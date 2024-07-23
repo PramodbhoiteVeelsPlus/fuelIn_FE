@@ -76,6 +76,8 @@ import { TablesWidget12Component } from './tables/tables-widget12/tables-widget1
 import { TablesWidget13Component } from './tables/tables-widget13/tables-widget13.component';
 import { TablesWidget14Component } from './tables/tables-widget14/tables-widget14.component';
 // new
+import { CardsWidget1Component } from './_new/cards/cards-widget1/cards-widget1.component';
+import { CardsWidget2Component } from './_new/cards/cards-widget2/cards-widget2.component';
 import { CardsWidget20Component } from './_new/cards/cards-widget20/cards-widget20.component';
 import { CardsWidget17Component } from './_new/cards/cards-widget17/cards-widget17.component';
 import { ListsWidget26Component } from './_new/lists/lists-widget26/lists-widget26.component';
@@ -158,6 +160,8 @@ import { SharedModule } from "../../../shared/shared.module";
     TablesWidget12Component,
     TablesWidget13Component,
     TablesWidget14Component,
+    CardsWidget1Component,
+    CardsWidget2Component,
     CardsWidget20Component,
     CardsWidget17Component,
     ListsWidget26Component,
@@ -248,6 +252,8 @@ import { SharedModule } from "../../../shared/shared.module";
     TablesWidget13Component,
     TablesWidget14Component,
     // new
+    CardsWidget1Component,
+    CardsWidget2Component,
     CardsWidget20Component,
     CardsWidget17Component,
     ListsWidget26Component,
