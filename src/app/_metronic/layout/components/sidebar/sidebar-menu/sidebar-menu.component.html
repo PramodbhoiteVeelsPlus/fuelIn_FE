@@ -4,38 +4,44 @@
   <div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
     <!-- Dashboard -->
     <div class="menu-item">
+      <div class="menu-content pt-8 pb-2">
+        <span class="menu-section text-muted text-uppercase fs-8 ls-1"> DASHBOARD </span>
+      </div>
+    </div>
+    <div class="menu-item">
       <a class="menu-link without-sub" routerLink="/dashboard" routerLinkActive="active">
         <span class="menu-icon">
           <app-keenicon name="element-11" class="fs-2"></app-keenicon>
         </span>
-        <span class="menu-title" translate="MENU.DASHBOARD"></span>
+        <span class="menu-title" translate="MONEY"></span>
       </a>
     </div>
 
-    <!-- Layout builder -->
+    <!-- Pump -->
     <div class="menu-item">
       <a class="menu-link without-sub" routerLink="/builder" routerLinkActive="active">
         <span class="menu-icon">
           <app-keenicon name="switch" class="fs-2"></app-keenicon>
         </span>
-        <span class="menu-title">Layout Builder</span>
+        <span class="menu-title">PUMP</span>
       </a>
     </div>
+
     <!-- Separator -->
     <div class="menu-item">
       <div class="menu-content pt-8 pb-2">
-        <span class="menu-section text-muted text-uppercase fs-8 ls-1">Crafted</span>
+        <span class="menu-section text-muted text-uppercase fs-8 ls-1"> </span>
       </div>
     </div>
 
-    <!-- Pages -->
+    <!-- Credit -->
     <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
       <span class="menu-link">
         <span class="menu-icon">
           <app-keenicon name="element-plus" class="fs-2"></app-keenicon>
         </span>
         <span
-          class="menu-title">Pages
+          class="menu-title">CREDIT
         </span>
         <span class="menu-arrow"></span>
       </span>
@@ -141,14 +147,14 @@
       </div>
     </div>
 
-    <!-- Accounts -->
+    <!-- Shift -->
     <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
       <span class="menu-link">
         <span class="menu-icon">
           <app-keenicon name="profile-circle" class="fs-2"></app-keenicon>
         </span>
         <span class="menu-title"
-              data-link="/crafted/account">Accounts
+              data-link="/crafted/account">SHIFT
         </span>
         <span class="menu-arrow"></span>
       </span>
@@ -178,219 +184,494 @@
       </div>
     </div>
 
-    <!-- Errors -->
+    <!-- Inventory -->
     <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
       <span class="menu-link">
         <span class="menu-icon">
-          <app-keenicon name="phone" class="fs-2"></app-keenicon>
+          <app-keenicon name="element-plus" class="fs-2"></app-keenicon>
+        </span>
+        <span
+          class="menu-title">INVENTORY
+        </span>
+        <span class="menu-arrow"></span>
+      </span>
+      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+        <div class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span
+              class="menu-title" data-link="/crafted/pages/profile">Profile
+            </span>
+            <span
+              class="menu-arrow"></span>
+          </span>
+          <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+            <div class="menu-item">
+              <a class="menu-link without-sub" routerLinkActive="active"
+                 routerLink="/crafted/pages/profile/overview">
+                <span class="menu-bullet">
+                  <span
+                    class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Overview</span>
+              </a>
+            </div>
+            <div class="menu-item">
+              <a class="menu-link without-sub" routerLinkActive="active"
+                 routerLink="/crafted/pages/profile/projects">
+                <span class="menu-bullet">
+                  <span
+                    class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Projects</span>
+              </a>
+            </div>
+            <div class="menu-item">
+              <a class="menu-link without-sub" routerLinkActive="active"
+                 routerLink="/crafted/pages/profile/campaigns">
+                <span class="menu-bullet">
+                  <span
+                    class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Campaigns</span>
+              </a>
+            </div>
+            <div class="menu-item">
+              <a class="menu-link without-sub" routerLinkActive="active"
+                 routerLink="/crafted/pages/profile/documents">
+                <span class="menu-bullet">
+                  <span
+                    class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Documents</span>
+              </a>
+            </div>
+            <div class="menu-item">
+              <a class="menu-link without-sub" routerLinkActive="active"
+                 routerLink="/crafted/pages/profile/connections">
+                <span class="menu-bullet">
+                  <span
+                    class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Connections</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span
+              class="menu-title" data-link="/crafted/pages/wizards">Wizards
+            </span>
+            <span
+              class="menu-arrow"></span>
+          </span>
+          <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+            <div class="menu-item">
+              <a class="menu-link without-sub" routerLinkActive="active"
+                 routerLink="/crafted/pages/wizards/horizontal">
+                <span class="menu-bullet">
+                  <span
+                    class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Horizontal</span>
+              </a>
+            </div>
+            <div class="menu-item">
+              <a class="menu-link without-sub" routerLinkActive="active"
+                 routerLink="/crafted/pages/wizards/vertical">
+                <span class="menu-bullet">
+                  <span
+                    class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Vertical</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Accounting -->
+    <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+      <span class="menu-link">
+        <span class="menu-icon">
+          <app-keenicon name="profile-circle" class="fs-2"></app-keenicon>
         </span>
         <span class="menu-title"
-              data-link="/error">Errors
+              data-link="/crafted/account">ACCOUNTING
         </span>
         <span class="menu-arrow"></span>
       </span>
       <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
         <div class="menu-item">
-          <a class="menu-link without-sub" routerLink="/error/404" routerLinkActive="active">
+          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/account/overview">
             <span
               class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
-            <span class="menu-title">Error
-              404
+            <span
+              class="menu-title">Overview
             </span>
           </a>
         </div>
         <div class="menu-item">
-          <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active">
+          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/account/settings">
             <span
               class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
-            <span class="menu-title">Error
-              500
+            <span
+              class="menu-title">Settings
             </span>
           </a>
         </div>
       </div>
     </div>
 
-    <!-- Widgets -->
+    <!-- Expense -->
     <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
       <span class="menu-link">
         <span class="menu-icon">
-          <app-keenicon name="element-7" class="fs-2"></app-keenicon>
+          <app-keenicon name="element-plus" class="fs-2"></app-keenicon>
+        </span>
+        <span
+          class="menu-title">EXPENSE
+        </span>
+        <span class="menu-arrow"></span>
+      </span>
+      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+        <div class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span
+              class="menu-title" data-link="/crafted/pages/profile">Profile
+            </span>
+            <span
+              class="menu-arrow"></span>
+          </span>
+          <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+            <div class="menu-item">
+              <a class="menu-link without-sub" routerLinkActive="active"
+                 routerLink="/crafted/pages/profile/overview">
+                <span class="menu-bullet">
+                  <span
+                    class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Overview</span>
+              </a>
+            </div>
+            <div class="menu-item">
+              <a class="menu-link without-sub" routerLinkActive="active"
+                 routerLink="/crafted/pages/profile/projects">
+                <span class="menu-bullet">
+                  <span
+                    class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Projects</span>
+              </a>
+            </div>
+            <div class="menu-item">
+              <a class="menu-link without-sub" routerLinkActive="active"
+                 routerLink="/crafted/pages/profile/campaigns">
+                <span class="menu-bullet">
+                  <span
+                    class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Campaigns</span>
+              </a>
+            </div>
+            <div class="menu-item">
+              <a class="menu-link without-sub" routerLinkActive="active"
+                 routerLink="/crafted/pages/profile/documents">
+                <span class="menu-bullet">
+                  <span
+                    class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Documents</span>
+              </a>
+            </div>
+            <div class="menu-item">
+              <a class="menu-link without-sub" routerLinkActive="active"
+                 routerLink="/crafted/pages/profile/connections">
+                <span class="menu-bullet">
+                  <span
+                    class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Connections</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span
+              class="menu-title" data-link="/crafted/pages/wizards">Wizards
+            </span>
+            <span
+              class="menu-arrow"></span>
+          </span>
+          <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+            <div class="menu-item">
+              <a class="menu-link without-sub" routerLinkActive="active"
+                 routerLink="/crafted/pages/wizards/horizontal">
+                <span class="menu-bullet">
+                  <span
+                    class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Horizontal</span>
+              </a>
+            </div>
+            <div class="menu-item">
+              <a class="menu-link without-sub" routerLinkActive="active"
+                 routerLink="/crafted/pages/wizards/vertical">
+                <span class="menu-bullet">
+                  <span
+                    class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Vertical</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DSR -->
+    <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+      <span class="menu-link">
+        <span class="menu-icon">
+          <app-keenicon name="profile-circle" class="fs-2"></app-keenicon>
         </span>
         <span class="menu-title"
-              data-link="/crafted/widgets">Widgets
+              data-link="/crafted/account">DSR
         </span>
         <span class="menu-arrow"></span>
       </span>
       <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
         <div class="menu-item">
-          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/widgets/lists">
+          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/account/overview">
             <span
               class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
             <span
-              class="menu-title">Lists
+              class="menu-title">Overview
             </span>
           </a>
         </div>
         <div class="menu-item">
-          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/widgets/statistics">
+          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/account/settings">
             <span
               class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
             <span
-              class="menu-title">Statistics
-            </span>
-          </a>
-        </div>
-        <div class="menu-item">
-          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/widgets/charts">
-            <span
-              class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span
-              class="menu-title">Charts
-            </span>
-          </a>
-        </div>
-        <div class="menu-item">
-          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/widgets/mixed">
-            <span
-              class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span
-              class="menu-title">Mixed
-            </span>
-          </a>
-        </div>
-        <div class="menu-item">
-          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/widgets/tables">
-            <span
-              class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span
-              class="menu-title">Tables
-            </span>
-          </a>
-        </div>
-        <div class="menu-item">
-          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/widgets/feeds">
-            <span
-              class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span
-              class="menu-title">Feeds
+              class="menu-title">Settings
             </span>
           </a>
         </div>
       </div>
     </div>
 
-    <!-- Separator -->
-    <div class="menu-item">
-      <div class="menu-content pt-8 pb-2">
-        <span class="menu-section text-muted text-uppercase fs-8 ls-1">Apps</span>
-      </div>
-    </div>
-
-    <!-- Chat -->
+    <!-- Ledger -->
     <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
       <span class="menu-link">
         <span class="menu-icon">
-          <app-keenicon name="message-text-2" class="fs-2"></app-keenicon>
+          <app-keenicon name="element-plus" class="fs-2"></app-keenicon>
+        </span>
+        <span
+          class="menu-title">LEDGER
+        </span>
+        <span class="menu-arrow"></span>
+      </span>
+      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+        <div class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span
+              class="menu-title" data-link="/crafted/pages/profile">Profile
+            </span>
+            <span
+              class="menu-arrow"></span>
+          </span>
+          <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+            <div class="menu-item">
+              <a class="menu-link without-sub" routerLinkActive="active"
+                 routerLink="/crafted/pages/profile/overview">
+                <span class="menu-bullet">
+                  <span
+                    class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Overview</span>
+              </a>
+            </div>
+            <div class="menu-item">
+              <a class="menu-link without-sub" routerLinkActive="active"
+                 routerLink="/crafted/pages/profile/projects">
+                <span class="menu-bullet">
+                  <span
+                    class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Projects</span>
+              </a>
+            </div>
+            <div class="menu-item">
+              <a class="menu-link without-sub" routerLinkActive="active"
+                 routerLink="/crafted/pages/profile/campaigns">
+                <span class="menu-bullet">
+                  <span
+                    class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Campaigns</span>
+              </a>
+            </div>
+            <div class="menu-item">
+              <a class="menu-link without-sub" routerLinkActive="active"
+                 routerLink="/crafted/pages/profile/documents">
+                <span class="menu-bullet">
+                  <span
+                    class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Documents</span>
+              </a>
+            </div>
+            <div class="menu-item">
+              <a class="menu-link without-sub" routerLinkActive="active"
+                 routerLink="/crafted/pages/profile/connections">
+                <span class="menu-bullet">
+                  <span
+                    class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Connections</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span
+              class="menu-title" data-link="/crafted/pages/wizards">Wizards
+            </span>
+            <span
+              class="menu-arrow"></span>
+          </span>
+          <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+            <div class="menu-item">
+              <a class="menu-link without-sub" routerLinkActive="active"
+                 routerLink="/crafted/pages/wizards/horizontal">
+                <span class="menu-bullet">
+                  <span
+                    class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Horizontal</span>
+              </a>
+            </div>
+            <div class="menu-item">
+              <a class="menu-link without-sub" routerLinkActive="active"
+                 routerLink="/crafted/pages/wizards/vertical">
+                <span class="menu-bullet">
+                  <span
+                    class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Vertical</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pump -->
+    <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+      <span class="menu-link">
+        <span class="menu-icon">
+          <app-keenicon name="profile-circle" class="fs-2"></app-keenicon>
         </span>
         <span class="menu-title"
-              data-link="/apps/chat">Chat
+              data-link="/crafted/account">PUMP
         </span>
         <span class="menu-arrow"></span>
       </span>
       <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
         <div class="menu-item">
-          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/apps/chat/private-chat">
+          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/account/overview">
             <span
               class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
-            <span class="menu-title">Private Chat
+            <span
+              class="menu-title">Overview
             </span>
           </a>
         </div>
         <div class="menu-item">
-          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/apps/chat/group-chat">
+          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/account/settings">
             <span
               class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
-            <span class="menu-title">Group Chat
-            </span>
-          </a>
-        </div>
-        <div class="menu-item">
-          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/apps/chat/drawer-chat">
             <span
-              class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title">Drawer Chat
+              class="menu-title">Settings
             </span>
           </a>
         </div>
       </div>
     </div>
 
-    <!-- Customers -->
+    <!-- Report -->
     <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
       <span class="menu-link">
         <span class="menu-icon">
-          <app-keenicon name="profile-user" class="fs-2"></app-keenicon>
+          <app-keenicon name="profile-circle" class="fs-2"></app-keenicon>
         </span>
-        <span class="menu-title" data-link="/apps">User Management
+        <span class="menu-title"
+              data-link="/crafted/account">REPORT
         </span>
         <span class="menu-arrow"></span>
       </span>
       <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
         <div class="menu-item">
-          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/apps/users">
+          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/account/overview">
             <span
               class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
-            <span class="menu-title">Users
+            <span
+              class="menu-title">Overview
             </span>
           </a>
         </div>
         <div class="menu-item">
-          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/apps/roles">
+          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/account/settings">
             <span
               class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
-            <span class="menu-title">Roles
-            </span>
-          </a>
-        </div>
-        <div class="menu-item">
-          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/apps/permissions">
             <span
-              class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title">Permissions
+              class="menu-title">Settings
             </span>
           </a>
         </div>
       </div>
     </div>
+
+
   </div>
   <!--end::Menu-->
 </div>

@@ -1,15 +1,13 @@
 <!--begin::Logo image-->
 <a routerLink="/dashboard">
   <ng-container *ngIf="currentLayoutType === 'dark-sidebar'">
-    <img alt="Logo" src="./assets/media/logos/default-dark.svg" class="h-25px app-sidebar-logo-default" />
+    <b class="h-25px app-sidebar-logo-default" style="font-size: 35px;">VeelsPlus</b>
   </ng-container>
   <ng-container *ngIf="currentLayoutType !== 'dark-sidebar'">
-    <img alt="Logo" src="./assets/media/logos/default.svg" class="h-25px app-sidebar-logo-default theme-light-show" />
-    <img alt="Logo" src="./assets/media/logos/default-dark.svg"
-      class="h-25px app-sidebar-logo-default theme-dark-show" />
+    <b class="h-25px app-sidebar-logo-default" style="font-size: 35px;">VeelsPlus</b>
   </ng-container>
 
-  <img alt="Logo" src="./assets/media/logos/default-small.svg" class="h-20px app-sidebar-logo-minimize" />
+  <img alt="Logo" src="./assets/media/logos/wheel.png" class="h-20px app-sidebar-logo-minimize" />
 </a>
 <!--end::Logo image-->
 
