@@ -7,7 +7,44 @@ export const environment = {
   appVersion: 'v8.2.4',
   USERDATA_KEY: 'authf649fc9a5f55',
   isMockEnabled: true,
-  apiUrl: 'api',
+  
+
+  
+  defaultauth: 'fackbackend',
+ 
+  firebaseConfig: {
+    apiKey: '',
+    authDomain: '',
+    databaseURL: '',
+    projectId: '',
+    storageBucket: '',
+    messagingSenderId: '',
+    appId: '',
+    measurementId: ''
+  },
+
+
+  
+  //* for test*/ 
+  key: 'rzp_test_TPEZneSo9wziks',
+  callback_url: 'http://localhost:4200/login',
+  key_sec: 'bkn9aRMDh5NvtH6uPMUekJFq',
+  apiUrl: 'http://13.234.240.139:9000/',
+  imagePath: 'https://veelsimage.s3.ap-south-1.amazonaws.com/',
+
+  crmAPIURL:'http://13.234.114.76:3000/', 
+   
+   //*  prod details listed // production environment*/
+  //  key: 'rzp_live_I7qQzdkmzXiHSm',
+  //  callback_url: 'http://52.66.192.10/#/login',
+  //  key_sec: 'jNeIn02AjQXJZ4nHMqhQb28a',
+  //  imagePath: 'https://veelsimage.s3.ap-south-1.amazonaws.com/',
+  //  apiUrl: 'https://theveels.in:9000/', 
+
+
+
+
+
   appThemeName: 'Metronic',
   appPurchaseUrl: 'https://1.envato.market/EA4JP',
   appHTMLIntegration: 'https://preview.keenthemes.com/metronic8/demo1/documentation/base/helpers/flex-layouts.html',
