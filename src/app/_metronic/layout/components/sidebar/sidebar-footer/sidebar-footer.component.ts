@@ -8,6 +8,7 @@ import { environment } from '../../../../../../environments/environment';
 })
 export class SidebarFooterComponent implements OnInit {
   appPreviewChangelogUrl: string = environment.appPreviewChangelogUrl;
+  currentDateStr: string = new Date().getFullYear().toString();
 
   constructor() {}
 
