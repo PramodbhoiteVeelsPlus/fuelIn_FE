@@ -7,14 +7,15 @@ import { getCSSVariableValue } from '../../../../../kt/_utils';
 })
 export class ChartsWidget1Component implements OnInit {
   chartOptions: any = {};
+  months = ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']
   constructor() {}
 
   ngOnInit(): void {
-    this.chartOptions = getChartOptions(350);
+    this.chartOptions = getChartOptions(350, this.months);
   }
 }
 
-function getChartOptions(height: number) {
+function getChartOptions(height: number, months: any) {
   const labelColor = getCSSVariableValue('--bs-gray-500')
   const borderColor = getCSSVariableValue('--bs-gray-200')
   const baseColor = getCSSVariableValue('--bs-primary')
@@ -23,11 +24,15 @@ function getChartOptions(height: number) {
   return {
     series: [
       {
-        name: 'Net Profit',
+        name: 'Sales',
         data: [44, 55, 57, 56, 61, 58],
       },
       {
-        name: 'Revenue',
+        name: 'Payment',
+        data: [76, 85, 101, 98, 87, 105],
+      },
+      {
+        name: 'O/S',
         data: [76, 85, 101, 98, 87, 105],
       },
     ],
@@ -58,7 +63,7 @@ function getChartOptions(height: number) {
       colors: ['transparent'],
     },
     xaxis: {
-      categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+      categories: months,
       axisBorder: {
         show: false,
       },
