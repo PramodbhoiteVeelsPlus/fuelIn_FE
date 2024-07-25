@@ -24,16 +24,16 @@ function getChartOptions(height: number, months: any) {
   return {
     series: [
       {
+        name: 'O/s',
+        data: [1000, 0, 1000, 2000, 0, 500],
+      },
+      {
         name: 'Sales',
-        data: [44, 55, 57, 56, 61, 58],
+        data: [8600, 8500, 4000, 9800, 8700, 10500],
       },
       {
         name: 'Payment',
-        data: [76, 85, 101, 98, 87, 105],
-      },
-      {
-        name: 'O/S',
-        data: [76, 85, 101, 98, 87, 105],
+        data: [7600, 8500, 3000, 7800, 8700, 10000],
       },
     ],
     chart: {
@@ -47,7 +47,7 @@ function getChartOptions(height: number, months: any) {
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: '30%',
+        columnWidth: '40%',
         borderRadius: 5,
       },
     },
@@ -63,6 +63,9 @@ function getChartOptions(height: number, months: any) {
       colors: ['transparent'],
     },
     xaxis: {
+      title: {
+        text: 'Month'
+      },
       categories: months,
       axisBorder: {
         show: false,
@@ -78,6 +81,9 @@ function getChartOptions(height: number, months: any) {
       },
     },
     yaxis: {
+      title: {
+        text: '₹'
+      },
       labels: {
         style: {
           colors: labelColor,
@@ -115,11 +121,11 @@ function getChartOptions(height: number, months: any) {
       },
       y: {
         formatter: function (val: number) {
-          return '$' + val + ' thousands';
+          return '₹' + val ;
         },
       },
     },
-    colors: [baseColor, secondaryColor],
+    colors: ['#F8285A', '#1B84FF', '#17C653'],
     grid: {
       borderColor: borderColor,
       strokeDashArray: 4,

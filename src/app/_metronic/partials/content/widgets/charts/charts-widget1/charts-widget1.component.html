@@ -11,21 +11,62 @@
 <div class="card-body">
   <!-- begin::Chart-->
   <div #chartRef id="kt_charts_widget_1_chart" [style.height]="'350px'">
-    <apx-chart
-      [series]="chartOptions.series"
-      [chart]="chartOptions.chart"
-      [xaxis]="chartOptions.xaxis"
-      [yaxis]="chartOptions.yaxis"
-      [dataLabels]="chartOptions.dataLabels"
-      [stroke]="chartOptions.stroke"
-      [legend]="chartOptions.legend"
-      [fill]="chartOptions.fill"
-      [states]="chartOptions.states"
-      [tooltip]="chartOptions.tooltip"
-      [colors]="chartOptions.colors"
-      [markers]="chartOptions.markers"
-      [plotOptions]="chartOptions.plotOptions"
-    ></apx-chart>
+    <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [xaxis]="chartOptions.xaxis"
+      [yaxis]="chartOptions.yaxis" [dataLabels]="chartOptions.dataLabels" [stroke]="chartOptions.stroke"
+      [legend]="chartOptions.legend" [fill]="chartOptions.fill" [states]="chartOptions.states"
+      [tooltip]="chartOptions.tooltip" [colors]="chartOptions.colors" [markers]="chartOptions.markers"
+      [plotOptions]="chartOptions.plotOptions"></apx-chart>
   </div>
   <!-- end::Chart-->
+  <!--begin::Items-->
+  <div class="d-flex flex-wrap pt-5" style="padding-left: 235px;">
+    <!--begin::Item-->
+    <div class="d-flex flex-column me-7 me-lg-16 pt-sm-3 pt-6">
+      <!--begin::Item-->
+      <div class="d-flex align-items-center mb-3 mb-sm-6">
+        <!--begin::Bullet-->
+        <span class="bullet bullet-dot bg-danger me-2 h-10px w-10px"></span>
+        <!--end::Bullet-->
+
+        <!--begin::Label-->
+        <span class="fw-bold text-gray-600 fs-6">O/s</span>
+        <!--end::Label-->
+      </div>
+      <!--ed::Item-->
+    </div>
+    <!--ed::Item-->
+
+    <!--begin::Item-->
+    <div class="d-flex flex-column me-7 me-lg-16 pt-sm-3 pt-6">
+      <!--begin::Item-->
+      <div class="d-flex align-items-center mb-3 mb-sm-6">
+        <!--begin::Bullet-->
+        <span class="bullet bullet-dot bg-primary me-2 h-10px w-10px"></span>
+        <!--end::Bullet-->
+
+        <!--begin::Label-->
+        <span class="fw-bold text-gray-600 fs-6">Sales</span>
+        <!--end::Label-->
+      </div>
+      <!--ed::Item-->
+    </div>
+    <!--ed::Item-->
+
+    <!--begin::Item-->
+    <div class="d-flex flex-column pt-sm-3 pt-6">
+      <!--begin::Item-->
+      <div class="d-flex align-items-center mb-3 mb-sm-6">
+        <!--begin::Bullet-->
+        <span class="bullet bullet-dot bg-success me-2 h-10px w-10px"></span>
+        <!--end::Bullet-->
+
+        <!--begin::Label-->
+        <span class="fw-bold text-gray-600 fs-6">Payment</span>
+        <!--end::Label-->
+      </div>
+      <!--ed::Item-->
+    </div>
+    <!--ed::Item-->
+  </div>
+  <!--ed::Items-->
 </div>
