@@ -6,68 +6,21 @@
 <!-- begin::Body -->
 <div class="card-body pt-2">
   <!-- begin::Item -->
-  <div class="d-flex align-items-center mb-8">
+  <div class="d-flex align-items-center mb-8" *ngFor="let data of array; let i = index">
     <!-- begin::Description -->
     <div class="flex-grow-1">
-      <a href="#" class="text-gray-800 text-hover-primary fw-bolder fs-6">
-        Create FireStone Logo
+      <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+        <!-- href="#"  need customer details page on click -->
+        {{ data.companyName }}
       </a>
       <span class="text-muted fw-bold d-block">Due in 2 Days</span>
     </div>
     <!-- end::Description -->
-    <span class="badge badge-light-success fs-8 fw-bolder">New</span>
-  </div>
-  <!-- end:Item -->
-  <!-- begin::Item -->
-  <div class="d-flex align-items-center mb-8">
-    <!-- begin::Description -->
-    <div class="flex-grow-1">
-      <a href="#" class="text-gray-800 text-hover-primary fw-bolder fs-6">
-        Stakeholder Meeting
-      </a>
-      <span class="text-muted fw-bold d-block">Due in 3 Days</span>
-    </div>
-    <!-- end::Description -->
-    <span class="badge badge-light-primary fs-8 fw-bolder">New</span>
-  </div>
-  <!-- end:Item -->
-  <!-- begin::Item -->
-  <div class="d-flex align-items-center mb-8">
-    <!-- begin::Description -->
-    <div class="flex-grow-1">
-      <a href="#" class="text-gray-800 text-hover-primary fw-bolder fs-6">
-        Scoping &amp; Estimations
-      </a>
-      <span class="text-muted fw-bold d-block">Due in 5 Days</span>
-    </div>
-    <!-- end::Description -->
-    <span class="badge badge-light-warning fs-8 fw-bolder">New</span>
-  </div>
-  <!-- end:Item -->
-  <!-- begin::Item -->
-  <div class="d-flex align-items-center mb-8">
-    <!-- begin::Description -->
-    <div class="flex-grow-1">
-      <a href="#" class="text-gray-800 text-hover-primary fw-bolder fs-6">
-        KPI App Showcase
-      </a>
-      <span class="text-muted fw-bold d-block">Due in 2 Days</span>
-    </div>
-    <!-- end::Description -->
-    <span class="badge badge-light-primary fs-8 fw-bolder">New</span>
-  </div>
-  <!-- end:Item -->
-  <!-- begin::Item -->
-  <div class="d-flex align-items-center mb-8">
-    <!-- begin::Description -->
-    <div class="flex-grow-1">
-      <a href="#" class="text-gray-800 text-hover-primary fw-bolder fs-6">
-        Project Meeting
-      </a>
-      <span class="text-muted fw-bold d-block">Due in 12 Days</span>
-    </div>
-    <!-- end::Description -->
-    <span class="badge badge-light-danger fs-8 fw-bolder">New</span>
+    <span *ngIf="i == 0" class="badge badge-light-danger fs-6 fw-bolder">  {{ data.netOS | number :"1.2-2" }} </span>
+    <span *ngIf="i == 1" class="badge badge-light-warning fs-6 fw-bolder"> {{ data.netOS | number :"1.2-2" }} </span>
+    <span *ngIf="i == 2" class="badge badge-light-primary fs-6 fw-bolder"> {{ data.netOS | number :"1.2-2" }} </span>
+    <span *ngIf="i == 3" class="badge badge-light-info fs-6 fw-bolder">    {{ data.netOS | number :"1.2-2" }} </span>
+    <span *ngIf="i == 4" class="badge badge-light-success fs-6 fw-bolder"> {{ data.netOS | number :"1.2-2" }} </span>
   </div>
   <!-- end:Item -->
 </div>
