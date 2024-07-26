@@ -6,7 +6,7 @@ const Routing: Routes = [
     loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
   {
-    path: 'builder',
+    path: 'pumpDashboard',
     loadChildren: () => import('./builder/builder.module').then((m) => m.BuilderModule),
   },
   {
