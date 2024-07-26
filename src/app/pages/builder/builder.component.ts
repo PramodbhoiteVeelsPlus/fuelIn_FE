@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { LayoutService } from '../../_metronic/layout';
 import { ModalConfig, ModalComponent } from '../../_metronic/partials';
 
 @Component({
@@ -20,7 +19,6 @@ export class BuilderComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.openModal()
   }
 
   async openModal() {
