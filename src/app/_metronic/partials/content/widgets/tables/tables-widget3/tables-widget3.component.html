@@ -1,9 +1,51 @@
-<!-- begin::Header -->
+<head>
+  <style>
+    .btn.btn-icon.badge.badge-light-success {
+      background-color: #DFFFEA;
+      color: #DFFFEA;
+      transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+    }
 
+    .btn.btn-icon.badge.badge-light-success:hover {
+      background-color: #17C653; /* Change to success color */
+      color: #17C653; /* Change text color if needed */
+    }
+
+    .btn.btn-icon.badge.badge-light-warning {
+      background-color: #FFF8DD;
+      color: #FFF8DD;
+      transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+    }
+
+    .btn.btn-icon.badge.badge-light-warning:hover {
+      background-color: #F6C000; /* Change to  color */
+      color: #F6C000; /* Change text color if needed */
+    }
+
+    .btn.btn-icon.badge.badge-light-danger {
+      background-color: #FFEEF3;
+      color: #FFEEF3;
+      transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+    }
+
+    .btn.btn-icon.badge.badge-light-danger:hover {
+      background-color: #F8285A; /* Change to  color */
+      color: #F8285A; /* Change text color if needed */
+    }
+  </style>
+</head>
+
+<!-- begin::Header -->
 <div class="card-header border-0 pt-5">
   <h3 class="card-title align-items-start flex-column">
     <span class="card-label fw-bolder fs-3 mb-1">Staff Overview</span>
   </h3>
+  <span class="badge badge-light-warning fs-6 fw-bolder">
+    MANAGER - 1
+  </span>
+  <span class="badge badge-light-success fs-6 fw-bolder">
+    OPERATOR - 2
+  </span>
   <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
     title="Click to add a user">
     <a href="#" class="btn btn-sm btn-light-primary">
@@ -86,21 +128,13 @@
 
           <td>
             <div class="d-flex justify-content-center flex-shrink-0">
-              <a href="#" class="
-                  btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                  me-1
-                ">
+              <a class="btn btn-icon badge badge-light-success">
                 <app-keenicon name="switch" class="fs-3"></app-keenicon>
               </a>
-              <a href="#" class="
-                  btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                  me-1
-                ">
+              <a class="btn btn-icon badge badge-light-warning">
                 <app-keenicon name="pencil" class="fs-3"></app-keenicon>
               </a>
-              <a href="#" class="
-                  btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                ">
+              <a class="btn btn-icon badge badge-light-danger">
                 <app-keenicon name="trash" class="fs-3"></app-keenicon>
               </a>
             </div>
