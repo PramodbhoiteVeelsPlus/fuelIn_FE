@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { ModalConfig } from 'src/app/_metronic/partials/layout/modals/modal.config';
+import { Modal3Component } from 'src/app/_metronic/partials/layout/modals/modal3/modal3.component';
 
 type Tabs =
   | 'kt_table_widget_4_tab_1'
@@ -122,6 +124,16 @@ export class TablesWidget4Component {
       upiId: "five@five"
     }
   ];
-  
+
+  modalConfig: ModalConfig = {
+    modalTitle: 'Modal title',
+    dismissButtonLabel: 'Submit',
+    closeButtonLabel: 'Cancel'
+  };
+  @ViewChild('modal') private modal3Component: Modal3Component;
   constructor() { }
+
+  async openModal() {
+    return await this.modal3Component.open();
+  }
 }

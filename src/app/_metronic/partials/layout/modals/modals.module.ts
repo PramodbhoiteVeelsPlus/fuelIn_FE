@@ -9,6 +9,9 @@ import {ModalComponent} from './modal/modal.component';
 import {NgbDatepickerModule, NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
 import {SharedModule} from "../../../shared/shared.module";
 import { FormsModule } from '@angular/forms';
+import {Modal2Component} from './modal2/modal2.component';
+import {Modal3Component} from './modal3/modal3.component';
+import {Modal4Component} from './modal4/modal4.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +19,9 @@ import { FormsModule } from '@angular/forms';
     MainModalComponent,
     UpgradePlanModalComponent,
     ModalComponent,
+    Modal2Component,
+    Modal3Component,
+    Modal4Component,
   ],
   imports: [
     CommonModule,
@@ -31,6 +37,9 @@ import { FormsModule } from '@angular/forms';
     MainModalComponent,
     UpgradePlanModalComponent,
     ModalComponent,
+    Modal2Component,
+    Modal3Component,
+    Modal4Component,
   ],
 })
 export class ModalsModule {

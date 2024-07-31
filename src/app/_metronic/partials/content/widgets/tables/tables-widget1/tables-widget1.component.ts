@@ -18,7 +18,8 @@ export class TablesWidget1Component {
     { productSellingPrice: "90", productName: "PETROL" },
     { productSellingPrice: "110", productName: "XTRA" },
   ]
-  mergedArray: any = [];  modalConfig: ModalConfig = {
+  mergedArray: any = [];  
+  modalConfig: ModalConfig = {
     modalTitle: 'Modal title',
     dismissButtonLabel: 'Submit',
     closeButtonLabel: 'Cancel'

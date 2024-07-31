@@ -3,34 +3,43 @@
     .btn.btn-icon.badge.badge-light-success {
       background-color: #DFFFEA;
       color: #DFFFEA;
-      transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+      transition: background-color 0.3s, color 0.3s;
+      /* Smooth transition */
     }
 
     .btn.btn-icon.badge.badge-light-success:hover {
-      background-color: #17C653; /* Change to success color */
-      color: #17C653; /* Change text color if needed */
+      background-color: #17C653;
+      /* Change to success color */
+      color: #17C653;
+      /* Change text color if needed */
     }
 
     .btn.btn-icon.badge.badge-light-warning {
       background-color: #FFF8DD;
       color: #FFF8DD;
-      transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+      transition: background-color 0.3s, color 0.3s;
+      /* Smooth transition */
     }
 
     .btn.btn-icon.badge.badge-light-warning:hover {
-      background-color: #F6C000; /* Change to  color */
-      color: #F6C000; /* Change text color if needed */
+      background-color: #F6C000;
+      /* Change to  color */
+      color: #F6C000;
+      /* Change text color if needed */
     }
 
     .btn.btn-icon.badge.badge-light-danger {
       background-color: #FFEEF3;
       color: #FFEEF3;
-      transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+      transition: background-color 0.3s, color 0.3s;
+      /* Smooth transition */
     }
 
     .btn.btn-icon.badge.badge-light-danger:hover {
-      background-color: #F8285A; /* Change to  color */
-      color: #F8285A; /* Change text color if needed */
+      background-color: #F8285A;
+      /* Change to  color */
+      color: #F8285A;
+      /* Change text color if needed */
     }
   </style>
 </head>
@@ -49,10 +58,13 @@
   </span>
   <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
     title="Click to add a user">
-    <a href="#" class="btn btn-sm btn-light-primary">
+    <a (click)="openModal()" class="btn btn-sm btn-light-primary">
       <app-keenicon name="plus" class="fs-3"></app-keenicon>
       New POS
     </a>
+    <app-modal4 #modal [modalConfig]="modalConfig">
+      Modal body html
+    </app-modal4>
   </div>
 </div>
 <!-- end::Header -->

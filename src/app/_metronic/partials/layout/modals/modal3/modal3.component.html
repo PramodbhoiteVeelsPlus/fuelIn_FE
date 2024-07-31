@@ -1,0 +1,154 @@
+<head>
+  <style>
+    .btn.btn-sm.btn-icon {
+      background-color: #c5294e;
+      color: #ffffff;
+      transition: background-color 0.3s, color 0.3s;
+      /* Smooth transition */
+    }
+  </style>
+</head>
+<ng-template #modal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <!--begin::Modal title-->
+      <h2>Add Bank Account</h2>
+      <!--end::Modal title-->
+      <!--begin::Close-->
+      <div class="btn btn-sm btn-icon" (click)="dismiss()"
+        *ngIf="modalConfig.hideDismissButton === undefined || !modalConfig.hideDismissButton()">
+        <app-keenicon name="cross" class="fs-1"></app-keenicon>
+        <!--end::Svg Icon-->
+      </div>
+      <!--end::Close-->
+    </div>
+    <div class="modal-body">
+
+      <div class="d-flex align-items-center mb-8">
+        <!-- begin::Description -->
+        <div class="flex-grow-1">
+          <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+            <span class="badge badge-light-success fs-6 fw-bolder">
+              Account Number <span style="color: red;">*</span></span>
+          </a>
+        </div>
+        <span class="badge badge-light-success fs-6 fw-bolder">
+          <input type="number" placeholder="Account Number" class="form-control" [(ngModel)]="accountNumber">
+        </span>
+        <!-- end::Description -->
+      </div>
+
+      <div class="d-flex align-items-center mb-8">
+        <!-- begin::Description -->
+        <div class="flex-grow-1">
+          <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+            <span class="badge badge-light-info fs-6 fw-bolder">
+              Mobile Number <span style="color: red;">*</span></span>
+          </a>
+        </div>
+        <span class="badge badge-light-info fs-6 fw-bolder">
+          <input type="number" placeholder="Mobile Number" class="form-control" [(ngModel)]="mobile"
+            onkeypress="return this.value.length < 10;">
+        </span>
+        <!-- end::Description -->
+      </div>
+
+      <div class="d-flex align-items-center mb-8">
+        <!-- begin::Description -->
+        <div class="flex-grow-1">
+          <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+            <span class="badge badge-light-success fs-6 fw-bolder">
+              IFSC <span style="color: red;">*</span></span>
+          </a>
+        </div>
+        <span class="badge badge-light-success fs-6 fw-bolder">
+          <input type="number" placeholder="IFSC" class="form-control" [(ngModel)]="ifsc">
+        </span>
+        <!-- end::Description -->
+      </div>
+
+      <div class="d-flex align-items-center mb-8">
+        <!-- begin::Description -->
+        <div class="flex-grow-1">
+          <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+            <span class="badge badge-light-info fs-6 fw-bolder">
+              Account Holder Name </span>
+          </a>
+        </div>
+        <span class="badge badge-light-info fs-6 fw-bolder">
+          <input type="text" placeholder="Account Holder Name" class="form-control" [(ngModel)]="accountHolderName">
+        </span>
+        <!-- end::Description -->
+      </div>
+
+      <div class="d-flex align-items-center mb-8">
+        <!-- begin::Description -->
+        <div class="flex-grow-1">
+          <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+            <span class="badge badge-light-success fs-6 fw-bolder">
+              Bank Name </span>
+          </a>
+        </div>
+        <span class="badge badge-light-success fs-6 fw-bolder">
+          <input type="text" placeholder="Bank Name" class="form-control" [(ngModel)]="bankName">
+        </span>
+        <!-- end::Description -->
+      </div>
+
+      <div class="d-flex align-items-center mb-8">
+        <!-- begin::Description -->
+        <div class="flex-grow-1">
+          <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+            <span class="badge badge-light-info fs-6 fw-bolder">
+              Branch Name </span>
+          </a>
+        </div>
+        <span class="badge badge-light-info fs-6 fw-bolder">
+          <input type="text" placeholder="Branch Name" class="form-control" [(ngModel)]="branchName">
+        </span>
+        <!-- end::Description -->
+      </div>
+
+      <div class="d-flex align-items-center mb-8">
+        <!-- begin::Description -->
+        <div class="flex-grow-1">
+          <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+            <span class="badge badge-light-success fs-6 fw-bolder">
+              UPI ID </span>
+          </a>
+        </div>
+        <span class="badge badge-light-success fs-6 fw-bolder">
+          <input type="text" placeholder="UPI ID" class="form-control" [(ngModel)]="upiId">
+        </span>
+        <!-- end::Description -->
+      </div>
+
+      <div class="d-flex align-items-center mb-8">
+        <!-- begin::Description -->
+        <div class="flex-grow-1">
+          <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+            <span class="badge badge-light-info fs-6 fw-bolder">
+              Account Type </span>
+          </a>
+        </div>
+        <span class="badge badge-light-info fs-6 fw-bolder">
+          <select class="form-select form-select-sm form-select-solid" data-placeholder="" data-hide-search="true" style="width: 220px;"
+            [(ngModel)]="accountType">
+            <option value="SAVING"> SAVING </option>
+            <option value="LOAN"> LOAN </option>
+          </select>
+        </span>
+        <!-- end::Description -->
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-success" (click)="submit()">
+        Submit
+      </button>
+      <button type="button" class="btn btn-outline-danger" (click)="close()">
+        Cancel
+      </button>
+    </div>
+  </div>
+</ng-template>

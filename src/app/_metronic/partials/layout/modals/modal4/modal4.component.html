@@ -1,0 +1,95 @@
+<head>
+  <style>
+    .btn.btn-sm.btn-icon {
+      background-color: #c5294e;
+      color: #ffffff;
+      transition: background-color 0.3s, color 0.3s;
+      /* Smooth transition */
+    }
+  </style>
+</head>
+<ng-template #modal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <!--begin::Modal title-->
+      <h2>Add POS/Terminal Sytem</h2>
+      <!--end::Modal title-->
+      <!--begin::Close-->
+      <div class="btn btn-sm btn-icon" (click)="dismiss()"
+        *ngIf="modalConfig.hideDismissButton === undefined || !modalConfig.hideDismissButton()">
+        <app-keenicon name="cross" class="fs-1"></app-keenicon>
+        <!--end::Svg Icon-->
+      </div>
+      <!--end::Close-->
+    </div>
+    <div class="modal-body">
+
+
+      <div class="d-flex align-items-center mb-8">
+        <!-- begin::Description -->
+        <div class="flex-grow-1">
+          <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+            <span class="badge badge-light-primary fs-6 fw-bolder">
+              Terminal Type </span>
+          </a>
+        </div>
+        <span class="badge badge-light-primary fs-6 fw-bolder">
+          <select class="form-select form-select-sm form-select-solid" data-placeholder="" data-hide-search="true"
+            style="width: 220px;" [(ngModel)]="terminalType">
+            <option value=""> Select Type </option>
+            <option value="BANK CARD"> BANK CARD </option>
+            <option value="UPI"> UPI </option>
+            <option value="AMERICAN EXPRESS"> AMERICAN EXPRESS </option>
+            <option value="OIL COMPANY FLEET PROGRAM"> OIL COMPANY FLEET PROGRAM </option>
+            <option value="OIL COMPANY RETAIL PROGRAM"> OIL COMPANY RETAIL PROGRAM </option>
+            <option value="OTHER"> OTHER </option>
+          </select>
+        </span>
+        <!-- end::Description -->
+      </div>
+
+      <div class="d-flex align-items-center mb-8">
+        <!-- begin::Description -->
+        <div class="flex-grow-1">
+          <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+            <span class="badge badge-light-info fs-6 fw-bolder">
+              Terminal Name </span>
+          </a>
+        </div>
+        <span class="badge badge-light-info fs-6 fw-bolder">
+          <input type="text" placeholder="Terminal Name" class="form-control" [(ngModel)]="terminalName">
+        </span>
+        <!-- end::Description -->
+      </div>
+
+      <div class="d-flex align-items-center mb-8">
+        <!-- begin::Description -->
+        <div class="flex-grow-1">
+          <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+            <span class="badge badge-light-success fs-6 fw-bolder">
+              Select Account </span>
+          </a>
+        </div>
+        <span class="badge badge-light-success fs-6 fw-bolder">
+          <select class="form-select form-select-sm form-select-solid" data-placeholder="" data-hide-search="true"
+            style="width: 220px;" [(ngModel)]="selectAccount">
+            <option value=""> Select Account </option>
+            <option value="KOTAK"> KOTAK </option>
+            <option value="AXIS"> AXIS </option>
+            <option value="SBI"> SBI </option>
+          </select>
+        </span>
+        <!-- end::Description -->
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-success" (click)="submit()">
+        Submit
+      </button>
+      <button type="button" class="btn btn-outline-danger" (click)="close()">
+        Cancel
+      </button>
+    </div>
+  </div>
+</ng-template>

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ModalConfig } from 'src/app/_metronic/partials/layout/modals/modal.config';
+import { Modal4Component } from 'src/app/_metronic/partials/layout/modals/modal4/modal4.component';
 
 type Tabs =
   | 'kt_table_widget_5_tab_1'
@@ -10,7 +12,15 @@ type Tabs =
   templateUrl: './tables-widget5.component.html',
 })
 export class TablesWidget5Component implements OnInit {
-  constructor() {}
+
+  modalConfig: ModalConfig = {
+    modalTitle: 'Modal title',
+    dismissButtonLabel: 'Submit',
+    closeButtonLabel: 'Cancel'
+  };
+
+  @ViewChild('modal') private modal4Component: Modal4Component;
+  constructor() { }
 
   posArray = [
     {
@@ -154,6 +164,10 @@ export class TablesWidget5Component implements OnInit {
       upiId: "five@five"
     }
   ];
-  
-  ngOnInit(): void {}
+
+  ngOnInit(): void { }
+
+  async openModal() {
+    return await this.modal4Component.open();
+  }
 }

@@ -1,10 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ModalConfig } from 'src/app/_metronic/partials/layout/modals/modal.config';
+import { Modal2Component } from 'src/app/_metronic/partials/layout/modals/modal2/modal2.component';
 
 @Component({
   selector: 'app-tables-widget3',
   templateUrl: './tables-widget3.component.html',
 })
 export class TablesWidget3Component implements OnInit {
+   
+  modalConfig: ModalConfig = {
+    modalTitle: 'Modal title',
+    dismissButtonLabel: 'Submit',
+    closeButtonLabel: 'Cancel'
+  };
+  @ViewChild('modal') private modal2Component: Modal2Component;
   constructor() { }
   staffArray = [
     {
@@ -65,4 +74,8 @@ export class TablesWidget3Component implements OnInit {
     }
   ];
   ngOnInit(): void { }
+  
+  async openModal() {
+    return await this.modal2Component.open();
+  }
 }

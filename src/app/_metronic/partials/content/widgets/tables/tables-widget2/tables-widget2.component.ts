@@ -53,4 +53,8 @@ export class TablesWidget2Component {
       })
     })
   }
+
+  addInfra(){
+    alert("View Infra Page")
+  }
 }
