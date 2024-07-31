@@ -1,11 +1,21 @@
+<head>
+  <style>
+    .btn.btn-sm.btn-icon {
+      background-color: #c5294e;
+      color: #ffffff;
+      transition: background-color 0.3s, color 0.3s;
+      /* Smooth transition */
+    }
+  </style>
+</head>
 <ng-template #modal>
   <div class="modal-content">
     <div class="modal-header">
       <!--begin::Modal title-->
-      <h2>{{ modalConfig.modalTitle }}</h2>
+      <h2>Set Fuel Rate</h2>
       <!--end::Modal title-->
       <!--begin::Close-->
-      <div class="btn btn-sm btn-icon btn-active-color-primary" (click)="dismiss()"
+      <div class="btn btn-sm btn-icon" (click)="dismiss()"
         *ngIf="modalConfig.hideDismissButton === undefined || !modalConfig.hideDismissButton()">
         <app-keenicon name="cross" class="fs-1"></app-keenicon>
         <!--end::Svg Icon-->
@@ -13,18 +23,48 @@
       <!--end::Close-->
     </div>
     <div class="modal-body">
-      <ng-content></ng-content>
+
+      <div class="d-flex align-items-center mb-8">
+        <!-- begin::Description -->
+        <div class="flex-grow-1">
+          <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+            <span class="badge badge-light-warning fs-6 fw-bolder">
+              Date </span>
+          </a>
+        </div>
+        <span class="badge badge-light-warning fs-6 fw-bolder">
+          <input class="form-control bg-transparent" placeholder="DD-MM-YYYY" (click)="startDate.toggle()"
+            name="startDate" ngbDatepicker #startDate="ngbDatepicker" [(ngModel)]="date">
+        </span>
+        <!-- end::Description -->
+      </div>
+      <div class="d-flex align-items-center mb-8" *ngFor="let data of product; let i = index">
+        <!-- begin::Description -->
+        <div class="flex-grow-1">
+          <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+            <span *ngIf="i % 2 === 0" class="badge badge-light-primary fs-6 fw-bolder">
+              {{ data.productName }} </span>
+            <span *ngIf="i % 2 != 0" class="badge badge-light-success fs-6 fw-bolder">
+              {{ data.productName }} </span>
+          </a>
+        </div>
+        <!-- end::Description -->
+        <span *ngIf="i % 2 === 0" class="badge badge-light-primary fs-6 fw-bolder">
+          <input class="form-control bg-transparent" type="number" name="rate" [(ngModel)]="data.rate"
+            onkeypress="return this.value.length < 6;" placeholder="Enter Rate" (change)="checkAmount($event)" />
+        </span>
+        <span *ngIf="i % 2 != 0" class="badge badge-light-success fs-6 fw-bolder">
+          <input class="form-control bg-transparent" type="number" name="rate" [(ngModel)]="data.rate"
+            onkeypress="return this.value.length < 6;" placeholder="Enter Rate" (change)="checkAmount($event)" />
+        </span>
+      </div>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-secondary" (click)="dismiss()"
-        *ngIf="modalConfig.hideDismissButton === undefined || !modalConfig.hideDismissButton()"
-        [disabled]="modalConfig.disableDismissButton !== undefined && modalConfig.disableDismissButton()">
-        {{ modalConfig.dismissButtonLabel }}
+      <button type="button" class="btn btn-outline-success" (click)="submit()">
+        Submit
       </button>
-      <button type="button" class="btn btn-outline-primary" (click)="close()"
-        *ngIf="modalConfig.hideCloseButton === undefined || !modalConfig.hideCloseButton()"
-        [disabled]="modalConfig.disableCloseButton !== undefined && modalConfig.disableCloseButton()">
-        {{ modalConfig.closeButtonLabel }}
+      <button type="button" class="btn btn-outline-danger" (click)="close()">
+        Cancel
       </button>
     </div>
   </div>

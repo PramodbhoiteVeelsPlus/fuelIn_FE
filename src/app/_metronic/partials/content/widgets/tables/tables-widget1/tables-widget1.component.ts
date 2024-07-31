@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { ModalComponent, ModalConfig } from 'src/app/_metronic/partials';
 
 @Component({
   selector: 'app-tables-widget1',
@@ -17,7 +18,12 @@ export class TablesWidget1Component {
     { productSellingPrice: "90", productName: "PETROL" },
     { productSellingPrice: "110", productName: "XTRA" },
   ]
-  mergedArray: any = [];
+  mergedArray: any = [];  modalConfig: ModalConfig = {
+    modalTitle: 'Modal title',
+    dismissButtonLabel: 'Submit',
+    closeButtonLabel: 'Cancel'
+  };
+  @ViewChild('modal') private modalComponent: ModalComponent;
   constructor() { }
 
   ngOnInit() {
@@ -41,4 +47,9 @@ export class TablesWidget1Component {
       })
     })
   }
+
+  async openModal() {
+    return await this.modalComponent.open();
+  }
+
 }

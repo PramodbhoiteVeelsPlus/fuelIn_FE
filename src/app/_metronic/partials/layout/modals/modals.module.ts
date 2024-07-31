@@ -6,8 +6,9 @@ import {InviteUsersModalComponent} from './invite-users-modal/invite-users-modal
 import {MainModalComponent} from './main-modal/main-modal.component';
 import {UpgradePlanModalComponent} from './upgrade-plan-modal/upgrade-plan-modal.component';
 import {ModalComponent} from './modal/modal.component';
-import {NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDatepickerModule, NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
 import {SharedModule} from "../../../shared/shared.module";
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,8 @@ import {SharedModule} from "../../../shared/shared.module";
     RouterModule,
     NgbModalModule,
     SharedModule,
+    FormsModule,
+    NgbDatepickerModule,
   ],
   exports: [
     InviteUsersModalComponent,

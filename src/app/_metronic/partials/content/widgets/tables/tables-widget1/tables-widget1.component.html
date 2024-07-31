@@ -10,10 +10,13 @@
   data-bs-trigger="hover"
   title="Click to add a user"
 >
-  <a href="#" class="btn btn-sm btn-light-primary">
+  <a (click)="openModal()" class="btn btn-sm btn-light-primary">
     <app-keenicon name="plus" class="fs-3"></app-keenicon>
     Add Rate
   </a>
+  <app-modal #modal [modalConfig]="modalConfig">
+    Modal body html
+  </app-modal>
 </div>
 </div>
 <!-- end::Header -->
