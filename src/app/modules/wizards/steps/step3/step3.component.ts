@@ -1,7 +1,9 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ICreateAccount } from '../../create-account.helper';
+import { Modal2Component } from 'src/app/_metronic/partials/layout/modals/modal2/modal2.component';
+import { ModalConfig } from 'src/app/_metronic/partials';
 
 @Component({
   selector: 'app-step3',
@@ -13,11 +15,17 @@ export class Step3Component implements OnInit, OnDestroy {
     isFormValid: boolean
   ) => void;
   form: FormGroup;
+  modalConfig: ModalConfig = {
+    modalTitle: 'Modal title',
+    dismissButtonLabel: 'Submit',
+    closeButtonLabel: 'Cancel'
+  };
   @Input() defaultValues: Partial<ICreateAccount>;
 
   private unsubscribe: Subscription[] = [];
 
-  constructor(private fb: FormBuilder) {}
+  @ViewChild('modal') private modal2Component: Modal2Component;
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
     this.initForm();
@@ -57,5 +65,9 @@ export class Step3Component implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
+  }
+
+  async openModal() {
+    return await this.modal2Component.open();
   }
 }
