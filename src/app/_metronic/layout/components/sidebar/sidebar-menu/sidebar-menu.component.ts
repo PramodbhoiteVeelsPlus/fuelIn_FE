@@ -6,7 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidebar-menu.component.scss']
 })
 export class SidebarMenuComponent implements OnInit {
-
+  isDealer: boolean = false;
+  isTransporter: boolean = false;
+  isAdmin: boolean = true;
   constructor() { }
 
   ngOnInit(): void {

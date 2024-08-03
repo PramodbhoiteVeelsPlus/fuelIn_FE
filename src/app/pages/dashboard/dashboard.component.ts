@@ -7,13 +7,17 @@ import { ModalConfig, ModalComponent } from '../../_metronic/partials';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent {
+  isDealer: boolean = false;
+  isTransporter: boolean = false;
+  isAdmin: boolean = true;
+
   modalConfig: ModalConfig = {
     modalTitle: 'Modal title',
     dismissButtonLabel: 'Submit',
     closeButtonLabel: 'Cancel'
   };
   @ViewChild('modal') private modalComponent: ModalComponent;
-  constructor() {}
+  constructor() { }
 
   async openModal() {
     return await this.modalComponent.open();

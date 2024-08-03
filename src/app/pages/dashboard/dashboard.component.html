@@ -1,42 +1,95 @@
-<!-- begin::Row -->
-<div class="row g-5 g-xl-8">
-  <div class="col-xl-3">
-    <app-stats-widget5 class="card bg-danger hoverable card-xl-stretch mb-xl-8" color="danger" iconColor="white"
-      title="Credit O/s"></app-stats-widget5>
-  </div>
+<!-- Dealer Login accessGroupId 12 -->
+<div *ngIf="isDealer">
+  <!-- begin::Row -->
+  <div class="row g-5 g-xl-8">
+    <div class="col-xl-3">
+      <app-stats-widget5 class="card bg-danger hoverable card-xl-stretch mb-xl-8" color="danger" iconColor="white"
+        title="Credit O/s"></app-stats-widget5>
+    </div>
 
-  <div class="col-xl-3">
-    <app-stats-widget5 class="card bg-primary hoverable card-xl-stretch mb-xl-8" color="primary" iconColor="white"
-      title="Credit Sales"></app-stats-widget5>
-  </div>
+    <div class="col-xl-3">
+      <app-stats-widget5 class="card bg-primary hoverable card-xl-stretch mb-xl-8" color="primary" iconColor="white"
+        title="Credit Sales"></app-stats-widget5>
+    </div>
 
-  <div class="col-xl-3">
-    <app-stats-widget5 class="card bg-success hoverable card-xl-stretch mb-5 mb-xl-8" color="success" iconColor="white"
-      title="Credit Payment"></app-stats-widget5>
+    <div class="col-xl-3">
+      <app-stats-widget5 class="card bg-success hoverable card-xl-stretch mb-5 mb-xl-8" color="success"
+        iconColor="white" title="Credit Payment"></app-stats-widget5>
+    </div>
   </div>
+  <!-- end::Row -->
+
+  <!--begin::Row-->
+  <div class="row gx-5 gx-xl-10">
+    <!--begin::Col-->
+    <div class="col-xxl-7 mb-5 mb-xl-10">
+      <app-charts-widget1></app-charts-widget1>
+    </div>
+    <!--end::Col-->
+
+    <!--begin::Col-->
+    <div class="col-xxl-5 mb-5 mb-xl-10">
+      <app-lists-widget3 class="card card-xxl-stretch mb-xl-3"></app-lists-widget3>
+    </div>
+    <!--end::Col-->
+  </div>
+  <!--end::Row-->
+
+  <!-- begin::Row -->
+  <div class="row gy-5 gx-xl-8">
+    <div class="col-xl-12">
+      <app-tables-widget10 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget10>
+    </div>
+  </div>
+  <!-- end::Row -->
 </div>
-<!-- end::Row -->
 
-<!--begin::Row-->
-<div class="row gx-5 gx-xl-10">
-  <!--begin::Col-->
-  <div class="col-xxl-7 mb-5 mb-xl-10">
-    <app-charts-widget1></app-charts-widget1>
-  </div>
-  <!--end::Col-->
 
-  <!--begin::Col-->
-  <div class="col-xxl-5 mb-5 mb-xl-10">
-    <app-lists-widget3 class="card card-xxl-stretch mb-xl-3"></app-lists-widget3>
-  </div>
-  <!--end::Col-->
+<!-- ADMIN Login accessGroupId 7 -->
+<div *ngIf="isAdmin">
+  <ul ngbNav #dashboard="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified" style="width: 50%;">
+    <li [ngbNavItem]="1">
+      <a ngbNavLink>
+        <span class="d-none d-sm-block" style="font-size: 13.5px;">DASHBOARD 1</span>
+      </a>
+      <ng-template ngbNavContent>
+        <app-tables-widget6 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget6>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="2">
+      <a ngbNavLink>
+        <span class="d-none d-sm-block" style="font-size: 13.5px;">DASHBOARD 2</span>
+      </a>
+      <ng-template ngbNavContent>
+        <app-tables-widget7 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget7>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="3">
+      <a ngbNavLink>
+        <span class="d-none d-sm-block" style="font-size: 13.5px;">DASHBOARD 3</span>
+      </a>
+      <ng-template ngbNavContent>
+        <app-tables-widget8 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget8>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="4">
+      <a ngbNavLink>
+        <span class="d-none d-sm-block" style="font-size: 13.5px;">DASHBOARD 4</span>
+      </a>
+      <ng-template ngbNavContent>
+        <app-tables-widget9 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget9>
+      </ng-template>
+    </li>
+  </ul>
+  <div [ngbNavOutlet]="dashboard"></div>
 </div>
-<!--end::Row-->
 
-<!-- begin::Row -->
-<div class="row gy-5 gx-xl-8">
-  <div class="col-xl-12">
-    <app-tables-widget10 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget10>
-  </div>
-</div>
-<!-- end::Row -->
+
+
+
+
+
+
+
+
+<!-- Transporter Login accessGroupId 2 -->
