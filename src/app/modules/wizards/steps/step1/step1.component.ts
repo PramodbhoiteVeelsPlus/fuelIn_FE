@@ -15,8 +15,9 @@ export class Step1Component implements OnInit, OnDestroy {
   form: FormGroup;
   @Input() defaultValues: Partial<ICreateAccount>;
   private unsubscribe: Subscription[] = [];
+  mobile: any;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
     this.initForm();

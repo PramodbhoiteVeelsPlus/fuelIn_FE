@@ -6,7 +6,7 @@ import { ICreateAccount, inits } from '../create-account.helper';
   templateUrl: './horizontal.component.html',
 })
 export class HorizontalComponent implements OnInit, OnDestroy {
-  formsCount = 5;
+  formsCount = 3;
   account$: BehaviorSubject<ICreateAccount> =
     new BehaviorSubject<ICreateAccount>(inits);
   currentStep$: BehaviorSubject<number> = new BehaviorSubject(1);

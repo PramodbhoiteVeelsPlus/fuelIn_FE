@@ -41,7 +41,7 @@ export class Step2Component implements OnInit, OnDestroy {
   }
 
   checkForm() {
-    return !this.form.get('accountName')?.hasError('required');
+    return !this.form.get('lastName')?.hasError('required');
   }
 
   ngOnDestroy() {

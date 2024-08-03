@@ -1,4 +1,4 @@
-<div class="pb-10 pb-lg-15">
+<!-- <div class="pb-10 pb-lg-15">
   <h2 class="fw-bolder d-flex align-items-center text-gray-900">
     Choose Account Type
     <i
@@ -78,7 +78,91 @@
     </div>
 
     <div class="fv-plugins-message-container invalid-feedback">
-      <!-- <ErrorMessage name='accountType' /> -->
+      <ErrorMessage name='accountType' />
+    </div>
+  </div>
+</div> -->
+
+
+<div class="card mb-5 mb-xl-10">
+  <div class="card-body pt-9 pb-0">
+    <div class="d-flex flex-wrap flex-sm-nowrap mb-3">
+
+      <div class="row" [formGroup]="form">
+        <div class="d-flex align-items-center mb-8">
+          <!-- begin::Description -->
+          <div class="col-sm-3">
+            <a class="text-gray-800 text-hover-primary fw-bolder fs-4">
+              <span class="badge badge-light-success fs-4 fw-bolder">
+                Mobile Number <span style="color: red;">*</span></span>
+            </a>
+          </div>
+          <span class="badge badge-light-success fs-4 fw-bolder" style="width: 500px;">
+            <input type="number" placeholder="Mobile Number" class="form-control" formControlName="mobile"
+              onkeypress="return this.value.length < 10;">
+          </span>
+          <!-- end::Description -->
+        </div>
+
+        <div class="d-flex align-items-center mb-8">
+          <!-- begin::Description -->
+          <div class="col-sm-3">
+            <a class="text-gray-800 text-hover-primary fw-bolder fs-4">
+              <span class="badge badge-light-success fs-4 fw-bolder">
+                Khata Name <span style="color: red;">*</span></span>
+            </a>
+          </div>
+          <span class="badge badge-light-success fs-4 fw-bolder" style="width: 500px;">
+            <input type="text" placeholder="Khata Name" class="form-control" formControlName="khataName">
+          </span>
+          <!-- end::Description -->
+        </div>
+
+        <div class="d-flex align-items-center mb-8">
+          <!-- begin::Description -->
+          <div class="col-sm-3">
+            <a class="text-gray-800 text-hover-primary fw-bolder fs-4">
+              <span class="badge badge-light-success fs-4 fw-bolder">
+                GST </span>
+            </a>
+          </div>
+          <span class="badge badge-light-success fs-4 fw-bolder" style="width: 500px;">
+            <input type="number" placeholder="GST" class="form-control" formControlName="gst">
+          </span>
+          <!-- end::Description -->
+        </div>
+
+        <div class="d-flex align-items-center mb-8">
+          <!-- begin::Description -->
+          <div class="col-sm-3">
+            <a class="text-gray-800 text-hover-primary fw-bolder fs-4">
+              <span class="badge badge-light-success fs-4 fw-bolder">
+                Cr. Limit Amount <span style="color: red;">*</span></span>
+            </a>
+          </div>
+          <span class="badge badge-light-success fs-4 fw-bolder" style="width: 500px;">
+            <input type="text" placeholder="Cr Limit Amount" class="form-control" formControlName="crLimitAmount">
+          </span>
+          <!-- end::Description -->
+        </div>
+
+        <div class="d-flex align-items-center mb-8">
+          <!-- begin::Description -->
+          <div class="col-sm-3">
+            <a class="text-gray-800 text-hover-primary fw-bolder fs-4">
+              <span class="badge badge-light-success fs-4 fw-bolder">
+                Cr. Limit Days <span style="color: red;">*</span>
+              </span>
+            </a>
+          </div>
+          <span class="badge badge-light-success fs-4 fw-bolder" style="width: 500px;">
+            <input type="number" placeholder="Cr Limit Days" class="form-control" formControlName="crLimitDays">
+          </span>
+          <!-- end::Description -->
+        </div>
+
+      </div>
+
     </div>
   </div>
 </div>
