@@ -1,1 +1,70 @@
-<p>dashboard2 works!</p>
+<br><br>
+<div class="row">
+    <div class="col-auto">
+      <span class="card-label fw-bolder fs-5 mb-1">Select Petrol Pump : </span>
+      <span class="badge badge-light-success fs-6 fw-bolder">
+        <select class="form-select form-select-sm form-select-solid" data-placeholder="" data-hide-search="true"
+          style="width: 220px;" [(ngModel)]="selectPump">
+          <option value=""> Select Petrol Pump </option>
+          <option value="ABC"> ABC PETROLEUM </option>
+          <option value="BK"> BK PETROLEUM </option>
+          <option value="SK"> SK PETROLEUM </option>
+        </select>
+      </span>
+    </div>
+    <div class="col-auto">
+      <span class="card-label fw-bolder fs-6 mb-1">Select Month : </span>
+      <span class="badge badge-light-success fs-6 fw-bolder">
+        <select class="form-select form-select-sm form-select-solid" data-placeholder="" data-hide-search="true"
+          style="width: 220px;" [(ngModel)]="selectMonth">
+          <option value=""> Select Month </option>
+          <option value="Jan"> Jan </option>
+          <option value="Feb"> Feb </option>
+          <option value="Mar"> Mar </option>
+        </select>
+      </span>
+    </div>
+
+    <div class="col-auto">
+      <span class="card-label fw-bolder fs-6 mb-1">Select Year : </span>
+      <span class="badge badge-light-success fs-6 fw-bolder">
+        <select class="form-select form-select-sm form-select-solid" data-placeholder="" data-hide-search="true"
+          style="width: 220px;" [(ngModel)]="selectYear">
+          <option value=""> Select Year </option>
+          <option value="2024"> 2024 </option>
+          <option value="2023"> 2023 </option>
+          <option value="2022"> 2022 </option>
+        </select>
+      </span>
+    </div>
+
+    <div class="col-auto">
+      <button class="card-label fw-bolder fs-6 mb-1 btn btn-sm btn-primary btn-icon">View </button>
+    </div>
+  </div>
+  <div class="row gy-5 gx-xl-8">
+    <div class="col-xl-12">
+        <div class="card-body py-3">
+            <ul ngbNav #dashboard2="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified"
+                style="width: 50%;">
+                <li [ngbNavItem]="1">
+                    <a ngbNavLink>
+                        <span class="d-none d-sm-block" style="font-size: 13.5px;">CREDIT</span>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <app-tables-widget11 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget11>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="2">
+                    <a ngbNavLink>
+                        <span class="d-none d-sm-block" style="font-size: 13.5px;">SHIFT</span>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <app-tables-widget12 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget12>
+                    </ng-template>
+                </li>
+            </ul>
+            <div [ngbNavOutlet]="dashboard2"></div>
+        </div>
+    </div>
+</div>

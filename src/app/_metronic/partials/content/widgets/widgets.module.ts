@@ -88,6 +88,7 @@ import { NewChartsWidget8Component } from './_new/charts/new-charts-widget8/new-
 import { CardsWidget18Component } from './_new/cards/cards-widget18/cards-widget18.component';
 import { SharedModule } from "../../../shared/shared.module";
 import { ModalsModule } from '../../layout/modals/modals.module';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     // Advanced Tables
@@ -179,7 +180,8 @@ import { ModalsModule } from '../../layout/modals/modals.module';
     NgApexchartsModule,
     NgbDropdownModule,
     SharedModule,
-    ModalsModule
+    ModalsModule,
+    FormsModule
   ],
   exports: [
     // Advanced Tables

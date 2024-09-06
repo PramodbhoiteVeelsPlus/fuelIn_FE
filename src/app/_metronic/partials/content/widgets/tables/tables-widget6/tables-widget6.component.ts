@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 type Tabs =
   | 'kt_table_widget_6_tab_1'
@@ -10,7 +11,10 @@ type Tabs =
   templateUrl: './tables-widget6.component.html',
 })
 export class TablesWidget6Component implements OnInit {
-  constructor() {}
+selectPump: any = "";
+  constructor(private modalService: NgbModal
+    
+  ) {}
 
   activeTab: Tabs = 'kt_table_widget_6_tab_1';
 

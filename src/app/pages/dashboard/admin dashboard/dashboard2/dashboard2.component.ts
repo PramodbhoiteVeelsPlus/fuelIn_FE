@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrl: './dashboard2.component.scss'
 })
 export class Dashboard2Component {
+selectMonth: any = "";
+selectYear: any = "";
+selectPump: any = "";
 
 }

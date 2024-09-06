@@ -10,6 +10,8 @@ type Tabs =
   templateUrl: './tables-widget8.component.html',
 })
 export class TablesWidget8Component implements OnInit {
+selectMonth: any = "";
+selectYear: any = "";
   constructor() {}
 
   activeTab: Tabs = 'kt_table_widget_8_tab_1';

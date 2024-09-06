@@ -8,6 +8,7 @@ import { DashboardComponent } from './dashboard.component';
 import { ModalsModule, WidgetsModule } from '../../_metronic/partials';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { Dashboard2Component } from './admin dashboard/dashboard2/dashboard2.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { Dashboard2Component } from './admin dashboard/dashboard2/dashboard2.com
   ],
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule.forChild([
       {
         path: '',

@@ -1,10 +1,20 @@
 <!-- begin::Header -->
 <div class="card-header border-0 pt-5">
   <h3 class="card-title align-items-start flex-column">
-    <span class="card-label fw-bolder fs-3 mb-1">Authors Earnings</span>
-    <span class="text-muted mt-1 fw-bold fs-7">More than 400 new authors</span>
+    <div>
+      <span class="card-label fw-bolder fs-5 mb-1">Select Petrol Pump</span>
+      <span class="badge badge-light-success fs-6 fw-bolder">
+        <select class="form-select form-select-sm form-select-solid" data-placeholder="" data-hide-search="true"
+          style="width: 220px;" [(ngModel)]="selectPump">
+          <option value=""> Select Petrol Pump </option>
+          <option value="ABC"> ABC PETROLEUM </option>
+          <option value="BK"> BK PETROLEUM </option>
+          <option value="SK"> SK PETROLEUM </option>
+        </select>
+      </span>
+    </div>
   </h3>
-  <div class="card-toolbar">
+  <!-- <div class="card-toolbar">
     <ul class="nav">
       <li class="nav-item">
         <a
@@ -54,18 +64,15 @@
         </a>
       </li>
     </ul>
-  </div>
+  </div> -->
 </div>
+<br><br>
 <!-- end::Header -->
 <!-- begin::Body -->
 <div class="card-body py-3">
   <div class="tab-content">
     <!-- begin::Tap pane -->
-    <div
-      class="tab-pane fade"
-      [ngClass]="activeClass('kt_table_widget_6_tab_1')"
-      id="kt_table_widget_6_tab_1"
-    >
+    <div class="tab-pane fade" [ngClass]="activeClass('kt_table_widget_6_tab_1')" id="kt_table_widget_6_tab_1">
       <!-- begin::Table container -->
       <div class="table-responsive">
         <!-- begin::Table -->
@@ -74,9 +81,12 @@
           <thead>
             <tr>
               <th class="p-0 w-50px"></th>
-              <th class="p-0 min-w-150px"></th>
-              <th class="p-0 min-w-140px"></th>
-              <th class="p-0 min-w-120px"></th>
+              <th class="p-0 min-w-150px text-gray-900 fw-bolder text-hover-primary mb-1 fs-5"
+                style="text-align: left;">Month</th>
+              <th class="p-0 min-w-140px text-gray-900 fw-bolder text-hover-primary mb-1 fs-5"
+                style="text-align: left;">Cr Sales</th>
+              <th class="p-0 min-w-120px text-gray-900 fw-bolder text-hover-primary mb-1 fs-5"
+                style="text-align: left;">Cr Payments</th>
             </tr>
           </thead>
           <!-- end::Table head -->
@@ -84,46 +94,80 @@
           <tbody>
             <tr>
               <td>
-                <div class="symbol symbol-50px me-2">
-                  <span class="symbol-label">
+                <div class="p-0 w-50px">
+                  <!-- <span class="symbol-label">
                     <img
                       src="./assets/media/svg/avatars/001-boy.svg"
                       class="h-75 align-self-end"
                       alt=""
                     />
-                  </span>
+                  </span> -->
                 </div>
               </td>
-              <td>
-                <a
-                  href="#"
-                  class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6"
-                >
-                  Brad Simmons
+              <td style="text-align: left;">
+                <a href="#" class="p-0 min-w-150px text-gray-900 fw-bolder text-hover-primary mb-1 fs-6">
+                  Jan 2024
                 </a>
-                <span class="text-muted fw-bold d-block"
-                  >Successful Fellas</span
-                >
               </td>
-              <td>
-                <span class="text-muted fw-bold d-block fs-7">Paid</span>
-                <span class="text-gray-900 fw-bolder d-block fs-5">$200,500</span>
+              <td style="text-align: left;">
+                <!-- <span class="text-muted fw-bold d-block fs-7">Paid</span> -->
+                <span class="p-0 min-w-140px text-gray-900 text-hover-primary mb-1 fs-6">$200,500</span>
               </td>
-              <td class="text-end">
-                <span class="text-primary fs-7 fw-bolder">+28%</span>
-              </td>
-              <td class="text-end">
-                <a
-                  href="#"
-                  class="
-                    btn btn-sm btn-icon btn-bg-light btn-active-color-primary
-                  "
-                >
-                  <app-keenicon name="arrow-right" class="fs-2"></app-keenicon>
-                </a>
+              <td style="text-align: left;">
+                <span class="p-0 min-w-120px text-gray-900 text-hover-primary mb-1 fs-5">$200,500</span>
               </td>
             </tr>
             <tr>
+              <td>
+                <div class="p-0 w-50px">
+                  <!-- <span class="symbol-label">
+                    <img
+                      src="./assets/media/svg/avatars/001-boy.svg"
+                      class="h-75 align-self-end"
+                      alt=""
+                    />
+                  </span> -->
+                </div>
+              </td>
+              <td style="text-align: left;">
+                <a href="#" class="p-0 min-w-150px text-gray-900 fw-bolder text-hover-primary mb-1 fs-6">
+                  Feb 2024
+                </a>
+              </td>
+              <td style="text-align: left;">
+                <!-- <span class="text-muted fw-bold d-block fs-7">Paid</span> -->
+                <span class="p-0 min-w-140px text-gray-900 text-hover-primary mb-1 fs-6">$200,500</span>
+              </td>
+              <td style="text-align: left;">
+                <span class="p-0 min-w-120px text-gray-900 text-hover-primary mb-1 fs-5">$200,500</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="p-0 w-50px">
+                  <!-- <span class="symbol-label">
+                    <img
+                      src="./assets/media/svg/avatars/001-boy.svg"
+                      class="h-75 align-self-end"
+                      alt=""
+                    />
+                  </span> -->
+                </div>
+              </td>
+              <td style="text-align: left;">
+                <a href="#" class="p-0 min-w-150px text-gray-900 fw-bolder text-hover-primary mb-1 fs-6">
+                  Mar 2024
+                </a>
+              </td>
+              <td style="text-align: left;">
+                <!-- <span class="text-muted fw-bold d-block fs-7">Paid</span> -->
+                <span class="p-0 min-w-140px text-gray-900 text-hover-primary mb-1 fs-6">$200,500</span>
+              </td>
+              <td style="text-align: left;">
+                <span class="p-0 min-w-120px text-gray-900 text-hover-primary mb-1 fs-5">$200,500</span>
+              </td>
+            </tr>
+            <!-- <tr>
               <td>
                 <div class="symbol symbol-50px me-2">
                   <span class="symbol-label">
@@ -282,7 +326,7 @@
                   <app-keenicon name="arrow-right" class="fs-2"></app-keenicon>
                 </a>
               </td>
-            </tr>
+            </tr> -->
           </tbody>
           <!-- end::Table body -->
         </table>
@@ -291,11 +335,7 @@
     </div>
     <!-- end::Tap pane -->
     <!-- begin::Tap pane -->
-    <div
-      class="tab-pane fade"
-      [ngClass]="activeClass('kt_table_widget_6_tab_2')"
-      id="kt_table_widget_6_tab_2"
-    >
+    <div class="tab-pane fade" [ngClass]="activeClass('kt_table_widget_6_tab_2')" id="kt_table_widget_6_tab_2">
       <!-- begin::Table container -->
       <div class="table-responsive">
         <!-- begin::Table -->
@@ -316,19 +356,12 @@
               <td>
                 <div class="symbol symbol-50px me-2">
                   <span class="symbol-label">
-                    <img
-                      src="./assets/media/svg/avatars/018-girl-9.svg"
-                      class="h-75 align-self-end"
-                      alt=""
-                    />
+                    <img src="./assets/media/svg/avatars/018-girl-9.svg" class="h-75 align-self-end" alt="" />
                   </span>
                 </div>
               </td>
               <td>
-                <a
-                  href="#"
-                  class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6"
-                >
+                <a href="#" class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6">
                   Jessie Clarcson
                 </a>
                 <span class="text-muted fw-bold d-block">HTML, CSS Coding</span>
@@ -341,12 +374,9 @@
                 <span class="text-warning fs-7 fw-bolder">+52%</span>
               </td>
               <td class="text-end">
-                <a
-                  href="#"
-                  class="
+                <a href="#" class="
                     btn btn-sm btn-icon btn-bg-light btn-active-color-primary
-                  "
-                >
+                  ">
                   <app-keenicon name="arrow-right" class="fs-2"></app-keenicon>
                 </a>
               </td>
@@ -355,19 +385,12 @@
               <td>
                 <div class="symbol symbol-50px me-2">
                   <span class="symbol-label">
-                    <img
-                      src="./assets/media/svg/avatars/014-girl-7.svg"
-                      class="h-75 align-self-end"
-                      alt=""
-                    />
+                    <img src="./assets/media/svg/avatars/014-girl-7.svg" class="h-75 align-self-end" alt="" />
                   </span>
                 </div>
               </td>
               <td>
-                <a
-                  href="#"
-                  class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6"
-                >
+                <a href="#" class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6">
                   Natali Trump
                 </a>
                 <span class="text-muted fw-bold d-block">UI/UX Designer</span>
@@ -380,12 +403,9 @@
                 <span class="text-success fs-7 fw-bolder">-34%</span>
               </td>
               <td class="text-end">
-                <a
-                  href="#"
-                  class="
+                <a href="#" class="
                     btn btn-sm btn-icon btn-bg-light btn-active-color-primary
-                  "
-                >
+                  ">
                   <app-keenicon name="arrow-right" class="fs-2"></app-keenicon>
                 </a>
               </td>
@@ -394,24 +414,15 @@
               <td>
                 <div class="symbol symbol-50px me-2">
                   <span class="symbol-label">
-                    <img
-                      src="./assets/media/svg/avatars/001-boy.svg"
-                      class="h-75 align-self-end"
-                      alt=""
-                    />
+                    <img src="./assets/media/svg/avatars/001-boy.svg" class="h-75 align-self-end" alt="" />
                   </span>
                 </div>
               </td>
               <td>
-                <a
-                  href="#"
-                  class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6"
-                >
+                <a href="#" class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6">
                   Brad Simmons
                 </a>
-                <span class="text-muted fw-bold d-block"
-                  >Successful Fellas</span
-                >
+                <span class="text-muted fw-bold d-block">Successful Fellas</span>
               </td>
               <td>
                 <span class="text-muted fw-bold d-block fs-7">Paid</span>
@@ -421,12 +432,9 @@
                 <span class="text-primary fs-7 fw-bolder">+28%</span>
               </td>
               <td class="text-end">
-                <a
-                  href="#"
-                  class="
+                <a href="#" class="
                     btn btn-sm btn-icon btn-bg-light btn-active-color-primary
-                  "
-                >
+                  ">
                   <app-keenicon name="arrow-right" class="fs-2"></app-keenicon>
                 </a>
               </td>
@@ -439,11 +447,7 @@
     </div>
     <!-- end::Tap pane -->
     <!-- begin::Tap pane -->
-    <div
-      class="tab-pane fade"
-      [ngClass]="activeClass('kt_table_widget_6_tab_3')"
-      id="kt_table_widget_6_tab_3"
-    >
+    <div class="tab-pane fade" [ngClass]="activeClass('kt_table_widget_6_tab_3')" id="kt_table_widget_6_tab_3">
       <!-- begin::Table container -->
       <div class="table-responsive">
         <!-- begin::Table -->
@@ -464,19 +468,12 @@
               <td>
                 <div class="symbol symbol-50px me-2">
                   <span class="symbol-label">
-                    <img
-                      src="./assets/media/svg/avatars/047-girl-25.svg"
-                      class="h-75 align-self-end"
-                      alt=""
-                    />
+                    <img src="./assets/media/svg/avatars/047-girl-25.svg" class="h-75 align-self-end" alt="" />
                   </span>
                 </div>
               </td>
               <td>
-                <a
-                  href="#"
-                  class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6"
-                >
+                <a href="#" class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6">
                   Jessie Clarcson
                 </a>
                 <span class="text-muted fw-bold d-block">HTML, CSS Coding</span>
@@ -489,12 +486,9 @@
                 <span class="text-danger fs-7 fw-bolder">+52%</span>
               </td>
               <td class="text-end">
-                <a
-                  href="#"
-                  class="
+                <a href="#" class="
                     btn btn-sm btn-icon btn-bg-light btn-active-color-primary
-                  "
-                >
+                  ">
                   <app-keenicon name="arrow-right" class="fs-2"></app-keenicon>
                 </a>
               </td>
@@ -503,19 +497,12 @@
               <td>
                 <div class="symbol symbol-50px me-2">
                   <span class="symbol-label">
-                    <img
-                      src="./assets/media/svg/avatars/014-girl-7.svg"
-                      class="h-75 align-self-end"
-                      alt=""
-                    />
+                    <img src="./assets/media/svg/avatars/014-girl-7.svg" class="h-75 align-self-end" alt="" />
                   </span>
                 </div>
               </td>
               <td>
-                <a
-                  href="#"
-                  class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6"
-                >
+                <a href="#" class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6">
                   Natali Trump
                 </a>
                 <span class="text-muted fw-bold d-block">UI/UX Designer</span>
@@ -528,12 +515,9 @@
                 <span class="text-success fs-7 fw-bolder">-34%</span>
               </td>
               <td class="text-end">
-                <a
-                  href="#"
-                  class="
+                <a href="#" class="
                     btn btn-sm btn-icon btn-bg-light btn-active-color-primary
-                  "
-                >
+                  ">
                   <app-keenicon name="arrow-right" class="fs-2"></app-keenicon>
                 </a>
               </td>
@@ -542,39 +526,27 @@
               <td>
                 <div class="symbol symbol-50px me-2">
                   <span class="symbol-label">
-                    <img
-                      src="./assets/media/svg/avatars/043-boy-18.svg"
-                      class="h-75 align-self-end"
-                      alt=""
-                    />
+                    <img src="./assets/media/svg/avatars/043-boy-18.svg" class="h-75 align-self-end" alt="" />
                   </span>
                 </div>
               </td>
               <td>
-                <a
-                  href="#"
-                  class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6"
-                >
+                <a href="#" class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6">
                   Kevin Leonard
                 </a>
                 <span class="text-muted fw-bold d-block">Art Director</span>
               </td>
               <td>
                 <span class="text-muted fw-bold d-block fs-7">Paid</span>
-                <span class="text-gray-900 fw-bolder d-block fs-5"
-                  >$35,600,000</span
-                >
+                <span class="text-gray-900 fw-bolder d-block fs-5">$35,600,000</span>
               </td>
               <td class="text-end">
                 <span class="text-info fs-7 fw-bolder">+230%</span>
               </td>
               <td class="text-end">
-                <a
-                  href="#"
-                  class="
+                <a href="#" class="
                     btn btn-sm btn-icon btn-bg-light btn-active-color-primary
-                  "
-                >
+                  ">
                   <app-keenicon name="arrow-right" class="fs-2"></app-keenicon>
                 </a>
               </td>
@@ -583,24 +555,15 @@
               <td>
                 <div class="symbol symbol-50px me-2">
                   <span class="symbol-label">
-                    <img
-                      src="./assets/media/svg/avatars/001-boy.svg"
-                      class="h-75 align-self-end"
-                      alt=""
-                    />
+                    <img src="./assets/media/svg/avatars/001-boy.svg" class="h-75 align-self-end" alt="" />
                   </span>
                 </div>
               </td>
               <td>
-                <a
-                  href="#"
-                  class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6"
-                >
+                <a href="#" class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6">
                   Brad Simmons
                 </a>
-                <span class="text-muted fw-bold d-block"
-                  >Successful Fellas</span
-                >
+                <span class="text-muted fw-bold d-block">Successful Fellas</span>
               </td>
               <td>
                 <span class="text-muted fw-bold d-block fs-7">Paid</span>
@@ -610,12 +573,9 @@
                 <span class="text-primary fs-7 fw-bolder">+28%</span>
               </td>
               <td class="text-end">
-                <a
-                  href="#"
-                  class="
+                <a href="#" class="
                     btn btn-sm btn-icon btn-bg-light btn-active-color-primary
-                  "
-                >
+                  ">
                   <app-keenicon name="arrow-right" class="fs-2"></app-keenicon>
                 </a>
               </td>

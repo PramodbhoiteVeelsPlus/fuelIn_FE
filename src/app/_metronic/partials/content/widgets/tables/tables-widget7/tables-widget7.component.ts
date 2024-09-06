@@ -10,6 +10,7 @@ type Tabs =
   templateUrl: './tables-widget7.component.html',
 })
 export class TablesWidget7Component implements OnInit {
+selectEntity: any = "";
   constructor() {}
 
   activeTab: Tabs = 'kt_table_widget_7_tab_1';

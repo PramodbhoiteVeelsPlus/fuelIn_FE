@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './tables-widget13.component.html',
 })
 export class TablesWidget13Component implements OnInit {
+selectPump: any = "";
   constructor() {}
 
   ngOnInit(): void {}
