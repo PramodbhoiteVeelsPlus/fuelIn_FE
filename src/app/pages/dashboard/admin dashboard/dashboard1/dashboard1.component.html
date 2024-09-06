@@ -1,0 +1,104 @@
+<div class="row gy-5 gx-xl-8">
+    <div class="col-xl-12">
+        <div class="card-body py-3">
+            <ul ngbNav #dashboard1="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified"
+                style="width: 50%;">
+                <li [ngbNavItem]="1">
+                    <a ngbNavLink>
+                        <span class="d-none d-sm-block" style="font-size: 13.5px;">DEALER WISE</span>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <app-tables-widget6 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget6>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="2">
+                    <a ngbNavLink>
+                        <span class="d-none d-sm-block" style="font-size: 13.5px;">FASTAG WISE</span>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <br>
+                        <div class="row gy-5 gx-xl-8">
+                            <div class="col-xl-12">
+                                <div class="card-body py-3">
+                                    <ul ngbNav #dashboardFT="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified"
+                                        style="width: 50%;">
+                                        <li [ngbNavItem]="1">
+                                            <a ngbNavLink>
+                                                <span class="d-none d-sm-block" style="font-size: 11.5px;">YES BANK</span>
+                                            </a>
+                                            <ng-template ngbNavContent>
+                                                <br>
+                                                <div class="row gy-5 gx-xl-8">
+                                                    <div class="col-xl-12">
+                                                        <div class="card-body py-3">
+                                                            <ul ngbNav #dashboardYB="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified"
+                                                                style="width: 50%;">
+                                                                <li [ngbNavItem]="1">
+                                                                    <a ngbNavLink>
+                                                                        <span class="d-none d-sm-block" style="font-size: 10.5px;">MONTH</span>
+                                                                    </a>
+                                                                    <ng-template ngbNavContent>
+                                                                        <app-tables-widget7 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget7>
+                                                                    </ng-template>
+                                                                </li>
+                                                                <li [ngbNavItem]="2">
+                                                                    <a ngbNavLink>
+                                                                        <span class="d-none d-sm-block" style="font-size: 10.5px;">CUSTOMER</span>
+                                                                    </a>
+                                                                    <ng-template ngbNavContent>
+                                                                        <app-tables-widget8 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget8>
+                                                                    </ng-template>
+                                                                </li>
+                                                            </ul>
+                                                            <div [ngbNavOutlet]="dashboardYB"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </li>
+                                        <li [ngbNavItem]="2">
+                                            <a ngbNavLink>
+                                                <span class="d-none d-sm-block" style="font-size: 11.5px;">LIVQUIK</span>
+                                            </a>
+                                            <ng-template ngbNavContent>
+                                                <br>
+                                                <div class="row gy-5 gx-xl-8">
+                                                    <div class="col-xl-12">
+                                                        <div class="card-body py-3">
+                                                            <ul ngbNav #dashboardLQ="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified"
+                                                                style="width: 50%;">
+                                                                <li [ngbNavItem]="1">
+                                                                    <a ngbNavLink>
+                                                                        <span class="d-none d-sm-block" style="font-size: 10.5px;">MONTH</span>
+                                                                    </a>
+                                                                    <ng-template ngbNavContent>
+                                                                        <app-tables-widget7 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget7>
+                                                                    </ng-template>
+                                                                </li>
+                                                                <li [ngbNavItem]="2">
+                                                                    <a ngbNavLink>
+                                                                        <span class="d-none d-sm-block" style="font-size: 10.5px;">CUSTOMER</span>
+                                                                    </a>
+                                                                    <ng-template ngbNavContent>
+                                                                        <app-tables-widget8 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget8>
+                                                                    </ng-template>
+                                                                </li>
+                                                            </ul>
+                                                            <div [ngbNavOutlet]="dashboardLQ"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>                                                
+                                            </ng-template>
+                                        </li>
+                                    </ul>
+                                    <div [ngbNavOutlet]="dashboardFT"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+            </ul>
+            <div [ngbNavOutlet]="dashboard1"></div>
+        </div>
+    </div>
+</div>
