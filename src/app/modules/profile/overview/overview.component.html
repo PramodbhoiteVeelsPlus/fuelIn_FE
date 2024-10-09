@@ -1,4 +1,4 @@
-<div class="row g-5 g-xxl-8">
+<!-- <div class="row g-5 g-xxl-8">
   <div class="col-xl-6">
     <app-feeds-widget2 class="card mb-5 mb-xxl-8"></app-feeds-widget2>
     <app-feeds-widget3 class="card mb-5 mb-xxl-8"></app-feeds-widget3>
@@ -11,4 +11,59 @@
     <app-lists-widget5 class="card mb-5 mb-xxl-8"></app-lists-widget5>
     <app-lists-widget2 class="card mb-5 mb-xxl-8"></app-lists-widget2>
   </div>
+</div> -->
+
+<div class="card mb-5 mb-xl-10">
+  <div class="card-body pt-9 pb-0">
+    <div class="d-flex overflow-auto h-55px">
+      <ul
+        class="
+          nav nav-stretch nav-line-tabs nav-line-tabs-2x
+          border-transparent
+          fs-5
+          fw-bolder
+          flex-nowrap
+        "
+      >
+        <li class="nav-item">
+          <a
+            class="nav-link text-active-primary me-6"
+            routerLink="/crafted/pages/profile/overview"
+            routerLinkActive="active"
+          >
+            ALL 
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-active-primary me-6"
+            routerLink="/crafted/pages/profile/projects"
+            routerLinkActive="active"
+          >
+            FUELIN PRIME
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-active-primary me-6"
+            routerLink="/crafted/pages/profile/campaigns"
+            routerLinkActive="active"
+          >
+            LITE DEALER
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-active-primary me-6"
+            routerLink="/crafted/pages/profile/documents"
+            routerLinkActive="active"
+          >
+            SMS
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>
+
+<router-outlet></router-outlet>

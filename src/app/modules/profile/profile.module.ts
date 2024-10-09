@@ -14,6 +14,7 @@ import {
   WidgetsModule,
 } from '../../_metronic/partials';
 import { SharedModule } from "../../_metronic/shared/shared.module";
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { SharedModule } from "../../_metronic/shared/shared.module";
     DropdownMenusModule,
     WidgetsModule,
     CardsModule,
-    SharedModule
+    SharedModule,
+    NgbNavModule,
   ],
 })
 export class ProfileModule {}
