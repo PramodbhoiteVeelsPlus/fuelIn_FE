@@ -23,6 +23,7 @@ const getThemeModeFromLocalStorage = (lsKey: string): ThemeModeType => {
 
   const data = localStorage.getItem(lsKey);
   if (!data) {
+    localStorage.setItem('isLoggedin', 'false');
     return 'light';
   }
 

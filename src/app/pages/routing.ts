@@ -1,4 +1,8 @@
 import { Routes } from '@angular/router';
+import { EmployeeComponent } from './user/employee/employee.component';
+import { BusinessComponent } from './user/business/business.component';
+import { FollowUpComponent } from './user/follow-up/follow-up.component';
+import { LocationComponent } from './user/location/location.component';
 
 const Routing: Routes = [
   {
@@ -54,6 +58,23 @@ const Routing: Routes = [
   {
     path: '**',
     redirectTo: 'error/404',
+  },
+  
+  {
+    path: 'crm/employee',
+    component: EmployeeComponent,
+  },
+  {
+    path: 'crm/business',
+    component: BusinessComponent,
+  },
+  {
+    path: 'crm/followUp',
+    component: FollowUpComponent,
+  },
+  {
+    path: 'crm/location',
+    component: LocationComponent,
   },
 ];
 

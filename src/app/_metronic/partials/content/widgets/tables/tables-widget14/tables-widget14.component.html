@@ -1,1 +1,216 @@
-<p>tables-widget14 works!</p>
+<div class="card-body">
+  <a href="#" class="card-title fw-bolder text-muted text-hover-primary fs-4">
+    {{ title }}
+  </a>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row mb-2">
+            <div class="col-sm-8">
+              <div class="text-sm-end">
+                <button type="button" class="btn btn-success btn-rounded mb-2 me-2" (click)="openEmp(addEmp)">
+                  Add Employee </button>
+              </div>
+            </div>
+            <br><br>
+            <div class="row">
+              <br><br>
+              <form [formGroup]="filterForm">
+                <div class="row">
+                  <div class="col-md-1"></div>
+
+                  <label for="example-text-input" class="col-auto col-form-label"> Date Range</label>
+                  <div class="col-md-2">
+                    <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+                      name="startDate" ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker
+                      #startDate="ngbDatepicker" formControlName="startDate">
+                  </div>
+                  <div class="col-md-2">
+                    <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+                      name="endDate" ngbTooltip="End Date" (click)="endDate.toggle()" ngbDatepicker
+                      #endDate="ngbDatepicker" formControlName="endDate">
+                  </div>
+                  <div class="col-md-2">
+                    <button class="btn btn-primary" (click)="getAllEmployee()"> submit </button>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-md-1"></div>
+                  <div class="col-md-3">
+                    <div class="search-box me-4 mb-4 d-inline-block">
+                      <div class="position-relative">
+                        <input class="form-control mr-sm-4" type="text" placeholder="search" ngbTooltip="Case Sensitive"
+                          [formControl]="searchBoxEmp" aria-label="Search" (click)="searchEmp()">
+                        <i class="bx bx-search-alt search-icon"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6"></div>
+                  <div class="col-md-1">
+                    <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download CSV" (click)="exportExcel()"><i
+                        class="fas fa-file-csv"></i></span> <br>
+                  </div>
+
+                  <div class="col-md-1">
+                    <span style="font-size: 35px;cursor: pointer;" (click)="pdfDownload()" ngbTooltip="Download PDF"
+                      placement="bottom"><i class="fas fa-file-pdf"></i></span>
+                  </div>
+
+                </div>
+                <br><br>
+              </form>
+              <br><br>
+              <div class="table-responsive mb-0">
+                <table id="excel-table" class="table table-centered table-nowrap">
+                  <thead class="table-light">
+                    <tr>
+                      <th style="text-align: center;"> Sr.No </th>
+                      <th style="text-align: center;"> Emp CRM Id </th>
+                      <th style="text-align: center;"> Mapped Date </th>
+                      <th style="text-align: center;"> Employee Name </th>
+                      <th style="text-align: center;"> Contact Number </th>
+                      <th style="text-align: center;"> Role </th>
+                      <th style="text-align: center;"> City, State </th>
+                      <th style="text-align: center;"> Password </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of userData; let i = index">
+                      <td style="text-align: center;"> {{ i+1 }} </td>
+                      <td style="text-align: center;"> {{ data.userCRMId }} </td>
+                      <td style="text-align: center;"> {{ data.userCreatedAt | date: "d MMM, yyyy" }} </td>
+                      <td style="text-align: center;"> {{ data.userName }} </td>
+                      <td style="text-align: center;"> {{ data.userMobile }} </td>
+                      <td style="text-align: center;"> {{ data.userRole }} </td>
+                      <td style="text-align: center;"> {{ data.userCity }} {{ data.userState }} </td>
+                      <td style="text-align: center;"> {{ data.userPassword }} </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+
+          <ng-template #addEmp let-c="close" let-d="dismiss">
+            <div class="modal-header">
+              <h4 class="modal-title">Add Employee</h4>
+              <button type="button" class="close btn-danger" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="filterForm">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class="col-md-1"></div>
+                      <div class="col-md-3">
+                        <label for="phoneNumber">Mobile Number <span style="color: red;">*</span> </label>
+                        <input type="number" placeholder="Mobile Number" class="form-control"
+                          formControlName="phoneNumber" onkeypress="return this.value.length < 10;">
+                      </div>
+
+                      <div class="col-md-3">
+                        <label for="firstName">First Name <span style="color: red;">*</span> </label>
+                        <input type="text" class="form-control" formControlName="firstName"
+                          placeholder="Enter First Name">
+                      </div>
+
+                      <div class="col-md-3">
+                        <label for="lastName">Last Name <span style="color: red;">*</span> </label>
+                        <input type="text" class="form-control" formControlName="lastName"
+                          placeholder="Enter Last Name">
+                      </div>
+                    </div>
+
+                    <br><br>
+                    <div class="row">
+                      <div class="col-md-1"></div>
+                      <div class="col-md-3">
+                        <label for="city"> City <span style="color: red;">*</span> </label>
+                        <input type="text" class="form-control" formControlName="city" placeholder="Enter City">
+                      </div>
+
+                      <div class="col-md-3">
+                        <label for="state">State </label>
+                        <select class="form-control" formControlName="state" placeholder="Select State" required>
+                          <option value="">Select State</option>
+                          <option value="ANDHRA PRADESH">Andhra Pradesh</option>
+                          <option value="ARUNACHAL PRADESH">Arunachal Pradesh</option>
+                          <option value="ASSAM">Assam</option>
+                          <option value="BIHAR">Bihar</option>
+                          <option value="CHHATTISGARH">Chhattisgarh</option>
+                          <option value="GOA">Goa</option>
+                          <option value="GUJARAT">Gujarat</option>
+                          <option value="HARYANA">Haryana</option>
+                          <option value="HIMACHAL PRADESH">Himachal Pradesh</option>
+                          <option value="JHARKHAND">Jharkhand</option>
+                          <option value="KARNATAKA">Karnataka</option>
+                          <option value="KERALA">Kerala</option>
+                          <option value="MADHYA PRADESH">Madhya Pradesh</option>
+                          <option value="MAHARASHTRA">Maharashtra</option>
+                          <option value="MANIPUR">Manipur</option>
+                          <option value="MEGHALAYA">Meghalaya</option>
+                          <option value="MIZORAM">Mizoram</option>
+                          <option value="NAGALAND">Nagaland</option>
+                          <option value="ODISHA">Odisha</option>
+                          <option value="PUNJAB">Punjab</option>
+                          <option value="RAJASTHAN">Rajasthan</option>
+                          <option value="SIKKIM">Sikkim</option>
+                          <option value="TAMIL NADU">Tamil Nadu</option>
+                          <option value="TELANGANA">Telangana</option>
+                          <option value="TRIPURA">Tripura</option>
+                          <option value="UTTAR PRADESH">Uttar Pradesh</option>
+                          <option value="UTTARAKHAND">Uttarakhand</option>
+                          <option value="WEST BENGAL">West Bengal</option>
+                          <option value="ANDAMAN AND NICOBAR ISLANDS">Andaman and Nicobar Islands</option>
+                          <option value="CHANDIGARH">Chandigarh</option>
+                          <option value="DADRA AND NAGAR HAVELI AND DAMAN AND DIU">Dadra and Nagar Haveli
+                            and Daman and Diu</option>
+                          <option value="DELHI">Delhi</option>
+                          <option value="LAKSHADWEEP">Lakshadweep</option>
+                          <option value="PUDUCHERRY">Puducherry (Pondicherry)</option>
+                          <option value="JAMMU AND KASHMIR">Jammu and Kashmir</option>
+                          <option value="LADAKH">Ladakh</option>
+                        </select>
+                      </div>
+
+                      <div class="col-md-3">
+                        <label for="role">Role </label>
+                        <select class="form-select" formControlName="role" placeholder="Select Role" required>
+                          <option value="Sale/Marketing">Sales/Marketing</option>
+                          <option value="HR">HR</option>
+                          <option value="IT">IT</option>
+                        </select>
+                      </div>
+                    </div>
+
+
+                    <br><br>
+                    <div class="row">
+                      <div class="col-md-4"></div>
+
+                      <div class="col-auto">
+                        <button type="submit" class="btn btn-primary" (click)="submit()">Submit</button>
+
+                      </div>
+                      <div class="col-auto">
+                        <button type="submit" class="btn btn-secondary" (click)="clear()">Cancel</button>
+                      </div>
+                      <div class="col-md-4"></div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

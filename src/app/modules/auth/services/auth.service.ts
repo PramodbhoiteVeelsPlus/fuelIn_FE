@@ -6,6 +6,7 @@ import { AuthModel } from '../models/auth.model';
 import { AuthHTTPService } from './auth-http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export type UserType = UserModel | undefined;
 
@@ -31,7 +32,7 @@ export class AuthService implements OnDestroy {
     this.currentUserSubject.next(user);
   }
 
-  constructor(
+  constructor(private http: HttpClient,
     private authHttpService: AuthHTTPService,
     private router: Router
   ) {
@@ -43,8 +44,74 @@ export class AuthService implements OnDestroy {
     this.unsubscribe.push(subscr);
   }
 
+
+  header: any;
+  user: any;
+  token: any = "";
+
+  public baseURL = environment.apiUrl;
+
+  private loginURL = this.baseURL + 'register/login';
+  private searchDealerByMobileURL = this.baseURL + 'fuelDealerCustMap/getDealerDetailsByDealerPhoneNumber'
+  private findPhoneNumberURL = this.baseURL + 'register/findPhoneNumber';
+  private addReferralURL = this.baseURL + 'referral/addReferral';
+
+
+  setHeader() {
+    this.token = JSON.parse(localStorage.getItem('authenticationToken') || '{}');
+
+  }
+
+  // loginURL
+  login(body: Object): Observable<any> {
+    return this.http.post(this.loginURL, body, {
+      headers: this.header
+    })
+  }
+
+  //searchDealerByMobileURL
+  searchDealerByMobile(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.searchDealerByMobileURL, body, {
+      headers: headers
+    })
+  }
+
+  //findPhoneNumberURL
+  findPhone(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.findPhoneNumberURL, body, {
+      headers: headers
+    })
+  }
+
+  //addReferralURL
+  addReferralPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.addReferralURL, body, {
+      headers: headers
+    })
+  }
+
+
+
+
+
+
+
+
+
+
+
+
   // public methods
-  login(email: string, password: string): Observable<UserType> {
+  login1(email: string, password: string): Observable<UserType> {
     this.isLoadingSubject.next(true);
     return this.authHttpService.login(email, password).pipe(
       map((auth: AuthModel) => {
@@ -94,7 +161,7 @@ export class AuthService implements OnDestroy {
       map(() => {
         this.isLoadingSubject.next(false);
       }),
-      switchMap(() => this.login(user.email, user.password)),
+      // switchMap(() => this.login(user.email, user.password)),
       catchError((err) => {
         console.error('err', err);
         return of(undefined);

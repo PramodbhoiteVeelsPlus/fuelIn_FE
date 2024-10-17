@@ -31,7 +31,7 @@ import { TilesWidget13Component } from './tiles/tiles-widget13/tiles-widget13.co
 import { TilesWidget14Component } from './tiles/tiles-widget14/tiles-widget14.component';
 // Other
 import { DropdownMenusModule } from '../dropdown-menus/dropdown-menus.module';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListsWidget2Component } from './lists/lists-widget2/lists-widget2.component';
 import { ListsWidget5Component } from './lists/lists-widget5/lists-widget5.component';
 import { ListsWidget6Component } from './lists/lists-widget6/lists-widget6.component';
@@ -83,12 +83,11 @@ import { CardsWidget17Component } from './_new/cards/cards-widget17/cards-widget
 import { ListsWidget26Component } from './_new/lists/lists-widget26/lists-widget26.component';
 import { EngageWidget10Component } from './_new/engage/engage-widget10/engage-widget10.component';
 import { CardsWidget7Component } from './_new/cards/cards-widget7/cards-widget7.component';
-import { TablesWidget16Component } from './_new/tables/tables-widget16/tables-widget16.component';
 import { NewChartsWidget8Component } from './_new/charts/new-charts-widget8/new-charts-widget8.component';
 import { CardsWidget18Component } from './_new/cards/cards-widget18/cards-widget18.component';
 import { SharedModule } from "../../../shared/shared.module";
 import { ModalsModule } from '../../layout/modals/modals.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     // Advanced Tables
@@ -169,11 +168,11 @@ import { FormsModule } from '@angular/forms';
     ListsWidget26Component,
     EngageWidget10Component,
     CardsWidget7Component,
-    TablesWidget16Component,
     NewChartsWidget8Component,
     CardsWidget18Component,
   ],
   imports: [
+    ReactiveFormsModule,
     CommonModule,
     DropdownMenusModule,
     InlineSVGModule,
@@ -181,7 +180,8 @@ import { FormsModule } from '@angular/forms';
     NgbDropdownModule,
     SharedModule,
     ModalsModule,
-    FormsModule
+    FormsModule,
+    NgbDatepickerModule,
   ],
   exports: [
     // Advanced Tables
@@ -263,9 +263,7 @@ import { FormsModule } from '@angular/forms';
     ListsWidget26Component,
     EngageWidget10Component,
     CardsWidget7Component,
-    TablesWidget16Component,
     NewChartsWidget8Component,
-    TablesWidget16Component,
     CardsWidget18Component
   ],
 })

@@ -14,16 +14,17 @@ import { environment } from 'src/environments/environment';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 // #fake-start#
 import { FakeAPIService } from './_fake/fake-api.service';
+import { NgxSpinnerModule } from 'ngx-spinner';
 // #fake-end#
 
-function appInitializer(authService: AuthService) {
-  return () => {
-    return new Promise((resolve) => {
-      //@ts-ignore
-      authService.getUserByToken().subscribe().add(resolve);
-    });
-  };
-}
+// function appInitializer(authService: AuthService) {
+//   return () => {
+//     return new Promise((resolve) => {
+//       //@ts-ignore
+//       authService.getUserByToken().subscribe().add(resolve);
+//     });
+//   };
+// }
 
 @NgModule({
   declarations: [AppComponent],
@@ -46,15 +47,16 @@ function appInitializer(authService: AuthService) {
     InlineSVGModule.forRoot(),
     NgbModule,
     SweetAlert2Module.forRoot(),
+    NgxSpinnerModule,
   ],
-  providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: appInitializer,
-      multi: true,
-      deps: [AuthService],
-    },
-  ],
+  // providers: [
+  //   {
+  //     provide: APP_INITIALIZER,
+  //     useFactory: appInitializer,
+  //     multi: true,
+  //     deps: [AuthService],
+  //   },
+  // ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

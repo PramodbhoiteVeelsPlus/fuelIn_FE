@@ -8,11 +8,18 @@ import { SharedModule } from 'src/app/_metronic/shared/shared.module';
 import { NgbCollapseModule, NgbDropdownModule, NgbNavModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { EmployeeComponent } from './employee/employee.component';
+import { BusinessComponent } from './business/business.component';
+import { FollowUpComponent } from './follow-up/follow-up.component';
+import { LocationComponent } from './location/location.component';
+import { WidgetsModule } from 'src/app/_metronic/partials';
 
 
 
 @NgModule({
-  declarations: [UserListingComponent, UserDetailsComponent],
+  declarations: [UserListingComponent, UserDetailsComponent,
+    EmployeeComponent, BusinessComponent, FollowUpComponent,
+    LocationComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -26,9 +33,26 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
         path: ':id',
         component: UserDetailsComponent,
       },
+      {
+        path: 'employee',
+        component: EmployeeComponent,
+      },
+      {
+        path: 'business',
+        component: BusinessComponent,
+      },
+      {
+        path: 'followUp',
+        component: FollowUpComponent,
+      },
+      {
+        path: 'location',
+        component: LocationComponent,
+      },
     ]),
     CrudModule,
     SharedModule,
+    WidgetsModule,
     NgbNavModule,
     NgbDropdownModule,
     NgbCollapseModule,

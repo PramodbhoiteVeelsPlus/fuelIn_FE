@@ -9,6 +9,7 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { LogoutComponent } from './components/logout/logout.component';
 import { AuthComponent } from './auth.component';
 import { TranslationModule } from '../i18n/translation.module';
+import { CustloginComponent } from './components/custlogin/custlogin.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { TranslationModule } from '../i18n/translation.module';
     ForgotPasswordComponent,
     LogoutComponent,
     AuthComponent,
+    CustloginComponent
   ],
   imports: [
     CommonModule,

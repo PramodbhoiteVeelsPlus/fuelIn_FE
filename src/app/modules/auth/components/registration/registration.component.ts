@@ -25,11 +25,11 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router
   ) {
-    this.isLoading$ = this.authService.isLoading$;
-    // redirect to home if already logged in
-    if (this.authService.currentUserValue) {
-      this.router.navigate(['/']);
-    }
+    // this.isLoading$ = this.authService.isLoading$;
+    // // redirect to home if already logged in
+    // if (this.authService.currentUserValue) {
+    //   this.router.navigate(['/']);
+    // }
   }
 
   ngOnInit(): void {
@@ -86,26 +86,26 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    this.hasError = false;
-    const result: {
-      [key: string]: string;
-    } = {};
-    Object.keys(this.f).forEach((key) => {
-      result[key] = this.f[key].value;
-    });
-    const newUser = new UserModel();
-    newUser.setUser(result);
-    const registrationSubscr = this.authService
-      .registration(newUser)
-      .pipe(first())
-      .subscribe((user: UserModel) => {
-        if (user) {
-          this.router.navigate(['/']);
-        } else {
-          this.hasError = true;
-        }
-      });
-    this.unsubscribe.push(registrationSubscr);
+    // this.hasError = false;
+    // const result: {
+    //   [key: string]: string;
+    // } = {};
+    // Object.keys(this.f).forEach((key) => {
+    //   result[key] = this.f[key].value;
+    // });
+    // const newUser = new UserModel();
+    // newUser.setUser(result);
+    // const registrationSubscr = this.authService
+    //   .registration(newUser)
+    //   .pipe(first())
+    //   .subscribe((user: UserModel) => {
+    //     if (user) {
+    //       this.router.navigate(['/']);
+    //     } else {
+    //       this.hasError = true;
+    //     }
+    //   });
+    // this.unsubscribe.push(registrationSubscr);
   }
 
   ngOnDestroy() {
