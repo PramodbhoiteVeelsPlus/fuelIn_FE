@@ -4,13 +4,11 @@
     <div>
       <span class="card-label fw-bolder fs-3 mb-1">Select Entity</span>
       <span class="badge badge-light-success fs-6 fw-bolder">
-        <select class="form-select form-select-sm form-select-solid" data-placeholder="" data-hide-search="true"
-          style="width: 220px;" [(ngModel)]="selectEntity">
-          <option value=""> Select Entity </option>
-          <option value="0000000001"> 0000000001 </option>
-          <option value="0000000002"> 0000000002 </option>
-          <option value="0000000003"> 0000000003 </option>
-        </select>
+        <input class="form-control" type="text" list="allEntityIdLQList" placeholder="Select Entity Id"
+          (change)="getcustomerIdByEntityLQ($event)">
+        <datalist id="allEntityIdLQList">
+          <option *ngFor="let data of allEntityIdLQList" [value]="data.entityId">
+        </datalist>
       </span>
     </div>
   </h3>
@@ -23,7 +21,7 @@
             fw-bolder
             px-4
             me-1
-          " data-bs-toggle="tab" [ngClass]="activeClass('kt_table_widget_9_tab_1')">
+          " data-bs-toggle="tab" [ngClass]="activeClass('kt_table_widget_9_tab_1')" (click)="exportToPDF()">
           PDF
         </a>
       </li>
@@ -34,7 +32,7 @@
             fw-bolder
             px-4
             me-1
-            " data-bs-toggle="tab" [ngClass]="activeClass('kt_table_widget_9_tab_1')">
+            " data-bs-toggle="tab" [ngClass]="activeClass('kt_table_widget_9_tab_1')" (click)="exportexcel()">
           CSV
         </a>
       </li>
@@ -50,7 +48,7 @@
       <!-- begin::Table container -->
       <div class="table-responsive">
         <!-- begin::Table -->
-        <table class="table align-middle gs-0 gy-3">
+        <table id="excel-table" class="table align-middle gs-0 gy-3">
           <!-- begin::Table head -->
           <thead>
             <tr class="fw-bolder text-muted bg-light">
@@ -66,88 +64,206 @@
           <tbody>
             <tr>
               <td>
-                <div class="d-flex align-items-center">
-                  <div class="d-flex justify-content-start flex-column">
-                    <span class="badge badge-light-primary fs-7 fw-bold p-0 min-w-100px ">Jan 2024</span>
-                  </div>
-                </div>
+                <b> {{ monthYrLQ1 }} </b>
               </td>
               <td>
-                
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
+                <li class="fas fa-rupee-sign"></li> {{crSalesMonthLQ1 | number:'1.2-2' }}
               </td>
               <td>
-                
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
+                <li class="fas fa-rupee-sign"></li> {{crPaymentMonthLQ1 | number:'1.2-2'}}
               </td>
               <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
+                <li class="fas fa-rupee-sign"></li> {{tollPaymentsLQ1 | number:'1.2-2'}}
               </td>
               <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
+                <li class="fas fa-rupee-sign"></li> {{tollRechargeLQ1 | number:'1.2-2'}}
               </td>
             </tr>
             <tr>
               <td>
-                <div class="d-flex align-items-center">
-                  <div class="d-flex justify-content-start flex-column">
-                    <span class="badge badge-light-primary fs-7 fw-bold p-0 min-w-100px ">Feb 2024</span>
-                  </div>
-                </div>
+                <b> {{ monthYrLQ2 }} </b>
               </td>
               <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
+                <li class="fas fa-rupee-sign"></li> {{crSalesMonthLQ2 | number:'1.2-2' }}
               </td>
               <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
+                <li class="fas fa-rupee-sign"></li> {{crPaymentMonthLQ2 | number:'1.2-2'}}
               </td>
               <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
+                <li class="fas fa-rupee-sign"></li> {{tollPaymentsLQ2 | number:'1.2-2'}}
               </td>
               <td>
-                <span class="p-0 min-w-120px text-gray-900 text-hover-primary mb-1 fs-5">$200,500</span>
+                <li class="fas fa-rupee-sign"></li> {{tollRechargeLQ2 | number:'1.2-2'}}
               </td>
             </tr>
             <tr>
               <td>
-                <div class="d-flex align-items-center">
-                  <div class="d-flex justify-content-start flex-column">
-                    <span class="badge badge-light-primary fs-7 fw-bold p-0 min-w-100px ">Mar 2024</span>
-                  </div>
-                </div>
+                <b> {{ monthYrLQ3 }} </b>
               </td>
               <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
+                <li class="fas fa-rupee-sign"></li> {{crSalesMonthLQ3 | number:'1.2-2' }}
               </td>
               <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
+                <li class="fas fa-rupee-sign"></li> {{crPaymentMonthLQ3 | number:'1.2-2'}}
               </td>
               <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
+                <li class="fas fa-rupee-sign"></li> {{tollPaymentsLQ3 | number:'1.2-2'}}
               </td>
               <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
+                <li class="fas fa-rupee-sign"></li> {{tollRechargeLQ3 | number:'1.2-2'}}
               </td>
             </tr>
             <tr>
               <td>
-                <div class="d-flex align-items-center">
-                  <div class="d-flex justify-content-start flex-column">
-                    <span class="badge badge-light-primary fs-7 fw-bold p-0 min-w-100px ">Apr 2024</span>
-                  </div>
-                </div>
+                <b> {{ monthYrLQ4 }} </b>
               </td>
               <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
+                <li class="fas fa-rupee-sign"></li> {{crSalesMonthLQ4 | number:'1.2-2' }}
               </td>
               <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
+                <li class="fas fa-rupee-sign"></li> {{crPaymentMonthLQ4 | number:'1.2-2'}}
               </td>
               <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
+                <li class="fas fa-rupee-sign"></li> {{tollPaymentsLQ4 | number:'1.2-2'}}
               </td>
               <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
+                <li class="fas fa-rupee-sign"></li> {{tollRechargeLQ4 | number:'1.2-2'}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <b> {{ monthYrLQ5 }} </b>
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{crSalesMonthLQ5 | number:'1.2-2' }}
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{crPaymentMonthLQ5 | number:'1.2-2'}}
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{tollPaymentsLQ5 | number:'1.2-2'}}
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{tollRechargeLQ5 | number:'1.2-2'}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <b> {{ monthYrLQ6 }} </b>
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{crSalesMonthLQ6 | number:'1.2-2' }}
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{crPaymentMonthLQ6 | number:'1.2-2'}}
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{tollPaymentsLQ6 | number:'1.2-2'}}
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{tollRechargeLQ6 | number:'1.2-2'}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <b> {{ monthYrLQ7 }} </b>
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{crSalesMonthLQ7 | number:'1.2-2' }}
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{crPaymentMonthLQ7 | number:'1.2-2'}}
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{tollPaymentsLQ7 | number:'1.2-2'}}
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{tollRechargeLQ7 | number:'1.2-2'}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <b> {{ monthYrLQ8 }} </b>
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{crSalesMonthLQ8 | number:'1.2-2' }}
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{crPaymentMonthLQ8 | number:'1.2-2'}}
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{tollPaymentsLQ8 | number:'1.2-2'}}
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li>{{tollRechargeLQ8 | number:'1.2-2'}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <b> {{ monthYrLQ9 }} </b>
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{crSalesMonthLQ9 | number:'1.2-2' }}
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{crPaymentMonthLQ9 | number:'1.2-2'}}
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{tollPaymentsLQ9 | number:'1.2-2'}}
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{tollRechargeLQ9 | number:'1.2-2'}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <b> {{ monthYrLQ10 }} </b>
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{crSalesMonthLQ10 | number:'1.2-2' }}
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{crPaymentMonthLQ10 | number:'1.2-2'}}
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{tollPaymentsLQ10 | number:'1.2-2'}}
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{tollRechargeLQ10 | number:'1.2-2'}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <b> {{ monthYrLQ11 }} </b>
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{crSalesMonthLQ11 | number:'1.2-2' }}
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{crPaymentMonthLQ11 | number:'1.2-2'}}
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{tollPaymentsLQ11 | number:'1.2-2'}}
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{tollRechargeLQ11 | number:'1.2-2'}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <b> {{ monthYrLQ12 }} </b>
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{crSalesMonthLQ12 | number:'1.2-2' }}
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{crPaymentMonthLQ12 | number:'1.2-2'}}
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{tollPaymentsLQ12 | number:'1.2-2'}}
+              </td>
+              <td>
+                <li class="fas fa-rupee-sign"></li> {{tollRechargeLQ12 | number:'1.2-2'}}
               </td>
             </tr>
           </tbody>

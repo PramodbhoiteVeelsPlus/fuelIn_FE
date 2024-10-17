@@ -1,16 +1,26 @@
 <!-- begin::Header -->
 <div class="card-header border-0 pt-5">
   <h3 class="card-title align-items-start flex-column">
+    <form [formGroup]="FilterForm">
     <div class="row">
       <div class="col-auto">
         <span class="card-label fw-bolder fs-6 mb-1">Select Month</span>
         <span class="badge badge-light-success fs-6 fw-bolder">
-          <select class="form-select form-select-sm form-select-solid" data-placeholder="" data-hide-search="true"
-            style="width: 220px;" [(ngModel)]="selectMonth">
+          <select class="form-control" style="font-size: 0.750rem;color: #9EA79E" formControlName="month"
+            (click)="getFastagLQMonthWise()">
             <option value=""> Select Month </option>
-            <option value="Jan"> Jan </option>
-            <option value="Feb"> Feb </option>
-            <option value="Mar"> Mar </option>
+            <option value="01"> Jan </option>
+            <option value="02"> Feb </option>
+            <option value="03"> Mar </option>
+            <option value="04"> Apr </option>
+            <option value="05"> May </option>
+            <option value="06"> Jun </option>
+            <option value="07"> Jul </option>
+            <option value="08"> Aug </option>
+            <option value="09"> Sep </option>
+            <option value="10"> Oct </option>
+            <option value="11"> Nov </option>
+            <option value="12"> Dec </option>
           </select>
         </span>
       </div>
@@ -18,16 +28,17 @@
       <div class="col-auto">
         <span class="card-label fw-bolder fs-6 mb-1">Select Year</span>
         <span class="badge badge-light-success fs-6 fw-bolder">
-          <select class="form-select form-select-sm form-select-solid" data-placeholder="" data-hide-search="true"
-            style="width: 220px;" [(ngModel)]="selectYear">
-            <option value=""> Select Year </option>
-            <option value="2024"> 2024 </option>
-            <option value="2023"> 2023 </option>
-            <option value="2022"> 2022 </option>
+          <select formControlName="year" class="form-select" required (click)="getFastagLQMonthWise()">
+            <option value={{currentYear}}> {{currentYear}} </option>
+            <option value={{lastYear}}> {{lastYear}} </option>
+            <option value={{last2Year}}> {{last2Year}} </option>
+            <option value={{lastFourthYear}}> {{lastFourthYear}} </option>
+            <option value={{lastFifthYear}}> {{lastFifthYear}} </option>
           </select>
         </span>
       </div>
     </div>
+    </form>
   </h3>
   <div class="card-toolbar">
     <ul class="nav">
@@ -38,7 +49,7 @@
             fw-bolder
             px-4
             me-1
-          " data-bs-toggle="tab" [ngClass]="activeClass('kt_table_widget_10_tab_1')">
+          " data-bs-toggle="tab" [ngClass]="activeClass('kt_table_widget_10_tab_1')" (click)="exportToPDF()">
           PDF
         </a>
       </li>
@@ -49,7 +60,7 @@
             fw-bolder
             px-4
             me-1
-            " data-bs-toggle="tab" [ngClass]="activeClass('kt_table_widget_10_tab_1')">
+            " data-bs-toggle="tab" [ngClass]="activeClass('kt_table_widget_10_tab_1')" (click)="exportexcel()">
           CSV
         </a>
       </li>
@@ -66,11 +77,11 @@
       <!-- begin::Table container -->
       <div class="table-responsive">
         <!-- begin::Table -->
-        <table class="table align-middle gs-0 gy-3">
+        <table id="excel-table" class="table align-middle gs-0 gy-3">
           <!-- begin::Table head -->
           <thead>
             <tr class="fw-bolder text-muted bg-light">
-              <th class="min-w-125px">Month</th>
+              <th class="min-w-125px">Entity Id</th>
               <th class="min-w-125px">Cr Sales</th>
               <th class="min-w-125px">Cr Payments</th>
               <th class="min-w-125px">Toll Recharge</th>
@@ -79,91 +90,40 @@
           </thead>
           <!-- end::Table head -->
           <!-- begin::Table body -->
-          <tbody>
+          <tbody *ngFor="let data of fastagLQData">
             <tr>
+              <td> {{data.entityId}} </td>
               <td>
-                <div class="d-flex align-items-center">
-                  <div class="d-flex justify-content-start flex-column">
-                    <span class="badge badge-light-primary fs-7 fw-bold p-0 min-w-100px ">VEELS00001</span>
-                  </div>
-                </div>
+                <span *ngIf="data.crSale">
+                  <li class="fas fa-rupee-sign"></li> {{data.crSale | number:'1.2-2' }}
+                </span>
+                <span *ngIf="!data.crSale">
+                  <li class="fas fa-rupee-sign"></li> 0.00
+                </span>
               </td>
               <td>
-
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
+                <span *ngIf="data.crPayment">
+                  <li class="fas fa-rupee-sign"></li> {{data.crPayment | number:'1.2-2' }}
+                </span>
+                <span *ngIf="!data.crPayment">
+                  <li class="fas fa-rupee-sign"></li> 0.00
+                </span>
               </td>
               <td>
-
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
+                <span *ngIf="data.tollPayment">
+                  <li class="fas fa-rupee-sign"></li> {{data.tollPayment | number:'1.2-2' }}
+                </span>
+                <span *ngIf="!data.tollPayment">
+                  <li class="fas fa-rupee-sign"></li> 0.00
+                </span>
               </td>
               <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
-              </td>
-              <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="d-flex align-items-center">
-                  <div class="d-flex justify-content-start flex-column">
-                    <span class="badge badge-light-primary fs-7 fw-bold p-0 min-w-100px ">VEELS00002</span>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
-              </td>
-              <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
-              </td>
-              <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
-              </td>
-              <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="d-flex align-items-center">
-                  <div class="d-flex justify-content-start flex-column">
-                    <span class="badge badge-light-primary fs-7 fw-bold p-0 min-w-100px ">VEELS00003</span>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
-              </td>
-              <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
-              </td>
-              <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
-              </td>
-              <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="d-flex align-items-center">
-                  <div class="d-flex justify-content-start flex-column">
-                    <span class="badge badge-light-primary fs-7 fw-bold p-0 min-w-100px ">VEELS00004</span>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
-              </td>
-              <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
-              </td>
-              <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
-              </td>
-              <td>
-                <span class="badge badge-light-primary fs-7 fw-bold">$200,500</span>
+                <span *ngIf="data.tollRecharge">
+                  <li class="fas fa-rupee-sign"></li> {{data.tollRecharge | number:'1.2-2' }}
+                </span>
+                <span *ngIf="!data.tollRecharge">
+                  <li class="fas fa-rupee-sign"></li> 0.00
+                </span>
               </td>
             </tr>
           </tbody>
