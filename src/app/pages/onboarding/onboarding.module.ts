@@ -1,5 +1,4 @@
 
-import { dealerListComponent } from './dealerOnboarding/dealerList/dealerList.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -7,35 +6,35 @@ import { RouterModule } from '@angular/router';
 import { ModalsModule, WidgetsModule } from '../../_metronic/partials';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
-import { demoComponent } from './dealerOnboarding/demo/demo.component';
 import { onboardingComponent } from './onboarding.component';
-import { requestComponent } from './dealerOnboarding/request/request.component';
+import { AllDealerComponent } from "./dealerOnboarding/all-dealer/all-dealer.component";
+import { DealerListsComponent } from './dealerOnboarding/dealer-lists/dealer-lists.component';
+import { DemoRemovedComponent } from './dealerOnboarding/demo-removed/demo-removed.component';
 
 @NgModule({
   declarations: [
     onboardingComponent,
-    dealerListComponent,
-    demoComponent,
-    requestComponent,
+    AllDealerComponent,
+    DealerListsComponent,
+    DemoRemovedComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     RouterModule.forChild([
-      {
-        path: '',
-        component: onboardingComponent,
-      },
+        {
+            path: '',
+            component: onboardingComponent,
+        },
     ]),
     WidgetsModule,
     ModalsModule,
     NgbNavModule,
-  ],
+],
   exports: [
-    dealerListComponent,
-    demoComponent,
-    requestComponent,
-    // Dashboard4Component
+    AllDealerComponent,
+    DealerListsComponent,
+    DemoRemovedComponent
   ]
 })
 export class onboardingModule { }
