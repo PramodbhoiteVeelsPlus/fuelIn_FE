@@ -31,7 +31,7 @@ import { TilesWidget13Component } from './tiles/tiles-widget13/tiles-widget13.co
 import { TilesWidget14Component } from './tiles/tiles-widget14/tiles-widget14.component';
 // Other
 import { DropdownMenusModule } from '../dropdown-menus/dropdown-menus.module';
-import { NgbDatepickerModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbDatepickerModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListsWidget2Component } from './lists/lists-widget2/lists-widget2.component';
 import { ListsWidget5Component } from './lists/lists-widget5/lists-widget5.component';
 import { ListsWidget6Component } from './lists/lists-widget6/lists-widget6.component';
@@ -88,6 +88,7 @@ import { CardsWidget18Component } from './_new/cards/cards-widget18/cards-widget
 import { SharedModule } from "../../../shared/shared.module";
 import { ModalsModule } from '../../layout/modals/modals.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ExcelService } from 'src/app/pages/excel.service';
 @NgModule({
   declarations: [
     // Advanced Tables
@@ -266,5 +267,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NewChartsWidget8Component,
     CardsWidget18Component
   ],
+  providers: [NgbActiveModal, ExcelService],
 })
 export class WidgetsModule {}

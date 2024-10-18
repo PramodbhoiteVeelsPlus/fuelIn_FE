@@ -1,0 +1,636 @@
+<style>
+    .card-header {
+        padding: .625rem 1.25rem;
+        margin-bottom: 0;
+        background-color: rgba(0, 0, 0, .03);
+        border-bottom: 0 solid #f6f6f6;
+    }
+</style>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form [formGroup]="filterForm">
+                    <div class="card mb-3">
+                        <marquee style="color: red;">Please Select Date Range between Financial Year..!</marquee>
+                        <div class="card-header">
+                            <h3><b>ONBOARD REPORT FOR VEELSPLUS</b></h3>
+                        </div>
+                        <div class="card-body table-responsive">
+
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-2">
+                                    <p style="text-align: center;"><b>Start Date</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <p style="text-align: center;"><b>End Date</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p><b>Dealer Added Transporter Report</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                        style="background-color: #ffffff;" name="startDate" (click)="startDate.toggle()"
+                                        formControlName="startDate" ngbDatepicker #startDate="ngbDatepicker">
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                        style="background-color: #ffffff;" name="endDate" (click)="endDate.toggle()"
+                                        formControlName="endDate" ngbDatepicker #endDate="ngbDatepicker">
+                                </div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-outline-success my-2 my-sm-0 btn-sm"
+                                        (click)="dealerAddedCustomerReport()">Download</button>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p><b>Onboard Corporate Report</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                        style="background-color: #ffffff;" name="startDate2"
+                                        (click)="startDate2.toggle()" formControlName="startDate" ngbDatepicker
+                                        #startDate2="ngbDatepicker">
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                        style="background-color: #ffffff;" name="endDate2" (click)="endDate2.toggle()"
+                                        formControlName="endDate" ngbDatepicker #endDate2="ngbDatepicker">
+                                </div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-outline-success my-2 my-sm-0 btn-sm"
+                                        (click)="getReportCorporate()">Download</button>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p><b>Admin Dealer Onboard Report</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                        style="background-color: #ffffff;" name="startDate3"
+                                        (click)="startDate3.toggle()" formControlName="startDate" ngbDatepicker
+                                        #startDate3="ngbDatepicker">
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                        style="background-color: #ffffff;" name="endDate3" (click)="endDate3.toggle()"
+                                        formControlName="endDate" ngbDatepicker #endDate3="ngbDatepicker">
+                                </div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-outline-success my-2 my-sm-0 btn-sm"
+                                        (click)="getDealerOnboardReport()">Download</button>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p><b>Self Dealer Onboard Report</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                        style="background-color: #ffffff;" name="startDate4"
+                                        (click)="startDate4.toggle()" formControlName="startDate" ngbDatepicker
+                                        #startDate4="ngbDatepicker">
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                        style="background-color: #ffffff;" name="endDate4" (click)="endDate4.toggle()"
+                                        formControlName="endDate" ngbDatepicker #endDate4="ngbDatepicker">
+                                </div>
+                                <div class="col-md-2">
+                                    <select class="form-control" formControlName="adminList">
+                                        <option value="">Select Name</option>
+                                        <option *ngFor="let data of allAdminList" [value]="data.personId">
+                                            <b *ngIf="data.firstName != 'undefined' && data.lastName == 'undefined'">
+                                                {{data.firstName}}
+                                            </b>
+                                            <b *ngIf="data.firstName == 'undefined' && data.lastName != 'undefined'">
+                                                {{data.lastName}}
+                                            </b>
+                                            <b *ngIf="data.firstName != 'undefined' && data.lastName != 'undefined'">
+                                                {{data.firstName}} {{data.lastName}}
+                                            </b>
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-outline-success my-2 my-sm-0 btn-sm"
+                                        (click)="getSelfOnboardReportByAdmin()">Download</button>
+                                </div>
+                            </div>
+                            <br><br><br>
+                        </div>
+                    </div>
+                    <!--Onboarded report ends  -->
+
+                    <!--Onboarded report starts  -->
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h3><b>ACTIVE DEALER REPORT</b></h3>
+                        </div>
+                        <div class="card-body table-responsive">
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-2">
+                                    <p style="text-align: center;"><b>Start Date</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <p style="text-align: center;"><b>End Date</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p><b>Active Dealer Report</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY"
+                                        style="background-color: #ffffff;" name="startDateA"
+                                        (click)="startDateA.toggle()" formControlName="startDate" ngbDatepicker
+                                        #startDateA="ngbDatepicker">
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY"
+                                        style="background-color: #ffffff;" name="endDateA" (click)="endDateA.toggle()"
+                                        formControlName="endDate" ngbDatepicker #endDateA="ngbDatepicker">
+                                </div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-outline-success my-2 my-sm-0 btn-sm"
+                                        (click)="activeDealerReport()">Download</button>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p><b>Selected Date Report</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY"
+                                        style="background-color: #ffffff;" name="startDateB"
+                                        (click)="startDateB.toggle()" formControlName="startDate" ngbDatepicker
+                                        #startDateB="ngbDatepicker">
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY"
+                                        style="background-color: #ffffff;" name="endDateB" (click)="endDateB.toggle()"
+                                        formControlName="endDate" ngbDatepicker #endDateB="ngbDatepicker">
+                                </div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-outline-success my-2 my-sm-0 btn-sm"
+                                        (click)="activeDealerSelectedDateReport()">Download</button>
+                                </div>
+                            </div>
+                            <br>
+                            <br><br><br>
+                        </div>
+                    </div>
+                    <!--Onboarded report ends  -->
+
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h3><b>PURCHASE REPORT</b></h3>
+                        </div>
+                        <div class="card-body table-responsive">
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-2">
+                                    <p style="text-align: center;"><b>Start Month</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <p style="text-align: center;"><b>Start Year</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <p style="text-align: center;"><b>End Month</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <p style="text-align: center;"><b>End Year</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <p><b>Purchase Report</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <select class="form-select" formControlName="startMonth">
+                                        <option value="">Select</option>
+                                        <option value="01">Jan</option>
+                                        <option value="02">Feb</option>
+                                        <option value="03">Mar</option>
+                                        <option value="04">Apr</option>
+                                        <option value="05">May</option>
+                                        <option value="06">Jun</option>
+                                        <option value="07">Jul</option>
+                                        <option value="08">Aug</option>
+                                        <option value="09">Sep</option>
+                                        <option value="10">Oct</option>
+                                        <option value="11">Nov</option>
+                                        <option value="12">Dec</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <select class="form-select" formControlName="startYear">
+
+                                        <option value=""> Select Year </option>
+                                        <option *ngFor="let data of years" [value]="data.yrs">{{data.yrs}} </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <select class="form-select" formControlName="endMonth">
+                                        <option value="">Select</option>
+                                        <option value="01">Jan</option>
+                                        <option value="02">Feb</option>
+                                        <option value="03">Mar</option>
+                                        <option value="04">Apr</option>
+                                        <option value="05">May</option>
+                                        <option value="06">Jun</option>
+                                        <option value="07">Jul</option>
+                                        <option value="08">Aug</option>
+                                        <option value="09">Sep</option>
+                                        <option value="10">Oct</option>
+                                        <option value="11">Nov</option>
+                                        <option value="12">Dec</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <select class="form-select" formControlName="endYear">
+
+                                        <option value=""> Select Year </option>
+                                        <option *ngFor="let data of years" [value]="data.yrs">{{data.yrs}} </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-outline-success my-2 my-sm-0 btn-sm"
+                                        (click)="getPurchaseReportByMonthYear()">Download</button>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <br><br><br>
+                        </div>
+                        <div class="card-header">
+                            <h3><b>SALES PAYMENT REPORT</b></h3>
+                        </div>
+                        <div class="card-body table-responsive">
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-2">
+                                    <p style="text-align: center;"><b>Month</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <p style="text-align: center;"><b>Year</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p><b>Tx-Wise Sales Payment</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <select class="form-select" formControlName="month">
+                                        <option value="">Select</option>
+                                        <option value="01">Jan</option>
+                                        <option value="02">Feb</option>
+                                        <option value="03">Mar</option>
+                                        <option value="04">Apr</option>
+                                        <option value="05">May</option>
+                                        <option value="06">Jun</option>
+                                        <option value="07">Jul</option>
+                                        <option value="08">Aug</option>
+                                        <option value="09">Sep</option>
+                                        <option value="10">Oct</option>
+                                        <option value="11">Nov</option>
+                                        <option value="12">Dec</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <select class="form-select" formControlName="year" required>
+                                        <option value=""> Select Year </option>
+                                        <option *ngFor="let data of years" [value]="data.yrs">{{data.yrs}} </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-outline-success my-2 my-sm-0 btn-sm"
+                                        (click)="txWiseSalesPayment()">Download</button>
+                                </div>
+                            </div>
+                            <br>
+                            <br><br><br>
+                        </div>
+                    </div>
+
+                    <!--FC By PAN report starts Dealer -->
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h3><b>FUEL CREDIT REPORT FOR VEELSPLUS</b></h3>
+                        </div>
+                        <div class="card-body table-responsive">
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-2">
+                                    <p style="text-align: center;"><b>Start Date</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <p style="text-align: center;"><b>End Date</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <p style="text-align: center;"><b>Additional</b></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p><b>Purchase Report</b></p>
+                                </div>
+                                <!-- date format changed 20-01-2022  -->
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                        style="background-color: #ffffff;" name="startDate5"
+                                        (click)="startDate5.toggle()" formControlName="startDate" ngbDatepicker
+                                        #startDate5="ngbDatepicker">
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                        style="background-color: #ffffff;" name="endDate5" (click)="endDate5.toggle()"
+                                        formControlName="endDate" ngbDatepicker #endDate5="ngbDatepicker">
+                                </div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-outline-success my-2 my-sm-0 btn-sm"
+                                        (click)="getTotalPurchaseReportForAdmin()">Download</button>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p><b>Purchase CR Report For Transporter</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                        style="background-color: #ffffff;" name="startDate6"
+                                        (click)="startDate6.toggle()" formControlName="startDate" ngbDatepicker
+                                        #startDate6="ngbDatepicker">
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                        style="background-color: #ffffff;" name="endDate6" (click)="endDate6.toggle()"
+                                        formControlName="endDate" ngbDatepicker #endDate6="ngbDatepicker">
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="Enter Phone Number"
+                                        formControlName="mobileNumber" type="number">
+                                </div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-outline-success my-2 my-sm-0 btn-sm"
+                                        (click)="getCrReportAsPerCorporate()">Download</button>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p><b>Payment Report</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                        style="background-color: #ffffff;" name="startDate7"
+                                        (click)="startDate7.toggle()" formControlName="startDate" ngbDatepicker
+                                        #startDate7="ngbDatepicker">
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                        style="background-color: #ffffff;" name="endDate7" (click)="endDate7.toggle()"
+                                        formControlName="endDate" ngbDatepicker #endDate7="ngbDatepicker">
+                                </div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-outline-success my-2 my-sm-0 btn-sm"
+                                        (click)="getTotalPaymentReportForAdmin()">Download</button>
+                                </div>
+                            </div>
+                            <br><br>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h3><b>FASTAG REPORT FOR VEELSPLUS</b></h3>
+                        </div>
+                        <div class="card-body table-responsive">
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-2">
+                                    <p style="text-align: center;"><b>Start Date</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <p style="text-align: center;"><b>End Date</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <p style="text-align: center;"><b>Additional</b></p>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p><b>Fastag All Customer</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                        style="background-color: #ffffff;" name="startDate8"
+                                        (click)="startDate8.toggle()" formControlName="startDate" ngbDatepicker
+                                        #startDate8="ngbDatepicker">
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                        style="background-color: #ffffff;" name="endDate8" (click)="endDate8.toggle()"
+                                        formControlName="endDate" ngbDatepicker #endDate8="ngbDatepicker">
+                                </div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-outline-success my-2 my-sm-0 btn-sm"
+                                        (click)="getFastagVehicleDetailsByDateForAdmin()">Download</button>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p><b>Fastag Txn Wise</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" type="text" list="allEntityList"
+                                        placeholder="For All EntityId" formControlName="entityId">
+                                    <datalist id="allEntityList">
+                                        <option *ngFor="let data of allEntityList" [value]="data.entityId">
+                                    </datalist>
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY"
+                                        style="background-color: #ffffff;" name="startDate9"
+                                        (click)="startDate9.toggle()" formControlName="startDateFT" ngbDatepicker
+                                        #startDate9="ngbDatepicker" (dateSelect)="ftSDateLimit()">
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY"
+                                        style="background-color: #ffffff;" name="endDate9" (click)="endDate9.toggle()"
+                                        formControlName="endDateFT" ngbDatepicker #endDate9="ngbDatepicker"
+                                        (dateSelect)="ftDateLimit()">
+                                </div>
+
+                                <div class="col-md-1">
+                                    <button class="btn btn-outline-success my-2 my-sm-0 btn-sm"
+                                        (click)="getFTTransactions()">Download</button>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p><b>Fastag Vehicle Wise</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" type="text" list="allVehicleList"
+                                        placeholder="Select Vehicle Number" formControlName="vehicleNumberFT">
+                                    <datalist id="allVehicleList">
+                                        <option *ngFor="let data of allVehicleList" [value]="data.vehicleNumber">
+                                    </datalist>
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                        style="background-color: #ffffff;" name="startDate10"
+                                        (click)="startDate10.toggle()" formControlName="startDate" ngbDatepicker
+                                        #startDate10="ngbDatepicker">
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                        style="background-color: #ffffff;" name="endDate10" (click)="endDate10.toggle()"
+                                        formControlName="endDate" ngbDatepicker #endDate10="ngbDatepicker">
+                                </div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-outline-success my-2 my-sm-0 btn-sm"
+                                        (click)="getFastagVehicleDetailsByVehicleNumberForAdmin()">Download</button>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h3><b>FASTAG LQ REPORT FOR VEELSPLUS</b></h3>
+                        </div>
+                        <div class="card-body table-responsive">
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-2">
+                                    <p style="text-align: center;"><b>Start Date</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <p style="text-align: center;"><b>End Date</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <p style="text-align: center;"><b>Additional</b></p>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p><b>Fastag All Customer</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                        style="background-color: #ffffff;" name="startDate8a"
+                                        (click)="startDate8a.toggle()" formControlName="startDate" ngbDatepicker
+                                        #startDate8a="ngbDatepicker">
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                        style="background-color: #ffffff;" name="endDate8a" (click)="endDate8a.toggle()"
+                                        formControlName="endDate" ngbDatepicker #endDate8a="ngbDatepicker">
+                                </div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-outline-success my-2 my-sm-0 btn-sm"
+                                        (click)="getFastagVehicleDetailsByDateForAdminLQ()">Download</button>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p><b>Fastag Txn Wise</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" type="text" list="allEntityListLQ"
+                                        placeholder="For All EntityId" formControlName="entityIdLQ">
+                                    <datalist id="allEntityListLQ">
+                                        <option *ngFor="let data of allEntityListLQ" [value]="data.entityId">
+                                    </datalist>
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY"
+                                        style="background-color: #ffffff;" name="startDate9a"
+                                        (click)="startDate9a.toggle()" formControlName="startDateFTLQ" ngbDatepicker
+                                        #startDate9a="ngbDatepicker" (dateSelect)="ftSDateLimitLQ()">
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY"
+                                        style="background-color: #ffffff;" name="endDate9a" (click)="endDate9a.toggle()"
+                                        formControlName="endDateFTLQ" ngbDatepicker #endDate9a="ngbDatepicker"
+                                        (dateSelect)="ftDateLimitLQ()">
+                                </div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-outline-success my-2 my-sm-0 btn-sm"
+                                        (click)="getFTTransactionsLQ()">Download</button>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p><b>Fastag Vehicle Wise</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" type="text" list="allVehicleListLQ"
+                                        placeholder="Select Vehicle Number" formControlName="vehicleNumberFTLQ">
+                                    <datalist id="allVehicleListLQ">
+                                        <option *ngFor="let data of allVehicleListLQ"
+                                            [value]="data.fastagTransactionBusinessId">
+                                    </datalist>
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                        style="background-color: #ffffff;" name="startDate10a"
+                                        (click)="startDate10a.toggle()" formControlName="startDate" ngbDatepicker
+                                        #startDate10a="ngbDatepicker">
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                        style="background-color: #ffffff;" name="endDate10a"
+                                        (click)="endDate10a.toggle()" formControlName="endDate" ngbDatepicker
+                                        #endDate10a="ngbDatepicker">
+                                </div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-outline-success my-2 my-sm-0 btn-sm"
+                                        (click)="getFastagVehicleDetailsByVehicleNumberForAdminLQ()">Download</button>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
