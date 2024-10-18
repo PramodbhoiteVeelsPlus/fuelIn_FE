@@ -69,6 +69,10 @@ export class TablesWidget11Component implements OnInit {
   lastFifthYear: number;
   lastFourthYear: number;
   dayWiseCredit: any = [];
+  p: number = 1;
+  p1: number = 1;
+  total: number = 0;
+
   constructor(
     private post: WidgetService,
     private spinner: NgxSpinnerService,
@@ -94,6 +98,12 @@ export class TablesWidget11Component implements OnInit {
     this.FilterForm.controls['year'].setValue(this.currentYear)
     this.FilterForm.controls['month'].setValue(moment(new Date()).format("MM"));
     this.getDealerList()
+    this.cd.detectChanges();
+  }
+
+  pageChangeEvent(event: number) {
+    this.p = event;
+    this.getCreditDetailsMonthWise();
   }
 
   getDealerList() {
@@ -123,37 +133,37 @@ export class TablesWidget11Component implements OnInit {
       .subscribe(res => {
         if (res.data.length) {
           this.fuelDealerId = res.data[0].fuelDealerId;
-          // this.getCreditDetailsYearWise()
+          this.getCreditDetailsMonthWise()
           this.cd.detectChanges();
         } else {
         }
       });
   }
-  
-  getCreditDetailsMonthWise(){
-    if(this.fuelDealerId){
-        this.dayWiseCredit = []
-        this.spinner.show()
-        let data = {
-            fuelDealerId: this.fuelDealerId, 
-            month: moment(this.FilterForm.value.month).format("MM"), 
-            year: this.FilterForm.value.year
-        }
-    
-        this.post.getDayWiseCreditPOST(data)
+
+  getCreditDetailsMonthWise() {
+    if (this.fuelDealerId) {
+      this.dayWiseCredit = []
+      this.spinner.show()
+      let data = {
+        fuelDealerId: this.fuelDealerId,
+        month: moment(this.FilterForm.value.month).format("MM"),
+        year: this.FilterForm.value.year
+      }
+
+      this.post.getDayWiseCreditPOST(data)
         .subscribe(res => {
-            if(res.status == "OK"){
-                this.dayWiseCredit = res.data;
-                this.spinner.hide()
-                this.cd.detectChanges();
-            } else {
-                this.dayWiseCredit = []
-                this.spinner.hide()
-                this.cd.detectChanges();
-            }
+          if (res.status == "OK") {
+            this.dayWiseCredit = res.data;
+            this.spinner.hide()
+            this.cd.detectChanges();
+          } else {
+            this.dayWiseCredit = []
+            this.spinner.hide()
+            this.cd.detectChanges();
+          }
         })
     } else {
-        alert("Please Select Pump Name..!")
+      alert("Please Select Pump Name..!")
     }
   }
 }

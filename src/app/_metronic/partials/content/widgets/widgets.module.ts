@@ -88,6 +88,8 @@ import { CardsWidget18Component } from './_new/cards/cards-widget18/cards-widget
 import { SharedModule } from "../../../shared/shared.module";
 import { ModalsModule } from '../../layout/modals/modals.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { TablesWidget15Component } from './tables/tables-widget15/tables-widget15.component';
 @NgModule({
   declarations: [
     // Advanced Tables
@@ -161,6 +163,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     TablesWidget12Component,
     TablesWidget13Component,
     TablesWidget14Component,
+    TablesWidget15Component,
     CardsWidget1Component,
     CardsWidget2Component,
     CardsWidget20Component,
@@ -182,6 +185,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ModalsModule,
     FormsModule,
     NgbDatepickerModule,
+    NgxPaginationModule,
   ],
   exports: [
     // Advanced Tables
@@ -255,6 +259,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     TablesWidget12Component,
     TablesWidget13Component,
     TablesWidget14Component,
+    TablesWidget15Component,
     // new
     CardsWidget1Component,
     CardsWidget2Component,

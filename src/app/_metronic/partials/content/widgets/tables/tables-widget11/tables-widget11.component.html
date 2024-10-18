@@ -47,7 +47,8 @@
       </div>
 
       <div class="col-auto">
-        <button class="card-label fw-bolder fs-6 mb-1 btn btn-sm btn-primary btn-icon" (click)="getCreditDetailsMonthWise()">View </button>
+        <button class="card-label fw-bolder fs-6 mb-1 btn btn-sm btn-primary btn-icon"
+          (click)="getCreditDetailsMonthWise()">View </button>
       </div>
     </div>
   </form>
@@ -72,24 +73,31 @@
         </thead>
         <!-- end::Table head -->
         <!-- begin::Table body -->
-        <tbody *ngFor="let data of dayWiseCredit">
+        <tbody *ngFor="let data of dayWiseCredit | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }">
 
           <tr>
-              <td> {{data.date | date:"mediumDate"}} </td>
-              <td> {{ data.purCount | number:'1.2-2' }} </td>
-              <td> {{data.purchase | number:'1.2-2' }}</td>
-              <td> {{data.activePurCust | number:'1.2-2'}} </td>
-              <td> {{data.payment | number:'1.2-2' }}</td>
-              <td> {{data.payCount | number:'1.2-2'}} </td>
-              <td> {{data.activePayCust | number:'1.2-2' }} </td>
-              <td> {{data.balance | number:'1.2-2' }}
-              </td>
+            <td> {{ data.date | date:"mediumDate"}} </td>
+            <td> {{ data.purCount | number:'1.2-2' }} </td>
+            <td> {{ data.purchase | number:'1.2-2' }}</td>
+            <td> {{ data.activePurCust | number:'1.2-2'}} </td>
+            <td> {{ data.payment | number:'1.2-2' }}</td>
+            <td> {{ data.payCount | number:'1.2-2'}} </td>
+            <td> {{ data.activePayCust | number:'1.2-2' }} </td>
+            <td> {{ data.balance | number:'1.2-2' }}
+            </td>
           </tr>
 
-      </tbody>
+        </tbody>
         <!-- end::Table body -->
       </table>
       <!-- end::Table -->
+
+      <!-- begin::Pagination -->
+      <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+        style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+      </pagination-controls>
+      <!-- end::Pagination -->
+
     </div>
     <!-- end::Table container -->
   </div>
