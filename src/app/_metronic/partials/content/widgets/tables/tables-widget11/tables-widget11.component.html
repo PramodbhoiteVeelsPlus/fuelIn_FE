@@ -1,150 +1,97 @@
 <!-- begin::Body -->
 <div class="card-body py-3">
-  <!-- begin::Table container -->
-  <div class="table-responsive">
-    <!-- begin::Table -->
-    <table class="table align-middle gs-0 gy-4">
-      <!-- begin::Table head -->
-      <thead>
-        <tr class="fw-bolder text-muted bg-light">
-          <th class="min-w-125px">Date</th>
-          <th class="min-w-125px">No.of Credit Sales Txn</th>
-          <th class="min-w-125px">Value of Credit Sales Txn</th>
-          <th class="min-w-125px">Active Cust Count For Credit Sales Txn</th>
-          <th class="min-w-125px">Value Of Credit Payment Txn</th>
-          <th class="min-w-125px">No. Of Credit Payment Txn</th>
-          <th class="min-w-125px">Active Cust Count For Credit Payment Txn</th>
-          <th class="min-w-125px">No. Of Credit Payment Txn</th>
-        </tr>
-      </thead>
-      <!-- end::Table head -->
-      <!-- begin::Table body -->
-      <tbody>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="d-flex justify-content-start flex-column">
-                <span class="badge badge-light-primary fs-7 fw-bold">Sep 1, 2024</span>
-              </div>
-            </div>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="d-flex justify-content-start flex-column">
-                <span class="badge badge-light-primary fs-7 fw-bold">Sep 2, 2024</span>
-              </div>
-            </div>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="d-flex justify-content-start flex-column">
-                <span class="badge badge-light-primary fs-7 fw-bold">Sep 3, 2024</span>
-              </div>
-            </div>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="d-flex justify-content-start flex-column">
-                <span class="badge badge-light-primary fs-7 fw-bold">Sep 4, 2024</span>
-              </div>
-            </div>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-        </tr>
+  <form [formGroup]="FilterForm">
+    <div class="row">
+      <div class="col-auto">
+        <span class="card-label fw-bolder fs-5 mb-1">Select Petrol Pump : </span>
+        <span class="badge badge-light-success fs-6 fw-bolder">
+          <input class="form-control" type="text" list="dealerList" placeholder="Select Pump Name"
+            (change)="getDetailsByCustomerMapName($event)">
+          <datalist id="dealerList">
+            <option *ngFor="let data of dealerList" [value]="data.companyName">
+          </datalist>
+        </span>
+      </div>
+      <div class="col-auto">
+        <span class="card-label fw-bolder fs-6 mb-1">Select Month : </span>
+        <span class="badge badge-light-success fs-6 fw-bolder">
+          <select class="form-control" style="font-size: 0.750rem;color: #9EA79E" formControlName="month">
+            <option value=""> Select Month </option>
+            <option value="01"> Jan </option>
+            <option value="02"> Feb </option>
+            <option value="03"> Mar </option>
+            <option value="04"> Apr </option>
+            <option value="05"> May </option>
+            <option value="06"> Jun </option>
+            <option value="07"> Jul </option>
+            <option value="08"> Aug </option>
+            <option value="09"> Sep </option>
+            <option value="10"> Oct </option>
+            <option value="11"> Nov </option>
+            <option value="12"> Dec </option>
+          </select>
+        </span>
+      </div>
+
+      <div class="col-auto">
+        <span class="card-label fw-bolder fs-6 mb-1">Select Year : </span>
+        <span class="badge badge-light-success fs-6 fw-bolder">
+          <select formControlName="year" class="form-select" required>
+            <option value={{currentYear}}> {{currentYear}} </option>
+            <option value={{lastYear}}> {{lastYear}} </option>
+            <option value={{last2Year}}> {{last2Year}} </option>
+            <option value={{lastFourthYear}}> {{lastFourthYear}} </option>
+            <option value={{lastFifthYear}}> {{lastFifthYear}} </option>
+          </select>
+        </span>
+      </div>
+
+      <div class="col-auto">
+        <button class="card-label fw-bolder fs-6 mb-1 btn btn-sm btn-primary btn-icon" (click)="getCreditDetailsMonthWise()">View </button>
+      </div>
+    </div>
+  </form>
+  <br>
+  <div class="row">
+    <!-- begin::Table container -->
+    <div class="table-responsive">
+      <!-- begin::Table -->
+      <table class="table align-middle gs-0 gy-4">
+        <!-- begin::Table head -->
+        <thead>
+          <tr class="fw-bolder text-muted bg-light">
+            <th class="min-w-125px">Date</th>
+            <th class="min-w-125px">No.of Credit Sales Txn</th>
+            <th class="min-w-125px">Value of Credit Sales Txn</th>
+            <th class="min-w-125px">Active Cust Count For Credit Sales Txn</th>
+            <th class="min-w-125px">Value Of Credit Payment Txn</th>
+            <th class="min-w-125px">No. Of Credit Payment Txn</th>
+            <th class="min-w-125px">Active Cust Count For Credit Payment Txn</th>
+            <th class="min-w-125px">No. Of Credit Payment Txn</th>
+          </tr>
+        </thead>
+        <!-- end::Table head -->
+        <!-- begin::Table body -->
+        <tbody *ngFor="let data of dayWiseCredit">
+
+          <tr>
+              <td> {{data.date | date:"mediumDate"}} </td>
+              <td> {{ data.purCount | number:'1.2-2' }} </td>
+              <td> {{data.purchase | number:'1.2-2' }}</td>
+              <td> {{data.activePurCust | number:'1.2-2'}} </td>
+              <td> {{data.payment | number:'1.2-2' }}</td>
+              <td> {{data.payCount | number:'1.2-2'}} </td>
+              <td> {{data.activePayCust | number:'1.2-2' }} </td>
+              <td> {{data.balance | number:'1.2-2' }}
+              </td>
+          </tr>
+
       </tbody>
-      <!-- end::Table body -->
-    </table>
-    <!-- end::Table -->
+        <!-- end::Table body -->
+      </table>
+      <!-- end::Table -->
+    </div>
+    <!-- end::Table container -->
   </div>
-  <!-- end::Table container -->
 </div>
 <!-- begin::Body -->
