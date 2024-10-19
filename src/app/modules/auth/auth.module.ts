@@ -10,6 +10,7 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { AuthComponent } from './auth.component';
 import { TranslationModule } from '../i18n/translation.module';
 import { CustloginComponent } from './components/custlogin/custlogin.component';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { CustloginComponent } from './components/custlogin/custlogin.component';
     AuthRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
+    HttpClientModule,NgbPaginationModule,
   ],
 })
 export class AuthModule {}

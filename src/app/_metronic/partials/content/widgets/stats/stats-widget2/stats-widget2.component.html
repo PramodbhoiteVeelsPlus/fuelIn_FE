@@ -1,13 +1,631 @@
-<div class="card-body d-flex align-items-center pt-3 pb-0">
-  <div class="d-flex flex-column flex-grow-1 py-2 py-lg-13 me-2">
-    <a href="#" class="fw-bolder text-gray-900 fs-4 mb-2 text-hover-primary">
-      {{ title }}
-    </a>
+<style>
+  .table {
+    border: 2px solid #272829;
+    thead {
+        background-color: lightgreen;
+        th {
+            border: 2px solid #272829;
+        }
+    }
+    td {
+        border: 2px solid #272829;
+    }
+}
+</style>
 
-    <span class="fw-bold text-muted fs-5">
-      <ng-content select="description"></ng-content>
-    </span>
+<div>
+  <form [formGroup]="filterForm">
+    <div class="row">
+      <div class="col-auto">
+        <label class="labelNewMargin"><b>Report Of</b>:</label>
+        <select class="form-control" formControlName="selecteReport" required>
+          <option value="">Select report </option>
+          <option value="allCreditAccount"> all credit accounts </option>
+          <option value="activeCreditAccount"> active credit accounts </option>
+          <option value="txnwiseCreditSales"> txn-wise credit sales </option>
+          <option value="txnWiseCreditPayments"> txn-wise credit payments </option>
+        </select>
+      </div>
+      <div class="col-auto">
+        <label class="labelNewMargin"><b>Dealer Name</b>:</label>
+        <select class="form-control" formControlName="selectedCorp" required>
+          <option value="">All</option>
+          <option *ngFor="let data of corporateList" [value]="data.fuelDealerId">
+            {{data.companyName}}
+          </option>
+        </select>
+      </div>
+      <div class="col-auto">
+        <label class="labelNewMargin"><b>Start Date</b>:</label>
+
+        <input class="form-control" placeholder="dd-mm-yyyy" name="startDate" readonly
+          style="background-color: #ffffff;" (click)="startDate.toggle()" formControlName="startDate" ngbDatepicker
+          #startDate="ngbDatepicker">
+      </div>
+      <div class="col-auto">
+        <label class="labelNewMargin"><b>End Date</b>:</label>
+        <input class="form-control" placeholder="dd-mm-yyyy" name="endDate" readonly style="background-color: #ffffff;"
+          (click)="endDate.toggle()" formControlName="endDate" ngbDatepicker #endDate="ngbDatepicker">
+      </div>
+      <div class="col-md-1"></div>
+      <div class="col-auto" style="margin-top:28px">
+        <button class="btn btn-outline-success" (click)="getDetailsByfuelDealerCustomerMapIdId()">
+          view
+        </button>
+      </div>
+    </div>
+    <br><br>
+  </form>
+  <hr>
+  <div *ngIf="isAllCreditAccount">
+    <div class="row">
+      <div class="col-lg-1">
+        <button type="button" class="btn btn-outline-success my-2 my-sm-0"
+          (click)="exportexcelForAllCredit()">Download</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="card-body table-responsive">
+        <table id="excel-tableAllCredit" class="table table-hover b">
+          <thead>
+            <tr>
+              <th style="text-align: center;">VeelsID</th>
+              <th style="text-align: center;">petrol pump name</th>
+              <th style="text-align: center;">oil company</th>
+              <th style="text-align: center;">mapped date</th>
+              <th style="text-align: center;">customer name</th>
+              <th style="text-align: center;">key person name</th>
+              <th style="text-align: center;">key person mobile no.</th>
+              <th style="text-align: center;">credit limit amount</th>
+              <th style="text-align: center;">credit limit days</th>
+              <th style="text-align: center;">previous outstanding</th>
+              <th style="text-align: center;">current outstanding amount</th>
+              <th style="text-align: center;">payment score lifetime</th>
+              <th style="text-align: center;">payment score last 5</th>
+              <th style="text-align: center;">rating</th>
+              <th style="text-align: center;">community alert</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let corporate of allCreditAccByDealerList1">
+            <tr>
+              <td style="text-align: center;">{{FuelVeelsId}}</td>
+              <td style="text-align: center;">{{companyName}}</td>
+              <td style="text-align: center;">{{brandName}}</td>
+              <td style="text-align: center;">
+                {{corporate.mappingCreatedDate | date:"mediumDate"}}</td>
+              <td style="text-align: center;">
+                {{corporate.companyName}}
+              </td>
+              <td style="text-align: center;">
+                <span *ngIf="corporate.mappingPreviousStatus == 'TRUE' ">{{corporate.mappingCustomerName}}
+                </span>
+                <span *ngIf="corporate.mappingPreviousStatus == 'FALSE' ">
+                  {{corporate.hostName}}
+                </span>
+              </td>
+              <td style="text-align: center;">
+                {{corporate.hostPhone}}
+              </td>
+              <td style="text-align: center;">
+                <span *ngIf="corporate.maxCreditAmount !='undefined'">
+                  {{corporate.maxCreditAmount}}
+                </span>
+              </td>
+              <td style="text-align: center;">
+                {{corporate.creditDayLimit}}</td>
+              <td style="text-align: center;">{{corporate.previousOutstand | number:'1.2-2'}}</td>
+              <td style="text-align: center;">
+                <span *ngIf="corporate.mappingStatus == 'ACTIVE'">
+                  <span
+                    *ngIf=" ((corporate.totalCRAmt - corporate.totalDiscount - corporate.totalInvPaidAmt) ++ (corporate.previousOutstand)) < 0">
+                    {{((corporate.totalCRAmt - corporate.totalDiscount -
+                    corporate.totalInvPaidAmt) ++ (corporate.previousOutstand)) *(-1) |
+                    number:'1.2-2'}}
+                    CR
+                  </span>
+                  <span
+                    *ngIf="((corporate.totalCRAmt - corporate.totalDiscount - corporate.totalInvPaidAmt) ++ (corporate.previousOutstand)) >= 0">
+                    <span
+                      *ngIf="((corporate.maxCreditAmount * 90)/100) <= ((corporate.totalCRAmt - corporate.totalDiscount - corporate.totalInvPaidAmt) ++ (corporate.previousOutstand))"
+                      style="color: red;">
+                      {{((corporate.totalCRAmt - corporate.totalDiscount -
+                      corporate.totalInvPaidAmt) ++ (corporate.previousOutstand)) |
+                      number:'1.2-2'}}
+                    </span>
+                    <span
+                      *ngIf="((corporate.maxCreditAmount *90)/100) > ((corporate.totalCRAmt - corporate.totalDiscount - corporate.totalInvPaidAmt) ++ (corporate.previousOutstand))">
+                      {{((corporate.totalCRAmt - corporate.totalDiscount -
+                      corporate.totalInvPaidAmt) ++ (corporate.previousOutstand)) |
+                      number:'1.2-2'}}
+                    </span>
+                  </span>
+                </span>
+                <span *ngIf="corporate.mappingStatus != 'ACTIVE'">
+                  -
+                </span>
+              </td>
+              <td style="text-align: center;">
+                <span *ngIf="(corporate.creditDayLimit)>=(corporate.pendingDays)">
+                  {{corporate.pendingDays}}
+                </span>
+                <span *ngIf="(corporate.creditDayLimit)<(corporate.pendingDays)" style="color: red;">
+                  {{corporate.pendingDays}}
+                </span>
+              </td>
+              <td style="text-align: center;">
+                <svg width="25" height="25" viewBox="0 0 25 25" aria-label="clap">
+                  <g fill-rule="evenodd">
+                    <path
+                      d="M11.74 0l.76 2.97.76-2.97zM14.81 3.78l1.84-2.56-1.42-.47zM8.38 1.22l1.84 2.56L9.8.75zM20.38 21.62a5.11 5.11 0 0 1-3.16 1.61l.49-.45c2.88-2.89 3.45-5.98 1.69-9.21l-1.1-1.94-.96-2.02c-.31-.67-.23-1.18.25-1.55a.84.84 0 0 1 .66-.16c.34.05.66.28.88.6l2.85 5.02c1.18 1.97 1.38 5.12-1.6 8.1M7.1 21.1l-5.02-5.02a1 1 0 0 1 .7-1.7 1 1 0 0 1 .72.3l2.6 2.6a.44.44 0 0 0 .63-.62L4.1 14.04l-1.75-1.75a1 1 0 1 1 1.41-1.41l4.15 4.15a.44.44 0 0 0 .63 0 .44.44 0 0 0 0-.62L4.4 10.26 3.22 9.08a1 1 0 0 1 0-1.4 1.02 1.02 0 0 1 1.41 0l1.18 1.16L9.96 13a.44.44 0 0 0 .62 0 .44.44 0 0 0 0-.63L6.43 8.22a.99.99 0 0 1-.3-.7.99.99 0 0 1 .3-.7 1 1 0 0 1 1.41 0l7 6.98a.44.44 0 0 0 .7-.5l-1.35-2.85c-.31-.68-.23-1.19.25-1.56a.85.85 0 0 1 .66-.16c.34.06.66.28.88.6L18.63 14c1.57 2.88 1.07 5.54-1.55 8.16a5.62 5.62 0 0 1-5.06 1.65 9.35 9.35 0 0 1-4.93-2.72zM11 5.98l2.56 2.56c-.5.6-.56 1.41-.15 2.28l.26.56-4.25-4.25a.98.98 0 0 1-.12-.45 1 1 0 0 1 .29-.7 1.02 1.02 0 0 1 1.41 0zm8.89 2.06c-.38-.56-.9-.92-1.49-1.01a1.74 1.74 0 0 0-1.34.33c-.38.29-.61.65-.71 1.06a2.1 2.1 0 0 0-1.1-.56 1.78 1.78 0 0 0-.99.13l-2.64-2.64a1.88 1.88 0 0 0-2.65 0 1.86 1.86 0 0 0-.48.85 1.89 1.89 0 0 0-2.67-.01 1.87 1.87 0 0 0-.5.9c-.76-.75-2-.75-2.7-.04a1.88 1.88 0 0 0 0 2.66c-.3.12-.61.29-.87.55a1.88 1.88 0 0 0 0 2.66l.62.62a1.88 1.88 0 0 0-.9 3.16l5.01 5.02c1.6 1.6 3.52 2.64 5.4 2.96a7.16 7.16 0 0 0 1.18.1c1.03 0 2-.25 2.9-.7A5.9 5.9 0 0 0 21 22.24c3.34-3.34 3.08-6.93 1.74-9.17l-2.87-5.04z">
+                    </path>
+                  </g>
+                </svg>
+                <span>{{(corporate.paymentAllAvgAmount/corporate.paymentAllCount)| number:
+                  '1.0-0'}}</span>
+              </td>
+              <td *ngIf="(corporate.paymentCount>5)" style="text-align: center;">
+                <svg width="25" height="25" viewBox="0 0 25 25" aria-label="clap">
+                  <g fill-rule="evenodd">
+                    <path
+                      d="M11.74 0l.76 2.97.76-2.97zM14.81 3.78l1.84-2.56-1.42-.47zM8.38 1.22l1.84 2.56L9.8.75zM20.38 21.62a5.11 5.11 0 0 1-3.16 1.61l.49-.45c2.88-2.89 3.45-5.98 1.69-9.21l-1.1-1.94-.96-2.02c-.31-.67-.23-1.18.25-1.55a.84.84 0 0 1 .66-.16c.34.05.66.28.88.6l2.85 5.02c1.18 1.97 1.38 5.12-1.6 8.1M7.1 21.1l-5.02-5.02a1 1 0 0 1 .7-1.7 1 1 0 0 1 .72.3l2.6 2.6a.44.44 0 0 0 .63-.62L4.1 14.04l-1.75-1.75a1 1 0 1 1 1.41-1.41l4.15 4.15a.44.44 0 0 0 .63 0 .44.44 0 0 0 0-.62L4.4 10.26 3.22 9.08a1 1 0 0 1 0-1.4 1.02 1.02 0 0 1 1.41 0l1.18 1.16L9.96 13a.44.44 0 0 0 .62 0 .44.44 0 0 0 0-.63L6.43 8.22a.99.99 0 0 1-.3-.7.99.99 0 0 1 .3-.7 1 1 0 0 1 1.41 0l7 6.98a.44.44 0 0 0 .7-.5l-1.35-2.85c-.31-.68-.23-1.19.25-1.56a.85.85 0 0 1 .66-.16c.34.06.66.28.88.6L18.63 14c1.57 2.88 1.07 5.54-1.55 8.16a5.62 5.62 0 0 1-5.06 1.65 9.35 9.35 0 0 1-4.93-2.72zM11 5.98l2.56 2.56c-.5.6-.56 1.41-.15 2.28l.26.56-4.25-4.25a.98.98 0 0 1-.12-.45 1 1 0 0 1 .29-.7 1.02 1.02 0 0 1 1.41 0zm8.89 2.06c-.38-.56-.9-.92-1.49-1.01a1.74 1.74 0 0 0-1.34.33c-.38.29-.61.65-.71 1.06a2.1 2.1 0 0 0-1.1-.56 1.78 1.78 0 0 0-.99.13l-2.64-2.64a1.88 1.88 0 0 0-2.65 0 1.86 1.86 0 0 0-.48.85 1.89 1.89 0 0 0-2.67-.01 1.87 1.87 0 0 0-.5.9c-.76-.75-2-.75-2.7-.04a1.88 1.88 0 0 0 0 2.66c-.3.12-.61.29-.87.55a1.88 1.88 0 0 0 0 2.66l.62.62a1.88 1.88 0 0 0-.9 3.16l5.01 5.02c1.6 1.6 3.52 2.64 5.4 2.96a7.16 7.16 0 0 0 1.18.1c1.03 0 2-.25 2.9-.7A5.9 5.9 0 0 0 21 22.24c3.34-3.34 3.08-6.93 1.74-9.17l-2.87-5.04z">
+                    </path>
+                  </g>
+                </svg>
+                <span>{{(corporate.lastFiveSum/5)| number: '1.0-0'}}</span>
+              </td>
+              <td *ngIf="(corporate.paymentCount<=5)" style="text-align: center;">
+                <svg width="25" height="25" viewBox="0 0 25 25" aria-label="clap">
+                  <g fill-rule="evenodd">
+                    <path
+                      d="M11.74 0l.76 2.97.76-2.97zM14.81 3.78l1.84-2.56-1.42-.47zM8.38 1.22l1.84 2.56L9.8.75zM20.38 21.62a5.11 5.11 0 0 1-3.16 1.61l.49-.45c2.88-2.89 3.45-5.98 1.69-9.21l-1.1-1.94-.96-2.02c-.31-.67-.23-1.18.25-1.55a.84.84 0 0 1 .66-.16c.34.05.66.28.88.6l2.85 5.02c1.18 1.97 1.38 5.12-1.6 8.1M7.1 21.1l-5.02-5.02a1 1 0 0 1 .7-1.7 1 1 0 0 1 .72.3l2.6 2.6a.44.44 0 0 0 .63-.62L4.1 14.04l-1.75-1.75a1 1 0 1 1 1.41-1.41l4.15 4.15a.44.44 0 0 0 .63 0 .44.44 0 0 0 0-.62L4.4 10.26 3.22 9.08a1 1 0 0 1 0-1.4 1.02 1.02 0 0 1 1.41 0l1.18 1.16L9.96 13a.44.44 0 0 0 .62 0 .44.44 0 0 0 0-.63L6.43 8.22a.99.99 0 0 1-.3-.7.99.99 0 0 1 .3-.7 1 1 0 0 1 1.41 0l7 6.98a.44.44 0 0 0 .7-.5l-1.35-2.85c-.31-.68-.23-1.19.25-1.56a.85.85 0 0 1 .66-.16c.34.06.66.28.88.6L18.63 14c1.57 2.88 1.07 5.54-1.55 8.16a5.62 5.62 0 0 1-5.06 1.65 9.35 9.35 0 0 1-4.93-2.72zM11 5.98l2.56 2.56c-.5.6-.56 1.41-.15 2.28l.26.56-4.25-4.25a.98.98 0 0 1-.12-.45 1 1 0 0 1 .29-.7 1.02 1.02 0 0 1 1.41 0zm8.89 2.06c-.38-.56-.9-.92-1.49-1.01a1.74 1.74 0 0 0-1.34.33c-.38.29-.61.65-.71 1.06a2.1 2.1 0 0 0-1.1-.56 1.78 1.78 0 0 0-.99.13l-2.64-2.64a1.88 1.88 0 0 0-2.65 0 1.86 1.86 0 0 0-.48.85 1.89 1.89 0 0 0-2.67-.01 1.87 1.87 0 0 0-.5.9c-.76-.75-2-.75-2.7-.04a1.88 1.88 0 0 0 0 2.66c-.3.12-.61.29-.87.55a1.88 1.88 0 0 0 0 2.66l.62.62a1.88 1.88 0 0 0-.9 3.16l5.01 5.02c1.6 1.6 3.52 2.64 5.4 2.96a7.16 7.16 0 0 0 1.18.1c1.03 0 2-.25 2.9-.7A5.9 5.9 0 0 0 21 22.24c3.34-3.34 3.08-6.93 1.74-9.17l-2.87-5.04z">
+                    </path>
+                  </g>
+                </svg>
+                <span>{{(corporate.lastFiveSum/corporate.paymentCount)| number: '1.0-0'}}</span>
+              </td>
+              <td *ngIf="!corporate.paymentCount" style="text-align: center;">
+                <svg width="25" height="25" viewBox="0 0 25 25" aria-label="clap">
+                  <g fill-rule="evenodd">
+                    <path
+                      d="M11.74 0l.76 2.97.76-2.97zM14.81 3.78l1.84-2.56-1.42-.47zM8.38 1.22l1.84 2.56L9.8.75zM20.38 21.62a5.11 5.11 0 0 1-3.16 1.61l.49-.45c2.88-2.89 3.45-5.98 1.69-9.21l-1.1-1.94-.96-2.02c-.31-.67-.23-1.18.25-1.55a.84.84 0 0 1 .66-.16c.34.05.66.28.88.6l2.85 5.02c1.18 1.97 1.38 5.12-1.6 8.1M7.1 21.1l-5.02-5.02a1 1 0 0 1 .7-1.7 1 1 0 0 1 .72.3l2.6 2.6a.44.44 0 0 0 .63-.62L4.1 14.04l-1.75-1.75a1 1 0 1 1 1.41-1.41l4.15 4.15a.44.44 0 0 0 .63 0 .44.44 0 0 0 0-.62L4.4 10.26 3.22 9.08a1 1 0 0 1 0-1.4 1.02 1.02 0 0 1 1.41 0l1.18 1.16L9.96 13a.44.44 0 0 0 .62 0 .44.44 0 0 0 0-.63L6.43 8.22a.99.99 0 0 1-.3-.7.99.99 0 0 1 .3-.7 1 1 0 0 1 1.41 0l7 6.98a.44.44 0 0 0 .7-.5l-1.35-2.85c-.31-.68-.23-1.19.25-1.56a.85.85 0 0 1 .66-.16c.34.06.66.28.88.6L18.63 14c1.57 2.88 1.07 5.54-1.55 8.16a5.62 5.62 0 0 1-5.06 1.65 9.35 9.35 0 0 1-4.93-2.72zM11 5.98l2.56 2.56c-.5.6-.56 1.41-.15 2.28l.26.56-4.25-4.25a.98.98 0 0 1-.12-.45 1 1 0 0 1 .29-.7 1.02 1.02 0 0 1 1.41 0zm8.89 2.06c-.38-.56-.9-.92-1.49-1.01a1.74 1.74 0 0 0-1.34.33c-.38.29-.61.65-.71 1.06a2.1 2.1 0 0 0-1.1-.56 1.78 1.78 0 0 0-.99.13l-2.64-2.64a1.88 1.88 0 0 0-2.65 0 1.86 1.86 0 0 0-.48.85 1.89 1.89 0 0 0-2.67-.01 1.87 1.87 0 0 0-.5.9c-.76-.75-2-.75-2.7-.04a1.88 1.88 0 0 0 0 2.66c-.3.12-.61.29-.87.55a1.88 1.88 0 0 0 0 2.66l.62.62a1.88 1.88 0 0 0-.9 3.16l5.01 5.02c1.6 1.6 3.52 2.64 5.4 2.96a7.16 7.16 0 0 0 1.18.1c1.03 0 2-.25 2.9-.7A5.9 5.9 0 0 0 21 22.24c3.34-3.34 3.08-6.93 1.74-9.17l-2.87-5.04z">
+                    </path>
+                  </g>
+                </svg>
+              </td>
+              <td *ngIf="!corporate.paymentCount" style="text-align: center;">
+              </td>
+              <td style="text-align: center;" *ngIf="(corporate.paymentCount>5)">
+                <span *ngIf="(corporate.lastFiveSum/5) <= 21 || (corporate.lastFiveSum/5) == undefined"
+                  style="cursor:pointer;color: gold;">
+                  <i class="fas fa-star"></i>
+                </span>
+                <span *ngIf="(corporate.lastFiveSum/5) >= 21 && (corporate.lastFiveSum/5) <= 40"
+                  style="cursor:pointer;color: gold;">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </span>
+                <span *ngIf="(corporate.lastFiveSum/5) >= 41 && (corporate.lastFiveSum/5) <= 60"
+                  style="cursor:pointer;color: gold;">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </span>
+                <span *ngIf="(corporate.lastFiveSum/5) >= 61 && (corporate.lastFiveSum/5) <= 80"
+                  style="cursor:pointer;color: gold;">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </span>
+                <span *ngIf="(corporate.lastFiveSum/5) >= 80" style="cursor:pointer;color: gold;">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </span>
+              </td>
+              <td style="text-align: center;" *ngIf="(corporate.paymentCount<=5)">
+                <span
+                  *ngIf="(corporate.lastFiveSum/corporate.paymentCount) <= 21 || (corporate.lastFiveSum/corporate.paymentCount) == undefined"
+                  style="cursor:pointer;color: gold;">
+                  <i class="fas fa-star"></i>
+                </span>
+                <span
+                  *ngIf="(corporate.lastFiveSum/corporate.paymentCount) >= 21 && (corporate.lastFiveSum/corporate.paymentCount) <= 40"
+                  style="cursor:pointer;color: gold;">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </span>
+                <span
+                  *ngIf="(corporate.lastFiveSum/corporate.paymentCount) >= 41 && (corporate.lastFiveSum/corporate.paymentCount) <= 60"
+                  style="cursor:pointer;color: gold;">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </span>
+                <span
+                  *ngIf="(corporate.lastFiveSum/corporate.paymentCount) >= 61 && (corporate.lastFiveSum/corporate.paymentCount) <= 80"
+                  style="cursor:pointer;color: gold;">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </span>
+                <span *ngIf="(corporate.lastFiveSum/corporate.paymentCount) >= 80" style="cursor:pointer;color: gold;">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
+  <div *ngIf="isActiveCreditAccount">
+    <button class="btn btn-outline-secondary my-2 my-sm-0" type="button" (click)="downloadExcel()">
+      download
+    </button>
+    <div class="card-body table-responsive">
+      <table class="table table-hover b">
+        <thead>
+          <tr>
+            <th style="text-align: center;">VeelsID</th>
+            <th style="text-align: center;">petrol pump name</th>
+            <th style="text-align: center;">oil company</th>
+            <th style="text-align: center;">mapped date</th>
+            <th style="text-align: center;">customer name</th>
+            <th style="text-align: center;">previous outstanding</th>
+            <th style="text-align: center;">credit limit</th>
+            <th style="text-align: center;">credit days limit</th>
+            <th style="text-align: center;">total purchase</th>
+            <th style="text-align: center;">total payment</th>
+            <th style="text-align: center;">total rewards</th>
+            <th style="text-align: center;">net outstanding </th>
+            <th style="text-align: center;">pending days </th>
+          </tr>
+        </thead>
+        <tbody
+          *ngFor="let corporate of allActiveCreditAccByDealer; let i = index">
+          <tr>
+            <td style="text-align: center;">{{FuelVeelsId}}</td>
+            <td style="text-align: center;">{{companyName}}</td>
+            <td style="text-align: center;">{{brandName}}</td>
+            <td style="text-align: center;">
+              {{corporate.mappingCreatedDate | date:"mediumDate"}}</td>
+            <td style="text-align: center;">
+              <span *ngIf="corporate.mappingPreviousStatus == 'TRUE' ">
+                <b> {{corporate.companyName}} </b> <br>
+                {{corporate.mappingCustomerName}} <br>
+                {{corporate.hostPhone}}
+              </span>
+              <span *ngIf="corporate.mappingPreviousStatus == 'FALSE' ">
+                <b> {{corporate.companyName}} </b> <br>
+                {{corporate.hostName}} <br>
+                {{corporate.hostPhone}}
+              </span>
+            </td>
+            <td style="text-align: center;">
+              {{corporate.previousOutstand | number:'1.2-2'}}
+            </td>
+            <td style="text-align: center;">
+              <span *ngIf="corporate.maxCreditAmount !='undefined'">
+                {{corporate.maxCreditAmount}}
+              </span>
+            </td>
+            <td style="text-align: center; ">{{corporate.creditDayLimit}}</td>
+            <td style="text-align: center;">
+              <span>
+                {{corporate.totalCRAmt | number:'1.2-2'}}
+              </span>
+            </td>
+            <td style="text-align: center;">
+              <span *ngIf="corporate.mappingStatus == 'ACTIVE'">
+                {{corporate.totalInvPaidAmt | number:'1.2-2'}}
+              </span>
+              <span *ngIf="corporate.mappingStatus != 'ACTIVE'">
+                -
+              </span>
+            </td>
+            <td style="text-align: center;">
+              <span>
+                {{corporate.totalDiscount | number:'1.2-2'}}
+              </span>
+            </td>
+            <td style="text-align: center;  ">
+              <span *ngIf="corporate.mappingStatus == 'ACTIVE'">
+                <span
+                  *ngIf=" ((corporate.totalCRAmt - corporate.totalDiscount - corporate.totalInvPaidAmt) ++ (corporate.previousOutstand)) < 0">
+                  {{((corporate.totalCRAmt - corporate.totalDiscount -
+                  corporate.totalInvPaidAmt) ++ (corporate.previousOutstand)) *(-1) |
+                  number:'1.2-2'}}
+                  CR
+                </span>
+                <span
+                  *ngIf="((corporate.totalCRAmt - corporate.totalDiscount - corporate.totalInvPaidAmt) ++ (corporate.previousOutstand)) >= 0">
+                  <span
+                    *ngIf="((corporate.maxCreditAmount * 90)/100) <= ((corporate.totalCRAmt - corporate.totalDiscount - corporate.totalInvPaidAmt) ++ (corporate.previousOutstand))"
+                    style="color: red;">
+                    {{((corporate.totalCRAmt - corporate.totalDiscount -
+                    corporate.totalInvPaidAmt) ++ (corporate.previousOutstand)) |
+                    number:'1.2-2'}}
+                  </span>
+                  <span
+                    *ngIf="((corporate.maxCreditAmount *90)/100) > ((corporate.totalCRAmt - corporate.totalDiscount - corporate.totalInvPaidAmt) ++ (corporate.previousOutstand))">
+                    {{((corporate.totalCRAmt - corporate.totalDiscount -
+                    corporate.totalInvPaidAmt) ++ (corporate.previousOutstand)) |
+                    number:'1.2-2'}}
+                  </span>
+                </span>
+              </span>
+              <span *ngIf="corporate.mappingStatus != 'ACTIVE'">
+                -
+              </span>
+            </td>
+            <td style="text-align: center; ">
+              <span *ngIf="(corporate.creditDayLimit)>=(corporate.pendingDays)">
+                {{corporate.pendingDays}}
 
-  <img [src]="avatar" alt="" class="align-self-end h-100px" />
+              </span>
+              <span *ngIf="(corporate.creditDayLimit)<(corporate.pendingDays)" style="color: red;">
+                {{corporate.pendingDays}}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- <ngb-pagination [collectionSize]="allCreditAccByDealerList.length" [(page)]="page" [pageSize]="pageSize"
+      [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination> -->
+  </div>
+  <div *ngIf="isTxnwiseCreditSales">
+    <button class="btn btn-outline-secondary my-2 my-sm-0" type="button" (click)="downloadExcelForTxnCredit()">
+      download
+    </button>
+    <div class="row">
+      <div class="col col-xl-12 col-lg-12">
+        <div class="card-body table-responsive">
+          <table class="table table-hover b">
+            <thead>
+              <tr>
+                <th style="text-align: center;">VeelsID</th>
+                <th style="text-align: center;">petrol pump name</th>
+                <th style="text-align: center;">oil company</th>
+                <th style="text-align: center;">date</th>
+                <th style="text-align: center;">customer name</th>
+                <th style="text-align: center;">key person name</th>
+                <th style="text-align: center;">key person mobile </th>
+                <th style="text-align: center;">product</th>
+                <th style="text-align: center;">vehicle no</th>
+                <th style="text-align: center;">other details</th>
+                <th style="text-align: center;">credit quantity</th>
+                <th style="text-align: center;">credit amount</th>
+                <th style="text-align: center;">created by</th>
+              </tr>
+            </thead>
+            <tbody
+              *ngFor="let data of allCreditReq ; let i = index">
+              <tr>
+                <td *ngIf="IsDealerId" style="text-align: center;">{{FuelVeelsId}}</td>
+                <td *ngIf="IsDealerId" style="text-align: center;">{{companyName}}</td>
+                <td *ngIf="IsDealerId" style="text-align: center;">{{brandName}}</td>
+                <td *ngIf="!IsDealerId" style="text-align: center;">{{data.FuelVeelsId}}</td>
+                <td *ngIf="!IsDealerId" style="text-align: center;">{{data.dealerCompany}}</td>
+                <td *ngIf="!IsDealerId" style="text-align: center;">{{data.brandName}}</td>
+                <td>
+                  {{data.estimatedRefuelDate | date:'mediumDate'}}
+                </td>
+                <td>
+                  <span *ngIf="data.mappingPreviousStatus =='TRUE'">
+                    {{data.mappingCompanyName}}
+                  </span>
+                  <span *ngIf="data.mappingPreviousStatus =='FALSE'">
+                    {{data.companyName}}
+                  </span>
+                </td>
+                <td style="text-align: center;">
+                  <span *ngIf="data.mappingPreviousStatus == 'TRUE'">
+                    {{data.mappingCustomerName}}
+                  </span>
+                  <span *ngIf="data.mappingPreviousStatus =='FALSE'">
+                    {{data.hostName}}
+                  </span>
+                </td>
+                <td style="text-align: center;">
+                  {{data.hostPhone}}
+                </td>
+                <td style="text-align: center;">
+                  <span *ngIf="data.purpose == 'CREDIT'">
+                    {{data.productName}}
+                  </span>
+                  <span *ngIf="data.purpose == 'LUBE'">
+                    {{data.productName}}
+                  </span>
+                  <span *ngIf="data.purpose == 'AdvAmt'">
+                    ADVANCE
+                  </span>
+                </td>
+                <td style="text-align: center;">
+                  <span *ngIf="data.purpose == 'CREDIT'">
+                    <span *ngIf="data.vehicleNumber == 'undefined'">
+                    </span>
+                    <span *ngIf="data.vehicleNumber != 'undefined'">
+                      {{data.vehicleNumber}}
+                    </span>
+                  </span>
+                  <span *ngIf="data.purpose == 'LUBE'">
+                    <span *ngIf="data.vehicleNumber == 'undefined'">
+                    </span>
+                    <span *ngIf="data.vehicleNumber != 'undefined'">
+                      {{data.vehicleNumber}}
+                    </span>
+                  </span>
+                </td>
+                <td style="text-align: center;">
+                  <span *ngIf="data.purpose == 'CREDIT'">
+                    <span *ngIf="data.vehicleNumber == 'undefined'">
+                      {{data.manualCrNumber}}
+                    </span>
+                    <span *ngIf="data.vehicleNumber != 'undefined'">
+                      {{data.manualCrNumber}}
+                    </span>
+                  </span>
+                  <span *ngIf="data.purpose == 'LUBE'">
+                    <span *ngIf="data.vehicleNumber == 'undefined'">
+                      {{data.lubeName}}/ {{data.manualCrNumber}}
+                    </span>
+                    <span *ngIf="data.vehicleNumber != 'undefined'">
+                      {{data.lubeName}} / {{data.manualCrNumber}}
+                    </span>
+                  </span>
+                  <span *ngIf="data.purpose == 'AdvAmt'">
+                    <span *ngIf="data.advMobile == 'undefined'">
+                      {{data.advName}} {{data.manualCrNumber}}
+                    </span>
+                    <span *ngIf="data.advMobile != 'undefined' ">
+                      {{data.advName}} {{data.advMobile}} {{data.manualCrNumber}}
+                    </span>
+                  </span>
+                </td>
+                <td style="text-align: center;">
+                  <span *ngIf="data.purpose == 'CREDIT'">
+                    <span *ngIf="data.transactionStatus == 'CANCEL'">
+                      CANCELLED
+                    </span>
+                    <span *ngIf="data.transactionStatus != 'CANCEL'">
+                      <span *ngIf="data.transactionStatus != 'PENDING'">
+                        <span *ngIf="data.productCategory == 'CNG'">
+                          {{data.actualCreditQuantity | number:'1.2-2'}} Kg
+                        </span>
+                        <span *ngIf="data.productCategory != 'CNG'">
+                          {{data.actualCreditQuantity | number:'1.2-2'}} Ltrs
+                        </span>
+                      </span>
+                      <span *ngIf="data.transactionStatus == 'PENDING'">
+                        PENDING
+                      </span>
+                    </span>
+                  </span>
+                  <span *ngIf="data.purpose == 'LUBE'">
+                    <span *ngIf="data.lubeUnit != 'undefined'">
+                      {{data.actualCreditQuantity | number:'1.2-2'}} {{data.lubeUnit}}
+                    </span>
+                    <span *ngIf="data.lubeUnit == 'undefined'">
+                      {{data.actualCreditQuantity | number:'1.2-2'}}
+                    </span>
+                  </span>
+                  <span *ngIf="data.purpose == 'AdvAmt'">
+                    -
+                  </span>
+                </td>
+                <td style="text-align: center;">
+                  <span *ngIf="data.transactionStatus != 'CANCEL'">
+                    <span *ngIf="data.transactionStatus != 'PENDING'">
+                      ₹{{data.creditAmount | number:'1.2-2'}}
+                    </span>
+                    <span *ngIf="data.transactionStatus == 'PENDING'">
+                      PENDING
+                    </span>
+                  </span>
+                  <span *ngIf="data.transactionStatus == 'CANCEL'">
+                    CANCELLED
+                  </span>
+                </td>
+                <td style="text-align: center;">
+                  <span *ngIf="data.byManager == 'FALSE' ">
+                    {{data.firstName}} {{data.lastName}}
+                  </span>
+                  <span *ngIf="data.byManager == 'TRUE' ">
+                    {{data.managerName}}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- <ngb-pagination [collectionSize]="pageLength" [(page)]="page" [pageSize]="pageSize" [maxSize]="5"
+            [rotate]="true" [boundaryLinks]="true">
+          </ngb-pagination> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isTxnWiseCreditPayments">
+    <div class="col-auto">
+      <button class="btn btn-outline-secondary my-2 my-sm-0" type="button" (click)="excelDownload()">
+        download </button>
+    </div>
+    <div class="card-body table-responsive">
+      <div class="row">
+      </div><br>
+      <table class="table table-hover b">
+        <thead>
+          <tr>
+            <th style="text-align: center;">VeelsID</th>
+            <th style="text-align: center;">petrol pump name</th>
+            <th style="text-align: center;">oil company</th>
+            <th style="text-align: center;">date</th>
+            <th style="text-align: center;">customer name</th>
+            <th style="text-align: center;">key person name</th>
+            <th style="text-align: center;">key person mobile</th>
+            <th style="text-align: center;">payment mode</th>
+            <th style="text-align: center;">amount</th>
+            <th style="text-align: center;">payment score</th>
+            <th style="text-align: center;">pending days</th>
+            <th style="text-align: center;">account</th>
+          </tr>
+        </thead>
+        <tbody
+          *ngFor="let data of crPaymentDetails; let i = index">
+          <tr>
+            <td *ngIf="isCreditPayment" style="text-align: center;">{{FuelVeelsId}}</td>
+            <td *ngIf="isCreditPayment" style="text-align: center;">{{companyName}}</td>
+            <td *ngIf="isCreditPayment" style="text-align: center;">{{brandName}}</td>
+            <td *ngIf="!isCreditPayment" style="text-align: center;">{{data.FuelVeelsId}}</td>
+            <td *ngIf="!isCreditPayment" style="text-align: center;">{{data.dealerCompany}}</td>
+            <td *ngIf="!isCreditPayment" style="text-align: center;">{{data.brandName}}</td>
+            <td style="text-align: center;"> {{data.transacDate | date:"mediumDate"}} </td>
+            <td style="text-align: center;">
+              <span *ngIf="data.mappingPreviousStatus =='TRUE'">
+                {{data.mappingCompanyName}}
+              </span>
+              <span *ngIf="data.mappingPreviousStatus =='FALSE'">
+                {{data.companyName}}
+              </span>
+            </td>
+            <td style="text-align: center;">
+              <span *ngIf="data.mappingPreviousStatus =='TRUE'">
+                {{data.mappingCustomerName}}
+              </span>
+              <span *ngIf="data.mappingPreviousStatus =='FALSE'">
+                {{data.hostName}}
+              </span>
+            </td>
+            <td style="text-align: center;"> {{data.hostPhone}} </td>
+            <td style="text-align: center;"> {{data.paymentMethod}} </td>
+            <td style="text-align: center;"> {{data.grandTotalAmount | number:'1.2-2'}} </td>
+            <td style="text-align: center;">
+              <svg width="25" height="25" viewBox="0 0 25 25" aria-label="clap">
+                <g fill-rule="evenodd">
+                  <path
+                    d="M11.74 0l.76 2.97.76-2.97zM14.81 3.78l1.84-2.56-1.42-.47zM8.38 1.22l1.84 2.56L9.8.75zM20.38 21.62a5.11 5.11 0 0 1-3.16 1.61l.49-.45c2.88-2.89 3.45-5.98 1.69-9.21l-1.1-1.94-.96-2.02c-.31-.67-.23-1.18.25-1.55a.84.84 0 0 1 .66-.16c.34.05.66.28.88.6l2.85 5.02c1.18 1.97 1.38 5.12-1.6 8.1M7.1 21.1l-5.02-5.02a1 1 0 0 1 .7-1.7 1 1 0 0 1 .72.3l2.6 2.6a.44.44 0 0 0 .63-.62L4.1 14.04l-1.75-1.75a1 1 0 1 1 1.41-1.41l4.15 4.15a.44.44 0 0 0 .63 0 .44.44 0 0 0 0-.62L4.4 10.26 3.22 9.08a1 1 0 0 1 0-1.4 1.02 1.02 0 0 1 1.41 0l1.18 1.16L9.96 13a.44.44 0 0 0 .62 0 .44.44 0 0 0 0-.63L6.43 8.22a.99.99 0 0 1-.3-.7.99.99 0 0 1 .3-.7 1 1 0 0 1 1.41 0l7 6.98a.44.44 0 0 0 .7-.5l-1.35-2.85c-.31-.68-.23-1.19.25-1.56a.85.85 0 0 1 .66-.16c.34.06.66.28.88.6L18.63 14c1.57 2.88 1.07 5.54-1.55 8.16a5.62 5.62 0 0 1-5.06 1.65 9.35 9.35 0 0 1-4.93-2.72zM11 5.98l2.56 2.56c-.5.6-.56 1.41-.15 2.28l.26.56-4.25-4.25a.98.98 0 0 1-.12-.45 1 1 0 0 1 .29-.7 1.02 1.02 0 0 1 1.41 0zm8.89 2.06c-.38-.56-.9-.92-1.49-1.01a1.74 1.74 0 0 0-1.34.33c-.38.29-.61.65-.71 1.06a2.1 2.1 0 0 0-1.1-.56 1.78 1.78 0 0 0-.99.13l-2.64-2.64a1.88 1.88 0 0 0-2.65 0 1.86 1.86 0 0 0-.48.85 1.89 1.89 0 0 0-2.67-.01 1.87 1.87 0 0 0-.5.9c-.76-.75-2-.75-2.7-.04a1.88 1.88 0 0 0 0 2.66c-.3.12-.61.29-.87.55a1.88 1.88 0 0 0 0 2.66l.62.62a1.88 1.88 0 0 0-.9 3.16l5.01 5.02c1.6 1.6 3.52 2.64 5.4 2.96a7.16 7.16 0 0 0 1.18.1c1.03 0 2-.25 2.9-.7A5.9 5.9 0 0 0 21 22.24c3.34-3.34 3.08-6.93 1.74-9.17l-2.87-5.04z">
+                  </path>
+                </g>
+              </svg>
+              <span>{{data.avgPayment| number: '1.0-0'}}</span>
+            </td>
+            <td style="text-align: center;"> {{data.pendingDays}} </td>
+            <td style="text-align: center;">
+              {{data.bankName}} {{data.accountNumber}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- <ngb-pagination [collectionSize]="crPaymentDetails.length" [(page)]="page" [pageSize]="pageSize" [maxSize]="5"
+        [rotate]="true" [boundaryLinks]="true"></ngb-pagination> -->
+    </div>
+  </div>
 </div>

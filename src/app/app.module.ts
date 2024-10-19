@@ -6,7 +6,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { ClipboardModule } from 'ngx-clipboard';
 import { TranslateModule } from '@ngx-translate/core';
 import { InlineSVGModule } from 'ng-inline-svg-2';
-import { NgbDatepickerModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule, NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthService } from './modules/auth/services/auth.service';
@@ -47,7 +47,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     InlineSVGModule.forRoot(),
     NgbModule,
     SweetAlert2Module.forRoot(),
-    NgxSpinnerModule,
+    NgxSpinnerModule,NgbPaginationModule,
   ],
   // providers: [
   //   {
