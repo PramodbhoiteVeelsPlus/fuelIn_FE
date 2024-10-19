@@ -1,0 +1,79 @@
+// footer {
+//   background-color: rgb(175, 173, 173);
+// }
+#footer-contact {
+    font-size: smaller;
+  }
+  
+  .avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  a {
+    cursor: pointer;
+  }
+  
+  .logo{
+    line-height: 65px;
+  }
+
+  .sticky-header {
+    position: sticky;
+    top: 0;
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    z-index: 1000;
+  }
+
+  .navbar ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-around; /* This distributes the items evenly */
+    padding: 0;
+    margin: 0;
+  }
+  
+  .navbar li {
+    display: flex;
+  }
+  
+  .navbar a {
+    text-decoration: none;
+    padding: 10px 20px;
+    color: white; /* You can change the color */
+  }
+  
+  .navbar a:hover {
+    color: #007bff; /* Change color on hover */
+  }
+  
+  .text-center {
+    // background-color: lightgrey; /* Dark background */
+    color: black;
+    padding: 20px;
+    opacity: 0.5; /* 50% transparency */
+  }
+
+  .text-shadow-example {
+    font-size: 60px;
+    color: green;
+    text-shadow: 0px -25px 10px rgba(144, 238, 144, 0.7); /* Shadow to the bottom-right */
+  }
+
+  .info-box {
+    background-color: white; /* White background for the box */
+    padding: 20px; /* Space inside the box */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    max-width: 400px; /* Maximum width of the box */
+    text-align: center; /* Center text */
+  }
+  

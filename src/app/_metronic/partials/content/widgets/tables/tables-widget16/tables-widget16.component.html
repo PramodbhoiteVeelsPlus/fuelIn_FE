@@ -39,18 +39,40 @@
                                         <th> {{ currentMonthYear }} fuel credit Payment </th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody *ngFor="let data of allfastagTransactionData">
                                     <tr>
-                                        <td> Total </td>
-                                        <td> ₹ {{sumFastagTransactionAllCurrent | number:'1.2-2'}} </td>
-                                        <td> ₹ {{sumFastagTransactionPaymentAllCurrent | number:'1.2-2'}} </td>
-                                        <td> ₹ {{lastCrSales | number:'1.2-2'}} </td>
-                                        <td> ₹ {{lastPay | number:'1.2-2'}} </td>
-                                        <td> ₹ {{sumFastagTransactionAll | number:'1.2-2'}} </td>
-                                        <td> ₹ {{sumFastagTransactionAllPre | number:'1.2-2'}} </td>
-                                        <td> ₹ {{currentCrSales | number:'1.2-2'}} </td>
-                                        <td> ₹ {{currentPay | number:'1.2-2'}} </td>
+                                        <td>
+                                            <b> {{data.entityId}} </b>
+                                        </td>
+                                        <td>
+                                            ₹ {{data.currentPurchase | number:'1.2-2'}}
+                                        </td>
+                                        <td>
+                                            ₹ {{data.currentPayment | number:'1.2-2'}}
+                                        </td>
+                                        <td>
+                                            ₹ {{data.currentFuelCreditSalesData | number:'1.2-2'}}
+
+                                        </td>
+                                        <td>
+                                            ₹ {{data.preAccountTransactionForCR | number:'1.2-2'}}
+                                        </td>
+                                        <td>
+                                            ₹ {{data.previousPurchase | number:'1.2-2'}}
+                                        </td>
+                                        <td>
+                                            ₹ {{data.previousPayment | number:'1.2-2'}}
+                                        </td>
+                                        <td>
+                                            ₹ {{data.preFuelCreditSalesData | number:'1.2-2'}}
+
+                                        </td>
+                                        <td>
+                                            ₹ {{data.currentAccountTransactionForCR | number:'1.2-2'}}
+                                        </td>
+
                                     </tr>
+
                                 </tbody>
                             </table>
                         </div>

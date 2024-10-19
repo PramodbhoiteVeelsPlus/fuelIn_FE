@@ -44,6 +44,11 @@ export class WidgetService {
   private getDayWiseCreditURL = this.baseURL + 'adminOutstand/getDayWiseCredit'; 
   private getCustomersCountDealerWiseURL = this.baseURL + 'adminDashboard/getCustomersCountDealerWise' 
   private getAllFastagTransactionDetailsURL = this.baseURL + 'fastag/getAllFastagTransactionDetails' 
+  private getAllDealerListURL = this.baseURL + 'dealerOnboarding/getAllDealerList';
+  private userOnboardingURL = this.baseURL + 'user/userOnboarding';
+  private updateDealerDemoStatusURL = this.baseURL + 'fuelVendor/updateDealerDemoStatus'; 
+  private updateDoorStepDeliveryStatusURL = this.baseURL + 'User/updateDoorStepDeliveryStatus'; 
+  private removeUserURL = this.baseURL + 'register/removeUser';
 
 
   setHeader() {
@@ -244,4 +249,53 @@ export class WidgetService {
     })
   }
 
+  // getAllDealerListURL
+  getAllDealerListPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getAllDealerListURL, body, {
+      headers: headers
+    })
+  }
+
+  // userOnboardingURL
+  userOnboardingPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.userOnboardingURL, body, {
+      headers: headers
+    })
+  }
+
+  // updateDealerDemoStatusURL
+  updateDealerDemoStatusPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateDealerDemoStatusURL, body, {
+      headers: headers
+    })
+  }
+
+  // updateDoorStepDeliveryStatusURL
+  updateDoorStepDeliveryStatusPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateDoorStepDeliveryStatusURL, body, {
+      headers: headers
+    })
+  }
+
+  // removeUserURL
+  removeUserPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.removeUserURL, body, {
+      headers: headers
+    })
+  }
 }
