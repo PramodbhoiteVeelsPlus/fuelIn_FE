@@ -187,6 +187,7 @@ import { TablesWidget15Component } from './tables/tables-widget15/tables-widget1
     FormsModule,
     NgbDatepickerModule,
     NgbPaginationModule,
+    NgxPaginationModule,
   ],
   exports: [
     // Advanced Tables
