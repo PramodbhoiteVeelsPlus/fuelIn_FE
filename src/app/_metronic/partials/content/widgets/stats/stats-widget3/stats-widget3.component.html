@@ -1,46 +1,560 @@
-<div class="card-body d-flex flex-column p-0">
-  <div class="d-flex flex-stack flex-grow-1 card-p">
-    <div class="d-flex flex-column me-2">
-      <a href="#" class="text-gray-900 text-hover-primary fw-bolder fs-3">
-        {{ title }}
-      </a>
+<br>
+<h4>Total petrol pump: {{allDealerCount}}</h4>
+<h4>Total customers: {{allCustomerCount}}</h4>
 
-      <span class="text-muted fw-bold mt-1">
-        <ng-content select="description"></ng-content>
-      </span>
+<div class="row">
+  <div class="col-xl-12 col-lg-12">
+    <div class="row">
+      <div class="my-2 mx-4 table-responsive">
+        <table class="table table-hover b">
+          <thead style="background-color: skyblue;">
+            <tr>
+              <th style="text-align: center;"> month </th>
+              <th style="text-align: center;"> petrol pump </th>
+              <th style="text-align: center;"> customers </th>
+              <th style="text-align: center;"> active petrol pump </th>
+              <th style="text-align: center;"> active customers </th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align: center;">
+                <b> jan </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;" (click)="showPumpName('jan',showPump)">
+                <b>
+                  {{firstSixMonthsPetrolPumpList1 }} &nbsp;
+                </b>
+              </td>
+
+              <td style="text-align: center; color: blue;cursor: pointer;" (click)="showCustomerName('jan',showCust)">
+                <b>
+                  {{firstSixMonthsCustomerList1}}
+                </b>
+              </td>
+
+              <td style="text-align: center; color: blue;cursor: pointer;"
+                (click)="showActiveCustomerName('jan',showActivePump)">
+                <b> {{allActiveDealer1}} </b>
+              </td>
+              <td style="text-align: center; color: blue;cursor: pointer;"
+                (click)="showActiveCustomer('jan',showActiveCust)">
+                <b> {{allActiveCustomer1Length}} </b>
+              </td>
+
+            </tr>
+
+            <tr>
+              <td style="text-align: center;">
+                <b> feb </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;" (click)="showPumpName('feb',showPump)">
+                <b>
+                  {{firstSixMonthsPetrolPumpList2 }} &nbsp;
+                </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;" (click)="showCustomerName('feb',showCust)">
+                <b>
+                  {{firstSixMonthsCustomerList2}}
+                </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;"
+                (click)="showActiveCustomerName('feb',showActivePump)">
+                <b> {{allActiveDealer2}} </b>
+              </td>
+              <td style="text-align: center;color: blue;cursor: pointer;"
+                (click)="showActiveCustomer('feb',showActiveCust)">
+                <b> {{allActiveCustomer2Length}} </b>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="text-align: center;">
+                <b> march </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;" (click)="showPumpName('march',showPump)">
+                <b>
+                  {{firstSixMonthsPetrolPumpList3 }} &nbsp;
+                </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;" (click)="showCustomerName('march',showCust)">
+                <b>
+                  {{ firstSixMonthsCustomerList3}}
+                </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;"
+                (click)="showActiveCustomerName('march',showActivePump)">
+                <b> {{allActiveDealer3}} </b>
+              </td>
+              <td style="text-align: center;color: blue;cursor: pointer;"
+                (click)="showActiveCustomer('march',showActiveCust)">
+                <b> {{allActiveCustomer3Length}} </b>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="text-align: center;">
+                <b> apr </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;" (click)="showPumpName('apr',showPump)">
+                <b>
+                  {{ firstSixMonthsPetrolPumpList4 }} &nbsp;
+                </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;" (click)="showCustomerName('apr',showCust)">
+                <b>
+                  {{firstSixMonthsCustomerList4}}
+                </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;"
+                (click)="showActiveCustomerName('apr',showActivePump)">
+                <b>{{allActiveDealer4}} </b>
+              </td>
+              <td style="text-align: center;color: blue;cursor: pointer;"
+                (click)="showActiveCustomer('apr',showActiveCust)">
+                <b> {{allActiveCustomer4Length}} </b>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="text-align: center;">
+                <b> may </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;" (click)="showPumpName('may',showPump)">
+                <b>
+                  {{firstSixMonthsPetrolPumpList5 }} &nbsp;
+                </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;" (click)="showCustomerName('may',showCust)">
+                <b>
+                  {{firstSixMonthsCustomerList5}}
+                </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;"
+                (click)="showActiveCustomerName('may',showActivePump)">
+                <b> {{allActiveDealer5}} </b>
+              </td>
+              <td style="text-align: center;color: blue;cursor: pointer;"
+                (click)="showActiveCustomer('may',showActiveCust)">
+                <b>{{allActiveCustomer5Length}} </b>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="text-align: center;">
+                <b> june </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;" (click)="showPumpName('june',showPump)">
+                <b>
+                  {{ firstSixMonthsPetrolPumpList6 }} &nbsp;
+                </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;" (click)="showCustomerName('june',showCust)">
+                <b>
+                  {{firstSixMonthsCustomerList6}}
+                </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;"
+                (click)="showActiveCustomerName('june',showActivePump)">
+                <b> {{allActiveDealer6}} </b>
+              </td>
+              <td style="text-align: center;color: blue;cursor: pointer;"
+                (click)="showActiveCustomer('june',showActiveCust)">
+                <b> {{allActiveCustomer6Length}} </b>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="text-align: center;">
+                <b> july </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;" (click)="showPumpName('july',showPump)">
+                <b>
+                  {{firstSixMonthsPetrolPumpList7 }} &nbsp;
+                </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;" (click)="showCustomerName('july',showCust)">
+                <b>
+                  {{ firstSixMonthsCustomerList7}}
+                </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;"
+                (click)="showActiveCustomerName('july',showActivePump)">
+                <b> {{allActiveDealer7}} </b>
+              </td>
+              <td style="text-align: center;color: blue;cursor: pointer;"
+                (click)="showActiveCustomer('july',showActiveCust)">
+                <b> {{allActiveCustomer7Length}} </b>
+              </td>
+
+            </tr>
+
+            <tr>
+              <td style="text-align: center;">
+                <b> aug </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;" (click)="showPumpName('aug',showPump)">
+                <b>
+                  {{ firstSixMonthsPetrolPumpList8}} &nbsp;
+                </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;" (click)="showCustomerName('aug',showCust)">
+                <b>
+                  {{firstSixMonthsCustomerList8 }}
+                </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;"
+                (click)="showActiveCustomerName('aug',showActivePump)">
+                <b> {{allActiveDealer8}} </b>
+              </td>
+              <td style="text-align: center;color: blue;cursor: pointer;"
+                (click)="showActiveCustomer('aug',showActiveCust)">
+                <b> {{allActiveCustomer8Length}} </b>
+              </td>
+
+            </tr>
+
+            <tr>
+              <td style="text-align: center;">
+                <b> sep </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;" (click)="showPumpName('sep',showPump)">
+                <b>
+                  {{ firstSixMonthsPetrolPumpList9}} &nbsp;
+                </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;" (click)="showCustomerName('sep',showCust)">
+                <b>
+                  {{firstSixMonthsCustomerList9}}
+                </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;"
+                (click)="showActiveCustomerName('sep',showActivePump)">
+                <b> {{allActiveDealer9}}</b>
+              </td>
+              <td style="text-align: center;color: blue;cursor: pointer;"
+                (click)="showActiveCustomer('sep',showActiveCust)">
+                <b> {{allActiveCustomer9Length}} </b>
+              </td>
+
+            </tr>
+
+            <tr>
+              <td style="text-align: center;">
+                <b> oct </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;" (click)="showPumpName('oct',showPump)">
+                <b>
+                  {{ firstSixMonthsPetrolPumpList10}} &nbsp;
+                </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;" (click)="showCustomerName('oct',showCust)">
+                <b>
+                  {{firstSixMonthsCustomerList10 }}
+                </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;"
+                (click)="showActiveCustomerName('oct',showActivePump)">
+                <b>{{allActiveDealer10}} </b>
+              </td>
+              <td style="text-align: center;color: blue;cursor: pointer;"
+                (click)="showActiveCustomer('oct',showActiveCust)">
+                <b> {{allActiveCustomer10Length}} </b>
+              </td>
+
+            </tr>
+
+            <tr>
+              <td style="text-align: center;">
+                <b> nov </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;" (click)="showPumpName('nov',showPump)">
+                <b>
+                  {{firstSixMonthsPetrolPumpList11}} &nbsp;
+                </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;" (click)="showCustomerName('nov',showCust)">
+                <b>
+                  {{firstSixMonthsCustomerList11 }}
+                </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;"
+                (click)="showActiveCustomerName('nov',showActivePump)">
+                <b>{{allActiveDealer11}} </b>
+              </td>
+              <td style="text-align: center;color: blue;cursor: pointer;"
+                (click)="showActiveCustomer('nov',showActiveCust)">
+                <b> {{allActiveCustomer11Length}} </b>
+              </td>
+
+            </tr>
+
+            <tr>
+              <td style="text-align: center;">
+                <b> dec </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;" (click)="showPumpName('dec',showPump)">
+                <b>
+                  {{ firstSixMonthsPetrolPumpList12 }} &nbsp;
+                </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;" (click)="showCustomerName('dec',showCust)">
+                <b>
+                  {{firstSixMonthsCustomerList12 }}
+                </b>
+              </td>
+
+              <td style="text-align: center;color: blue;cursor: pointer;"
+                (click)="showActiveCustomerName('dec',showActivePump)">
+                <b>{{allActiveDealer12}} </b>
+              </td>
+              <td style="text-align: center;color: blue;cursor: pointer;"
+                (click)="showActiveCustomer('dec',showActiveCust)">
+                <b> {{allActiveCustomer12Length}} </b>
+              </td>
+
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
     </div>
-
-    <span class="symbol symbol-50px">
-      <span
-        class="symbol-label fs-5 fw-bolder"
-        [ngClass]="'bg-light-' + color"
-        [ngClass]="'text-' + color"
-      >
-        {{ change }}
-      </span>
-    </span>
-  </div>
-
-  <div
-    #chartRef
-    class="statistics-widget-3-chart card-rounded-bottom"
-    [style.height]="'150px'"
-  >
-    <apx-chart
-      type="area"
-      [series]="chartOptions.series"
-      [chart]="chartOptions.chart"
-      [xaxis]="chartOptions.xaxis"
-      [yaxis]="chartOptions.yaxis"
-      [dataLabels]="chartOptions.dataLabels"
-      [stroke]="chartOptions.stroke"
-      [legend]="chartOptions.legend"
-      [fill]="chartOptions.fill"
-      [states]="chartOptions.states"
-      [tooltip]="chartOptions.tooltip"
-      [colors]="chartOptions.colors"
-      [markers]="chartOptions.markers"
-      [plotOptions]="chartOptions.plotOptions"
-    ></apx-chart>
   </div>
 </div>
+
+<ng-template #showPump let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="text-center">
+      Show Pump
+    </h4>
+    <button type="button" class="btn btn-outline-success my-2 my-sm-0"
+      (click)="excelDownloadShowPump()">Download</button>
+    <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table class="table table-hover table-striped">
+      <thead style=" background-color: lightgreen;">
+        <tr>
+          <th style="text-align: center;">sr no</th>
+          <th style="text-align: center;">date</th>
+          <th style="text-align: center;">phone</th>
+          <th style="text-align: center;">oilCompany</th>
+          <th style="text-align: center;">Comany Name</th>
+
+
+
+
+        </tr>
+      </thead>
+      <tbody
+        *ngFor="let data of pumpName ; let i = index">
+
+        <tr>
+          <td style="text-align: center;"> {{i+1}} </td>
+          <td style="text-align: center;">
+            {{data.corporateCreatedAt | date:"mediumDate"}}
+          </td>
+          <td style="text-align: center;">
+            {{data.hostPhone}}
+          </td>
+          <td style="text-align: center;">
+            {{data.brandName}}
+          </td>
+          <td style="text-align: center;">
+            {{data.companyName}}
+          </td>
+
+
+        </tr>
+      </tbody>
+    </table>
+    <ngb-pagination [collectionSize]="pumpName.length" [(page)]="page1" [pageSize]="pageSize1" [maxSize]="5"
+      [rotate]="true" [boundaryLinks]="true">
+    </ngb-pagination>
+
+  </div>
+</ng-template>
+
+<ng-template #showCust let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="text-center">
+      Show Customer
+    </h4>
+    <button type="button" class="btn btn-outline-success my-2 my-sm-0"
+      (click)="excelDownloadShowCustomer()">Download</button>
+
+    <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table class="table table-hover table-striped">
+      <thead style=" background-color: lightgreen;">
+        <tr>
+          <th style="text-align: center;">sr no</th>
+          <th style="text-align: center;">date</th>
+          <th style="text-align: center;">phone</th>
+          <th style="text-align: center;">Comany Name</th>
+
+
+
+
+        </tr>
+      </thead>
+      <tbody
+        *ngFor="let data of custName ; let i = index">
+
+        <tr>
+          <td style="text-align: center;"> {{i+1}} </td>
+          <td style="text-align: center;">
+            {{data.corporateCreatedAt | date:"mediumDate"}}
+          </td>
+
+          <td style="text-align: center;">
+            {{data.hostPhone}}
+          </td>
+          <td style="text-align: center;">
+            {{data.companyName}}
+          </td>
+
+
+        </tr>
+      </tbody>
+    </table>
+    <ngb-pagination [collectionSize]="custName.length" [(page)]="page2" [pageSize]="pageSize2" [maxSize]="5"
+      [rotate]="true" [boundaryLinks]="true">
+    </ngb-pagination>
+
+  </div>
+</ng-template>
+
+
+<ng-template #showActivePump let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="text-center">
+      Show Active Pump
+    </h4>
+    <button type="button" class="btn btn-outline-success my-2 my-sm-0"
+      (click)="excelDownloadActivePump()">Download</button>
+
+    <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table class="table table-hover table-striped">
+      <thead style=" background-color: lightgreen;">
+        <tr>
+          <th style="text-align: center;">sr no</th>
+          <th style="text-align: center;">date</th>
+          <th style="text-align: center;">phone</th>
+          <th style="text-align: center;">Comany Name</th>
+        </tr>
+      </thead>
+      <tbody
+        *ngFor="let data of activeCustomer ; let i = index">
+
+        <tr>
+          <td style="text-align: center;"> {{i+1}} </td>
+          <td style="text-align: center;">
+            {{data.chequeDate | date:"mediumDate"}}
+          </td>
+
+          <td style="text-align: center;">
+            {{data.hostPhone}}
+          </td>
+          <td style="text-align: center;">
+            {{data.companyName}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ngb-pagination [collectionSize]="activeCustomer.length" [(page)]="page3" [pageSize]="pageSize3" [maxSize]="5"
+      [rotate]="true" [boundaryLinks]="true">
+    </ngb-pagination>
+
+  </div>
+</ng-template>
+
+<ng-template #showActiveCust let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="text-center">
+      Show Active Customer
+    </h4>
+    <button type="button" class="btn btn-outline-success my-2 my-sm-0"
+      (click)="excelDownloadActiveCustomer()">Download</button>
+
+    <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table class="table table-hover table-striped">
+      <thead style=" background-color: lightgreen;">
+        <tr>
+          <th style="text-align: center;">sr no</th>
+          <th style="text-align: center;">date</th>
+          <th style="text-align: center;">phone</th>
+          <th style="text-align: center;">Comany Name</th>
+        </tr>
+      </thead>
+      <tbody
+        *ngFor="let data of activeCustomerDatewise ; let i = index">
+
+        <tr>
+          <td style="text-align: center;"> {{i+1}} </td>
+          <td style="text-align: center;">
+            {{data.estimatedRefuelDate | date:"mediumDate"}}
+          </td>
+          <td style="text-align: center;">
+            {{data.hostPhone}}
+          </td>
+          <td style="text-align: center;">
+            {{data.companyName}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- <ngb-pagination [collectionSize]="activeCustomerDatewise.length" [(page)]="page4" [pageSize]="pageSize4"
+      [maxSize]="5" [rotate]="true" [boundaryLinks]="true">
+    </ngb-pagination> -->
+
+  </div>
+</ng-template>

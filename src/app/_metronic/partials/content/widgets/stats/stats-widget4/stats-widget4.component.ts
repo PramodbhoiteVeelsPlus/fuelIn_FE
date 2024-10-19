@@ -1,159 +1,272 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { ApexOptions } from 'ng-apexcharts';
-import { getCSSVariableValue } from '../../../../../kt/_utils';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { StatsService } from '../stats.services';
 
 @Component({
   selector: 'app-stats-widget4',
   templateUrl: './stats-widget4.component.html',
 })
 export class StatsWidget4Component implements OnInit {
-  @Input() svgIcon = '';
-  @Input() color = '';
-  @Input() description = '';
-  @Input() change = '';
-  @ViewChild('chartRef', { static: true }) chartRef: ElementRef;
-  height: number;
+  personName: string;
+  updateAvailable: boolean = false;
+  page: any = 1;
+  pageSize: any = 10;
+  mobileForm = new FormGroup({
+    newNumber: new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
+    oldNumber: new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
+    mobileNumber: new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
+  });
+  personName1: string;
+  personName2: string;
+  companyName2: any;
+  role: string;
+  updateMobileLog: any = [];
+  createdBy: string;
+  entityGroup: string;
 
-  chartOptions: any = {};
-  labelColor: string;
-  baseColor: string;
-  lightColor: string;
+  checkNewMobileNoLength: any;
+  checkOldMobileNoLength: any;
+  isCorrectOldMobileNumber: boolean = false
+  isCorrectNewMobileNumber: boolean = false
+  showNewMobileNumberField: boolean = false;
+  updateMobileLog1: any = []
+  showDetails: boolean = false
 
-  constructor() {}
+  searchBox: FormControl = new FormControl();
+  searchTerm: any = "";
+
+  get userMobile1() {
+    return this.mobileForm.get('newNumber')
+  }
+  get userMobile() {
+    return this.mobileForm.get('oldNumber')
+  }
+  get userMobile2() {
+    return this.mobileForm.get('mobileNumber')
+  }
+
+  companyName: string;
+
+
+  constructor(private post: StatsService,
+    private spinner: NgxSpinnerService, private cd: ChangeDetectorRef,) {
+
+  }
 
   ngOnInit(): void {
-    this.height = 150;
-    this.labelColor = getCSSVariableValue('--bs-gray-800');
-    this.baseColor = getCSSVariableValue('--bs-' + this.color);
-    this.lightColor = getCSSVariableValue('--bs-' + this.color + '-light');
-    this.chartOptions = getChartOptions(
-      this.height,
-      this.labelColor,
-      this.baseColor,
-      this.lightColor
-    );
+    var element = JSON.parse(localStorage.getItem('element') || '');
+    this.createdBy = element.firstName + ' ' + element.lastName
+    this.getDetailsByUpdateMobileLog()
   }
+
+  getDetailsByNewMobileNumber() {
+    this.mobileForm.controls["mobileNumber"].setValue("")
+    this.checkNewMobileNoLength = this.mobileForm.value.newNumber
+    if (this.checkNewMobileNoLength.toString().length == 10) {
+      if (this.mobileForm.value.newNumber) {
+        let data = {
+          newPhoneNumber: this.mobileForm.value.newNumber,
+        }
+        this.post.getDetailsByMobilePOST(data)
+          .subscribe(res => {
+            if (res.status == "OK") {
+              if (res.data.length) {
+                alert("This mobile Number is already in Our DataBase..")
+                this.personName1 = res.data[0].firstName + ' ' + res.data[0].lastName
+                this.updateAvailable = false;
+                this.isCorrectNewMobileNumber = false
+              } else {
+                this.updateAvailable = true;
+                this.isCorrectNewMobileNumber = true
+              }
+            }
+            else {
+            }
+          })
+      }
+    } else {
+      alert("Please enter 10 digit mobile number.")
+      this.isCorrectNewMobileNumber = false
+    }
+  }
+
+  getDetailsByOldMobileNumber() {
+    this.mobileForm.controls["mobileNumber"].setValue("")
+    this.checkOldMobileNoLength = this.mobileForm.value.oldNumber
+    if (this.checkOldMobileNoLength.toString().length == 10) {
+      if (this.mobileForm.value.oldNumber) {
+        let data = {
+          oldPhoneNumber: this.mobileForm.value.oldNumber,
+          newPhoneNumber: "1111111111",
+        }
+        this.post.getDetailsByMobilePOST(data)
+          .subscribe(res => {
+            if (res.status == "OK") {
+              if (res.data.length) {
+                this.personName = res.data[0].firstName + ' ' + res.data[0].lastName
+                this.companyName = res.data[0].companyName
+                this.entityGroup = res.data[0].entityGroup;
+                this.isCorrectOldMobileNumber = true
+                this.showNewMobileNumberField = true;
+                this.showDetails = true;
+              } else {
+                alert("This mobile Number is not in Our DataBase as Dealer or Transporter..")
+                this.isCorrectOldMobileNumber = false
+              }
+            }
+            else {
+            }
+          })
+      } else {
+      }
+    } else {
+      alert("Please enter 10 digit mobile number.")
+      this.isCorrectOldMobileNumber = false
+    }
+  }
+
+  updateMobileNumber() {
+    this.mobileForm.controls["mobileNumber"].setValue("")
+    if (this.mobileForm.value.oldNumber && this.mobileForm.value.newNumber) {
+      this.spinner.show()
+      let data = {
+        oldPhoneNumber: this.mobileForm.value.oldNumber,
+        newPhoneNumber: this.mobileForm.value.newNumber,
+        updateBy: this.createdBy,
+        companyName: this.companyName,
+        hostName: this.personName,
+      }
+      this.post.updatePersonMobilePOST(data)
+        .subscribe(res => {
+          if (res.status == "OK") {
+            this.spinner.hide()
+            alert("Mobile Number updated..")
+            this.mobileForm.reset();
+            this.updateAvailable = false;
+            this.isCorrectNewMobileNumber = false;
+            this.isCorrectOldMobileNumber = false;
+            this.showNewMobileNumberField = false;
+            this.personName = ''
+            this.personName1 = ''
+            this.companyName = ''
+            this.entityGroup = ''
+            this.getDetailsByUpdateMobileLog()
+          } else {
+            this.spinner.hide()
+            alert("Error to Update Mobile Number..")
+          }
+        })
+    } else {
+      alert("Enter both number..")
+    }
+  }
+
+  //getDetailsByMobileNumber
+  getDetailsByMobileNumber() {
+    if (this.mobileForm.value.mobileNumber) {
+      this.personName2 = ''
+      this.companyName2 = ''
+      this.role = ''
+      let data = {
+        mobileNumber: this.mobileForm.value.mobileNumber,
+      }
+      this.post.getDetailsByMobilePOST(data)
+        .subscribe(res => {
+          if (res.status == "OK") {
+            if (res.data.length) {
+              this.personName2 = res.data[0].firstName + ' ' + res.data[0].lastName
+              this.companyName2 = res.data[0].companyName
+              if (res.data[0].accessGroupId == 2) {
+                this.role = 'TRANSPORTER'
+              } else {
+                if (res.data[0].accessGroupId == 12) {
+                  this.role = 'DEALER'
+                } else {
+                  if (res.data[0].accessGroupId == 13) {
+                    this.role = 'DEALER-OPERATOR'
+                  } else {
+                    if (res.data[0].accessGroupId == 14) {
+                      this.role = 'DEALER-MANAGER'
+                    } else {
+                      if (res.data[0].accessGroupId == 16) {
+                        this.role = 'TRANSPORTER-MANAGER'
+                      } else {
+                        if (res.data[0].accessGroupId == 7) {
+                          this.role = 'ADMIN'
+                        } else {
+                          this.role = 'OTHER'
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            } else {
+            }
+          }
+          else {
+          }
+        })
+    } else {
+    }
+  }
+
+  //getDetailsByUpdateMobileLogPOST
+  getDetailsByUpdateMobileLog() {
+    let data = {}
+    this.post.getDetailsByUpdateMobileLogPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          if (res.data.length) {
+            this.updateMobileLog = res.data
+            this.updateMobileLog1 = res.data
+            this.cd.detectChanges();
+          } else {
+          }
+        }
+        else {
+        }
+      })
+  }
+
+  //  Free Search
+  search() {
+    let term = this.searchTerm;
+    this.updateMobileLog = this.updateMobileLog1.filter(function (res: any) {
+      return res.updateMobileLogCompanyName.indexOf(term) >= 0;
+    });
+    if (this.updateMobileLog.length == 0) {
+      term = this.searchTerm;
+      this.updateMobileLog = this.updateMobileLog1.filter(function (res: any) {
+        return res.updateMobileLogCompanyName.indexOf(term) >= 0;
+      });
+    }
+    if (this.updateMobileLog.length == 0) {
+      term = this.searchTerm;
+      this.updateMobileLog = this.updateMobileLog1.filter(function (res: any) {
+        return res.updateMobileLogHostName.indexOf(term) >= 0;
+      });
+    }
+    if (this.updateMobileLog.length == 0) {
+      term = this.searchTerm;
+      this.updateMobileLog = this.updateMobileLog1.filter(function (res: any) {
+        return res.updateMobileLogOldNumber.indexOf(term) >= 0;
+      });
+    }
+    if (this.updateMobileLog.length == 0) {
+      term = this.searchTerm;
+      this.updateMobileLog = this.updateMobileLog1.filter(function (res: any) {
+        return res.updateMobileLogNewNumber.indexOf(term) >= 0;
+      });
+    }
+    if (this.updateMobileLog.length == 0) {
+      term = this.searchTerm;
+      this.updateMobileLog = this.updateMobileLog1.filter(function (res: any) {
+        return res.updateMobileLogBy.indexOf(term) >= 0;
+      });
+    }
+  }
+
 }
 
-function getChartOptions(
-  height: number,
-  labelColor: string,
-  baseColor: string,
-  lightColor: string
-): ApexOptions {
-  return {
-    series: [
-      {
-        name: 'Net Profit',
-        data: [40, 40, 30, 30, 35, 35, 50],
-      },
-    ],
-    chart: {
-      fontFamily: 'inherit',
-      type: 'area',
-      height: height,
-      toolbar: {
-        show: false,
-      },
-      zoom: {
-        enabled: false,
-      },
-      sparkline: {
-        enabled: true,
-      },
-    },
-    plotOptions: {},
-    legend: {
-      show: false,
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    fill: {
-      type: 'solid',
-      opacity: 1,
-    },
-    stroke: {
-      curve: 'smooth',
-      show: true,
-      width: 3,
-      colors: [baseColor],
-    },
-    xaxis: {
-      categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
-      axisBorder: {
-        show: false,
-      },
-      axisTicks: {
-        show: false,
-      },
-      labels: {
-        show: false,
-        style: {
-          colors: labelColor,
-          fontSize: '12px',
-        },
-      },
-      crosshairs: {
-        show: false,
-        position: 'front',
-        stroke: {
-          color: '#E4E6EF',
-          width: 1,
-          dashArray: 3,
-        },
-      },
-      tooltip: {
-        enabled: false,
-      },
-    },
-    yaxis: {
-      min: 0,
-      max: 60,
-      labels: {
-        show: false,
-        style: {
-          colors: labelColor,
-          fontSize: '12px',
-        },
-      },
-    },
-    states: {
-      normal: {
-        filter: {
-          type: 'none',
-          value: 0,
-        },
-      },
-      hover: {
-        filter: {
-          type: 'none',
-          value: 0,
-        },
-      },
-      active: {
-        allowMultipleDataPointsSelection: false,
-        filter: {
-          type: 'none',
-          value: 0,
-        },
-      },
-    },
-    tooltip: {
-      style: {
-        fontSize: '12px',
-      },
-      y: {
-        formatter: function (val) {
-          return '$' + val + ' thousands';
-        },
-      },
-    },
-    colors: [lightColor],
-    markers: {
-      colors: [lightColor],
-      strokeColors: [baseColor],
-      strokeWidth: 3,
-    },
-  };
-}

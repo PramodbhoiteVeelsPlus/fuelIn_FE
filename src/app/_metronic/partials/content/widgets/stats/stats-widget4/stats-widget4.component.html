@@ -1,44 +1,107 @@
-<div class="card-body p-0">
-  <div class="d-flex flex-stack card-p flex-grow-1">
-    <span
-      class="symbol symbol-50px"
-      [ngClass]="'symbol-light-' + color + ' me-2'"
-    >
-      <span class="symbol-label">
-        <span
-          [inlineSVG]="svgIcon"
-          class="svg-icon fs-2x"
-          [ngClass]="'svg-icon-' + color"
-        ></span>
-      </span>
-    </span>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]="mobileForm">
+            <br>
+            <div class="row">
+              <label for="example-text-input" class="col-auto col-form-label"><b>Mobile Number</b></label>
+              <div class="col-md-3">
+                <input type="number" class="form-control"
+                  formControlName="oldNumber" style="text-align: left;" placeholder="Mobile Number"
+                  onkeypress="return this.value.length < 10;" oninput="if(this.value.length=10)"
+                  (blur)="getDetailsByOldMobileNumber()" />
+                <!-- <div *ngIf="(userMobile.invalid && userMobile.touched) || userMobile.dirty">
+                  <small *ngIf="userMobile.errors?.required" class="text-danger">
+                    Mobile Number is required</small>
+                  <small *ngIf="userMobile.errors?.pattern" class="text-danger">
+                    Please provide a valid 10 Digit Mobile Number</small>
+                </div> -->
+              </div>
+              <label *ngIf="showNewMobileNumberField" for="example-text-input" class="col-auto col-form-label"><b>New
+                  Mobile Number</b></label>
+              <div class="col-md-3" *ngIf="showNewMobileNumberField">
+                <input type="number" class="form-control" formControlName="newNumber"
+                  style="text-align: left;" placeholder="Enter New Mobile Number"
+                  onkeypress="return this.value.length < 10;" oninput="if(this.value.length=10)"
+                  (blur)="getDetailsByNewMobileNumber()" />
 
-    <div class="d-flex flex-column text-end">
-      <span class="text-gray-900 fw-bolder fs-2">{{ change }}</span>
+                <!-- <div *ngIf="(userMobile1.invalid && userMobile1.touched) || userMobile1.dirty">
+                  <small *ngIf="userMobile1.errors?.required" class="text-danger">
+                    Mobile Number is required</small>
+                  <small *ngIf="userMobile1.errors?.pattern" class="text-danger">
+                    Please provide a valid 10 Digit Mobile Number</small>
+                </div> -->
 
-      <span class="text-muted fw-bold mt-1">{{ description }}</span>
+              </div>
+              <div class="col-md-1" *ngIf="isCorrectOldMobileNumber && isCorrectNewMobileNumber">
+                <button type="submit" class="btn btn-primary" (click)=updateMobileNumber()>
+                  update</button>
+              </div>
+            </div>
+            <div class="row" *ngIf="showDetails">
+              <div class="col-md-1"></div>
+              <div class="col-md-10">
+                <br>
+                <p>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <b> Owner Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp; </b>
+                  {{personName}} <br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <b> Company Name &nbsp; : &nbsp; </b> {{companyName}} <br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <b> Role &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    : &nbsp; </b> {{entityGroup}} <br>
+                </p>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+            </div>
+            <br>
+            <div class="row">
+              <div class="table-responsive mb-0">
+                <table class="table table-centered table-nowrap">
+                  <thead class="table-light">
+                    <tr>
+                      <th style="text-align: left;"> Sr. No. </th>
+                      <th style="text-align: left;"> Date </th>
+                      <th style="text-align: left;"> Owner Name </th>
+                      <th style="text-align: left;"> Company Name </th>
+                      <th style="text-align: left;"> Old Number </th>
+                      <th style="text-align: left;"> New Number </th>
+                      <th style="text-align: left;"> Update By </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    *ngFor="let data of updateMobileLog; let i = index;">
+                    <tr>
+                      <td style="text-align: left;"> {{i + 1}} </td>
+                      <td style="text-align: left;"> {{data.updateMobileLogDate |
+                        date:"d MMM, yyyy"}} </td>
+                      <td style="text-align: left;"> {{data.updateMobileLogHostName}} </td>
+                      <td style="text-align: left;"> {{data.updateMobileLogCompanyName}} </td>
+                      <td style="text-align: left;"> {{data.updateMobileLogOldNumber}} </td>
+                      <td style="text-align: left;"> {{data.updateMobileLogNewNumber}} </td>
+                      <td style="text-align: left;"> {{data.updateMobileLogBy}} </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!-- <div class="text-md-right float-md-end pagination-rounded">
+                  <ngb-pagination [collectionSize]="updateMobileLog1.length" [(page)]="page" [pageSize]="pageSize"
+                    [maxSize]="5" [rotate]="true" [boundaryLinks]="true">
+                  </ngb-pagination>
+                </div> -->
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <div
-    #chartRef
-    class="statistics-widget-3-chart card-rounded-bottom"
-    [style.height]="'150px'"
-  >
-    <apx-chart
-      [series]="chartOptions.series"
-      [chart]="chartOptions.chart"
-      [xaxis]="chartOptions.xaxis"
-      [yaxis]="chartOptions.yaxis"
-      [dataLabels]="chartOptions.dataLabels"
-      [stroke]="chartOptions.stroke"
-      [legend]="chartOptions.legend"
-      [fill]="chartOptions.fill"
-      [states]="chartOptions.states"
-      [tooltip]="chartOptions.tooltip"
-      [colors]="chartOptions.colors"
-      [markers]="chartOptions.markers"
-      [plotOptions]="chartOptions.plotOptions"
-    ></apx-chart>
   </div>
 </div>

@@ -34,9 +34,9 @@ export class StatsService {
     private getAllLQEntityURL = this.baseURL + 'fastag/getAllLQEntity ';
     private getAllLQVehicleURL = this.baseURL + 'fastag/getAllLQVehicle ';
     private dealerAddedCustomerReportURL = this.baseURL + 'adminDashboard/dealerAddedCustomerReport';
-    private onboardFuelDealerReportByAdminURL = this.baseURL + 'tripReports/onboardFuelDealerReportByAdmin'
-    private getSelfOnboardReportByAdminURL = this.baseURL + 'tripReports/getSelfOnboardReportByAdmin'
-    private getReportOfActiveDealerURL = this.baseURL + 'tripReports/getReportOfActiveDealer'; 
+    private onboardFuelDealerReportByAdminURL = this.baseURL + 'tripReports/onboardFuelDealerReportByAdmin';
+    private getSelfOnboardReportByAdminURL = this.baseURL + 'tripReports/getSelfOnboardReportByAdmin';
+    private getReportOfActiveDealerURL = this.baseURL + 'tripReports/getReportOfActiveDealer';
     private getReportOfSelectedDateActiveDealerURL = this.baseURL + 'tripReports/getReportOfSelectedDateActiveDealer';
     private getReportOfPurchaseDealerMonthWiseURL = this.baseURL + 'tripReports/getReportOfPurchaseDealerMonthWise';
     private getCrSalesPaymentTxWiseURL = this.baseURL + 'tripReports/getCrSalesPaymentTxWise';
@@ -45,10 +45,42 @@ export class StatsService {
     private getTotalPaymentReportURL = this.baseURL + 'tripReports/getTotalPaymentReport';
     private getFastagVehicleDetailsByDateURL = this.baseURL + 'fastag/getFastagVehicleDetailsByDate';
     private getFTTransactionsURL = this.baseURL + 'fastag/getFTTransactions';
-    private getFastagVehicleDetailsByVehicleNumberURL = this.baseURL + 'fastag/getFastagVehicleDetailsByVehicleNumber'; 
+    private getFastagVehicleDetailsByVehicleNumberURL = this.baseURL + 'fastag/getFastagVehicleDetailsByVehicleNumber';
     private getFastagVehicleDetailsByDateLQURL = this.baseURL + 'fastag/getFastagVehicleDetailsByDateLQ';
-    private getFTTransactionsLQURL = this.baseURL + 'fastag/getFTTransactionsLQ'; 
+    private getFTTransactionsLQURL = this.baseURL + 'fastag/getFTTransactionsLQ';
     private getFastagVehicleDetailsByVehicleNumberLQURL = this.baseURL + 'fastag/getFastagVehicleDetailsByVehicleNumberLQ';
+    private getFuelVendorsListURL = this.baseURL + 'fuelVendor/getFuelVendorsList';
+    private getFuelVendorsDetailsByIdURL = this.baseURL + 'fuelVendor/getFuelVendorsDetailsById';
+    private getAllCreditAccByDealerIdURL = this.baseURL + 'fuelDealerCustMap/getAllCreditAccByDealerIdNEW';
+    private getAllclapsCalculationByDealerIdURL = this.baseURL + 'fuelDealerCustMap/getAllclapsCalculationByDealerId';
+    private getAllclapsCalculationByCorpIdURL = this.baseURL + 'fuelDealerCustMap/getAllclapsCalculationByCorpId';
+    private getThisMonthCrDetailsURL = this.baseURL + 'dealerDashboard/getThisMonthCrDetails';
+    private getPreviousOutstandingURL = this.baseURL + 'dealerDashboard/getPreviousOutstanding';
+    private getFuelCreditRequestByfuelDealerIdURL = this.baseURL + 'fuelDealerCustMap/getFuelCreditRequestByfuelDealerId';
+    private getAllCrwithoutDealerIdURL = this.baseURL + 'fuelDealerCustMap/getAllCrwithoutDealerId';
+    private getAllCRPaymentByDealerURL = this.baseURL + 'accounttransaclog/getAllCRPaymentByDealer';
+    private getFirstSixMonthPetrolPumpNameURL = this.baseURL + 'adminDashboard/getFirstSixMonthPetrolPumpName';
+    private getLastSixMonthPetrolPumpNameURL = this.baseURL + 'adminDashboard/getLastSixMonthPetrolPumpName';
+    private getFirstSixMonthCustomerNameURL = this.baseURL + 'adminDashboard/getFirstSixMonthCustomerName';
+    private getLastSixMonthCustomerNameURL = this.baseURL + 'adminDashboard/getLastSixMonthCustomerName';
+    private getDealerAndCustomerURL = this.baseURL + 'adminDashboard/getDealerAndCustomer';
+    private getFirstSixMonthActivePumpNameURL = this.baseURL + 'adminDashboard/getFirstSixMonthActivePumpName';
+    private getLastSixMonthActivePumpNameURL = this.baseURL + 'adminDashboard/getLastSixMonthActivePumpName';
+    private getFirstSixMonthActiveCustomerNameURL = this.baseURL + 'adminDashboard/getFirstSixMonthActiveCustomerName';
+    private getLastSixMonthActiveCustomerNameURL = this.baseURL + 'adminDashboard/getLastSixMonthActiveCustomerName';
+    private showPumpNameURL = this.baseURL + 'adminDashboard/showPumpName';
+    private showCustomerNameURL = this.baseURL + 'adminDashboard/showCustomerName';
+    private showActivePumpNameURL = this.baseURL + 'adminDashboard/showActivePumpName';
+    private showActiveCustomerURL = this.baseURL + 'adminDashboard/showActiveCustomer';
+    private getDetailsByMobileURL = this.baseURL + 'activityCount/getDetailsByMobile';
+    private updatePersonMobileURL = this.baseURL + 'activityCount/updatePersonMobile';
+    private getDetailsByUpdateMobileLogURL = this.baseURL + 'activityCount/getDetailsByUpdateMobileLog';
+
+
+
+
+
+
 
     setHeader() {
         this.token = JSON.parse(localStorage.getItem('authenticationToken') || '{}');
@@ -294,6 +326,266 @@ export class StatsService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.getFastagVehicleDetailsByVehicleNumberLQURL, body, {
+            headers: headers
+        })
+    }
+
+    // getFuelVendorsListURL
+    getFuelVendorsList(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFuelVendorsListURL, body, {
+            headers: headers
+        })
+    }
+
+    // getFuelVendorsDetailsByIdURL
+    getFuelVendorsDetailsById(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFuelVendorsDetailsByIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAllCreditAccByDealerIdURL
+    getAllCreditAccByDealerId(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAllCreditAccByDealerIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAllclapsCalculationByDealerIdURL
+    getAllclapsCalculationByDealerIdPost(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAllclapsCalculationByDealerIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAllclapsCalculationByCorpIdURL
+    getAllclapsCalculationByCorpIdPost(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAllclapsCalculationByCorpIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getThisMonthCrDetailsURL
+    getThisMonthCrDetails(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getThisMonthCrDetailsURL, body, {
+            headers: headers
+        })
+    }
+
+    // getPreviousOutstandingURL
+    getPreviousOutstanding(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getPreviousOutstandingURL, body, {
+            headers: headers
+        })
+    }
+
+    // getFuelCreditRequestByfuelDealerIdURL
+    getFuelCreditRequestByfuelDealerId(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFuelCreditRequestByfuelDealerIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAllCrwithoutDealerIdURL
+    getAllCrwithoutDealerIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAllCrwithoutDealerIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAllCRPaymentByDealerURL
+    getAllCRPaymentByDealer(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAllCRPaymentByDealerURL, body, {
+            headers: headers
+        })
+    }
+
+    // getFirstSixMonthPetrolPumpNameURL
+    getFirstSixMonthPetrolPumpNamePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFirstSixMonthPetrolPumpNameURL, body, {
+            headers: headers
+        })
+    }
+
+    // getLastSixMonthPetrolPumpNameURL
+    getLastSixMonthPetrolPumpNamePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getLastSixMonthPetrolPumpNameURL, body, {
+            headers: headers
+        })
+    }
+
+    // getFirstSixMonthCustomerNameURL
+    getFirstSixMonthCustomerNamePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFirstSixMonthCustomerNameURL, body, {
+            headers: headers
+        })
+    }
+
+    // getLastSixMonthCustomerNameURL
+    getLastSixMonthCustomerNamePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getLastSixMonthCustomerNameURL, body, {
+            headers: headers
+        })
+    }
+
+    // getDealerAndCustomerURL
+    getDealerAndCustomerPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getDealerAndCustomerURL, body, {
+            headers: headers
+        })
+    }
+
+    // getFirstSixMonthActivePumpNameURL
+    getFirstSixMonthActivePumpNamePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFirstSixMonthActivePumpNameURL, body, {
+            headers: headers
+        })
+    }
+
+    // getLastSixMonthActivePumpNameURL
+    getLastSixMonthActivePumpNamePost(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getLastSixMonthActivePumpNameURL, body, {
+            headers: headers
+        })
+    }
+
+    // getFirstSixMonthActiveCustomerNameURL
+    getFirstSixMonthActiveCustomerNamePost(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFirstSixMonthActiveCustomerNameURL, body, {
+            headers: headers
+        })
+    }
+
+    // getLastSixMonthActiveCustomerNameURL
+    getLastSixMonthActiveCustomerNamePost(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getLastSixMonthActiveCustomerNameURL, body, {
+            headers: headers
+        })
+    }
+
+    // showPumpNameURL
+    showPumpNameURLPost(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.showPumpNameURL, body, {
+            headers: headers
+        })
+    }
+
+    // showCustomerNameURL
+    showCustomerNamePost(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.showCustomerNameURL, body, {
+            headers: headers
+        })
+    }
+
+    // showActivePumpNameURL
+    showActivePumpNamePost(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.showActivePumpNameURL, body, {
+            headers: headers
+        })
+    }
+
+    // showActiveCustomerURL
+    showActiveCustomerPost(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.showActiveCustomerURL, body, {
+            headers: headers
+        })
+    }
+
+    // getDetailsByMobileURL
+    getDetailsByMobilePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getDetailsByMobileURL, body, {
+            headers: headers
+        })
+    }
+
+    // updatePersonMobileURL
+    updatePersonMobilePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updatePersonMobileURL, body, {
+            headers: headers
+        })
+    }
+
+    // getDetailsByUpdateMobileLogURL
+    getDetailsByUpdateMobileLogPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getDetailsByUpdateMobileLogURL, body, {
             headers: headers
         })
     }

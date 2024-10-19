@@ -31,7 +31,7 @@ import { TilesWidget13Component } from './tiles/tiles-widget13/tiles-widget13.co
 import { TilesWidget14Component } from './tiles/tiles-widget14/tiles-widget14.component';
 // Other
 import { DropdownMenusModule } from '../dropdown-menus/dropdown-menus.module';
-import { NgbActiveModal, NgbDatepickerModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbDatepickerModule, NgbDropdownModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListsWidget2Component } from './lists/lists-widget2/lists-widget2.component';
 import { ListsWidget5Component } from './lists/lists-widget5/lists-widget5.component';
 import { ListsWidget6Component } from './lists/lists-widget6/lists-widget6.component';
@@ -192,6 +192,7 @@ import { TablesWidget18Component } from './tables/tables-widget18/tables-widget1
     ModalsModule,
     FormsModule,
     NgbDatepickerModule,
+    NgbPaginationModule,
     NgxPaginationModule,
   ],
   exports: [
