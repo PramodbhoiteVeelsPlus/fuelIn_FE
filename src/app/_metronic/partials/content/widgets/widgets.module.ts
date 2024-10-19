@@ -89,6 +89,8 @@ import { SharedModule } from "../../../shared/shared.module";
 import { ModalsModule } from '../../layout/modals/modals.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ExcelService } from 'src/app/pages/excel.service';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { TablesWidget15Component } from './tables/tables-widget15/tables-widget15.component';
 @NgModule({
   declarations: [
     // Advanced Tables
@@ -162,6 +164,7 @@ import { ExcelService } from 'src/app/pages/excel.service';
     TablesWidget12Component,
     TablesWidget13Component,
     TablesWidget14Component,
+    TablesWidget15Component,
     CardsWidget1Component,
     CardsWidget2Component,
     CardsWidget20Component,
@@ -257,6 +260,7 @@ import { ExcelService } from 'src/app/pages/excel.service';
     TablesWidget12Component,
     TablesWidget13Component,
     TablesWidget14Component,
+    TablesWidget15Component,
     // new
     CardsWidget1Component,
     CardsWidget2Component,

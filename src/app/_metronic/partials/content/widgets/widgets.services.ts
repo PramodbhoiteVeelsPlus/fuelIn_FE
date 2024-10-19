@@ -42,6 +42,8 @@ export class WidgetService {
   private getRechargeForFastagLQURL = this.baseURL + 'Fastag/getRechargeForFastagLQ'; 
   private getCrFastagLQForAllCustomerByMonthURL = this.baseURL + 'fastag/getCrFastagLQForAllCustomerByMonth'; 
   private getDayWiseCreditURL = this.baseURL + 'adminOutstand/getDayWiseCredit'; 
+  private getCustomersCountDealerWiseURL = this.baseURL + 'adminDashboard/getCustomersCountDealerWise' 
+  private getAllFastagTransactionDetailsURL = this.baseURL + 'fastag/getAllFastagTransactionDetails' 
 
 
   setHeader() {
@@ -218,6 +220,26 @@ export class WidgetService {
     let headers = new HttpHeaders();
     headers = headers.set('authenticationToken', this.token);
     return this.http.post(this.getDayWiseCreditURL, body, {
+      headers: headers
+    })
+  }
+
+  // getCustomersCountDealerWiseURL
+  getCustomersCountDealerWisePOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getCustomersCountDealerWiseURL, body, {
+      headers: headers
+    })
+  }
+
+  // getAllFastagTransactionDetailsURL
+  getAllFastagTransactionDetailsPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getAllFastagTransactionDetailsURL, body, {
       headers: headers
     })
   }

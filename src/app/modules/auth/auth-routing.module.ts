@@ -6,6 +6,8 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { CustloginComponent } from './components/custlogin/custlogin.component';
+import { ContactUsComponent } from './components/contact-us/contact-us.component';
+import { AboutComponent } from './components/about/about.component';
 
 const routes: Routes = [
   {
@@ -32,6 +34,14 @@ const routes: Routes = [
       {
         path: 'logout',
         component: LogoutComponent,
+      },
+      {
+        path: 'contactUs',
+        component: ContactUsComponent,
+      },
+      {
+        path: 'about',
+        component: AboutComponent,
       },
       // { path: '', redirectTo: 'login', pathMatch: 'full' },
       // { path: '**', redirectTo: 'login', pathMatch: 'full' },

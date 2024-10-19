@@ -4,13 +4,11 @@
     <div>
       <span class="card-label fw-bolder fs-5 mb-1">Select Petrol Pump</span>
       <span class="badge badge-light-success fs-6 fw-bolder">
-        <select class="form-select form-select-sm form-select-solid" data-placeholder="" data-hide-search="true"
-          style="width: 220px;" [(ngModel)]="selectPump">
-          <option value=""> Select Petrol Pump </option>
-          <option value="ABC"> ABC PETROLEUM </option>
-          <option value="BK"> BK PETROLEUM </option>
-          <option value="SK"> SK PETROLEUM </option>
-        </select>
+        <input class="form-control" type="text" list="dealerList" placeholder="Select Pump Name"
+          (change)="getDetailsByCustomerMapName($event)">
+        <datalist id="dealerList">
+          <option *ngFor="let data of dealerList" [value]="data.companyName">
+        </datalist>
       </span>
     </div>
   </h3>

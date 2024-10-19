@@ -1,0 +1,64 @@
+<div class="card-body">
+    <a href="#" class="card-title fw-bolder text-muted text-hover-primary fs-4">
+
+    </a>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-sm-8">
+
+                            <div class="card-toolbar">
+                                <ul class="nav">
+                                    <li class="nav-item">
+                                        <a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-light-primary fw-bolder px-4 me-1"
+                                            (click)="exportexcel()">
+                                            CSV
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="table-responsive mb-0">
+
+                            <table id="excel-table" class="table table-centered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>
+                                        </th>
+                                        <th>{{ lastMonthYear }} toll payment </th>
+                                        <th>{{ lastMonthYear }} toll recharge </th>
+                                        <th>{{ lastMonthYear }} fuel credit </th>
+                                        <th>{{ lastMonthYear }} fuel credit payment </th>
+                                        <th>{{ currentMonthYear }} toll payment </th>
+                                        <th> {{ currentMonthYear }} toll recharge </th>
+                                        <th> {{ currentMonthYear }} fuel credit </th>
+                                        <th> {{ currentMonthYear }} fuel credit Payment </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td> Total </td>
+                                        <td> ₹ {{sumFastagTransactionAllCurrent | number:'1.2-2'}} </td>
+                                        <td> ₹ {{sumFastagTransactionPaymentAllCurrent | number:'1.2-2'}} </td>
+                                        <td> ₹ {{lastCrSales | number:'1.2-2'}} </td>
+                                        <td> ₹ {{lastPay | number:'1.2-2'}} </td>
+                                        <td> ₹ {{sumFastagTransactionAll | number:'1.2-2'}} </td>
+                                        <td> ₹ {{sumFastagTransactionAllPre | number:'1.2-2'}} </td>
+                                        <td> ₹ {{currentCrSales | number:'1.2-2'}} </td>
+                                        <td> ₹ {{currentPay | number:'1.2-2'}} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
