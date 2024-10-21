@@ -1,10 +1,103 @@
-<div class="card-body">
- 
-  <div class="fw-bold" [ngClass]="'text-inverse-' + color + ' fs-5'">
-    {{ title }}
-  </div>
-  <div [ngClass]="'text-inverse-' + color" class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">
-    ₹ {{ amount }}
-  </div>
+<style>
+  .table {
+    border: 1px solid #272829;
 
+    thead {
+      background-color: rgb(255, 192, 0);
+
+      th {
+        border: 1px solid #272829;
+      }
+    }
+
+    td {
+      border: 1px solid #272829;
+    }
+  }
+</style>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]="gstForm">
+            <div class="row">
+              <div class="col col-xl-4 col-lg-4"></div>
+              <div class="col col-xl-4 col-lg-4">
+                <div class="card-body table-responsive">
+                  <table class="table table-hover table-striped">
+                    <thead>
+                      <tr>
+                        <th style="text-align: center;"> gst % </th>
+                        <th style="text-align: center;"> gst info </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style="text-align: center;">
+                          <input type="number" class="form-control" formControlName="gst" style="text-align: center;"
+                            placeholder="GST %" />
+                        </td>
+                        <td style="text-align: center;">
+                          <input type="text" class="form-control" formControlName="gstInfo" style="text-align: center;"
+                            placeholder="GST details" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="row">
+            <div class="col col-xl-12 col-lg-12">
+              <div class="row">
+                <div class="col-md-5">
+                </div>
+                <div class="col-auto">
+                  <button *ngIf="isUpdate" type="submit" class="btn btn-outline-warning my-2 my-sm-0"
+                    (click)=updateGSTDetails()>Update</button>
+                  <button *ngIf="!isUpdate" type="submit" class="btn btn-outline-success my-2 my-sm-0"
+                    (click)=addGSTDetails()>Submit</button>
+                </div>
+                <div class="col-auto">
+                  <button type="submit" class="btn btn-danger" (click)=clearGSTDetails()>Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <hr>
+          <div class="row">
+            <div class="col col-xl-3 col-lg-3"></div>
+            <div class="col col-xl-6 col-lg-6">
+              <table class="table table-hover table-striped">
+                <thead>
+                  <tr>
+                    <th style="text-align: center;"> sr no </th>
+                    <th style="text-align: center;"> gst % </th>
+                    <th style="text-align: center;"> gst info </th>
+                    <th style="text-align: center;"> update </th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let data of gstDetails; let i = index;">
+                  <tr>
+                    <td style="text-align: center;"> {{i + 1}} </td>
+                    <td style="text-align: center;"> {{data.gst}} </td>
+                    <td style="text-align: center;"> {{data.gstDetailsInfo}} </td>
+                    <td style="text-align: center;">
+                      <i style="color:#138496;cursor:pointer;" class="fas fa-edit"
+                        (click)="getGSTDetailsById(data.gstDetailsId)"></i>
+                      /
+                      <i style="color:red" class="fa fa-ban" (click)="deleteGSTDetails(data.gstDetailsId)"></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

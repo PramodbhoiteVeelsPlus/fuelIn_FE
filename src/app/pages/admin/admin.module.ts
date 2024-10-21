@@ -9,9 +9,11 @@ import { ModalsModule, WidgetsModule } from '../../_metronic/partials';
 import { ReportsComponent } from './reports/reports.component';
 import { NewReportComponent } from './new-report/new-report.component';
 import { UpdateMobileComponent } from './update-mobile/update-mobile.component';
+import { GstDetailsComponent } from './gst-details/gst-details.component';
+import { ActivityCountComponent } from './activity-count/activity-count.component';
 
 @NgModule({
-  declarations: [ReportsComponent, NewReportComponent, UpdateMobileComponent],
+  declarations: [ReportsComponent, NewReportComponent, UpdateMobileComponent, GstDetailsComponent, ActivityCountComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -31,10 +33,18 @@ import { UpdateMobileComponent } from './update-mobile/update-mobile.component';
         path: 'updateMobile',
         component: UpdateMobileComponent,
       },
+      {
+        path: 'gstDetails',
+        component: GstDetailsComponent,
+      },
+      {
+        path: 'activityCount',
+        component: ActivityCountComponent,
+      },
     ]),
     WidgetsModule,
     ModalsModule,
     NgbNavModule,
   ],
 })
-export class AdminModule {}
+export class AdminModule { }
