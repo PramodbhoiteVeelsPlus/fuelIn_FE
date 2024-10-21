@@ -97,6 +97,9 @@ export class TablesWidget17Component {
   searchBoxLiteDealerList: FormControl = new FormControl();
   searchTermLiteDealerList: any;
   searchData: any;
+  p: number = 1;
+  p1: number = 1;
+  total: number = 0;
 
   constructor(
     private post: WidgetService,
@@ -123,6 +126,10 @@ export class TablesWidget17Component {
     this.cd.detectChanges();
   }
 
+  pageChangeEvent(event: number) {
+    this.p = event;
+    this.getAllDealerList();
+  }
   getAllDealerList() {
     if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
       this.allDealerList = []

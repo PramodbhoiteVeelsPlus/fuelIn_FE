@@ -5,16 +5,61 @@
         <form [formGroup]="filterForm">
 
             <div class="row">
+
+                <label for="example-text-input" class="col-auto col-form-label">Date Range</label>
+                <div class="col-md-2">
+                    <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+                        name="startDate" ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker
+                        #startDate="ngbDatepicker" formControlName="startDate">
+                </div>
+                <div class="col-md-2">
+                    <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+                        name="endDate" ngbTooltip="End Date" (click)="endDate.toggle()" ngbDatepicker
+                        #endDate="ngbDatepicker" formControlName="endDate">
+                </div>
+
+                <label for="example-text-input" class="col-auto col-form-label">Select Dealer Type</label>
+                <div class="col-md-3">
+                    <select class="form-control" formControlName="demoDealer" required>
+                        <option value="">select Dealer Type</option>
+                        <option value="TRUE">Demo Dealer</option>
+                        <option value="FALSE">Actual Dealer</option>
+
+                    </select>
+                </div>
+
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary" style="margin-bottom: 30px"
+                        (click)="getPrimeDealerDetails()">
+                        Submit
+                    </button>
+                    &nbsp;&nbsp;
+
+                    <button type="submit" class="btn btn-secondary" style="margin-bottom: 30px"
+                        (click)="clearPrimeDealerDetails()">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-md-3">
                     <div class="search-box me-2 mb-2 d-inline-block">
                         <div class="position-relative">
-                            <input class="form-control" type="text"  placeholder="Search"
-                                [(ngModel)]="searchData" [ngModelOptions]="{standalone: true}">
+                            <input class="form-control" type="text" placeholder="Search" [(ngModel)]="searchData"
+                                [ngModelOptions]="{standalone: true}">
                             <i class="bx bx-search-alt search-icon"></i>
                         </div>
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-light-primary fw-bolder px-4 me-1"
+                        (click)="exportExcel()">
+                        CSV
+                    </a>
+                </div>
             </div>
+
         </form>
     </div>
 </div>
