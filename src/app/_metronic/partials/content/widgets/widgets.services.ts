@@ -50,6 +50,23 @@ export class WidgetService {
   private updateDoorStepDeliveryStatusURL = this.baseURL + 'User/updateDoorStepDeliveryStatus'; 
   private removeUserURL = this.baseURL + 'register/removeUser';
   private getPrimeDealerDetailsURL = this.baseURL + 'dealerOnboarding/getPrimeDealerDetails';
+  private updateTaxInvoiceStatusURL = this.baseURL + 'User/updateTaxInvoiceStatus';
+  private getPayInfoURL = this.baseURL + 'register/getPayInfo';
+  private addOffLinePaymentURL = this.baseURL + 'dealerInvoice/addOffLinePayment';
+  private waiveoffPaymentUpdateURL = this.baseURL + 'corporate/waiveoffPaymentUpdate';
+  private updateSmsStatusURL = this.baseURL + 'user/updateSmsStatus';
+  private updateemailStatusURL = this.baseURL + 'user/updateemailStatus';
+  private updateDealerCRSMSStatusURL = this.baseURL + 'fuelVendor/updateDealerCRSMSStatus';
+  private getLiteDealerDetailsURL = this.baseURL + 'dealerOnboarding/getLiteDealerDetails';
+  private updateOsSmsStatusURL = this.baseURL + 'user/updateOsSmsStatus';
+  private getPrimeDealerReqListURL = this.baseURL + 'dealerOnboarding/getPrimeDealerReqList'; 
+  private updatePrimeUserStatusURL = this.baseURL + 'fuelVendor/updatePrimeUserStatus'; 
+  private getDealerRequestDetailsURL = this.baseURL + 'dealerOnboarding/getDealerRequestDetails'; 
+  private updateStatusForRequestURL = this.baseURL + 'fuelVendor/updateStatusForRequest';
+  private getRequestCallDetailsURL = this.baseURL + 'dealerOnboarding/getRequestCallDetails';
+  private updateDemoScheduleRequestURL = this.baseURL + 'fuelStaff/updateDemoScheduleRequest'; 
+  private getDemoDealerDetailsURL = this.baseURL + 'dealerOnboarding/getDemoDealerDetails';
+  private getRemovedDealerDetailsURL = this.baseURL + 'dealerOnboarding/getRemovedDealerDetails';  
 
 
   setHeader() {
@@ -309,4 +326,175 @@ export class WidgetService {
       headers: headers
     })
   }
+
+  // updateTaxInvoiceStatusURL
+  updateTaxInvoiceStatusPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateTaxInvoiceStatusURL, body, {
+      headers: headers
+    })
+  }
+
+  // getPayInfoURL
+  getPayInfoPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.get(this.getPayInfoURL, {
+      headers: headers
+    })
+  }
+
+  // addOffLinePaymentURL
+  addOffLinePaymentPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.addOffLinePaymentURL, body, {
+      headers: headers
+    })
+  }
+
+  // waiveoffPaymentUpdateURL
+  waiveoffPaymentUpdatePOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.waiveoffPaymentUpdateURL, body, {
+      headers: headers
+    })
+  }
+
+  // updateSmsStatusURL
+  updateSmsStatusPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateSmsStatusURL, body, {
+      headers: headers
+    })
+  }
+
+  // updateemailStatusURL
+  updateemailStatusPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateemailStatusURL, body, {
+      headers: headers
+    })
+  }
+
+  // updateDealerCRSMSStatusURL
+  updateDealerCRSMSStatusPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateDealerCRSMSStatusURL, body, {
+      headers: headers
+    })
+  }
+
+  // getLiteDealerDetailsURL
+  getLiteDealerDetailsPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getLiteDealerDetailsURL, body, {
+      headers: headers
+    })
+  }
+
+  // updateOsSmsStatusURL
+  updateOsSmsStatusPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateOsSmsStatusURL, body, {
+      headers: headers
+    })
+  }
+
+  // getPrimeDealerReqListURL
+  getPrimeDealerReqListPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getPrimeDealerReqListURL, body, {
+      headers: headers
+    })
+  }
+
+  // updatePrimeUserStatusURL
+  updatePrimeUserStatusPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updatePrimeUserStatusURL, body, {
+      headers: headers
+    })
+  }
+
+  // getDealerRequestDetailsURL
+  getDealerRequestDetailsPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getDealerRequestDetailsURL, body, {
+      headers: headers
+    })
+  }
+
+  // updateStatusForRequestURL
+  updateStatusForRequestPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateStatusForRequestURL, body, {
+      headers: headers
+    })
+  }
+
+  // getRequestCallDetailsURL
+  getRequestCallDetailsPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getRequestCallDetailsURL, body, {
+      headers: headers
+    })
+  }
+
+  // updateDemoScheduleRequestURL
+  updateDemoScheduleRequestPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateDemoScheduleRequestURL, body, {
+      headers: headers
+    })
+  }
+
+  // getDemoDealerDetailsURL
+  getDemoDealerDetailsPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getDemoDealerDetailsURL, body, {
+      headers: headers
+    })
+  }
+
+  // getRemovedDealerDetailsURL
+  getRemovedDealerDetailsPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getRemovedDealerDetailsURL, body, {
+      headers: headers
+    })
+  }
+
 }

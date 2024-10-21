@@ -94,6 +94,13 @@ import { TablesWidget15Component } from './tables/tables-widget15/tables-widget1
 import { TablesWidget16Component } from './tables/tables-widget16/tables-widget16.component';
 import { TablesWidget17Component } from './tables/tables-widget17/tables-widget17.component';
 import { TablesWidget18Component } from './tables/tables-widget18/tables-widget18.component';
+import { TablesWidget19Component } from './tables/tables-widget19/tables-widget19.component';
+import { TablesWidget20Component } from './tables/tables-widget20/tables-widget20.component';
+import { TablesWidget21Component } from './tables/tables-widget21/tables-widget21.component';
+import { TablesWidget22Component } from './tables/tables-widget22/tables-widget22.component';
+import { TablesWidget23Component } from './tables/tables-widget23/tables-widget23.component';
+import { TablesWidget24Component } from './tables/tables-widget24/tables-widget24.component';
+import { TablesWidget25Component } from './tables/tables-widget25/tables-widget25.component';
 @NgModule({
   declarations: [
     // Advanced Tables
@@ -180,6 +187,13 @@ import { TablesWidget18Component } from './tables/tables-widget18/tables-widget1
     TablesWidget16Component,
     TablesWidget17Component,
     TablesWidget18Component,
+    TablesWidget19Component,
+    TablesWidget20Component,
+    TablesWidget21Component,
+    TablesWidget22Component,
+    TablesWidget23Component,
+    TablesWidget24Component,
+    TablesWidget25Component,
   ],
   imports: [
     ReactiveFormsModule,
@@ -281,6 +295,13 @@ import { TablesWidget18Component } from './tables/tables-widget18/tables-widget1
     TablesWidget16Component,
     TablesWidget17Component,
     TablesWidget18Component,
+    TablesWidget19Component,
+    TablesWidget20Component,
+    TablesWidget21Component,
+    TablesWidget22Component,
+    TablesWidget23Component,
+    TablesWidget24Component,
+    TablesWidget25Component,
   ],
   providers: [NgbActiveModal, ExcelService],
 })

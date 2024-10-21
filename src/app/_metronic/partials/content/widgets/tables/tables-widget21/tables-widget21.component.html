@@ -1,0 +1,82 @@
+<div class="card-body py-3">
+    <div class="row">
+        <div class="table-responsive mb-0">
+            <table class="table table-centered">
+                <thead class="table-light">
+                    <tr>
+                        <th style="text-align: left;"> Veels ID </th>
+                        <th style="text-align: left;"> Mapped Date </th>
+                        <th style="text-align: left;"> Company Name</th>
+                        <th style="text-align: left;"> Oil Company </th>
+                        <th style="text-align: left;"> Owner Name </th>
+                        <th style="text-align: left;"> Contact Number </th>
+                        <th style="text-align: left;"> Accept </th>
+                        <th style="text-align: left;"> Decline </th>
+
+                    </tr>
+                </thead>
+                <tbody
+                    *ngFor="let data of primeDealerReqList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                    <tr>
+                        <td> {{data.FuelVeelsId}} </td>
+                        <td>{{data.corporateCreatedAt | date:"d MMM, yyyy"}}</td>
+                        <td>{{data.companyName}}</td>
+                        <td>{{data.brandName}}</td>
+                        <td>{{data.hostName}}</td>
+                        <td>{{data.phone1}}</td>
+                        <td class="width-50">
+                            <button type="button" class="btn ico-btn-primary"
+                                (click)="onBoarding1(primeReq,'Accept','12','ACCEPT',data.fuelDealerConversionId, data.accessGroupId,data.personId, data.firstName, data.lastName, data.companyName, data.city, data.email1, data.state, data.fuelDealerId, data.brandName, data.hostPhone)">
+                                <i style="color:green; font-size: 18px;" class="fa fa-check" aria-hidden="true"></i>
+
+                            </button>
+                        </td>
+                        <td class="width-50 ico-btn">
+                            <button type="button" class="btn ico-btn-danger"
+                                (click)="onBoarding1(primeReq,'Decline', '19', 'DECLINE', data.fuelDealerConversionId, data.accessGroupId,data.personId, data.firstName, data.lastName, data.companyName, data.city, data.email1, data.state, data.fuelDealerId, data.brandName, data.hostPhone)">
+                                <i style="color:red;  font-size: 18px;" class="fa fa-ban"></i>
+
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- begin::Pagination -->
+            <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+            </pagination-controls>
+            <!-- end::Pagination -->
+
+
+            <ng-template #primeReq let-c="close" let-d="dismiss">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <label>
+                            <h4><strong>
+                                    Do You Want To {{primeDealerStatus}} ?</strong></h4>
+                        </label>
+                    </h4>
+                    <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-outline-success my-2 my-sm-0"
+                                (click)="primeDealerRequest()">
+                                Yes</button>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-danger" aria-label="Close"
+                                (click)="d('Cross click')">No</button>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>

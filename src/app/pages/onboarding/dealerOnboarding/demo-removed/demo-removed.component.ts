@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrl: './demo-removed.component.scss'
 })
 export class DemoRemovedComponent {
+  isDealer: boolean = false;
+  isTransporter: boolean = false;
+  isAdmin: boolean = true;
 
 }
