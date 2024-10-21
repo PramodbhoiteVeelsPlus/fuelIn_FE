@@ -66,7 +66,7 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody *ngFor="let data of allDealerList; let i = index">
+            <tbody *ngFor="let data of allDealerList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
                 <tr>
                     <td style="cursor: pointer;">
                         <a class="expand-row" (click)="changeValueLiteDealerList(i,data.pin, data.GSTNumber, data.email1, data.city, data.state, 
@@ -188,6 +188,12 @@
                 </tr>
             </tbody>
         </table>
+
+        <!-- begin::Pagination -->
+        <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+          style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+        </pagination-controls>
+        <!-- end::Pagination -->
     </div>
 
     <ng-template #contentOnBoard1 let-c="close" let-d="dismiss">

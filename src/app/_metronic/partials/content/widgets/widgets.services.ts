@@ -49,6 +49,7 @@ export class WidgetService {
   private updateDealerDemoStatusURL = this.baseURL + 'fuelVendor/updateDealerDemoStatus'; 
   private updateDoorStepDeliveryStatusURL = this.baseURL + 'User/updateDoorStepDeliveryStatus'; 
   private removeUserURL = this.baseURL + 'register/removeUser';
+  private getPrimeDealerDetailsURL = this.baseURL + 'dealerOnboarding/getPrimeDealerDetails';
 
 
   setHeader() {
@@ -295,6 +296,16 @@ export class WidgetService {
     let headers = new HttpHeaders();
     headers = headers.set('authenticationToken', this.token);
     return this.http.post(this.removeUserURL, body, {
+      headers: headers
+    })
+  }
+
+  // getPrimeDealerDetailsURL
+  getPrimeDealerDetailsPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getPrimeDealerDetailsURL, body, {
       headers: headers
     })
   }
