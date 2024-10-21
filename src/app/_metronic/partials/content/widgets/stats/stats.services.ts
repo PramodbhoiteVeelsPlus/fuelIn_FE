@@ -79,10 +79,17 @@ export class StatsService {
     private getGSTDataURL = this.baseURL + 'activityCount/getGSTData';
     private updateGSTDataURL = this.baseURL + 'activityCount/updateGSTData';
     private deleteGSTDataURL = this.baseURL + 'activityCount/deleteGSTData';
+    private getActivityCountURL = this.baseURL + 'activityCount/getActivityCount';
+    private getCompanyNamesURL = this.baseURL + 'activityCount/getCompanyNames';
+    private getAllActiveUserDetailsURL = this.baseURL + 'register/getAllActiveUserDetails';
+    private getAllKitNoByPersonIdURL = this.baseURL + 'fastag/getAllKitNoByPersonId';
+    private getAllEntityIdURL = this.baseURL + 'coinConversion/getAllEntityId';
+    private getAllKitNoURL = this.baseURL + 'fastag/getAllKitNo';
+    private getActiveUserDetailsByCorpIdURL = this.baseURL + 'register/getActiveUserDetailsByCorpId';
 
 
 
-
+    
 
 
 
@@ -634,7 +641,75 @@ export class StatsService {
         })
     }
 
+    // getActivityCountURL
+    getActivityCountPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getActivityCountURL, body, {
+            headers: headers
+        })
+    }
 
+    // getCompanyNamesURL
+    getCompanyNamesPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getCompanyNamesURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAllActiveUserDetailsURL
+    getAllActiveUserDetailsPost(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAllActiveUserDetailsURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAllKitNoByPersonIdURL
+    getAllKitNoByPersonIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAllKitNoByPersonIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAllEntityIdURL
+    getAllEntityIdPost(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAllEntityIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAllKitNoURL
+    getAllKitNoURLPost(): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.get(this.getAllKitNoURL, {
+            headers: headers
+        })
+    }
+
+    // getActiveUserDetailsByCorpIdURL
+    getActiveUserDetailsByCorpIdPost(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getActiveUserDetailsByCorpIdURL, body, {
+            headers: headers
+        })
+    }
 
 
 

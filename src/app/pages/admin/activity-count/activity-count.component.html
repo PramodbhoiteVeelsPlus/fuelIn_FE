@@ -6,16 +6,16 @@
         <a ngbNavLink>
             <span class="d-none d-sm-block" style="font-size: 15px;">PORTAL</span>
         </a>
-        <ng-template ngbNavContent>
-            <!-- <ng-template [ngTemplateOutlet]="portal"></ng-template> -->
+        <ng-template ngbNavContent><hr>
+            <ng-template [ngTemplateOutlet]="portal"></ng-template>
         </ng-template>
     </li>
     <li [ngbNavItem]="2">
         <a ngbNavLink>
             <span class="d-none d-sm-block" style="font-size: 15px;">APP</span>
         </a>
-        <ng-template ngbNavContent>
-            <!-- <ng-template [ngTemplateOutlet]="app"></ng-template> -->
+        <ng-template ngbNavContent><hr>
+            <ng-template [ngTemplateOutlet]="app"></ng-template>
         </ng-template>
     </li>
     <li [ngbNavItem]="3">
@@ -23,7 +23,7 @@
             <span class="d-none d-sm-block" style="font-size: 15px;">ACTIVE CUSTOMER</span>
         </a>
         <ng-template ngbNavContent>
-            <!-- <app-stats-widget3></app-stats-widget3> -->
+            <app-stats-widget9></app-stats-widget9>
         </ng-template>
     </li>
 </ul>
@@ -31,22 +31,22 @@
 
 
 
-<!-- <ng-template #portal>
+<ng-template #portal>
     <ul ngbNav #activityCountPortal="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified" style="width: 50%;">
         <li [ngbNavItem]="1">
             <a ngbNavLink>
-                <span class="d-none d-sm-block" style="font-size: 15px;">PORTAL</span>
+                <span class="d-none d-sm-block" style="font-size: 15px;">DEALER</span>
             </a>
             <ng-template ngbNavContent>
-                <app-count-dealer></app-count-dealer>
+                <app-stats-widget7 title="PORTAL"></app-stats-widget7>
             </ng-template>
         </li>
         <li [ngbNavItem]="2">
             <a ngbNavLink>
-                <span class="d-none d-sm-block" style="font-size: 15px;">APP</span>
+                <span class="d-none d-sm-block" style="font-size: 15px;">TRANSPORTER</span>
             </a>
             <ng-template ngbNavContent>
-                <app-count-transporter></app-count-transporter>
+                <app-stats-widget8 title="PORTAL"></app-stats-widget8>
             </ng-template>
         </li>
     </ul>
@@ -57,20 +57,20 @@
     <ul ngbNav #activityCountApp="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified" style="width: 50%;">
         <li [ngbNavItem]="1">
             <a ngbNavLink>
-                <span class="d-none d-sm-block" style="font-size: 15px;">PORTAL</span>
+                <span class="d-none d-sm-block" style="font-size: 15px;">DEALER</span>
             </a>
             <ng-template ngbNavContent>
-                <app-count-dealer></app-count-dealer>                
+                <app-stats-widget7 title="APP"></app-stats-widget7>
             </ng-template>
         </li>
         <li [ngbNavItem]="2">
             <a ngbNavLink>
-                <span class="d-none d-sm-block" style="font-size: 15px;">APP</span>
+                <span class="d-none d-sm-block" style="font-size: 15px;">TRANSPORTER</span>
             </a>
             <ng-template ngbNavContent>
-                <app-count-transporter></app-count-transporter>
+                <app-stats-widget8 title="APP"></app-stats-widget8>
             </ng-template>
         </li>
     </ul>
     <div [ngbNavOutlet]="activityCountApp"></div>
-</ng-template> -->
+</ng-template>

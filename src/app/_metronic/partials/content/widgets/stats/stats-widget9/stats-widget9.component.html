@@ -1,0 +1,59 @@
+<br>
+<form [formGroup]="filter">
+  <div class="row">
+    <div class="col-md-3">
+      <input class="form-control" type="text" list="activityCountTransporter" placeholder="select transporter"
+        formControlName="transporter" (change)="selectActiveUserFilter($event)">
+      <datalist id="activityCountTransporter">
+        <option value="All">All</option>
+        <option *ngFor="let data of activityCountTransporter" [value]="data.companyName">
+      </datalist>
+    </div>
+    <div class="col-auto">
+      <label> Start Date</label>
+    </div>
+    <div class="col-auto">
+      <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" readonly style="background-color: #ffffff;"
+        (click)="startDate.toggle()" formControlName="startDate" ngbDatepicker #startDate="ngbDatepicker">
+    </div>
+    <div class="col-auto">
+      <label> End Date</label>
+    </div>
+    <div class="col-auto">
+      <input class="form-control" placeholder="DD-MM-YYYY" name="endDate" readonly style="background-color: #ffffff;"
+        (click)="endDate.toggle()" formControlName="endDate" ngbDatepicker #endDate="ngbDatepicker">
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="button" (click)="getactiveUserFilter()"> view </button>
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-outline-secondary my-2 my-sm-0" type="button" (click)="excelDownload()">
+        download </button>
+    </div>
+  </div>
+  <br>
+</form>
+<div class="row">
+  <div class="col col-xl-12 col-lg-12">
+    <table class="table table-hover table-striped">
+      <thead>
+        <tr>
+          <th style="text-align: center;"> date </th>
+          <th style="text-align: center;"> user name </th>
+          <th style="text-align: center;"> company name </th>
+          <th style="text-align: center;"> mobile number </th>
+          <th style="text-align: center;"> role </th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let data of activeUserDetails; let i = index;">
+        <tr>
+          <td style="text-align: center;"> {{data.activeUserCountCreatedOn}} </td>
+          <td style="text-align: center;"> {{data.activeUserName}} </td>
+          <td style="text-align: center;"> {{data.activeUserCompanyName}} </td>
+          <td style="text-align: center;"> {{data.activeUserMobileNumber}} </td>
+          <td style="text-align: center;"> {{data.activeUserRole}} </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
