@@ -11,13 +11,11 @@ import { NewReportComponent } from './new-report/new-report.component';
 import { UpdateMobileComponent } from './update-mobile/update-mobile.component';
 import { GstDetailsComponent } from './gst-details/gst-details.component';
 import { ActivityCountComponent } from './activity-count/activity-count.component';
-import { CountDealerComponent } from './activity-count/count-dealer/count-dealer.component';
-import { CountTransporterComponent } from './activity-count/count-transporter/count-transporter.component';
 
 @NgModule({
   declarations: [ReportsComponent, NewReportComponent,
     UpdateMobileComponent, GstDetailsComponent,
-    ActivityCountComponent, CountDealerComponent, CountTransporterComponent],
+    ActivityCountComponent, ],
   imports: [
     CommonModule,
     FormsModule,
