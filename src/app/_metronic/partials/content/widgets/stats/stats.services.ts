@@ -75,6 +75,10 @@ export class StatsService {
     private getDetailsByMobileURL = this.baseURL + 'activityCount/getDetailsByMobile';
     private updatePersonMobileURL = this.baseURL + 'activityCount/updatePersonMobile';
     private getDetailsByUpdateMobileLogURL = this.baseURL + 'activityCount/getDetailsByUpdateMobileLog';
+    private addGSTDataURL = this.baseURL + 'activityCount/addGSTData';
+    private getGSTDataURL = this.baseURL + 'activityCount/getGSTData';
+    private updateGSTDataURL = this.baseURL + 'activityCount/updateGSTData';
+    private deleteGSTDataURL = this.baseURL + 'activityCount/deleteGSTData';
 
 
 
@@ -589,6 +593,47 @@ export class StatsService {
             headers: headers
         })
     }
+
+    // addGSTDataURL
+    addGSTDataPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addGSTDataURL, body, {
+            headers: headers
+        })
+    }
+
+    // getGSTDataURL
+    getGSTDataPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getGSTDataURL, body, {
+            headers: headers
+        })
+    }
+
+    // updateGSTDataURL
+    updateGSTDataPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateGSTDataURL, body, {
+            headers: headers
+        })
+    }
+
+    // deleteGSTDataURL
+    deleteGSTDataPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.deleteGSTDataURL, body, {
+            headers: headers
+        })
+    }
+
 
 
 

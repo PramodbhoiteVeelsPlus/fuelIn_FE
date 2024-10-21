@@ -1,0 +1,30 @@
+<div class="card-header">
+    <b>ACTIVITY COUNT</b>
+</div>
+<ul ngbNav #activityCount="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified" style="width: 50%;">
+    <li [ngbNavItem]="1">
+        <a ngbNavLink>
+            <span class="d-none d-sm-block" style="font-size: 15px;">PORTAL</span>
+        </a>
+        <ng-template ngbNavContent>
+            <!-- <app-stats-widget2></app-stats-widget2> -->
+        </ng-template>
+    </li>
+    <li [ngbNavItem]="2">
+        <a ngbNavLink>
+            <span class="d-none d-sm-block" style="font-size: 15px;">APP</span>
+        </a>
+        <ng-template ngbNavContent>
+            <!-- <app-stats-widget3></app-stats-widget3> -->
+        </ng-template>
+    </li>
+    <li [ngbNavItem]="3">
+        <a ngbNavLink>
+            <span class="d-none d-sm-block" style="font-size: 15px;">ACTIVE CUSTOMER</span>
+        </a>
+        <ng-template ngbNavContent>
+            <!-- <app-stats-widget3></app-stats-widget3> -->
+        </ng-template>
+    </li>
+</ul>
+<div [ngbNavOutlet]="activityCount"></div>
