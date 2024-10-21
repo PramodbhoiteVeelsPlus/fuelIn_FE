@@ -13,7 +13,9 @@ import { GstDetailsComponent } from './gst-details/gst-details.component';
 import { ActivityCountComponent } from './activity-count/activity-count.component';
 
 @NgModule({
-  declarations: [ReportsComponent, NewReportComponent, UpdateMobileComponent, GstDetailsComponent, ActivityCountComponent],
+  declarations: [ReportsComponent, NewReportComponent,
+    UpdateMobileComponent, GstDetailsComponent,
+    ActivityCountComponent, ],
   imports: [
     CommonModule,
     FormsModule,

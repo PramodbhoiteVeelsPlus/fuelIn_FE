@@ -94,6 +94,9 @@ import { TablesWidget15Component } from './tables/tables-widget15/tables-widget1
 import { TablesWidget16Component } from './tables/tables-widget16/tables-widget16.component';
 import { TablesWidget17Component } from './tables/tables-widget17/tables-widget17.component';
 import { TablesWidget18Component } from './tables/tables-widget18/tables-widget18.component';
+import { StatsWidget7Component } from './stats/stats-widget7/stats-widget7.component';
+import { StatsWidget8Component } from './stats/stats-widget8/stats-widget8.component';
+import { StatsWidget9Component } from './stats/stats-widget9/stats-widget9.component';
 import { TablesWidget19Component } from './tables/tables-widget19/tables-widget19.component';
 import { TablesWidget20Component } from './tables/tables-widget20/tables-widget20.component';
 import { TablesWidget21Component } from './tables/tables-widget21/tables-widget21.component';
@@ -160,6 +163,9 @@ import { TablesWidget25Component } from './tables/tables-widget25/tables-widget2
     StatsWidget4Component,
     StatsWidget5Component,
     StatsWidget6Component,
+    StatsWidget7Component,
+    StatsWidget8Component,
+    StatsWidget9Component,
     TablesWidget1Component,
     TablesWidget2Component,
     TablesWidget3Component,
@@ -267,6 +273,9 @@ import { TablesWidget25Component } from './tables/tables-widget25/tables-widget2
     StatsWidget4Component,
     StatsWidget5Component,
     StatsWidget6Component,
+    StatsWidget7Component,
+    StatsWidget8Component,
+    StatsWidget9Component,
     TablesWidget1Component,
     TablesWidget2Component,
     TablesWidget3Component,

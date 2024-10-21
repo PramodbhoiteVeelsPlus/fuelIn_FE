@@ -1,0 +1,73 @@
+<form [formGroup]="filter">
+  <br><br>
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-auto">
+      <label> Start Date</label>
+    </div>
+    <div class="col-auto">
+      <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" readonly style="background-color: #ffffff;"
+        (click)="startDate.toggle()" formControlName="startDate" ngbDatepicker #startDate="ngbDatepicker">
+    </div>
+    <div class="col-auto">
+      <label> End Date</label>
+    </div>
+    <div class="col-auto">
+      <input class="form-control" placeholder="DD-MM-YYYY" name="endDate" readonly style="background-color: #ffffff;"
+        (click)="endDate.toggle()" formControlName="endDate" ngbDatepicker #endDate="ngbDatepicker">
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="button" (click)="getActivityCount()">
+        view </button>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-3">
+      <input class="form-control" type="text" list="activityCountDealers" placeholder="select dealer"
+        formcontrolName="dealer" (change)="getActivityCountByDealer($event)">
+      <datalist id="activityCountDealers">
+        <option *ngFor="let data of activityCountDealers" [value]="data.companyName">
+      </datalist>
+    </div>
+    <div class="col-md-4"></div>
+    <div class="col-auto">
+      <button class="btn btn-outline-primary my-2 my-sm-0" type="button" (click)="excelDownload()">
+        download </button>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col col-xl-1 col-lg-1">
+    </div>
+    <div class="col col-xl-6 col-lg-6">
+      <b *ngIf="dealerName">
+        {{dealersName}}
+      </b>
+      <table class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th style="text-align: center;"> sr no </th>
+            <th style="text-align: center;"> modal </th>
+            <th style="text-align: center;"> count </th>
+          </tr>
+        </thead>
+        <tbody *ngIf="isPORTAL">
+          <tr *ngFor="let data of activityCountDetailsDealer; let i = index;">
+            <td style="text-align: center;"> {{i + 1}} </td>
+            <td style="text-align: center;"> {{data.activityCountModal}} </td>
+            <td style="text-align: center;"> {{data.count}} </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="isAPP">
+          <tr *ngFor="let data of activityCountDetailsDealerAPP; let i = index;">
+            <td style="text-align: center;"> {{i + 1}} </td>
+            <td style="text-align: center;"> {{data.activityCountModal}} </td>
+            <td style="text-align: center;"> {{data.count}} </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</form>
