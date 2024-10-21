@@ -91,6 +91,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ExcelService } from 'src/app/pages/excel.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TablesWidget15Component } from './tables/tables-widget15/tables-widget15.component';
+import { TablesWidget16Component } from './tables/tables-widget16/tables-widget16.component';
+import { TablesWidget17Component } from './tables/tables-widget17/tables-widget17.component';
+import { TablesWidget18Component } from './tables/tables-widget18/tables-widget18.component';
 @NgModule({
   declarations: [
     // Advanced Tables
@@ -164,7 +167,6 @@ import { TablesWidget15Component } from './tables/tables-widget15/tables-widget1
     TablesWidget12Component,
     TablesWidget13Component,
     TablesWidget14Component,
-    TablesWidget15Component,
     CardsWidget1Component,
     CardsWidget2Component,
     CardsWidget20Component,
@@ -174,6 +176,10 @@ import { TablesWidget15Component } from './tables/tables-widget15/tables-widget1
     CardsWidget7Component,
     NewChartsWidget8Component,
     CardsWidget18Component,
+    TablesWidget15Component,
+    TablesWidget16Component,
+    TablesWidget17Component,
+    TablesWidget18Component,
   ],
   imports: [
     ReactiveFormsModule,
@@ -261,7 +267,6 @@ import { TablesWidget15Component } from './tables/tables-widget15/tables-widget1
     TablesWidget12Component,
     TablesWidget13Component,
     TablesWidget14Component,
-    TablesWidget15Component,
     // new
     CardsWidget1Component,
     CardsWidget2Component,
@@ -271,7 +276,11 @@ import { TablesWidget15Component } from './tables/tables-widget15/tables-widget1
     EngageWidget10Component,
     CardsWidget7Component,
     NewChartsWidget8Component,
-    CardsWidget18Component
+    CardsWidget18Component,
+    TablesWidget15Component,
+    TablesWidget16Component,
+    TablesWidget17Component,
+    TablesWidget18Component,
   ],
   providers: [NgbActiveModal, ExcelService],
 })

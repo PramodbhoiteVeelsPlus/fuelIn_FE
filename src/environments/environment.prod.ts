@@ -27,7 +27,7 @@ export const environment = {
   
   //* for test*/ 
   key: 'rzp_test_TPEZneSo9wziks',
-  callback_url: 'http://localhost:4200/login',
+  callback_url: 'http://localhost:4200/home',
   key_sec: 'bkn9aRMDh5NvtH6uPMUekJFq',
   apiUrl: 'http://13.234.240.139:9000/',
   imagePath: 'https://veelsimage.s3.ap-south-1.amazonaws.com/',

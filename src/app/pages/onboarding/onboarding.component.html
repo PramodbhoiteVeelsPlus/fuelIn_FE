@@ -7,7 +7,7 @@
         <span class="d-none d-sm-block" style="font-size: 15px;">DEALER LIST</span>
       </a>
       <ng-template ngbNavContent>
-        <app-dealer-lists></app-dealer-lists>
+        <app-all-dealer></app-all-dealer>
       </ng-template>
     </li>
     <li [ngbNavItem]="2">
@@ -15,17 +15,17 @@
         <span class="d-none d-sm-block" style="font-size: 15px;">REQUEST </span>
       </a>
       <ng-template ngbNavContent>
-        <app-demo-removed></app-demo-removed>
+        <app-dealer-lists></app-dealer-lists>
       </ng-template>
     </li>
-    <!-- <li [ngbNavItem]="3">
+    <li [ngbNavItem]="3">
       <a ngbNavLink>
         <span class="d-none d-sm-block" style="font-size: 15px;">DEMO/REMOVED</span>
       </a>
       <ng-template ngbNavContent>
-        <app-request></app-request>
+        <app-demo-removed></app-demo-removed>
       </ng-template>
-    </li> -->
+    </li>
   </ul>
   <div [ngbNavOutlet]="dashboard"></div>
 </div>

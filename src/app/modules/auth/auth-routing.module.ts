@@ -8,6 +8,7 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { CustloginComponent } from './components/custlogin/custlogin.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { AboutComponent } from './components/about/about.component';
+import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,10 @@ const routes: Routes = [
       {
         path: 'about',
         component: AboutComponent,
+      },
+      {
+        path: 'home',
+        component: HomeComponent,
       },
       // { path: '', redirectTo: 'login', pathMatch: 'full' },
       // { path: '**', redirectTo: 'login', pathMatch: 'full' },

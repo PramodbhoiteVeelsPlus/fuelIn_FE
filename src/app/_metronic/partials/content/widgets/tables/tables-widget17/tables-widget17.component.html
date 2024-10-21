@@ -1,0 +1,221 @@
+<!-- begin::Header -->
+<div class="card-body py-3">
+
+    <div class="row">
+        <form [formGroup]="filterForm">
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="search-box me-2 mb-2 d-inline-block">
+                        <div class="position-relative">
+                            <input class="form-control" type="text" (input)="onSearch()" placeholder="Search"
+                                [(ngModel)]="searchData" [ngModelOptions]="{standalone: true}">
+                            <i class="bx bx-search-alt search-icon"></i>
+                        </div>
+                    </div>
+                </div>
+
+                &nbsp;&nbsp;
+
+                <label for="example-text-input" class="col-auto col-form-label">Date Range</label>
+                <div class="col-md-2">
+                    <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+                        name="startDate" ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker
+                        #startDate="ngbDatepicker" formControlName="startDate">
+                </div>
+                <div class="col-md-2">
+                    <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+                        name="endDate" ngbTooltip="End Date" (click)="endDate.toggle()" ngbDatepicker
+                        #endDate="ngbDatepicker" formControlName="endDate">
+                </div>
+
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary" style="margin-bottom: 30px"
+                        (click)="getAllDealerList()">
+                        Submit
+                    </button>
+                    &nbsp;&nbsp;
+
+                    <button type="submit" class="btn btn-secondary" style="margin-bottom: 30px" (click)="clearAllDealerList()">
+                        Cancel
+                    </button>
+                    &nbsp;&nbsp;
+                    <a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-light-primary fw-bolder px-4 me-1"
+                        (click)="exportExcel()">
+                        CSV
+                    </a>
+
+                </div>
+
+            </div>
+            <br>
+        </form>
+    </div>
+
+    <div class="table-responsive mb-0">
+        <table class="table table-centered">
+            <thead class="table-light">
+                <tr class="fw-bolder text-muted bg-light">
+                    <th> </th>
+                    <th>Veels ID</th>
+                    <th>Mapped Date</th>
+                    <th>Company Name</th>
+                    <th>Oil Company</th>
+                    <th>Owner Name</th>
+                    <th>Contact Number</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let data of allDealerList; let i = index">
+                <tr>
+                    <td style="cursor: pointer;">
+                        <a class="expand-row" (click)="changeValueLiteDealerList(i,data.pin, data.GSTNumber, data.email1, data.city, data.state, 
+                           data.onBoardingStatus, data.demoDealer, data.fuelDealerId, data.hostPhone, data.userId,data.personId, data.headQuarterName,
+                           data.customerId  )" style="font-size: 19px;">
+                            +
+                        </a>
+                    </td>
+                    <td> {{ data.FuelVeelsId }} </td>
+                    <td> {{ data.customerCreatedAt | date:"d MMM, yyyy" }} </td>
+                    <td> {{ data.companyName }} </td>
+                    <td> {{ data.brandName }} </td>
+                    <td> {{ data.hostName }} </td>
+                    <td> {{ data.hostPhone }} </td>
+                    <td style="text-align: center;cursor: pointer;">
+                        <!-- <div ngbDropdown placement="bottom-left">
+                            <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle
+                                data-toggle="dropdown" aria-expanded="true"></i>
+                            <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                                <a class="dropdown-item" href="javascript: void(0);"
+                                    [routerLink]="['/admin/customerDetailsEdit', data.customerId]">
+                                    <i class="fas fa-edit" style="color: #4e9b4e;">
+                                    </i> &nbsp; Edit</a>
+                            </div>
+                        </div> -->
+                    </td>
+                </tr>
+
+                <tr *ngIf="showLiteDealerList  && i == rowNumberLiteDealerList" class="sub-table no-bg">
+                    <td> </td>
+                    <td colspan="12" class="p-0">
+                        <table class="table mb-0 table-striped">
+                            <thead class="table-light">
+
+                            </thead>
+                            <tbody>
+                                <tr class="fw-bolder text-muted bg-light">
+                                    <th>Email Id</th>
+                                    <th>GST</th>
+                                    <th>City</th>
+                                    <th>State</th>
+                                    <th>PIN Code</th>
+
+                                </tr>
+                                <tr>
+                                    <td>{{data.email1}}</td>
+                                    <td>{{data.GSTNumber}}</td>
+                                    <td>{{data.city}}</td>
+                                    <td>{{data.state}}</td>
+                                    <td>{{data.pin}}</td>
+                                </tr>
+
+                                <tr class="fw-bolder text-muted bg-light">
+                                    <th>Onboarding Status</th>
+                                    <th>Accept</th>
+                                    <th>Decline</th>
+                                    <th>Active Pump</th>
+                                    <th>Door Step Delivery</th>
+                                    <th>Remove Dealer</th>
+
+                                </tr>
+                                <tr>
+                                    <td> {{data.onBoardingStatus}} </td>
+                                    <td class="width-50">
+                                        <button type="button" class="btn ico-btn-primary"
+                                            (click)="onBoarding(contentOnBoard1,'Accept',data.userId,data.personId)">
+                                            <i style="color:green; font-size: 18px;" class="fa fa-check"
+                                                aria-hidden="true"></i>
+                                        </button>
+                                    </td>
+                                    <td class="width-50 ico-btn">
+                                        <button type="button" class="btn ico-btn-danger"
+                                            (click)="onBoarding(contentOnBoard1,'Decline',data.userId,data.personId)">
+                                            <i style="color:red;  font-size: 18px;" class="fa fa-ban"></i>
+                                        </button>
+                                    </td>
+
+                                    <td>
+                                        <div *ngIf="data.demoDealer == 'FALSE'">
+                                            <label class="switch">
+                                                <input type="checkbox" checked="checked"
+                                                    (change)="demoDealerActive($event,data.fuelDealerId,data.demoDealer)">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                        <div *ngIf="data.demoDealer =='TRUE'">
+                                            <label class="switch">
+                                                <input type="checkbox" [checked]="waive"
+                                                    (change)="demoDealerActive($event,data.fuelDealerId,data.demoDealer)">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <div *ngIf="data.doorStepDelivery == 'TRUE'">
+                                        <label class="switch">
+                                            <input type="checkbox" [checked]="true"
+                                                (change)="doorDeliveryEnable($event, data.userId, 'FALSE')">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                    <div *ngIf="data.doorStepDelivery == 'FALSE'">
+                                        <label class="switch">
+                                            <input type="checkbox" [checked]="false"
+                                                (change)="doorDeliveryEnable($event, data.userId, 'TRUE')">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                    <td>
+                                        <button type="button" class="btn btn-danger"
+                                            (click)="removePerson(data.hostPhone)">
+                                            delete
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <ng-template #contentOnBoard1 let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h4 class="modal-title">
+                <label>
+                    <h4><strong>
+                            Do You Want To {{onBoardStatus}} ?</strong></h4>
+                </label>
+            </h4>
+            <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-outline-success my-2 my-sm-0" (click)="onBoard()">
+                        Yes</button>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-danger" aria-label="Close"
+                        (click)="d('Cross click')">No</button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>
+<br><br>
+<!-- end::Header -->
