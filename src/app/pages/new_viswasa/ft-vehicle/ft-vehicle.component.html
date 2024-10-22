@@ -1,0 +1,119 @@
+<div class="container-fluid">
+    <div class="card-header">
+        <b>CUSTOMER ONBOARDING</b>
+    </div>
+    <div class="row">
+        <div class="col-lg-9">
+            &nbsp;
+            <b> Entity ID : {{entityID}} </b>
+        </div>
+        <div class="col-lg-3">
+            <input class="form-control mr-sm-2" type="file" (change)="onExcelKitpload($event)">
+        </div>
+        <br>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="col-md-12">
+                        <div class="table-responsive mb-0">
+                            <table class="table table-centered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th></th>
+                                        <th> Vehicle Number </th>
+                                        <th> Owner Name </th>
+                                        <th> Owner Father Name </th>
+                                        <th> Tag Class </th>
+                                        <th> Threshold Limit </th>
+                                        <th> Created Date </th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody
+                                    *ngFor="let vehicle of vehicleList; let i = index">
+                                    <tr>
+                                        <td style="cursor: pointer;">
+                                            <a class="expand-row" (click)="changeValue(i, vehicle.vehicleNumber)"
+                                                style="font-size: 19px;">
+                                                +
+                                            </a>
+                                        </td>
+                                        <td>{{vehicle.vehicleNumber}}</td>
+                                        <td>{{vehicle.ownerName}}</td>
+                                        <td>{{vehicle.ownerFatherName}}</td>
+                                        <td>{{vehicle.vehicleTagClass}}</td>
+                                        <td>{{vehicle.thrLimit}}</td>
+                                        <td>{{vehicle.vehicleCreatedAt | date:"dd/MM/yyyy"}}</td>
+                                        <td style="text-align: left;cursor: pointer;">
+                                            <div ngbDropdown placement="bottom-left">
+                                                <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle
+                                                    data-toggle="dropdown" aria-expanded="true"></i>
+                                                <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                                                    <a class="dropdown-item" href="javascript: void(0);"
+                                                        (click)="open(contentOnBoard,vehicle.vehicleNumber,vehicle.vistUserId)">
+                                                        &nbsp;&nbsp; Get Info From Signzy</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <ng-template #contentOnBoard let-c="close" let-d="dismiss">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">
+                                                <label>
+                                                    <h4><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            Do You Want To Confirm ?</strong></h4>
+                                                </label>
+                                            </h4>
+                                            <button type="button" class="btn btn-danger" aria-label="Close"
+                                                (click)="d('Cross click')">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-md-4"></div>
+                                                <div class="col-md-2">
+                                                    <button type="button" class="btn btn-outline-success my-2 my-sm-0"
+                                                        (click)="getInfoFromSignzy()">
+                                                        Yes</button>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <button type="button" class="btn btn-danger" aria-label="Close"
+                                                        (click)="d('Cross click')">No</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                    <tr *ngIf="show  && i == rowNumber" class="sub-table no-bg">
+                                        <!-- <td align="center"> </td> -->
+                                        <td colspan="12" class="p-0">
+                                            <table class="table mb-0 table-striped">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th></th>
+                                                        <th> Register Number </th>
+                                                        <th> Kit Number </th>
+                                                        <th> Vehicle Barcode </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody *ngFor="let data of ftVehicleList; let i = index">
+                                                    <tr>
+                                                        <td></td>
+                                                        <td>{{data.vistFastagVehicleRegNo}}</td>
+                                                        <td>{{data.vistFastagVehicleKitNo}}</td>
+                                                        <td>{{data.vistFastagVehicleBarcode}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

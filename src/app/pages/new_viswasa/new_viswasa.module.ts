@@ -7,9 +7,10 @@ import { InlineSVGModule } from 'ng-inline-svg-2';
 import { SharedModule } from "../../_metronic/shared/shared.module";
 import { ModalsModule, WidgetsModule } from '../../_metronic/partials';
 import { CustomerListComponent } from './customer-list/customer-list.component';
+import { FtVehicleComponent } from './ft-vehicle/ft-vehicle.component';
 
 @NgModule({
-  declarations: [CustomerListComponent],
+  declarations: [CustomerListComponent, FtVehicleComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -20,6 +21,10 @@ import { CustomerListComponent } from './customer-list/customer-list.component';
       {
         path: 'customerList',
         component: CustomerListComponent,
+      },
+      {
+        path: 'ftVehicle/:id',
+        component: FtVehicleComponent,
       },
     ]),
     WidgetsModule,

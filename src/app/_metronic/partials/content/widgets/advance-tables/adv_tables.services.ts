@@ -35,6 +35,10 @@ export class Adv_TablesService {
     private getFTCustomerListURL = this.baseURL + 'fastag/getFTCustomerList';
     private getFTAllVehicleListURL = this.baseURL + 'fastag/getFTAllVehicleList';
     private getFTAllVehicleListDateRangeURL = this.baseURL + 'fastag/getFTAllVehicleListDateRange';
+    private getFastagVehicleListByUserIdURL = this.baseURL + 'fastag/getFastagVehicleListByUserId';
+    private addVistVehicleByExcelURL = this.baseURL + 'kitbarcodemap/addVistVehicleByExcel'
+    private getVehicledataFromSignzyURL = this.baseURL + 'vehicle/getVehicledataFromSignzy';
+    private getAllFTVehicleListByVehicleNumberURL = this.baseURL + 'fastag/getAllFTVehicleListByVehicleNumber'; 
     
 
 
@@ -140,14 +144,57 @@ export class Adv_TablesService {
     }
 
     // getFTAllVehicleListDateRangeURL
-    getFTAllVehicleListDateRangePost(body:object): Observable<any> {
+    getFTAllVehicleListDateRangePost(body: object): Observable<any> {
         this.setHeader();
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
-        return this.http.post(this.getFTAllVehicleListDateRangeURL, body,{
+        return this.http.post(this.getFTAllVehicleListDateRangeURL, body, {
             headers: headers
         })
     }
+
+    // getFastagVehicleListByUserIdURL
+    getFastagVehicleListByUserIdPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFastagVehicleListByUserIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // addVistVehicleByExcelURL
+    addVistVehicleByExcelPost(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addVistVehicleByExcelURL, body, {
+            headers: headers
+        })
+    }
+
+    // getVehicledataFromSignzyURL
+    getVehicledataFromSignzyPost(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getVehicledataFromSignzyURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAllFTVehicleListByVehicleNumberURL
+    getAllFTVehicleListByVehicleNumberPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAllFTVehicleListByVehicleNumberURL, body, {
+            headers: headers
+        })
+    }
+
+
+
 
 
 

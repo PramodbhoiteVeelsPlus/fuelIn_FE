@@ -70,7 +70,7 @@
         <td> {{data.vishUserFirstName}} {{data.vishUserLastName}} </td>
         <td> {{data.vishUserMobile}} </td>
         <td> {{data.vishUserMail}} </td>
-        <td style="color: blue;"> {{data.vehicleSum}}
+        <td style="color: blue;" [routerLink]="['/new_Viswasa/ftVehicle', data.vishUserId]"> {{data.vehicleSum}}
         </td>
         <td style="text-align: left;cursor: pointer;">
           <div ngbDropdown placement="bottom-left">
