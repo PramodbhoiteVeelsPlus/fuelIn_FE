@@ -18,6 +18,10 @@ const Routing: Routes = [
     loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule),
   },
   {
+    path: 'new_Viswasa',
+    loadChildren: () => import('./new_viswasa/new_viswasa.module').then((m) => m.New_ViswasaModule),
+  },
+  {
     path: 'crafted/pages/profile',
     loadChildren: () => import('../modules/profile/profile.module').then((m) => m.ProfileModule),
     // data: { layout: 'light-sidebar' },
