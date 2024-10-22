@@ -63,6 +63,10 @@ const Routing: Routes = [
     loadChildren: () => import('./onboarding/onboarding.module').then((m) => m.onboardingModule),
   },
   {
+    path: 'customerDetails',
+    loadChildren: () => import('./customerDetails/customerDetails.module').then((m) => m.customerDetailsModule),
+  },
+  {
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full',

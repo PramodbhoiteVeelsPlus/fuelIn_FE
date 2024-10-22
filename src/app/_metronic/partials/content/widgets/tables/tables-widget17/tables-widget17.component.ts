@@ -130,6 +130,7 @@ export class TablesWidget17Component {
     this.p = event;
     this.getAllDealerList();
   }
+  
   getAllDealerList() {
     if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
       this.allDealerList = []
@@ -298,20 +299,16 @@ export class TablesWidget17Component {
       let data = {
         demoDealer: demoDealer,
         fuelDealerId: fuelDealerId,
-
       }
 
       this.post.updateDealerDemoStatusPOST(data)
         .subscribe(res => {
           if (res) {
             alert("Updated..")
-
           }
-
         })
     } else {
       alert("Please Select");
-
     }
   }
 

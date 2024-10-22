@@ -98,6 +98,16 @@ import { TablesWidget18Component } from './tables/tables-widget18/tables-widget1
 import { StatsWidget7Component } from './stats/stats-widget7/stats-widget7.component';
 import { StatsWidget8Component } from './stats/stats-widget8/stats-widget8.component';
 import { StatsWidget9Component } from './stats/stats-widget9/stats-widget9.component';
+import { TablesWidget19Component } from './tables/tables-widget19/tables-widget19.component';
+import { TablesWidget20Component } from './tables/tables-widget20/tables-widget20.component';
+import { TablesWidget21Component } from './tables/tables-widget21/tables-widget21.component';
+import { TablesWidget22Component } from './tables/tables-widget22/tables-widget22.component';
+import { TablesWidget23Component } from './tables/tables-widget23/tables-widget23.component';
+import { TablesWidget24Component } from './tables/tables-widget24/tables-widget24.component';
+import { TablesWidget25Component } from './tables/tables-widget25/tables-widget25.component';
+import { RouterModule } from '@angular/router';
+import { StatsWidget10Component } from './stats/stats-widget10/stats-widget10.component';
+// import { routes } from 'src/app/app-routing.module';
 @NgModule({
   declarations: [
     // Advanced Tables
@@ -188,6 +198,14 @@ import { StatsWidget9Component } from './stats/stats-widget9/stats-widget9.compo
     TablesWidget16Component,
     TablesWidget17Component,
     TablesWidget18Component,
+    TablesWidget19Component,
+    TablesWidget20Component,
+    TablesWidget21Component,
+    TablesWidget22Component,
+    TablesWidget23Component,
+    TablesWidget24Component,
+    TablesWidget25Component,
+    StatsWidget10Component,
   ],
   imports: [
     ReactiveFormsModule,
@@ -202,6 +220,7 @@ import { StatsWidget9Component } from './stats/stats-widget9/stats-widget9.compo
     NgbDatepickerModule,
     NgbPaginationModule,
     NgxPaginationModule,
+    RouterModule,
   ],
   exports: [
     // Advanced Tables
@@ -293,6 +312,14 @@ import { StatsWidget9Component } from './stats/stats-widget9/stats-widget9.compo
     TablesWidget16Component,
     TablesWidget17Component,
     TablesWidget18Component,
+    TablesWidget19Component,
+    TablesWidget20Component,
+    TablesWidget21Component,
+    TablesWidget22Component,
+    TablesWidget23Component,
+    TablesWidget24Component,
+    TablesWidget25Component,
+    StatsWidget10Component,
   ],
   providers: [NgbActiveModal, ExcelService],
 })

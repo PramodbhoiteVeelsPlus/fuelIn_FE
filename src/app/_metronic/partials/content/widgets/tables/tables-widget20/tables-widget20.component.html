@@ -1,0 +1,181 @@
+<!-- begin::Header -->
+<div class="card-body py-3">
+    <div class="row">
+        <form [formGroup]="filterForm">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="search-box me-2 mb-2 d-inline-block">
+                        <div class="position-relative">
+                            <input class="form-control" type="text" (input)="onSearch()" placeholder="Search"
+                                [(ngModel)]="searchData" [ngModelOptions]="{standalone: true}">
+                            <i class="bx bx-search-alt search-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <label for="example-text-input" class="col-auto col-form-label">Date Range</label>
+                <div class="col-md-2">
+                    <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+                        name="startDate" ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker
+                        #startDate="ngbDatepicker" formControlName="startDate">
+                </div>
+                <div class="col-md-2">
+                    <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+                        name="endDate" ngbTooltip="End Date" (click)="endDate.toggle()" ngbDatepicker
+                        #endDate="ngbDatepicker" formControlName="endDate">
+                </div>
+
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary" style="margin-bottom: 30px"
+                        (click)="getPrimeDealerDetails()">
+                        Submit
+                    </button>
+                    &nbsp;&nbsp;
+
+                    <button type="submit" class="btn btn-secondary" style="margin-bottom: 30px"
+                        (click)="clearPrimeDealerDetails()">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+            <br>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="search-box me-2 mb-2 d-inline-block">
+                        <div class="position-relative">
+                            <label style="font-size: larger;"> <b> SMS Status </b></label>
+                            <p> Credit Payment SMS </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="search-box me-2 mb-2 d-inline-block">
+                        <div class="position-relative">
+                            <label style="font-size: larger;"> <b> CR SMS </b> </label>
+                            <p> Credit Sales SMS </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="search-box me-2 mb-2 d-inline-block">
+                        <div class="position-relative">
+                            <label style="font-size: larger;"> <b> Os SMS </b> </label>
+                            <p> Daily Outstanding SMS </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+
+        <div class="table-responsive mb-0">
+            <table class="table table-centered">
+                <thead class="table-light">
+                    <tr>
+                        <th style="text-align: left;"> Veels ID </th>
+                        <th style="text-align: left;"> Mapped Date </th>
+                        <th style="text-align: left;"> Company Name</th>
+                        <th style="text-align: left;"> Owner Name </th>
+                        <th style="text-align: left;"> Contact Number </th>
+                        <th style="text-align: left;"> SMS Status </th>
+                        <th style="text-align: left;"> CR SMS </th>
+                        <th style="text-align: left;"> OS SMS </th>
+                        <!-- <th style="text-align: left;"> Email Status </th> -->
+
+                    </tr>
+                </thead>
+                <tbody
+                    *ngFor="let data of primeDealerData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                    <tr>
+
+                        <td>
+                            <!-- <a [routerLink]="['/admin/customerDetails', data.customerId]">{{data.FuelVeelsId}}</a> -->
+                        </td>
+                        <td>{{data.corporateCreatedAt | date:"d MMM, yyyy"}}</td>
+                        <td>{{data.companyName}}</td>
+                        <td>{{data.hostName}}</td>
+                        <td>{{data.phone1}}</td>
+
+                        <!-- SMS  Status / SMS Receive Status -->
+                        <td>
+                            <div *ngIf="data.isSMS == 'FALSE'">
+                                <label class="switch">
+                                    <input type="checkbox" checked="checked"
+                                        (change)="smsEnable($event, data.corporateId, data.userId, data.isSMS)">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <div *ngIf="data.isSMS =='TRUE'">
+                                <label class="switch">
+                                    <input type="checkbox" [checked]="waive"
+                                        (change)="smsEnable($event, data.corporateId, data.userId, data.isSMS)">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </td>
+
+                        <!-- CR Sms -->
+                        <td>
+                            <div *ngIf="data.fueldealerCreditSMS == 'FALSE'">
+                                <label class="switch">
+                                    <input type="checkbox" checked="checked"
+                                        (change)="crSMSActive($event, data.fuelDealerId, data.fueldealerCreditSMS)">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <div *ngIf="data.fueldealerCreditSMS =='TRUE'">
+                                <label class="switch">
+                                    <input type="checkbox" [checked]="waive"
+                                        (change)="crSMSActive($event, data.fuelDealerId, data.fueldealerCreditSMS)">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </td>
+
+                        <!-- daily Outstanding SMS  Status -->
+                        <td>
+                            <div *ngIf="data.isOsSMS == 'FALSE'">
+                                <label class="switch">
+                                    <input type="checkbox" checked="checked"
+                                        (change)="osSmsEnable($event, data.corporateId, data.userId, data.isOsSMS)">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <div *ngIf="data.isOsSMS =='TRUE'">
+                                <label class="switch">
+                                    <input type="checkbox" [checked]="waive"
+                                        (change)="osSmsEnable($event, data.corporateId, data.userId, data.isOsSMS)">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </td>
+
+                        <!-- Email Status / Email Receive Status -->
+                        <!-- <td>
+                            <div *ngIf="data.isEmail == 'FALSE'">
+                                <label class="switch">
+                                    <input type="checkbox" checked="checked"
+                                        (change)="emailEnable($event, data.corporateId, data.userId, data.isEmail, data.accessGroupId)">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <div *ngIf="data.isEmail =='TRUE'">
+                                <label class="switch">
+                                    <input type="checkbox" [checked]="waive"
+                                        (change)="emailEnable($event, data.corporateId, data.userId, data.isEmail, data.accessGroupId)">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </td> -->
+                    </tr>
+
+                </tbody>
+            </table>
+            <!-- begin::Pagination -->
+            <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+            </pagination-controls>
+            <!-- end::Pagination -->
+        </div>
+    </div>
+</div>

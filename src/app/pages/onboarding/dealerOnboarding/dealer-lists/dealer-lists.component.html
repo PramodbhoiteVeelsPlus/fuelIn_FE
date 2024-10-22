@@ -1,1 +1,31 @@
-<p>dealer-lists works!</p>
+<br>
+<!-- ADMIN Login accessGroupId 7 -->
+<div *ngIf="isAdmin">
+    <ul ngbNav #dashboard="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified" style="width: 50%;">
+      <li [ngbNavItem]="1">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">PRIME </span>
+        </a>
+        <ng-template ngbNavContent>
+            <app-tables-widget21 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget21>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="2">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">DEALER </span>
+        </a>
+        <ng-template ngbNavContent>
+            <app-tables-widget22 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget22>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="3">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">CALL </span>
+        </a>
+        <ng-template ngbNavContent>
+            <app-tables-widget23 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget23>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="dashboard"></div>
+  </div>

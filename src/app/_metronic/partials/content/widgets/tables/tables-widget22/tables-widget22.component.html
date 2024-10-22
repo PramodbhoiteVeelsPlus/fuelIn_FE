@@ -1,0 +1,139 @@
+<div class="card-body py-3">
+    <div class="row">
+        <form [formGroup]="filterForm">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="search-box me-2 mb-2 d-inline-block">
+                        <div class="position-relative">
+                            <input class="form-control" type="text" (input)="onSearch()" placeholder="Search"
+                                [(ngModel)]="searchData" [ngModelOptions]="{standalone: true}">
+                            <i class="bx bx-search-alt search-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <label for="example-text-input" class="col-auto col-form-label">Date Range</label>
+                <div class="col-md-2">
+                    <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+                        name="startDate" ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker
+                        #startDate="ngbDatepicker" formControlName="startDate">
+                </div>
+                <div class="col-md-2">
+                    <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+                        name="endDate" ngbTooltip="End Date" (click)="endDate.toggle()" ngbDatepicker
+                        #endDate="ngbDatepicker" formControlName="endDate">
+                </div>
+
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary" style="margin-bottom: 30px"
+                        (click)="getDealerRequestDetails()">
+                        Submit
+                    </button>
+                    &nbsp;&nbsp;
+
+                    <button type="submit" class="btn btn-secondary" style="margin-bottom: 30px"
+                        (click)="clearPrimeDealerDetails()">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-9"></div>
+                <div class="col-md-3">
+                    <a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-light-primary fw-bolder px-4 me-1"
+                        (click)="exportExcel()">
+                        CSV
+                    </a>
+                </div>
+            </div>
+        </form>
+
+        <div class="table-responsive mb-0">
+
+            <table class="table table-centered">
+                <thead class="table-light">
+                    <tr>
+                        <th></th>
+                        <th>Veels ID</th>
+                        <th>Mapped Date</th>
+                        <th>Company Name</th>
+                        <th>Oil Company</th>
+                        <th>Owner Name</th>
+                        <th>Contact Number</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody
+                    *ngFor="let data of dealerRequestData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                    <tr>
+
+                        <td style="cursor: pointer;">
+                            <a class="expand-row"
+                                (click)="changeValue(i,data.email1, data.GSTNumber, data.city, data.state, data.pin , data.fuelDealerConversionStatus)"
+                                style="font-size: 19px;">
+                                +
+                            </a>
+                        </td>
+                        <td>{{data.FuelVeelsId}}</td>
+                        <td>{{data.customerCreatedAt | date:"d MMM, yyyy"}}</td>
+                        <td> {{data.companyName}}</td>
+                        <td>{{data.brandName}}</td>
+                        <td>{{data.hostName}}</td>
+                        <td>{{data.hostPhone}}</td>
+
+                        <td style="text-align: left;cursor: pointer;"
+                            *ngIf="data.fuelDealerConversionStatus !='PENDING' ">
+                            <div ngbDropdown placement="bottom-left">
+                                <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                                    aria-expanded="true"></i>
+                                <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+
+                                    <a class="dropdown-item" href="javascript: void(0);"
+                                        (click)="updateConvertion(data.fuelDealerConversionId,'ACCEPT','12',data.fuelDealerConversionPersonId,data.fuelDealerId,'14')">
+                                        <i class="fas fa-edit" style="color: #4e9b4e;">
+                                        </i> &nbsp; Accept</a>
+
+                                    <a class="dropdown-item" href="javascript: void(0);"
+                                        (click)="updateConvertion(data.fuelDealerConversionId,'DECLINE','19',data.fuelDealerConversionPersonId,data.fuelDealerId,'21')">
+                                        <i class="fas fa-ban" style="color: red;"> </i> &nbsp;&nbsp; Decline</a>
+
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="showLiteDealerRequest  && i == rowNumberLiteDealerRequest" class="sub-table no-bg">
+                        <td> </td>
+                        <td colspan="12" class="p-0">
+                            <table class="table mb-0 table-striped">
+                                <thead class="table-light">
+
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>Email Id</th>
+                                        <th>GST</th>
+                                        <th>City</th>
+                                        <th>State</th>
+                                        <th>PIN Code</th>
+                                        <th>Onboarding Status</th>
+                                    </tr>
+
+                                    <tr>
+                                        <td>{{data.email1}}</td>
+                                        <td>{{data.GSTNumber}}</td>
+                                        <td>{{data.city}}</td>
+                                        <td>{{data.state}}</td>
+                                        <td>{{data.pin}}</td>
+                                        <td>{{data.fuelDealerConversionStatus}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>

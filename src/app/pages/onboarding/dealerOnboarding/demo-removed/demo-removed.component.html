@@ -1,1 +1,23 @@
-<p>demo-removed works!</p>
+<br>
+<!-- ADMIN Login accessGroupId 7 -->
+<div *ngIf="isAdmin">
+    <ul ngbNav #dashboard="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified" style="width: 50%;">
+      <li [ngbNavItem]="1">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">DEMO </span>
+        </a>
+        <ng-template ngbNavContent>
+            <app-tables-widget24 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget24>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="2">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">REMOVED </span>
+        </a>
+        <ng-template ngbNavContent>
+            <app-tables-widget25 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget25>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="dashboard"></div>
+  </div>
