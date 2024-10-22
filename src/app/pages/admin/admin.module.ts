@@ -11,11 +11,14 @@ import { NewReportComponent } from './new-report/new-report.component';
 import { UpdateMobileComponent } from './update-mobile/update-mobile.component';
 import { GstDetailsComponent } from './gst-details/gst-details.component';
 import { ActivityCountComponent } from './activity-count/activity-count.component';
+import { AddFuelPartnerComponent } from './add-fuel-partner/add-fuel-partner.component';
+import { FuelProductMasterComponent } from './fuel-product-master/fuel-product-master.component';
 
 @NgModule({
   declarations: [ReportsComponent, NewReportComponent,
     UpdateMobileComponent, GstDetailsComponent,
-    ActivityCountComponent, ],
+    ActivityCountComponent, AddFuelPartnerComponent,
+    FuelProductMasterComponent ],
   imports: [
     CommonModule,
     FormsModule,
@@ -42,6 +45,14 @@ import { ActivityCountComponent } from './activity-count/activity-count.componen
       {
         path: 'activityCount',
         component: ActivityCountComponent,
+      },
+      {
+        path: 'addFuelPartner',
+        component: AddFuelPartnerComponent,
+      },
+      {
+        path: 'fuelProductMaster',
+        component: FuelProductMasterComponent,
       },
     ]),
     WidgetsModule,

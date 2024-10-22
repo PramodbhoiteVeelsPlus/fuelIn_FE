@@ -7,9 +7,10 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CustomerDetailsComponent } from './customerDetails.component';
 import { CustomerDetailComponent } from './customer-detail/customer-detail.component';
+import { CustomerDetailsEditComponent } from './customer-details-edit/customer-details-edit.component';
 
 @NgModule({
-  declarations: [CustomerDetailComponent
+  declarations: [CustomerDetailComponent, CustomerDetailsEditComponent
   ],
   imports: [
     CommonModule,
@@ -18,9 +19,14 @@ import { CustomerDetailComponent } from './customer-detail/customer-detail.compo
       {
         path: '',
         component: CustomerDetailsComponent,
-      },{
+      },
+      {
         path: 'customerDetail/:id',
         component: CustomerDetailComponent,
+      },
+      {
+        path: 'customerDetailsEdit/:id',
+        component: CustomerDetailsEditComponent,
       },
     ]),
     WidgetsModule,
@@ -28,7 +34,8 @@ import { CustomerDetailComponent } from './customer-detail/customer-detail.compo
     NgbNavModule,
   ], 
   exports: [
-    CustomerDetailComponent
+    CustomerDetailComponent,
+    CustomerDetailsEditComponent
   ]
 })
 export class customerDetailsModule { }

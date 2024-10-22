@@ -1,0 +1,466 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form [formGroup]="filterForm">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <br>
+                                        <div class="row">
+                                            <div class="col col-md-3 col-lg-3">
+                                                <label class="labelMargin" for="detailerOutletName">Partner Outlet
+                                                    Name</label>
+                                            </div>
+                                            <div class="col col-md-6 col-lg-6">
+                                                <input class="form-control" formControlName="companyName"
+                                                    placeholder="Partner Company Name"
+                                                    oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                            </div>
+                                        </div>
+
+                                        <br>
+                                        <div class="row">
+                                            <div class="col col-md-3 col-lg-3">
+                                                <label class="labelMargin">Partner Name</label>
+                                            </div>
+                                            <div class="col col-md-3 col-lg-3">
+                                                <input class="form-control" formControlName="firstName"
+                                                    placeholder="Partner First Name"
+                                                    oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                            </div>
+                                            <div class="col col-md-3 col-lg-3">
+                                                <input class="form-control" formControlName="lastName"
+                                                    placeholder="Partner Last Name"
+                                                    oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                            </div>
+                                        </div>
+
+                                        <br>
+                                        <div class="row">
+                                            <div class="col col-md-3 col-lg-3">
+                                                <label class="labelMargin">Mobile Number of
+                                                    Partner</label>
+                                            </div>
+                                            <div class="col col-md-3 col-lg-3">
+                                                <input class="form-control" formControlName="phone1" type="number"
+                                                    placeholder="Mobile Number" (blur)="checkPhoneNumber()"
+                                                    onkeypress="return this.value.length < 10;"
+                                                    oninput="if(this.value.length=10)">
+                                                <div>
+                                                    <small class="text-danger">Please
+                                                        provide a valid 10 Digit Mobile Number</small>
+                                                </div>
+                                            </div>
+                                            <div class="col col-md-3 col-lg-3">
+                                                <input class="form-control" formControlName="password" type="password"
+                                                    placeholder="Enter Password"
+                                                    onkeypress="return this.value.length < 12;">
+                                            </div>
+                                        </div>
+                                        <br>
+
+                                        <div class="row">
+                                            <div class="col col-md-3 col-lg-3">
+                                                <label class="labelMargin" for="emailIdOfDealer">Email Id of
+                                                    Dealer</label>
+                                            </div>
+                                            <div class="col col-md-3 col-lg-3">
+                                                <input type="email" class="form-control" formControlName="email"
+                                                    placeholder="Enter Email Address">
+                                                <div>
+                                                    <small class="text-danger">Please
+                                                        provide a valid email address</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col col-md-3 col-lg-3">
+                                                <label class="labelMargin" for="oilCompany">Oil Company</label>
+                                            </div>
+                                            <div class="col col-md-6 col-lg-6">
+
+                                                <select formControlName="brandName" class="form-control" required>
+                                                    <option value="">Select Brand & Product</option>
+                                                    <option
+                                                        *ngFor="let data of getAllOilBrandProductNameCodeDetails.data"
+                                                        value={{data.brandName}}> {{data.brandName}} </option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-2" style="text-align: center;">
+                                        <div class="row">
+                                            <a style="color: blue;"> Logo </a>
+                                        </div>
+                                        <br>
+                                        <div class="row" style="text-align: right;">
+                                            <div class="col-md-2"></div>
+                                            <div class="col-md-10">
+                                                <img src="" style="width: 180px; height:180px;">
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row" style="text-align: right;">
+                                            <div class="col-md-2"></div>
+                                            <div class="col-md-10">
+                                                <!-- <input type="file" formControlName="CompanyLogo"
+                                                    (change)="onLogo($event)"> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <hr>
+
+                                <div class="row">
+                                    <div class="">
+                                        <div class="col-md-1"></div>
+                                        <div class="row">
+                                            <div class="col-md-4"> </div>
+                                            <div class="col-md-12" style="margin-left:15px !important">
+                                                <b>
+                                                    <h3>Address Details</h3>
+                                                </b>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row" style="width:900px;margin-left:15px !important">
+                                            <div class="col-md-4">
+                                                <label>Address Line 1:</label>
+                                                <input class="form-control" placeholder="Enter Address Line 1"
+                                                    formControlName="address1"
+                                                    oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                            </div>
+                                            <div class="col-md-4">
+
+
+                                                <label>Address Line 2:</label>
+                                                <input class="form-control" placeholder="Enter Address Line 2"
+                                                    formControlName="address2"
+                                                    oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label class="labelMargin">City Area:</label>
+
+                                                <input class="form-control" placeholder="Enter City Area"
+                                                    formControlName="cityArea"
+                                                    oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                            </div>
+
+
+                                        </div>
+                                        <br>
+                                        <div class="row" style="width:900px;margin-left:15px !important">
+                                            <div class="col-md-4">
+                                                <label class="labelMargin">City:</label>
+
+                                                <input class="form-control" placeholder="Enter City"
+                                                    formControlName="city"
+                                                    oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="labelMargin">District:</label>
+
+                                                <input class="form-control" placeholder="Enter District"
+                                                    formControlName="dist"
+                                                    oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label class="labelMargin">State:</label>
+                                                <select class="form-control" style="color: #9EA79E;"
+                                                    formControlName="state" required placeholder="Select state">
+                                                    <option value="">Select State</option>
+                                                    <option value="ANDHRA PRADESH">Andhra Pradesh</option>
+                                                    <option value="ARUNACHAL PRADESH">Arunachal Pradesh</option>
+                                                    <option value="ASSAM">Assam</option>
+                                                    <option value="BIHAR">Bihar</option>
+                                                    <option value="CHHATTISGARH">Chhattisgarh</option>
+                                                    <option value="GOA">Goa</option>
+                                                    <option value="GUJARAT">Gujarat</option>
+                                                    <option value="HARYANA">Haryana</option>
+                                                    <option value="HIMACHAL PRADESH">Himachal Pradesh</option>
+                                                    <option value="JHARKHAND">Jharkhand</option>
+                                                    <option value="KARNATAKA">Karnataka</option>
+                                                    <option value="KERALA">Kerala</option>
+                                                    <option value="MADHYA PRADESH">Madhya Pradesh</option>
+                                                    <option value="MAHARASHTRA">Maharashtra</option>
+                                                    <option value="MANIPUR">Manipur</option>
+                                                    <option value="MEGHALAYA">Meghalaya</option>
+                                                    <option value="MIZORAM">Mizoram</option>
+                                                    <option value="NAGALAND">Nagaland</option>
+                                                    <option value="ODISHA">Odisha</option>
+                                                    <option value="PUNJAB">Punjab</option>
+                                                    <option value="RAJASTHAN">Rajasthan</option>
+                                                    <option value="SIKKIM">Sikkim</option>
+                                                    <option value="TAMIL NADU">Tamil Nadu</option>
+                                                    <option value="TELANGANA">Telangana</option>
+                                                    <option value="TRIPURA">Tripura</option>
+                                                    <option value="UTTAR PRADESH">Uttar Pradesh</option>
+                                                    <option value="UTTARAKHAND">Uttarakhand</option>
+                                                    <option value="WEST BENGAL">West Bengal</option>
+                                                    <option value="ANDAMAN AND NICOBAR ISLANDS">Andaman and Nicobar
+                                                        Islands</option>
+                                                    <option value="CHANDIGARH">Chandigarh</option>
+                                                    <option value="DADRA AND NAGAR HAVELI AND DAMAN AND DIU">Dadra and
+                                                        Nagar Haveli
+                                                        and Daman and Diu</option>
+                                                    <option value="DELHI">Delhi</option>
+                                                    <option value="LAKSHADWEEP">Lakshadweep</option>
+                                                    <option value="PUDUCHERRY">Puducherry (Pondicherry)</option>
+                                                    <option value="JAMMU AND KASHMIR">Jammu and Kashmir</option>
+                                                    <option value="LADAKH">Ladakh</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row" style="width:900px;margin-left:15px !important">
+
+                                            <div class="col-md-3">
+                                                <label class="labelMargin">PIN Code:</label>
+                                                <input class="form-control" formControlName="pin" type="number"
+                                                    placeholder="Enter PIN Code" maxlength="6"
+                                                    onkeypress="return this.value.length < 6;"
+                                                    oninput="if(this.value.length=6)">
+                                            </div>
+
+
+
+                                            <div class="col-md-3">
+                                                <label class="labelMargin">Geo Location:</label>
+
+                                                <button type="submit" class="btn btn-sm" style="color: blue"
+                                                    (click)="getGeoLocation()">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                </button>
+                                                <input class="form-control" placeholder="Geo Location" readonly
+                                                    formControlName="geoLocation">
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label class="labelMargin">Phone Number:</label>
+
+                                                <input class="form-control" formControlName="phone2"
+                                                    placeholder="Enter Phone Number"
+                                                    onkeypress="return this.value.length < 10;"
+                                                    oninput="if(this.value.length=10)">
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label class="labelMargin">NH/SH No:</label>
+
+                                                <input class="form-control" placeholder="Enter NH/SH No"
+                                                    formControlName="highwayNumber"
+                                                    oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-1"></div>
+
+                                        <hr>
+                                        <br>
+                                        <div class="col-md-1"></div>
+                                        <div class="row">
+                                            <div class="col-md-4"> </div>
+                                            <div class="col-md-12" style="margin-left:15px !important">
+                                                <b>
+                                                    <h3>Business Details</h3>
+                                                </b>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row" style="width:900px;margin-left:15px !important">
+                                            <div class="col-md-4">
+                                                <label class="labelMargin">Business Type:</label>
+                                                <select class="form-control" formControlName="businessType">
+                                                    <option value="">Select Type</option>
+                                                    <option value="Proprietorship">Proprietorship</option>
+                                                    <option value="Partnership">Partnership</option>
+                                                    <option value="Private Limited Company">Private Limited Company
+                                                    </option>
+                                                    <option value="Public Limited Company">Public Limited Company
+                                                    </option>
+                                                    <option value="Foreign Company">Foreign Company</option>
+                                                    <option value="others">Others</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label class="labelMargin">GST Number:</label>
+                                                <input class="form-control" formControlName="GSTNumber"
+                                                    placeholder="Enter GST Number" maxlength="15"
+                                                    oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label class="labelMargin">Unique Code Assigned:</label>
+                                                <input class="form-control" formControlName="uniqueCodeAssigned"
+                                                    placeholder="Enter Unique Code"
+                                                    oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row" style="width:900px;margin-left:15px !important">
+                                            <div class="col-md-4">
+                                                <label class="labelMargin">Business PAN Name:</label>
+                                                <input class="form-control" formControlName="businessPanName"
+                                                    placeholder="Enter PAN Name"
+                                                    oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label class="labelMargin">Business PAN Number:</label>
+                                                <input class="form-control" formControlName="businessPancardNumber"
+                                                    placeholder="Enter PAN Number " maxlength="10"
+                                                    oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-1"></div>
+                                        <hr>
+
+                                    </div>
+
+                                    <br>
+
+                                    <div class="row">
+
+                                        <table class="" style="width:900px;margin-left:35px !important">
+
+                                            <tr style="margin-left:15px">
+                                                <td colspan="4">
+                                                    <h3>Upload Document</h3>
+                                                </td>
+                                            </tr>
+
+                                            <br>
+                                            <tbody>
+                                                <tr>
+
+                                                    <td>
+                                                        Business PAN:
+
+                                                        <!-- <input type="file" formControlName="businesspanCard"
+                                                            (change)="onBusPan($event)"> -->
+
+
+                                                        <div>
+                                                            <img style="width:50px" (click)="opendoc(doc)">
+                                                        </div>
+                                                        <ng-template #doc let-c="close" let-d="dismiss">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">
+                                                                </h4>
+                                                                <button type="button" class="close" aria-label="Close"
+                                                                    (click)="d('Cross click')">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                            </div>
+                                                        </ng-template>
+
+                                                    </td>
+
+                                                    <td>
+                                                        Business GST:
+
+                                                        <!-- <input type="file" formControlName="gstNumberDoc"
+                                                            (change)="onGst($event)"> -->
+
+                                                        <div>
+                                                            <img style="width:50px" (click)="opendoc(doc)">
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        Owner PAN:
+
+                                                        <!-- <input type="file" formControlName="individualPanCard"
+                                                            (change)="onPan($event)"> -->
+                                                        <div>
+
+                                                            <img style="width:50px" (click)="opendoc(doc)">
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <br>
+
+                                                <tr>
+                                                    <td>
+                                                        Owner Aadhar Front:
+
+                                                        <!-- <input type="file" formControlName="aadharcardfrontdoc"
+                                                            (change)="onAdhrFront($event)"> -->
+
+                                                        <div>
+
+                                                            <img style="width:50px" (click)="opendoc(doc)">
+
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        Owner Aadhar Back:
+
+                                                        <!-- <input type="file" formControlName="addharLinkDoc"
+                                                            (change)="onAdhrBack($event)"> -->
+
+                                                        <div>
+                                                            <img style="width:50px" (click)="opendoc(doc)">
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        Owner DL:
+
+                                                        <!-- <input type="file" formControlName="licenceLinkDoc"
+                                                            (change)="onDl($event)"> -->
+
+                                                        <div>
+                                                            <img style="width:50px" (click)="opendoc(doc)">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <br>
+                                                <tr>
+                                                    <td>
+                                                        Oil Company product receipt:
+
+                                                        <!-- <input type="file" formControlName="oilCmpProductReceipt"
+                                                            (change)="onOilCmpReceipt($event)"> -->
+
+                                                        <div>
+
+                                                            <img style="width:50px" (click)="opendoc(doc)">
+
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <br>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

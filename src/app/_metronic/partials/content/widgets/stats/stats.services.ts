@@ -93,6 +93,9 @@ export class StatsService {
     private updateCorporateURL = this.baseURL + 'corporate/updateCorporateNEW';
     private postUpdateAddressUrl = this.baseURL + 'address/updateAddress';
     private addNewTicketURL = this.baseURL + 'serviceRequestTickets/addNewTicket';
+    private findPhoneNumberURL = this.baseURL + 'register/findPhoneNumber';
+    private getAllOilBrandProductNameCodeURL = this.baseURL + 'fuelVendor/getAllOilBrandProductNameCode'
+    private getGeoLocationURL = this.baseURL + 'LoadReceipt/getGeoLocation';
 
 
 
@@ -788,6 +791,35 @@ export class StatsService {
         })
     }
 
+    // findPhoneNumberURL
+    findPhoneNumberPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.findPhoneNumberURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAllOilBrandProductNameCodeURL
+    getAllOilBrandProductNameCodePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.get(this.getAllOilBrandProductNameCodeURL, {
+            headers: headers
+        })
+    }
+
+    // getGeoLocationURL
+    getGeoLocationPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.get(this.getGeoLocationURL, {
+            headers: headers
+        })
+    }
 
 
 

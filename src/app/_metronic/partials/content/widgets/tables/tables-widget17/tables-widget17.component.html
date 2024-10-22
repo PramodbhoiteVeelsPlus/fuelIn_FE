@@ -79,22 +79,21 @@
                     <td> {{ data.customerCreatedAt | date:"d MMM, yyyy" }} </td>
                     <td>
                         <a [routerLink]="['/customerDetails/customerDetail', data.customerId]">{{data.companyName}}</a>
-                        <!-- <a routerLinkActive="active" [routerLink]="['/customerDetails', data.customerId]">{{data.companyName}}</a> -->
                     </td>
                     <td> {{ data.brandName }} </td>
                     <td> {{ data.hostName }} </td>
                     <td> {{ data.hostPhone }} </td>
                     <td style="text-align: center;cursor: pointer;">
-                        <!-- <div ngbDropdown placement="bottom-left">
+                        <div ngbDropdown placement="bottom-left">
                             <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle
                                 data-toggle="dropdown" aria-expanded="true"></i>
                             <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
                                 <a class="dropdown-item" href="javascript: void(0);"
-                                    [routerLink]="['/admin/customerDetailsEdit', data.customerId]">
+                                    [routerLink]="['/customerDetails/customerDetailsEdit', data.customerId]">
                                     <i class="fas fa-edit" style="color: #4e9b4e;">
                                     </i> &nbsp; Edit</a>
                             </div>
-                        </div> -->
+                        </div>
                       
                     </td>
                 </tr>

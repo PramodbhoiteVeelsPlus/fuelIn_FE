@@ -1,11 +1,11 @@
 import { ChangeDetectorRef, Component, Injectable } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbDateAdapter, NgbDateParserFormatter, NgbDatepickerConfig, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { StatsService } from '../stats.services';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ExcelService } from 'src/app/pages/excel.service';
-import moment from 'moment';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import moment from 'moment';
+import { ExcelService } from 'src/app/pages/excel.service';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -46,23 +46,19 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
     return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : '';
   }
 }
-
 @Component({
-  selector: 'app-stats-widget10',
-  templateUrl: './stats-widget10.component.html',
-  styleUrl: './stats-widget10.component.scss',
-  providers: [
-    { provide: NgbDateAdapter, useClass: CustomAdapter },
-    { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }
-  ]
+  selector: 'app-stats-widget11',
+  templateUrl: './stats-widget11.component.html',
+    styleUrl: './stats-widget11.component.scss',
+    providers: [
+      { provide: NgbDateAdapter, useClass: CustomAdapter },
+      { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }
+    ]
 })
+export class StatsWidget11Component {
 
-export class StatsWidget10Component {
   localStoragecorporateId: any;
   acceesGroup: any;
-  editCustDetails: boolean = false;
-  editAddressDetails: boolean = false;
-  editOtherDetails: boolean = false;
 
   customerForm = new FormGroup({
     businessType: new FormControl('', Validators.required),
@@ -168,16 +164,19 @@ export class StatsWidget10Component {
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.localStoragecorporateId = element.veelsPlusCorporateID
+    // localStorage.setItem('corpId', this.localStoragecorporateId);
     this.acceesGroup = element.accessGroupId
     this.createdBy = element.firstName + ' ' + element.lastName
 
     let id = this.route.snapshot.paramMap.get('id');
+    // localStorage.setItem('customerId', id);
     console.log(id)
     let data = {
       customerId: id
     };
 
     this.customerId = id
+
     this.getCustomerAllDataById(this.customerId);
     this.cd.detectChanges();
 
@@ -204,6 +203,8 @@ export class StatsWidget10Component {
           this.emailId = res.data[0].email1;
           this.fstKycStatus = res.data[0].fstKycStatus;
           this.corporateLogoLink = res.data[0].companyLogoLink;
+
+
           this.firstName = res.data[0].firstName;
           this.lastName = res.data[0].lastName;
           this.hostName = res.data[0].hostName;
@@ -224,8 +225,14 @@ export class StatsWidget10Component {
 
           this.getBranchByCorporateVeelsplusId(this.vpcorporateId);
           this.cd.detectChanges();
+          // this.getAllDocDetails(this.corporateSqlId)
+
+          // this.setValueInForm();
+
         }
       })
+
+
   }
 
   getBranchByCorporateVeelsplusId(corporateId: string) {
@@ -281,13 +288,13 @@ export class StatsWidget10Component {
         // this.AllUserByVeelsplus(corpId)
 
       })
-
     let data = {
       customerId: this.customerId
     }
   }
 
   updateCustomerData() {
+
     this.customerId = localStorage.getItem('customerId');
     //Customer Update
     let data = {
@@ -307,30 +314,31 @@ export class StatsWidget10Component {
           this.cd.detectChanges();
         }
       })
-
     //Person Update
     let datap = {
+
       personId: this.personSQLId,
       email: this.email1,
+
     }
 
     this.post.updatePerson(datap)
       .subscribe(res => {
         if (res) {
           this.cd.detectChanges();
+
         } else {
           alert(res.msg);
           this.cd.detectChanges();
         }
       })
-  }
 
-  editCustDetail() {
-    this.editCustDetails = true;
   }
 
   updateCorporate() {
+
     let data = {
+
       hostName: this.hostName,
       GSTNumber: this.GSTNumber,
       corporateId: this.corporateSqlId,
@@ -348,10 +356,6 @@ export class StatsWidget10Component {
         }
       })
 
-  }
-
-  editAddressDetail() {
-    this.editAddressDetails = true;
   }
 
   onSubmitInfoAddress() {
@@ -385,10 +389,6 @@ export class StatsWidget10Component {
     }
   }
 
-  editOtherDetail() {
-    this.editOtherDetails = true;
-  }
-
   requestDetail() {
 
     if (this.reqDescription) {
@@ -417,4 +417,5 @@ export class StatsWidget10Component {
       alert("Please Enter Description!")
     }
   }
+
 }

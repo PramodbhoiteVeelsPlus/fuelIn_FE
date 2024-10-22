@@ -106,6 +106,8 @@ import { TablesWidget24Component } from './tables/tables-widget24/tables-widget2
 import { TablesWidget25Component } from './tables/tables-widget25/tables-widget25.component';
 import { RouterModule } from '@angular/router';
 import { StatsWidget10Component } from './stats/stats-widget10/stats-widget10.component';
+import { StatsWidget11Component } from './stats/stats-widget11/stats-widget11.component';
+import { StatsWidget12Component } from './stats/stats-widget12/stats-widget12.component';
 // import { routes } from 'src/app/app-routing.module';
 @NgModule({
   declarations: [
@@ -204,6 +206,8 @@ import { StatsWidget10Component } from './stats/stats-widget10/stats-widget10.co
     TablesWidget24Component,
     TablesWidget25Component,
     StatsWidget10Component,
+    StatsWidget11Component,
+    StatsWidget12Component,
   ],
   imports: [
     ReactiveFormsModule,
@@ -317,6 +321,8 @@ import { StatsWidget10Component } from './stats/stats-widget10/stats-widget10.co
     TablesWidget24Component,
     TablesWidget25Component,
     StatsWidget10Component,
+    StatsWidget11Component,
+    StatsWidget12Component,
   ],
   providers: [NgbActiveModal, ExcelService],
 })
