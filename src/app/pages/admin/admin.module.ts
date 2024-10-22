@@ -13,12 +13,13 @@ import { GstDetailsComponent } from './gst-details/gst-details.component';
 import { ActivityCountComponent } from './activity-count/activity-count.component';
 import { AddFuelPartnerComponent } from './add-fuel-partner/add-fuel-partner.component';
 import { FuelProductMasterComponent } from './fuel-product-master/fuel-product-master.component';
+import { ReferralComponent } from './referral/referral.component';
 
 @NgModule({
   declarations: [ReportsComponent, NewReportComponent,
     UpdateMobileComponent, GstDetailsComponent,
     ActivityCountComponent, AddFuelPartnerComponent,
-    FuelProductMasterComponent ],
+    FuelProductMasterComponent, ReferralComponent ],
   imports: [
     CommonModule,
     FormsModule,
@@ -53,6 +54,10 @@ import { FuelProductMasterComponent } from './fuel-product-master/fuel-product-m
       {
         path: 'fuelProductMaster',
         component: FuelProductMasterComponent,
+      },
+      {
+        path: 'referral',
+        component: ReferralComponent,
       },
     ]),
     WidgetsModule,

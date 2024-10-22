@@ -1,0 +1,233 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row mb-2" *ngIf="!viewMaster">
+                        <div class="col-sm-4">
+                            <!-- <app-page-title title="Add Fuel Product Master"></app-page-title>  -->
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="text-sm-end">
+                                <button type="button" class="btn btn-success btn-rounded mb-2 me-2"
+                                    (click)="viewFuelMaster()">
+                                    View Fuel Product Master </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-2" *ngIf="viewMaster">
+                        <div class="col-sm-4">
+                            <!-- <app-page-title title="View Fuel Product Master"></app-page-title>  -->
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="text-sm-end">
+                                <button type="button" class="btn btn-success btn-rounded mb-2 me-2"
+                                    (click)="viewFuelMaster()">
+                                    Add Fuel Product Master </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="viewMaster" class="row">
+                        <div class="table-responsive mb-0">
+                            <table class="table table-centered table-nowrap">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="text-align: left;">Sr No</th>
+                                        <th style="text-align: left;">Brand Name</th>
+                                        <th style="text-align: left;">Product Category</th>
+                                        <th style="text-align: left;">Product Code</th>
+                                        <th style="text-align: left;">Product Name</th>
+                                        <th style="text-align: left;">Edit</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody
+                                    *ngFor="let data of brandList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                                    <tr>
+                                        <td style="text-align: left;"> {{i+1}} </td>
+                                        <td style="text-align: left;"> {{data.brandName}} </td>
+                                        <td style="text-align: left;"> {{data.productCategory}} </td>
+                                        <td style="text-align: left;"> {{data.productCode}} </td>
+                                        <td style="text-align: left;"> {{data.productName}} </td>
+                                        <td style="text-align: left;">
+                                            <a
+                                                (click)="update(edit,data.fuelProductsId,data.brandName,data.productCategory,data.productCode,data.productName)">
+                                                <i class="fas fa-edit" style="color: #4e9b4e;">
+                                                </i></a>
+
+                                        </td>
+                                    </tr>
+
+                                    <!-- Edit starts -->
+                                    <ng-template #edit let-c="close" let-d="dismiss">
+
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">
+                                                <label>
+                                                    <h4>
+                                                        <strong>
+                                                            Update Fuel Product Master <br></strong>
+                                                    </h4>
+                                                </label>
+                                            </h4>
+                                            <button type="button" class="btn btn-danger" aria-label="Close"
+                                                (click)="d('Cross click')">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form [formGroup]="filterForm">
+
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <label class="labelMargin" for="vendorId">Brand Name</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <input class="form-control" formControlName="brandName"
+                                                            placeholder="Enter Brand Name"
+                                                            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                                    </div>
+
+                                                    <div class="col-md-2">
+                                                        <label class="labelMargin" for="detailerOutletName">Product
+                                                            Category</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <select class="form-control" formControlName="productCategory">
+                                                            <option value="">Select Category</option>
+                                                            <option value="PETROL">PETROL</option>
+                                                            <option value="DIESEL">DIESEL</option>
+                                                            <option value="CNG">CNG</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <label class="labelMargin" for="keyPersonName">Product
+                                                            Name</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <input class="form-control" placeholder="Enter Product Name"
+                                                            formControlName="productName"
+                                                            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                                    </div>
+
+                                                    <div class="col-md-2">
+                                                        <label class="labelMargin" for="keyPersonNumber">Product
+                                                            Code</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <input class="form-control" placeholder="Enter Product Code"
+                                                            formControlName="productCode"
+                                                            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-md-4"></div>
+                                                    <div class="col-md-2">
+                                                        <button type="submit" class="btn btn-primary"
+                                                            (click)="updateBrand()">Update</button>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-2">
+                                                        <button type="submit" class="btn btn-secondary"
+                                                            (click)="d('Cross click')">Cancel</button>
+                                                    </div>
+
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </ng-template>
+                                    <!-- Edit ends -->
+
+                                </tbody>
+                            </table>
+
+                            <!-- begin::Pagination -->
+                            <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                                style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                            </pagination-controls>
+                            <!-- end::Pagination -->
+                        </div>
+                    </div>
+
+
+                    <div *ngIf="!viewMaster">
+                        <form [formGroup]="productForm">
+
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="example-text-input" class="col-form-label">Oil Company</label>
+                                </div>
+                                <div class="col-lg-10">
+                                    <input class="form-control" formControlName="brandName"
+                                        placeholder="Enter Brand Name"
+                                        oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                </div>
+                            </div>
+                            <br>
+
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="example-text-input" class="col-form-label">Product Category</label>
+                                </div>
+                                <div class="col-lg-10">
+                                    <select class="form-control" formControlName="productCategory">
+                                        <option value="">Select Category</option>
+                                        <option value="PETROL">PETROL</option>
+                                        <option value="DIESEL">DIESEL</option>
+                                        <option value="CNG">CNG</option>
+                                        <option value="LPG">LPG</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="example-text-input" class="col-form-label">Product Name</label>
+                                </div>
+                                <div class="col-lg-10">
+                                    <input class="form-control" placeholder="Enter Product Name"
+                                        formControlName="productName"
+                                        oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                </div>
+                            </div>
+                            <br>
+
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="example-text-input" class="col-form-label">Product Code</label>
+                                </div>
+                                <div class="col-lg-10">
+                                    <input class="form-control" placeholder="Enter Product Code"
+                                        formControlName="productCode"
+                                        oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                </div>
+                            </div>
+                            <br>
+
+                            <div class="row">
+                                <div class="col-md-12" style="text-align: center;">
+                                    <div>
+                                        <button type="submit" class="btn btn-primary"
+                                            (click)="submitBrand()">Submit</button> &nbsp; &nbsp;
+                                        <button type="submit" class="btn btn-secondary"
+                                            (click)="clearForm()">Cancel</button> &nbsp; &nbsp;
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

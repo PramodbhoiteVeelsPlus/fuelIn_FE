@@ -1,0 +1,326 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form [formGroup]="filterForm">
+                        <div class="row">
+                            <div class="col-auto">
+                                <label for="example-text-input">Select Petrol
+                                    Pump</label>
+                                <input class="form-control" type="text" list="allDealerList"
+                                    placeholder="Select Pump Name" (change)="getDealerId($event)">
+                                <datalist id="allDealerList">
+                                    <option *ngFor="let data of allDealerList" [value]="data.companyName">
+                                </datalist>
+                            </div>
+                            <div class="col-auto">
+                                <label for="example-text-input">Select Status</label>
+                                <select class="form-control" formControlName="status" style="width: 180px;"
+                                    placeholder="Status" required>
+                                    <option value=""> Select </option>
+                                    <option value="PENDING"> PENDING </option>
+                                    <option value="SUCCESS"> SUCCESS </option>
+                                    <option value="HOLD"> HOLD </option>
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <label> Start Date</label>
+                                <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" readonly
+                                    style="background-color: #ffffff;" (click)="startDate.toggle()"
+                                    formControlName="startDate" ngbDatepicker #startDate="ngbDatepicker">
+                            </div>
+                            <div class="col-auto">
+                                <label> End Date</label>
+                                <input class="form-control" placeholder="DD-MM-YYYY" name="endDate" readonly
+                                    style="background-color: #ffffff;" (click)="endDate.toggle()"
+                                    formControlName="endDate" ngbDatepicker #endDate="ngbDatepicker">
+                            </div>
+                            <div class="col-auto" style="padding-top: 20px;">
+                                <button class="btn btn-primary my-2 my-sm-0" type="button" (click)="getReferrals()">
+                                    Submit </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <br>
+                    <div class="row mb-2">
+                        <div class="col-md-8">
+                        </div>
+                        <div class="col-md-1">
+                            <div class="text-sm-end">
+                                <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF"
+                                    placement="bottom" (click)="exportToPDF()"><i class="fas fa-file-pdf"></i></span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="text-sm-end">
+                                <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download CSV"
+                                    placement="bottom" (click)="exportexcel()"><i class="fas fa-file-csv"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="text-sm-end">
+                                <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download Details CSV"
+                                    placement="bottom" (click)="exportExcel()"><i class="fas fa-file-csv"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="table-responsive mb-0">
+                        <table id="excel-table" class="table table-hover table-striped">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="text-align: left;"> Sr.No </th>
+                                    <th style="text-align: left;"> Dealer VFId </th>
+                                    <th style="text-align: left;"> Petrol Pump </th>
+                                    <th style="text-align: left;"> Dealer Name </th>
+                                    <th style="text-align: left;"> Dealer Number </th>
+                                    <th style="text-align: left;"> Referral Date </th>
+                                    <th style="text-align: left;"> Owner Name </th>
+                                    <th style="text-align: left;"> Mobile Number </th>
+                                    <th style="text-align: left;"> Company Name </th>
+                                    <th style="text-align: left;"> Status </th>
+                                    <th style="text-align: left;"> Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody
+                                *ngFor="let data of referralData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                                <tr>
+                                    <td style="text-align: left;"> {{i+1}} </td>
+                                    <td style="text-align: left;"> {{ data.FuelVeelsId }} </td>
+                                    <td style="text-align: left;"> {{ data.companyName }} </td>
+                                    <td style="text-align: left;"> {{ data.hostName }}
+                                        <br>
+                                        <span *ngIf="data.accessGroupId == '12'">(OWNER)</span>
+                                        <span *ngIf="data.accessGroupId == '13'">(OPERATOR)</span>
+                                        <span *ngIf="data.accessGroupId == '14'">(MANAGER)</span>
+                                    </td>
+                                    <td style="text-align: left;"> {{ data.hostPhone}} </td>
+                                    <td style="text-align: left;"> {{ data.createdAt | date: "medium" }} </td>
+                                    <td style="text-align: left;"> {{ data.ownerName }} </td>
+                                    <td style="text-align: left;"> {{ data.mobileNumber }} </td>
+                                    <td style="text-align: left;"> {{ data.refCompanyName }} </td>
+                                    <td style="text-align: left;"> {{ data.referralStatus}} </td>
+                                    <td style="width: 83px">
+                                        <span>
+                                            <i class="fas fa-edit" style="color: grey;" title="Update Status"
+                                                (click)="openStatus(updateStatus, data.referralId, data.referralStatus, data.remark)">
+                                            </i>
+                                        </span>
+                                        &nbsp;
+                                        <span>
+                                            <i class="fas fa-edit" style="color: green;" title="Referral Details"
+                                                (click)="openDetails(updateDetails, data.referralId)">
+                                            </i>
+                                        </span>
+                                        &nbsp;
+                                        <span>
+                                            <i class="fas fa-trash" style="color: red;" title="Delete"
+                                                (click)="deleteReferral(data.referralId)"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- begin::Pagination -->
+                        <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                            style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                        </pagination-controls>
+                        <!-- end::Pagination -->
+
+                        <ng-template #updateStatus let-c="close" let-d="dismiss">
+                            <div class="modal-header">
+                                <h6 class="modal-title">
+                                    <strong>
+                                        Update Referral Status
+                                    </strong>
+                                </h6>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="labelNewMargin">Status :</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="form-control" [(ngModel)]="updatestatus"
+                                            [ngModelOptions]="{standalone: true}">
+                                            <option value="PENDING"> PENDING </option>
+                                            <option value="SUCCESS"> SUCCESS </option>
+                                            <option value="HOLD"> HOLD </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="labelNewMargin">Remark:</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input class="form-control" max="15"
+                                            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                                            [(ngModel)]="remark" [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                </div>
+
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="submit" class="btn btn-primary"
+                                            (click)="updateReferralStatus()">Update</button>
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-2">
+                                        <button type="submit" class="btn btn-danger" (click)="clear()">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+
+                        <ng-template #updateDetails let-c="close" let-d="dismiss">
+                            <div class="modal-header">
+                                <h6 class="modal-title">
+                                    <strong>
+                                        Referral Details
+                                    </strong>
+                                </h6>
+                            </div>
+                            <div class="modal-body">
+                                <form [formGroup]="referForm">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="labelNewMargin"> Date:</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input class="form-control" placeholder="DD-MM-YYYY" name="date" readonly
+                                                style="background-color: #ffffff;" (click)="date.toggle()"
+                                                formControlName="date" ngbDatepicker #date="ngbDatepicker">
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="labelNewMargin">Details:</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input class="form-control" formControlName="details">
+                                        </div>
+                                    </div>
+                                </form>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="submit" class="btn btn-primary"
+                                            (click)="addReferralDetails()">Submit</button>
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-2">
+                                        <button type="submit" class="btn btn-danger" (click)="cancel()">Cancel</button>
+                                    </div>
+                                </div>
+
+                                <br>
+                                <div class="table-responsive mb-0">
+                                    <table id="excel-table" class="table table-hover table-striped">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th style="text-align: center;"> Sr.No </th>
+                                                <th style="text-align: center;"> Date </th>
+                                                <th style="text-align: center;"> Details </th>
+                                                <th style="text-align: center;"> Action </th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody
+                                            *ngFor="let data of referDetails | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                                            <tr>
+                                                <td style="text-align: center;"> {{i+1}} </td>
+                                                <td style="text-align: center;"> {{ data.referralDetailsDate | date:
+                                                    "dd-MMM,yyyy" }}
+                                                </td>
+                                                <td style="text-align: center;"> {{ data.referralDetails }} </td>
+                                                <td style="text-align: center;">
+                                                    <span>
+                                                        <i class="fas fa-edit" style="color: grey;"
+                                                            title="Referral Details"
+                                                            (click)="openReferDetails(updateRefDetails, data.referralDetailsId, data.referralDetails)">
+                                                        </i>
+                                                    </span>
+                                                    &nbsp;&nbsp;
+                                                    <span>
+                                                        <i class="fas fa-trash" style="color: red;" title="Delete"
+                                                            (click)="deleteRefDetails(data.referralDetailsId)"></i>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                            <!-- begin::Pagination -->
+                            <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                                style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                            </pagination-controls>
+                            <!-- end::Pagination -->
+
+                                </div>
+
+                                <ng-template #updateRefDetails let-c="close" let-d="dismiss">
+                                    <div class="modal-header">
+                                        <h6 class="modal-title">
+                                            <strong>
+                                                Update Referral Details
+                                            </strong>
+                                        </h6>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label class="labelNewMargin">Date :</label>
+                                            </div>
+                                            <!-- <div class="col-md-6">
+                                                <input class="form-control" placeholder="DD-MM-YYYY" [(ngModel)]="date" [ngModelOptions]="{standalone: true}"
+                                                ngbDatepicker #startDate="ngbDatepicker" disabled>
+                                            </div> -->
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label class="labelNewMargin">Details:</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input class="form-control" [(ngModel)]="details"
+                                                    [ngModelOptions]="{standalone: true}">
+                                            </div>
+                                        </div>
+
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button type="submit" class="btn btn-primary"
+                                                    (click)="updateReferralDetails()">Update</button>
+                                            </div>
+                                            <div class="col-auto">
+                                                <button type="submit" class="btn btn-danger"
+                                                    (click)="cancel1()">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

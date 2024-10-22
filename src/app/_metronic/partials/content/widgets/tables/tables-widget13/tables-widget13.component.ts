@@ -62,6 +62,22 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 export class TablesWidget13Component implements OnInit {
   dealerList: any = [];
   fuelDealerId: any;
+  allCustomerList: any = [];
+  allCustomerListDetails: any = [];
+  activeCustomerList: any = [];
+  activeCustomerListDetails: any = [];
+  managerList: any = [];
+  managerListDetails: any = [];
+  operatorList: any = [];
+  operatorListDetails: any = [];
+  posList: any = [];
+  posListDetails: any = [];
+  duNzTkList: any = [];
+  duNzTkListDetails: any = [];
+  allDealerList: any = [];
+  allDealerDetails: any = [];
+  searchData: any;
+  allDealerDetailsSearch: any = [];
 
   constructor(
     private post: WidgetService,
@@ -75,12 +91,13 @@ export class TablesWidget13Component implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getDealerList();
+    // this.getDealerList();
+    this.getAllDealerList()
     this.cd.detectChanges();
   }
 
   
-  getDealerList() {
+  getAllDealerList() {
     this.spinner.show()
     let data = {
 
@@ -89,6 +106,7 @@ export class TablesWidget13Component implements OnInit {
     this.post.getDealerListPOST(data).subscribe((res) => {
       if (res.status == "OK") {
         this.dealerList = res.data;
+        this.getCustomersCountDealerWise();
         this.spinner.hide()
         this.cd.detectChanges();
       } else {
@@ -114,4 +132,155 @@ export class TablesWidget13Component implements OnInit {
       });
   }
   
+  // //getAllDealerList
+  // getAllDealerList() {
+    
+  //   this.post.getAllDealerListPOST()
+  //     .subscribe(res => {
+  //       if (res) {
+  //         this.dealerList = res
+  //         this.dealerList.data.map(
+  //           (            detail: any) => {
+  //             this.allDealerList.push(detail)
+  //           })
+  //           this.getAllFastagDetails()
+  //       } else {
+  //       }
+  //     });
+  // }
+  
+  //getCustomersCountDealerWiseURL
+  getCustomersCountDealerWise() {
+    let data = {
+
+    }
+
+    this.post.getCustomersCountDealerWisePOST(data)
+      .subscribe(res => {
+        if (res) {
+          this.allCustomerList = res
+          this.allCustomerList.data.map(
+            (            detail: any) => {
+              this.allCustomerListDetails.push(detail)
+            })
+          this.activeCustomerList = res
+          this.activeCustomerList.data1.map(
+            (            detail: any) => {
+              this.activeCustomerListDetails.push(detail)
+            })
+
+            this.getSTAFFnPOSPumpCountDealerWise();
+
+        } else {
+        }
+      });
+  }
+
+
+  //getSTAFFnPOSPumpCountDealerWise
+  getSTAFFnPOSPumpCountDealerWise() {
+    let data = {
+
+    }
+    
+    this.post.getSTAFFnPOSPumpCountDealerWisePOST(data)
+      .subscribe(res => {
+        if (res) {
+          this.managerList = res
+          this.managerList.data.map(
+            (            detail: any) => {
+              this.managerListDetails.push(detail)
+            })
+          this.operatorList = res
+          this.operatorList.data1.map(
+            (            detail: any) => {
+              this.operatorListDetails.push(detail)
+            })
+            this.posList = res
+            this.posList.data2.map(
+              (              detail: any) => {
+                this.posListDetails.push(detail)
+              })
+            this.duNzTkList = res
+            this.duNzTkList.data3.map(
+              (              detail: any) => {
+                this.duNzTkListDetails.push(detail)
+              })
+
+              this.getCombine()
+        } else {
+        }
+      });
+  }
+
+getCombine(){
+    this.dealerList.map((res1: { companyName: string; fuelDealerId: any; }) => {
+        const dataJson = {
+          pumpName: '',
+          allCustCount: 0,
+          activeCustCount: 0,
+          managerCount:0,
+          operatorCount:0,
+          posCount: 0,
+          tankCount: 0,
+          pumpCount: 0,
+          nzCount:0,
+        };
+    
+          dataJson.pumpName = res1.companyName;
+
+          this.allCustomerListDetails.map((res2: { fuelDealerId: any; allCustomers: number; }) => {
+            if (res1.fuelDealerId == res2.fuelDealerId) {
+                dataJson.allCustCount = res2.allCustomers;
+                }
+              })
+
+            this.activeCustomerListDetails.map((res3: { fuelDealerId: any; activeCustomers: number; }) => {
+            if (res1.fuelDealerId == res3.fuelDealerId) {
+                dataJson.activeCustCount = res3.activeCustomers;
+                    }
+                })
+
+            this.managerListDetails.map((res4: { fuelDealerId: any; managerCount: number; }) => {
+                if (res1.fuelDealerId == res4.fuelDealerId) {
+                    dataJson.managerCount = res4.managerCount;
+                    }
+                })
+
+            this.operatorListDetails.map((res5: { fuelDealerId: any; operatorCount: number; }) => {
+                if (res1.fuelDealerId == res5.fuelDealerId) {
+                    dataJson.operatorCount = res5.operatorCount;
+                    }
+                })
+
+            this.posListDetails.map((res6: { fuelDealerId: any; posCount: number; }) => {
+                if (res1.fuelDealerId == res6.fuelDealerId) {
+                    dataJson.posCount = res6.posCount;
+                    }
+                })
+
+            this.duNzTkListDetails.map((res7: { fuelDealerId: any; tankCount: number; pumpCount: number; nzCount: number; }) => {
+                if (res1.fuelDealerId == res7.fuelDealerId) {
+                    dataJson.tankCount = res7.tankCount;
+                    dataJson.pumpCount = res7.pumpCount;
+                    dataJson.nzCount = res7.nzCount;  
+                    }
+                })
+          
+              
+          this.allDealerDetails.push(dataJson);
+          this.allDealerDetailsSearch.push(dataJson);
+      })   
+}
+
+onSearch() {
+  // Trim the query and convert it to lowercase for case-insensitive search
+  let query = this.searchData
+  query = query.trim().toLowerCase();
+
+  // Filter the data based on the search query    
+  this.allDealerDetails = this.allDealerDetailsSearch.filter((item: { pumpName: any; }) =>
+    item.pumpName.toLowerCase().includes(query)
+  );
+}
 }

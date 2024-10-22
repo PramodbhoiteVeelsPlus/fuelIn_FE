@@ -67,6 +67,19 @@ export class WidgetService {
   private updateDemoScheduleRequestURL = this.baseURL + 'fuelStaff/updateDemoScheduleRequest'; 
   private getDemoDealerDetailsURL = this.baseURL + 'dealerOnboarding/getDemoDealerDetails';
   private getRemovedDealerDetailsURL = this.baseURL + 'dealerOnboarding/getRemovedDealerDetails';  
+  private getAllBrandsFuelProductURL = this.baseURL + 'fuelproductmaster/getAllBrandsFuelProduct'; 
+  private updateFuelProductURL = this.baseURL + 'fuelproductmaster/updateFuelProduct';  
+  private addFuelProductURL = this.baseURL + 'fuelproductmaster/addFuelProduct'; 
+  private getAllDealersListURL = this.baseURL + 'adminDashboard/getAllDealerList';
+  private getReferralListURL = this.baseURL + 'referral/getReferralList';
+  private deleteReferralURL = this.baseURL + 'referral/deleteReferral'; 
+  private updateReferralStatusURL = this.baseURL + 'referral/updateReferralStatus';
+  private addReferralDetailsURL = this.baseURL + 'referral/addReferralDetails'; 
+  private getReferralDetailsURL = this.baseURL + 'referral/getReferralDetails'; 
+  private deleteReferralDetailsURL = this.baseURL + 'referral/deleteReferralDetails'; 
+  private updateReferralDetailsURL = this.baseURL + 'referral/updateReferralDetails'; 
+  private getAllReferralDetailsURL = this.baseURL + 'referral/getAllReferralDetails'; 
+  private getSTAFFnPOSPumpCountDealerWiseURL = this.baseURL + 'adminDashboard/getSTAFFnPOSPumpCountDealerWise'
 
 
   setHeader() {
@@ -252,7 +265,7 @@ export class WidgetService {
     this.setHeader();
     let headers = new HttpHeaders();
     headers = headers.set('authenticationToken', this.token);
-    return this.http.post(this.getCustomersCountDealerWiseURL, body, {
+    return this.http.get(this.getCustomersCountDealerWiseURL, {
       headers: headers
     })
   }
@@ -497,4 +510,133 @@ export class WidgetService {
     })
   }
 
+  // getAllBrandsFuelProductURL
+  getAllBrandsFuelProductPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.get(this.getAllBrandsFuelProductURL, {
+      headers: headers
+    })
+  }
+
+  // updateFuelProductURL
+  updateFuelProductPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateFuelProductURL, body,{
+      headers: headers
+    })
+  }
+
+  // addFuelProductURL
+  addFuelProductPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.addFuelProductURL, body,{
+      headers: headers
+    })
+  }
+
+  // getAllDealersListURL
+  getAllDealersListPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.get(this.getAllDealersListURL,{
+      headers: headers
+    })
+  }
+
+  // getReferralListURL
+  getReferralListPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getReferralListURL, body,{
+      headers: headers
+    })
+  }
+
+  // deleteReferralURL
+  deleteReferralPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.deleteReferralURL, body,{
+      headers: headers
+    })
+  }
+
+  // updateReferralStatusURL
+  updateReferralStatusPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateReferralStatusURL, body,{
+      headers: headers
+    })
+  }
+
+  // addReferralDetailsURL
+  addReferralDetailsPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.addReferralDetailsURL, body,{
+      headers: headers
+    })
+  }
+
+  // getReferralDetailsURL
+  getReferralDetailsPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getReferralDetailsURL, body,{
+      headers: headers
+    })
+  }
+
+  // deleteReferralDetailsURL
+  deleteReferralDetailsPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.deleteReferralDetailsURL, body,{
+      headers: headers
+    })
+  }
+
+  // updateReferralDetailsURL
+  updateReferralDetailsPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateReferralDetailsURL,body, {
+      headers: headers
+    })
+  }
+
+  // getAllReferralDetailsURL
+  getAllReferralDetailsPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getAllReferralDetailsURL, body, {
+      headers: headers
+    })
+  }
+
+  // getSTAFFnPOSPumpCountDealerWiseURL
+  getSTAFFnPOSPumpCountDealerWisePOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.get(this.getSTAFFnPOSPumpCountDealerWiseURL, {
+      headers: headers
+    })
+  }
 }
