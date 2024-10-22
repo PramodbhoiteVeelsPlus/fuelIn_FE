@@ -31,9 +31,11 @@ export class Adv_TablesService {
     private creditStatusURL = this.baseURL + 'loanRequest/creditStatus';
     private updateVyanaByVistUserIdURL = this.baseURL + 'loanRequest/updateVyanaByVistUserId';
     private vendoronboardingURL = this.baseURL + 'loanRequest/vendoronboarding';
-
-
-
+    private getFTCustomerListByDateRangeURL = this.baseURL + 'fastag/getFTCustomerListByDateRange';
+    private getFTCustomerListURL = this.baseURL + 'fastag/getFTCustomerList';
+    private getFTAllVehicleListURL = this.baseURL + 'fastag/getFTAllVehicleList';
+    private getFTAllVehicleListDateRangeURL = this.baseURL + 'fastag/getFTAllVehicleListDateRange';
+    
 
 
 
@@ -58,56 +60,94 @@ export class Adv_TablesService {
     }
 
     // getAllCustomerListDateRangeURL
-    getAllCustomerListDateRangePOST(body:object): Observable<any> {
+    getAllCustomerListDateRangePOST(body: object): Observable<any> {
         this.setHeader();
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
-        return this.http.post(this.getAllCustomerListDateRangeURL, body,{
+        return this.http.post(this.getAllCustomerListDateRangeURL, body, {
             headers: headers
         })
     }
 
     // getvendorDetailsURL
-    getvendorDetailsPOST(body:object): Observable<any> {
+    getvendorDetailsPOST(body: object): Observable<any> {
         this.setHeader();
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
-        return this.http.post(this.getvendorDetailsURL, body,{
+        return this.http.post(this.getvendorDetailsURL, body, {
             headers: headers
         })
     }
 
     // creditStatusURL
-    creditStatusPOST(body:object): Observable<any> {
+    creditStatusPOST(body: object): Observable<any> {
         this.setHeader();
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
-        return this.http.post(this.creditStatusURL, body,{
+        return this.http.post(this.creditStatusURL, body, {
             headers: headers
         })
     }
 
     // updateVyanaByVistUserIdURL
-    updateVyanaByVistUserIdPOST(body:object): Observable<any> {
+    updateVyanaByVistUserIdPOST(body: object): Observable<any> {
         this.setHeader();
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
-        return this.http.post(this.updateVyanaByVistUserIdURL, body,{
+        return this.http.post(this.updateVyanaByVistUserIdURL, body, {
             headers: headers
         })
     }
 
     // vendoronboardingURL
-    vendoronboardingPOST(body:object): Observable<any> {
+    vendoronboardingPOST(body: object): Observable<any> {
         this.setHeader();
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
-        return this.http.post(this.vendoronboardingURL, body,{
+        return this.http.post(this.vendoronboardingURL, body, {
             headers: headers
         })
     }
 
+    // getFTCustomerListByDateRangeURL
+    getFTCustomerListByDateRangePost(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFTCustomerListByDateRangeURL, body, {
+            headers: headers
+        })
+    }
 
+    // getFTCustomerListURL
+    getFastagCustomerList(): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.get(this.getFTCustomerListURL, {
+            headers: headers
+        })
+    }
+
+    // getFTAllVehicleListURL
+    getFTAllVehicleList(): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.get(this.getFTAllVehicleListURL, {
+            headers: headers
+        })
+    }
+
+    // getFTAllVehicleListDateRangeURL
+    getFTAllVehicleListDateRangePost(body:object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFTAllVehicleListDateRangeURL, body,{
+            headers: headers
+        })
+    }
 
 
 

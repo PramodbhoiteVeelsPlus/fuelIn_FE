@@ -1,357 +1,206 @@
-<div class="card card-custom card-stretch gutter-b">
-  <!-- Header -->
-  <div class="card-header border-0 pt-5">
-    <h3 class="card-title align-items-start flex-column">
-      <span class="card-label font-weight-bolder text-gray-900">New Arrivals</span>
-      <span class="text-muted mt-3 font-weight-bold font-size-sm"
-        >More than 400+ new members</span
-      >
-    </h3>
-    <div class="card-toolbar">
-      <ul class="nav nav-pills nav-pills-sm nav-dark-75">
-        <li
-          class="nav-item"
-          (click)="setCurrentTab('Month')"
-          [style.cursor]="'pointer'"
-        >
-          <a
-            class="nav-link py-2 px-4"
-            [class.active]="currentTab === 'Month'"
-            data-toggle="tab"
-            >Month</a
-          >
-        </li>
-        <li
-          class="nav-item"
-          (click)="setCurrentTab('Week')"
-          [style.cursor]="'pointer'"
-        >
-          <a
-            class="nav-link py-2 px-4"
-            [class.active]="currentTab === 'Week'"
-            data-toggle="tab"
-            >Week</a
-          >
-        </li>
-        <li
-          class="nav-item"
-          (click)="setCurrentTab('Day')"
-          [style.cursor]="'pointer'"
-        >
-          <a
-            class="nav-link py-2 px-4"
-            [class.active]="currentTab === 'Day'"
-            data-toggle="tab"
-            >Day</a
-          >
-        </li>
-      </ul>
+<form [formGroup]="filterVehicleList">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="search-box me-2 mb-2 d-inline-block">
+        <div class="position-relative">
+          <input class="form-control mr-sm-4" type="text" placeholder="search" [formControl]="searchBoxVehicleList"
+            aria-label="Search" (click)="searchVehicleList1()">
+          <i class="bx bx-search-alt search-icon"></i>
+        </div>
+      </div>
+    </div>
+    <label for="example-text-input" class="col-auto col-form-label">Date Range</label>
+    <div class="col-md-2">
+      <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;" name="startDate"
+        ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker #startDate="ngbDatepicker"
+        formControlName="startDate">
+    </div>
+    <div class="col-md-2">
+      <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;" name="endDate"
+        ngbTooltip="End Date" (click)="endDate.toggle()" ngbDatepicker #endDate="ngbDatepicker"
+        formControlName="endDate">
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary" (click)="getFastagAllVehicleListDateRange()">
+        Submit
+      </button>
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-secondary" (click)="clearFilterVehicleList()">
+        Cancel
+      </button>
+    </div>
+    <div class="col-auto" style="margin-top: -6px;">
+      <span style="font-size: 36px;cursor: pointer;" ngbTooltip="Download CSV" (click)="exportToExcelVehicleList()"><i
+          class="fas fa-file-csv"></i></span>
     </div>
   </div>
-  <!-- Body -->
-  <div class="card-body pt-3 pb-0">
-    <!--begin::Table-->
-    <div class="table-responsive">
-      <table class="table table-borderless table-vertical-center">
-        <thead>
-          <tr>
-            <th class="p-0" [style.min-width]="'50px'"></th>
-            <th class="p-0" [style.min-width]="'200px'"></th>
-            <th class="p-0" [style.min-width]="'100px'"></th>
-            <th class="p-0" [style.min-width]="'125px'"></th>
-            <th class="p-0" [style.min-width]="'110px'"></th>
-            <th class="p-0" [style.min-width]="'150px'"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="pl-0 py-4">
-              <div class="symbol symbol-50 symbol-light mr-1">
-                <span class="symbol-label">
-                  <img
-                    alt=""
-                    src="./assets/media/svg/brand-logos/plurk.svg"
-                    class="h-50 align-self-center"
-                  />
-                </span>
-              </div>
-            </td>
-            <td class="pl-0">
-              <a
-                class="text-gray-900-75 font-weight-bolder text-hover-primary mb-1 font-size-lg cursor-pointer"
-                >Sant Outstanding</a
-              >
-              <div>
-                <span class="font-weight-bolder">Email:</span>&nbsp;
-                <a
-                  class="text-muted font-weight-bold text-hover-primary cursor-pointer"
-                  >bprow&#64;bnc.cc</a
-                >
-              </div>
-            </td>
-            <td class="text-right">
-              <span
-                class="text-gray-900-75 font-weight-bolder d-block font-size-lg"
-              >
-                $2,000,000
-              </span>
-              <span class="text-muted font-weight-bold">
-                Paid
-              </span>
-            </td>
-            <td class="text-right">
-              <span class="text-muted font-weight-500">
-                ReactJs, HTML
-              </span>
-            </td>
-            <td class="text-right">
-              <span class="label label-lg label-light-primary label-inline"
-                >Approved</span
-              >
-            </td>
-            <td class="text-right pr-0">
-              <a class="btn btn-icon btn-light btn-sm cursor-pointer">
-                <app-keenicon name="switch" class="fs-md text-primary"></app-keenicon>
-              </a>
-              <a class="btn btn-icon btn-light btn-sm mx-3 cursor-pointer">
-                <app-keenicon name="pencil" class="fs-md text-primary"></app-keenicon>
-              </a>
-              <a class="btn btn-icon btn-light btn-sm cursor-pointer">
-                <app-keenicon name="trash" class=" svg-icon-md text-primary"></app-keenicon>
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td class="pl-0 py-4">
-              <div class="symbol symbol-50 symbol-light">
-                <span class="symbol-label">
-                  <img
-                    alt=""
-                    src="./assets/media/svg/brand-logos/telegram.svg"
-                    class="h-50 align-self-center"
-                  />
-                </span>
-              </div>
-            </td>
-            <td class="pl-0">
-              <a
-                class="text-gray-900-75 font-weight-bolder text-hover-primary mb-1 font-size-lg cursor-pointer"
-                >Application Development</a
-              >
-              <div>
-                <span class="font-weight-bolder">Email:</span>&nbsp;
-                <a
-                  class="text-muted font-weight-bold text-hover-primary cursor-pointer"
-                  >app&#64;dev.com</a
-                >
-              </div>
-            </td>
-            <td class="text-right">
-              <span
-                class="text-gray-900-75 font-weight-bolder d-block font-size-lg"
-              >
-                $4,600,000
-              </span>
-              <span class="text-muted font-weight-bold">
-                Paid
-              </span>
-            </td>
-            <td class="text-right">
-              <span class="text-muted font-weight-500">
-                Python, MySQL
-              </span>
-            </td>
-            <td class="text-right">
-              <span class="label label-lg label-light-warning label-inline"
-                >In Progress</span
-              >
-            </td>
-            <td class="text-right pr-0">
-              <a class="btn btn-icon btn-light btn-sm cursor-pointer">
-                <app-keenicon name="switch" class="fs-md text-primary"></app-keenicon>
-              </a>
-              <a class="btn btn-icon btn-light btn-sm mx-3 cursor-pointer">
-                <app-keenicon name="pencil" class="fs-md text-primary"></app-keenicon>
-              </a>
-              <a class="btn btn-icon btn-light btn-sm cursor-pointer">
-                <app-keenicon name="trash" class=" svg-icon-md text-primary"></app-keenicon>
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td class="pl-0 py-4">
-              <div class="symbol symbol-50 symbol-light">
-                <span class="symbol-label">
-                  <img
-                    alt=""
-                    src="./assets/media/svg/misc/puzzle.svg"
-                    class="h-50 align-self-center"
-                  />
-                </span>
-              </div>
-            </td>
-            <td class="pl-0">
-              <a
-                class="text-gray-900-75 font-weight-bolder text-hover-primary mb-1 font-size-lg cursor-pointer"
-                >Payrol Application</a
-              >
-              <div>
-                <span class="font-weight-bolder">Email:</span>&nbsp;
-                <a
-                  class="text-muted font-weight-bold text-hover-primary cursor-pointer"
-                  >company&#64;dev.com</a
-                >
-              </div>
-            </td>
-            <td class="text-right">
-              <span
-                class="text-gray-900-75 font-weight-bolder d-block font-size-lg"
-              >
-                $560,000
-              </span>
-              <span class="text-muted font-weight-bold">
-                Paid
-              </span>
-            </td>
-            <td class="text-right">
-              <span class="text-muted font-weight-500">
-                Laravel, Metronic
-              </span>
-            </td>
-            <td class="text-right">
-              <span class="label label-lg label-light-success label-inline"
-                >Success</span
-              >
-            </td>
-            <td class="text-right pr-0">
-              <a class="btn btn-icon btn-light btn-sm cursor-pointer">
-                <app-keenicon name="switch" class="fs-md text-primary"></app-keenicon>
-              </a>
-              <a class="btn btn-icon btn-light btn-sm mx-3 cursor-pointer">
-                <app-keenicon name="pencil" class="fs-md text-primary"></app-keenicon>
-              </a>
-              <a class="btn btn-icon btn-light btn-sm cursor-pointer">
-                <app-keenicon name="trash" class=" svg-icon-md text-primary"></app-keenicon>
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td class="pl-0 py-4">
-              <div class="symbol symbol-50 symbol-light">
-                <span class="symbol-label">
-                  <img
-                    alt=""
-                    src="./assets/media/svg/brand-logos/bebo.svg"
-                    class="h-50 align-self-center"
-                  />
-                </span>
-              </div>
-            </td>
-            <td class="pl-0">
-              <a
-                class="text-gray-900-75 font-weight-bolder text-hover-primary mb-1 font-size-lg cursor-pointer"
-                >HR Management System</a
-              >
-              <div>
-                <span class="font-weight-bolder">Email:</span>&nbsp;
-                <a
-                  class="text-muted font-weight-bold text-hover-primary cursor-pointer"
-                  >hr&#64;demo.com</a
-                >
-              </div>
-            </td>
-            <td class="text-right">
-              <span
-                class="text-gray-900-75 font-weight-bolder d-block font-size-lg"
-              >
-                $57,000
-              </span>
-              <span class="text-muted font-weight-bold">
-                Paid
-              </span>
-            </td>
-            <td class="text-right">
-              <span class="text-muted font-weight-bold">
-                AngularJS, C#
-              </span>
-            </td>
-            <td class="text-right">
-              <span class="label label-lg label-light-danger label-inline"
-                >Rejected</span
-              >
-            </td>
-            <td class="text-right pr-0">
-              <a class="btn btn-icon btn-light btn-sm cursor-pointer">
-                <app-keenicon name="switch" class="fs-md text-primary"></app-keenicon>
-              </a>
-              <a class="btn btn-icon btn-light btn-sm mx-3 cursor-pointer">
-                <app-keenicon name="pencil" class="fs-md text-primary"></app-keenicon>
-              </a>
-              <a class="btn btn-icon btn-light btn-sm cursor-pointer">
-                <app-keenicon name="trash" class=" svg-icon-md text-primary"></app-keenicon>
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td class="pl-0 py-4">
-              <div class="symbol symbol-50 symbol-light">
-                <span class="symbol-label">
-                  <img
-                    alt=""
-                    src="./assets/media/svg/brand-logos/kickstarter.svg"
-                    class="h-50 align-self-center"
-                  />
-                </span>
-              </div>
-            </td>
-            <td class="pl-0">
-              <a
-                class="text-gray-900-75 font-weight-bolder text-hover-primary mb-1 font-size-lg cursor-pointer"
-                >KTR Mobile Application</a
-              >
-              <div>
-                <span class="font-weight-bolder">Email:</span>&nbsp;
-                <a
-                  class="text-muted font-weight-bold text-hover-primary cursor-pointer"
-                  >ktr&#64;demo.com</a
-                >
-              </div>
-            </td>
-            <td class="text-right">
-              <span
-                class="text-gray-900-75 font-weight-bolder d-block font-size-lg"
-              >
-                $45,200,000
-              </span>
-              <span class="text-muted font-weight-bold">
-                Paid
-              </span>
-            </td>
-            <td class="text-right">
-              <span class="text-muted font-weight-500">
-                ReactJS, Ruby
-              </span>
-            </td>
-            <td class="text-right">
-              <span class="label label-lg label-light-warning label-inline"
-                >In Progress</span
-              >
-            </td>
-            <td class="text-right pr-0">
-              <a class="btn btn-icon btn-light btn-sm cursor-pointer">
-                <app-keenicon name="switch" class="fs-md text-primary"></app-keenicon>
-              </a>
-              <a class="btn btn-icon btn-light btn-sm mx-3 cursor-pointer">
-                <app-keenicon name="pencil" class="fs-md text-primary"></app-keenicon>
-              </a>
-              <a class="btn btn-icon btn-light btn-sm cursor-pointer">
-                <app-keenicon name="trash" class=" svg-icon-md text-primary"></app-keenicon>
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!--end::Table-->
-  </div>
+  <br>
+</form>
+<div class="table-responsive mb-0">
+  <table class="table table-centered">
+    <thead class="table-light">
+      <tr>
+        <th></th>
+        <th style="text-align: left;"> Date of Addition </th>
+        <th style="text-align: left;"> Veels ID </th>
+        <th style="text-align: left;"> Vehicle Number </th>
+        <th style="text-align: left;"> Added by Customer Name </th>
+        <th style="text-align: left;"> Chassis Number </th>
+        <th style="text-align: left;"> Insurance Expiry </th>
+        <th style="text-align: left;"> Finance Company Name </th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let data of getAllVehicleList2; let i = index">
+      <tr>
+        <td style="cursor: pointer;">
+          <a class="expand-row"
+            (click)="changeValue(i, data.entityId, data.ownerName, data.ownerFatherName, data.splitPresentAddress, data.permanentAddress, data.vehicleNumber, data.vehicleManufacturerName, 
+                          data.vehicleManufacturingMonthYear, data.regDate, data.rcExpiryDate, data.status, data.regAuthority, data.rcFinancer, data.isCommercial, data.fuelType, data.vehicleClass, data.model,
+                          data.bodyType, data.engineNumber, data.chassicNumber, data.normsType, data.vehicleColour, data.wheelbase, data.unladenWeight, data.grossVehicleWeight, data.vehicleTaxUpto,
+                          data.vehicleCubicCapacity, data.vehicleCylindersNo, data.vehicleSeatCapacity, data.vehicleSleeperCapacity, data.vehicleStandingCapacity, data.pucNumber, data.pucExpiryDate,
+                          data.permitType, data.permitNumber, data.permitIssueDate, data.permitValidFrom, data.permitValidUpto, data.nationalPermitUpto, data.nationalPermitNumber, 
+                          data.nationalPermitIssuedBy, data.vehicleInsuranceCompanyName, data.vehicleInsurancePolicyNumber, data.vehicleInsuranceUpto, data.blacklistStatus)"
+            style="font-size: 19px;">
+            +
+          </a>
+        </td>
+        <td>{{data.vishUserCreatedAt | date:"d MMM, yyyy"}}</td>
+        <td> {{data.entityId}} </td>
+        <td> {{data.vehicleNumber}} </td>
+        <td> {{data.vishUserFirstName}} {{data.vishUserLastName}} </td>
+        <td> {{data.chassicNumber}} </td>
+        <td> {{data.insuranceExpiryDate}} </td>
+        <td> {{data.vehicleInsuranceCompanyName}} </td>
+      </tr>
+      <tr *ngIf="show  && i == rowNumber" class="sub-table no-bg">
+        <td colspan="12" class="p-0">
+          <table class="table mb-0 table-striped">
+            <tbody>
+              <tr>
+                <th> Owner Name </th>
+                <th> Owner Father Name </th>
+                <th> Present Address </th>
+                <th> Pin Code </th>
+                <th> permanent Address </th>
+                <th> Pin Code </th>
+              </tr>
+              <tr>
+                <td> {{data.ownerName}} </td>
+                <td> {{data.ownerFatherName}} </td>
+                <td> {{data.splitPresentAddress}} </td>
+                <td> abcd </td>
+                <td> {{data.permanentAddress}} </td>
+                <td> abcd </td>
+              </tr>
+              <tr>
+                <th> Vehicle Manufacturer Name </th>
+                <th> Vehicle Manufacturing Month Year </th>
+                <th> Rc Expiry Date </th>
+                <th> Rc Status </th>
+                <th> Reg Authority </th>
+                <th> State </th>
+              </tr>
+              <tr>
+                <td> {{data.vehicleManufacturerName}} </td>
+                <td> {{data.vehicleManufacturingMonthYear}} </td>
+                <td> {{data.rcExpiryDate}} </td>
+                <td> {{data.status}} </td>
+                <td> {{data.regAuthority}} </td>
+                <td> abcd </td>
+              </tr>
+              <tr>
+                <th> financier </th>
+                <th> Commercial </th>
+                <th> Fuel Description </th>
+                <th> Vehicle Class Description </th>
+                <th> Maker Model </th>
+                <th> Body Type Description </th>
+              </tr>
+              <tr>
+                <td> {{data.rcFinancer }} </td>
+                <td> {{data.isCommercial}} </td>
+                <td> {{data.fuelType}} </td>
+                <td> {{data.vehicleClass}} </td>
+                <td> {{data.model}} </td>
+                <td> {{data.bodyType}} </td>
+              </tr>
+              <tr>
+                <th> Engine Number </th>
+                <th> Norms Description </th>
+                <th> Vehicle Colour </th>
+                <th> Wheelbase </th>
+                <th> Unladen Weight </th>
+                <th> Gross Vehicle Weight </th>
+              </tr>
+              <tr>
+                <td> {{data.engineNumber }} </td>
+                <td> {{data.normsType}} </td>
+                <td> {{data.vehicleColour}} </td>
+                <td> {{data.wheelbase}} </td>
+                <td> {{data.unladenWeight}} </td>
+                <td> {{data.grossVehicleWeight}} </td>
+              </tr>
+              <tr>
+                <th> Vehicle Number </th>
+                <th> Vehicle Tax Upto </th>
+                <th> Vehicle Cubic Capacity </th>
+                <th> Vehicle Cylinders No </th>
+                <th> Vehicle Seat Capacity </th>
+                <th> Vehicle Sleeper Capacity </th>
+              </tr>
+              <tr>
+                <td> {{data.vehicleNumber }} </td>
+                <td> {{data.vehicleTaxUpto}} </td>
+                <td> {{data.vehicleCubicCapacity}} </td>
+                <td> {{data.vehicleCylindersNo}} </td>
+                <td> {{data.vehicleSeatCapacity}} </td>
+                <td> {{data.vehicleSleeperCapacity}} </td>
+              </tr>
+              <tr>
+                <th> Vehicle Standing Capacity </th>
+                <th> Puc Number </th>
+                <th> Puc Expiry Date </th>
+                <th> State Permit Type </th>
+                <th> Permit Number </th>
+                <th> Permit Issue Date </th>
+              </tr>
+              <tr>
+                <td> {{data.vehicleStandingCapacity }} </td>
+                <td> {{data.pucNumber}} </td>
+                <td> {{data.pucExpiryDate}} </td>
+                <td> {{data.permitType}} </td>
+                <td> {{data.permitNumber}} </td>
+                <td> {{data.permitIssueDate}} </td>
+              </tr>
+              <tr>
+                <th> Permit Valid From </th>
+                <th> Permit Valid Upto </th>
+                <th> National Permit Upto </th>
+                <th> National Permit Number </th>
+                <th> National Permit Issued By </th>
+                <th> Vehicle Insurance Policy Number </th>
+              </tr>
+              <tr>
+                <td> {{data.permitValidFrom }} </td>
+                <td> {{data.permitValidUpto}} </td>
+                <td> {{data.nationalPermitUpto}} </td>
+                <td> {{data.nationalPermitNumber}} </td>
+                <td> {{data.nationalPermitIssuedBy}} </td>
+                <td> {{data.vehicleInsurancePolicyNumber}} </td>
+              </tr>
+              <tr>
+                <th> Vehicle Insurance Upto </th>
+                <th> Blacklist Status </th>
+              </tr>
+              <tr>
+                <td> {{data.vehicleInsuranceUpto }} </td>
+                <td> {{data.blacklistStatus}} </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
