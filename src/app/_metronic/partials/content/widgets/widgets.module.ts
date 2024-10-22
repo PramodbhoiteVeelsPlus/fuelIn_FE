@@ -5,6 +5,7 @@ import { InlineSVGModule } from 'ng-inline-svg-2';
 // Advanced Tables
 import { AdvanceTablesWidget1Component } from './advance-tables/advance-tables-widget1/advance-tables-widget1.component';
 import { AdvanceTablesWidget2Component } from './advance-tables/advance-tables-widget2/advance-tables-widget2.component';
+import { AdvanceTablesWidget3Component } from './advance-tables/advance-tables-widget3/advance-tables-widget3.component';
 import { AdvanceTablesWidget7Component } from './advance-tables/advance-tables-widget7/advance-tables-widget7.component';
 // Base Tables
 import { BaseTablesWidget1Component } from './base-tables/base-tables-widget1/base-tables-widget1.component';
@@ -102,6 +103,7 @@ import { StatsWidget9Component } from './stats/stats-widget9/stats-widget9.compo
     // Advanced Tables
     AdvanceTablesWidget1Component,
     AdvanceTablesWidget2Component,
+    AdvanceTablesWidget3Component,
     AdvanceTablesWidget7Component,
     // Base Tables
     BaseTablesWidget1Component,
@@ -205,6 +207,7 @@ import { StatsWidget9Component } from './stats/stats-widget9/stats-widget9.compo
     // Advanced Tables
     AdvanceTablesWidget1Component,
     AdvanceTablesWidget2Component,
+    AdvanceTablesWidget3Component,
     AdvanceTablesWidget7Component,
     // Base Tables
     BaseTablesWidget1Component,

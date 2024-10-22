@@ -1,0 +1,30 @@
+<div class="card-header">
+    <b>CUSTOMER ONBOARDING</b>
+</div>
+<ul ngbNav #customerList="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified" style="width: 50%;">
+    <li [ngbNavItem]="1">
+        <a ngbNavLink>
+            <span class="d-none d-sm-block" style="font-size: 15px;">ALL CUSTOMER LIST</span>
+        </a>
+        <ng-template ngbNavContent>
+            <app-advance-tables-widget1></app-advance-tables-widget1>
+        </ng-template>
+    </li>
+    <li [ngbNavItem]="2">
+        <a ngbNavLink>
+            <span class="d-none d-sm-block" style="font-size: 15px;">FASTAG CUSTOMER LIST</span>
+        </a>
+        <ng-template ngbNavContent>
+            <app-advance-tables-widget2></app-advance-tables-widget2>
+        </ng-template>
+    </li>
+    <li [ngbNavItem]="3">
+        <a ngbNavLink>
+            <span class="d-none d-sm-block" style="font-size: 15px;">VEHICLE LIST</span>
+        </a>
+        <ng-template ngbNavContent>
+            <app-advance-tables-widget3></app-advance-tables-widget3>
+        </ng-template>
+    </li>
+</ul>
+<div [ngbNavOutlet]="customerList"></div>
