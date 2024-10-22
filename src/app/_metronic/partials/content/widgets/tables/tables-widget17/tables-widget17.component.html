@@ -77,7 +77,10 @@
                     </td>
                     <td> {{ data.FuelVeelsId }} </td>
                     <td> {{ data.customerCreatedAt | date:"d MMM, yyyy" }} </td>
-                    <td> {{ data.companyName }} </td>
+                    <td>
+                        <a [routerLink]="['/customerDetails/customerDetail', data.customerId]">{{data.companyName}}</a>
+                        <!-- <a routerLinkActive="active" [routerLink]="['/customerDetails', data.customerId]">{{data.companyName}}</a> -->
+                    </td>
                     <td> {{ data.brandName }} </td>
                     <td> {{ data.hostName }} </td>
                     <td> {{ data.hostPhone }} </td>
@@ -92,6 +95,7 @@
                                     </i> &nbsp; Edit</a>
                             </div>
                         </div> -->
+                      
                     </td>
                 </tr>
 

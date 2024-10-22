@@ -104,6 +104,9 @@ import { TablesWidget22Component } from './tables/tables-widget22/tables-widget2
 import { TablesWidget23Component } from './tables/tables-widget23/tables-widget23.component';
 import { TablesWidget24Component } from './tables/tables-widget24/tables-widget24.component';
 import { TablesWidget25Component } from './tables/tables-widget25/tables-widget25.component';
+import { RouterModule } from '@angular/router';
+import { StatsWidget10Component } from './stats/stats-widget10/stats-widget10.component';
+// import { routes } from 'src/app/app-routing.module';
 @NgModule({
   declarations: [
     // Advanced Tables
@@ -200,6 +203,7 @@ import { TablesWidget25Component } from './tables/tables-widget25/tables-widget2
     TablesWidget23Component,
     TablesWidget24Component,
     TablesWidget25Component,
+    StatsWidget10Component,
   ],
   imports: [
     ReactiveFormsModule,
@@ -214,6 +218,7 @@ import { TablesWidget25Component } from './tables/tables-widget25/tables-widget2
     NgbDatepickerModule,
     NgbPaginationModule,
     NgxPaginationModule,
+    RouterModule,
   ],
   exports: [
     // Advanced Tables
@@ -311,6 +316,7 @@ import { TablesWidget25Component } from './tables/tables-widget25/tables-widget2
     TablesWidget23Component,
     TablesWidget24Component,
     TablesWidget25Component,
+    StatsWidget10Component,
   ],
   providers: [NgbActiveModal, ExcelService],
 })

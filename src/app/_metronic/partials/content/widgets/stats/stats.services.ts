@@ -86,6 +86,13 @@ export class StatsService {
     private getAllEntityIdURL = this.baseURL + 'coinConversion/getAllEntityId';
     private getAllKitNoURL = this.baseURL + 'fastag/getAllKitNo';
     private getActiveUserDetailsByCorpIdURL = this.baseURL + 'register/getActiveUserDetailsByCorpId';
+    private getCustomerByCustomerIdURL = this.baseURL + 'customer/getCustomerBycustomerId';
+    private getBranchByphoneNumberUrl = this.baseURL + 'corporate/getBranchByphoneNumber';
+    private updateCustomerURL = this.baseURL + 'customer/updateCustomer';
+    private postUpdateressUrl = this.baseURL + 'person/updatePerson';
+    private updateCorporateURL = this.baseURL + 'corporate/updateCorporateNEW';
+    private postUpdateAddressUrl = this.baseURL + 'address/updateAddress';
+    private addNewTicketURL = this.baseURL + 'serviceRequestTickets/addNewTicket';
 
 
 
@@ -711,6 +718,75 @@ export class StatsService {
         })
     }
 
+    // getCustomerByCustomerIdURL
+    getCustomerByCustomerIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getCustomerByCustomerIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getBranchByphoneNumberUrl
+    getBranchByphoneNumberPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getBranchByphoneNumberUrl, body, {
+            headers: headers
+        })
+    }
+
+    // updateCustomerURL
+    updateCustomerPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateCustomerURL, body, {
+            headers: headers
+        })
+    }
+
+    // postUpdateressUrl
+    updatePerson(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.postUpdateressUrl, body, {
+            headers: headers
+        })
+    }
+
+    // updateCorporateURL
+    updateCorporatePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateCorporateURL, body, {
+            headers: headers
+        })
+    }
+
+    // postUpdateAddressUrl
+    postUpdateAddressPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.postUpdateAddressUrl, body, {
+            headers: headers
+        })
+    }
+
+    // addNewTicketURL
+    addNewTicketPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addNewTicketURL, body, {
+            headers: headers
+        })
+    }
 
 
 
