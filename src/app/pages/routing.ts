@@ -1,3 +1,4 @@
+import { ViswasaModule } from './viswasa/viswasa.module';
 import { Routes } from '@angular/router';
 import { EmployeeComponent } from './user/employee/employee.component';
 import { BusinessComponent } from './user/business/business.component';
@@ -20,6 +21,10 @@ const Routing: Routes = [
   {
     path: 'new_Viswasa',
     loadChildren: () => import('./new_viswasa/new_viswasa.module').then((m) => m.New_ViswasaModule),
+  },
+  {
+    path: 'viswasa',
+    loadChildren: () => import('./viswasa/viswasa.module').then((m) => m.ViswasaModule),
   },
   {
     path: 'crafted/pages/profile',

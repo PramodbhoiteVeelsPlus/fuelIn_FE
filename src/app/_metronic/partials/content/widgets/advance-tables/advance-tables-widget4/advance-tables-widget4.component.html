@@ -1,0 +1,221 @@
+<style>
+  .switch {
+    display: inline-block;
+    height: 34px;
+    position: relative;
+    width: 60px;
+  }
+
+  .switch input {
+    display: none;
+  }
+
+  .slider {
+    background-color: #ccc;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+  }
+
+  .slider:before {
+    background-color: #fff;
+    bottom: 4px;
+    content: "";
+    height: 26px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 26px;
+  }
+
+  input:checked+.slider {
+    background-color: #66bb6a;
+  }
+
+  input:checked+.slider:before {
+    transform: translateX(26px);
+  }
+
+  .slider.round {
+    border-radius: 34px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
+  }
+</style>
+<div class="card mb-3">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="search-box me-2 mb-2 d-inline-block">
+          <div class="position-relative">
+            <input class="form-control mr-sm-4" type="text" placeholder="search" [formControl]="searchBox1"
+              aria-label="Search">
+            <i class="bx bx-search-alt search-icon"></i>
+          </div>
+        </div>
+      </div>
+      <label for="example-text-input" class="col-auto col-form-label">Pending New Requests:</label>
+      <div class="col-md-3">
+        <input class="form-control mr-sm-2" type="number" placeholder="Count of Pending New Requests" readonly>
+      </div>
+      <div class="col-md-3">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span style="font-size: 36px;cursor: pointer;" ngbTooltip="Download CSV"
+          (click)="downloadExcelCustomerOnboardList()"><i class="fas fa-file-csv"></i></span>
+      </div>
+    </div>
+  </div>
+  <div class="table-responsive mb-0">
+    <table class="table table-centered table-nowrap">
+      <thead class="table-light">
+        <tr>
+          <th></th>
+          <th>Veels ID</th>
+          <th>Mapped Date</th>
+          <th>Owner Name</th>
+          <th>Contact Number</th>
+          <th>Company Name</th>
+          <th>Status</th>
+          <th>Accept</th>
+          <th>Decline</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let kyc of kycData; let i = index">
+        <tr>
+          <td style="cursor: pointer;">
+            <a class="expand-row"
+              (click)="changeValue1(i, kyc.email1, kyc.onBoardingStatus, kyc.payCorpStatus, kyc.corporateId, kyc.userId, kyc.isSMS, kyc.isEmail)"
+              style="font-size: 19px;">
+              +
+            </a>
+          </td>
+          <td> <a [routerLink]="['/customerDetails/customerDetail', kyc.customerId]">{{kyc.veelsPlusId}}</a> </td>
+          <td>{{kyc.corporateCreatedAt | date:"d MMM, yyyy"}}</td>
+          <td>{{kyc.firstName}} {{kyc.lastName}}</td>
+          <td>{{kyc.hostPhone}}</td>
+          <td>{{kyc.companyName}}</td>
+          <td>{{kyc.onBoardingStatus}}</td>
+          <td class="width-50">
+            <button type="button" class="btn ico-btn-primary"
+              (click)="open(contentOnBoard,'Accept',kyc.userId,kyc.personId)">
+              <i style="color:green" class="fa fa-check" aria-hidden="true"></i>
+            </button>
+          </td>
+          <td class="width-50 ico-btn">
+            <button type="button" class="btn ico-btn-danger"
+              (click)="open(contentOnBoard,'Decline',kyc.userId,kyc.personId)">
+              <i style="color:red" class="fa fa-ban"></i>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="show  && i == rowNumber" class="sub-table no-bg">
+          <td> </td>
+          <td colspan="12" class="p-0">
+            <table class="table mb-0 table-striped">
+              <thead class="table-light"> </thead>
+              <tbody>
+                <tr>
+                  <th>Email</th>
+                  <th>Payment Status</th>
+                  <th>Waive Off Action</th>
+                  <th>SMS Status</th>
+                  <th>Mail Status</th>
+                </tr>
+                <tr>
+                  <td>{{kyc.email1}}</td>
+                  <td>{{kyc.payCorpStatus}}</td>
+                  <!-- wave off -->
+                  <td>
+                    <div *ngIf="kyc.payCorpStatus == 'waiveOff' && kyc.payCorpStatus!='paid' ">
+                      <label class="switch">
+                        <input type="checkbox" checked="checked"
+                          (change)="waiveOffPaymentEnable($event,kyc.corporateId,kyc.userId,kyc.payCorpStatus)">
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                    <div *ngIf="kyc.payCorpStatus !='waiveOff' && kyc.payCorpStatus!='paid' ">
+                      <label class="switch">
+                        <input type="checkbox" [checked]="waive"
+                          (change)="waiveOffPaymentEnable($event,kyc.corporateId,kyc.userId,kyc.payCorpStatus)">
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </td>
+                  <!-- sms -->
+                  <td>
+                    <div *ngIf="kyc.isSMS == 'FALSE'">
+                      <label class="switch">
+                        <input type="checkbox" checked="checked"
+                          (change)="sMSEnableTransport($event,kyc.corporateId,kyc.userId,kyc.isSMS)">
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                    <div *ngIf="kyc.isSMS =='TRUE'">
+                      <label class="switch">
+                        <input type="checkbox" [checked]="waive"
+                          (change)="sMSEnableTransport($event,kyc.corporateId,kyc.userId,kyc.isSMS)">
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </td>
+                  <!-- email -->
+                  <td>
+                    <div *ngIf="kyc.isEmail == 'FALSE'">
+                      <label class="switch">
+                        <input type="checkbox" checked="checked"
+                          (change)="emailEnableTransport($event,kyc.corporateId,kyc.userId,kyc.isEmail)">
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                    <div *ngIf="kyc.isEmail =='TRUE'">
+                      <label class="switch">
+                        <input type="checkbox" [checked]="waive"
+                          (change)="emailEnableTransport($event,kyc.corporateId,kyc.userId,kyc.isEmail)">
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #contentOnBoard let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">
+          <label>
+            <h4><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Do You Want To {{onBoardStatus}} ?</strong></h4>
+          </label>
+        </h4>
+        <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-2">
+            <button type="button" class="btn btn-outline-success my-2 my-sm-0" (click)="onBoard()">
+              Yes</button>
+          </div>
+          <div class="col-md-2">
+            <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">No</button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    
+  </div>
+</div>

@@ -6,7 +6,7 @@ import { InlineSVGModule } from 'ng-inline-svg-2';
 import { AdvanceTablesWidget1Component } from './advance-tables/advance-tables-widget1/advance-tables-widget1.component';
 import { AdvanceTablesWidget2Component } from './advance-tables/advance-tables-widget2/advance-tables-widget2.component';
 import { AdvanceTablesWidget3Component } from './advance-tables/advance-tables-widget3/advance-tables-widget3.component';
-import { AdvanceTablesWidget7Component } from './advance-tables/advance-tables-widget7/advance-tables-widget7.component';
+import { AdvanceTablesWidget4Component } from './advance-tables/advance-tables-widget4/advance-tables-widget4.component';
 // Base Tables
 import { BaseTablesWidget1Component } from './base-tables/base-tables-widget1/base-tables-widget1.component';
 import { BaseTablesWidget2Component } from './base-tables/base-tables-widget2/base-tables-widget2.component';
@@ -118,7 +118,7 @@ import { TablesWidget27Component } from './tables/tables-widget27/tables-widget2
     AdvanceTablesWidget1Component,
     AdvanceTablesWidget2Component,
     AdvanceTablesWidget3Component,
-    AdvanceTablesWidget7Component,
+    AdvanceTablesWidget4Component,
     // Base Tables
     BaseTablesWidget1Component,
     BaseTablesWidget2Component,
@@ -235,7 +235,7 @@ import { TablesWidget27Component } from './tables/tables-widget27/tables-widget2
     AdvanceTablesWidget1Component,
     AdvanceTablesWidget2Component,
     AdvanceTablesWidget3Component,
-    AdvanceTablesWidget7Component,
+    AdvanceTablesWidget4Component,
     // Base Tables
     BaseTablesWidget1Component,
     BaseTablesWidget2Component,

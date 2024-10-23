@@ -10,19 +10,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class Adv_TablesService {
 
-
     constructor(private http: HttpClient,
         private router: Router
     ) { }
-
 
     header: any;
     user: any;
     token: any = "";
 
-
     public baseURL = environment.apiUrl;
-
 
     ///// API path
     private getAllCustomerListURL = this.baseURL + 'fastag/getAllCustomerList';
@@ -38,8 +34,14 @@ export class Adv_TablesService {
     private getFastagVehicleListByUserIdURL = this.baseURL + 'fastag/getFastagVehicleListByUserId';
     private addVistVehicleByExcelURL = this.baseURL + 'kitbarcodemap/addVistVehicleByExcel'
     private getVehicledataFromSignzyURL = this.baseURL + 'vehicle/getVehicledataFromSignzy';
-    private getAllFTVehicleListByVehicleNumberURL = this.baseURL + 'fastag/getAllFTVehicleListByVehicleNumber'; 
-    
+    private getAllFTVehicleListByVehicleNumberURL = this.baseURL + 'fastag/getAllFTVehicleListByVehicleNumber';
+    private getkycDataURL = this.baseURL + 'kyc/getAllkyc';
+    private userOnboardingURL = this.baseURL + 'user/userOnboarding';
+    private waiveoffPaymentUpdateURL = this.baseURL + 'corporate/waiveoffPaymentUpdate';
+    private updateSmsStatusURL = this.baseURL + 'user/updateSmsStatus';
+    private updateemailStatusURL = this.baseURL + 'user/updateemailStatus';
+
+
 
 
 
@@ -189,6 +191,56 @@ export class Adv_TablesService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.getAllFTVehicleListByVehicleNumberURL, body, {
+            headers: headers
+        })
+    }
+
+    // getkycDataURL
+    getkycDetails(): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.get(this.getkycDataURL, {
+            headers: headers
+        })
+    }
+
+    // userOnboardingURL
+    userOnBoard(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.userOnboardingURL, body, {
+            headers: headers
+        })
+    }
+
+    // waiveoffPaymentUpdateURL
+    waiveoffPaymentUpdateURLPost(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.waiveoffPaymentUpdateURL, body, {
+            headers: headers
+        })
+    }
+
+    // updateSmsStatusURL
+    updateSmsStatusPost(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateSmsStatusURL, body, {
+            headers: headers
+        })
+    }
+
+    // updateemailStatusURL
+    updateemailStatusPost(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateemailStatusURL, body, {
             headers: headers
         })
     }
