@@ -8,7 +8,7 @@
                         <div class="row">
                             <div class="col-auto">
                                 <input class="form-control" type="text" list="allCorporateList"
-                                    placeholder="select dealer" formControlName="selectedDealer"
+                                    placeholder="Select Dealer" formControlName="selectedDealer"
                                     (blur)=getDealerId($event)>
                                 <datalist id="allCorporateList">
                                     <option *ngFor="let data of allDealerList" [value]="data.companyName">

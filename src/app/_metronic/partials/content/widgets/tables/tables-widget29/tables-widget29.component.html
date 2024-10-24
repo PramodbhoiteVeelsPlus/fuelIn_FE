@@ -1,1 +1,103 @@
-<p>tables-widget29 works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <form [formGroup]="filterForm">
+                        <div class="row">
+                            <div class="col-auto">
+                                <input class="form-control" type="text" list="allCorporateList"
+                                    placeholder="Select Dealer" formControlName="selectedDealer"
+                                    (blur)=getDealerId($event)>
+                                <datalist id="allCorporateList">
+                                    <option *ngFor="let data of allDealerList" [value]="data.companyName">
+                                </datalist>
+                            </div>
+
+                            <label for="example-text-input" class="col-auto col-form-label">Date Range</label>
+                            <div class="col-md-2">
+                                <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                    style="background-color: #ffffff;" name="startDate" ngbTooltip="Start Date"
+                                    (click)="startDate.toggle()" ngbDatepicker #startDate="ngbDatepicker"
+                                    formControlName="startDate">
+                            </div>
+                            <div class="col-md-2">
+                                <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                    style="background-color: #ffffff;" name="endDate" ngbTooltip="End Date"
+                                    (click)="endDate.toggle()" ngbDatepicker #endDate="ngbDatepicker"
+                                    formControlName="endDate">
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-primary" name="button" (click)="getFuelPriceByDealer()">
+                                    Submit
+                                </button>
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-danger" name="button"
+                                    (click)="deleteFuelPrice()">
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+                    <div class="row mb-2">
+                        <div class="col-sm-8">
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="text-sm-end">
+                                <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF"
+                                    placement="bottom" (click)="exportToPDF()"><i class="fas fa-file-pdf"></i></span>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="text-sm-end">
+                                <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download CSV"
+                                    placement="bottom" (click)="exportexcel()"><i class="fas fa-file-csv"></i></span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <br><br>
+                    <div class="table-responsive mb-0">
+                        <table id="excel-table" class="table table-centered table-nowrap">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="text-align: left;"> Sr.No. </th>
+                                    <th style="text-align: left;"> Dealer Name </th>
+                                    <th style="text-align: left;"> Date Time </th>
+                                    <th style="text-align: left;"> Rate (Rs/Ltr) </th>
+                                    <th style="text-align: left;"> Product </th>
+                                    <th style="text-align: left;"> Selling Price </th>
+                                </tr>
+                            </thead>
+
+                            <tbody
+                                *ngFor="let data of getFuelPriceData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                                <tr>
+                                    <td style="text-align: left;">{{i+1}} </td>
+                                    <td *ngIf="!isDealer" style="text-align: left;">{{ data.companyName }} </td>
+                                    <td *ngIf="isDealer" style="text-align: left;">{{ headerName1 }} </td>
+                                    <td style="text-align: left;">{{data.productPriceDate | date:"mediumDate"}}
+                                        {{data.productPriceTime}} </td>
+                                    <td style="text-align: left;"> Rate {{data.rateCount}} </td>
+                                    <td style="text-align: left;">{{data.productName}} </td>
+                                    <td style="text-align: left;">{{data.productSellingPrice}} </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- begin::Pagination -->
+                        <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                            style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                        </pagination-controls>
+                        <!-- end::Pagination -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

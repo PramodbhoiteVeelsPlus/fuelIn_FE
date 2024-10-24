@@ -1,0 +1,106 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <form [formGroup]="filterForm">
+                        <div class="row">
+                            <div class="col-auto">
+                                <label><b>Select Entity (YES BANK) :</b></label>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-auto">
+                                <input class="form-control" type="text" list="allentityList"
+                                    placeholder="Select Entity Id" (change)="getcustomerIdByEntityFastag($event)">
+                                <datalist id="allentityList">
+                                    <option value="ALL"> ALL
+                                    <option *ngFor="let data of allentityList" [value]="data.entityId">
+                                </datalist>
+                            </div>
+                            <div class="col-auto">
+                                <label> Start Date</label>
+                            </div>
+                            <div class="col-auto">
+                                <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" readonly
+                                    style="background-color: #ffffff;" (click)="startDate.toggle()"
+                                    formControlName="startDate" ngbDatepicker #startDate="ngbDatepicker">
+                            </div>
+                            <div class="col-auto">
+                                <label> End Date</label>
+                            </div>
+                            <div class="col-auto">
+                                <input class="form-control" placeholder="DD-MM-YYYY" name="endDate" readonly
+                                    style="background-color: #ffffff;" (click)="endDate.toggle()"
+                                    formControlName="endDate" ngbDatepicker #endDate="ngbDatepicker">
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-primary my-2 my-sm-0" type="button" (click)="fetchTransaction()">
+                                    Submit </button>
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-danger my-2 my-sm-0" type="button" (click)="deleteFastag()">
+                                    Delete </button>
+                            </div>
+                            <div class="col-auto">
+                                <span style="font-size: 30px;cursor: pointer;" ngbTooltip="Download CSV"
+                                    placement="bottom" (click)="getFastagTransaction()"><i
+                                        class="fas fa-file-csv my-2"></i></span>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                            <div class="col-auto">
+                                <label><b>Select Entity (LQ) :</b></label>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-auto">
+                                <input class="form-control" type="text" list="allentityLQList"
+                                    placeholder="Select Entity Id" (change)="getcustomerIdByEntityFastagLQ($event)">
+                                <datalist id="allentityLQList">
+                                    <option value="ALL"> ALL
+                                    <option *ngFor="let data of allentityLQList" [value]="data.entityId">
+                                </datalist>
+                            </div>
+                            <div class="col-auto">
+                                <label> Start Date</label>
+                            </div>
+                            <div class="col-auto">
+                                <input class="form-control" placeholder="DD-MM-YYYY" name="startDate"
+                                    style="background-color: #ffffff;" (click)="startDate1.toggle()"
+                                    formControlName="startDate1" ngbDatepicker #startDate1="ngbDatepicker">
+                            </div>
+                            <div class="col-auto">
+                                <label> End Date</label>
+                            </div>
+                            <div class="col-auto">
+                                <input class="form-control" placeholder="DD-MM-YYYY" name="endDate"
+                                    style="background-color: #ffffff;" (click)="endDate1.toggle()"
+                                    formControlName="endDate1" ngbDatepicker #endDate1="ngbDatepicker">
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-primary my-2 my-sm-0" type="button"
+                                    (click)="fetchTransactionLQ()">
+                                    Submit </button>
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-danger my-2 my-sm-0" type="button" (click)="deleteFastagLQ()">
+                                    Delete </button>
+                            </div>
+                            <div class="col-auto">
+                                <span style="font-size: 30px;cursor: pointer;" ngbTooltip="Download CSV"
+                                    placement="bottom" (click)="getFastagTransactionLQ()"><i
+                                        class="fas fa-file-csv my-2"></i></span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -84,6 +84,8 @@ export class WidgetService {
   private getPaymentByDealerIdURL = this.baseURL + 'deleteModal/getPaymentByDealerId';
   private cancelFuelCreditReqURL = this.baseURL + 'fuelDealerCustMap/cancelFuelCreditReq'
   private removeTransactionLogURL = this.baseURL + 'accounttransaclog/removeTransactionLog';
+  private getPriceByDealerIdURL = this.baseURL + 'fuelPrice/getPriceByDealerId';
+  private deleteFuelPriceURL = this.baseURL + 'fuelPrice/deleteFuelPrice'; 
 
 
   setHeader() {
@@ -680,6 +682,26 @@ export class WidgetService {
     let headers = new HttpHeaders();
     headers = headers.set('authenticationToken', this.token);
     return this.http.post(this.removeTransactionLogURL, body,{
+      headers: headers
+    })
+  }
+
+  // getPriceByDealerIdURL
+  getPriceByDealerIdPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getPriceByDealerIdURL, body,{
+      headers: headers
+    })
+  }
+
+  // deleteFuelPriceURL
+  deleteFuelPricePOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.deleteFuelPriceURL, body,{
       headers: headers
     })
   }

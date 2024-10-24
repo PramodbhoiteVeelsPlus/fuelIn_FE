@@ -8,13 +8,16 @@ import { FormsModule } from '@angular/forms';
 import { DeleteModalComponent } from './delete-modal.component';
 import { DeleteCrPaymentComponent } from './delete-cr-payment/delete-cr-payment.component';
 import { DeleteFuelPriceComponent } from './delete-fuel-price/delete-fuel-price.component';
+import { DeleteFastagComponent } from './delete-fastag/delete-fastag.component';
+import { DeleteDsrComponent } from './delete-dsr/delete-dsr.component';
 
 @NgModule({
   declarations: [
     DeleteModalComponent,
     DeleteCrPaymentComponent,
     DeleteFuelPriceComponent,
-    // DemoRemovedComponent
+    DeleteFastagComponent,
+    DeleteDsrComponent
   ],
   imports: [
     CommonModule,
@@ -31,6 +34,14 @@ import { DeleteFuelPriceComponent } from './delete-fuel-price/delete-fuel-price.
         {
             path: 'deleteFuelPrice',
             component: DeleteFuelPriceComponent,
+        },
+        {
+            path: 'deleteFastag',
+            component: DeleteFastagComponent,
+        },
+        {
+            path: 'deleteDsr',
+            component: DeleteDsrComponent,
         },
     ]),
     WidgetsModule,

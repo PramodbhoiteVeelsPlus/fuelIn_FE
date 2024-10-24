@@ -96,10 +96,20 @@ export class StatsService {
     private findPhoneNumberURL = this.baseURL + 'register/findPhoneNumber';
     private getAllOilBrandProductNameCodeURL = this.baseURL + 'fuelVendor/getAllOilBrandProductNameCode'
     private getGeoLocationURL = this.baseURL + 'LoadReceipt/getGeoLocation';
+    private getEntityIdAllLQURL = this.baseURL + 'fastag/getEntityIdAllLQ1';
+    private getFastagTransactionsByDateURL = this.baseURL + 'fastag/getFastagTransactionsByDate';
+    private deleteFastagURL = this.baseURL + 'fastag/deleteFastag';
+    private getAllFastagTransactionsByDateURL = this.baseURL + 'fastag/getAllFastagTransactionsByDate';
+    private getFastagTransactionsByDateLQURL = this.baseURL + 'fastag/getFastagTransactionsByDateLQ';
+    private getAllFastagTransactionsLQByDateURL = this.baseURL + 'fastag/getAllFastagTransactionsLQByDate';
+    private deleteFastagLQURL = this.baseURL + 'fastag/deleteFastagLQ';
+    private getAllDealersListURL = this.baseURL + 'adminDashboard/getAllDealerList';
+    private getDealerIDCorpIdURL = this.baseURL + 'adminDashboard/getDealerIDCorpId';
+    private getFuelProductIdByDealerIdURL = this.baseURL + 'fuelPrice/getFuelProductIdByDealerId'
 
 
 
-    
+
 
 
 
@@ -821,6 +831,105 @@ export class StatsService {
         })
     }
 
+    // getEntityIdAllLQURL
+    getEntityIdAllLQPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getEntityIdAllLQURL, body, {
+            headers: headers
+        })
+    }
+
+    //getFastagTransactionsByDateURL
+    getFastagTransactionsByDatePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFastagTransactionsByDateURL, body, {
+            headers: headers
+        })
+    }
+
+    //deleteFastagURL
+    deleteFastagPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.deleteFastagURL, body, {
+            headers: headers
+        })
+    }
+
+    //getAllFastagTransactionsByDateURL
+    getAllFastagTransactionsByDatePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAllFastagTransactionsByDateURL, body, {
+            headers: headers
+        })
+    }
+
+    //getFastagTransactionsByDateLQURL
+    getFastagTransactionsByDateLQPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFastagTransactionsByDateLQURL, body, {
+            headers: headers
+        })
+    }
+    
+    //getAllFastagTransactionsLQByDateURL
+    getAllFastagTransactionsLQByDatePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAllFastagTransactionsLQByDateURL, body, {
+            headers: headers
+        })
+    }
+    
+    //deleteFastagLQURL
+    deleteFastagLQPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.deleteFastagLQURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAllDealersListURL
+    getAllDealersListPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.get(this.getAllDealersListURL,{
+        headers: headers
+      })
+    }
+
+    // getDealerIDCorpIdURL
+    getDealerIDCorpIdPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getDealerIDCorpIdURL, body, {
+        headers: headers
+      })
+    }
+
+    // getFuelProductIdByDealerIdURL
+    getFuelProductIdByDealerIdPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getFuelProductIdByDealerIdURL, body, {
+        headers: headers
+      })
+    }
 
 
 
