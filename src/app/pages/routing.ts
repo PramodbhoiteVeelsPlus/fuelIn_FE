@@ -97,6 +97,10 @@ const Routing: Routes = [
     path: 'crm/location',
     component: LocationComponent,
   },
+  {
+    path: 'deleteModal',
+    loadChildren: () => import('./delete-modal/delete-modal.module').then((m) => m.deleteModalModule),
+  },
 ];
 
 export { Routing };

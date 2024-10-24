@@ -1,0 +1,233 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <form [formGroup]="filterForm">
+                        <div class="row">
+                            <div class="col-auto">
+                                <input class="form-control" type="text" list="allCorporateList"
+                                    placeholder="select dealer" formControlName="selectedDealer"
+                                    (blur)=getDealerId($event)>
+                                <datalist id="allCorporateList">
+                                    <option *ngFor="let data of allDealerList" [value]="data.companyName">
+                                </datalist>
+                            </div>
+
+                            <div class="col-md-2">
+                                <select class="form-control" style="color: #9EA79E;" formControlName="table"
+                                    (change)=showTable() required>
+                                    <option value=""> select </option>
+                                    <option value="CREDIT"> credit </option>
+                                    <option value="PAYMENT"> payment </option>
+                                </select>
+                            </div>
+
+                            <label for="example-text-input" class="col-auto col-form-label">Date Range</label>
+                            <div class="col-md-2">
+                                <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                    style="background-color: #ffffff;" name="startDate" ngbTooltip="Start Date"
+                                    (click)="startDate.toggle()" ngbDatepicker #startDate="ngbDatepicker"
+                                    formControlName="startDate">
+                            </div>
+                            <div class="col-md-2">
+                                <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                    style="background-color: #ffffff;" name="endDate" ngbTooltip="End Date"
+                                    (click)="endDate.toggle()" ngbDatepicker #endDate="ngbDatepicker"
+                                    formControlName="endDate">
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-primary" name="button" (click)="view()">
+                                    Submit
+                                </button>
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-secondary" name="button"
+                                    (click)="clearFilterForm()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+
+                    <div class="row" *ngIf="isCredit">
+                        <div class="table-responsive mb-0">
+                            <table class="table table-centered table-nowrap">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="text-align: left;">Sr No</th>
+                                        <th style="text-align: left;">Date</th>
+                                        <th style="text-align: left;">Customer Name</th>
+                                        <th style="text-align: left;">Product</th>
+                                        <th style="text-align: left;">Vehicle No / other details</th>
+                                        <th style="text-align: left;">Quantity</th>
+                                        <th style="text-align: left;">Amount</th>
+                                        <th style="text-align: left;">Delete </th>
+                                    </tr>
+                                </thead>
+                                <tbody
+                                    *ngFor="let data of allCredit | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                                    <tr>
+                                        <td style="text-align: left;"> {{i+1}} </td>
+                                        <td>
+                                            {{data.estimatedRefuelDate | date:'mediumDate'}}
+                                        </td>
+                                        <td>
+                                            <span *ngIf="data.mappingPreviousStatus =='TRUE'">
+                                                {{data.mappingCompanyName}}
+                                            </span>
+                                            <span *ngIf="data.mappingPreviousStatus =='FALSE'">
+                                                {{data.companyName}}
+                                            </span>
+                                        </td>
+
+                                        <td style="text-align: left;">
+                                            <span *ngIf="data.purpose == 'CREDIT'">
+                                                {{data.productName}}
+                                            </span>
+                                            <span *ngIf="data.purpose == 'LUBE'">
+                                                {{data.productName}}
+                                            </span>
+                                            <span *ngIf="data.purpose == 'AdvAmt'">
+                                                ADVANCE
+                                            </span>
+                                        </td>
+
+                                        <td style="text-align: left;">
+                                            <span *ngIf="data.purpose == 'CREDIT'">
+                                                <span *ngIf="data.vehicleNumber == 'undefined'">
+
+                                                </span>
+                                                <span *ngIf="data.vehicleNumber != 'undefined'">
+                                                    {{data.vehicleNumber}}
+                                                </span>
+                                            </span>
+                                            <span *ngIf="data.purpose == 'LUBE'">
+                                                <span *ngIf="data.vehicleNumber == 'undefined'">
+                                                    {{data.lubeName}}
+                                                </span>
+                                                <span *ngIf="data.vehicleNumber != 'undefined'">
+                                                    {{data.vehicleNumber}} {{data.lubeName}}
+                                                </span>
+                                            </span>
+                                            <span *ngIf="data.purpose == 'AdvAmt'">
+                                                {{data.advName}} {{data.advMobile}}
+                                            </span>
+                                        </td>
+
+                                        <td style="text-align: left;">
+                                            <span *ngIf="data.purpose == 'CREDIT'">
+                                                <span *ngIf="data.transactionStatus == 'CANCEL'">
+                                                    DELETED
+                                                </span>
+                                                <span *ngIf="data.transactionStatus != 'CANCEL'">
+                                                    <span *ngIf="data.transactionStatus != 'PENDING'">
+                                                        <span *ngIf="data.productCategory == 'CNG'">
+                                                            {{data.actualCreditQuantity | number:'1.2-2'}} Kg
+                                                        </span>
+                                                        <span *ngIf="data.productCategory != 'CNG'">
+                                                            {{data.actualCreditQuantity | number:'1.2-2'}} Ltrs
+                                                        </span>
+
+                                                    </span>
+                                                    <span *ngIf="data.transactionStatus == 'PENDING'">
+                                                        PENDING
+                                                    </span>
+                                                </span>
+                                            </span>
+                                            <span *ngIf="data.purpose == 'LUBE'">
+                                                <span *ngIf="data.lubeUnit != 'undefined'">
+                                                    {{data.actualCreditQuantity | number:'1.2-2'}}
+                                                    {{data.lubeUnit}}
+                                                </span>
+                                                <span *ngIf="data.lubeUnit == 'undefined'">
+                                                    {{data.actualCreditQuantity | number:'1.2-2'}}
+                                                </span>
+
+                                            </span>
+                                            <span *ngIf="data.purpose == 'AdvAmt'">
+                                                -
+                                            </span>
+                                        </td>
+
+                                        <td style="text-align: left;">
+                                            <span *ngIf="data.transactionStatus != 'PENDING'">
+                                                ₹{{data.creditAmount | number:'1.2-2'}}
+                                            </span>
+                                            <span *ngIf="data.transactionStatus == 'PENDING'">
+                                                PENDING
+                                            </span>
+                                        </td>
+
+                                        <td style="text-align: left;">
+                                            <span *ngIf="data.transactionStatus != 'CANCEL'">
+                                                <i style="color:red" class="fa fa-ban"
+                                                    (click)="cancelCredit(data.fuelCreditId,data.fuelDealerCustomerMapId)"></i>
+                                            </span>
+                                            <span *ngIf="data.transactionStatus == 'CANCEL'">
+                                                DELETED
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- begin::Pagination -->
+                            <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                                style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                            </pagination-controls>
+                            <!-- end::Pagination -->
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="isPayment">
+                        <div class="table-responsive mb-0">
+                            <table class="table table-centered table-nowrap">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="text-align: left;">Sr No </th>
+                                        <th style="text-align: left;">Date</th>
+                                        <th style="text-align: left;">Customer Name</th>
+                                        <th style="text-align: left;">Payment Mode</th>
+                                        <th style="text-align: left;">Amount</th>
+                                        <th style="text-align: left;">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody
+                                    *ngFor="let data of allPayment | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                                    <tr>
+                                        <td style="text-align: left;"> {{i+1}} </td>
+                                        <td style="text-align: left;"> {{data.transacDate |
+                                            date:"mediumDate"}} </td>
+                                        <td>
+                                            <span *ngIf="data.mappingPreviousStatus =='TRUE'">
+                                                {{data.mappingCompanyName}}
+                                            </span>
+                                            <span *ngIf="data.mappingPreviousStatus =='FALSE'">
+                                                {{data.companyName}}
+                                            </span>
+                                        </td>
+                                        <td style="text-align: left;"> {{data.paymentMethod}} </td>
+                                        <td style="text-align: left;"> {{data.grandTotalAmount |
+                                            number:'1.2-2'}} </td>
+                                        <td style="text-align: left;">
+                                            <i style="color:red" class="fa fa-ban"
+                                                (click)="cancelPayment(data.accountTransacLogId,data.fuelDealerCustomerMapId,data.grandTotalAmount)"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- begin::Pagination -->
+                            <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                                style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                            </pagination-controls>
+                            <!-- end::Pagination -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

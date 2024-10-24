@@ -80,6 +80,10 @@ export class WidgetService {
   private updateReferralDetailsURL = this.baseURL + 'referral/updateReferralDetails'; 
   private getAllReferralDetailsURL = this.baseURL + 'referral/getAllReferralDetails'; 
   private getSTAFFnPOSPumpCountDealerWiseURL = this.baseURL + 'adminDashboard/getSTAFFnPOSPumpCountDealerWise'
+  private getCreditByDealerIdURL = this.baseURL + 'deleteModal/getCreditByDealerId'; 
+  private getPaymentByDealerIdURL = this.baseURL + 'deleteModal/getPaymentByDealerId';
+  private cancelFuelCreditReqURL = this.baseURL + 'fuelDealerCustMap/cancelFuelCreditReq'
+  private removeTransactionLogURL = this.baseURL + 'accounttransaclog/removeTransactionLog';
 
 
   setHeader() {
@@ -636,6 +640,46 @@ export class WidgetService {
     let headers = new HttpHeaders();
     headers = headers.set('authenticationToken', this.token);
     return this.http.get(this.getSTAFFnPOSPumpCountDealerWiseURL, {
+      headers: headers
+    })
+  }
+
+  // getCreditByDealerIdURL
+  getCreditByDealerIdPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getCreditByDealerIdURL, body, {
+      headers: headers
+    })
+  }
+
+  // getPaymentByDealerIdURL
+  getPaymentByDealerIdPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getPaymentByDealerIdURL, body, {
+      headers: headers
+    })
+  }
+
+  // cancelFuelCreditReqURL
+  cancelFuelCreditReqPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.cancelFuelCreditReqURL, body, {
+      headers: headers
+    })
+  }
+
+  // removeTransactionLogURL
+  removeTransactionLogPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.removeTransactionLogURL, body,{
       headers: headers
     })
   }
