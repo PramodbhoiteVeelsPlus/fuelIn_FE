@@ -59,21 +59,6 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 
 export class StatsWidget14Component {
   localStoragecorporateId: any;
-
-  filterForm = new FormGroup({
-    dealer: new FormControl(''),
-    month: new FormControl('', Validators.required),
-    year: new FormControl('', Validators.required),
-    product: new FormControl('', Validators.required),
-  });
-  allDealerList: any;
-  fuelDealerId: any;
-  currentYear: number;
-  lastYear: number;
-  last2Year: number;
-  lastFourthYear: number;
-  lastFifthYear: number;
-  productsList: any;
   
   constructor(
     private post: StatsService,
@@ -94,72 +79,7 @@ export class StatsWidget14Component {
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.localStoragecorporateId = element.veelsPlusCorporateID
-    this.getAllDealerList()
-    // this.getAllLQEntity()
-    this.currentYear = new Date().getFullYear();
-    this.lastYear = Number(this.currentYear) - 1;
-    this.last2Year = Number(this.currentYear) - 2;
-    this.lastFourthYear = Number(this.currentYear) - 3;
-    this.lastFifthYear = Number(this.currentYear) - 4;
     this.cd.detectChanges();
   }
   
-  //getAllDealerList
-  getAllDealerList() {
-    this.spinner.show()
-    let data = {
-
-    }
-
-    this.post.getAllDealersListPOST(data)
-      .subscribe(res => {
-        if (res.status == "OK") {
-          this.allDealerList = res.data
-          this.spinner.hide()
-          this.cd.detectChanges();
-        } else {
-          this.spinner.hide()
-          this.cd.detectChanges();
-        }
-      });
-  }
-
-  getDealerId(id: any) {
-    let data = {
-      name: id.target.value,
-    }
-    this.post.getDealerIDCorpIdPOST(data)
-      .subscribe(res => {
-        if (res.data.length) {
-          this.fuelDealerId = res.data[0].fuelDealerId;
-          this.getProductsByDealerId(this.fuelDealerId)
-          this.cd.detectChanges();
-        } else {
-          this.fuelDealerId = '';
-          this.cd.detectChanges();
-        }
-      });
-  }
-  
-  selectYear(id: any) {
-    this.filterForm.value.year = id.target.value
-    // this.getDSRMeterSales(this.fuelDealerId)
-  }
-  
-  getDSRByProduct(id: any) {
-    if (id.target.value) {
-      // this.getDSRMeterSales(this.fuelDealerId);
-    }
-  }
-  
-  getProductsByDealerId(fuelDealerId: any) {
-    let data = {
-      fuelDealerId: fuelDealerId,
-    };
-    this.post.getFuelProductIdByDealerIdPOST(data).subscribe((res) => {
-      if (res.data.length) {
-        this.productsList = res.data;
-      }
-    });
-  }
 }

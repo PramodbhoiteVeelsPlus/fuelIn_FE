@@ -40,6 +40,9 @@ export class Adv_TablesService {
     private waiveoffPaymentUpdateURL = this.baseURL + 'corporate/waiveoffPaymentUpdate';
     private updateSmsStatusURL = this.baseURL + 'user/updateSmsStatus';
     private updateemailStatusURL = this.baseURL + 'user/updateemailStatus';
+    private deleteDsrDetailsURL = this.baseURL + 'dsrDetails/deleteDSRDetail'; 
+    private getDsrMeterSalesURL = this.baseURL + 'dsr/getDsrMeterSales';
+    private getTankDSRDetailURL = this.baseURL + 'dsr/getTankDSRDetails';
 
 
 
@@ -241,6 +244,36 @@ export class Adv_TablesService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.updateemailStatusURL, body, {
+            headers: headers
+        })
+    }
+
+    // deleteDsrDetailsURL
+    deleteDsrDetailPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.deleteDsrDetailsURL, body, {
+            headers: headers
+        })
+    }
+
+    // getDsrMeterSalesURL
+    getDsrMeterSalesPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getDsrMeterSalesURL, body, {
+            headers: headers
+        })
+    }
+
+    // getTankDSRDetailURL
+    getTankDSRDetailPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getTankDSRDetailURL, body, {
             headers: headers
         })
     }

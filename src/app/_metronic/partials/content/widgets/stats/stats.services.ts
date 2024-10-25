@@ -9,7 +9,18 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
     providedIn: 'root',
 })
 export class StatsService {
+    fuelDealerId: any;
+    year: any;
+    headerName1: any;
+    product: any;
 
+    
+    setRouteForDSR(fuelDealerId: string, year: any, headerName1: any, product: any) {
+        this.fuelDealerId = fuelDealerId;
+        this.year = year;
+        this.headerName1 = headerName1;
+        this.product = product;
+      }
 
     constructor(private http: HttpClient,
         private router: Router

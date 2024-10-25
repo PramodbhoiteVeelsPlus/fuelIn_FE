@@ -115,6 +115,7 @@ import { TablesWidget28Component } from './tables/tables-widget28/tables-widget2
 import { TablesWidget29Component } from './tables/tables-widget29/tables-widget29.component';
 import { StatsWidget13Component } from './stats/stats-widget13/stats-widget13.component';
 import { StatsWidget14Component } from './stats/stats-widget14/stats-widget14.component';
+import { AdvanceTablesWidget5Component } from './advance-tables/advance-tables-widget5/advance-tables-widget5.component';
 // import { routes } from 'src/app/app-routing.module';
 @NgModule({
   declarations: [
@@ -222,6 +223,7 @@ import { StatsWidget14Component } from './stats/stats-widget14/stats-widget14.co
     TablesWidget29Component,
     StatsWidget13Component,
     StatsWidget14Component,
+    AdvanceTablesWidget5Component,
   ],
   imports: [
     ReactiveFormsModule,
@@ -344,6 +346,7 @@ import { StatsWidget14Component } from './stats/stats-widget14/stats-widget14.co
     TablesWidget29Component,
     StatsWidget13Component,
     StatsWidget14Component,
+    AdvanceTablesWidget5Component
   ],
   providers: [NgbActiveModal, ExcelService],
 })
