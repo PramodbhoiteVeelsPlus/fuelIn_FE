@@ -1,0 +1,64 @@
+<div class="card-body">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+
+                        <table class="table table-hover b">
+                            <thead style="background-color: skyblue;">
+                                <tr>
+                                    <th style="text-align: center;"> Entity ID </th>
+                                    <th style="text-align: center;">Customer Name </th>
+                                    <th style="text-align: center;"> Redeem Coins </th>
+                                    <th style="text-align: center;"> Redeem Value </th>
+                                    <th style="text-align: center;"> Redeem % </th>
+                                    <th style="text-align: center;"> Suggestion </th>
+                                    <th style="text-align: center;"> Status </th>
+                                    <th style="text-align: center;"> Created At </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let data of dataArray | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                                    <td style="text-align: center;">
+                                        <b> {{data.entityId}}</b>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <b> {{data.companyName}} </b>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <b> {{data.redeemCoincoinConversionAmountValue | number : '1.0-0'}} </b>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <b> {{data.redeemValue | number : '1.0-0'}} </b>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <b> {{data.redeemCoinPersent}} % </b>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <b> {{data.suggestion}} </b>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <b> {{data.redeemCoinStatus}} </b>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <b> {{data.redeemCoinCreatedAt}} </b>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                        <!-- begin::Pagination -->
+                        <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                            style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                        </pagination-controls>
+                        <!-- end::Pagination -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

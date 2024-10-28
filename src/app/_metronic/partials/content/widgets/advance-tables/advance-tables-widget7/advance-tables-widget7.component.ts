@@ -134,8 +134,6 @@ export class AdvanceTablesWidget7Component {
 
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem("element") || '');
-    // this.corporateId = element.veelsPlusCorporateID;
-    // this.getEntityAll();
     this.cd.detectChanges();
   }
 

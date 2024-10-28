@@ -54,6 +54,7 @@ export class Adv_TablesService {
     private getTranslogForFastagURL = this.baseURL + 'fastag/getTranslogForFastag';
     private getredeemCoinMonthWiseURL = this.baseURL + 'coinConversion/getredeemCoinMonthWise';
     private addRedeemCoinURL = this.baseURL + 'coinConversion/addRedeemCoin';
+    private getRedeemInfoByCustomerIdURL = this.baseURL + 'coinConversion/getRedeemInfoByCustomerId';
 
 
 
@@ -394,7 +395,17 @@ export class Adv_TablesService {
         this.setHeader();
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
-        return this.http.post(this. addRedeemCoinURL, body, {
+        return this.http.post(this.addRedeemCoinURL, body, {
+            headers: headers
+        })
+    }
+
+    // getRedeemInfoByCustomerIdURL
+    getRedeemInfoByCustomerIdPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getRedeemInfoByCustomerIdURL, body, {
             headers: headers
         })
     }
