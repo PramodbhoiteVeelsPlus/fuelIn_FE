@@ -1,0 +1,129 @@
+<div class="card-body">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-sm btn-success" (click)="addEntity(entity)">
+                                add Entity
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card-body table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>SNo.</th>
+                                <th>Entity Name</th>
+                                <th>Entity Status</th>
+                                <th>Entity Created At</th>
+                                <th>Entity Created By</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody
+                            *ngFor="let Fastag of fastagDetailsAll | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                            <tr>
+                                <td>{{ i + 1 }}</td>
+                                <td>{{ Fastag.fastagEntityDetailName }}</td>
+                                <td *ngIf="Fastag.fastagEntityDetailStatus == 'FALSE'">INACTIVE</td>
+                                <td *ngIf="Fastag.fastagEntityDetailStatus == 'TRUE'">ACTIVE</td>
+                                <td>{{ Fastag.fastagEntityDetailCreatedAt }}</td>
+                                <td>{{ Fastag.fastagEntityDetailCreatedBy }}</td>
+                                <td style="color: blue; cursor: pointer"
+                                    (click)="updateEntity(statusUpdate, Fastag.idfastagEntityDetail, Fastag.fastagEntityDetailStatus, Fastag.fastagEntityDetailKey )">
+                                    Edit
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- begin::Pagination -->
+                    <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                        style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                    </pagination-controls>
+                    <!-- end::Pagination -->
+                </div>
+            </div>
+            
+            <ng-template #entity let-c="close" let-d="dismiss">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        add entity for API
+                    </h4>
+                    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input class="form-control form-control-sm mr-1 w-40" class="form-control"
+                                [(ngModel)]="fastagEntityName" [ngModelOptions]="{ standalone: true }" required
+                                placeholder="Entity Id"
+                                oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);" />
+                        </div>
+                        <div class="col-md-4">
+                            <input class="form-control form-control-sm mr-1 w-40" placeholder="Entity Key"
+                                class="form-control" [(ngModel)]="fastagEntityDetailKeyAdd"
+                                [ngModelOptions]="{ standalone: true }" />
+                        </div>
+
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-md btn-info" (click)="aadFastagEntityDetail()">
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template #statusUpdate let-c="close" let-d="dismiss">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        update entity for API
+                    </h4>
+                    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Select Status : </b>
+                        </div>
+
+                        <div class="col-md-6">
+                            <select class="form-control" [(ngModel)]="fastagEntityDetailStatus">
+                                <option value="TRUE">ACTIVE</option>
+                                <option value="FALSE">INACTIVE</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Key : </b>
+                        </div>
+
+                        <div class="col-md-6">
+                            <input class="form-control form-control-sm mr-1 w-40" class="form-control"
+                                [(ngModel)]="fastagEntityDetailKey" [ngModelOptions]="{ standalone: true }" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-md btn-info" (click)="updateFastagEntityDetail()">
+                                Update
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            
+        </div>
+    </div>
+</div>

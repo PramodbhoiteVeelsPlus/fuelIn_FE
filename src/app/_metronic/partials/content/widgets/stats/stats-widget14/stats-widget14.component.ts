@@ -59,6 +59,11 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 
 export class StatsWidget14Component {
   localStoragecorporateId: any;
+  countUnAssign: any = 0;
+  countAssignToPerson: any = 0;
+  personId: any;
+  userData: any = [];
+  limit: any = 0;
   
   constructor(
     private post: StatsService,
@@ -79,7 +84,55 @@ export class StatsWidget14Component {
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.localStoragecorporateId = element.veelsPlusCorporateID
+    this.getCountUnAssignTag()
+    this.getAllVeelsUser()
     this.cd.detectChanges();
   }
   
+  
+  getCountUnAssignTag(){
+    let data = {
+  
+    }
+    this.post.getCountUnAssignTagPOST(data)
+    .subscribe(res=>{
+      this.countUnAssign = res.data[0].NumberOfkitNotAssign
+    })
+  }
+  
+  getCountAssignTag(i: any){
+    
+    let data = {
+      personId: this.personId
+    }
+    this.post.getCountAssignTagByPersonIdPOST(data)
+    .subscribe(res=>{
+      this.countAssignToPerson = res.data[0].NumberOfkitNotAssign
+    })
+  }
+  
+  getAllVeelsUser(){
+    let data = {
+  
+    }
+    this.post.getAllVeelsplusUserPOST(data)
+    .subscribe(res=>{
+      this.userData = res.data
+    })
+  }
+  
+  submitAssignTag(){
+    let data = {
+      personId:this.personId,
+      limit:this.limit
+    }
+    this.post.assignKitNumberToPersonIdPOST(data)
+    .subscribe(res=>{
+      if(res.status=="OK"){
+        alert(res.msg);
+        this.getCountUnAssignTag();
+      }
+    })
+  }
 }
+

@@ -1,1 +1,58 @@
-<p>advance-tables-widget5 works!</p>
+<div class="card-body">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="search-box me-2 mb-2 d-inline-block">
+                                <div class="position-relative">
+                                    <input class="form-control" type="text" (input)="onSearch()" placeholder="Search"
+                                        [(ngModel)]="searchData" [ngModelOptions]="{standalone: true}">
+                                    <i class="bx bx-search-alt search-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4"></div>
+    
+                        <div class="col-lg-3">
+                            <input class="form-control mr-sm-2" type="file" (change)="onExcelKitpload($event)">
+                        </div>
+
+                        <div class="table-responsive mb-0">
+                            <table class="table table-centered table-nowrap">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="align-left">Tag Id</th>
+                                        <th class="align-left">Barcode</th>
+                                        <th class="align-left">Tag Class</th>
+                                        <th class="align-left">Veels Id</th>
+                                        <th class="align-left">Vehicle Number</th>
+                                        <th class="align-left">Assign To</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let Fastag of fastagVichleDataKit | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                                    <tr>
+                                        <td>{{Fastag.kitbarcodemapTID}}</td>
+                                        <td>{{Fastag.kitNo}}</td>
+                                        <td>{{Fastag.tagclass}}</td>
+                                        <td>{{Fastag.parentId}}</td>
+                                        <td>{{Fastag.entityId}}</td>
+                                        <td>{{Fastag.firstName}} &nbsp; {{Fastag.lastName}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- begin::Pagination -->
+                            <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                                style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                            </pagination-controls>
+                            <!-- end::Pagination -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

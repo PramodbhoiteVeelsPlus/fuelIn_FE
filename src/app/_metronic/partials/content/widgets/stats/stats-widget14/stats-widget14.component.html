@@ -1,0 +1,75 @@
+<div class="card-body">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-2">
+                            <label><b>Total Unassign Kit :</b></label>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control" type="text" placeholder="Total Unassign"
+                                [(ngModel)]="countUnAssign" disabled>
+                        </div>
+                        <div class="col-md-7">
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-2">
+                            <label><b>Select User :</b></label>
+                        </div>
+                        <div class="col-md-2">
+                            <select class="form-control" [(ngModel)]="personId" (change)="getCountAssignTag($event)">
+                                <option> Select </option>
+                                <option *ngFor="let user of userData; let i = index" value="{{user.personId}}">
+                                    {{user.firstName}} {{user.lastName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-2">
+                            <label><b>Already Assign :</b></label>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control" type="text" placeholder="Already Assign"
+                                [(ngModel)]="countAssignToPerson" disabled>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-2">
+                            <label><b> Assign Number:</b></label>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control" type="number" min="0" placeholder="Assign Number"
+                                [(ngModel)]="limit">
+                        </div>
+                    </div>
+                    <br>
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-2" style="text-align: right;">
+                                <button type="submit" class="btn btn-sm btn-danger" >
+                                    Cancel
+                                    </button>  
+                               </div>
+                        <div class="col-md-2">
+                        <button type="submit" class="btn btn-sm btn-info" (click)="submitAssignTag()">
+                            Assign Tag
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

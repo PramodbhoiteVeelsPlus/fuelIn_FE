@@ -1,0 +1,368 @@
+<div class="card-body">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label><b>Select Entity :</b></label>
+                        </div>
+                        <div class="col-md-4">
+                            <input class="form-control" type="text" list="allentityList" placeholder="Select Entity Id"
+                                (change)="getcustomerIdByEntity($event)">
+                            <datalist id="allentityList">
+                                <option *ngFor="let data of allentityList" [value]="data.entityId">
+                            </datalist>
+                        </div>
+
+                        <div class="col-md-1"></div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-sm btn-info" (click)="openRedeemModal(RedeemAdd)">
+                                Redeem Coin
+                            </button>
+                        </div>
+                    </div>
+                    <table class="table table-hover b">
+                        <thead style="background-color: skyblue;">
+                            <tr>
+                                <th style="text-align: center;"> Month </th>
+                                <th style="text-align: center;"> Fastag Recharge </th>
+                                <th style="text-align: center;"> Locked Coins </th>
+                                <th style="text-align: center;"> CR payment </th>
+                                <th style="text-align: center;"> Un-locked Coins </th>
+                                <th style="text-align: center;"> Redeem Coins </th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center;">
+                                    <b> Jan</b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{janRecharge | number : '1.2-2'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{janLoc -janUnLoc | number : '1.2-2'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{janTrans | number : '1.2-2'}} </b>
+                                </td>
+
+
+                                <td style="text-align: center;">
+                                    <b> {{janUnLoc -month1 | number : '1.0-0' }} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{month1 | number : '1.0-0'}} </b>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;">
+                                    <b> Feb</b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{febRecharge | number : '1.2-2'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{febLoc -febUnLoc | number : '1.0-0'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{febTrans | number : '1.2-2'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{febUnLoc - month2 | number : '1.0-0'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b>{{month2 | number : '1.0-0'}} </b>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;">
+                                    <b> Mar</b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{marRecharge | number : '1.2-2'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{marLoc -marUnLoc | number : '1.0-0'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{marTrans | number : '1.2-2'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{marUnLoc -month3 | number : '1.0-0'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{month3 | number : '1.0-0'}} </b>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;">
+                                    <b> Apr</b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{aprRecharge | number : '1.2-2'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{aprLoc -aprUnLoc | number : '1.0-0'}}</b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{aprTrans | number : '1.2-2'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{aprUnLoc -month4 | number : '1.0-0'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{month4 | number : '1.0-0'}} </b>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td style="text-align: center;">
+                                    <b> May</b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{mayRecharge | number : '1.2-2'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{mayLoc -mayUnLoc | number : '1.0-0'}}</b>
+
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{mayTrans | number : '1.2-2'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{mayUnLoc -month5 | number : '1.0-0'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{month5 | number : '1.0-0'}} </b>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;">
+                                    <b> June</b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{juneRecharge | number : '1.2-2'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{juneLoc -juneUnLoc | number : '1.0-0'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{juneTrans | number : '1.2-2'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{juneUnLoc -month6 | number : '1.0-0'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{month6 | number : '1.0-0'}} </b>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;">
+                                    <b> July</b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{julyRecharge | number : '1.2-2'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{julyLoc -julyUnLoc | number : '1.0-0'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{julyTrans | number : '1.2-2'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{julyUnLoc -month7 | number : '1.0-0'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{month7 | number : '1.0-0'}} </b>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;">
+                                    <b> Aug</b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{augustRecharge | number : '1.2-2'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{augustLoc -augustUnLoc | number : '1.0-0'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{augustTrans | number : '1.2-2'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{augustUnLoc -month8 | number : '1.0-0'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{month8 | number : '1.0-0'}} </b>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td style="text-align: center;">
+                                    <b> Sep</b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{sepRecharge | number : '1.2-2'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{sepLoc -sepUnLoc | number : '1.0-0'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{sepTrans | number : '1.2-2'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{sepUnLoc -month9 | number : '1.0-0'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{month9 | number : '1.0-0'}} </b>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;">
+                                    <b> Oct</b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{octRecharge | number : '1.2-2'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{octLoc -octUnLoc | number : '1.0-0'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{octTrans | number : '1.2-2'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{octUnLoc -month10 | number : '1.0-0'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{month10 | number : '1.0-0'}} </b>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;">
+                                    <b> Nov</b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{novRecharge | number : '1.2-2'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{novLoc -novUnLoc | number : '1.0-0'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{novTrans | number : '1.2-2'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{novUnLoc -month11 | number : '1.0-0'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{month11 | number : '1.0-0'}} </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;">
+                                    <b> Dec</b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{decRecharge | number : '1.2-2'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{decLoc -decUnLoc | number : '1.0-0'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{decTrans | number : '1.2-2'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{decUnLoc -month12 | number : '1.0-0'}} </b>
+                                </td>
+                                <td style="text-align: center;">
+                                    <b> {{month12 | number : '1.0-0'}} </b>
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                    <ng-template #RedeemAdd let-c="close" let-d="dismiss">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add Redeem Details</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>entityId:</label>
+
+                                    {{entityId}}
+
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-1">
+                                    <label class="labelNewMargin"><b>Date</b>:</label>
+                                </div>
+                                <div class="col-md-5">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" name="startDate"
+                                        (click)="endDate.toggle()" readonly style="background-color: #ffffff;"
+                                        [(ngModel)]="selectMonth" ngbDatepicker #endDate="ngbDatepicker">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label>Redeem Coin:</label>
+                                    <input type="number" class="form-control" [(ngModel)]="redeemValue">
+
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Suggestion:</label>
+                                    <textarea type="text" class="form-control" [(ngModel)]="suggestion">   </textarea>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label>Redeem Value:</label>
+                                    <input type="number" class="form-control" [(ngModel)]="redeemAmount">
+
+
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-8">
+                                    <br><button type="submit" class="btn btn-sm btn-info"
+                                        (click)="addRedeemCoin()">Submit</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </ng-template>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

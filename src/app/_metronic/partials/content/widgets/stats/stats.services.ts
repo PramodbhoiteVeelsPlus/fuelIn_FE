@@ -117,6 +117,12 @@ export class StatsService {
     private getAllDealersListURL = this.baseURL + 'adminDashboard/getAllDealerList';
     private getDealerIDCorpIdURL = this.baseURL + 'adminDashboard/getDealerIDCorpId';
     private getFuelProductIdByDealerIdURL = this.baseURL + 'fuelPrice/getFuelProductIdByDealerId'
+    private getCountUnAssignTagURL = this.baseURL + 'fuelVendor/getCountUnAssignTag'
+    private getCountAssignTagByPersonIdURL = this.baseURL + 'fuelVendor/getCountAssignTagByPersonId'
+    private getAllVeelsplusUserURL = this.baseURL + 'fuelVendor/getAllVeelsplusUser'
+    private assignKitNumberToPersonIdURL = this.baseURL + 'fuelVendor/assignKitNumberToPersonId'
+    private getFastagTransactionByDateURL = this.baseURL + 'fastag/getFastagTransactionByDate';
+    private getFastagTransactionByDateLQURL = this.baseURL + 'fastag/getFastagTransactionByDateLQ'; 
 
 
 
@@ -938,6 +944,66 @@ export class StatsService {
       let headers = new HttpHeaders();
       headers = headers.set('authenticationToken', this.token);
       return this.http.post(this.getFuelProductIdByDealerIdURL, body, {
+        headers: headers
+      })
+    }
+
+    // getCountUnAssignTagURL
+    getCountUnAssignTagPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getCountUnAssignTagURL, body, {
+        headers: headers
+      })
+    }
+
+    // getCountAssignTagByPersonIdURL
+    getCountAssignTagByPersonIdPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getCountAssignTagByPersonIdURL, body, {
+        headers: headers
+      })
+    }
+
+    // getAllVeelsplusUserURL
+    getAllVeelsplusUserPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getAllVeelsplusUserURL, body, {
+        headers: headers
+      })
+    }
+
+    // assignKitNumberToPersonIdURL
+    assignKitNumberToPersonIdPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.assignKitNumberToPersonIdURL, body, {
+        headers: headers
+      })
+    }
+
+    // getFastagTransactionByDateURL
+    getFastagTransactionByDatePOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getFastagTransactionByDateURL, body, {
+        headers: headers
+      })
+    }
+
+    // getFastagTransactionByDateLQURL
+    getFastagTransactionByDateLQPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getFastagTransactionByDateLQURL, body, {
         headers: headers
       })
     }

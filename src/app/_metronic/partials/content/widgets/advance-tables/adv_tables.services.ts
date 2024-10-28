@@ -43,6 +43,17 @@ export class Adv_TablesService {
     private deleteDsrDetailsURL = this.baseURL + 'dsrDetails/deleteDSRDetail'; 
     private getDsrMeterSalesURL = this.baseURL + 'dsr/getDsrMeterSales';
     private getTankDSRDetailURL = this.baseURL + 'dsr/getTankDSRDetails';
+    private getAllKitNoURL = this.baseURL + 'fastag/getAllKitNo';
+    private getAllEntityDetailsURL = this.baseURL + 'fastag/getAllEntityDetails';
+    private aadFastagEntityDetailURL = this.baseURL + 'fastag/aadFastagEntityDetail';
+    private updateFastagEntityDetailURL = this.baseURL + 'fastag/updateFastagEntityDetail';
+    private getAllEntityIdURL = this.baseURL + 'coinConversion/getAllEntityId';
+    private getRechargeForFastagURL = this.baseURL + 'fastag/getRechargeForFastag';
+    private getcustmerIdByEntityIdURL = this.baseURL + 'coinConversion/getcustmerIdByEntityId';
+    private getCoinDataMonthWiseURL = this.baseURL + 'coinConversion/getCoinDataMonthWise';
+    private getTranslogForFastagURL = this.baseURL + 'fastag/getTranslogForFastag';
+    private getredeemCoinMonthWiseURL = this.baseURL + 'coinConversion/getredeemCoinMonthWise';
+    private addRedeemCoinURL = this.baseURL + 'coinConversion/addRedeemCoin';
 
 
 
@@ -274,6 +285,116 @@ export class Adv_TablesService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.getTankDSRDetailURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAllKitNoURL
+    getAllKitNoPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.get(this.getAllKitNoURL, {
+            headers: headers
+        })
+    }
+
+    // getAllEntityDetailsURL
+    getAllEntityDetailsPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.get(this.getAllEntityDetailsURL, {
+            headers: headers
+        })
+    }
+
+    // aadFastagEntityDetailURL
+    aadFastagEntityDetailPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.aadFastagEntityDetailURL, body, {
+            headers: headers
+        })
+    }
+
+    // updateFastagEntityDetailURL
+    updateFastagEntityDetailPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateFastagEntityDetailURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAllEntityIdURL
+    getAllEntityIdPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAllEntityIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getRechargeForFastagURL
+    getRechargeForFastagPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getRechargeForFastagURL, body, {
+            headers: headers
+        })
+    }
+
+    // getcustmerIdByEntityIdURL
+    getcustmerIdByEntityIdPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getcustmerIdByEntityIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getCoinDataMonthWiseURL
+    getCoinDataMonthWisePOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getCoinDataMonthWiseURL, body, {
+            headers: headers
+        })
+    }
+
+    // getTranslogForFastagURL
+    getTranslogForFastagPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getTranslogForFastagURL, body, {
+            headers: headers
+        })
+    }
+
+    // getredeemCoinMonthWiseURL
+    getredeemCoinMonthWisePOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getredeemCoinMonthWiseURL, body, {
+            headers: headers
+        })
+    }
+
+    // addRedeemCoinURL
+    addRedeemCoinPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this. addRedeemCoinURL, body, {
             headers: headers
         })
     }

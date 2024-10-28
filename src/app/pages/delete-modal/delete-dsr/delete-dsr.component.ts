@@ -10,6 +10,7 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Options } from '@angular-slider/ngx-slider';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -121,6 +122,55 @@ export class DeleteDsrComponent {
     this.cd.detectChanges();
   }
   
+  tickvalue = 10;
+  tickhighValue = 90;
+  tickoptions: Options = {
+    floor: 0,
+    ceil: 100,
+    step: 10,
+    showTicks: true
+  };
+
+  tickValue = moment(new Date()).format("MM");
+  tickValueoptions: Options = {
+    showTicksValues: true,
+    stepsArray: [
+      { value: 1, legend: 'JAN' },
+      { value: 2, legend: 'FEB' },
+      { value: 3, legend: 'MAR' },
+      { value: 4, legend: 'APR' },
+      { value: 5, legend: 'MAY' },
+      { value: 6, legend: 'JUN' },
+      { value: 7, legend: 'JUL' },
+      { value: 8, legend: 'AUG' },
+      { value: 9, legend: 'SEP' },
+      { value: 10, legend: 'OCT' },
+      { value: 11, legend: 'NOV' },
+      { value: 12, legend: 'DEC' }
+    ]
+  };
+  
+  monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+  selectedMonth: number = 1; // Default to January
+  
+  setMonth(tickValue: any) {
+  //   if ((moment(new Date()).format("MM")) >= moment(this.filterForm.value.month, ["MMM"]).format("MM")) {
+  //     if ((moment(new Date()).format("YYYY")) >= moment(this.filterForm.value.year, ["YYYY"]).format("YYYY")) {
+  //       this.filterForm.controls["month"].setValue(moment(tickValue, ["MM"]).format("MMM"))
+  //       this.getDSRMeterSales(this.fuelDealerId)
+  //     } else {
+
+  //     }
+
+  //   } else {
+  //     this.filterForm.controls["month"].setValue(moment(tickValue, ["MM"]).format("MMM"))
+  //     this.getDSRMeterSales(this.fuelDealerId)
+
+  //   }
+  }
   //getAllDealerList
   getAllDealerList() {
     this.spinner.show()

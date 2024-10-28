@@ -116,6 +116,9 @@ import { TablesWidget29Component } from './tables/tables-widget29/tables-widget2
 import { StatsWidget13Component } from './stats/stats-widget13/stats-widget13.component';
 import { StatsWidget14Component } from './stats/stats-widget14/stats-widget14.component';
 import { AdvanceTablesWidget5Component } from './advance-tables/advance-tables-widget5/advance-tables-widget5.component';
+import { AdvanceTablesWidget6Component } from './advance-tables/advance-tables-widget6/advance-tables-widget6.component';
+import { StatsWidget15Component } from './stats/stats-widget15/stats-widget15.component';
+import { AdvanceTablesWidget7Component } from './advance-tables/advance-tables-widget7/advance-tables-widget7.component';
 // import { routes } from 'src/app/app-routing.module';
 @NgModule({
   declarations: [
@@ -224,6 +227,9 @@ import { AdvanceTablesWidget5Component } from './advance-tables/advance-tables-w
     StatsWidget13Component,
     StatsWidget14Component,
     AdvanceTablesWidget5Component,
+    AdvanceTablesWidget6Component, 
+    StatsWidget15Component,
+    AdvanceTablesWidget7Component
   ],
   imports: [
     ReactiveFormsModule,
@@ -346,7 +352,10 @@ import { AdvanceTablesWidget5Component } from './advance-tables/advance-tables-w
     TablesWidget29Component,
     StatsWidget13Component,
     StatsWidget14Component,
-    AdvanceTablesWidget5Component
+    AdvanceTablesWidget5Component,
+    AdvanceTablesWidget6Component,
+    StatsWidget15Component,
+    AdvanceTablesWidget7Component
   ],
   providers: [NgbActiveModal, ExcelService],
 })

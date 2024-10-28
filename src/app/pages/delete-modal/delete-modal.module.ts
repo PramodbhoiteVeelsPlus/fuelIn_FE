@@ -10,6 +10,7 @@ import { DeleteCrPaymentComponent } from './delete-cr-payment/delete-cr-payment.
 import { DeleteFuelPriceComponent } from './delete-fuel-price/delete-fuel-price.component';
 import { DeleteFastagComponent } from './delete-fastag/delete-fastag.component';
 import { DeleteDsrComponent } from './delete-dsr/delete-dsr.component';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { DeleteDsrComponent } from './delete-dsr/delete-dsr.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxSliderModule,
     RouterModule.forChild([
         {
             path: '',

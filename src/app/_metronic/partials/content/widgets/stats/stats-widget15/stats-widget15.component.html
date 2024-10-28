@@ -1,0 +1,83 @@
+<div class="card-body">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <form [formGroup]="fastagTransaction">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label><b>Select Entity (YES BANK) :</b></label>
+                            </div>
+                            <div class="col-md-2">
+                                <input class="form-control" type="text" list="allentityList"
+                                    placeholder="Select Entity Id" (change)="getcustomerIdByEntityFastag($event)">
+                                <datalist id="allentityList">
+                                    <option value="ALL"> ALL
+                                    <option *ngFor="let data of allentityList" [value]="data.entityId">
+                                </datalist>
+                            </div>
+                            <div class="col-auto">
+                                <label> Start Date</label>
+                            </div>
+                            <div class="col-auto">
+                                <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" readonly
+                                    style="background-color: #ffffff;" (click)="startDate.toggle()"
+                                    formControlName="startDate" ngbDatepicker #startDate="ngbDatepicker">
+                            </div>
+                            <div class="col-auto">
+                                <label> End Date</label>
+                            </div>
+                            <div class="col-auto">
+                                <input class="form-control" placeholder="DD-MM-YYYY" name="endDate" readonly
+                                    style="background-color: #ffffff;" (click)="endDate.toggle()"
+                                    formControlName="endDate" ngbDatepicker #endDate="ngbDatepicker">
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="button"
+                                    (click)="fetchTransaction()">
+                                    Update </button>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label><b>Select Entity (LQ) :</b></label>
+                            </div>
+                            <div class="col-md-2">
+                                <input class="form-control" type="text" list="allentityLQList"
+                                    placeholder="Select Entity Id" (change)="getcustomerIdByEntityFastagLQ($event)">
+                                <datalist id="allentityLQList">
+                                    <option value="ALL"> ALL
+                                    <option *ngFor="let data of allentityLQList" [value]="data.entityId">
+                                </datalist>
+                            </div>
+                            <div class="col-auto">
+                                <label> Start Date</label>
+                            </div>
+                            <div class="col-auto">
+                                <input class="form-control" placeholder="DD-MM-YYYY" name="startDate"
+                                    style="background-color: #ffffff;" (click)="startDate1.toggle()"
+                                    formControlName="startDate1" ngbDatepicker #startDate1="ngbDatepicker">
+                            </div>
+                            <div class="col-auto">
+                                <label> End Date</label>
+                            </div>
+                            <div class="col-auto">
+                                <input class="form-control" placeholder="DD-MM-YYYY" name="endDate"
+                                    style="background-color: #ffffff;" (click)="endDate1.toggle()"
+                                    formControlName="endDate1" ngbDatepicker #endDate1="ngbDatepicker">
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="button"
+                                    (click)="fetchTransactionLQ()">
+                                    Update </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
