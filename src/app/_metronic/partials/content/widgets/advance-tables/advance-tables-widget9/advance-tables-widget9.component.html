@@ -1,1 +1,172 @@
-<p>advance-tables-widget9 works!</p>
+<div class="card-body">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+
+                <ul ngbNav #justifiednav="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified"
+                    style="width: 80%;">
+                    <li [ngbNavItem]="1">
+                        <a ngbNavLink>
+                            <span class="d-none d-sm-block"><b>YES BANK</b></span>
+                        </a>
+                        <ng-template ngbNavContent>
+                            <ng-template [ngTemplateOutlet]="yesBank"></ng-template>
+                        </ng-template>
+                    </li>
+                    <li [ngbNavItem]="2">
+                        <a ngbNavLink>
+                            <span class="d-none d-sm-block"><b>LIVQUIK</b></span>
+                        </a>
+                        <ng-template ngbNavContent>
+                            <ng-template [ngTemplateOutlet]="livquik"></ng-template>
+                        </ng-template>
+                    </li>
+                </ul>
+                <div [ngbNavOutlet]="justifiednav"></div>
+                <br><br>
+
+                <ng-template #yesBank>
+                    <br>
+                    <form [formGroup]="filterForm">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <label><b>Select Entity :</b></label>
+                            </div>
+                            <div class="col-md-2">
+                                <input class="form-control" type="text" list="allentityList"
+                                    placeholder="Select Entity Id" formControlName="entityId">
+                                <datalist id="allentityList">
+                                    <option value="ALL"> ALL
+                                    <option *ngFor="let data of allentityList" [value]="data.entityId">
+                                </datalist>
+                            </div>
+                            <div class="col-auto col-form-label"> Start Date </div>
+                            <div class="col-auto">
+                                <input class="form-control" placeholder="DD-MM-YYYY" name="startDate"
+                                    style="background-color: #ffffff;" (click)="startDate.toggle()"
+                                    formControlName="startDate" ngbDatepicker #startDate="ngbDatepicker">
+                            </div>
+                            <div class="col-auto col-form-label">End Date</div>
+                            <div class="col-auto">
+                                <input class="form-control" placeholder="DD-MM-YYYY" name="endDate"
+                                    style="background-color: #ffffff;" (click)="endDate.toggle()"
+                                    formControlName="endDate" ngbDatepicker #endDate="ngbDatepicker">
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="button"
+                                    (click)="getEntityCount()">
+                                    Filter </button>
+                            </div>
+                        </div>
+                    </form>
+                    <br><br>
+
+                    <table class="table table-hover b">
+                        <thead style="background-color: skyblue;">
+                            <tr>
+                                <th style="text-align: center;"> Date </th>
+                                <th style="text-align: center;"> Entity Id </th>
+                                <th style="text-align: center;"> Entity Count </th>
+                            </tr>
+                        </thead>
+                        <tbody
+                            *ngFor="let data of entityCountList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                            <tr>
+                                <td style="text-align: center;">
+                                    <b> {{data.manualDate | date:'medium'}} </b>
+                                </td>
+
+                                <td style="text-align: center;">
+                                    <b> {{data.entityId}} </b>
+                                </td>
+
+                                <td style="text-align: center;">
+                                    <b> {{data.EntityCount}} </b>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- begin::Pagination -->
+                    <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                        style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                    </pagination-controls>
+                    <!-- end::Pagination -->
+
+                </ng-template>
+
+                <ng-template #livquik>
+                    <br>
+                    <form [formGroup]="filterFormLQ">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <label><b>Select Entity :</b></label>
+                            </div>
+                            <div class="col-md-2">
+                                <input class="form-control" type="text" list="allentityLQList"
+                                    placeholder="Select Entity Id" formControlName="entityId">
+                                <datalist id="allentityLQList">
+                                    <option value="ALL"> ALL
+                                    <option *ngFor="let data of allentityLQList" [value]="data.entityId">
+                                </datalist>
+                            </div>
+                            <div class="col-auto col-form-label"> Start Date </div>
+                            <div class="col-auto">
+                                <input class="form-control" placeholder="DD-MM-YYYY" name="startDate"
+                                    style="background-color: #ffffff;" (click)="startDate.toggle()"
+                                    formControlName="startDate" ngbDatepicker #startDate="ngbDatepicker">
+                            </div>
+                            <div class="col-auto col-form-label">End Date</div>
+                            <div class="col-auto">
+                                <input class="form-control" placeholder="DD-MM-YYYY" name="endDate"
+                                    style="background-color: #ffffff;" (click)="endDate.toggle()"
+                                    formControlName="endDate" ngbDatepicker #endDate="ngbDatepicker">
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="button"
+                                    (click)="getEntityCountLQ()">
+                                    Filter </button>
+                            </div>
+                        </div>
+                    </form>
+                    <br><br>
+
+                    <table class="table table-hover b">
+                        <thead style="background-color: skyblue;">
+                            <tr>
+                                <th style="text-align: center;"> Date </th>
+                                <th style="text-align: center;"> Entity Id </th>
+                                <th style="text-align: center;"> Entity Count </th>
+                            </tr>
+                        </thead>
+                        <tbody
+                            *ngFor="let data of entityCountLQList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                            <tr>
+
+                                <td style="text-align: center;">
+                                    <b> {{data.manualDate | date:'medium'}} </b>
+                                </td>
+
+                                <td style="text-align: center;">
+                                    <b> {{data.entityId}} </b>
+                                </td>
+
+                                <td style="text-align: center;">
+                                    <b> {{data.EntityCount}} </b>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                    <!-- begin::Pagination -->
+                    <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                        style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                    </pagination-controls>
+                    <!-- end::Pagination -->
+
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

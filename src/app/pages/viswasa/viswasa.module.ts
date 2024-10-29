@@ -10,9 +10,10 @@ import { CustomerOnboardingComponent } from './customer-onboarding/customer-onbo
 import { UploadKitNumberComponent } from './upload-kit-number/upload-kit-number.component';
 import { AssignTransactionFastagComponent } from './assign-transaction-fastag/assign-transaction-fastag.component';
 import { CoinRewardDetailsComponent } from './coin-reward-details/coin-reward-details.component';
+import { FastagReplacementComponent } from './fastag-replacement/fastag-replacement.component';
 
 @NgModule({
-  declarations: [CustomerOnboardingComponent, UploadKitNumberComponent, AssignTransactionFastagComponent, CoinRewardDetailsComponent],
+  declarations: [CustomerOnboardingComponent, UploadKitNumberComponent, AssignTransactionFastagComponent, CoinRewardDetailsComponent, FastagReplacementComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -35,6 +36,10 @@ import { CoinRewardDetailsComponent } from './coin-reward-details/coin-reward-de
       {
         path: 'CoinRewardDetails',
         component: CoinRewardDetailsComponent,
+      },
+      {
+        path: 'FastagReplacement',
+        component: FastagReplacementComponent,
       },
     ]),
     WidgetsModule,

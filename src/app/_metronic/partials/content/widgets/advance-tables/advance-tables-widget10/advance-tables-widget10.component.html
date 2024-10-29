@@ -1,1 +1,133 @@
-<p>advance-tables-widget10 works!</p>
+<br>
+<div class="card-body">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-1">
+                        <label><b>Select Entity :</b></label>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" type="text" list="allentityList" placeholder="Select Entity Id"
+                            (change)="getcustomerIdByEntity($event)">
+                        <datalist id="allentityList">
+                            <option *ngFor="let data of allentityList" [value]="data.entityId">
+                        </datalist>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-sm btn-info"
+                            (click)="openRedeemModalBypass(RedeemBypassAdd)">
+                            Redeem Coin
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <i>
+                                    <img class="" src="../../../../../../assets/images/sensors.svg"
+                                        style=" width:7%;height:21px;">
+                                </i>
+                            </div>
+                            <div class="card-body" style="font-size: 15px;">
+                                locked coin: <i class="fas fa-coins"></i> &nbsp;{{ActualLockedCoin | number : '1.0-0'}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-gas-pump" style=" width:10%;height:12%;"></i>
+                            </div>
+                            <div class="card-body" style="font-size: 15px;">
+                                unlocked coin: <i class="fas fa-coins"></i> &nbsp; {{unLockedCoin - redeemCoinValue |
+                                number : '1.0-0'}}
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-university" style=" width:10%;height:7%;"></i>
+                            </div>
+                            <div class="card-body" style="font-size: 15px;">
+                                redeem coin: <i class="fas fa-coins"></i> &nbsp; {{redeemCoin | number : '1.0-0'}}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <ng-template #RedeemBypassAdd let-c="close" let-d="dismiss">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Redeem Details</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>entityId:</label>
+
+                                {{entityId}}
+
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-1">
+                                <label class="labelNewMargin"><b>Date</b>:</label>
+                            </div>
+                            <div class="col-md-5">
+                                <input class="form-control" placeholder="DD-MM-YYYY" name="startDate"
+                                    (click)="endDate.toggle()" readonly style="background-color: #ffffff;"
+                                    [(ngModel)]="redeemDate" ngbDatepicker #endDate="ngbDatepicker">
+                            </div>
+
+
+
+
+                            <div class="col-md-6">
+                                <label>Redeem Coin:</label>
+                                <input type="number" class="form-control" [(ngModel)]="redeemAmount">
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Suggestion:</label>
+                                <textarea type="text" class="form-control" [(ngModel)]="suggestion">   </textarea>
+
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Redeem Value:</label>
+                                <input type="number" class="form-control" [(ngModel)]="redeemValue">
+
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-8">
+                                <br><button type="submit" class="btn btn-sm btn-info"
+                                    (click)="addRedeemCoinByPass()">Submit</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,166 @@
+<style>
+  .table {
+    thead {
+      th {
+        text-align: left;
+      }
+    }
+
+    td {
+      text-align: left;
+
+    }
+  }
+</style>
+<div class="card-body">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body table-responsive">
+          <table class="table table-hover table-striped">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Customer name</th>
+                <th>Customer mobile</th>
+                <th>Vehicle number</th>
+
+                <th>Delivery address</th>
+                <th>fastag image</th>
+                <th>Status</th>
+                <th>Action</th>
+
+              </tr>
+            </thead>
+
+            <tbody
+              *ngFor="let data of vehicleListDetails | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+              <tr>
+                <td>{{data.vehicleReplaceCreatedAt | date:"dd/MM/yyyy"}}</td>
+                <td>{{data.vishUserFirstName}} &nbsp; {{data.vishUserLastName}}</td>
+                <td> {{data.vishUserMobile}} </td>
+                <td> {{data.vehicleNumber}} </td>
+                <td> {{data.vehicleReplaceShipAddress1}} {{data.vehicleReplaceShipAddress2}}
+                  {{data.vehicleReplaceShipCity}}
+                  {{data.vehicleReplaceShipPinCode}} {{data.vehicleReplaceShipState}}</td>
+                <td (click)="openImage(data.vehicleReplacePreviousFastagImage)" style="color: blue;cursor: pointer;">
+          {{data.vehicleReplacePreviousFastagImage}}</td>
+                <td>{{data.vehicleReplaceReqFstStatus}}</td>
+
+                <td style="color: blue; cursor: pointer;" data-toggle="modal"
+                  (click)="openVehicleModal(vehicleContent,data.vehicleReplaceVistVehicleId,data.vehicleReplaceKitNo,data.vehicleReplaceSerialNo,data.vehicleReplaceReqFstStatus,data.vehicleNumber,data.vehicleTagClass,data.vistFastagVehicleReplaceId,data.vehicleReplaceEntityId,data.vehicleReplaceVistUserId)"
+                  data-target="#myModal">
+                  Edit</td>
+
+                <td style="color: blue; cursor: pointer;" (click)="updateTags(data.vehicleReplaceKitNo)"> Block</td>
+
+              </tr>
+            </tbody>
+
+          </table>
+          <!-- begin::Pagination -->
+          <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+            style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+          </pagination-controls>
+          <!-- end::Pagination -->
+
+        </div>
+
+        <ng-template #vehicleContent let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="modal-title">Update Fastag Vehicle Info</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6">
+                <label class="labelDriverMargin">vehicle tag class :</label>
+              </div>
+              <div class="col-md-6">
+                <input class="form-control" type="text" [(ngModel)]="vehicleTagClass" placeholder="vehicle Tag Class"
+                  readonly>
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label class="labelDriverMargin">old kitNo :</label>
+              </div>
+              <div class="col-md-6">
+                <input class="form-control" type="text" [(ngModel)]="kitNo" placeholder="Select Kit Number" readonly>
+
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <label class="labelDriverMargin">serialNo :</label>
+              </div>
+              <div class="col-md-6">
+                <input type="text" class="form-control" [(ngModel)]="serialNo" readonly>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <label class="labelDriverMargin">reqFstStatus :</label>
+              </div>
+              <div class="col-md-6">
+                <input type="text" class="form-control" [(ngModel)]="reqFstStatus" readonly>
+              </div>
+            </div>
+
+            <div *ngIf="acceesGroup == '17' || acceesGroup == '18'" class="row">
+              <div class="col-md-6">
+                <label class="labelDriverMargin">Tag Assign :</label>
+              </div>
+              <div class="col-md-2">
+                Indivisual
+              </div>
+              <div class="col-md-1">
+                <input class="form-control form-control-sm mr-1 w-40" type="radio" value="INDIVIDUAL"
+                  [(ngModel)]="isTagassign" (change)="getComplete()">
+              </div>
+              <div class="col-md-1">
+                All
+              </div>
+              <div class="col-md-1">
+                <input type="radio" class="form-control" value="ALL" [(ngModel)]="isTagassign" (change)="getAllPay()">
+
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="labelDriverMargin">new Serial Number :</label>
+            </div>
+            <div class="col-md-6">
+              <input class="form-control" type="text" [(ngModel)]="serialNoNew" list="fastagDataKitDetails"
+                placeholder="Select Serial Number" (change)="findSerialNumberModel()">
+              <datalist id="fastagDataKitDetails">
+                <option *ngFor="let data of fastagDataKitDetails" [value]="data.serialNumber">
+              </datalist>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="labelDriverMargin">new kitNo :</label>
+            </div>
+            <div class="col-md-6">
+              <input type="text" class="form-control" [(ngModel)]="newKitNo" readonly>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-outline-success my-2 my-sm-0" (click)="repalceTags()">REPLACE</button>
+            <button type="cancel" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+          </div>
+
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
