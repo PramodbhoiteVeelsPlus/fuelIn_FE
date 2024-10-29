@@ -52,6 +52,11 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   }
 }
 
+type Tabs =
+  | 'kt_table_widget_16_tab_1'
+  | 'kt_table_widget_16_tab_2'
+  | 'kt_table_widget_16_tab_3';
+
 @Component({
   selector: 'app-tables-widget16',
   templateUrl: './tables-widget16.component.html',
@@ -100,6 +105,15 @@ export class TablesWidget16Component {
     config.outsideDays = 'hidden';
   }
 
+  activeTab: Tabs = 'kt_table_widget_16_tab_1';
+
+  setTab(tab: Tabs) {
+    this.activeTab = tab;
+  }
+
+  activeClass(tab: Tabs) {
+    return tab === this.activeTab ? 'show active' : '';
+  }
   ngOnInit(): void {
     this.currentMonthYear = moment(new Date()).format("MMM y")
     this.lastMonthYear = moment(new Date()).subtract(1, 'month').format("MMM y")
@@ -107,21 +121,6 @@ export class TablesWidget16Component {
     this.cd.detectChanges();
   }
 
-  /*name of the excel-file which will be downloaded. */
-  fileName = 'fastag Transaction Excel ONE.xlsx';
-
-  exportexcel(): void {
-    /* table id is passed over here */
-    let element = document.getElementById('excel-table');
-    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
-
-    /* generate workbook and add the worksheet */
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-
-    /* save to file */
-    XLSX.writeFile(wb, this.fileName);
-  }
 
   getAllFastagDetails() {
     this.thisMonthFastag = new Date().getMonth();
@@ -249,4 +248,19 @@ export class TablesWidget16Component {
 
   }
 
+  /*name of the excel-file which will be downloaded. */
+  fileName = 'fastag Transaction Excel.xlsx';
+
+  exportexcel(): void {
+    /* table id is passed over here */
+    let element = document.getElementById('excel-table');
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    /* save to file */
+    XLSX.writeFile(wb, this.fileName);
+  }
 }

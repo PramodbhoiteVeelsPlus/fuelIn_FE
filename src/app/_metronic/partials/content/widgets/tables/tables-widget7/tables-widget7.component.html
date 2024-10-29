@@ -62,26 +62,11 @@
         <!-- begin::Table body -->
         <tbody *ngFor="let data of fastagData;">
           <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="d-flex justify-content-start flex-column">
-                  <span class="badge badge-light-primary fs-7 fw-bold p-0 min-w-100px ">{{data.month }}
-                    {{data.year}}</span>
-                </div>
-              </div>
-            </td>
-            <td>
-              <span class="badge badge-light-primary fs-7 fw-bold"> {{data.totalCr }}</span>
-            </td>
-            <td>
-              <span class="badge badge-light-primary fs-7 fw-bold"> {{data.totalPur }} </span>
-            </td>
-            <td>
-              <span class="badge badge-light-primary fs-7 fw-bold"> {{data.totalTollPay }} </span>
-            </td>
-            <td>
-              <span class="badge badge-light-primary fs-7 fw-bold"> {{data.totalTollPur }} </span>
-            </td>
+            <td> {{data.month }}{{data.year}} </td>
+            <td> {{data.totalCr | number: '1.2-2'}} </td>
+            <td> {{data.totalPur | number: '1.2-2'}} </td>
+            <td> {{data.totalTollPay | number: '1.2-2'}} </td>
+            <td> {{data.totalTollPur | number: '1.2-2'}} </td>
           </tr>
         </tbody>
         <!-- end::Table body -->

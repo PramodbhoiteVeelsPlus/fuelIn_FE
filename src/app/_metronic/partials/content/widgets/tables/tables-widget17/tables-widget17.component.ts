@@ -54,6 +54,11 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   }
 }
 
+type Tabs =
+  | 'kt_table_widget_17_tab_1'
+  | 'kt_table_widget_17_tab_2'
+  | 'kt_table_widget_17_tab_3';
+
 @Component({
   selector: 'app-tables-widget17',
   templateUrl: './tables-widget17.component.html',
@@ -113,15 +118,20 @@ export class TablesWidget17Component {
     config.maxDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
     config.outsideDays = 'hidden';
   }
+  
+  activeTab: Tabs = 'kt_table_widget_17_tab_1';
+
+  setTab(tab: Tabs) {
+    this.activeTab = tab;
+  }
+
+  activeClass(tab: Tabs) {
+    return tab === this.activeTab ? 'show active' : '';
+  }
 
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.veelsPlusPersonId = element.veelsPlusId;
-    // this.currentMonthYear = moment(new Date()).format("MMM y")
-    // this.lastMonthYear = moment(new Date()).subtract(1, 'month').format("MMM y")
-    // console.log("years", this.currentMonthYear, this.lastMonthYear)
-    // this.getCurrentMonthCrPay()
-    // this.getLastMonthCrPay()
     this.getAllDealerList();
     this.cd.detectChanges();
   }

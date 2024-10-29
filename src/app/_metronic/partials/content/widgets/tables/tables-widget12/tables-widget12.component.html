@@ -48,7 +48,7 @@
       </div>
 
       <div class="col-auto">
-        <button class="card-label fw-bolder fs-6 mb-1 btn btn-sm btn-primary btn-icon"
+        <button class="card-label fw-bolder fs-6 mb-1 btn btn-sm btn-primary btn-icon" (click)="getDayWiseShiftDetails()"
           >View </button>
       </div>
     </div>
@@ -74,128 +74,1377 @@
       </thead>
       <!-- end::Table head -->
       <!-- begin::Table body -->
-      <tbody>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="d-flex justify-content-start flex-column">
-                <span class="badge badge-light-primary fs-7 fw-bold">Sep 1, 2024</span>
-              </div>
-            </div>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="d-flex justify-content-start flex-column">
-                <span class="badge badge-light-primary fs-7 fw-bold">Sep 2, 2024</span>
-              </div>
-            </div>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="d-flex justify-content-start flex-column">
-                <span class="badge badge-light-primary fs-7 fw-bold">Sep 3, 2024</span>
-              </div>
-            </div>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="d-flex justify-content-start flex-column">
-                <span class="badge badge-light-primary fs-7 fw-bold">Sep 4, 2024</span>
-              </div>
-            </div>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">0.00</span>
-          </td>
-        </tr>
-      </tbody>
+
+                        <tbody *ngIf="is31">
+                          <tr>
+                              <td> {{date1 | date:"mediumDate"}} </td>
+                              <td> {{totalShift1 | number:'1.2-2' }} </td>
+                              <td> {{meterSales1 | number:'1.2-2' }} </td>
+                              <td> {{credit1 | number:'1.2-2' }} </td>
+                              <td> {{digital1 | number:'1.2-2' }} </td>
+                              <td> {{cash1 | number:'1.2-2' }} </td>
+                              <td> {{expense1 | number:'1.2-2' }} </td>
+                              <td> {{short1 | number:'1.2-2' }} </td>
+
+                          </tr>
+
+                          <tr>
+                              <td> {{date2 | date:"mediumDate"}} </td>
+                              <td> {{totalShift2 | number:'1.2-2' }} </td>
+                              <td> {{meterSales2 | number:'1.2-2' }} </td>
+                              <td> {{credit2 | number:'1.2-2' }} </td>
+                              <td> {{digital2 | number:'1.2-2' }} </td>
+                              <td> {{cash2 | number:'1.2-2' }} </td>
+                              <td> {{expense2 | number:'1.2-2' }} </td>
+                              <td> {{short2 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date3 | date:"mediumDate"}} </td>
+                              <td> {{totalShift3 | number:'1.2-2' }} </td>
+                              <td> {{meterSales3 | number:'1.2-2' }} </td>
+                              <td> {{credit3 | number:'1.2-2' }} </td>
+                              <td> {{digital3 | number:'1.2-2' }} </td>
+                              <td> {{cash3 | number:'1.2-2' }} </td>
+                              <td> {{expense3 | number:'1.2-2' }} </td>
+                              <td> {{short3 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date4 | date:"mediumDate"}} </td>
+                              <td> {{totalShift4 | number:'1.2-2' }} </td>
+                              <td> {{meterSales4 | number:'1.2-2' }} </td>
+                              <td> {{credit4 | number:'1.2-2' }} </td>
+                              <td> {{digital4 | number:'1.2-2' }} </td>
+                              <td> {{cash4 | number:'1.2-2' }} </td>
+                              <td> {{expense4 | number:'1.2-2' }} </td>
+                              <td> {{short4 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date5 | date:"mediumDate"}} </td>
+                              <td> {{totalShift5 | number:'1.2-2' }} </td>
+                              <td> {{meterSales5 | number:'1.2-2' }} </td>
+                              <td> {{credit5 | number:'1.2-2' }} </td>
+                              <td> {{digital5 | number:'1.2-2' }} </td>
+                              <td> {{cash5 | number:'1.2-2' }} </td>
+                              <td> {{expense5 | number:'1.2-2' }} </td>
+                              <td> {{short5 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date6 | date:"mediumDate"}} </td>
+                              <td> {{totalShift6 | number:'1.2-2' }} </td>
+                              <td> {{meterSales6 | number:'1.2-2' }} </td>
+                              <td> {{credit6 | number:'1.2-2' }} </td>
+                              <td> {{digital6 | number:'1.2-2' }} </td>
+                              <td> {{cash6 | number:'1.2-2' }} </td>
+                              <td> {{expense6 | number:'1.2-2' }} </td>
+                              <td> {{short6 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date7 | date:"mediumDate"}} </td>
+                              <td> {{totalShift7 | number:'1.2-2' }} </td>
+                              <td> {{meterSales7 | number:'1.2-2' }} </td>
+                              <td> {{credit7 | number:'1.2-2' }} </td>
+                              <td> {{digital7 | number:'1.2-2' }} </td>
+                              <td> {{cash7 | number:'1.2-2' }} </td>
+                              <td> {{expense7 | number:'1.2-2' }} </td>
+                              <td> {{short7 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date8 | date:"mediumDate"}} </td>
+                              <td> {{totalShift8 | number:'1.2-2' }} </td>
+                              <td> {{meterSales8| number:'1.2-2' }} </td>
+                              <td> {{credit8 | number:'1.2-2' }} </td>
+                              <td> {{digital8 | number:'1.2-2' }} </td>
+                              <td> {{cash8 | number:'1.2-2' }} </td>
+                              <td> {{expense8 | number:'1.2-2' }} </td>
+                              <td> {{short8 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date9 | date:"mediumDate"}} </td>
+                              <td> {{totalShift9 | number:'1.2-2' }} </td>
+                              <td> {{meterSales9 | number:'1.2-2' }} </td>
+                              <td> {{credit9 | number:'1.2-2' }} </td>
+                              <td> {{digital9 | number:'1.2-2' }} </td>
+                              <td> {{cash9 | number:'1.2-2' }} </td>
+                              <td> {{expense9 | number:'1.2-2' }} </td>
+                              <td> {{short9 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date10 | date:"mediumDate"}} </td>
+                              <td> {{totalShift10 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales10 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit10 | number:'1.2-2' }} </td>
+                              <td> {{digital10 | number:'1.2-2' }} </td>
+                              <td> {{cash10 | number:'1.2-2' }} </td>
+                              <td> {{expense10 | number:'1.2-2' }} </td>
+                              <td> {{short10 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date11 | date:"mediumDate"}} </td>
+                              <td> {{totalShift11 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales11 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit11 | number:'1.2-2' }} </td>
+                              <td> {{digital11 | number:'1.2-2' }} </td>
+                              <td> {{cash11 | number:'1.2-2' }} </td>
+                              <td> {{expense11 | number:'1.2-2' }} </td>
+                              <td> {{short11 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date12 | date:"mediumDate"}} </td>
+                              <td> {{totalShift12 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales12 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit12 | number:'1.2-2' }} </td>
+                              <td> {{digital12 | number:'1.2-2' }} </td>
+                              <td> {{cash12 | number:'1.2-2' }} </td>
+                              <td> {{expense12 | number:'1.2-2' }} </td>
+                              <td> {{short12 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date13 | date:"mediumDate"}} </td>
+                              <td> {{totalShift13 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales13 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit13 | number:'1.2-2' }} </td>
+                              <td> {{digital13 | number:'1.2-2' }} </td>
+                              <td> {{cash13 | number:'1.2-2' }} </td>
+                              <td> {{expense13 | number:'1.2-2' }} </td>
+                              <td> {{short13 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date14 | date:"mediumDate"}} </td>
+                              <td> {{totalShift14 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales14 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit14 | number:'1.2-2' }} </td>
+                              <td> {{digital14 | number:'1.2-2' }} </td>
+                              <td> {{cash14 | number:'1.2-2' }} </td>
+                              <td> {{expense14 | number:'1.2-2' }} </td>
+                              <td> {{short14 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date15 | date:"mediumDate"}} </td>
+                              <td> {{totalShift15 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales15 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit15 | number:'1.2-2' }} </td>
+                              <td> {{digital15 | number:'1.2-2' }} </td>
+                              <td> {{cash15 | number:'1.2-2' }} </td>
+                              <td> {{expense15 | number:'1.2-2' }} </td>
+                              <td> {{short15 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date16 | date:"mediumDate"}} </td>
+                              <td> {{totalShift16 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales16 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit16 | number:'1.2-2' }} </td>
+                              <td> {{digital16 | number:'1.2-2' }} </td>
+                              <td> {{cash16 | number:'1.2-2' }} </td>
+                              <td> {{expense16 | number:'1.2-2' }} </td>
+                              <td> {{short16 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date17 | date:"mediumDate"}} </td>
+                              <td> {{totalShift17 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales17 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit17 | number:'1.2-2' }} </td>
+                              <td> {{digital17 | number:'1.2-2' }} </td>
+                              <td> {{cash17 | number:'1.2-2' }} </td>
+                              <td> {{expense17 | number:'1.2-2' }} </td>
+                              <td> {{short17 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date18 | date:"mediumDate"}} </td>
+                              <td> {{totalShift18 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales18 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit18 | number:'1.2-2' }} </td>
+                              <td> {{digital18 | number:'1.2-2' }} </td>
+                              <td> {{cash18 | number:'1.2-2' }} </td>
+                              <td> {{expense18 | number:'1.2-2' }} </td>
+                              <td> {{short18 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date19 | date:"mediumDate"}} </td>
+                              <td> {{totalShift19 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales19 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit19 | number:'1.2-2' }} </td>
+                              <td> {{digital19 | number:'1.2-2' }} </td>
+                              <td> {{cash19 | number:'1.2-2' }} </td>
+                              <td> {{expense19 | number:'1.2-2' }} </td>
+                              <td> {{short19 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date20 | date:"mediumDate"}} </td>
+                              <td> {{totalShift20 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales20 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit20 | number:'1.2-2' }} </td>
+                              <td> {{digital20 | number:'1.2-2' }} </td>
+                              <td> {{cash20 | number:'1.2-2' }} </td>
+                              <td> {{expense20 | number:'1.2-2' }} </td>
+                              <td> {{short20 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date21 | date:"mediumDate"}} </td>
+                              <td> {{totalShift21 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales21 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit21 | number:'1.2-2' }} </td>
+                              <td> {{digital21 | number:'1.2-2' }} </td>
+                              <td> {{cash21 | number:'1.2-2' }} </td>
+                              <td> {{expense21 | number:'1.2-2' }} </td>
+                              <td> {{short21 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date22 | date:"mediumDate"}} </td>
+                              <td> {{totalShift22 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales22 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit22 | number:'1.2-2' }} </td>
+                              <td> {{digital22 | number:'1.2-2' }} </td>
+                              <td> {{cash22 | number:'1.2-2' }} </td>
+                              <td> {{expense22 | number:'1.2-2' }} </td>
+                              <td> {{short22 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date23 | date:"mediumDate"}} </td>
+                              <td> {{totalShift23 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales23 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit23 | number:'1.2-2' }} </td>
+                              <td> {{digital23 | number:'1.2-2' }} </td>
+                              <td> {{cash23 | number:'1.2-2' }} </td>
+                              <td> {{expense23 | number:'1.2-2' }} </td>
+                              <td> {{short23 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date24 | date:"mediumDate"}} </td>
+                              <td> {{totalShift24 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales24 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit24 | number:'1.2-2' }} </td>
+                              <td> {{digital24 | number:'1.2-2' }} </td>
+                              <td> {{cash24 | number:'1.2-2' }} </td>
+                              <td> {{expense24 | number:'1.2-2' }} </td>
+                              <td> {{short24 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date25 | date:"mediumDate"}} </td>
+                              <td> {{totalShift25 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales25 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit25 | number:'1.2-2' }} </td>
+                              <td> {{digital25 | number:'1.2-2' }} </td>
+                              <td> {{cash25 | number:'1.2-2' }} </td>
+                              <td> {{expense25 | number:'1.2-2' }} </td>
+                              <td> {{short25 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date26 | date:"mediumDate"}} </td>
+                              <td> {{totalShift26 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales26 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit26 | number:'1.2-2' }} </td>
+                              <td> {{digital26 | number:'1.2-2' }} </td>
+                              <td> {{cash26 | number:'1.2-2' }} </td>
+                              <td> {{expense26 | number:'1.2-2' }} </td>
+                              <td> {{short26 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date27 | date:"mediumDate"}} </td>
+                              <td> {{totalShift27 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales27 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit27 | number:'1.2-2' }} </td>
+                              <td> {{digital27 | number:'1.2-2' }} </td>
+                              <td> {{cash27 | number:'1.2-2' }} </td>
+                              <td> {{expense27 | number:'1.2-2' }} </td>
+                              <td> {{short27 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date28 | date:"mediumDate"}} </td>
+                              <td> {{totalShift28 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales28 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit28 | number:'1.2-2' }} </td>
+                              <td> {{digital28 | number:'1.2-2' }} </td>
+                              <td> {{cash28 | number:'1.2-2' }} </td>
+                              <td> {{expense28 | number:'1.2-2' }} </td>
+                              <td> {{short28 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date29 | date:"mediumDate"}} </td>
+                              <td> {{totalShift29 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales29 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit29 | number:'1.2-2' }} </td>
+                              <td> {{digital29 | number:'1.2-2' }} </td>
+                              <td> {{cash29 | number:'1.2-2' }} </td>
+                              <td> {{expense29 | number:'1.2-2' }} </td>
+                              <td> {{short29 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date30 | date:"mediumDate"}} </td>
+                              <td> {{totalShift30 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales30 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit30 | number:'1.2-2' }} </td>
+                              <td> {{digital30 | number:'1.2-2' }} </td>
+                              <td> {{cash30 | number:'1.2-2' }} </td>
+                              <td> {{expense30 | number:'1.2-2' }} </td>
+                              <td> {{short30 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date31 | date:"mediumDate"}} </td>
+                              <td> {{totalShift31 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales31 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit31 | number:'1.2-2' }} </td>
+                              <td> {{digital31 | number:'1.2-2' }} </td>
+                              <td> {{cash31 | number:'1.2-2' }} </td>
+                              <td> {{expense31 | number:'1.2-2' }} </td>
+                              <td> {{short31 | number:'1.2-2' }} </td>
+                          </tr>
+
+
+                      </tbody>
+
+                      <tbody *ngIf="is30">
+                          <tr>
+                              <td> {{date1 | date:"mediumDate"}} </td>
+                              <td> {{totalShift1 | number:'1.2-2' }} </td>
+                              <td> {{meterSales1 | number:'1.2-2' }} </td>
+                              <td> {{credit1 | number:'1.2-2' }} </td>
+                              <td> {{digital1 | number:'1.2-2' }} </td>
+                              <td> {{cash1 | number:'1.2-2' }} </td>
+                              <td> {{expense1 | number:'1.2-2' }} </td>
+                              <td> {{short1 | number:'1.2-2' }} </td>
+
+                          </tr>
+
+                          <tr>
+                              <td> {{date2 | date:"mediumDate"}} </td>
+                              <td> {{totalShift2 | number:'1.2-2' }} </td>
+                              <td> {{meterSales2 | number:'1.2-2' }} </td>
+                              <td> {{credit2 | number:'1.2-2' }} </td>
+                              <td> {{digital2 | number:'1.2-2' }} </td>
+                              <td> {{cash2 | number:'1.2-2' }} </td>
+                              <td> {{expense2 | number:'1.2-2' }} </td>
+                              <td> {{short2 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date3 | date:"mediumDate"}} </td>
+                              <td> {{totalShift3 | number:'1.2-2' }} </td>
+                              <td> {{meterSales3 | number:'1.2-2' }} </td>
+                              <td> {{credit3 | number:'1.2-2' }} </td>
+                              <td> {{digital3 | number:'1.2-2' }} </td>
+                              <td> {{cash3 | number:'1.2-2' }} </td>
+                              <td> {{expense3 | number:'1.2-2' }} </td>
+                              <td> {{short3 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date4 | date:"mediumDate"}} </td>
+                              <td> {{totalShift4 | number:'1.2-2' }} </td>
+                              <td> {{meterSales4 | number:'1.2-2' }} </td>
+                              <td> {{credit4 | number:'1.2-2' }} </td>
+                              <td> {{digital4 | number:'1.2-2' }} </td>
+                              <td> {{cash4 | number:'1.2-2' }} </td>
+                              <td> {{expense4 | number:'1.2-2' }} </td>
+                              <td> {{short4 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date5 | date:"mediumDate"}} </td>
+                              <td> {{totalShift5 | number:'1.2-2' }} </td>
+                              <td> {{meterSales5 | number:'1.2-2' }} </td>
+                              <td> {{credit5 | number:'1.2-2' }} </td>
+                              <td> {{digital5 | number:'1.2-2' }} </td>
+                              <td> {{cash5 | number:'1.2-2' }} </td>
+                              <td> {{expense5 | number:'1.2-2' }} </td>
+                              <td> {{short5 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date6 | date:"mediumDate"}} </td>
+                              <td> {{totalShift6 | number:'1.2-2' }} </td>
+                              <td> {{meterSales6 | number:'1.2-2' }} </td>
+                              <td> {{credit6 | number:'1.2-2' }} </td>
+                              <td> {{digital6 | number:'1.2-2' }} </td>
+                              <td> {{cash6 | number:'1.2-2' }} </td>
+                              <td> {{expense6 | number:'1.2-2' }} </td>
+                              <td> {{short6 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date7 | date:"mediumDate"}} </td>
+                              <td> {{totalShift7 | number:'1.2-2' }} </td>
+                              <td> {{meterSales7 | number:'1.2-2' }} </td>
+                              <td> {{credit7 | number:'1.2-2' }} </td>
+                              <td> {{digital7 | number:'1.2-2' }} </td>
+                              <td> {{cash7 | number:'1.2-2' }} </td>
+                              <td> {{expense7 | number:'1.2-2' }} </td>
+                              <td> {{short7 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date8 | date:"mediumDate"}} </td>
+                              <td> {{totalShift8 | number:'1.2-2' }} </td>
+                              <td> {{meterSales8| number:'1.2-2' }} </td>
+                              <td> {{credit8 | number:'1.2-2' }} </td>
+                              <td> {{digital8 | number:'1.2-2' }} </td>
+                              <td> {{cash8 | number:'1.2-2' }} </td>
+                              <td> {{expense8 | number:'1.2-2' }} </td>
+                              <td> {{short8 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date9 | date:"mediumDate"}} </td>
+                              <td> {{totalShift9 | number:'1.2-2' }} </td>
+                              <td> {{meterSales9 | number:'1.2-2' }} </td>
+                              <td> {{credit9 | number:'1.2-2' }} </td>
+                              <td> {{digital9 | number:'1.2-2' }} </td>
+                              <td> {{cash9 | number:'1.2-2' }} </td>
+                              <td> {{expense9 | number:'1.2-2' }} </td>
+                              <td> {{short9 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date10 | date:"mediumDate"}} </td>
+                              <td> {{totalShift10 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales10 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit10 | number:'1.2-2' }} </td>
+                              <td> {{digital10 | number:'1.2-2' }} </td>
+                              <td> {{cash10 | number:'1.2-2' }} </td>
+                              <td> {{expense10 | number:'1.2-2' }} </td>
+                              <td> {{short10 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date11 | date:"mediumDate"}} </td>
+                              <td> {{totalShift11 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales11 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit11 | number:'1.2-2' }} </td>
+                              <td> {{digital11 | number:'1.2-2' }} </td>
+                              <td> {{cash11 | number:'1.2-2' }} </td>
+                              <td> {{expense11 | number:'1.2-2' }} </td>
+                              <td> {{short11 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date12 | date:"mediumDate"}} </td>
+                              <td> {{totalShift12 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales12 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit12 | number:'1.2-2' }} </td>
+                              <td> {{digital12 | number:'1.2-2' }} </td>
+                              <td> {{cash12 | number:'1.2-2' }} </td>
+                              <td> {{expense12 | number:'1.2-2' }} </td>
+                              <td> {{short12 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date13 | date:"mediumDate"}} </td>
+                              <td> {{totalShift13 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales13 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit13 | number:'1.2-2' }} </td>
+                              <td> {{digital13 | number:'1.2-2' }} </td>
+                              <td> {{cash13 | number:'1.2-2' }} </td>
+                              <td> {{expense13 | number:'1.2-2' }} </td>
+                              <td> {{short13 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date14 | date:"mediumDate"}} </td>
+                              <td> {{totalShift14 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales14 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit14 | number:'1.2-2' }} </td>
+                              <td> {{digital14 | number:'1.2-2' }} </td>
+                              <td> {{cash14 | number:'1.2-2' }} </td>
+                              <td> {{expense14 | number:'1.2-2' }} </td>
+                              <td> {{short14 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date15 | date:"mediumDate"}} </td>
+                              <td> {{totalShift15 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales15 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit15 | number:'1.2-2' }} </td>
+                              <td> {{digital15 | number:'1.2-2' }} </td>
+                              <td> {{cash15 | number:'1.2-2' }} </td>
+                              <td> {{expense15 | number:'1.2-2' }} </td>
+                              <td> {{short15 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date16 | date:"mediumDate"}} </td>
+                              <td> {{totalShift16 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales16 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit16 | number:'1.2-2' }} </td>
+                              <td> {{digital16 | number:'1.2-2' }} </td>
+                              <td> {{cash16 | number:'1.2-2' }} </td>
+                              <td> {{expense16 | number:'1.2-2' }} </td>
+                              <td> {{short16 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date17 | date:"mediumDate"}} </td>
+                              <td> {{totalShift17 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales17 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit17 | number:'1.2-2' }} </td>
+                              <td> {{digital17 | number:'1.2-2' }} </td>
+                              <td> {{cash17 | number:'1.2-2' }} </td>
+                              <td> {{expense17 | number:'1.2-2' }} </td>
+                              <td> {{short17 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date18 | date:"mediumDate"}} </td>
+                              <td> {{totalShift18 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales18 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit18 | number:'1.2-2' }} </td>
+                              <td> {{digital18 | number:'1.2-2' }} </td>
+                              <td> {{cash18 | number:'1.2-2' }} </td>
+                              <td> {{expense18 | number:'1.2-2' }} </td>
+                              <td> {{short18 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date19 | date:"mediumDate"}} </td>
+                              <td> {{totalShift19 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales19 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit19 | number:'1.2-2' }} </td>
+                              <td> {{digital19 | number:'1.2-2' }} </td>
+                              <td> {{cash19 | number:'1.2-2' }} </td>
+                              <td> {{expense19 | number:'1.2-2' }} </td>
+                              <td> {{short19 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date20 | date:"mediumDate"}} </td>
+                              <td> {{totalShift20 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales20 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit20 | number:'1.2-2' }} </td>
+                              <td> {{digital20 | number:'1.2-2' }} </td>
+                              <td> {{cash20 | number:'1.2-2' }} </td>
+                              <td> {{expense20 | number:'1.2-2' }} </td>
+                              <td> {{short20 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date21 | date:"mediumDate"}} </td>
+                              <td> {{totalShift21 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales21 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit21 | number:'1.2-2' }} </td>
+                              <td> {{digital21 | number:'1.2-2' }} </td>
+                              <td> {{cash21 | number:'1.2-2' }} </td>
+                              <td> {{expense21 | number:'1.2-2' }} </td>
+                              <td> {{short21 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date22 | date:"mediumDate"}} </td>
+                              <td> {{totalShift22 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales22 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit22 | number:'1.2-2' }} </td>
+                              <td> {{digital22 | number:'1.2-2' }} </td>
+                              <td> {{cash22 | number:'1.2-2' }} </td>
+                              <td> {{expense22 | number:'1.2-2' }} </td>
+                              <td> {{short22 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date23 | date:"mediumDate"}} </td>
+                              <td> {{totalShift23 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales23 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit23 | number:'1.2-2' }} </td>
+                              <td> {{digital23 | number:'1.2-2' }} </td>
+                              <td> {{cash23 | number:'1.2-2' }} </td>
+                              <td> {{expense23 | number:'1.2-2' }} </td>
+                              <td> {{short23 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date24 | date:"mediumDate"}} </td>
+                              <td> {{totalShift24 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales24 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit24 | number:'1.2-2' }} </td>
+                              <td> {{digital24 | number:'1.2-2' }} </td>
+                              <td> {{cash24 | number:'1.2-2' }} </td>
+                              <td> {{expense24 | number:'1.2-2' }} </td>
+                              <td> {{short24 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date25 | date:"mediumDate"}} </td>
+                              <td> {{totalShift25 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales25 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit25 | number:'1.2-2' }} </td>
+                              <td> {{digital25 | number:'1.2-2' }} </td>
+                              <td> {{cash25 | number:'1.2-2' }} </td>
+                              <td> {{expense25 | number:'1.2-2' }} </td>
+                              <td> {{short25 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date26 | date:"mediumDate"}} </td>
+                              <td> {{totalShift26 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales26 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit26 | number:'1.2-2' }} </td>
+                              <td> {{digital26 | number:'1.2-2' }} </td>
+                              <td> {{cash26 | number:'1.2-2' }} </td>
+                              <td> {{expense26 | number:'1.2-2' }} </td>
+                              <td> {{short26 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date27 | date:"mediumDate"}} </td>
+                              <td> {{totalShift27 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales27 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit27 | number:'1.2-2' }} </td>
+                              <td> {{digital27 | number:'1.2-2' }} </td>
+                              <td> {{cash27 | number:'1.2-2' }} </td>
+                              <td> {{expense27 | number:'1.2-2' }} </td>
+                              <td> {{short27 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date28 | date:"mediumDate"}} </td>
+                              <td> {{totalShift28 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales28 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit28 | number:'1.2-2' }} </td>
+                              <td> {{digital28 | number:'1.2-2' }} </td>
+                              <td> {{cash28 | number:'1.2-2' }} </td>
+                              <td> {{expense28 | number:'1.2-2' }} </td>
+                              <td> {{short28 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date29 | date:"mediumDate"}} </td>
+                              <td> {{totalShift29 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales29 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit29 | number:'1.2-2' }} </td>
+                              <td> {{digital29 | number:'1.2-2' }} </td>
+                              <td> {{cash29 | number:'1.2-2' }} </td>
+                              <td> {{expense29 | number:'1.2-2' }} </td>
+                              <td> {{short29 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date30 | date:"mediumDate"}} </td>
+                              <td> {{totalShift30 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales30 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit30 | number:'1.2-2' }} </td>
+                              <td> {{digital30 | number:'1.2-2' }} </td>
+                              <td> {{cash30 | number:'1.2-2' }} </td>
+                              <td> {{expense30 | number:'1.2-2' }} </td>
+                              <td> {{short30 | number:'1.2-2' }} </td>
+                          </tr>
+
+
+                      </tbody>
+
+                      <tbody *ngIf="isLeap">
+                          <tr>
+                              <td> {{date1 | date:"mediumDate"}} </td>
+                              <td> {{totalShift1 | number:'1.2-2' }} </td>
+                              <td> {{meterSales1 | number:'1.2-2' }} </td>
+                              <td> {{credit1 | number:'1.2-2' }} </td>
+                              <td> {{digital1 | number:'1.2-2' }} </td>
+                              <td> {{cash1 | number:'1.2-2' }} </td>
+                              <td> {{expense1 | number:'1.2-2' }} </td>
+                              <td> {{short1 | number:'1.2-2' }} </td>
+
+                          </tr>
+
+                          <tr>
+                              <td> {{date2 | date:"mediumDate"}} </td>
+                              <td> {{totalShift2 | number:'1.2-2' }} </td>
+                              <td> {{meterSales2 | number:'1.2-2' }} </td>
+                              <td> {{credit2 | number:'1.2-2' }} </td>
+                              <td> {{digital2 | number:'1.2-2' }} </td>
+                              <td> {{cash2 | number:'1.2-2' }} </td>
+                              <td> {{expense2 | number:'1.2-2' }} </td>
+                              <td> {{short2 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date3 | date:"mediumDate"}} </td>
+                              <td> {{totalShift3 | number:'1.2-2' }} </td>
+                              <td> {{meterSales3 | number:'1.2-2' }} </td>
+                              <td> {{credit3 | number:'1.2-2' }} </td>
+                              <td> {{digital3 | number:'1.2-2' }} </td>
+                              <td> {{cash3 | number:'1.2-2' }} </td>
+                              <td> {{expense3 | number:'1.2-2' }} </td>
+                              <td> {{short3 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date4 | date:"mediumDate"}} </td>
+                              <td> {{totalShift4 | number:'1.2-2' }} </td>
+                              <td> {{meterSales4 | number:'1.2-2' }} </td>
+                              <td> {{credit4 | number:'1.2-2' }} </td>
+                              <td> {{digital4 | number:'1.2-2' }} </td>
+                              <td> {{cash4 | number:'1.2-2' }} </td>
+                              <td> {{expense4 | number:'1.2-2' }} </td>
+                              <td> {{short4 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date5 | date:"mediumDate"}} </td>
+                              <td> {{totalShift5 | number:'1.2-2' }} </td>
+                              <td> {{meterSales5 | number:'1.2-2' }} </td>
+                              <td> {{credit5 | number:'1.2-2' }} </td>
+                              <td> {{digital5 | number:'1.2-2' }} </td>
+                              <td> {{cash5 | number:'1.2-2' }} </td>
+                              <td> {{expense5 | number:'1.2-2' }} </td>
+                              <td> {{short5 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date6 | date:"mediumDate"}} </td>
+                              <td> {{totalShift6 | number:'1.2-2' }} </td>
+                              <td> {{meterSales6 | number:'1.2-2' }} </td>
+                              <td> {{credit6 | number:'1.2-2' }} </td>
+                              <td> {{digital6 | number:'1.2-2' }} </td>
+                              <td> {{cash6 | number:'1.2-2' }} </td>
+                              <td> {{expense6 | number:'1.2-2' }} </td>
+                              <td> {{short6 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date7 | date:"mediumDate"}} </td>
+                              <td> {{totalShift7 | number:'1.2-2' }} </td>
+                              <td> {{meterSales7 | number:'1.2-2' }} </td>
+                              <td> {{credit7 | number:'1.2-2' }} </td>
+                              <td> {{digital7 | number:'1.2-2' }} </td>
+                              <td> {{cash7 | number:'1.2-2' }} </td>
+                              <td> {{expense7 | number:'1.2-2' }} </td>
+                              <td> {{short7 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date8 | date:"mediumDate"}} </td>
+                              <td> {{totalShift8 | number:'1.2-2' }} </td>
+                              <td> {{meterSales8| number:'1.2-2' }} </td>
+                              <td> {{credit8 | number:'1.2-2' }} </td>
+                              <td> {{digital8 | number:'1.2-2' }} </td>
+                              <td> {{cash8 | number:'1.2-2' }} </td>
+                              <td> {{expense8 | number:'1.2-2' }} </td>
+                              <td> {{short8 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date9 | date:"mediumDate"}} </td>
+                              <td> {{totalShift9 | number:'1.2-2' }} </td>
+                              <td> {{meterSales9 | number:'1.2-2' }} </td>
+                              <td> {{credit9 | number:'1.2-2' }} </td>
+                              <td> {{digital9 | number:'1.2-2' }} </td>
+                              <td> {{cash9 | number:'1.2-2' }} </td>
+                              <td> {{expense9 | number:'1.2-2' }} </td>
+                              <td> {{short9 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date10 | date:"mediumDate"}} </td>
+                              <td> {{totalShift10 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales10 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit10 | number:'1.2-2' }} </td>
+                              <td> {{digital10 | number:'1.2-2' }} </td>
+                              <td> {{cash10 | number:'1.2-2' }} </td>
+                              <td> {{expense10 | number:'1.2-2' }} </td>
+                              <td> {{short10 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date11 | date:"mediumDate"}} </td>
+                              <td> {{totalShift11 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales11 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit11 | number:'1.2-2' }} </td>
+                              <td> {{digital11 | number:'1.2-2' }} </td>
+                              <td> {{cash11 | number:'1.2-2' }} </td>
+                              <td> {{expense11 | number:'1.2-2' }} </td>
+                              <td> {{short11 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date12 | date:"mediumDate"}} </td>
+                              <td> {{totalShift12 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales12 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit12 | number:'1.2-2' }} </td>
+                              <td> {{digital12 | number:'1.2-2' }} </td>
+                              <td> {{cash12 | number:'1.2-2' }} </td>
+                              <td> {{expense12 | number:'1.2-2' }} </td>
+                              <td> {{short12 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date13 | date:"mediumDate"}} </td>
+                              <td> {{totalShift13 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales13 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit13 | number:'1.2-2' }} </td>
+                              <td> {{digital13 | number:'1.2-2' }} </td>
+                              <td> {{cash13 | number:'1.2-2' }} </td>
+                              <td> {{expense13 | number:'1.2-2' }} </td>
+                              <td> {{short13 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date14 | date:"mediumDate"}} </td>
+                              <td> {{totalShift14 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales14 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit14 | number:'1.2-2' }} </td>
+                              <td> {{digital14 | number:'1.2-2' }} </td>
+                              <td> {{cash14 | number:'1.2-2' }} </td>
+                              <td> {{expense14 | number:'1.2-2' }} </td>
+                              <td> {{short14 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date15 | date:"mediumDate"}} </td>
+                              <td> {{totalShift15 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales15 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit15 | number:'1.2-2' }} </td>
+                              <td> {{digital15 | number:'1.2-2' }} </td>
+                              <td> {{cash15 | number:'1.2-2' }} </td>
+                              <td> {{expense15 | number:'1.2-2' }} </td>
+                              <td> {{short15 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date16 | date:"mediumDate"}} </td>
+                              <td> {{totalShift16 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales16 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit16 | number:'1.2-2' }} </td>
+                              <td> {{digital16 | number:'1.2-2' }} </td>
+                              <td> {{cash16 | number:'1.2-2' }} </td>
+                              <td> {{expense16 | number:'1.2-2' }} </td>
+                              <td> {{short16 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date17 | date:"mediumDate"}} </td>
+                              <td> {{totalShift17 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales17 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit17 | number:'1.2-2' }} </td>
+                              <td> {{digital17 | number:'1.2-2' }} </td>
+                              <td> {{cash17 | number:'1.2-2' }} </td>
+                              <td> {{expense17 | number:'1.2-2' }} </td>
+                              <td> {{short17 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date18 | date:"mediumDate"}} </td>
+                              <td> {{totalShift18 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales18 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit18 | number:'1.2-2' }} </td>
+                              <td> {{digital18 | number:'1.2-2' }} </td>
+                              <td> {{cash18 | number:'1.2-2' }} </td>
+                              <td> {{expense18 | number:'1.2-2' }} </td>
+                              <td> {{short18 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date19 | date:"mediumDate"}} </td>
+                              <td> {{totalShift19 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales19 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit19 | number:'1.2-2' }} </td>
+                              <td> {{digital19 | number:'1.2-2' }} </td>
+                              <td> {{cash19 | number:'1.2-2' }} </td>
+                              <td> {{expense19 | number:'1.2-2' }} </td>
+                              <td> {{short19 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date20 | date:"mediumDate"}} </td>
+                              <td> {{totalShift20 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales20 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit20 | number:'1.2-2' }} </td>
+                              <td> {{digital20 | number:'1.2-2' }} </td>
+                              <td> {{cash20 | number:'1.2-2' }} </td>
+                              <td> {{expense20 | number:'1.2-2' }} </td>
+                              <td> {{short20 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date21 | date:"mediumDate"}} </td>
+                              <td> {{totalShift21 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales21 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit21 | number:'1.2-2' }} </td>
+                              <td> {{digital21 | number:'1.2-2' }} </td>
+                              <td> {{cash21 | number:'1.2-2' }} </td>
+                              <td> {{expense21 | number:'1.2-2' }} </td>
+                              <td> {{short21 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date22 | date:"mediumDate"}} </td>
+                              <td> {{totalShift22 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales22 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit22 | number:'1.2-2' }} </td>
+                              <td> {{digital22 | number:'1.2-2' }} </td>
+                              <td> {{cash22 | number:'1.2-2' }} </td>
+                              <td> {{expense22 | number:'1.2-2' }} </td>
+                              <td> {{short22 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date23 | date:"mediumDate"}} </td>
+                              <td> {{totalShift23 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales23 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit23 | number:'1.2-2' }} </td>
+                              <td> {{digital23 | number:'1.2-2' }} </td>
+                              <td> {{cash23 | number:'1.2-2' }} </td>
+                              <td> {{expense23 | number:'1.2-2' }} </td>
+                              <td> {{short23 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date24 | date:"mediumDate"}} </td>
+                              <td> {{totalShift24 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales24 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit24 | number:'1.2-2' }} </td>
+                              <td> {{digital24 | number:'1.2-2' }} </td>
+                              <td> {{cash24 | number:'1.2-2' }} </td>
+                              <td> {{expense24 | number:'1.2-2' }} </td>
+                              <td> {{short24 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date25 | date:"mediumDate"}} </td>
+                              <td> {{totalShift25 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales25 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit25 | number:'1.2-2' }} </td>
+                              <td> {{digital25 | number:'1.2-2' }} </td>
+                              <td> {{cash25 | number:'1.2-2' }} </td>
+                              <td> {{expense25 | number:'1.2-2' }} </td>
+                              <td> {{short25 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date26 | date:"mediumDate"}} </td>
+                              <td> {{totalShift26 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales26 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit26 | number:'1.2-2' }} </td>
+                              <td> {{digital26 | number:'1.2-2' }} </td>
+                              <td> {{cash26 | number:'1.2-2' }} </td>
+                              <td> {{expense26 | number:'1.2-2' }} </td>
+                              <td> {{short26 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date27 | date:"mediumDate"}} </td>
+                              <td> {{totalShift27 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales27 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit27 | number:'1.2-2' }} </td>
+                              <td> {{digital27 | number:'1.2-2' }} </td>
+                              <td> {{cash27 | number:'1.2-2' }} </td>
+                              <td> {{expense27 | number:'1.2-2' }} </td>
+                              <td> {{short27 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date28 | date:"mediumDate"}} </td>
+                              <td> {{totalShift28 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales28 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit28 | number:'1.2-2' }} </td>
+                              <td> {{digital28 | number:'1.2-2' }} </td>
+                              <td> {{cash28 | number:'1.2-2' }} </td>
+                              <td> {{expense28 | number:'1.2-2' }} </td>
+                              <td> {{short28 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date29 | date:"mediumDate"}} </td>
+                              <td> {{totalShift29 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales29 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit29 | number:'1.2-2' }} </td>
+                              <td> {{digital29 | number:'1.2-2' }} </td>
+                              <td> {{cash29 | number:'1.2-2' }} </td>
+                              <td> {{expense29 | number:'1.2-2' }} </td>
+                              <td> {{short29 | number:'1.2-2' }} </td>
+                          </tr>
+
+
+                      </tbody>
+
+                      <tbody *ngIf="isFeb">
+                          <tr>
+                              <td> {{date1 | date:"mediumDate"}} </td>
+                              <td> {{totalShift1 | number:'1.2-2' }} </td>
+                              <td> {{meterSales1 | number:'1.2-2' }} </td>
+                              <td> {{credit1 | number:'1.2-2' }} </td>
+                              <td> {{digital1 | number:'1.2-2' }} </td>
+                              <td> {{cash1 | number:'1.2-2' }} </td>
+                              <td> {{expense1 | number:'1.2-2' }} </td>
+                              <td> {{short1 | number:'1.2-2' }} </td>
+
+                          </tr>
+
+                          <tr>
+                              <td> {{date2 | date:"mediumDate"}} </td>
+                              <td> {{totalShift2 | number:'1.2-2' }} </td>
+                              <td> {{meterSales2 | number:'1.2-2' }} </td>
+                              <td> {{credit2 | number:'1.2-2' }} </td>
+                              <td> {{digital2 | number:'1.2-2' }} </td>
+                              <td> {{cash2 | number:'1.2-2' }} </td>
+                              <td> {{expense2 | number:'1.2-2' }} </td>
+                              <td> {{short2 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date3 | date:"mediumDate"}} </td>
+                              <td> {{totalShift3 | number:'1.2-2' }} </td>
+                              <td> {{meterSales3 | number:'1.2-2' }} </td>
+                              <td> {{credit3 | number:'1.2-2' }} </td>
+                              <td> {{digital3 | number:'1.2-2' }} </td>
+                              <td> {{cash3 | number:'1.2-2' }} </td>
+                              <td> {{expense3 | number:'1.2-2' }} </td>
+                              <td> {{short3 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date4 | date:"mediumDate"}} </td>
+                              <td> {{totalShift4 | number:'1.2-2' }} </td>
+                              <td> {{meterSales4 | number:'1.2-2' }} </td>
+                              <td> {{credit4 | number:'1.2-2' }} </td>
+                              <td> {{digital4 | number:'1.2-2' }} </td>
+                              <td> {{cash4 | number:'1.2-2' }} </td>
+                              <td> {{expense4 | number:'1.2-2' }} </td>
+                              <td> {{short4 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date5 | date:"mediumDate"}} </td>
+                              <td> {{totalShift5 | number:'1.2-2' }} </td>
+                              <td> {{meterSales5 | number:'1.2-2' }} </td>
+                              <td> {{credit5 | number:'1.2-2' }} </td>
+                              <td> {{digital5 | number:'1.2-2' }} </td>
+                              <td> {{cash5 | number:'1.2-2' }} </td>
+                              <td> {{expense5 | number:'1.2-2' }} </td>
+                              <td> {{short5 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date6 | date:"mediumDate"}} </td>
+                              <td> {{totalShift6 | number:'1.2-2' }} </td>
+                              <td> {{meterSales6 | number:'1.2-2' }} </td>
+                              <td> {{credit6 | number:'1.2-2' }} </td>
+                              <td> {{digital6 | number:'1.2-2' }} </td>
+                              <td> {{cash6 | number:'1.2-2' }} </td>
+                              <td> {{expense6 | number:'1.2-2' }} </td>
+                              <td> {{short6 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date7 | date:"mediumDate"}} </td>
+                              <td> {{totalShift7 | number:'1.2-2' }} </td>
+                              <td> {{meterSales7 | number:'1.2-2' }} </td>
+                              <td> {{credit7 | number:'1.2-2' }} </td>
+                              <td> {{digital7 | number:'1.2-2' }} </td>
+                              <td> {{cash7 | number:'1.2-2' }} </td>
+                              <td> {{expense7 | number:'1.2-2' }} </td>
+                              <td> {{short7 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date8 | date:"mediumDate"}} </td>
+                              <td> {{totalShift8 | number:'1.2-2' }} </td>
+                              <td> {{meterSales8| number:'1.2-2' }} </td>
+                              <td> {{credit8 | number:'1.2-2' }} </td>
+                              <td> {{digital8 | number:'1.2-2' }} </td>
+                              <td> {{cash8 | number:'1.2-2' }} </td>
+                              <td> {{expense8 | number:'1.2-2' }} </td>
+                              <td> {{short8 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date9 | date:"mediumDate"}} </td>
+                              <td> {{totalShift9 | number:'1.2-2' }} </td>
+                              <td> {{meterSales9 | number:'1.2-2' }} </td>
+                              <td> {{credit9 | number:'1.2-2' }} </td>
+                              <td> {{digital9 | number:'1.2-2' }} </td>
+                              <td> {{cash9 | number:'1.2-2' }} </td>
+                              <td> {{expense9 | number:'1.2-2' }} </td>
+                              <td> {{short9 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date10 | date:"mediumDate"}} </td>
+                              <td> {{totalShift10 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales10 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit10 | number:'1.2-2' }} </td>
+                              <td> {{digital10 | number:'1.2-2' }} </td>
+                              <td> {{cash10 | number:'1.2-2' }} </td>
+                              <td> {{expense10 | number:'1.2-2' }} </td>
+                              <td> {{short10 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date11 | date:"mediumDate"}} </td>
+                              <td> {{totalShift11 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales11 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit11 | number:'1.2-2' }} </td>
+                              <td> {{digital11 | number:'1.2-2' }} </td>
+                              <td> {{cash11 | number:'1.2-2' }} </td>
+                              <td> {{expense11 | number:'1.2-2' }} </td>
+                              <td> {{short11 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date12 | date:"mediumDate"}} </td>
+                              <td> {{totalShift12 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales12 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit12 | number:'1.2-2' }} </td>
+                              <td> {{digital12 | number:'1.2-2' }} </td>
+                              <td> {{cash12 | number:'1.2-2' }} </td>
+                              <td> {{expense12 | number:'1.2-2' }} </td>
+                              <td> {{short12 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date13 | date:"mediumDate"}} </td>
+                              <td> {{totalShift13 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales13 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit13 | number:'1.2-2' }} </td>
+                              <td> {{digital13 | number:'1.2-2' }} </td>
+                              <td> {{cash13 | number:'1.2-2' }} </td>
+                              <td> {{expense13 | number:'1.2-2' }} </td>
+                              <td> {{short13 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date14 | date:"mediumDate"}} </td>
+                              <td> {{totalShift14 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales14 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit14 | number:'1.2-2' }} </td>
+                              <td> {{digital14 | number:'1.2-2' }} </td>
+                              <td> {{cash14 | number:'1.2-2' }} </td>
+                              <td> {{expense14 | number:'1.2-2' }} </td>
+                              <td> {{short14 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date15 | date:"mediumDate"}} </td>
+                              <td> {{totalShift15 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales15 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit15 | number:'1.2-2' }} </td>
+                              <td> {{digital15 | number:'1.2-2' }} </td>
+                              <td> {{cash15 | number:'1.2-2' }} </td>
+                              <td> {{expense15 | number:'1.2-2' }} </td>
+                              <td> {{short15 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date16 | date:"mediumDate"}} </td>
+                              <td> {{totalShift16 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales16 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit16 | number:'1.2-2' }} </td>
+                              <td> {{digital16 | number:'1.2-2' }} </td>
+                              <td> {{cash16 | number:'1.2-2' }} </td>
+                              <td> {{expense16 | number:'1.2-2' }} </td>
+                              <td> {{short16 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date17 | date:"mediumDate"}} </td>
+                              <td> {{totalShift17 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales17 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit17 | number:'1.2-2' }} </td>
+                              <td> {{digital17 | number:'1.2-2' }} </td>
+                              <td> {{cash17 | number:'1.2-2' }} </td>
+                              <td> {{expense17 | number:'1.2-2' }} </td>
+                              <td> {{short17 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date18 | date:"mediumDate"}} </td>
+                              <td> {{totalShift18 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales18 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit18 | number:'1.2-2' }} </td>
+                              <td> {{digital18 | number:'1.2-2' }} </td>
+                              <td> {{cash18 | number:'1.2-2' }} </td>
+                              <td> {{expense18 | number:'1.2-2' }} </td>
+                              <td> {{short18 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date19 | date:"mediumDate"}} </td>
+                              <td> {{totalShift19 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales19 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit19 | number:'1.2-2' }} </td>
+                              <td> {{digital19 | number:'1.2-2' }} </td>
+                              <td> {{cash19 | number:'1.2-2' }} </td>
+                              <td> {{expense19 | number:'1.2-2' }} </td>
+                              <td> {{short19 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date20 | date:"mediumDate"}} </td>
+                              <td> {{totalShift20 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales20 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit20 | number:'1.2-2' }} </td>
+                              <td> {{digital20 | number:'1.2-2' }} </td>
+                              <td> {{cash20 | number:'1.2-2' }} </td>
+                              <td> {{expense20 | number:'1.2-2' }} </td>
+                              <td> {{short20 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date21 | date:"mediumDate"}} </td>
+                              <td> {{totalShift21 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales21 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit21 | number:'1.2-2' }} </td>
+                              <td> {{digital21 | number:'1.2-2' }} </td>
+                              <td> {{cash21 | number:'1.2-2' }} </td>
+                              <td> {{expense21 | number:'1.2-2' }} </td>
+                              <td> {{short21 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date22 | date:"mediumDate"}} </td>
+                              <td> {{totalShift22 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales22 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit22 | number:'1.2-2' }} </td>
+                              <td> {{digital22 | number:'1.2-2' }} </td>
+                              <td> {{cash22 | number:'1.2-2' }} </td>
+                              <td> {{expense22 | number:'1.2-2' }} </td>
+                              <td> {{short22 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date23 | date:"mediumDate"}} </td>
+                              <td> {{totalShift23 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales23 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit23 | number:'1.2-2' }} </td>
+                              <td> {{digital23 | number:'1.2-2' }} </td>
+                              <td> {{cash23 | number:'1.2-2' }} </td>
+                              <td> {{expense23 | number:'1.2-2' }} </td>
+                              <td> {{short23 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date24 | date:"mediumDate"}} </td>
+                              <td> {{totalShift24 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales24 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit24 | number:'1.2-2' }} </td>
+                              <td> {{digital24 | number:'1.2-2' }} </td>
+                              <td> {{cash24 | number:'1.2-2' }} </td>
+                              <td> {{expense24 | number:'1.2-2' }} </td>
+                              <td> {{short24 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date25 | date:"mediumDate"}} </td>
+                              <td> {{totalShift25 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales25 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit25 | number:'1.2-2' }} </td>
+                              <td> {{digital25 | number:'1.2-2' }} </td>
+                              <td> {{cash25 | number:'1.2-2' }} </td>
+                              <td> {{expense25 | number:'1.2-2' }} </td>
+                              <td> {{short25 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date26 | date:"mediumDate"}} </td>
+                              <td> {{totalShift26 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales26 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit26 | number:'1.2-2' }} </td>
+                              <td> {{digital26 | number:'1.2-2' }} </td>
+                              <td> {{cash26 | number:'1.2-2' }} </td>
+                              <td> {{expense26 | number:'1.2-2' }} </td>
+                              <td> {{short26 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date27 | date:"mediumDate"}} </td>
+                              <td> {{totalShift27 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales27 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit27 | number:'1.2-2' }} </td>
+                              <td> {{digital27 | number:'1.2-2' }} </td>
+                              <td> {{cash27 | number:'1.2-2' }} </td>
+                              <td> {{expense27 | number:'1.2-2' }} </td>
+                              <td> {{short27 | number:'1.2-2' }} </td>
+                          </tr>
+                          <tr>
+                              <td> {{date28 | date:"mediumDate"}} </td>
+                              <td> {{totalShift28 | number:'1.2-2' }}
+                              </td>
+                              <td> {{meterSales28 | number:'1.2-2' }}
+                              </td>
+                              <td> {{credit28 | number:'1.2-2' }} </td>
+                              <td> {{digital28 | number:'1.2-2' }} </td>
+                              <td> {{cash28 | number:'1.2-2' }} </td>
+                              <td> {{expense28 | number:'1.2-2' }} </td>
+                              <td> {{short28 | number:'1.2-2' }} </td>
+                          </tr>
+
+                      </tbody>
       <!-- end::Table body -->
     </table>
     <!-- end::Table -->

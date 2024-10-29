@@ -86,6 +86,9 @@ export class WidgetService {
   private removeTransactionLogURL = this.baseURL + 'accounttransaclog/removeTransactionLog';
   private getPriceByDealerIdURL = this.baseURL + 'fuelPrice/getPriceByDealerId';
   private deleteFuelPriceURL = this.baseURL + 'fuelPrice/deleteFuelPrice'; 
+  private getDayWiseShiftBookURL = this.baseURL + 'shiftList/getDayWiseShiftBook';
+  private getDayWiseShiftBookMIDURL = this.baseURL + 'shiftList/getDayWiseShiftBookMID'; 
+  private getDayWiseShiftBookLASTURL = this.baseURL + 'shiftList/getDayWiseShiftBookLAST'; 
 
 
   setHeader() {
@@ -702,6 +705,36 @@ export class WidgetService {
     let headers = new HttpHeaders();
     headers = headers.set('authenticationToken', this.token);
     return this.http.post(this.deleteFuelPriceURL, body,{
+      headers: headers
+    })
+  }
+
+  // getDayWiseShiftBookURL
+  getDayWiseShiftBookPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getDayWiseShiftBookURL, body,{
+      headers: headers
+    })
+  }
+  
+  // getDayWiseShiftBookMIDURL
+  getDayWiseShiftBookMIDPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getDayWiseShiftBookMIDURL, body,{
+      headers: headers
+    })
+  }
+
+  // getDayWiseShiftBookLASTURL
+  getDayWiseShiftBookLASTPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getDayWiseShiftBookLASTURL, body,{
       headers: headers
     })
   }
