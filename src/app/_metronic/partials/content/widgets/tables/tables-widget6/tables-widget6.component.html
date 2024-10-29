@@ -36,8 +36,8 @@
           <tbody *ngFor="let data of creditData">
             <tr>
               <td class="min-w-125px">{{data.month}} {{data.year}}</td>
-              <td class="min-w-125px">{{data.purchase}}</td>
-              <td class="min-w-125px">{{data.payment}}</td>
+              <td class="min-w-125px">{{data.purchase | number: '1.2-2'}}</td>
+              <td class="min-w-125px">{{data.payment | number: '1.2-2'}}</td>
             </tr>
 
           </tbody>
