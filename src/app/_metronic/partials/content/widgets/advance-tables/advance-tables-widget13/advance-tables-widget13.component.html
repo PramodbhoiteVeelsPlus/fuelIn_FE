@@ -1,0 +1,411 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col col-xl-12 col-lg-12">
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <input *ngIf="!isFastagReg" class="form-control mr-sm-2" type="number"
+                                            placeholder="Search Phone Number" [formControl]="searchBox"
+                                            aria-label="Search">
+                                        <input *ngIf="isFastagReg" class="form-control mr-sm-2" type="number"
+                                            [(ngModel)]="phoneSearch" placeholder="Search Phone Number"
+                                            [formControl]="searchBox" aria-label="Search">
+
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <button *ngIf="!isFastagReg" class="btn btn-outline-success"
+                                            (click)="addfastagStatus()">Add</button>
+                                        <button *ngIf="isFastagReg" class="btn btn-outline-success"
+                                            (click)="searchPhoneNumber()">Search</button>
+
+                                    </div>
+                                    <div class="col-lg-4"></div>
+                                    <div class="col-lg-2">
+                                        <button *ngIf="!isFastagReg" type="submit"
+                                            class="btn btn-outline-success my-2 my-sm-0"
+                                            (click)="exportAsXLSXCustomer()">Export to Excel</button>
+                                    </div>
+                                </div>
+                                <div *ngIf="isFastagReg" class="row">
+                                    <form [formGroup]="registerCorporateForm">
+                                        <hr>
+                                        <div *ngIf="!isAdd"></div>
+                                        <div *ngIf="isNumberFound">
+                                            <div class="row">
+                                                <div class="col-md-1"></div>
+                                                <div class="col-md-2">
+                                                    <label class="labelNewMargin"> customer mobile: </label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="number" class="form-control" formControlName="phone1"
+                                                        minlength="10" onkeypress="return this.value.length < 10;"
+                                                        oninput="if(this.value.length=10)"
+                                                        placeholder="Enter 10 Digits Mobile Number"
+                                                        (blur)="checkPhone()" required>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-1"></div>
+                                                <div class="col-md-2">
+                                                    <label class="labelNewMargin"> first name: </label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" placeholder="first name"
+                                                        formControlName="firstName"
+                                                        oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                                </div>
+                                                <div class="col-md-1"></div>
+                                                <div class="col-md-2">
+                                                    <label class="labelNewMargin"> last name: </label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" placeholder="last name"
+                                                        formControlName="lastName"
+                                                        oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-1"></div>
+                                                <div class="col-md-2">
+                                                    <label class="labelNewMargin"> company name: </label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" placeholder="company name"
+                                                        formControlName="companyName"
+                                                        oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                                </div>
+                                                <div class="col-md-1"></div>
+                                                <div class="col-md-2">
+                                                    <label class="labelNewMargin"> bussiness type: </label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <select class="form-control" formControlName="businessType"
+                                                        placeholder="Select Business Type" style="color: #9EA79E;"
+                                                        required>
+                                                        <option value="Proprietorship">Proprietorship</option>
+                                                        <option value="Partnership">Partnership</option>
+                                                        <option value="Private Limited Company">Private Limited
+                                                            Company</option>
+                                                        <option value="Public Limited Company">Public Limited
+                                                            Company</option>
+                                                        <option value="Foreign Company">Foreign Company</option>
+                                                        <option value="others">Others</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-1"></div>
+                                                <div class="col-md-2">
+                                                    <label class="labelNewMargin"> emailId: </label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="email" id=""
+                                                        formControlName="email1" placeholder="email" required>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-1"></div>
+                                                <div class="col-md-2">
+                                                    <label class="labelNewMargin"> GST no: </label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" placeholder="GST no"
+                                                        formControlName="GSTNumber"
+                                                        onkeypress="return this.value.length < 15;"
+                                                        oninput="if(this.value.length=15)"
+                                                        oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                                </div>
+                                                <div class="col-md-1"></div>
+                                                <div class="col-md-2">
+                                                    <label class="labelNewMargin"> city: </label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" placeholder="city"
+                                                        formControlName="city"
+                                                        oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-1"></div>
+                                                <div class="col-md-2">
+                                                    <label class="labelNewMargin"> address line1: </label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" placeholder="address line1"
+                                                        formControlName="address1"
+                                                        oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                                </div>
+                                                <div class="col-md-1"></div>
+                                                <div class="col-md-2">
+                                                    <label class="labelNewMargin"> address line2: </label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" placeholder="address line2"
+                                                        formControlName="address2"
+                                                        oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6"></div>
+                                                <div class="col-md-1"></div>
+                                                <div class="col-md-2">
+                                                    <label class="labelNewMargin"> state: </label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <select class="form-control" style="color: #9EA79E;"
+                                                        formControlName="state" required placeholder="Select state">
+                                                        <option value="">Select State</option>
+                                                        <option value="ANDHRA PRADESH">Andhra Pradesh</option>
+                                                        <option value="ARUNACHAL PRADESH">Arunachal Pradesh</option>
+                                                        <option value="ASSAM">Assam</option>
+                                                        <option value="BIHAR">Bihar</option>
+                                                        <option value="CHHATTISGARH">Chhattisgarh</option>
+                                                        <option value="GOA">Goa</option>
+                                                        <option value="GUJARAT">Gujarat</option>
+                                                        <option value="HARYANA">Haryana</option>
+                                                        <option value="HIMACHAL PRADESH">Himachal Pradesh</option>
+                                                        <option value="JHARKHAND">Jharkhand</option>
+                                                        <option value="KARNATAKA">Karnataka</option>
+                                                        <option value="KERALA">Kerala</option>
+                                                        <option value="MADHYA PRADESH">Madhya Pradesh</option>
+                                                        <option value="MAHARASHTRA">Maharashtra</option>
+                                                        <option value="MANIPUR">Manipur</option>
+                                                        <option value="MEGHALAYA">Meghalaya</option>
+                                                        <option value="MIZORAM">Mizoram</option>
+                                                        <option value="NAGALAND">Nagaland</option>
+                                                        <option value="ODISHA">Odisha</option>
+                                                        <option value="PUNJAB">Punjab</option>
+                                                        <option value="RAJASTHAN">Rajasthan</option>
+                                                        <option value="SIKKIM">Sikkim</option>
+                                                        <option value="TAMIL NADU">Tamil Nadu</option>
+                                                        <option value="TELANGANA">Telangana</option>
+                                                        <option value="TRIPURA">Tripura</option>
+                                                        <option value="UTTAR PRADESH">Uttar Pradesh</option>
+                                                        <option value="UTTARAKHAND">Uttarakhand</option>
+                                                        <option value="WEST BENGAL">West Bengal</option>
+                                                        <option value="ANDAMAN AND NICOBAR ISLANDS">Andaman and
+                                                            Nicobar Islands</option>
+                                                        <option value="CHANDIGARH">Chandigarh</option>
+                                                        <option value="DADRA AND NAGAR HAVELI AND DAMAN AND DIU">
+                                                            Dadra and Nagar Haveli
+                                                            and Daman and Diu</option>
+                                                        <option value="DELHI">Delhi</option>
+                                                        <option value="LAKSHADWEEP">Lakshadweep</option>
+                                                        <option value="PUDUCHERRY">Puducherry (Pondicherry)</option>
+                                                        <option value="JAMMU AND KASHMIR">Jammu and Kashmir</option>
+                                                        <option value="LADAKH">Ladakh</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-1"></div>
+                                                <div class="col-md-2">
+                                                    <label class="labelNewMargin">Thresho Id Limit :</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" placeholder="Thresho Id Limit "
+                                                        formControlName="thrLimit">
+                                                </div>
+                                                <div class="col-md-1"></div>
+                                                <div class="col-md-2">
+                                                    <label class="labelNewMargin">kit No :</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" placeholder="kitNo "
+                                                        formControlName="kitNo">
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-4"> </div>
+                                                <div class="col-md-4" style="text-align: right;">
+                                                    <button class="btn btn-outline-success my-2 my-sm-0" type="button"
+                                                        (click)="submit()">Register
+                                                    </button>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <button class="btn btn-outline-success my-2 my-sm-0" type="button"
+                                                        (click)="cancelRegister()">cancel
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="isAdd">
+                                            <div class="row">
+                                                <div class="col-md-1"></div>
+                                                <div class="col-md-2">
+                                                    <label class="labelNewMargin">Thresho Id Limit :</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" placeholder="Thresho Id Limit "
+                                                        formControlName="thrLimit">
+                                                </div>
+                                                <div class="col-md-1"></div>
+                                                <div class="col-md-2">
+                                                    <label class="labelNewMargin">kit No :</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" placeholder="kitNo "
+                                                        formControlName="kitNo">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-1"></div>
+                                                <div class="col-md-4">
+                                                    <button class="btn btn-outline-success"
+                                                        (click)="addFastagForCorp()">Submit</button>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <button class="btn btn-outline-success my-2 my-sm-0" type="button"
+                                                        (click)="cancelRegister()">cancel
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div *ngIf="!isFastagReg" class="card-body table-responsive">
+                                    <table class="table table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>Company Name</th>
+                                                <th>Person Name</th>
+                                                <th>Person Mobile No</th>
+                                                <th>Email </th>
+                                                <th>Entity Id</th>
+                                                <th>IsActive</th>
+                                                <th>Threshold Limit</th>
+                                                <th>Registered Date</th>
+                                                <th>Fastag Vehicle Count</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngFor="let customer of customerDetailData; let i = index">
+                                            <tr>
+                                                <td>{{i+1}}</td>
+                                                <td>
+                                                    {{customer.companyName}}
+                                                </td>
+                                                <td>{{customer.hostName}}</td>
+                                                <td>{{customer.hostPhone}}</td>
+                                                <td>{{customer.email1}}</td>
+                                                <td>{{customer.entityId}}</td>
+                                                <td>{{customer.isActive}}</td>
+                                                <td>{{customer.thrLimit}}</td>
+                                                <td>{{customer.corporateCreatedAt | date:"dd/MM/yyyy"}}</td>
+                                                <td>{{customer.vehicleSum}}</td>
+                                                <td>
+                                                    <button class="btn btn-success"
+                                                        (click)="openCorpWalletModal(CorpWalletContent, customer.entityId, customer.companyName)">
+                                                        <i class="fa fa-add"></i>
+                                                    </button>
+                                                    <button class="btn btn-secondary"
+                                                        (click)="openCorpModal(CorpContent,customer.ftcorpId,customer.isActive,customer.thrLimit)">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <ng-template #CorpContent let-c="close" let-d="dismiss">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Update Fastag Corp Info</h4>
+                                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="labelDriverMargin">isActive :</label>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="form-control" [(ngModel)]="isActive"
+                                            placeholder="Select Business Type" style="color: #9EA79E;">
+                                            <option value="">Select Thr Limit</option>
+                                            <option value="YES">YES</option>
+                                            <option value="NO">NO</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="labelDriverMargin">Thr Limit :</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" [(ngModel)]="thrLimit">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-outline-success my-2 my-sm-0"
+                                    (click)="editFastagForCorp()">Update</button>
+                                <button type="cancel" class="btn btn-secondary"
+                                    (click)="c('Close click')">Close</button>
+                            </div>
+                        </ng-template>
+                        <ng-template #CorpWalletContent let-c="close" let-d="dismiss">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Corporate Wallet {{corpWalletCompanyName}} </h4>
+                                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="labelDriverMargin"> Account No </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" [(ngModel)]="corpWalletAccNo"
+                                            placeholder="Enter Account No">
+                                    </div>
+                                </div><br>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="labelDriverMargin"> IFSC </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" [(ngModel)]="corpWalletIFSC"
+                                            placeholder="Enter IFSC">
+                                    </div>
+                                </div><br>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="labelDriverMargin"> UPI </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" [(ngModel)]="corpWalletUPI"
+                                            placeholder="Enter UPI">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-2" *ngIf="isUpdate">
+                                    <button type="submit" class="btn btn-outline-warning my-2 my-sm-0"
+                                        (click)="updateCorpWalletDetails()">Update</button>
+                                </div>
+                                <div class="col-md-2" *ngIf="!isUpdate">
+                                    <button type="submit" class="btn btn-outline-success my-2 my-sm-0"
+                                        (click)="submitCorpWalletDetails()">Submit</button>
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="cancel" class="btn btn-secondary"
+                                        (click)="c('Close click')">Close</button>
+                                </div>
+                            </div><br>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

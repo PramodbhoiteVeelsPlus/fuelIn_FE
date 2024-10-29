@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbNavModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { InlineSVGModule } from 'ng-inline-svg-2';
 import { SharedModule } from "../../_metronic/shared/shared.module";
@@ -10,9 +10,15 @@ import { CustomerOnboardingComponent } from './customer-onboarding/customer-onbo
 import { UploadKitNumberComponent } from './upload-kit-number/upload-kit-number.component';
 import { AssignTransactionFastagComponent } from './assign-transaction-fastag/assign-transaction-fastag.component';
 import { CoinRewardDetailsComponent } from './coin-reward-details/coin-reward-details.component';
+import { FastagComponent } from './fastag/fastag.component';
+import { FastagLQComponent } from './fastag-lq/fastag-lq.component';
 
 @NgModule({
-  declarations: [CustomerOnboardingComponent, UploadKitNumberComponent, AssignTransactionFastagComponent, CoinRewardDetailsComponent],
+  declarations: [CustomerOnboardingComponent, 
+    UploadKitNumberComponent, AssignTransactionFastagComponent, 
+    CoinRewardDetailsComponent, FastagComponent, FastagLQComponent,
+    
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -36,10 +42,19 @@ import { CoinRewardDetailsComponent } from './coin-reward-details/coin-reward-de
         path: 'CoinRewardDetails',
         component: CoinRewardDetailsComponent,
       },
+      {
+        path: 'corporateFT',
+        component: FastagComponent,
+      },
+      {
+        path: 'corporateFTLQ',
+        component: FastagLQComponent,
+      },
     ]),
     WidgetsModule,
     ModalsModule,
     NgbNavModule,
+    ReactiveFormsModule,
   ],
 })
 export class ViswasaModule { }

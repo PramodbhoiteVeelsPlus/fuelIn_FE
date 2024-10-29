@@ -111,10 +111,7 @@ export class AdvanceTablesWidget6Component {
   }
 
   getEntityAll() {
-    let data = {
-
-    }
-    this.post.getAllEntityDetailsPOST(data).subscribe((res) => {
+    this.post.getAllEntityDetailsPOST().subscribe((res) => {
       if (res) {
         this.fastagDetailsAll = res.data;
       }
