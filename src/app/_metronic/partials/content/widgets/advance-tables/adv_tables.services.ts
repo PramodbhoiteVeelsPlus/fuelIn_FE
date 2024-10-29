@@ -72,6 +72,19 @@ export class Adv_TablesService {
     private aadFastagDataLQURL = this.baseURL + 'fastag/aadFastagDataLQ';
     private getCorpWalletDetailsByEntityURL = this.baseURL + 'lqCorpWallet/getCorpWalletDetailsByEntity';
     private addCorpWalletDetailsURL = this.baseURL + 'lqCorpWallet/addCorpWalletDetails';
+    private getEntityCountByEntityIdURL = this.baseURL + 'fastag/getEntityCountByEntityId';
+    private getEntityIdAllLQURL = this.baseURL + 'fastag/getEntityIdAllLQ1';
+    private getEntityCountByEntityIdLQURL = this.baseURL + 'fastag/getEntityCountByEntityIdLQ';
+    private getAllCoinConversionByCustomerIdLockedURL = this.baseURL + "coinConversion/getAllCoinConversionForLockedByCustomerId";
+    private addCoinDetailsByPassURL = this.baseURL + 'coinConversion/addCoinDetailsByPass';
+    private getAllVehicleListURL = this.baseURL + 'fastag/getAllVehicleList';
+    private getSerialNumberURL = this.baseURL + 'fastag/getSerialNumber'
+    private getAllKitNoByPersonIdURL = this.baseURL + 'fastag/getAllKitNoByPersonId';
+    private ReplaceTagURL = this.baseURL + 'fastag/ReplaceTag';
+    private uprepFastagURL = this.baseURL + 'fastag/uprepFastag';
+    private updatekitBarCodeMapURL = this.baseURL + 'kitbarcodemap/updatekitBarCodeMap'
+    private updateTagURL = this.baseURL + 'fastag/updateTag';
+
 
 
 
@@ -596,6 +609,126 @@ export class Adv_TablesService {
         })
     }
 
+
+    // getEntityCountByEntityIdURL
+    getEntityCountByEntityIdPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getEntityCountByEntityIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getEntityIdAllLQURL
+    getEntityIdAllLQPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getEntityIdAllLQURL, body, {
+            headers: headers
+        })
+    }
+
+    // getEntityCountByEntityIdLQURL
+    getEntityCountByEntityIdLQPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getEntityCountByEntityIdLQURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAllCoinConversionByCustomerIdLockedURL
+    getAllCoinConversionByCustomerIdLockedPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAllCoinConversionByCustomerIdLockedURL, body, {
+            headers: headers
+        })
+    }
+
+    // addCoinDetailsByPassURL
+    addCoinDetailsByPassPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addCoinDetailsByPassURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAllVehicleListURL
+    getAllVehicleListPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.get(this.getAllVehicleListURL, {
+            headers: headers
+        })
+    }
+
+    // getSerialNumberURL
+    getSerialNumberPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getSerialNumberURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAllKitNoByPersonIdURL
+    getAllKitNoByPersonIdPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAllKitNoByPersonIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // ReplaceTagURL
+    ReplaceTagPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.ReplaceTagURL, body, {
+            headers: headers
+        })
+    }
+
+    // uprepFastagURL
+    uprepFastagPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.uprepFastagURL, body, {
+            headers: headers
+        })
+    }
+
+    // updatekitBarCodeMapURL
+    updatekitBarCodeMapPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updatekitBarCodeMapURL, body, {
+            headers: headers
+        })
+    }
+
+    // updateTagURL
+    updateTagPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateTagURL, body, {
+            headers: headers
+        })
+    }
 
 
 

@@ -34,7 +34,7 @@ import { TilesWidget13Component } from './tiles/tiles-widget13/tiles-widget13.co
 import { TilesWidget14Component } from './tiles/tiles-widget14/tiles-widget14.component';
 // Other
 import { DropdownMenusModule } from '../dropdown-menus/dropdown-menus.module';
-import { NgbActiveModal, NgbDatepickerModule, NgbDropdownModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbDatepickerModule, NgbDropdownModule, NgbNavModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListsWidget2Component } from './lists/lists-widget2/lists-widget2.component';
 import { ListsWidget5Component } from './lists/lists-widget5/lists-widget5.component';
 import { ListsWidget6Component } from './lists/lists-widget6/lists-widget6.component';
@@ -124,6 +124,7 @@ import { AdvanceTablesWidget7Component } from './advance-tables/advance-tables-w
 import { AdvanceTablesWidget8Component } from './advance-tables/advance-tables-widget8/advance-tables-widget8.component';
 import { AdvanceTablesWidget9Component } from './advance-tables/advance-tables-widget9/advance-tables-widget9.component';
 import { AdvanceTablesWidget10Component } from './advance-tables/advance-tables-widget10/advance-tables-widget10.component';
+import { AdvanceTablesWidget11Component } from './advance-tables/advance-tables-widget11/advance-tables-widget11.component';
 // import { routes } from 'src/app/app-routing.module';
 @NgModule({
   declarations: [
@@ -239,7 +240,8 @@ import { AdvanceTablesWidget10Component } from './advance-tables/advance-tables-
     AdvanceTablesWidget7Component, 
     AdvanceTablesWidget8Component,
     AdvanceTablesWidget9Component, 
-    AdvanceTablesWidget10Component
+    AdvanceTablesWidget10Component,
+    AdvanceTablesWidget11Component
   ],
   imports: [
     ReactiveFormsModule,
@@ -255,6 +257,7 @@ import { AdvanceTablesWidget10Component } from './advance-tables/advance-tables-
     NgbPaginationModule,
     NgxPaginationModule,
     RouterModule,
+    NgbNavModule
   ],
   exports: [
     // Advanced Tables
@@ -370,7 +373,8 @@ import { AdvanceTablesWidget10Component } from './advance-tables/advance-tables-
     AdvanceTablesWidget7Component, 
     AdvanceTablesWidget8Component,
     AdvanceTablesWidget9Component, 
-    AdvanceTablesWidget10Component
+    AdvanceTablesWidget10Component,
+    AdvanceTablesWidget11Component
   ],
   providers: [NgbActiveModal, ExcelService],
 })

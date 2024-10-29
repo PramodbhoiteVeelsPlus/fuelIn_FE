@@ -12,12 +12,13 @@ import { AssignTransactionFastagComponent } from './assign-transaction-fastag/as
 import { CoinRewardDetailsComponent } from './coin-reward-details/coin-reward-details.component';
 import { FastagComponent } from './fastag/fastag.component';
 import { FastagLQComponent } from './fastag-lq/fastag-lq.component';
+import { FastagReplacementComponent } from './fastag-replacement/fastag-replacement.component';
 
 @NgModule({
   declarations: [CustomerOnboardingComponent, 
     UploadKitNumberComponent, AssignTransactionFastagComponent, 
     CoinRewardDetailsComponent, FastagComponent, FastagLQComponent,
-    
+    FastagReplacementComponent
   ],
   imports: [
     CommonModule,
@@ -49,6 +50,10 @@ import { FastagLQComponent } from './fastag-lq/fastag-lq.component';
       {
         path: 'corporateFTLQ',
         component: FastagLQComponent,
+      },
+      {
+        path: 'FastagReplacement',
+        component: FastagReplacementComponent,
       },
     ]),
     WidgetsModule,
