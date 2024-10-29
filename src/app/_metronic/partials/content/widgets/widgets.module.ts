@@ -7,6 +7,8 @@ import { AdvanceTablesWidget1Component } from './advance-tables/advance-tables-w
 import { AdvanceTablesWidget2Component } from './advance-tables/advance-tables-widget2/advance-tables-widget2.component';
 import { AdvanceTablesWidget3Component } from './advance-tables/advance-tables-widget3/advance-tables-widget3.component';
 import { AdvanceTablesWidget4Component } from './advance-tables/advance-tables-widget4/advance-tables-widget4.component';
+import { AdvanceTablesWidget12Component } from './advance-tables/advance-tables-widget12/advance-tables-widget12.component';
+import { AdvanceTablesWidget13Component } from './advance-tables/advance-tables-widget13/advance-tables-widget13.component';
 // Base Tables
 import { BaseTablesWidget1Component } from './base-tables/base-tables-widget1/base-tables-widget1.component';
 import { BaseTablesWidget2Component } from './base-tables/base-tables-widget2/base-tables-widget2.component';
@@ -131,6 +133,8 @@ import { AdvanceTablesWidget11Component } from './advance-tables/advance-tables-
     AdvanceTablesWidget2Component,
     AdvanceTablesWidget3Component,
     AdvanceTablesWidget4Component,
+    AdvanceTablesWidget12Component,
+    AdvanceTablesWidget13Component,
     // Base Tables
     BaseTablesWidget1Component,
     BaseTablesWidget2Component,
@@ -261,6 +265,8 @@ import { AdvanceTablesWidget11Component } from './advance-tables/advance-tables-
     AdvanceTablesWidget2Component,
     AdvanceTablesWidget3Component,
     AdvanceTablesWidget4Component,
+    AdvanceTablesWidget12Component,
+    AdvanceTablesWidget13Component,
     // Base Tables
     BaseTablesWidget1Component,
     BaseTablesWidget2Component,

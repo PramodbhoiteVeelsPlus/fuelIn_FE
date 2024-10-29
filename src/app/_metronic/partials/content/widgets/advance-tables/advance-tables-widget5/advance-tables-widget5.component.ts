@@ -86,12 +86,8 @@ export class AdvanceTablesWidget5Component {
   }
 
   getKitNumberAll() {
-    let data = {
-
-    }
-    this.post.getAllKitNoPOST(data)
+    this.post.getAllKitNoPOST()
       .subscribe(res => {
-
         if (res) {
           this.fastagVichleDataKit = res.data;
           this.fastagVichleDataKitSearch = res.data;

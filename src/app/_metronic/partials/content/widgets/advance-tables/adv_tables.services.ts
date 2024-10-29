@@ -55,6 +55,23 @@ export class Adv_TablesService {
     private getredeemCoinMonthWiseURL = this.baseURL + 'coinConversion/getredeemCoinMonthWise';
     private addRedeemCoinURL = this.baseURL + 'coinConversion/addRedeemCoin';
     private getRedeemInfoByCustomerIdURL = this.baseURL + 'coinConversion/getRedeemInfoByCustomerId';
+    private getCorporateDetailsForFastagURL = this.baseURL + 'fastag/getCorporateDetailsForFastag';
+    private serchPhoneForFastagURL = this.baseURL + 'fastag/serchPhoneForFastag';
+    private userRegisterURL = this.baseURL + 'register/userRegister';
+    private postAddressUrl = this.baseURL + 'address/addAddress';
+    private addCorporateUrl = this.baseURL + 'corporate/addCorporate';
+    private getCorporateByIdUrl = this.baseURL + 'corporate/getCorporateById';
+    private PostCustomer = this.baseURL + 'customer/addCustomer';
+    private updateVeelsPlusCorporateIdwithPermURL = this.baseURL + 'register/updateVeelsPlusCorporateIdwithPerm';
+    private addkycURL = this.baseURL + 'kyc/addKYC';
+    private findPhoneNumberURL = this.baseURL + 'register/findPhoneNumber';
+    private aadFastagDataURL = this.baseURL + 'fastag/aadFastagData';
+    private updateCorpFastagURL = this.baseURL + 'fastag/updateCorpFastag';
+    private serchPhoneForFastagLQURL = this.baseURL + 'fastag/serchPhoneForFastagLQ';
+    private getCorporateDetailsForFastagLQURL = this.baseURL + 'fastag/getCorporateDetailsForFastagLQ';
+    private aadFastagDataLQURL = this.baseURL + 'fastag/aadFastagDataLQ';
+    private getCorpWalletDetailsByEntityURL = this.baseURL + 'lqCorpWallet/getCorpWalletDetailsByEntity';
+    private addCorpWalletDetailsURL = this.baseURL + 'lqCorpWallet/addCorpWalletDetails';
     private getEntityCountByEntityIdURL = this.baseURL + 'fastag/getEntityCountByEntityId';
     private getEntityIdAllLQURL = this.baseURL + 'fastag/getEntityIdAllLQ1';
     private getEntityCountByEntityIdLQURL = this.baseURL + 'fastag/getEntityCountByEntityIdLQ';
@@ -303,7 +320,7 @@ export class Adv_TablesService {
     }
 
     // getAllKitNoURL
-    getAllKitNoPOST(body: object): Observable<any> {
+    getAllKitNoPOST(): Observable<any> {
         this.setHeader();
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
@@ -313,7 +330,7 @@ export class Adv_TablesService {
     }
 
     // getAllEntityDetailsURL
-    getAllEntityDetailsPOST(body: object): Observable<any> {
+    getAllEntityDetailsPOST(): Observable<any> {
         this.setHeader();
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
@@ -421,6 +438,177 @@ export class Adv_TablesService {
             headers: headers
         })
     }
+
+    // getCorporateDetailsForFastagPost
+    getCorporateDetailsForFastagPost(): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.get(this.getCorporateDetailsForFastagURL, {
+            headers: headers
+        })
+    }
+
+    // serchPhoneForFastagURL
+    searchPhoneForFuelDealerPost(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.serchPhoneForFastagURL, body, {
+            headers: headers
+        })
+    }
+
+    // userRegisterURL
+    userRegister(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.userRegisterURL, body, {
+            headers: headers
+        })
+    }
+
+    // postAddressUrl
+    addAddress(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.postAddressUrl, body, {
+            headers: headers
+        })
+    }
+
+    // addCorporateUrl
+    addCorporate(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addCorporateUrl, body, {
+            headers: headers
+        })
+    }
+
+    // getCorporateByIdUrl
+    postCorporateById(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getCorporateByIdUrl, body, {
+            headers: headers
+        })
+    }
+
+    // PostCustomer
+    addCustomer(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.PostCustomer, body, {
+            headers: headers
+        })
+    }
+
+    // updateVeelsPlusCorporateIdwithPermURL
+    updateVeelsPlusCorporateIdwithPermPost(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateVeelsPlusCorporateIdwithPermURL, body, {
+            headers: headers
+        })
+    }
+
+    // addkycURL
+    addKYC(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addkycURL, body, {
+            headers: headers
+        })
+    }
+
+    // findPhoneNumberURL
+    findPhone(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.findPhoneNumberURL, body, {
+            headers: headers
+        })
+    }
+
+    // aadFastagDataURL
+    aadFastagDataPost(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.aadFastagDataURL, body, {
+            headers: headers
+        })
+    }
+
+    // updateCorpFastagURL
+    updateCorpFastagPost(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateCorpFastagURL, body, {
+            headers: headers
+        })
+    }
+
+    // serchPhoneForFastagLQURL
+    searchPhoneForFuelDealerLQPost(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.serchPhoneForFastagLQURL, body, {
+            headers: headers
+        })
+    }
+
+    // getCorporateDetailsForFastagLQURL
+    getCorporateDetailsForFastagLQPost(): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.get(this.getCorporateDetailsForFastagLQURL, {
+            headers: headers
+        })
+    }
+
+    // aadFastagDataLQURL
+    aadFastagDataLQPost(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.aadFastagDataLQURL, body, {
+            headers: headers
+        })
+    }
+
+    // getCorpWalletDetailsByEntityURL
+    getCorpWalletDetailsByEntityPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getCorpWalletDetailsByEntityURL, body, {
+            headers: headers
+        })
+    }
+
+    // addCorpWalletDetailsURL
+    addCorpWalletDetailsPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addCorpWalletDetailsURL, body, {
+            headers: headers
+        })
+    }
+
 
     // getEntityCountByEntityIdURL
     getEntityCountByEntityIdPOST(body: object): Observable<any> {
@@ -541,6 +729,8 @@ export class Adv_TablesService {
             headers: headers
         })
     }
+
+
 
 
 
