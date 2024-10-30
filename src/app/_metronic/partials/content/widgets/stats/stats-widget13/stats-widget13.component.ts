@@ -47,6 +47,11 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   }
 }
 
+type Tabs =
+  | 'kt_stats_widget_13_tab_1'
+  | 'kt_stats_widget_13_tab_2'
+  | 'kt_stats_widget_13_tab_3';
+
 @Component({
   selector: 'app-stats-widget13',
   templateUrl: './stats-widget13.component.html',
@@ -90,6 +95,16 @@ export class StatsWidget13Component {
     config.minDate = { year: 2020, month: 4, day: 1 };
     config.maxDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
     config.outsideDays = 'hidden';
+  }
+
+  activeTab: Tabs = 'kt_stats_widget_13_tab_1';
+
+  setTab(tab: Tabs) {
+    this.activeTab = tab;
+  }
+
+  activeClass(tab: Tabs) {
+    return tab === this.activeTab ? 'show active' : '';
   }
 
   ngOnInit(): void {

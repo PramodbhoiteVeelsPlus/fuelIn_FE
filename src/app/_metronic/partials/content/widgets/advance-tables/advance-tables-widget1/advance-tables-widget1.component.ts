@@ -46,6 +46,11 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   }
 }
 
+type Tabs =
+  | 'kt_advance-tables_widget_1_tab_1'
+  | 'kt_advance-tables_widget_1_tab_2'
+  | 'kt_advance-tables_widget_1_tab_3';
+
 @Component({
   selector: 'app-advance-tables-widget1',
   templateUrl: './advance-tables-widget1.component.html',
@@ -91,6 +96,16 @@ export class AdvanceTablesWidget1Component {
     config: NgbDatepickerConfig,
     private cd: ChangeDetectorRef,
   ) { }
+
+  activeTab: Tabs = 'kt_advance-tables_widget_1_tab_1';
+
+  setTab(tab: Tabs) {
+    this.activeTab = tab;
+  }
+
+  activeClass(tab: Tabs) {
+    return tab === this.activeTab ? 'show active' : '';
+  }
 
   ngOnInit() {
     this.getAllvishUserCustomerList();

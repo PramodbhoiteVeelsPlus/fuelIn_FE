@@ -45,9 +45,16 @@
                                     Delete </button>
                             </div>
                             <div class="col-auto">
-                                <span style="font-size: 30px;cursor: pointer;" ngbTooltip="Download CSV"
-                                    placement="bottom" (click)="getFastagTransaction()"><i
-                                        class="fas fa-file-csv my-2"></i></span>
+                                <a class="
+                                nav-link
+                                btn btn-sm btn-color-muted btn-active btn-active-light-primary
+                                fw-bolder
+                                px-4
+                                me-1
+                              " data-bs-toggle="tab" [ngClass]="activeClass('kt_stats_widget_13_tab_1')"
+                                    (click)="getFastagTransaction()">
+                                    CSV
+                                </a>
                             </div>
                         </div>
                         <br>
@@ -93,9 +100,16 @@
                                     Delete </button>
                             </div>
                             <div class="col-auto">
-                                <span style="font-size: 30px;cursor: pointer;" ngbTooltip="Download CSV"
-                                    placement="bottom" (click)="getFastagTransactionLQ()"><i
-                                        class="fas fa-file-csv my-2"></i></span>
+                                <a class="
+                                nav-link
+                                btn btn-sm btn-color-muted btn-active btn-active-light-primary
+                                fw-bolder
+                                px-4
+                                me-1
+                              " data-bs-toggle="tab" [ngClass]="activeClass('kt_stats_widget_13_tab_1')"
+                                    (click)="getFastagTransactionLQ()">
+                                    CSV
+                                </a>
                             </div>
                         </div>
                     </form>

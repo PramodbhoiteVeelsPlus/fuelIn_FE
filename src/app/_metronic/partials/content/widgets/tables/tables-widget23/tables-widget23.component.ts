@@ -53,6 +53,11 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   }
 }
 
+type Tabs =
+  | 'kt_table_widget_23_tab_1'
+  | 'kt_table_widget_23_tab_2'
+  | 'kt_table_widget_23_tab_3';
+
 @Component({
   selector: 'app-tables-widget23',
   templateUrl: './tables-widget23.component.html',
@@ -96,6 +101,16 @@ export class TablesWidget23Component {
     config.minDate = { year: 2018, month: 1, day: 1 };
     config.maxDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
     config.outsideDays = 'hidden';
+  }
+
+  activeTab: Tabs = 'kt_table_widget_23_tab_1';
+
+  setTab(tab: Tabs) {
+    this.activeTab = tab;
+  }
+
+  activeClass(tab: Tabs) {
+    return tab === this.activeTab ? 'show active' : '';
   }
 
   ngOnInit(): void {
@@ -143,7 +158,7 @@ export class TablesWidget23Component {
           endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD")
         }
 
-        this.post.getRequestCallDetailsPOST(data)
+        this.post.getRequestCallByScheduleDatePOST(data)
           .subscribe(res => {
             if (res.status == "OK" && res.data.length) {
               this.requestCallData = res.data

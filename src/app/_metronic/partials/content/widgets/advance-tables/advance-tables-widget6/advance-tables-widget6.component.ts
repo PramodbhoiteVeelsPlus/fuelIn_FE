@@ -114,6 +114,7 @@ export class AdvanceTablesWidget6Component {
     this.post.getAllEntityDetailsPOST().subscribe((res) => {
       if (res) {
         this.fastagDetailsAll = res.data;
+        this.cd.detectChanges();3
       }
     });
   }

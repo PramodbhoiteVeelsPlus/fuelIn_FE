@@ -3,6 +3,7 @@ import { Observable, Subscription } from 'rxjs';
 import { TranslationService } from '../../../../../../modules/i18n';
 import { AuthService, UserType } from '../../../../../../modules/auth';
 import { Router } from '@angular/router';
+import { StatsService } from 'src/app/_metronic/partials/content/widgets/stats/stats.services';
 
 @Component({
   selector: 'app-user-inner',
@@ -18,15 +19,21 @@ export class UserInnerComponent implements OnInit, OnDestroy {
   langs = languages;
   user: boolean = true;
   private unsubscribe: Subscription[] = [];
+  veelsplusCorporate: any;
+  customerId: any;
 
   constructor(
     private auth: AuthService,
+    private post: StatsService,
     private translationService: TranslationService,private router: Router,
   ) {}
 
   ngOnInit(): void {
     // this.user$ = this.auth.currentUserSubject.asObservable();
     this.setLanguage(this.translationService.getSelectedLanguage());
+    var element = JSON.parse(localStorage.getItem('element') || '{}');
+    this.veelsplusCorporate = element.veelsPlusCorporateID;
+    this.getCorporateById(this.veelsplusCorporate)
   }
 
   logout() {
@@ -53,6 +60,18 @@ export class UserInnerComponent implements OnInit, OnDestroy {
       } else {
         language.active = false;
       }
+    });
+  }
+  
+  getCorporateById(veelsplusCorporate: any) {
+    let data = {
+        veelsplusCorporateId: veelsplusCorporate,
+    };
+
+    this.post.getBranchVeelsplusId(data).subscribe((res) => {
+        if (res.status == "OK") {
+            this.customerId = res.data[0].customerId;
+        }
     });
   }
 

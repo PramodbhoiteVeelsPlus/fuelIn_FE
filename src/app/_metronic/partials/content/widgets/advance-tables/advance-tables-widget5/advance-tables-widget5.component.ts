@@ -91,6 +91,7 @@ export class AdvanceTablesWidget5Component {
         if (res) {
           this.fastagVichleDataKit = res.data;
           this.fastagVichleDataKitSearch = res.data;
+          this.cd.detectChanges();
         } else {
         }
       });

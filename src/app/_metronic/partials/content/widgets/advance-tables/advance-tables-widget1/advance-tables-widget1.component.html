@@ -44,9 +44,17 @@
         Cancel
       </button>
     </div>
-    <div class="col-auto" style="margin-top: -6px;">
-      <span style="font-size: 36px;cursor: pointer;" ngbTooltip="Download CSV"
-        (click)="exportToExcelAllCustomerList()"><i class="fas fa-file-csv"></i></span>
+    <div class="col-auto" style="margin-top: -1px;">
+      <a class="
+      nav-link
+      btn btn-sm btn-color-muted btn-active btn-active-light-primary
+      fw-bolder
+      px-4
+      me-1
+    " data-bs-toggle="tab" [ngClass]="activeClass('kt_advance-tables_widget_1_tab_1')"
+          (click)="exportToExcelAllCustomerList()">
+          CSV
+      </a>
     </div>
   </div>
   <br>
@@ -144,6 +152,7 @@
           <button type="button" class="btn btn-success" aria-label="Close"
             (click)="updateVyanaByVistUserId()">Add</button>
         </div>
+        <div class="col-md-1"></div>
         <div class="col-md-2">
           <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
             Cancel

@@ -45,9 +45,17 @@
         Cancel
       </button>
     </div>
-    <div class="col-auto" style="margin-top: -6px;">
-      <span style="font-size: 36px;cursor: pointer;" ngbTooltip="Download CSV" (click)="exportToExcelCustomerList()"><i
-          class="fas fa-file-csv"></i></span>
+    <div class="col-auto" style="margin-top: -1px;">
+      <a class="
+      nav-link
+      btn btn-sm btn-color-muted btn-active btn-active-light-primary
+      fw-bolder
+      px-4
+      me-1
+    " data-bs-toggle="tab" [ngClass]="activeClass('kt_advance-tables_widget_2_tab_1')"
+          (click)="exportToExcelCustomerList()">
+          CSV
+      </a>
     </div>
   </div>
   <br>

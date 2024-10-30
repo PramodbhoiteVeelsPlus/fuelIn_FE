@@ -44,15 +44,21 @@
                 <div class="col-md-3">
                     <div class="search-box me-2 mb-2 d-inline-block">
                         <div class="position-relative">
-                            <input class="form-control" type="text" (input)="onSearch()" placeholder="Search" [(ngModel)]="searchData"
-                                [ngModelOptions]="{standalone: true}">
+                            <input class="form-control" type="text" (input)="onSearch()" placeholder="Search"
+                                [(ngModel)]="searchData" [ngModelOptions]="{standalone: true}">
                             <i class="bx bx-search-alt search-icon"></i>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6"></div>
-                <div class="col-md-3">
-                    <a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-light-primary fw-bolder px-4 me-1"
+                <div class="col-md-2">
+                    <a class="
+                    nav-link
+                    btn btn-sm btn-color-muted btn-active btn-active-light-primary
+                    fw-bolder
+                    px-4
+                    me-1
+                  " data-bs-toggle="tab" [ngClass]="activeClass('kt_table_widget_18_tab_1')"
                         (click)="exportExcel()">
                         CSV
                     </a>
@@ -95,16 +101,16 @@
                     <td> {{ data.hostName }} </td>
                     <td> {{ data.hostPhone }} </td>
                     <td style="text-align: center;cursor: pointer;">
-                        <!-- <div ngbDropdown placement="bottom-left">
-                            <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle
-                                data-toggle="dropdown" aria-expanded="true"></i>
+                        <div ngbDropdown placement="bottom-left">
+                            <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                                aria-expanded="true"></i>
                             <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
                                 <a class="dropdown-item" href="javascript: void(0);"
-                                    [routerLink]="['/admin/customerDetailsEdit', data.customerId]">
+                                    [routerLink]="['/customerDetails/customerDetailsEdit', data.customerId]">
                                     <i class="fas fa-edit" style="color: #4e9b4e;">
                                     </i> &nbsp; Edit</a>
                             </div>
-                        </div> -->
+                        </div>
                     </td>
 
                     <td>

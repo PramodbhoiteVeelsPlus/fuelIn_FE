@@ -47,15 +47,35 @@
                         </div>
                         <div class="col-sm-1">
                             <div class="text-sm-end">
-                                <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF"
-                                    placement="bottom" (click)="exportToPDF()"><i class="fas fa-file-pdf"></i></span>
+                                <a class="
+                                nav-link
+                                btn btn-sm btn-color-muted btn-active btn-active-light-primary
+                                fw-bolder
+                                px-4
+                                me-1
+                              " data-bs-toggle="tab" [ngClass]="activeClass('kt_table_widget_29_tab_1')"
+                                    (click)="exportToPDF()">
+                                    PDF
+                                </a>
+                                <!-- <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF"
+                                    placement="bottom" (click)="exportToPDF()"><i class="fas fa-file-pdf"></i></span> -->
 
                             </div>
                         </div>
                         <div class="col-sm-1">
                             <div class="text-sm-end">
-                                <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download CSV"
-                                    placement="bottom" (click)="exportexcel()"><i class="fas fa-file-csv"></i></span>
+                                <a class="
+                                nav-link
+                                btn btn-sm btn-color-muted btn-active btn-active-light-primary
+                                fw-bolder
+                                px-4
+                                me-1
+                              " data-bs-toggle="tab" [ngClass]="activeClass('kt_table_widget_29_tab_1')"
+                                    (click)="exportexcel()">
+                                    CSV
+                                </a>
+                                <!-- <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download CSV"
+                                    placement="bottom" (click)="exportexcel()"><i class="fas fa-file-csv"></i></span> -->
 
                             </div>
                         </div>

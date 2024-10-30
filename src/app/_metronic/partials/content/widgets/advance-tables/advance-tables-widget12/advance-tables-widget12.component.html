@@ -2,20 +2,20 @@
   <div class="col col-xl-12 col-lg-12">
     <div class="card mb-3">
       <div class="card-header">
-        <div class="row">
-          <div class="col-lg-3">
+        <div class="row mb-2">
+          <div class="col-md-3">
             <input *ngIf="!isFastagReg" class="form-control mr-sm-2" type="number" placeholder="Search Phone Number"
               [formControl]="searchBox" aria-label="Search">
             <input *ngIf="isFastagReg" class="form-control mr-sm-2" type="number" [(ngModel)]="phoneSearch"
               placeholder="Search Phone Number" [formControl]="searchBox" aria-label="Search">
           </div>
-          <div class="col-lg-3">
-            <button *ngIf="!isFastagReg" class="btn btn-outline-success" (click)="addfastagStatus()">Add</button>
-            <button *ngIf="isFastagReg" class="btn btn-outline-success" (click)="searchPhoneNumber()">Search</button>
+          <div class="col-md-3">
+            <button *ngIf="!isFastagReg" class="btn btn-success" (click)="addfastagStatus()">Add</button>
+            <button *ngIf="isFastagReg" class="btn btn-success" (click)="searchPhoneNumber()">Search</button>
           </div>
-          <div class="col-lg-4"></div>
-          <div class="col-lg-2">
-            <button *ngIf="!isFastagReg" type="submit" class="btn btn-outline-success my-2 my-sm-0"
+          <!-- <div class="col-md-3"></div> -->
+          <div class="col-md-6">
+            <button *ngIf="!isFastagReg" type="submit" class="btn btn-success"
               (click)="exportAsXLSXCustomer()">Export to Excel</button>
           </div>
         </div>
@@ -249,7 +249,7 @@
           </form>
         </div>
         <div *ngIf="!isFastagReg" class="card-body table-responsive">
-          <table class="table table-hover table-striped">
+          <table class="table table-centered">
             <thead>
               <tr>
                 <th>S.No</th>

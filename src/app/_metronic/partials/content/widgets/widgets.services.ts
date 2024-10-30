@@ -89,6 +89,7 @@ export class WidgetService {
   private getDayWiseShiftBookURL = this.baseURL + 'shiftList/getDayWiseShiftBook';
   private getDayWiseShiftBookMIDURL = this.baseURL + 'shiftList/getDayWiseShiftBookMID'; 
   private getDayWiseShiftBookLASTURL = this.baseURL + 'shiftList/getDayWiseShiftBookLAST'; 
+  private getRequestCallByScheduleDateURL = this.baseURL + 'dealerOnboarding/getRequestCallDetailsByScheduleDate';
 
 
   setHeader() {
@@ -735,6 +736,16 @@ export class WidgetService {
     let headers = new HttpHeaders();
     headers = headers.set('authenticationToken', this.token);
     return this.http.post(this.getDayWiseShiftBookLASTURL, body,{
+      headers: headers
+    })
+  }
+
+  // getRequestCallByScheduleDateURL
+  getRequestCallByScheduleDatePOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getRequestCallByScheduleDateURL, body, {
       headers: headers
     })
   }

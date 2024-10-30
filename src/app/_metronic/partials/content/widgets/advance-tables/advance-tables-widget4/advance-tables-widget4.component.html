@@ -62,13 +62,19 @@
       </div>
       <label for="example-text-input" class="col-auto col-form-label">Pending New Requests:</label>
       <div class="col-md-3">
-        <input class="form-control mr-sm-2" type="number" placeholder="Count of Pending New Requests" readonly>
+        <input class="form-control mr-sm-2" type="number" placeholder="Count of Pending New Requests" disabled>
       </div>
-      <div class="col-md-3">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <span style="font-size: 36px;cursor: pointer;" ngbTooltip="Download CSV"
-          (click)="downloadExcelCustomerOnboardList()"><i class="fas fa-file-csv"></i></span>
+      <div class="col-md-2">
+        <a class="
+        nav-link
+        btn btn-sm btn-color-muted btn-active btn-active-light-primary
+        fw-bolder
+        px-4
+        me-1
+      " data-bs-toggle="tab" [ngClass]="activeClass('kt_advance-tables_widget_4_tab_1')"
+            (click)="downloadExcelCustomerOnboardList()">
+            CSV
+        </a>
       </div>
     </div>
   </div>

@@ -29,8 +29,15 @@
                 </div>
 
                 <div class="col-md-2">
-                    <span style="font-size: 36px;cursor: pointer;" ngbTooltip="Download CSV" (click)="exportExcel()"><i
-                            class="fas fa-file-csv"></i></span>
+                    <a class="
+                    nav-link
+                    btn btn-sm btn-color-muted btn-active btn-active-light-primary
+                    fw-bolder
+                    px-4
+                    me-1
+                  " data-bs-toggle="tab" [ngClass]="activeClass('kt_table_widget_23_tab_1')" (click)="exportExcel()">
+                        CSV
+                    </a>
                 </div>
             </div>
 

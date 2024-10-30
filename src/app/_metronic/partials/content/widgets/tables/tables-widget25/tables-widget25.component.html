@@ -36,8 +36,16 @@
                 </div>
 
                 <div class="col-md-2">
-                    <span style="font-size: 36px;cursor: pointer; margin-top: -15%;" ngbTooltip="Download CSV"
-                        (click)="exportRemovedDealerList()"><i class="fas fa-file-csv"></i></span>
+                    <a class="
+                    nav-link
+                    btn btn-sm btn-color-muted btn-active btn-active-light-primary
+                    fw-bolder
+                    px-4
+                    me-1
+                  " data-bs-toggle="tab" [ngClass]="activeClass('kt_table_widget_25_tab_1')"
+                        (click)="exportRemovedDealerList()">
+                        CSV
+                    </a>
                 </div>
 
             </div>
