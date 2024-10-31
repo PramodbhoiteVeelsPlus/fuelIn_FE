@@ -32,6 +32,9 @@ export class StatsWidget4Component implements OnInit {
   showNewMobileNumberField: boolean = false;
   updateMobileLog1: any = []
   showDetails: boolean = false
+  p: number = 1;
+  p1: number = 1;
+  total: number = 0;
 
   searchBox: FormControl = new FormControl();
   searchTerm: any = "";
@@ -58,6 +61,11 @@ export class StatsWidget4Component implements OnInit {
     var element = JSON.parse(localStorage.getItem('element') || '');
     this.createdBy = element.firstName + ' ' + element.lastName
     this.getDetailsByUpdateMobileLog()
+  }
+
+  pageChangeEvent(event: number) {
+    this.p = event;
+    this.getDetailsByNewMobileNumber();
   }
 
   getDetailsByNewMobileNumber() {
