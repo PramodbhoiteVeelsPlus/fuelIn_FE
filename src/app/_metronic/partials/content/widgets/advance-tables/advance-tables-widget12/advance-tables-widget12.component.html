@@ -265,7 +265,7 @@
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody *ngFor="let customer of customerDetailData; let i = index">
+            <tbody *ngFor="let customer of customerDetailData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
               <tr>
                 <td>{{i+1}}</td>
                 <td>
@@ -289,6 +289,11 @@
               </tr>
             </tbody>
           </table>
+          <!-- begin::Pagination -->
+          <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+              style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+          </pagination-controls>
+          <!-- end::Pagination -->
         </div>
       </div>
     </div>

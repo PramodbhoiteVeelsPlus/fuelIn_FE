@@ -73,7 +73,7 @@
       </tr>
     </thead>
     <tbody
-      *ngFor="let data of getAllFastagUserList1; let i = index">
+      *ngFor="let data of getAllFastagUserList1 | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
       <tr>
         <td> {{data.entityId}} </td>
         <td>{{data.vishUserCreatedAt | date:"d MMM, yyyy"}}</td>
@@ -85,4 +85,9 @@
       </tr>
     </tbody>
   </table>
+  <!-- begin::Pagination -->
+  <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+      style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+  </pagination-controls>
+  <!-- end::Pagination -->
 </div>

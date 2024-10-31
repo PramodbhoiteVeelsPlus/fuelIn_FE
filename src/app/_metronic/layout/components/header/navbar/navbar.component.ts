@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -14,7 +14,10 @@ export class NavbarComponent implements OnInit {
   userAvatarClass: string = 'symbol-35px symbol-md-40px';
   btnIconClass: string = 'fs-2 fs-md-1';
 
-  constructor() {}
+  constructor(
+    private cd: ChangeDetectorRef,) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.cd.detectChanges();
+  }
 }

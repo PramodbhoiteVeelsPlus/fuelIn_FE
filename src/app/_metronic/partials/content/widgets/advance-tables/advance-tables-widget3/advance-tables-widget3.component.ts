@@ -119,6 +119,9 @@ export class AdvanceTablesWidget3Component implements OnInit {
   blacklistStatus1: string;
   rowNumber: any;
   show: boolean = false;
+  p: number = 1;
+  p1: number = 1;
+  total: number = 0;
 
 
   constructor(private post: Adv_TablesService, private excelService: ExcelService,
@@ -142,6 +145,11 @@ export class AdvanceTablesWidget3Component implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getAllVehicleList();
+  }
+
+  pageChangeEvent(event: number) {
+    this.p = event;
     this.getAllVehicleList();
   }
 

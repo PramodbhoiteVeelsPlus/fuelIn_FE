@@ -83,6 +83,9 @@ export class AdvanceTablesWidget12Component {
   isActive: any;
   thrLimit: any;
   personIdLoginUser: any;
+  p: number = 1;
+  p1: number = 1;
+  total: number = 0;
 
 
   constructor(private excelService: ExcelService, private modalService: NgbModal,
@@ -96,6 +99,11 @@ export class AdvanceTablesWidget12Component {
     var element = JSON.parse(localStorage.getItem("element") || '');
       this.showCustomer();
 
+  }
+
+  pageChangeEvent(event: number) {
+    this.p = event;
+    this.showCustomer();
   }
 
   registerCorporateForm = new FormGroup({

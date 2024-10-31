@@ -72,7 +72,7 @@
         <th style="text-align: left;"> Created By </th>
       </tr>
     </thead>
-    <tbody *ngFor="let data of getVishUserCustList2; let i = index">
+    <tbody *ngFor="let data of getVishUserCustList2 | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
       <tr>
         <td>{{data.vishUserCreatedAt | date:"d MMM, yyyy"}}</td>
         <td> {{data.vishUserFirstName}} {{data.vishUserLastName}} </td>
@@ -100,6 +100,11 @@
       </tr>
     </tbody>
   </table>
+  <!-- begin::Pagination -->
+  <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+      style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+  </pagination-controls>
+  <!-- end::Pagination -->
 
   <ng-template #contentOnBoard let-c="close" let-d="dismiss">
     <div class="modal-header">

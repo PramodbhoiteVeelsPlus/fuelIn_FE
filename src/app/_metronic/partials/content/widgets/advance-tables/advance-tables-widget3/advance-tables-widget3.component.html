@@ -73,7 +73,7 @@
         <th style="text-align: left;"> Finance Company Name </th>
       </tr>
     </thead>
-    <tbody *ngFor="let data of getAllVehicleList2; let i = index">
+    <tbody *ngFor="let data of getAllVehicleList2 | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
       <tr>
         <td style="cursor: pointer;">
           <a class="expand-row"
@@ -225,4 +225,9 @@
       </tr>
     </tbody>
   </table>
+  <!-- begin::Pagination -->
+  <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+      style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+  </pagination-controls>
+  <!-- end::Pagination -->
 </div>

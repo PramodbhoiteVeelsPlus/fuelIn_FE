@@ -83,6 +83,9 @@ export class AdvanceTablesWidget1Component {
   ifscCode: any;
   searchBoxAllCustomerList:FormControl = new FormControl();
   searchTermAllCustomerList: any="";
+  p: number = 1;
+  p1: number = 1;
+  total: number = 0;
 
 
 
@@ -108,6 +111,11 @@ export class AdvanceTablesWidget1Component {
   }
 
   ngOnInit() {
+    this.getAllvishUserCustomerList();
+  }
+
+  pageChangeEvent(event: number) {
+    this.p = event;
     this.getAllvishUserCustomerList();
   }
 

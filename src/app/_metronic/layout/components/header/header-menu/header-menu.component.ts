@@ -10,6 +10,9 @@ import { LayoutService } from '../../../core/layout.service';
   styleUrls: ['./header-menu.component.scss'],
 })
 export class HeaderMenuComponent implements OnInit {
+  isDealer: boolean = false;
+  isTransporter: boolean = false;
+  isAdmin: boolean = true;
   constructor(private router: Router, private layout: LayoutService, private layoutInit: LayoutInitService) {}
 
   ngOnInit(): void {}

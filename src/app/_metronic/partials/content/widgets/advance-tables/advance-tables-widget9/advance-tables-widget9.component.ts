@@ -88,8 +88,14 @@ export class AdvanceTablesWidget9Component {
 
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem("element") || '');
+    this.filterForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"));
+    this.filterForm.controls["startDate"].setValue(moment(new Date()).subtract(31,'days').format("DD-MM-YYYY")); 
+    this.filterFormLQ.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"));
+    this.filterFormLQ.controls["startDate"].setValue(moment(new Date()).subtract(31,'days').format("DD-MM-YYYY")); 
     this.getAllEntity();
     this.getAllLQEntity()
+    this.getEntityCount()
+    this.getEntityCountLQ()
     this.cd.detectChanges();
   }
 
@@ -126,9 +132,11 @@ export class AdvanceTablesWidget9Component {
             this.entityCount = res;
           this.entityCountList = res.data
               this.spinner.hide();
+              this.cd.detectChanges();
           } else {
             alert(res.msg);
             this.spinner.hide();
+            this.cd.detectChanges();
           }     
         });
     }else{
@@ -144,9 +152,11 @@ export class AdvanceTablesWidget9Component {
           this.entityCount = res;
           this.entityCountList = res.data
             this.spinner.hide();
+            this.cd.detectChanges();
         } else {
           alert(res.msg);
           this.spinner.hide();
+          this.cd.detectChanges();
         }     
       });
     }
@@ -179,9 +189,11 @@ getEntityCountLQ() {
         if (res.status == "OK") {
         this.entityCountLQList = res.data
             this.spinner.hide();
+            this.cd.detectChanges();
         } else {
           alert(res.msg);
           this.spinner.hide();
+          this.cd.detectChanges();
         }     
       });
   }else{
@@ -196,9 +208,11 @@ getEntityCountLQ() {
       if (res.status == "OK") {
         this.entityCountLQList = res.data
           this.spinner.hide();
+          this.cd.detectChanges();
       } else {
         alert(res.msg);
         this.spinner.hide();
+        this.cd.detectChanges();
       }     
     });
   }

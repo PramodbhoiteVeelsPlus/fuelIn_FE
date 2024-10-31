@@ -127,6 +127,9 @@ export class AdvanceTablesWidget4Component {
   modalReference: any;
   closeResult: string;
   waive: boolean = false;
+  p: number = 1;
+  p1: number = 1;
+  total: number = 0;
 
   constructor(private excelService: ExcelService,
     private spinner: NgxSpinnerService,
@@ -149,6 +152,11 @@ export class AdvanceTablesWidget4Component {
     var element = JSON.parse(localStorage.getItem("element") || '');
     this.personIdLoginUser = element.personId
     this.veelsPlusPersonId = element.veelsPlusId;
+    this.kycDetails();
+  }
+
+  pageChangeEvent(event: number) {
+    this.p = event;
     this.kycDetails();
   }
 

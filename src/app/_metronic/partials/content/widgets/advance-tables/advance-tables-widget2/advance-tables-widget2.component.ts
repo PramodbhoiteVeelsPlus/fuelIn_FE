@@ -72,6 +72,9 @@ export class AdvanceTablesWidget2Component implements OnInit {
   selectedCList: string;
   getAllFastagUserList: any = [];
   getAllFastagUserList1Excel: any = [];
+  p: number = 1;
+  p1: number = 1;
+  total: number = 0;
 
 
 
@@ -96,6 +99,11 @@ export class AdvanceTablesWidget2Component implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getAllFastagCustomerList();
+  }
+
+  pageChangeEvent(event: number) {
+    this.p = event;
     this.getAllFastagCustomerList();
   }
 

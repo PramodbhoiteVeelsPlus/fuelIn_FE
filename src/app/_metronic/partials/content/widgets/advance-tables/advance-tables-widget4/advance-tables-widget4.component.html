@@ -93,7 +93,7 @@
           <th>Decline</th>
         </tr>
       </thead>
-      <tbody *ngFor="let kyc of kycData; let i = index">
+      <tbody *ngFor="let kyc of kycData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
         <tr>
           <td style="cursor: pointer;">
             <a class="expand-row"
@@ -195,6 +195,11 @@
         </tr>
       </tbody>
     </table>
+    <!-- begin::Pagination -->
+    <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+        style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+    </pagination-controls>
+    <!-- end::Pagination -->
 
     <ng-template #contentOnBoard let-c="close" let-d="dismiss">
       <div class="modal-header">
