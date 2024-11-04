@@ -5,7 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ExcelService } from 'src/app/pages/excel.service';
 import moment from 'moment';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -158,6 +158,7 @@ export class StatsWidget10Component {
     private excelService: ExcelService,
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
+    private router: Router
   ) {
     const currentDate = new Date();
     const year = moment(new Date()).subtract(1, 'year').format("YYYY");
@@ -234,14 +235,17 @@ export class StatsWidget10Component {
     }
     this.post.getBranchVeelsplusId(data)
       .subscribe(result => {
-
+        if(result.status){
         this.allBranch = result.data[0];
         this.corporateId = result.data[0].veelsPlusCorporateID
         this.veelsPlusBranchID = result.data[0].veelsPlusBranchID
 
         this.getAllBranchByCorporateVeelsplusId(result.data[0].veelsPlusCorporateID);
         this.cd.detectChanges();
-
+        } else { 
+          alert("Seesion TimeOut Please Login Again..!")
+          this.router.navigate(['/auth/login'])
+        }
 
       })
 

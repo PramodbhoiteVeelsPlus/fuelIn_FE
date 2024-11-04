@@ -7,6 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Adv_TablesService } from '../adv_tables.services';
 import { ExcelService } from 'src/app/pages/excel.service';
 
+@Injectable()
 export class CustomAdapter extends NgbDateAdapter<string> {
   readonly DELIMITER = '-';
   fromModel(value: string | null): NgbDateStruct | null {

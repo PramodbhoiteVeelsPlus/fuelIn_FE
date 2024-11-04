@@ -9,6 +9,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
     providedIn: 'root',
 })
 export class StatsService {
+    searchDealerByMobile(data: { mobileNumber: any; }) {
+      throw new Error('Method not implemented.');
+    }
     fuelDealerId: any;
     year: any;
     headerName1: any;
@@ -123,6 +126,8 @@ export class StatsService {
     private assignKitNumberToPersonIdURL = this.baseURL + 'fuelVendor/assignKitNumberToPersonId'
     private getFastagTransactionByDateURL = this.baseURL + 'fastag/getFastagTransactionByDate';
     private getFastagTransactionByDateLQURL = this.baseURL + 'fastag/getFastagTransactionByDateLQ'; 
+    private getCreditDetailsByDealerIdURL = this.baseURL + 'dealerDashboard/getCreditDetailsByDealerId';
+    private searchDealerByMobileURL = this.baseURL + 'fuelDealerCustMap/getDealerDetailsByDealerPhoneNumber'
 
 
 
@@ -1004,6 +1009,26 @@ export class StatsService {
       let headers = new HttpHeaders();
       headers = headers.set('authenticationToken', this.token);
       return this.http.post(this.getFastagTransactionByDateLQURL, body, {
+        headers: headers
+      })
+    }
+
+    // getCreditDetailsByDealerIdURL
+    getCreditDetailsByDealerIdPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getCreditDetailsByDealerIdURL, body, {
+        headers: headers
+      })
+    }
+
+    // searchDealerByMobileURL
+    searchDealerByMobilePOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.searchDealerByMobileURL, body, {
         headers: headers
       })
     }

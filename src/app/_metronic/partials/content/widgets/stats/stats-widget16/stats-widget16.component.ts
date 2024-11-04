@@ -6,10 +6,10 @@ import { ExcelService } from 'src/app/pages/excel.service';
 import { StatsService } from '../stats.services';
 
 @Component({
-  selector: 'app-stats-widget5',
-  templateUrl: './stats-widget5.component.html',
+  selector: 'app-stats-widget16',
+  templateUrl: './stats-widget16.component.html',
 })
-export class StatsWidget5Component {
+export class StatsWidget16Component {
   @Input() svgIcon = '';
   @Input() iconColor = '';
   @Input() color = '';
@@ -62,7 +62,7 @@ getCreditDetailsByDealerId(fuelDealerId: any) {
       .subscribe(res => {
           if (res.status == "OK") {
               if(res.dataSales[0].totalPurchase){
-                 this.thisMonthCrSale = res.dataSales[0].totalPurchase
+                 this.thisMonthCrSale = Number(res.dataSales[0].totalPurchase).toFixed(2)
               } else {
                   this.thisMonthCrSale = 0
               }

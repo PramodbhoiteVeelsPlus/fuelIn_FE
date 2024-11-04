@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LayoutType } from '../../../core/configs/config';
 import { LayoutInitService } from '../../../core/layout-init.service';
 import { LayoutService } from '../../../core/layout.service';
+import { StatsService } from 'src/app/_metronic/partials/content/widgets/stats/stats.services';
 
 @Component({
   selector: 'app-header-menu',
@@ -12,10 +13,43 @@ import { LayoutService } from '../../../core/layout.service';
 export class HeaderMenuComponent implements OnInit {
   isDealer: boolean = false;
   isTransporter: boolean = false;
-  isAdmin: boolean = true;
-  constructor(private router: Router, private layout: LayoutService, private layoutInit: LayoutInitService) {}
+  isAdmin: boolean = false;
+  veelsplusCorporate: any;
+  customerId: any;
+  phone1: any;
+  companyName: any;
+  city: any;
+  cd: any;
+  constructor(private router: Router, private layout: LayoutService, private layoutInit: LayoutInitService, 
+    private post: StatsService,) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (JSON.parse(localStorage.getItem('isLoggedin') || '{}') == true) {
+      var element = JSON.parse(localStorage.getItem("element") || '{}');
+      this.veelsplusCorporate = element.veelsPlusCorporateID;
+      this.getCorporateById(this.veelsplusCorporate)
+      if (element.accessGroupId == '7') {
+        this.isAdmin = true;
+        this.isDealer = false;
+        this.isTransporter = false;
+      }else if (element.accessGroupId == '2') {
+        this.isTransporter = true;
+        this.isAdmin = false;
+        this.isDealer = false;
+      }else if (element.accessGroupId == '12' || element.accessGroupId == '14') {
+        this.isDealer = true;
+        this.isAdmin = false;
+        this.isTransporter = false;
+      }else{
+        this.isAdmin = false;
+        this.isDealer = false;
+        this.isTransporter = false;
+        this.router.navigate(['/auth/login']);
+      }
+    } else {
+      this.router.navigate(['/auth/login'])
+    }
+  }
 
   calculateMenuItemCssClass(url: string): string {
     return checkIsActive(this.router.url, url) ? 'active' : '';
@@ -31,6 +65,40 @@ export class HeaderMenuComponent implements OnInit {
       currentConfig.app.toolbar.layout = toolbarLayout;
       this.layout.saveBaseConfig(currentConfig)
     }
+  }
+  
+  getCorporateById(veelsplusCorporate: any) {
+    let data = {
+        veelsplusCorporateId: veelsplusCorporate,
+    };
+
+    this.post.getBranchVeelsplusId(data).subscribe((res) => {
+        if (res.status == "OK") {
+            this.customerId = res.data[0].customerId;
+            this.getCustomerAllDataById(this.customerId)
+        } else {
+          alert("Seesion TimeOut Please Login Again..!")
+          this.router.navigate(['/auth/login'])
+        }
+    });
+  }
+  
+  getCustomerAllDataById(customerId: any) {
+    let data = {
+      customerId: customerId
+    }
+
+    this.post.getCustomerByCustomerIdPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          this.city = res.data[0].city;
+          this.companyName = res.data[0].companyName;
+          this.phone1 = res.data[0].phone1;
+
+          // this.getBranchByCorporateVeelsplusId(this.vpcorporateId);
+          this.cd.detectChanges();
+        }
+      })
   }
 }
 

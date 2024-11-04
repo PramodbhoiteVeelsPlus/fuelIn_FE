@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbDateAdapter, NgbDateParserFormatter, NgbDatepickerConfig, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { StatsService } from '../stats.services';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import moment from 'moment';
 import { ExcelService } from 'src/app/pages/excel.service';
 
@@ -154,6 +154,7 @@ export class StatsWidget11Component {
     private excelService: ExcelService,
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
+    private router: Router
   ) {
     const currentDate = new Date();
     const year = moment(new Date()).subtract(1, 'year').format("YYYY");
@@ -241,17 +242,19 @@ export class StatsWidget11Component {
     }
     this.post.getBranchVeelsplusId(data)
       .subscribe(result => {
-
-        this.allBranch = result.data[0];
-        this.corporateId = result.data[0].veelsPlusCorporateID
-        this.veelsPlusBranchID = result.data[0].veelsPlusBranchID
-
-        this.getAllBranchByCorporateVeelsplusId(result.data[0].veelsPlusCorporateID);
-        this.cd.detectChanges();
-
-
-      })
-
+        if(result.status == "OK"){
+          this.allBranch = result.data[0];
+          this.corporateId = result.data[0].veelsPlusCorporateID
+          this.veelsPlusBranchID = result.data[0].veelsPlusBranchID
+  
+          this.getAllBranchByCorporateVeelsplusId(result.data[0].veelsPlusCorporateID);
+          this.cd.detectChanges();
+        } else{
+          alert("Seesion TimeOut Please Login Again..!")
+          this.router.navigate(['/auth/login'])
+      }
+    })
+    
   }
 
   getAllBranchByCorporateVeelsplusId(corporateId: any) {

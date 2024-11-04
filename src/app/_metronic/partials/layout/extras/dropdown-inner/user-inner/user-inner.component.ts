@@ -71,6 +71,9 @@ export class UserInnerComponent implements OnInit, OnDestroy {
     this.post.getBranchVeelsplusId(data).subscribe((res) => {
         if (res.status == "OK") {
             this.customerId = res.data[0].customerId;
+        } else {
+          alert("Seesion TimeOut Please Login Again..!")
+          this.router.navigate(['/auth/login'])
         }
     });
   }

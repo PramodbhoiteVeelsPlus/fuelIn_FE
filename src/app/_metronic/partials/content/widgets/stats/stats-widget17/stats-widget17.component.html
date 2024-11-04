@@ -1,10 +1,10 @@
 <div class="card-body">
  
   <div class="fw-bold" [ngClass]="'text-inverse-' + color + ' fs-5'">
-    Credit O/s
+    Credit Payment
   </div>
   <div [ngClass]="'text-inverse-' + color" class="fw-bold text-white me-2 lh-1 ls-n2">
-    ₹ {{ totalOS }}
+    ₹ {{ thisMonthCrPayment  | number:'1.2-2' }}
   </div>
 
 </div>

@@ -6,10 +6,10 @@ import { ExcelService } from 'src/app/pages/excel.service';
 import { StatsService } from '../stats.services';
 
 @Component({
-  selector: 'app-stats-widget5',
-  templateUrl: './stats-widget5.component.html',
+  selector: 'app-stats-widget17',
+  templateUrl: './stats-widget17.component.html',
 })
-export class StatsWidget5Component {
+export class StatsWidget17Component {
   @Input() svgIcon = '';
   @Input() iconColor = '';
   @Input() color = '';
