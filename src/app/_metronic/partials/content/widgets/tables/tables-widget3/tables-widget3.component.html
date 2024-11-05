@@ -41,6 +41,55 @@
       color: #F8285A;
       /* Change text color if needed */
     }
+
+    .switch {
+      display: inline-block;
+      height: 34px;
+      position: relative;
+      width: 60px;
+    }
+
+    .switch input {
+      display: none;
+    }
+
+    .slider {
+      background-color: #ccc;
+      bottom: 0;
+      cursor: pointer;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      transition: .4s;
+    }
+
+    .slider:before {
+      background-color: #fff;
+      bottom: 4px;
+      content: "";
+      height: 26px;
+      left: 4px;
+      position: absolute;
+      transition: .4s;
+      width: 26px;
+    }
+
+    input:checked+.slider {
+      background-color: #66bb6a;
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(26px);
+    }
+
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
   </style>
 </head>
 
@@ -50,10 +99,10 @@
     <span class="card-label fw-bolder fs-3 mb-1">Staff Overview</span>
   </h3>
   <span class="badge badge-light-warning fs-6 fw-bolder">
-    MANAGER - 1
+    MANAGER - {{totalManager}}
   </span>
   <span class="badge badge-light-success fs-6 fw-bolder">
-    OPERATOR - 2
+    OPERATOR - {{totalOperator}}
   </span>
   <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
     title="Click to add a user">
@@ -77,85 +126,150 @@
       <thead>
         <tr class="fw-bolder text-muted">
           <th class="min-w-50px">#</th>
-          <th class="min-w-150px">Name</th>
+          <th class="min-w-150px">First Name</th>
+          <th class="min-w-150px">Last Name</th>
           <th class="min-w-120px">Mobile</th>
           <th class="min-w-120px">Role</th>
           <th class="min-w-120px">Salary</th>
+          <th class="min-w-120px">Mapping</th>
           <th class="min-w-100px text-center">Actions</th>
         </tr>
       </thead>
       <!-- end::Table head -->
       <!-- begin::Table body -->
-      <tbody *ngFor="let data of staffArray; let i = index">
+      <tbody *ngFor="let data of staffDetailsStaff; let i = index">
         <tr>
-          <td> {{ i + 1 }} </td>
+          <td style="text-align: left;"> {{i+1}} </td>
+          <td style="text-align: left;"> {{data.firstName}} </td>
+          <td style="text-align: left;"> {{data.lastName}} </td>
 
-          <td>
-            <span *ngIf="data.accessGroupId == 12" class="badge badge-light-danger fs-6 fw-bolder">
-              {{ data.firstName }} {{ data.lastName }}
+          <td style="text-align: left;"> {{data.phone1}} </td>
+          <td style="text-align: left;">
+            <span *ngIf="data.accessGroupId == '12'">OWNER</span>
+            <span *ngIf="data.accessGroupId == '13'">OPERATOR</span>
+            <span *ngIf="data.accessGroupId == '14'">MANAGER</span>
+          </td>
+          <td style="text-align: left;">
+            <span *ngIf="data.accessGroupId != '12'">
+              {{data.salary}}
             </span>
-            <span *ngIf="data.accessGroupId == 14" class="badge badge-light-warning fs-6 fw-bolder">
-              {{ data.firstName }} {{ data.lastName }}
-            </span>
-            <span *ngIf="data.accessGroupId == 13" class="badge badge-light-success fs-6 fw-bolder">
-              {{ data.firstName }} {{ data.lastName }}
+            <span *ngIf="data.accessGroupId == '12'">
+              -
             </span>
           </td>
-
-          <td>
-            <span *ngIf="data.accessGroupId == 12" class="badge badge-light-danger fs-6 fw-bolder">
-              {{ data.phone1 }}
+          <td *ngIf="accessGroupId != '14' " style="text-align:left;">
+            <span *ngIf="data.accessGroupId == '12'">
+              -
             </span>
-            <span *ngIf="data.accessGroupId == 14" class="badge badge-light-warning fs-6 fw-bolder">
-              {{ data.phone1 }}
-            </span>
-            <span *ngIf="data.accessGroupId == 13" class="badge badge-light-success fs-6 fw-bolder">
-              {{ data.phone1 }}
-            </span>
-          </td>
-
-          <td>
-            <span *ngIf="data.accessGroupId == 12" class="badge badge-light-danger fs-6 fw-bolder">
-              OWNER
-            </span>
-            <span *ngIf="data.accessGroupId == 14" class="badge badge-light-warning fs-6 fw-bolder">
-              MANAGER
-            </span>
-            <span *ngIf="data.accessGroupId == 13" class="badge badge-light-success fs-6 fw-bolder">
-              OPERATOR
-            </span>
-          </td>
-
-          <td>
-            <span *ngIf="data.accessGroupId == 14" class="badge badge-light-warning fs-6 fw-bolder">
-              {{ data.salary }}
-            </span>
-            <span *ngIf="data.accessGroupId == 13" class="badge badge-light-success fs-6 fw-bolder">
-              {{ data.salary }}
-            </span>
-          </td>
-
-          <td>
-            <span *ngIf="data.accessGroupId != 12">
-              <div class="d-flex justify-content-center flex-shrink-0">
-                <a class="btn btn-icon badge badge-light-success">
-                  <app-keenicon name="switch" class="fs-3"></app-keenicon>
-                </a>
-                <a class="btn btn-icon badge badge-light-warning">
-                  <app-keenicon name="pencil" class="fs-3"></app-keenicon>
-                </a>
-                <a class="btn btn-icon badge badge-light-danger">
-                  <app-keenicon name="trash" class="fs-3"></app-keenicon>
-                </a>
+            <span *ngIf="data.accessGroupId != '12'">
+              <div *ngIf="data.dealerMapStatus == 'MAPPED'">
+                <label class="switch">
+                  <input type="checkbox" checked="checked"
+                    (change)="updateMapping($event,data.fuelDealerStaffId,data.dealerMapStatus)">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <div *ngIf="data.dealerMapStatus == 'UNMAPPED'">
+                <label class="switch">
+                  <input type="checkbox" [checked]="false"
+                    (change)="updateMapping($event,data.fuelDealerStaffId,data.dealerMapStatus)">
+                  <span class="slider round"></span>
+                </label>
               </div>
             </span>
           </td>
 
+          <td *ngIf="accessGroupId != '14' ">
+            <div ngbDropdown placement="bottom-left" *ngIf="data.accessGroupId != '12'">
+              <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                aria-expanded="true"></i>
+              <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                <a class="dropdown-item" href="javascript: void(0);"
+                  (click)="staffEdit(updateStaff,data.fuelDealerStaffId,data.userId,data.personId,data.firstName,data.lastName,data.designation,data.salary)">
+                  <i style="color:#138496;cursor:pointer;" class="fas fa-edit"></i> Edit
+                </a>
+              </div>
+            </div>
+            <span *ngIf="data.accessGroupId == '12'">
+              -
+            </span>
+          </td>
         </tr>
       </tbody>
       <!-- end::Table body -->
     </table>
     <!-- end::Table -->
+
+    <ng-template #updateStaff let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">
+          <strong>
+            &nbsp;&nbsp;&nbsp;
+            Edit Staff </strong>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-2">
+            <label class="labelNewMargin">Name :</label>
+          </div>
+          <div class="col-md-4">
+            <input class="form-control" placeholder="first name" [(ngModel)]="firstName"
+              [ngModelOptions]="{standalone: true}" (ngModelChange)="firstName = $event.toUpperCase()">
+          </div>
+          <div class="col-md-4">
+            <input class="form-control" placeholder="last name" [(ngModel)]="lastName"
+              [ngModelOptions]="{standalone: true}" (ngModelChange)="lastName = $event.toUpperCase()">
+          </div>
+        </div>
+        <br>
+
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-2">
+            <label class="labelNewMargin">Designation :</label>
+          </div>
+          <div class="col-md-4">
+            <select class="form-select" [(ngModel)]="designation" [ngModelOptions]="{standalone: true}">
+              <option value="">Select Role</option>
+              <option value="OPERATOR">OPERATOR</option>
+              <option value="MANAGER">MANAGER</option>
+            </select>
+
+          </div>
+        </div>
+        <br>
+
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-2">
+            <label class="labelNewMargin">Salary :</label>
+          </div>
+          <div class="col-md-4">
+            <input class="form-control" placeholder="salary" type="number" minlength="0" [(ngModel)]="salary"
+              [ngModelOptions]="{standalone: true}">
+          </div>
+        </div>
+        <br>
+
+
+        <div class="row">
+          <div class="col-md-4">
+          </div>
+          <div class="col-md-2">
+            <button type="submit" class="btn btn-outline-success my-2 my-sm-0"
+              (click)="UpdateDealerStaffDetails()">Update</button>
+          </div>
+          &nbsp;&nbsp;
+          <div class="col-md-2">
+            <button type="submit" class="btn btn-danger" (click)="closeModalEditStaff()">Cancel</button>
+          </div>
+        </div>
+
+      </div>
+    </ng-template>
+
   </div>
   <!-- end::Table container -->
 </div>

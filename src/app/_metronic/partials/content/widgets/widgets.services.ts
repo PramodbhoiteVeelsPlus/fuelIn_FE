@@ -90,6 +90,15 @@ export class WidgetService {
   private getDayWiseShiftBookMIDURL = this.baseURL + 'shiftList/getDayWiseShiftBookMID'; 
   private getDayWiseShiftBookLASTURL = this.baseURL + 'shiftList/getDayWiseShiftBookLAST'; 
   private getRequestCallByScheduleDateURL = this.baseURL + 'dealerOnboarding/getRequestCallDetailsByScheduleDate';
+  private getBranchByVeelsplusIdURL = this.baseURL + 'corporate/getBranchByVeelsplusId';
+  private getfuelDealerIdByCorporateIdURL = this.baseURL + 'fuelDealerCustMap/getFuelDealerIdfromCorporateId'
+  private getFuelProductIdByDealerIdURL = this.baseURL + 'fuelPrice/getFuelProductIdByDealerId'
+  private getFuelPriceByProductDateDealerIdURL = this.baseURL + 'fuelPrice/getFuelPriceByProductDateDealerId'; 
+  private getStaffDetailsURL = this.baseURL + 'fuelStaff/getStaffDetails'
+  private updateMapStatusforStaffURL = this.baseURL + 'fuelStaff/updateMapStatusforStaff'; 
+  private UpdateDealerStaffDetailsURL = this.baseURL + 'fuelStaff/UpdateDealerStaffDetails'; 
+  private switchedToStaffURL = this.baseURL + 'userAccess/switchedToStaff'
+  private getStaffCountURL = this.baseURL + 'fuelStaff/getStaffCount'; 
 
 
   setHeader() {
@@ -746,6 +755,96 @@ export class WidgetService {
     let headers = new HttpHeaders();
     headers = headers.set('authenticationToken', this.token);
     return this.http.post(this.getRequestCallByScheduleDateURL, body, {
+      headers: headers
+    })
+  }
+
+  // getBranchByVeelsplusIdURL
+  getBranchByVeelsplusIdPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getBranchByVeelsplusIdURL, body, {
+      headers: headers
+    })
+  }
+
+  // getfuelDealerIdByCorporateIdURL
+  getfuelDealerIdByCorporateIdPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getfuelDealerIdByCorporateIdURL, body, {
+      headers: headers
+    })
+  }
+
+  // getFuelProductIdByDealerIdURL
+  getFuelProductIdByDealerIdPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getFuelProductIdByDealerIdURL, body, {
+      headers: headers
+    })
+  }
+
+  // getFuelPriceByProductDateDealerIdURL
+  getFuelPriceByProductDateDealerIdPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getFuelPriceByProductDateDealerIdURL, body, {
+      headers: headers
+    })
+  }
+
+  // getStaffDetailsURL
+  getStaffDetailsPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getStaffDetailsURL, body, {
+      headers: headers
+    })
+  }
+
+  // updateMapStatusforStaffURL
+  updateMapStatusforStaffPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateMapStatusforStaffURL, body, {
+      headers: headers
+    })
+  }
+
+  // UpdateDealerStaffDetailsURL
+  UpdateDealerStaffDetailsPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.UpdateDealerStaffDetailsURL, body, {
+      headers: headers
+    })
+  }
+
+  // switchedToStaffURL
+  switchedToStaffPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.switchedToStaffURL, body, {
+      headers: headers
+    })
+  }
+
+  // getStaffCountURL
+  getStaffCountPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getStaffCountURL, body, {
       headers: headers
     })
   }

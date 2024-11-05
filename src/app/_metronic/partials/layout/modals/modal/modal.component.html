@@ -24,46 +24,31 @@
     </div>
     <div class="modal-body">
 
-      <div class="d-flex align-items-center mb-8">
-        <!-- begin::Description -->
-        <div class="flex-grow-1">
-          <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
-            <span class="badge badge-light-warning fs-6 fw-bolder">
-              Date </span>
-          </a>
+      <div class="row">
+        <div class="col-md-5">
+          <label for="example-text-input" class="col-md-5 col-form-label"><b> Date</b></label>
         </div>
-        <span class="badge badge-light-warning fs-6 fw-bolder">
+        <div class="col-md-6">
           <input class="form-control bg-transparent" placeholder="DD-MM-YYYY" (click)="startDate.toggle()"
-            name="startDate" ngbDatepicker #startDate="ngbDatepicker" [(ngModel)]="date">
-        </span>
-        <!-- end::Description -->
-      </div>
-      <div class="d-flex align-items-center mb-8" *ngFor="let data of product; let i = index">
-        <!-- begin::Description -->
-        <div class="flex-grow-1">
-          <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
-            <span *ngIf="i % 2 === 0" class="badge badge-light-primary fs-6 fw-bolder">
-              {{ data.productName }} </span>
-            <span *ngIf="i % 2 != 0" class="badge badge-light-success fs-6 fw-bolder">
-              {{ data.productName }} </span>
-          </a>
+            name="startDate" ngbDatepicker #startDate="ngbDatepicker" [(ngModel)]="date" disabled>
         </div>
-        <!-- end::Description -->
-        <span *ngIf="i % 2 === 0" class="badge badge-light-primary fs-6 fw-bolder">
-          <input class="form-control bg-transparent" type="number" name="rate" [(ngModel)]="data.rate"
-            onkeypress="return this.value.length < 6;" placeholder="Enter Rate" (change)="checkAmount($event)" />
-        </span>
-        <span *ngIf="i % 2 != 0" class="badge badge-light-success fs-6 fw-bolder">
-          <input class="form-control bg-transparent" type="number" name="rate" [(ngModel)]="data.rate"
-            onkeypress="return this.value.length < 6;" placeholder="Enter Rate" (change)="checkAmount($event)" />
-        </span>
+      </div>
+      <br>
+      <div class="mb-3 row" *ngFor="let data of allProductPriceList">
+        <label for="example-text-input" class="col-md-5 col-form-label">{{data.productName}} </label>
+        <div class="col-md-6">
+          <input class="form-control" type="number" [(ngModel)]="data.sellingPrice"
+            onkeypress="return this.value.length < 6;" [ngModelOptions]="{standalone: true}" placeholder="Enter Price"
+            (change)="checkAmount($event)">
+        </div>
+        <br><br>
       </div>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-success" (click)="submit()">
+      <button type="button" class="btn btn-success" (click)="submit()">
         Submit
       </button>
-      <button type="button" class="btn btn-outline-danger" (click)="close()">
+      <button type="button" class="btn btn-danger" (click)="close()">
         Cancel
       </button>
     </div>

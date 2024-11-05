@@ -1,80 +1,116 @@
 <!-- begin::Header -->
 <div class="card-header border-0 pt-5">
   <h3 class="card-title align-items-start flex-column">
-    <span class="card-label fw-bolder fs-3 mb-1">Rate Overview1</span>
+    <span class="card-label fw-bolder fs-3 mb-1">Rate Overview</span>
   </h3>
-  <div
-  class="card-toolbar"
-  data-bs-toggle="tooltip"
-  data-bs-placement="top"
-  data-bs-trigger="hover"
-  title="Click to add Rate"
->
-  <a (click)="openModal()" class="btn btn-sm btn-light-primary">
-    <app-keenicon name="plus" class="fs-3"></app-keenicon>
-    Add Rate
-  </a>
-  <app-modal #modal [modalConfig]="modalConfig">
-    Modal body html
-  </app-modal>
-</div>
+  <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
+    title="Click to add Rate">
+    <a (click)="openModal()" class="btn btn-sm btn-light-primary">
+      <app-keenicon name="plus" class="fs-3"></app-keenicon>
+      Add Rate
+    </a>
+    <app-modal #modal [modalConfig]="modalConfig">
+      Modal body html
+    </app-modal>
+  </div>
 </div>
 <!-- end::Header -->
 <!-- begin::Body -->
 <div class="card-body py-3">
   <!-- begin::Table container -->
-  <div class="table-responsive">
-    <!-- begin::Table -->
-    <table class="table align-middle gs-0 gy-5">
-      <!-- begin::Table head -->
-      <thead>
-        <tr class="fw-bolder text-muted">
-          <th class="p-0 min-w-100px">Product</th>
-          <th class="p-0 min-w-100px">Previous</th>
-          <th class="p-0 min-w-100px">Current</th>
+  <div *ngIf="!isNoRate">
+    <table class="table table-hover table-striped">
+      <thead class="table-light">
+        <tr>
+          <th style="text-align: left;"><b> Rate </b></th>
+          <th style="text-align: left;"><b> Previous </b></th>
+          <th style="text-align: left;"><b> Current </b></th>
         </tr>
       </thead>
-      <!-- end::Table head -->
-      <!-- begin::Table body -->
-      <tbody *ngFor="let data of mergedArray; let i = index">
+      <tbody>
         <tr>
-          <td>
-            <span *ngIf="i % 2 === 0" class="badge badge-light-primary fs-6 fw-bolder">
-              {{ data.productName }}
-            </span>
-            <span *ngIf="i % 2 != 0" class="badge badge-light-success fs-6 fw-bolder">
-              {{ data.productName }}
-            </span>
+          <td style="text-align: left;"> {{product11}}
           </td>
-          <td>
-            <div class="d-flex flex-column w-100 me-2">
-              <div class="d-flex flex-stack mb-2">
-                <span *ngIf="i % 2 === 0" class="badge badge-light-primary fs-6 fw-bolder">
-                  {{ data.previousRate | number:"1.1-2" }}
-                </span>
-                <span *ngIf="i % 2 != 0" class="badge badge-light-success fs-6 fw-bolder">
-                  {{ data.previousRate | number:"1.1-2" }}
-                </span>
-              </div>
-            </div>
+          <td style="text-align: left;"> {{product1Rate1}}
           </td>
-          <td>
-            <div class="d-flex flex-column w-100 me-2">
-              <div class="d-flex flex-stack mb-2">
-                <span *ngIf="i % 2 === 0" class="badge badge-light-primary fs-6 fw-bolder">
-                  {{ data.currentRate| number:"1.1-2" }}
-                </span>
-                <span *ngIf="i % 2 != 0" class="badge badge-light-success fs-6 fw-bolder">
-                  {{ data.currentRate| number:"1.1-2" }}
-                </span>
-              </div>
-            </div>
+          <td style="text-align: left;"> {{product1Rate2}}
+          </td>
+        </tr>
+        <tr *ngIf='isProduct2'>
+          <td style="text-align: left;"> {{product22}}
+          </td>
+          <td style="text-align: left;"> {{product2Rate1}}
+          </td>
+          <td style="text-align: left;"> {{product2Rate2}}
+          </td>
+        </tr>
+        <tr *ngIf='isProduct3'>
+          <td style="text-align: left;"> {{product33}}
+          </td>
+          <td style="text-align: left;"> {{product3Rate1}}
+          </td>
+          <td style="text-align: left;"> {{product3Rate2}}
+          </td>
+        </tr>
+        <tr *ngIf='isProduct4'>
+          <td style="text-align: left;"> {{product44}}
+          </td>
+          <td style="text-align: left;"> {{product4Rate1}}
+          </td>
+          <td style="text-align: left;"> {{product4Rate2}}
+          </td>
+        </tr>
+        <tr *ngIf='isProduct5'>
+          <td style="text-align: left;"> {{product55}}
+          </td>
+          <td style="text-align: left;"> {{product5Rate1}}
+          </td>
+          <td style="text-align: left;"> {{product5Rate2}}
+          </td>
+        </tr>
+        <tr *ngIf='isProduct6'>
+          <td style="text-align: left;"> {{product66}}
+          </td>
+          <td style="text-align: left;"> {{product6Rate1}}
+          </td>
+          <td style="text-align: left;"> {{product6Rate2}}
           </td>
         </tr>
       </tbody>
-      <!-- end::Table body -->
+      <br>
+
+
     </table>
-    <!-- end::Table -->
+
+
+  </div>
+
+  <div *ngIf="isNoRate">
+    <table class="table table-hover table-striped">
+      <thead class="table-light">
+        <tr>
+          <th style="text-align: left;"><b> Rate </b></th>
+          <th style="text-align: left;"><b> Previous </b></th>
+          <th style="text-align: left;"><b> Current </b></th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let data of productsList">
+        <tr>
+          <td style="text-align: left;">
+            {{data.productName}} </td>
+          <td style="text-align: left;"> please set rate
+          </td>
+          <td style="text-align: left;"> please set rate
+          </td>
+        </tr>
+
+      </tbody>
+
+      <br>
+    </table>
+
+
+
   </div>
   <!-- end::Table container -->
 </div>
