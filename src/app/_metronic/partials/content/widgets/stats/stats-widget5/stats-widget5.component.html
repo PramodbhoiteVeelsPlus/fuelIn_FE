@@ -1,10 +1,16 @@
 <div class="card-body">
  
   <div class="fw-bold" [ngClass]="'text-inverse-' + color + ' fs-5'">
-    Credit O/s
+    {{ title }}
   </div>
-  <div [ngClass]="'text-inverse-' + color" class="fw-bold text-white me-2 lh-1 ls-n2">
+  <div *ngIf="isOS" [ngClass]="'text-inverse-' + color" class="fw-bold text-white me-2 lh-1 ls-n2">
     ₹ {{ totalOS }}
+  </div>
+  <div *ngIf="isSales" [ngClass]="'text-inverse-' + color" class="fw-bold text-white me-2 lh-1 ls-n2">
+    ₹ {{ thisMonthCrSale }}
+  </div>
+  <div *ngIf="isPayment" [ngClass]="'text-inverse-' + color" class="fw-bold text-white me-2 lh-1 ls-n2">
+    ₹ {{ thisMonthCrPayment }}
   </div>
 
 </div>
