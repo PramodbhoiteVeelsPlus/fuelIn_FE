@@ -3,13 +3,8 @@
   <h3 class="card-title align-items-start flex-column">
     <span class="card-label fw-bolder fs-3 mb-1">Infra Overview</span>
   </h3>
-  <div
-    class="card-toolbar"
-    data-bs-toggle="tooltip"
-    data-bs-placement="top"
-    data-bs-trigger="hover"
-    title="Click to add Infra"
-  >
+  <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
+    title="Click to add Infra">
     <a class="btn btn-sm btn-light-primary" (click)="addInfra()">
       <app-keenicon name="plus" class="fs-3"></app-keenicon>
       Add Infra
@@ -26,60 +21,21 @@
       <!-- begin::Table head -->
       <thead>
         <tr class="fw-bolder text-muted">
-          <th class="p-0 min-w-100px">Product</th>
-          <th class="p-0 min-w-100px">Tank</th>
-          <th class="p-0 min-w-100px">Pump</th>
-          <th class="p-0 min-w-100px">Nozzle</th>
+          <th class="p-0 min-w-100px"><b>Product</b></th>
+          <th class="p-0 min-w-100px"><b>Tank</b></th>
+          <th class="p-0 min-w-100px"><b>Pump</b></th>
+          <th class="p-0 min-w-100px"><b>Nozzle</b></th>
         </tr>
       </thead>
       <!-- end::Table head -->
       <!-- begin::Table body -->
-      <tbody *ngFor="let data of mergedArray; let i = index">
+
+      <tbody *ngFor="let data of infraDetails">
         <tr>
-          <td>
-            <span *ngIf="i % 2 === 0" class="badge badge-light-primary fs-6 fw-bolder">
-              {{ data.productName }}
-            </span>
-            <span *ngIf="i % 2 != 0" class="badge badge-light-success fs-6 fw-bolder">
-              {{ data.productName }}
-            </span>
-          </td>
-          <td>
-            <div class="d-flex flex-column w-100 me-2">
-              <div class="d-flex flex-stack mb-2">
-                <span *ngIf="i % 2 === 0" class="badge badge-light-primary fs-6 fw-bolder">
-                  {{ data.tk }}
-                </span>
-                <span *ngIf="i % 2 != 0" class="badge badge-light-success fs-6 fw-bolder">
-                  {{ data.tk }}
-                </span>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex flex-column w-100 me-2">
-              <div class="d-flex flex-stack mb-2">
-                <span *ngIf="i % 2 === 0" class="badge badge-light-primary fs-6 fw-bolder">
-                  {{ data.du }}
-                </span>
-                <span *ngIf="i % 2 != 0" class="badge badge-light-success fs-6 fw-bolder">
-                  {{ data.du }}
-                </span>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex flex-column w-100 me-2">
-              <div class="d-flex flex-stack mb-2">
-                <span *ngIf="i % 2 === 0" class="badge badge-light-primary fs-6 fw-bolder">
-                  {{ data.nz }}
-                </span>
-                <span *ngIf="i % 2 != 0" class="badge badge-light-success fs-6 fw-bolder">
-                  {{ data.nz }}
-                </span>
-              </div>
-            </div>
-          </td>
+          <td style="text-align: left;"> {{data.productName}} </td>
+          <td style="text-align: left;"> {{data.totalTank}} </td>
+          <td style="text-align: left;"> {{data.totalDU}} </td>
+          <td style="text-align: left;"> {{data.totalNZ}} </td>
         </tr>
       </tbody>
       <!-- end::Table body -->

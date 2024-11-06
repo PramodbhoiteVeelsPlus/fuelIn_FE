@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LayoutType } from '../../../core/configs/config';
 import { LayoutInitService } from '../../../core/layout-init.service';
@@ -19,9 +19,9 @@ export class HeaderMenuComponent implements OnInit {
   phone1: any;
   companyName: any;
   city: any;
-  cd: any;
   constructor(private router: Router, private layout: LayoutService, private layoutInit: LayoutInitService, 
-    private post: StatsService,) {}
+    private post: StatsService,
+    public cd: ChangeDetectorRef,) {}
 
   ngOnInit(): void {
     if (JSON.parse(localStorage.getItem('isLoggedin') || '{}') == true) {
@@ -46,8 +46,10 @@ export class HeaderMenuComponent implements OnInit {
         this.isTransporter = false;
         this.router.navigate(['/auth/login']);
       }
+      this.cd.detectChanges();
     } else {
       this.router.navigate(['/auth/login'])
+      this.cd.detectChanges();
     }
   }
 

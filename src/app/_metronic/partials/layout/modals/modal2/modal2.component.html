@@ -23,77 +23,163 @@
       <!--end::Close-->
     </div>
     <div class="modal-body">
+      <form *ngIf='isNewUser' [formGroup]="userForm">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+                <span class="badge badge-light-warning fs-6 fw-bolder">
+                  Mobile Number </span>
+              </a>
+            </div>
+            <div class="col-md-6">
+              <span class="badge badge-light-primary fs-6 fw-bolder">
+                <input type="number" class="form-control" formControlName="phoneNumber"
+                  placeholder="Enter Mobile Number" (blur)="checkuserPhoneNumber()"
+                  onkeypress="return this.value.length < 10;" oninput="if(this.value.length=10)">
+                <span *ngIf="isvalidPhone" style="color:red;">Mobile Number Should Be 10 Digits</span>
+              </span>
+            </div>
+          </div>
+          <br>
 
-      <div class="d-flex align-items-center mb-8">
-        <!-- begin::Description -->
-        <div class="flex-grow-1">
-          <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
-            <span class="badge badge-light-success fs-6 fw-bolder">
-              Mobile Number </span>
-          </a>
+          <div class="row">
+            <div class="col-md-6">
+              <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+                <span class="badge badge-light-success fs-6 fw-bolder">
+                  First Name</span>
+              </a>
+            </div>
+            <div class="col-md-6">
+              <span class="badge badge-light-primary fs-6 fw-bolder">
+                <input class="form-control" formControlName="firstName" placeholder="Enter First Name"
+                  oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                  required>
+              </span>
+            </div>
+          </div>
+          <br>
+
+          <div class="row">
+            <div class="col-md-6">
+              <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+                <span class="badge badge-light-info fs-6 fw-bolder">
+                  Last Name </span>
+              </a>
+            </div>
+            <div class="col-md-6">
+              <span class="badge badge-light-primary fs-6 fw-bolder">
+                <input class="form-control" formControlName="lastName" placeholder="Enter Last Name"
+                  oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+              </span>
+            </div>
+          </div>
+          <br>
+
+          <div class="row">
+            <div class="col-md-6">
+              <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+                <span class="badge badge-light-primary fs-6 fw-bolder">
+                  Role </span>
+              </a>
+            </div>
+            <div class="col-md-6">
+              <span class="badge badge-light-primary fs-6 fw-bolder">
+                <select class="form-select" formControlName="role" style="color: #9EA79E;">
+                  <option value="">Select Role</option>
+                  <option value="13">OPERATOR</option>
+                  <option value="14">MANAGER</option>
+                </select>
+              </span>
+            </div>
+          </div>
+          <br>
+
+          <div class="modal-footer justify-content-center">
+            <button type="submit" class="btn btn-outline-success my-2 my-sm-0"
+              (click)="fuelStaffRegister()">Save</button>
+            <button type="cancel" class="btn btn-danger" (click)="close()">Close</button>
+          </div>
         </div>
-        <span class="badge badge-light-success fs-6 fw-bolder">
-          <input type="number" placeholder="Mobile Number" class="form-control" [(ngModel)]="mobile"
-            onkeypress="return this.value.length < 10;">
-        </span>
-        <!-- end::Description -->
-      </div>
+      </form>
 
-      <div class="d-flex align-items-center mb-8">
-        <!-- begin::Description -->
-        <div class="flex-grow-1">
-          <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
-            <span class="badge badge-light-primary fs-6 fw-bolder">
-              First Name </span>
-          </a>
+      <form *ngIf='!isNewUser' [formGroup]="reNewStaffForm">
+        <div class="modal-body">
+          <div class="row">
+
+            <div class="col-md-6">
+              <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+                <span class="badge badge-light-primary fs-6 fw-bolder">
+                  Mobile Number </span>
+              </a>
+            </div>
+
+            <div class="col-md-6">
+              <span class="badge badge-light-primary fs-6 fw-bolder">
+                <input type="number" class="form-control" formControlName="mobileNumber"
+                  placeholder="Enter Mobile Number" onkeypress="return this.value.length < 10;"
+                  oninput="if(this.value.length=10)">
+                <span *ngIf="isvalidPhone" style="color:red;">Mobile Number Should Be 10 Digits</span>
+              </span>
+            </div>
+          </div>
+          <br>
+
+          <div class="row">
+            <div class="col-md-6">
+              <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+                <span class="badge badge-light-primary fs-6 fw-bolder">
+                  First Name </span>
+              </a>
+            </div>
+            <div class="col-md-6">
+              <span class="badge badge-light-primary fs-6 fw-bolder">
+                <input class="form-control" formControlName="firstName" placeholder="First Name" readonly
+                  oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                  required>
+              </span>
+            </div>
+          </div>
+          <br>
+
+          <div class="row">
+            <div class="col-md-6">
+              <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+                <span class="badge badge-light-primary fs-6 fw-bolder">
+                  Last Name </span>
+              </a>
+            </div>
+            <div class="col-md-6">
+              <span class="badge badge-light-primary fs-6 fw-bolder">
+                <input class="form-control" formControlName="lastName" placeholder="Last Name" readonly
+                  oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+              </span>
+            </div>
+          </div>
+          <br>
+
+          <div class="row">
+            <div class="col-md-6">
+              <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+                <span class="badge badge-light-primary fs-6 fw-bolder">
+                  Role </span>
+              </a>
+            </div>
+            <div class="col-md-6">
+              <span class="badge badge-light-primary fs-6 fw-bolder">
+                <input class="form-control" formControlName="role" placeholder="Role" readonly
+                  oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+              </span>
+            </div>
+          </div>
+          <br>
         </div>
-        <span class="badge badge-light-primary fs-6 fw-bolder">
-          <input type="text" placeholder="First Name" class="form-control" [(ngModel)]="firstName">
-        </span>
-        <!-- end::Description -->
-      </div>
-
-      <div class="d-flex align-items-center mb-8">
-        <!-- begin::Description -->
-        <div class="flex-grow-1">
-          <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
-            <span class="badge badge-light-info fs-6 fw-bolder">
-              Last Name </span>
-          </a>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-outline-success my-2 my-sm-0" (click)="renewMappingStaff()">Add</button>
+          <button type="cancel" class="btn btn-danger" (click)="closeReNew()">Close</button>
         </div>
-        <span class="badge badge-light-info fs-6 fw-bolder">
-          <input type="text" placeholder="Last Name" class="form-control" [(ngModel)]="lastName">
-        </span>
-        <!-- end::Description -->
-      </div>
-
-      <div class="d-flex align-items-center mb-8">
-        <!-- begin::Description -->
-        <div class="flex-grow-1">
-          <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
-            <span class="badge badge-light-warning fs-6 fw-bolder">
-              Role </span>
-          </a>
-        </div>
-        <span class="badge badge-light-warning fs-6 fw-bolder">
-          <select class="form-select form-select-sm form-select-solid" data-placeholder="" data-hide-search="true"
-            style="width: 220px;" [(ngModel)]="role">
-            <option value=""> Select Role </option>
-            <option value="MANAGER"> MANAGER</option>
-            <option value="OPERATOR"> OPERATOR </option>
-          </select>
-        </span>
-        <!-- end::Description -->
-      </div>
-
+      </form>
     </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-success" (click)="submit()">
-        Submit
-      </button>
-      <button type="button" class="btn btn-outline-danger" (click)="close()">
-        Cancel
-      </button>
-    </div>
+
   </div>
 </ng-template>

@@ -330,6 +330,7 @@ export class TablesWidget3Component implements OnInit {
         if (res.status == "OK") {
            this.totalOperator = res.data1[0].totalOperator;
            this.totalManager = res.data[0].totalManager;
+           this.cd.detectChanges()
         }
     });
   }

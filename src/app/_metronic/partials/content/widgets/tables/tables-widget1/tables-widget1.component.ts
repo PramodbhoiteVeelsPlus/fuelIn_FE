@@ -61,19 +61,6 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   ]
 })
 export class TablesWidget1Component {
-  arrayPrev = [
-    { productSellingPrice: "50", productName: "CNG" },
-    { productSellingPrice: "70", productName: "DIESEL" },
-    { productSellingPrice: "80", productName: "PETROL" },
-    { productSellingPrice: "100", productName: "XTRA" },
-  ];
-  arrayCurrent = [
-    { productSellingPrice: "60", productName: "CNG" },
-    { productSellingPrice: "80", productName: "DIESEL" },
-    { productSellingPrice: "90", productName: "PETROL" },
-    { productSellingPrice: "110", productName: "XTRA" },
-  ]
-  mergedArray: any = [];
   modalConfig: ModalConfig = {
     modalTitle: 'Modal title',
     dismissButtonLabel: 'Submit',
@@ -125,6 +112,8 @@ export class TablesWidget1Component {
   product4Rate2: any;
   product5Rate2: any;
   product6Rate2: any;
+  dealerAccess: boolean = false;
+  liteAccess: boolean = false;
 
   constructor(
     private post: WidgetService,
@@ -140,27 +129,14 @@ export class TablesWidget1Component {
   ngOnInit() {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.dealerLoginVPId = element.veelsPlusCorporateID;
-    this.getCorporateById(this.dealerLoginVPId);
-    this.mergeArray();
-    this.cd.detectChanges()
-  }
-  mergeArray() {
-
-    this.arrayPrev.map(res1 => {
-      const dataJSON = {
-        productName: "",
-        previousRate: "",
-        currentRate: "",
+    if (element.accessGroupId == 12 || element.accessGroupId == 14 || element.accessGroupId == 19 || element.accessGroupId == 21) {
+      this.dealerAccess = true
+      if (element.accessGroupId == 19 || element.accessGroupId == 21) {
+        this.liteAccess = true
       }
-      dataJSON.productName = res1.productName;
-      dataJSON.previousRate = res1.productSellingPrice;
-      this.arrayCurrent.map(res2 => {
-        if (res1.productName == res2.productName) {
-          dataJSON.currentRate = res2.productSellingPrice;
-          this.mergedArray.push(dataJSON)
-        }
-      })
-    })
+    }
+    this.getCorporateById(this.dealerLoginVPId);
+    this.cd.detectChanges()
   }
 
   async openModal() {

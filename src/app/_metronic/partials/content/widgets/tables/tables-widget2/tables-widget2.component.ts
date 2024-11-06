@@ -1,60 +1,179 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, Injectable } from '@angular/core';
+import { NgbDateAdapter, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { WidgetService } from '../../widgets.services';
+
+@Injectable()
+export class CustomAdapter extends NgbDateAdapter<string> {
+
+  readonly DELIMITER = '-';
+
+  fromModel(value: string | null): NgbDateStruct | null {
+    if (value) {
+      let date = value.split(this.DELIMITER);
+      return {
+        day: parseInt(date[0], 10),
+        month: parseInt(date[1], 10),
+        year: parseInt(date[2], 10)
+      };
+    }
+    return null;
+  }
+
+  toModel(date: NgbDateStruct | null): string | null {
+    return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : null;
+  }
+}
+
+/**
+ * This Service handles how the date is rendered and parsed from keyboard i.e. in the bound input field.
+ */
+@Injectable()
+export class CustomDateParserFormatter extends NgbDateParserFormatter {
+
+  readonly DELIMITER = '/';
+
+  parse(value: string): NgbDateStruct | null {
+    if (value) {
+      let date = value.split(this.DELIMITER);
+      return {
+        day: parseInt(date[0], 10),
+        month: parseInt(date[1], 10),
+        year: parseInt(date[2], 10)
+      };
+    }
+    return null;
+  }
+
+  format(date: NgbDateStruct | null): string {
+    return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : '';
+  }
+}
 
 @Component({
   selector: 'app-tables-widget2',
   templateUrl: './tables-widget2.component.html',
-})
-export class TablesWidget2Component {
-  dataDU = [
-    { fuelProductId: "31", productName: "CNG", totalDU: 3 },
-    { fuelProductId: "14", productName: "DIESEL", totalDU: 4 },
-    { fuelProductId: "13", productName: "PETROL", totalDU: 6 },
-    { fuelProductId: "30", productName: "XTRA", totalDU: 2 },
-  ];
-  dataNZ = [
-    { fuelProductId: "31", productName: "CNG", totalNZ: 14 },
-    { fuelProductId: "14", productName: "DIESEL", totalNZ: 11 },
-    { fuelProductId: "13", productName: "PETROL", totalNZ: 10 },
-    { fuelProductId: "30", productName: "XTRA", totalNZ: 4 },
-  ];
-  dataTK = [
-    { fuelProductId: "31", productName: "CNG", totalTK: 4 },
-    { fuelProductId: "14", productName: "DIESEL", totalTK: 4 },
-    { fuelProductId: "13", productName: "PETROL", totalTK: 2 },
-    { fuelProductId: "30", productName: "XTRA", totalTK: 1 },
+  providers: [
+    { provide: NgbDateAdapter, useClass: CustomAdapter },
+    { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }
   ]
-  mergedArray: any = [];
-  constructor() { }
+})
+
+export class TablesWidget2Component {
+  dealerLoginVPId: any;
+  dealerAccess: boolean = false;
+  liteAccess: boolean = false;
+  loginSQLCorporateId: any;
+  fuelDealerId: any;
+  infraDetails: any = [];
+
+  constructor(
+    private post: WidgetService,
+    private spinner: NgxSpinnerService,
+    config: NgbDatepickerConfig,
+    public cd: ChangeDetectorRef,) {
+    const currentDate = new Date();
+    config.minDate = { year: 2018, month: 1, day: 1 };
+    config.maxDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
+    config.outsideDays = 'hidden';
+  }
 
   ngOnInit() {
-    this.mergeArray();
-  }
-  mergeArray() {
-
-    this.dataTK.map(res1 => {
-      const dataJSON = {
-        productName: "",
-        tk: 0,
-        du: 0,
-        nz: 0
+    var element = JSON.parse(localStorage.getItem('element') || '{}');
+    this.dealerLoginVPId = element.veelsPlusCorporateID;
+    if (element.accessGroupId == 12 || element.accessGroupId == 14 || element.accessGroupId == 19 || element.accessGroupId == 21) {
+      this.dealerAccess = true
+      if (element.accessGroupId == 19 || element.accessGroupId == 21) {
+        this.liteAccess = true
       }
-      dataJSON.productName = res1.productName;
-      dataJSON.tk = res1.totalTK;
-      this.dataDU.map(res2 => {
-        if (res1.productName == res2.productName) {
-          dataJSON.du = res2.totalDU;
-          this.dataNZ.map(res3 => {
-            if (res1.productName == res3.productName) {
-              dataJSON.nz = res3.totalNZ;
-              this.mergedArray.push(dataJSON)
-            }
-          })
+    }
+    this.getCorporateById(this.dealerLoginVPId);
+    this.cd.detectChanges()
+  }
+
+  addInfra() {
+    alert("View Infra Page")
+  }
+
+  // get Corporate DetailsBy VP-Id
+  getCorporateById(dealerLoginVPId: any) {
+    let data = {
+      veelsplusCorporateId: dealerLoginVPId
+    }
+    this.post.getBranchByVeelsplusIdPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          if (res.data.length) {
+            this.loginSQLCorporateId = res.data[0].corporateId;
+            this.getfuelDealerIdByCorporateId(this.loginSQLCorporateId);
+            this.cd.detectChanges()
+          }
+          else {
+            alert("Getting Error..! Please Logout & Login again..!")
+            this.cd.detectChanges()
+          }
         }
       })
-    })
   }
 
-  addInfra(){
-    alert("View Infra Page")
+  // getfuelDealerIdByDealerCorporateId
+  getfuelDealerIdByCorporateId(loginSQLCorporateId: any) {
+    let data = {
+      corporateId: loginSQLCorporateId
+    }
+    this.post.getfuelDealerIdByCorporateIdPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          this.fuelDealerId = res.data[0].fuelDealerId;
+          this.getTotalTANKDUByDealerId(this.fuelDealerId);
+          // this.getFuelPriceByProductDateDealer(this.fuelDealerId);
+          this.cd.detectChanges()
+        }
+        else {
+          this.cd.detectChanges()
+        }
+      })
+  }
+
+  //getTotalTANKDUProductwise
+  getTotalTANKDUByDealerId(fuelDealerId: any) {
+    let data = {
+      fuelDealerId: fuelDealerId,
+    };
+    this.post.getTotalTANKDUProductwisePOST(data).subscribe((res) => {
+      if (res.status == "OK") {
+        this.infraDetails = []
+        if (res.dataTK.length) {
+          res.dataTK.map((res1: { productName: string; totalTank: number; fuelProductId: any; }) => {
+
+            const dataJson = {
+              productName: '',
+              totalTank: 0,
+              totalDU: 0,
+              totalNZ: 0,
+            };
+
+            dataJson.productName = res1.productName;
+            dataJson.totalTank = res1.totalTank;
+            res.dataDU.map((res2: { fuelProductId: any; totalDU: number; }) => {
+              if (res1.fuelProductId == res2.fuelProductId) {
+                dataJson.totalDU = res2.totalDU;
+              }
+            })
+            res.dataNZ.map((res3: { fuelProductId: any; totalNz: number; }) => {
+              if (res1.fuelProductId == res3.fuelProductId) {
+                dataJson.totalNZ = res3.totalNz;
+              }
+            })
+
+            this.infraDetails.push(dataJson);
+          });
+          this.cd.detectChanges()
+        }
+
+        this.cd.detectChanges()
+
+      }
+    });
   }
 }

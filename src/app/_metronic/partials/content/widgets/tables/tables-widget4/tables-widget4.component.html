@@ -41,6 +41,55 @@
       color: #F8285A;
       /* Change text color if needed */
     }
+
+    .switch {
+      display: inline-block;
+      height: 34px;
+      position: relative;
+      width: 60px;
+    }
+
+    .switch input {
+      display: none;
+    }
+
+    .slider {
+      background-color: #ccc;
+      bottom: 0;
+      cursor: pointer;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      transition: .4s;
+    }
+
+    .slider:before {
+      background-color: #fff;
+      bottom: 4px;
+      content: "";
+      height: 26px;
+      left: 4px;
+      position: absolute;
+      transition: .4s;
+      width: 26px;
+    }
+
+    input:checked+.slider {
+      background-color: #66bb6a;
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(26px);
+    }
+
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
   </style>
 </head>
 
@@ -80,75 +129,167 @@
           <th class="min-w-120px">Account Number</th>
           <th class="min-w-100px">IFSC Code</th>
           <th class="min-w-120px">UPI</th>
+          <th class="min-w-120px">Default Account</th>
           <th class="min-w-100px text-center">Actions</th>
         </tr>
       </thead>
       <!-- end::Table head -->
       <!-- begin::Table body -->
-      <tbody *ngFor="let data of bankArray; let i = index">
+      <tbody *ngFor="let data of bankAccList; let i = index">
+
         <tr>
-          <td> {{ i + 1 }} </td>
-
-          <td>
-            <span *ngIf="data.uniqueStatus == 'TRUE'" class="badge badge-light-success fs-6 fw-bolder">
-              {{ data.type }}
-            </span>
-            <span *ngIf="data.uniqueStatus != 'TRUE'" class="badge badge-light-info fs-6 fw-bolder">
-              {{ data.type }}
-            </span>
-          </td>
-
-          <td>
-            <span *ngIf="data.uniqueStatus == 'TRUE'" class="badge badge-light-success fs-6 fw-bolder">
-              {{ data.bankName }}
-            </span>
-            <span *ngIf="data.uniqueStatus != 'TRUE'" class="badge badge-light-info fs-6 fw-bolder">
-              {{ data.bankName }}
-            </span>
-          </td>
-
-          <td>
-            <span *ngIf="data.uniqueStatus == 'TRUE'" class="badge badge-light-success fs-6 fw-bolder">
-              {{ data.accountNumber }}
-            </span>
-            <span *ngIf="data.uniqueStatus != 'TRUE'" class="badge badge-light-info fs-6 fw-bolder">
-              {{ data.accountNumber }}
-            </span>
-          </td>
-
-          <td>
-            <span *ngIf="data.uniqueStatus == 'TRUE'" class="badge badge-light-success fs-6 fw-bolder">
-              {{ data.ifsc }}
-            </span>
-            <span *ngIf="data.uniqueStatus != 'TRUE'" class="badge badge-light-info fs-6 fw-bolder">
-              {{ data.ifsc }}
-            </span>
-          </td>
-
-          <td>
-            <span *ngIf="data.uniqueStatus == 'TRUE'" class="badge badge-light-success fs-6 fw-bolder">
-              {{ data.upiId }}
-            </span>
-            <span *ngIf="data.uniqueStatus != 'TRUE'" class="badge badge-light-info fs-6 fw-bolder">
-              {{ data.upiId }}
-            </span>
-          </td>
-
-          <td>
-            <div class="d-flex justify-content-center flex-shrink-0">
-              <a class="btn btn-icon badge badge-light-success">
-                <app-keenicon name="switch" class="fs-3"></app-keenicon>
-              </a>
-              <a class="btn btn-icon badge badge-light-warning">
-                <app-keenicon name="pencil" class="fs-3"></app-keenicon>
-              </a>
-              <a class="btn btn-icon badge badge-light-danger">
-                <app-keenicon name="trash" class="fs-3"></app-keenicon>
-              </a>
+          <td style="text-align: left;"> {{i+1}} </td>
+          <td style="text-align: left;"> {{data.type}} </td>
+          <td style="text-align: left;"> {{data.accountNumber}} </td>
+          <td style="text-align: left;"> {{data.ifsc}} </td>
+          <td style="text-align: left;"> {{data.upiId}} </td>
+          <td style="text-align: left;"> {{data.bankName}} </td>
+          <td style="text-align: left;">
+            <div *ngIf="data.uniqueStatus == 'TRUE'">
+              <label class="switch">
+                <input type="checkbox" checked="checked"
+                  (change)="statusBankEnable($event,data.bankDetailsId,data.dealerId)">
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div *ngIf="data.uniqueStatus =='FALSE'">
+              <label class="switch">
+                <input type="checkbox" [checked]="false"
+                  (change)="statusBankEnable($event,data.bankDetailsId,data.dealerId)">
+                <span class="slider round"></span>
+              </label>
             </div>
           </td>
+          <td style="text-align:left;">
+            <div ngbDropdown placement="bottom-left">
+              <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                aria-expanded="true"></i>
+              <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                <a class="dropdown-item" href="javascript: void(0);"
+                  (click)="updateBank(editBank,data.bankDetailsId,data.bankName,data.accountHolderName,data.accountNumber,data.phone,data.upiId,data.ifsc,data.branchName)">
+                  <i style="color:#138496;cursor:pointer;" class="fas fa-edit">
+                  </i> Edit
+                </a>
+                <a class="dropdown-item" href="javascript: void(0);" (click)="deletBankAcc(data.bankDetailsId)">
+                  <i style="color:red" class="fa fa-ban">
+                  </i> Remove
+                </a>
+              </div>
+            </div>
+
+          </td>
+
 
         </tr>
+
+        <ng-template #editBank let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="modal-title">
+              <label>
+                <h4>
+                  <strong>
+                    Update Account <br></strong>
+                </h4>
+              </label>
+            </h4>
+            <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="updateBankDetailsForm">
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                  <label class="labelNewMargin">Account Number <span style="color: red;">*</span></label>
+                </div>
+                <div class="col-md-3">
+                  <input class="form-control" formControlName="accountNumber" placeholder="Account Number">
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                  <label class="labelNewMargin">Bank Name</label>
+                </div>
+                <div class="col-md-3">
+                  <input class="form-control"
+                    oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                    type="text" formControlName="bankName" placeholder="Bank Name">
+                </div>
+
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                  <label class="labelNewMargin">Mobile Number<span style="color: red;">*</span></label>
+                </div>
+                <div class="col-md-3">
+                  <input class="form-control" type="number" formControlName="phone"
+                    onkeypress="return this.value.length < 10;" oninput="if(this.value.length=10)"
+                    placeholder="Mobile Number">
+
+                </div>
+              </div>
+              <div class="col-md-1"></div>
+              <div class="col-md-2">
+                <label class="labelNewMargin">Account Holder</label>
+              </div>
+              <div class="col-md-3">
+                <input class="form-control"
+                  oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                  type="text" formControlName="accountHolderName" placeholder="Acc Holder Name">
+              </div>
+
+              <!-- </div> -->
+              <br>
+              <div class="row">
+
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                  <label class="labelNewMargin">IFSC <span style="color: red;">*</span></label>
+                </div>
+                <div class="col-md-3">
+                  <input class="form-control" formControlName="ifsc"
+                    oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                    placeholder="enter IFSC">
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                  <label class="labelNewMargin"> Branch Name</label>
+                </div>
+                <div class="col-md-3">
+                  <input class="form-control"
+                    oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                    type="text" formControlName="branchName" placeholder="Branch Name">
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                  <label class="labelNewMargin">UPI</label>
+                </div>
+                <div class="col-md-3">
+                  <input class="form-control" type="text" formControlName="upiId" placeholder="UPI">
+                </div>
+
+              </div>
+
+              <br>
+              <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-2">
+                  <button type="submit" class="btn btn-outline-success my-2 my-sm-0"
+                    [disabled]="!updateBankDetailsForm.valid" (click)="updateBankAcc()">Update</button>
+                </div>&nbsp;&nbsp;
+                <div class="col-md-2">
+                  <button type="submit" class="btn btn-danger" (click)="clearModal()">Cancel</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </ng-template>
+
       </tbody>
       <!-- end::Table body -->
     </table>
