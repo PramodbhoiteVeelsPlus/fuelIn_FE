@@ -20,15 +20,14 @@ export class StatsWidget5Component {
   thisMonthCrSale: any;
   thisMonthCrPayment: any;
   totalOS: any;
+  isOS: boolean;
+  isSales: boolean;
+  isPayment: boolean;
 
   constructor(
     private post: StatsService,
     private spinner: NgxSpinnerService,
-    config: NgbDatepickerConfig,
-    private excelService: ExcelService,
-    private cd: ChangeDetectorRef,
-    private route: ActivatedRoute,
-    private router: Router) {}
+    private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem("element") || '{}');
@@ -36,49 +35,63 @@ export class StatsWidget5Component {
     this.getDealerIdByPhone(this.dealerMobile);
     this.cd.detectChanges()
   }
-  
+
   getDealerIdByPhone(dealerMobile: any) {
     let data = {
-        mobileNumber: dealerMobile,
+      mobileNumber: dealerMobile,
     };
     this.post.searchDealerByMobilePOST(data)
       .subscribe(res => {
         if ((res.status = "OK")) {
-            this.fuelDealerId = res.data[0].fuelDealerId;
-            this.getCreditDetailsByDealerId(this.fuelDealerId);
-            this.cd.detectChanges()
+          this.fuelDealerId = res.data[0].fuelDealerId;
+          this.getCreditDetailsByDealerId(this.fuelDealerId);
+          if (this.title == "Credit O/s") {
+            this.isOS = true;
+            this.isSales = false;
+            this.isPayment = false;
+          } else if (this.title == "Credit Sales") {
+            this.isOS = false;
+            this.isSales = true;
+            this.isPayment = false;
+          } else if (this.title == "Credit Payment") {
+            this.isOS = false;
+            this.isSales = false;
+            this.isPayment = true;            
+          }
+          this.cd.detectChanges()
         } else {
         }
-    });
-}
-
-getCreditDetailsByDealerId(fuelDealerId: any) {
-  this.spinner.show()
-  let data = {
-      fuelDealerId: fuelDealerId
+      });
   }
 
-  this.post.getCreditDetailsByDealerIdPOST(data)
-      .subscribe(res => {
-          if (res.status == "OK") {
-              if(res.dataSales[0].totalPurchase){
-                 this.thisMonthCrSale = res.dataSales[0].totalPurchase
-              } else {
-                  this.thisMonthCrSale = 0
-              }
+  getCreditDetailsByDealerId(fuelDealerId: any) {
+    this.spinner.show()
+    let data = {
+      fuelDealerId: fuelDealerId
+    }
 
-              if(res.dataPayment[0].totalPayment){
-                  this.thisMonthCrPayment = res.dataPayment[0].totalPayment
-              } else {
-                  this.thisMonthCrPayment = 0
-              }
-              this.totalOS = Number(res.outstanding).toFixed(2);
-              this.spinner.hide();
-              this.cd.detectChanges()
+    this.post.getCreditDetailsByDealerIdPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          if (res.dataSales[0].totalPurchase) {
+            this.thisMonthCrSale = res.dataSales[0].totalPurchase
           } else {
-              this.spinner.hide();
-              this.cd.detectChanges()
+            this.thisMonthCrSale = 0
           }
+          if (res.dataPayment[0].totalPayment) {
+            this.thisMonthCrPayment = res.dataPayment[0].totalPayment
+          } else {
+            this.thisMonthCrPayment = 0
+          }
+          this.totalOS = Number(res.outstanding).toFixed(2);
+          this.spinner.hide();
+          this.cd.detectChanges()
+        } else {
+          this.spinner.hide();
+          this.cd.detectChanges()
+        }
       })
-}
+  }
+
+  
 }
