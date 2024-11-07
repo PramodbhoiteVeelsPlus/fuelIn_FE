@@ -23,106 +23,109 @@
       <!--end::Close-->
     </div>
     <div class="modal-body">
-      <div class="col-md-12">
-        <div class="row">
-          <!-- <div class="col-md-1"></div> -->
-          <div class="col-md-4">
-            <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+      <form [formGroup]="addBankDetailsForm">
+        <div class="col-md-12">
+          <div class="row">
+            <!-- <div class="col-md-1"></div> -->
+            <div class="col-md-4">
+              <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+                <span class="badge badge-light-success fs-6 fw-bolder">
+                  Account Number <span style="color: red;">*</span></span>
+              </a>
+              <br>
               <span class="badge badge-light-success fs-6 fw-bolder">
-                Account Number <span style="color: red;">*</span></span>
-            </a>
-            <br>
-            <span class="badge badge-light-success fs-6 fw-bolder">
-              <input type="number" placeholder="Account Number" class="form-control" [(ngModel)]="accountNumber">
-            </span>
-          </div>
+                <input type="number" placeholder="Account Number" class="form-control" formControlName="accountNumber">
+              </span>
+            </div>
 
-          <div class="col-md-4">
-            <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+            <div class="col-md-4">
+              <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+                <span class="badge badge-light-info fs-6 fw-bolder">
+                  Mobile Number <span style="color: red;">*</span></span>
+              </a>
               <span class="badge badge-light-info fs-6 fw-bolder">
-                Mobile Number <span style="color: red;">*</span></span>
-            </a>
-            <span class="badge badge-light-info fs-6 fw-bolder">
-              <input type="number" placeholder="Mobile Number" class="form-control" [(ngModel)]="mobile"
-                onkeypress="return this.value.length < 10;">
-            </span>
+                <input type="number" placeholder="Mobile Number" class="form-control" formControlName="AccPhoneNumber"
+                  onkeypress="return this.value.length < 10;">
+              </span>
 
-          </div>
+            </div>
 
-          <div class="col-md-4">
-            <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
-              <span class="badge badge-light-warning fs-6 fw-bolder">
-                IFSC <span style="color: red;">*</span></span>
-            </a>
-            <span class="badge badge-light-warningfs-6 fw-bolder">
-              <input type="number" placeholder="IFSC" class="form-control" [(ngModel)]="ifsc">
-            </span>
-          </div>
+            <div class="col-md-4">
+              <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+                <span class="badge badge-light-warning fs-6 fw-bolder">
+                  IFSC <span style="color: red;">*</span></span>
+              </a>
+              <span class="badge badge-light-warningfs-6 fw-bolder">
+                <input type="number" placeholder="IFSC" class="form-control" formControlName="ifsc">
+              </span>
+            </div>
 
-        </div>
-        <br><br>
-
-        <div class="row">
-          <!-- <div class="col-md-1"></div> -->
-          <div class="col-md-4">
-            <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
-              <span class="badge badge-light-successfs-6 fw-bolder">
-                Account Holder Name </span>
-            </a>
-            <span class="badge badge-light-success fs-6 fw-bolder">
-              <input type="text" placeholder="Account Holder Name" class="form-control" [(ngModel)]="accountHolderName">
-            </span>
-          </div>
-
-          <div class="col-md-4">
-            <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
-              <span class="badge badge-light-info fs-6 fw-bolder">
-                Bank Name </span>
-            </a>
-            <span class="badge badge-light-info fs-6 fw-bolder">
-              <input type="text" placeholder="Bank Name" class="form-control" [(ngModel)]="bankName">
-            </span>
-          </div>
-
-          <div class="col-md-4">
-            <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
-              <span class="badge badge-light-warning fs-6 fw-bolder">
-                Branch Name </span>
-            </a>
-            <span class="badge badge-light-warning fs-6 fw-bolder">
-              <input type="text" placeholder="Branch Name" class="form-control" [(ngModel)]="branchName">
-            </span>
-          </div>
-
-        </div>
-        <br><br>
-
-        <div class="row">
-          <div class="col-md-4">
-            <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
-              <span class="badge badge-light-success fs-6 fw-bolder">
-                UPI ID </span>
-            </a>
-            <span class="badge badge-light-success fs-6 fw-bolder">
-              <input type="text" placeholder="UPI ID" class="form-control" [(ngModel)]="upiId">
-            </span>
           </div>
           <br><br>
-          <div class="col-md-4">
-            <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+
+          <div class="row">
+            <!-- <div class="col-md-1"></div> -->
+            <div class="col-md-4">
+              <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+                <span class="badge badge-light-successfs-6 fw-bolder">
+                  Account Holder Name </span>
+              </a>
+              <span class="badge badge-light-success fs-6 fw-bolder">
+                <input type="text" placeholder="Account Holder Name" class="form-control"
+                formControlName="accountHolderName">
+              </span>
+            </div>
+
+            <div class="col-md-4">
+              <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+                <span class="badge badge-light-info fs-6 fw-bolder">
+                  Bank Name </span>
+              </a>
               <span class="badge badge-light-info fs-6 fw-bolder">
-                Account Type </span>
-            </a>
-            <span class="badge badge-light-info fs-6 fw-bolder">
-              <select class="form-select form-select-sm form-select-solid" data-placeholder="" data-hide-search="true"
-                style="width: 220px;" [(ngModel)]="accountType">
-                <option value="SAVING"> SAVING </option>
-                <option value="LOAN"> LOAN </option>
-              </select>
-            </span>
+                <input type="text" placeholder="Bank Name" class="form-control" formControlName="bankName">
+              </span>
+            </div>
+
+            <div class="col-md-4">
+              <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+                <span class="badge badge-light-warning fs-6 fw-bolder">
+                  Branch Name </span>
+              </a>
+              <span class="badge badge-light-warning fs-6 fw-bolder">
+                <input type="text" placeholder="Branch Name" class="form-control" formControlName="branchName">
+              </span>
+            </div>
+
+          </div>
+          <br><br>
+
+          <div class="row">
+            <div class="col-md-4">
+              <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+                <span class="badge badge-light-success fs-6 fw-bolder">
+                  UPI ID </span>
+              </a>
+              <span class="badge badge-light-success fs-6 fw-bolder">
+                <input type="text" placeholder="UPI ID" class="form-control" formControlName="upiId">
+              </span>
+            </div>
+            <br><br>
+            <div class="col-md-4">
+              <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+                <span class="badge badge-light-info fs-6 fw-bolder">
+                  Account Type </span>
+              </a>
+              <span class="badge badge-light-info fs-6 fw-bolder">
+                <select class="form-select form-select-sm form-select-solid" data-placeholder="" data-hide-search="true"
+                  style="width: 220px;" formControlName="accountType">
+                  <option value="SAVING"> SAVING </option>
+                  <option value="LOAN"> LOAN </option>
+                </select>
+              </span>
+            </div>
           </div>
         </div>
-      </div>
+      </form>
 
     </div>
     <div class="modal-footer">
