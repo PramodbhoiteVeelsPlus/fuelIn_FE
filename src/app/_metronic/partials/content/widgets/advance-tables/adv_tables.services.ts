@@ -93,7 +93,7 @@ export class Adv_TablesService {
 
     setHeader() {
         this.token = JSON.parse(localStorage.getItem('authenticationToken') || '{}');
-        console.log("AuthTolen", this.token)
+        
     }
 
 

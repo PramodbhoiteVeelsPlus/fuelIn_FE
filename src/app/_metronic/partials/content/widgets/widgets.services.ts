@@ -109,7 +109,7 @@ export class WidgetService {
 
   setHeader() {
     this.token = JSON.parse(localStorage.getItem('authenticationToken') || '{}');
-    console.log("AuthTolen", this.token)
+    
   }
 
 

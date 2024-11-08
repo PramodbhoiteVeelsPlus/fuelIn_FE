@@ -42,10 +42,13 @@ export class SidebarMenuComponent implements OnInit {
   }
   
   // logout() {
+  //  localStorage.removeItem('authenticationToken');
   //   localStorage.setItem('isLoggedin', 'false');
   //   localStorage.removeItem('element');
   //   localStorage.removeItem('username');
   //   localStorage.removeItem('userdata');
+    // localStorage.removeItem('dealerList');
+    // localStorage.removeItem('creditData');
   //   this.router.navigate(['/auth/login'])
   // }
 

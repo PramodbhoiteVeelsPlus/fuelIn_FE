@@ -37,7 +37,7 @@ export class ModalsService {
 
   setHeader() {
     this.token = JSON.parse(localStorage.getItem('authenticationToken') || '{}');
-    console.log("AuthTolen", this.token)
+    
   }
   
   // addFuelPriceByDealerIdURL

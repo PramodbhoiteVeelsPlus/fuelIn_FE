@@ -37,12 +37,8 @@ export class UserInnerComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    // this.auth.logout();
-    // document.location.reload();
     localStorage.setItem('isLoggedin', 'false');
-    localStorage.removeItem('element');
-    localStorage.removeItem('username');
-    localStorage.removeItem('userdata');
+    localStorage.clear();
     this.router.navigate(['/auth/login'])
   }
 

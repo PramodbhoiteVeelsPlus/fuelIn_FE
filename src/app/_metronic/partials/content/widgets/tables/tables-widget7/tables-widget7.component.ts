@@ -96,28 +96,49 @@ export class TablesWidget7Component implements OnInit {
   }
 
   ngOnInit(): void {
+    this.allentityList = JSON.parse(localStorage.getItem('allentityList') || '{}');
+    this.fastagData = JSON.parse(localStorage.getItem('fastagData') || '{}');
     this.currentYear = new Date().getFullYear();
-    this.getAllEntity()
-    this.getFastag()
+    if(!this.allentityList.length){
+      this.getAllEntity()
+    }else{
+      this.getAllEntity1();
+    }
+    if(!this.fastagData.length){
+      this.getFastag();
+    }else{
+      this.getFastag1();
+    }
     this.cd.detectChanges();
   }
 
   getAllEntity() {
     let data = {
-
     }
     this.post.getAllEntityIdPOST(data)
       .subscribe(res => {
-        this.allentityList = res.data
+        this.allentityList = res.data;
+        localStorage.setItem('allentityList', JSON.stringify(res.data));
         this.cd.detectChanges();
       })
   }
+  getAllEntity1() {
+    let data = {
+    }
+    this.post.getAllEntityIdPOST(data)
+      .subscribe(res => {
+        this.allentityList = res.data;
+        localStorage.setItem('allentityList', JSON.stringify(res.data));
+        this.cd.detectChanges();
+      })
+  }
+  
+  
 
   getcustomerIdByEntity(id: any) {
     this.entityId = id.target.value
     this.customerIdByEntity(this.entityId)
     this.cd.detectChanges();
-    // this.getFastag()
   }
 
   customerIdByEntity(entityId: any) {
@@ -161,14 +182,35 @@ export class TablesWidget7Component implements OnInit {
         .subscribe((res) => {
           if (res.status == 'OK') {
             this.fastagData = res.data;
+            localStorage.setItem('fastagData', JSON.stringify(res.data));
             this.spinner.hide()
             this.cd.detectChanges();
           } else {
             this.spinner.hide()
+            localStorage.setItem('fastagData', JSON.stringify(''));
             this.cd.detectChanges();
           }
         })
     }
+  }
+  getFastag1() {
+      let data = {
+        year: this.currentYear
+      };
+      this.post.getFastagByYearPOST(data)
+        .subscribe((res) => {
+          if (res.status == 'OK') {
+            this.fastagData = res.data;
+            localStorage.setItem('fastagData', JSON.stringify(res.data));
+            this.spinner.hide()
+            this.cd.detectChanges();
+          } else {
+            this.spinner.hide()
+            localStorage.setItem('fastagData', JSON.stringify(''));
+            this.cd.detectChanges();
+          }
+        })
+    
   }
 
   exportToPDF() {

@@ -108,23 +108,30 @@ export class TablesWidget6Component implements OnInit {
   }
 
   ngOnInit() {
+    this.dealerList = JSON.parse(localStorage.getItem('dealerList') || '{}');
+    this.creditData = JSON.parse(localStorage.getItem('creditData') || '{}');
     this.lastyr = moment(new Date()).subtract(1, 'year').format("YYYY")
     this.nextyr = moment(new Date()).add(1, 'year').format("YYYY")
-    this.getDealerList()
-    this.getCreditDetailsYearWise()
-    this.cd.detectChanges();
+    if (!this.dealerList.length) {
+      this.getDealerList();
+    } else {
+      this.getDealerList1();
+    }
+    if (!this.creditData.length) {
+      this.getCreditDetailsYearWise();
+    }else{
+      this.getCreditDetailsYearWise1();
+    }
   }
 
   getDealerList() {
     this.spinner.show()
     let data = {
-
     }
-
     this.post.getDealerListPOST(data).subscribe((res) => {
       if (res.status == "OK") {
         this.dealerList = res.data;
-        this.spinner.hide()
+        localStorage.setItem('dealerList', JSON.stringify(res.data));
         this.cd.detectChanges();
       } else {
         this.dealerList = [];
@@ -133,8 +140,23 @@ export class TablesWidget6Component implements OnInit {
       }
     })
   }
+  getDealerList1() {
+    let data = {
+    }
+    this.post.getDealerListPOST(data).subscribe((res) => {
+      if (res.status == "OK") {
+        this.dealerList = res.data;
+        localStorage.setItem('dealerList', JSON.stringify(res.data));
+        this.cd.detectChanges();
+      } else {
+        this.dealerList = [];
+        this.cd.detectChanges();
+      }
+    })
+  }
 
   getDetailsByCustomerMapName(id: any) {
+    this.spinner.show()
     let data = {
       name: id.target.value,
     }
@@ -157,9 +179,8 @@ export class TablesWidget6Component implements OnInit {
       let data = {
         fuelDealerId: this.fuelDealerId,
         startDate: moment(this.lastyr).format("YYYY-04-01"),
-        endDate: moment(this.nextyr).format("YYYY-03-31")
+        endDate: moment(this.nextyr).format("YYYY-03-31"),
       }
-
       this.post.getYearWiseCreditPOST(data).subscribe(res => {
         if (res.status == "OK") {
           this.creditData = res.data;
@@ -167,7 +188,7 @@ export class TablesWidget6Component implements OnInit {
           this.cd.detectChanges();
         } else {
           this.creditData = [];
-          this.spinner.hide()
+          this.spinner.hide();
           this.cd.detectChanges();
         }
       })
@@ -175,22 +196,41 @@ export class TablesWidget6Component implements OnInit {
       this.spinner.show()
       let data = {
         startDate: moment(this.lastyr).format("YYYY-04-01"),
-        endDate: moment(this.nextyr).format("YYYY-03-31")
+        endDate: moment(this.nextyr).format("YYYY-03-31"),
       }
-
       this.post.getYearWiseCreditPOST(data).subscribe(res => {
         if (res.status == "OK") {
           this.creditData = res.data;
           this.data = res.data[0].month
-          console.log("data", this.creditData)
+          localStorage.setItem('creditData', JSON.stringify(res.data));
           this.spinner.hide()
           this.cd.detectChanges();
         } else {
           this.creditData = [];
+          localStorage.setItem('creditData', JSON.stringify(''));
           this.spinner.hide()
           this.cd.detectChanges();
         }
       })
     }
+  }
+  getCreditDetailsYearWise1() {   
+      let data = {
+        startDate: moment(this.lastyr).format("YYYY-04-01"),
+        endDate: moment(this.nextyr).format("YYYY-03-31"),
+      }
+      this.post.getYearWiseCreditPOST(data).subscribe(res => {
+        if (res.status == "OK") {
+          this.creditData = res.data;
+          this.data = res.data[0].month
+          localStorage.setItem('creditData', JSON.stringify(res.data));
+          this.cd.detectChanges();
+        } else {
+          this.creditData = [];
+          localStorage.setItem('creditData', JSON.stringify(''));
+          this.cd.detectChanges();
+        }
+      })
+    
   }
 }
