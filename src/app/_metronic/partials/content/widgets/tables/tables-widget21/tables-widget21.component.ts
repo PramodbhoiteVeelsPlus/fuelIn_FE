@@ -101,8 +101,13 @@ export class TablesWidget21Component {
 
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
+    this.primeDealerReqList = JSON.parse(localStorage.getItem('primeDealerReqList') || '{}');
     this.veelsPlusPersonId = element.veelsPlusId;
-    this.getPrimeDealerReqList();
+    if(!this.primeDealerReqList.length){
+      this.getPrimeDealerReqList();
+    }else{
+      this.getPrimeDealerReqList1();
+    }
     this.cd.detectChanges();
   }
 
@@ -120,9 +125,28 @@ export class TablesWidget21Component {
     this.post.getPrimeDealerReqListPOST(data).subscribe(res => {
       if (res.status == "OK") {
         this.primeDealerReqList = res.data;
+        localStorage.setItem('primeDealerReqList', JSON.stringify(res.data));
         this.spinner.hide()
       } else {
         this.primeDealerReqList = [];
+        localStorage.setItem('primeDealerReqList', JSON.stringify(res.data));
+        this.spinner.hide()
+      }
+    })
+  }
+
+  getPrimeDealerReqList1() {
+    let data = {
+
+    }
+
+    this.post.getPrimeDealerReqListPOST(data).subscribe(res => {
+      if (res.status == "OK") {
+        this.primeDealerReqList = res.data;
+        localStorage.setItem('primeDealerReqList', JSON.stringify(res.data));
+        this.spinner.hide()
+      } else {
+        localStorage.setItem('primeDealerReqList', JSON.stringify(res.data));
         this.spinner.hide()
       }
     })

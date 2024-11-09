@@ -36,7 +36,8 @@
                     </button>
                     &nbsp;&nbsp;
 
-                    <button type="submit" class="btn btn-secondary" style="margin-bottom: 30px" (click)="clearAllDealerList()">
+                    <button type="submit" class="btn btn-secondary" style="margin-bottom: 30px"
+                        (click)="clearAllDealerList()">
                         Cancel
                     </button>
                     &nbsp;&nbsp;
@@ -46,8 +47,7 @@
                     fw-bolder
                     px-4
                     me-1
-                  " data-bs-toggle="tab" [ngClass]="activeClass('kt_table_widget_17_tab_1')" 
-                        (click)="exportExcel()">
+                  " data-bs-toggle="tab" [ngClass]="activeClass('kt_table_widget_17_tab_1')" (click)="exportExcel()">
                         CSV
                     </a>
 
@@ -72,7 +72,8 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody *ngFor="let data of allDealerList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+            <tbody
+                *ngFor="let data of allDealerList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
                 <tr>
                     <td style="cursor: pointer;">
                         <a class="expand-row" (click)="changeValueLiteDealerList(i,data.pin, data.GSTNumber, data.email1, data.city, data.state, 
@@ -84,15 +85,22 @@
                     <td> {{ data.FuelVeelsId }} </td>
                     <td> {{ data.customerCreatedAt | date:"d MMM, yyyy" }} </td>
                     <td>
-                        <a [routerLink]="['/customerDetails/customerDetail', data.customerId]">{{data.companyName}}</a>
+                        <span *ngIf="data.demoDealer == 'FALSE'">
+                            <a style="color: blue;"
+                                [routerLink]="['/customerDetails/customerDetail', data.customerId]">{{data.companyName}}</a>
+                        </span>
+                        <span *ngIf="data.demoDealer == 'TRUE'">
+                            <a style="color:red"
+                                [routerLink]="['/customerDetails/customerDetail', data.customerId]">{{data.companyName}}</a>
+                        </span>
                     </td>
                     <td> {{ data.brandName }} </td>
                     <td> {{ data.hostName }} </td>
                     <td> {{ data.hostPhone }} </td>
                     <td style="text-align: center;cursor: pointer;">
                         <div ngbDropdown placement="bottom-left">
-                            <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle
-                                data-toggle="dropdown" aria-expanded="true"></i>
+                            <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                                aria-expanded="true"></i>
                             <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
                                 <a class="dropdown-item" href="javascript: void(0);"
                                     [routerLink]="['/customerDetails/customerDetailsEdit', data.customerId]">
@@ -100,7 +108,7 @@
                                     </i> &nbsp; Edit</a>
                             </div>
                         </div>
-                      
+
                     </td>
                 </tr>
 
@@ -200,7 +208,7 @@
 
         <!-- begin::Pagination -->
         <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
-          style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+            style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
         </pagination-controls>
         <!-- end::Pagination -->
     </div>

@@ -142,9 +142,14 @@ export class TablesWidget18Component {
 
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
+    this.primeDealerData = JSON.parse(localStorage.getItem('primeDealerData') || '{}');
     this.veelsPlusPersonId = element.veelsPlusId;
     this.filterForm.controls['demoDealer'].setValue('');
-    this.getPrimeDealerDetails();
+    if(!this.primeDealerData.length){
+      this.getPrimeDealerDetails();
+    }else{
+      this.getPrimeDealerDetails1();
+    }
     this.getPayInfo()
     this.cd.detectChanges();
   }
@@ -230,10 +235,99 @@ export class TablesWidget18Component {
           if (res.status == "OK" && res.data.length) {
             this.primeDealerData = res.data;
             this.primeDealerDataSearch = res.data
+            localStorage.setItem('primeDealerData', JSON.stringify(res.data));
             this.spinner.hide()
             this.cd.detectChanges();
           } else {
             this.primeDealerData = []
+            localStorage.setItem('primeDealerData', JSON.stringify(res.data));
+            this.spinner.hide()
+            this.cd.detectChanges();
+          }
+        })
+    }
+  }
+  
+  getPrimeDealerDetails1() {
+    if (this.filterForm.value.startDate && this.filterForm.value.endDate && this.filterForm.value.demoDealer) {
+      this.primeDealerData = []
+      this.spinner.show()
+      let data = {
+        startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+        endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+        demoDealer: this.filterForm.value.demoDealer
+      }
+
+      this.post.getPrimeDealerDetailsPOST(data)
+        .subscribe(res => {
+          if (res.status == "OK" && res.data.length) {
+            this.primeDealerData = res.data;
+            this.primeDealerDataSearch = res.data
+            this.spinner.hide()
+            this.cd.detectChanges();
+          } else {
+            this.primeDealerData = []
+            this.spinner.hide()
+            this.cd.detectChanges();
+          }
+        })
+    } else if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
+      this.primeDealerData = []
+      this.spinner.show()
+      let data = {
+        startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+        endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD")
+      }
+
+      this.post.getPrimeDealerDetailsPOST(data)
+        .subscribe(res => {
+          if (res.status == "OK" && res.data.length) {
+            this.primeDealerData = res.data;
+            this.primeDealerDataSearch = res.data
+            this.spinner.hide()
+            this.cd.detectChanges();
+          } else {
+            this.primeDealerData = []
+            this.spinner.hide()
+            this.cd.detectChanges();
+          }
+        })
+    } else if (this.filterForm.value.demoDealer) {
+      this.primeDealerData = []
+      this.spinner.show()
+      let data = {
+        demoDealer: this.filterForm.value.demoDealer
+      }
+
+      this.post.getPrimeDealerDetailsPOST(data)
+        .subscribe(res => {
+          if (res.status == "OK" && res.data.length) {
+            this.primeDealerData = res.data;
+            this.primeDealerDataSearch = res.data
+            this.spinner.hide()
+            this.cd.detectChanges();
+          } else {
+            this.primeDealerData = []
+            this.spinner.hide()
+            this.cd.detectChanges();
+          }
+        })
+    } else {
+      this.primeDealerData = []
+      let data = {
+
+      }
+
+      this.post.getPrimeDealerDetailsPOST(data)
+        .subscribe(res => {
+          if (res.status == "OK" && res.data.length) {
+            this.primeDealerData = res.data;
+            this.primeDealerDataSearch = res.data
+            localStorage.setItem('primeDealerData', JSON.stringify(res.data));
+            this.spinner.hide()
+            this.cd.detectChanges();
+          } else {
+            localStorage.setItem('primeDealerData', JSON.stringify(res.data));
             this.spinner.hide()
             this.cd.detectChanges();
           }

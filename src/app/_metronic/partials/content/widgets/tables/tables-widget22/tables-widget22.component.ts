@@ -116,8 +116,13 @@ export class TablesWidget22Component {
 
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
+    this.dealerRequestData = JSON.parse(localStorage.getItem('dealerRequestData') || '{}');
     this.veelsPlusPersonId = element.veelsPlusId;
-    this.getDealerRequestDetails();
+    if(!this.dealerRequestData.length){
+      this.getDealerRequestDetails();
+    }else{
+      this.getDealerRequestDetails1();
+    }
     this.cd.detectChanges();
   }
 
@@ -158,9 +163,54 @@ export class TablesWidget22Component {
           if (res.status == "OK" && res.data.length) {
             this.dealerRequestData = res.data
             this.dealerRequestDataSearch = res.data
+            localStorage.setItem('dealerRequestData', JSON.stringify(res.data));
             this.spinner.hide()
             this.cd.detectChanges();
           } else {
+            localStorage.setItem('dealerRequestData', JSON.stringify(res.data));
+            this.spinner.hide()
+            this.cd.detectChanges();
+          }
+        })
+    }
+  }
+  
+  getDealerRequestDetails1() {
+    if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
+      this.spinner.show()
+      let data = {
+        startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+        endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD")
+      }
+
+      this.post.getDealerRequestDetailsPOST(data)
+        .subscribe(res => {
+          if (res.status == "OK" && res.data.length) {
+            this.dealerRequestData = res.data
+            this.dealerRequestDataSearch = res.data
+            this.spinner.hide()
+            this.cd.detectChanges();
+          } else {
+            alert("Data Not Found..!")
+            this.spinner.hide()
+            this.cd.detectChanges();
+          }
+        })
+    } else {
+      let data = {
+
+      }
+
+      this.post.getDealerRequestDetailsPOST(data)
+        .subscribe(res => {
+          if (res.status == "OK" && res.data.length) {
+            this.dealerRequestData = res.data
+            this.dealerRequestDataSearch = res.data
+            localStorage.setItem('dealerRequestData', JSON.stringify(res.data));
+            this.spinner.hide()
+            this.cd.detectChanges();
+          } else {
+            localStorage.setItem('dealerRequestData', JSON.stringify(res.data));
             this.spinner.hide()
             this.cd.detectChanges();
           }

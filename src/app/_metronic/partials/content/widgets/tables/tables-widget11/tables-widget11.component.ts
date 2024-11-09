@@ -90,6 +90,7 @@ export class TablesWidget11Component implements OnInit {
   })
 
   ngOnInit(): void {
+    this.dealerList = JSON.parse(localStorage.getItem('dealerList') || '{}');
     this.currentYear = new Date().getFullYear();
     this.lastYear = Number(this.currentYear) - 1;
     this.last2Year = Number(this.currentYear) - 2;
@@ -97,7 +98,11 @@ export class TablesWidget11Component implements OnInit {
     this.lastFifthYear = Number(this.currentYear) - 4;
     this.FilterForm.controls['year'].setValue(this.currentYear)
     this.FilterForm.controls['month'].setValue(moment(new Date()).format("MM"));
-    this.getDealerList()
+    if (!this.dealerList.length) {
+      this.getDealerList();
+    } else {
+      this.getDealerList1();
+    }
     this.cd.detectChanges();
   }
 
@@ -115,10 +120,32 @@ export class TablesWidget11Component implements OnInit {
     this.post.getDealerListPOST(data).subscribe((res) => {
       if (res.status == "OK") {
         this.dealerList = res.data;
+        localStorage.setItem('dealerList', JSON.stringify(res.data));
         this.spinner.hide()
         this.cd.detectChanges();
       } else {
         this.dealerList = [];
+        localStorage.setItem('dealerList', JSON.stringify(res.data));
+        this.spinner.hide()
+        this.cd.detectChanges();
+      }
+    })
+  }
+
+  getDealerList1() {
+    this.spinner.show()
+    let data = {
+
+    }
+
+    this.post.getDealerListPOST(data).subscribe((res) => {
+      if (res.status == "OK") {
+        this.dealerList = res.data;
+        localStorage.setItem('dealerList', JSON.stringify(res.data));
+        this.spinner.hide()
+        this.cd.detectChanges();
+      } else {
+        localStorage.setItem('dealerList', JSON.stringify(res.data));
         this.spinner.hide()
         this.cd.detectChanges();
       }

@@ -124,9 +124,14 @@ export class TablesWidget19Component {
 
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
+    this.liteDealerData = JSON.parse(localStorage.getItem('liteDealerData') || '{}');
     this.veelsPlusPersonId = element.veelsPlusId;
     this.filterForm.controls['demoDealer'].setValue('');
-    this.getLiteDealerDetails();
+    if(!this.liteDealerData.length){
+      this.getLiteDealerDetails();
+    }else{
+      this.getLiteDealerDetails1();
+    }
     this.cd.detectChanges();
   }
 
@@ -167,10 +172,56 @@ export class TablesWidget19Component {
           if (res.status == "OK") {
             this.liteDealerData = res.data
             this.liteDealerDataSearch = res.data
+            localStorage.setItem('liteDealerData', JSON.stringify(res.data));
             this.spinner.hide()
             this.cd.detectChanges();
           } else {
             this.liteDealerData = []
+            localStorage.setItem('liteDealerData', JSON.stringify(res.data));
+            this.spinner.hide()
+            this.cd.detectChanges();
+          }
+        })
+    }
+  }
+
+  getLiteDealerDetails1() {
+    if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
+      this.spinner.show()
+      let data = {
+        startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+        endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD")
+      }
+
+      this.post.getLiteDealerDetailsPOST(data)
+        .subscribe(res => {
+          if (res.status == "OK") {
+            this.liteDealerData = res.data
+            this.liteDealerDataSearch = res.data
+            this.spinner.hide()
+            this.cd.detectChanges();
+          } else {
+            alert("Data Not Found..!")
+            this.spinner.hide()
+            this.cd.detectChanges();
+          }
+        })
+    } else {
+      this.spinner.show()
+      let data = {
+
+      }
+
+      this.post.getLiteDealerDetailsPOST(data)
+        .subscribe(res => {
+          if (res.status == "OK") {
+            this.liteDealerData = res.data
+            this.liteDealerDataSearch = res.data
+            localStorage.setItem('liteDealerData', JSON.stringify(res.data));
+            this.spinner.hide()
+            this.cd.detectChanges();
+          } else {
+            localStorage.setItem('liteDealerData', JSON.stringify(res.data));
             this.spinner.hide()
             this.cd.detectChanges();
           }

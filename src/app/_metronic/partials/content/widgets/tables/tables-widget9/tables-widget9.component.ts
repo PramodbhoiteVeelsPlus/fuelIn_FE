@@ -154,23 +154,43 @@ export class TablesWidget9Component {
   }
 
   ngOnInit(): void {
-    this.getAllLQEntity()
+    this.allEntityIdLQList = JSON.parse(localStorage.getItem('allEntityIdLQList') || '{}');
+    if (!this.allEntityIdLQList.length) {
+      this.getAllLQEntity();
+    } else {
+      this.getAllLQEntity1();
+    }
     this.getCRForFastagLQ()
     this.getTranslogForFastagLQ()
     this.getpaymentForFastagLQ()
     this.getRechargeForFastagLQ()
-    this.getAllLQEntity()
     this.cd.detectChanges();
   }
 
   getAllLQEntity() {
+    this.spinner.show()
     let data = {
 
     }
     this.post.getEntityIdAllLQPOST(data)
       .subscribe(res => {
         this.allEntityIdLQList = res.data
+        localStorage.setItem('allEntityIdLQList', JSON.stringify(res.data));
         this.cd.detectChanges();
+        this.spinner.hide()
+      })
+  }
+
+  getAllLQEntity1() {
+    let data = {
+
+    }
+    this.post.getEntityIdAllLQPOST(data)
+      .subscribe(res => {
+        this.allEntityIdLQList = res.data
+        localStorage.setItem('allEntityIdLQList', JSON.stringify(res.data));
+        this.cd.detectChanges();
+        this.spinner.hide()
       })
   }
 
@@ -764,7 +784,7 @@ export class TablesWidget9Component {
         });
     }
   }
-  
+
   exportToPDF() {
     var doc = new jsPDF('l', 'pt');
 

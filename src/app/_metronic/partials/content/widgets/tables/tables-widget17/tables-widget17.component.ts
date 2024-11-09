@@ -118,7 +118,7 @@ export class TablesWidget17Component {
     config.maxDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
     config.outsideDays = 'hidden';
   }
-  
+
   activeTab: Tabs = 'kt_table_widget_17_tab_1';
 
   setTab(tab: Tabs) {
@@ -131,8 +131,13 @@ export class TablesWidget17Component {
 
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
+    this.allDealerList = JSON.parse(localStorage.getItem('allDealerList') || '{}');
     this.veelsPlusPersonId = element.veelsPlusId;
-    this.getAllDealerList();
+    if (!this.allDealerList.length) {
+      this.getAllDealerList();
+    } else {
+      this.getAllDealerList1();
+    }
     this.cd.detectChanges();
   }
 
@@ -140,7 +145,7 @@ export class TablesWidget17Component {
     this.p = event;
     this.getAllDealerList();
   }
-  
+
   getAllDealerList() {
     if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
       this.allDealerList = []
@@ -178,10 +183,60 @@ export class TablesWidget17Component {
           if (res.status == "OK") {
             this.allDealerList = res.data;
             this.allDealerListSearch = res.data
+            localStorage.setItem('allDealerList', JSON.stringify(res.data));
             this.spinner.hide()
             this.cd.detectChanges();
           } else {
             this.allDealerList = []
+            localStorage.setItem('allDealerList', JSON.stringify(res.data));
+            this.spinner.hide()
+            this.cd.detectChanges();
+          }
+        })
+    }
+  }
+
+  getAllDealerList1() {
+    if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
+      this.allDealerList = []
+      this.allDealerListSearch = []
+      this.spinner.show()
+      let data = {
+        startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+        endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD")
+      }
+
+      this.post.getAllDealerListPOST(data)
+        .subscribe(res => {
+          if (res.status == "OK" && res.data.length) {
+            this.allDealerList = res.data;
+            this.allDealerListSearch = res.data
+            this.spinner.hide()
+            this.cd.detectChanges();
+          } else {
+            alert("No Data Found..!")
+            this.spinner.hide()
+            this.cd.detectChanges();
+          }
+        })
+
+    } else {
+      this.allDealerList = []
+      this.allDealerListSearch = []
+      let data = {
+
+      }
+
+      this.post.getAllDealerListPOST(data)
+        .subscribe(res => {
+          if (res.status == "OK") {
+            this.allDealerList = res.data;
+            this.allDealerListSearch = res.data
+            localStorage.setItem('allDealerList', JSON.stringify(res.data));
+            this.spinner.hide()
+            this.cd.detectChanges();
+          } else {
+            localStorage.setItem('allDealerList', JSON.stringify(res.data));
             this.spinner.hide()
             this.cd.detectChanges();
           }
@@ -465,7 +520,7 @@ export class TablesWidget17Component {
       );
     }
   }
-  
+
   clearAllDealerList() {
     this.filterForm.reset();
     this.getAllDealerList();

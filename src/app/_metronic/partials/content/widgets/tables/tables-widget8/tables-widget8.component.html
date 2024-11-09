@@ -84,13 +84,13 @@
               <th class="min-w-125px">Entity Id</th>
               <th class="min-w-125px">Cr Sales</th>
               <th class="min-w-125px">Cr Payments</th>
-              <th class="min-w-125px">Toll Recharge</th>
-              <th class="min-w-125px">Toll Payments</th>
+              <th class="min-w-125px">Toll Recharge(Credit)</th>
+              <th class="min-w-125px">Toll Payments(Debit)</th>
             </tr>
           </thead>
           <!-- end::Table head -->
           <!-- begin::Table body -->
-          <tbody *ngFor="let data of fastagData">
+          <tbody *ngFor="let data of fastagCustData">
             <tr>
               <td> {{data.entityId}} </td>
               <td>

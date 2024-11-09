@@ -115,9 +115,14 @@ export class TablesWidget23Component {
 
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
+    this.requestCallData = JSON.parse(localStorage.getItem('requestCallData') || '{}');
     this.veelsPlusPersonId = element.veelsPlusId;
     this.filterForm.controls["isCreatedAt"].setValue("created") 
-    this.getRequestCallDetails();
+    if(!this.requestCallData.length){
+      this.getRequestCallDetails();
+    }else{
+      this.getRequestCallDetails1();
+    }
     this.cd.detectChanges();
   }
 
@@ -181,8 +186,70 @@ export class TablesWidget23Component {
           if (res.status == "OK" && res.data.length) {
             this.requestCallData = res.data
             this.requestCallDataSearch = res.data
+            localStorage.setItem('requestCallData', JSON.stringify(res.data));
             this.spinner.hide()
           } else {
+            localStorage.setItem('requestCallData', JSON.stringify(res.data));
+            alert("Data Not Found..!")
+            this.spinner.hide()
+          }
+        })
+    }
+  }
+
+  getRequestCallDetails1() {
+    if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
+      if (this.filterForm.value.isCreatedAt == 'created') {
+        this.spinner.show()
+        let data = {
+          startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+          endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD")
+        }
+
+        this.post.getRequestCallDetailsPOST(data)
+          .subscribe(res => {
+            if (res.status == "OK" && res.data.length) {
+              this.requestCallData = res.data
+              this.requestCallDataSearch = res.data
+              this.spinner.hide()
+            } else {
+              alert("Data Not Found..!")
+              this.spinner.hide()
+            }
+          })
+      } else {
+        this.spinner.show()
+        let data = {
+          startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+          endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD")
+        }
+
+        this.post.getRequestCallByScheduleDatePOST(data)
+          .subscribe(res => {
+            if (res.status == "OK" && res.data.length) {
+              this.requestCallData = res.data
+              this.requestCallDataSearch = res.data
+              this.spinner.hide()
+            } else {
+              alert("Data Not Found..!")
+              this.spinner.hide()
+            }
+          })
+      }
+    } else {
+      let data = {
+
+      }
+
+      this.post.getRequestCallDetailsPOST(data)
+        .subscribe(res => {
+          if (res.status == "OK" && res.data.length) {
+            this.requestCallData = res.data
+            this.requestCallDataSearch = res.data
+            localStorage.setItem('requestCallData', JSON.stringify(res.data));
+            this.spinner.hide()
+          } else {
+            localStorage.setItem('requestCallData', JSON.stringify(res.data));
             alert("Data Not Found..!")
             this.spinner.hide()
           }

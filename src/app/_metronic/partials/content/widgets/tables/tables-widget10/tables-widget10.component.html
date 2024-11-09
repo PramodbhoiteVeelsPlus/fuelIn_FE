@@ -82,10 +82,11 @@
           <thead>
             <tr class="fw-bolder text-muted bg-light">
               <th class="min-w-125px">Entity Id</th>
+              <th class="min-w-125px">Company Name</th>
               <th class="min-w-125px">Cr Sales</th>
               <th class="min-w-125px">Cr Payments</th>
-              <th class="min-w-125px">Toll Recharge</th>
-              <th class="min-w-125px">Toll Payments</th>
+              <th class="min-w-125px">Toll Recharge(Credit)</th>
+              <th class="min-w-125px">Toll Payments(Debit)</th>
             </tr>
           </thead>
           <!-- end::Table head -->
@@ -93,6 +94,7 @@
           <tbody *ngFor="let data of fastagLQData">
             <tr>
               <td> {{data.entityId}} </td>
+              <td> {{data.companyName}} </td>
               <td>
                 <span *ngIf="data.crSale">
                   <li class="fas fa-rupee-sign"></li> {{data.crSale | number:'1.2-2' }}

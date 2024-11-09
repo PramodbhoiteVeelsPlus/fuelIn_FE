@@ -116,8 +116,13 @@ activeClass(tab: Tabs) {
 
 ngOnInit(): void {
   var element = JSON.parse(localStorage.getItem('element') || '{}');
+  this.removedDealerData = JSON.parse(localStorage.getItem('removedDealerData') || '{}');
   this.veelsPlusPersonId = element.veelsPlusId;
-  this.getRemovedDealerDetails();
+  if(!this.removedDealerData.length){
+    this.getRemovedDealerDetails();
+  }else{
+    this.getRemovedDealerDetails();
+  }
   this.cd.detectChanges();
 }
 
@@ -152,6 +157,45 @@ getRemovedDealerDetails(){
       if(res.status == "OK" && res.data.length){
         this.removedDealerData = res.data
         this.removedDealerDataSearch = res.data
+        localStorage.setItem('removedDealerData', JSON.stringify(res.data));
+        this.spinner.hide()
+      } else {
+        alert("Data Not Found..!")
+        this.spinner.hide()
+      }
+    })
+  }
+}
+getRemovedDealerDetails1(){
+  if(this.filterForm.value.startDate && this.filterForm.value.endDate){
+    this.spinner.show()
+    let data = {
+      startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+      endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD")
+    }
+    
+    this.post.getRemovedDealerDetailsPOST(data)
+    .subscribe(res => {
+      if(res.status == "OK" && res.data.length){
+        this.removedDealerData = res.data
+        this.removedDealerDataSearch = res.data
+        this.spinner.hide()
+      } else {
+        alert("Data Not Found..!")
+        this.spinner.hide()
+      }
+    })
+  } else {
+    let data = {
+     
+    }
+    
+    this.post.getRemovedDealerDetailsPOST(data)
+    .subscribe(res => {
+      if(res.status == "OK" && res.data.length){
+        this.removedDealerData = res.data
+        this.removedDealerDataSearch = res.data
+        localStorage.setItem('removedDealerData', JSON.stringify(res.data));
         this.spinner.hide()
       } else {
         alert("Data Not Found..!")

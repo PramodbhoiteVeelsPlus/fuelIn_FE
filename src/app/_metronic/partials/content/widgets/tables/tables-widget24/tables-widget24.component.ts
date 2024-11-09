@@ -72,7 +72,7 @@ export class TablesWidget24Component {
   p: number = 1;
   p1: number = 1;
   total: number = 0;
-waive: any;
+  waive: any;
 
   constructor(
     private post: WidgetService,
@@ -99,8 +99,13 @@ waive: any;
 
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
+    this.demoDealerData = JSON.parse(localStorage.getItem('demoDealerData') || '{}');
     this.veelsPlusPersonId = element.veelsPlusId;
-    this.getDemoDealerDetails();
+    if(!this.demoDealerData.length){
+      this.getDemoDealerDetails();
+    }else{
+      this.getDemoDealerDetails1();
+    }
     this.cd.detectChanges();
   }
 
@@ -118,10 +123,32 @@ waive: any;
       .subscribe(res => {
         if (res.status == "OK") {
           this.demoDealerData = res.data
+          localStorage.setItem('demoDealerData', JSON.stringify(res.data));
           this.spinner.hide()
           this.cd.detectChanges();
         } else {
           this.demoDealerData = []
+          localStorage.setItem('demoDealerData', JSON.stringify(res.data));
+          this.spinner.hide()
+          this.cd.detectChanges();
+        }
+      })
+  }
+
+  getDemoDealerDetails1() {
+    let data = {
+
+    }
+
+    this.post.getDemoDealerDetailsPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          this.demoDealerData = res.data
+          localStorage.setItem('demoDealerData', JSON.stringify(res.data));
+          this.spinner.hide()
+          this.cd.detectChanges();
+        } else {
+          localStorage.setItem('demoDealerData', JSON.stringify(res.data));
           this.spinner.hide()
           this.cd.detectChanges();
         }
@@ -132,7 +159,7 @@ waive: any;
     this.p = event;
     this.getDemoDealerDetails();
   }
-  
+
   demoDealerActive(status: any, fuelDealerId: any, demoDealer: string) {
     if (demoDealer == "TRUE") {
       if (status.target.checked) {

@@ -76,6 +76,7 @@ export class TablesWidget8Component implements OnInit {
   lastFourthYear: number;
   lastFifthYear: number;
   fastagData: any = [];
+  fastagCustData: any = [];
 
   constructor(
     private post: WidgetService,
@@ -104,6 +105,7 @@ export class TablesWidget8Component implements OnInit {
   })
 
   ngOnInit(): void {
+    this.fastagCustData = JSON.parse(localStorage.getItem('fastagCustData') || '{}');
     this.currentYear = new Date().getFullYear();
     this.lastYear = Number(this.currentYear) - 1;
     this.last2Year = Number(this.currentYear) - 2;
@@ -111,7 +113,11 @@ export class TablesWidget8Component implements OnInit {
     this.lastFifthYear = Number(this.currentYear) - 4;
     this.FilterForm.controls['year'].setValue(this.currentYear)
     this.FilterForm.controls['month'].setValue(moment(new Date()).format("MM"));
-    this.getFastagMonthWise()
+    if(!this.fastagCustData.length){
+      this.getFastagMonthWise();
+    }else{
+      this.getFastagMonthWise1();
+    }
     this.cd.detectChanges();
   }
 
@@ -124,12 +130,34 @@ export class TablesWidget8Component implements OnInit {
 
     this.post.getCrFastagForAllCustomerByMonthPOST(data).subscribe(res => {
       if (res.status == "OK") {
-        this.fastagData = res.data;
+        this.fastagCustData = res.data;
+        localStorage.setItem('fastagCustData', JSON.stringify(res.data));
         this.spinner.hide();
         this.cd.detectChanges();
       } else {
-        this.fastagData = [];
+        this.fastagCustData = [];
+        localStorage.setItem('fastagCustData', JSON.stringify(res.data));
         this.spinner.hide();
+        this.cd.detectChanges();
+      }
+    })
+  }
+
+  getFastagMonthWise1() {
+    let data = {
+      startDate: moment(this.FilterForm.value.month + '-' + this.FilterForm.value.year, ["MM-YYYY"]).format("YYYY-MM-01"),
+      endDate: moment(this.FilterForm.value.month + '-' + this.FilterForm.value.year, ["MM-YYYY"]).format("YYYY-MM-31")
+    }
+
+    this.post.getCrFastagForAllCustomerByMonthPOST(data).subscribe(res => {
+      if (res.status == "OK") {
+        this.fastagCustData = res.data;
+        localStorage.setItem('fastagCustData', JSON.stringify(res.data));
+        this.spinner.hide();
+        this.cd.detectChanges();
+      } else {
+        this.spinner.hide();
+        localStorage.setItem('fastagCustData', JSON.stringify(res.data));
         this.cd.detectChanges();
       }
     })
