@@ -19,33 +19,74 @@
 <div class="card-body py-3">
   <div class="tab-content">
     <!-- begin::Tap pane -->
-      <!-- begin::Table container -->
-      <div class="table-responsive mb-0">
-        <!-- begin::Table -->
-        <table class="table table-centered">
-          <!-- begin::Table head -->
-          <thead>
-            <tr class="fw-bolder text-muted bg-light">
-              <th class="min-w-125px">Month</th>
-              <th class="min-w-125px">Cr Sales</th>
-              <th class="min-w-125px">Cr Payments</th>
-            </tr>
-          </thead>
-          <!-- end::Table head -->
-          <!-- begin::Table body -->
-          <tbody *ngFor="let data of creditData">
-            <tr>
-              <td class="min-w-125px"><b>{{data.month}} {{data.year}}</b></td>
-              <td class="min-w-125px"> ₹ {{data.purchase | number: '1.2-2'}}</td>
-              <td class="min-w-125px"> ₹ {{data.payment | number: '1.2-2'}}</td>
-            </tr>
+    <!-- begin::Table container -->
+    <div class="table-responsive mb-0">
+      <!-- begin::Table -->
+      <table class="table table-centered">
+        <!-- begin::Table head -->
+        <thead>
+          <tr class="fw-bolder text-muted bg-light">
+            <th class="min-w-125px">Month</th>
+            <th class="min-w-125px">Cr Sales</th>
+            <th class="min-w-125px">Cr Payments</th>
+            <th class="min-w-125px">Active Customer Count</th>
+          </tr>
+        </thead>
+        <!-- end::Table head -->
+        <!-- begin::Table body -->
+        <tbody *ngFor="let data of creditData">
+          <tr>
+            <td class="min-w-125px"><b>{{data.month}} {{data.year}}</b></td>
+            <td class="min-w-125px"> ₹ {{data.purchase | number: '1.2-2'}}</td>
+            <td class="min-w-125px"> ₹ {{data.payment | number: '1.2-2'}}</td>
+            <td class="min-w-125px"><a style="color: blue;"
+                (click)="custName(cust, data.fuelDealerCustomerMapId, data.companyName)">{{ data.custCount }}</a>
+            </td>
+          </tr>
 
-          </tbody>
-          <!-- end::Table body -->
-        </table>
-      </div>
-      <!-- end::Table -->
+        </tbody>
+        <!-- end::Table body -->
+      </table>
+
+      <ng-template #cust>
+        <div class="modal-header">
+          <h4 class="modal-title">
+            <strong>
+              &nbsp;&nbsp;&nbsp;
+              customer List </strong>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <!-- begin::Table container -->
+          <div class="table-responsive mb-0">
+            <!-- begin::Table -->
+            <table class="table table-centered">
+              <!-- begin::Table head -->
+              <thead>
+                <tr class="fw-bolder text-muted bg-light">
+                  <th class="min-w-125px">Sr.no</th>
+                  <th class="min-w-125px">Customer Name</th>
+                </tr>
+              </thead>
+              <!-- end::Table head -->
+              <!-- begin::Table body -->
+              <tbody *ngFor="let data of dataCustList; let i = index">
+                <tr>
+                  <td class="min-w-125px">{{i+1}} </td>
+                  <td class="min-w-125px">{{data.mappingCustomerName}}</td>
+                </tr>
+      
+              </tbody>
+              <!-- end::Table body -->
+            </table>
+          </div>
+          <!-- end::Table -->
+        </div>
+
+      </ng-template>
     </div>
-    <!-- end::Tap pane -->
+    <!-- end::Table -->
+  </div>
+  <!-- end::Tap pane -->
 </div>
 <!-- end::Body -->

@@ -1,11 +1,10 @@
 import { ChangeDetectorRef, Component, Injectable, OnInit, ViewChild } from '@angular/core';
-import { NgbDateAdapter, NgbDateParserFormatter, NgbDatepickerConfig, NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbDateAdapter, NgbDateParserFormatter, NgbDatepickerConfig, NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { WidgetService } from '../../widgets.services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import moment from 'moment';
-import { ModalComponent } from 'src/app/_metronic/partials/layout/modals/modal/modal.component';
-import { ModalConfig } from 'src/app/_metronic/partials/layout/modals/modal.config';
+import { ModalConfig } from 'src/app/_metronic/partials';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -80,9 +79,12 @@ export class TablesWidget6Component implements OnInit {
     dismissButtonLabel: 'Submit',
     closeButtonLabel: 'Cancel'
   };
-  @ViewChild('modal') private modalComponent: ModalComponent;
   data: any;
   fuelDealerId: any;
+  modalReference: any;
+  closeResult: string;
+  companyName: any;
+  dataCustList: any = [];
   constructor(
     private modalService: NgbModal,
     private post: WidgetService,
@@ -184,6 +186,7 @@ export class TablesWidget6Component implements OnInit {
       this.post.getYearWiseCreditPOST(data).subscribe(res => {
         if (res.status == "OK") {
           this.creditData = res.data;
+          this.dataCustList = res.dataCustList
           this.spinner.hide()
           this.cd.detectChanges();
         } else {
@@ -201,6 +204,7 @@ export class TablesWidget6Component implements OnInit {
       this.post.getYearWiseCreditPOST(data).subscribe(res => {
         if (res.status == "OK") {
           this.creditData = res.data;
+          this.dataCustList = res.dataCustList
           this.data = res.data[0].month
           localStorage.setItem('creditData', JSON.stringify(res.data));
           this.spinner.hide()
@@ -214,6 +218,7 @@ export class TablesWidget6Component implements OnInit {
       })
     }
   }
+
   getCreditDetailsYearWise1() {   
       let data = {
         startDate: moment(this.lastyr).format("YYYY-04-01"),
@@ -223,6 +228,7 @@ export class TablesWidget6Component implements OnInit {
         if (res.status == "OK") {
           this.creditData = res.data;
           this.data = res.data[0].month
+          this.dataCustList = res.dataCustList
           localStorage.setItem('creditData', JSON.stringify(res.data));
           this.cd.detectChanges();
         } else {
@@ -232,5 +238,29 @@ export class TablesWidget6Component implements OnInit {
         }
       })
     
+  }
+  
+  custName(cust: any,fuelDealerId: any,companyName: any){
+
+    this.companyName = companyName
+    this.fuelDealerId = fuelDealerId
+
+    this.modalReference = this.modalService.open(cust)
+    this.modalReference.result.then((result: any) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason: any) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+  
+  
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 }
