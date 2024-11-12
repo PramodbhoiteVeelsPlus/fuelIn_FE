@@ -126,7 +126,7 @@
                                     <th>City</th>
                                     <th>State</th>
                                     <th>PIN Code</th>
-
+                                    <th>Customize</th>
                                 </tr>
                                 <tr>
                                     <td>{{data.email1}}</td>
@@ -134,6 +134,22 @@
                                     <td>{{data.city}}</td>
                                     <td>{{data.state}}</td>
                                     <td>{{data.pin}}</td>
+                                    <td>
+                                        <div *ngIf="data.customizeStatus == 'OFF'">
+                                            <label class="switch">
+                                                <input type="checkbox" [checked]="waive" value="ON"
+                                                    (change)="customizeStatusDealer($event,data.fuelDealerId,data.customizeStatus)">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                        <div *ngIf="data.customizeStatus =='ON'">
+                                            <label class="switch">
+                                                <input type="checkbox" checked="checked" value="OFF"
+                                                    (change)="customizeStatusDealer($event,data.fuelDealerId,data.customizeStatus)">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                    </td>
                                 </tr>
 
                                 <tr class="fw-bolder text-muted bg-light">

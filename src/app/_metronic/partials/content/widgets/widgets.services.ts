@@ -105,6 +105,7 @@ export class WidgetService {
   private getPOSByBankIdURL = this.baseURL + 'fuelTerminals/getPOSByBankId'; 
   private deleteBankAccByDealerIdURL = this.baseURL + 'bankDetails/deleteBankAccByDealerId';
   private updateBankAccountDetailsURL = this.baseURL + 'bankDetails/updateBankAccountDetails';
+  private updateCustomizeStatusURL = this.baseURL + 'customize/updateCustomizeStatus'; 
 
 
   setHeader() {
@@ -914,4 +915,24 @@ export class WidgetService {
       headers: headers
     })
   }
+  
+  // updateCustomizeStatusURL
+  updateCustomizeStatusPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateCustomizeStatusURL, body, {
+      headers: headers
+    })
+  }
+
+
+
+
+
+
+
+
+
+
 }
