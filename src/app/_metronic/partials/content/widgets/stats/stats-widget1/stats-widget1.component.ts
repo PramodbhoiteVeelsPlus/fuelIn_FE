@@ -141,6 +141,7 @@ export class StatsWidget1Component implements OnInit {
   FastagDetailsByDateExcel: any = [];
   allFTvehicleDetailsByEntityIdLQ: any = [];
   FastagDetailsLQByDateExcel: any = [];
+  createdBy: string;
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -665,7 +666,7 @@ export class StatsWidget1Component implements OnInit {
           startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
           endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
         };
-        this.post.getSelfOnboardReportByAdminPOST(data).subscribe((res) => {
+        this.post.getDealerOnboardReportByAdminPOST(data).subscribe((res) => {
           if (res.data.length) {
             this.selfOnboardList = res.data;
             this.downloadSelfOnboardReport()
@@ -685,6 +686,11 @@ export class StatsWidget1Component implements OnInit {
   downloadSelfOnboardReport() {
     this.selfOnboardList1.length = 0
     this.selfOnboardList.map((res: any) => {
+      if(res.userCreatedBy){
+        this.createdBy = "Self"
+      } else {
+        this.createdBy = "Admin"
+      }
       let json = {
         Date: moment(res.userCreatedAt).format("DD-MM-YYYY"),
         CompanyName: res.companyName,
@@ -698,13 +704,14 @@ export class StatsWidget1Component implements OnInit {
         Address2: res.address2,
         City: res.city,
         State: res.state,
+        OnboardBy: this.createdBy
 
       };
       this.selfOnboardList1.push(json);
     });
     this.excelService.exportAsExcelFile(
       this.selfOnboardList1,
-      "selfOnboardReport"
+      "OnboardReport"
     );
   }
 
@@ -749,6 +756,7 @@ export class StatsWidget1Component implements OnInit {
         TotalAccounting: res.totalAccounting,
         TotalNzDSR: res.totalNzDSR,
         TotalTankDSR: res.totalTankDSR,
+        DateRange: this.filterForm.value.startDate + ' To ' + this.filterForm.value.endDate
       };
       this.activeDealerReportData.push(json);
     });

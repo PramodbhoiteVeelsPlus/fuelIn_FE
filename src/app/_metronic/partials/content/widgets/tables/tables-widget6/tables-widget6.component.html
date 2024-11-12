@@ -30,6 +30,7 @@
             <th class="min-w-125px">Cr Sales</th>
             <th class="min-w-125px">Cr Payments</th>
             <th class="min-w-125px">Active Customer Count</th>
+            <th class="min-w-125px">Active Vehicle Count</th>
           </tr>
         </thead>
         <!-- end::Table head -->
@@ -40,7 +41,10 @@
             <td class="min-w-125px"> ₹ {{data.purchase | number: '1.2-2'}}</td>
             <td class="min-w-125px"> ₹ {{data.payment | number: '1.2-2'}}</td>
             <td class="min-w-125px"><a style="color: blue;"
-                (click)="custName(cust, data.fuelDealerCustomerMapId, data.companyName)">{{ data.custCount }}</a>
+                (click)="custName(cust, data.fuelDealerCustomerMapId, data.month, data.year)">{{ data.custCount }}</a>
+            </td>
+            <td class="min-w-125px"><a style="color: blue;"
+              (click)="vehList(veh, data.fuelDealerCustomerMapId, data.month, data.year)">{{ data.vehCount }}</a>
             </td>
           </tr>
 
@@ -70,7 +74,7 @@
               </thead>
               <!-- end::Table head -->
               <!-- begin::Table body -->
-              <tbody *ngFor="let data of dataCustList; let i = index">
+              <tbody *ngFor="let data of dataCustList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
                 <tr>
                   <td class="min-w-125px">{{i+1}} </td>
                   <td class="min-w-125px">{{data.mappingCustomerName}}</td>
@@ -79,6 +83,57 @@
               </tbody>
               <!-- end::Table body -->
             </table>
+
+            <!-- begin::Pagination -->
+            <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+            </pagination-controls>
+            <!-- end::Pagination -->
+             
+          </div>
+          <!-- end::Table -->
+        </div>
+
+      </ng-template>
+      
+      <ng-template #veh>
+        <div class="modal-header">
+          <h4 class="modal-title">
+            <strong>
+              &nbsp;&nbsp;&nbsp;
+              Vehicle List </strong>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <!-- begin::Table container -->
+          <div class="table-responsive mb-0">
+            <!-- begin::Table -->
+            <table class="table table-centered">
+              <!-- begin::Table head -->
+              <thead>
+                <tr class="fw-bolder text-muted bg-light">
+                  <th class="min-w-125px">Sr.no</th>
+                  <th class="min-w-125px">Vehicle Number</th>
+                </tr>
+              </thead>
+              <!-- end::Table head -->
+              <!-- begin::Table body -->
+              <tbody *ngFor="let data of dataVehList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                <tr>
+                  <td class="min-w-125px">{{i+1}} </td>
+                  <td class="min-w-125px">{{data.vehicleNumber}}</td>
+                </tr>
+      
+              </tbody>
+              <!-- end::Table body -->
+            </table>
+
+            <!-- begin::Pagination -->
+            <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+            </pagination-controls>
+            <!-- end::Pagination -->
+             
           </div>
           <!-- end::Table -->
         </div>

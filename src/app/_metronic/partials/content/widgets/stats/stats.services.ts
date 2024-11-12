@@ -128,6 +128,7 @@ export class StatsService {
     private getFastagTransactionByDateLQURL = this.baseURL + 'fastag/getFastagTransactionByDateLQ'; 
     private getCreditDetailsByDealerIdURL = this.baseURL + 'dealerDashboard/getCreditDetailsByDealerId';
     private searchDealerByMobileURL = this.baseURL + 'fuelDealerCustMap/getDealerDetailsByDealerPhoneNumber'
+    private getDealerOnboardReportByAdminURL = this.baseURL + 'tripReports/getDealerOnboardReportByAdmin'
 
 
 
@@ -1029,6 +1030,16 @@ export class StatsService {
       let headers = new HttpHeaders();
       headers = headers.set('authenticationToken', this.token);
       return this.http.post(this.searchDealerByMobileURL, body, {
+        headers: headers
+      })
+    }
+
+    // getDealerOnboardReportByAdminURL
+    getDealerOnboardReportByAdminPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getDealerOnboardReportByAdminURL, body, {
         headers: headers
       })
     }

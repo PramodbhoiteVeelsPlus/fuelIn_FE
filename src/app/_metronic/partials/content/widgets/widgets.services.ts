@@ -105,6 +105,8 @@ export class WidgetService {
   private getPOSByBankIdURL = this.baseURL + 'fuelTerminals/getPOSByBankId'; 
   private deleteBankAccByDealerIdURL = this.baseURL + 'bankDetails/deleteBankAccByDealerId';
   private updateBankAccountDetailsURL = this.baseURL + 'bankDetails/updateBankAccountDetails';
+  private getActiveCustomerListURL = this.baseURL + 'adminOutstand/getActiveCustomerList';
+  private getActiveVehicleListURL = this.baseURL + 'adminOutstand/getActiveVehicleList';
 
 
   setHeader() {
@@ -911,6 +913,26 @@ export class WidgetService {
     let headers = new HttpHeaders();
     headers = headers.set('authenticationToken', this.token);
     return this.http.post(this.updateBankAccountDetailsURL, body, {
+      headers: headers
+    })
+  }
+  
+  // getActiveCustomerListURL
+  getActiveCustomerListPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getActiveCustomerListURL, body, {
+      headers: headers
+    })
+  }
+  
+  // getActiveVehicleListURL
+  getActiveVehicleListPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getActiveVehicleListURL, body, {
       headers: headers
     })
   }

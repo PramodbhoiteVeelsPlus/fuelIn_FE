@@ -85,6 +85,14 @@ export class TablesWidget6Component implements OnInit {
   closeResult: string;
   companyName: any;
   dataCustList: any = [];
+  month: any;
+  year: any;
+  dealerId: any;
+  p: number = 1;
+  p1: number = 1;
+  total: number = 0;
+  dataVehList: any = [];
+
   constructor(
     private modalService: NgbModal,
     private post: WidgetService,
@@ -167,6 +175,7 @@ export class TablesWidget6Component implements OnInit {
         if (res.data.length) {
           this.fuelDealerId = res.data[0].fuelDealerId;
           this.getCreditDetailsYearWise()
+          this.getActiveCustList()
           this.cd.detectChanges();
         } else {
         }
@@ -240,17 +249,20 @@ export class TablesWidget6Component implements OnInit {
     
   }
   
-  custName(cust: any,fuelDealerId: any,companyName: any){
+  custName(cust: any,fuelDealerId: any,month: any, year:any){
 
-    this.companyName = companyName
-    this.fuelDealerId = fuelDealerId
-
+    this.month = month
+    this.year = year
+    this.dealerId = this.fuelDealerId
+    console.log(this.month, this.year, "11")
     this.modalReference = this.modalService.open(cust)
     this.modalReference.result.then((result: any) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason: any) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+
+    this.getActiveCustList()
   }
   
   
@@ -261,6 +273,106 @@ export class TablesWidget6Component implements OnInit {
       return 'by clicking on a backdrop';
     } else {
       return `with: ${reason}`;
+    }
+  }
+
+  pageChangeEvent(event: number) {
+    this.p = event;
+    this.getActiveCustList();
+  }
+
+  getActiveCustList() {
+    if (this.dealerId) {
+      this.spinner.show()
+      let data = {
+        fuelDealerId: this.dealerId,
+        startDate: moment(this.month + '-' + this.year, ["MMM-YYYY"]).format("YYYY-MM-01"),
+        endDate: moment(this.month + '-' + this.year, ["MMM-YYYY"]).format("YYYY-MM-31"),
+      }
+      this.post.getActiveCustomerListPOST(data).subscribe(res => {
+        if (res.status == "OK") {
+          this.dataCustList = res.data
+          this.spinner.hide()
+          this.cd.detectChanges();
+        } else {
+          this.dataCustList = [];
+          this.spinner.hide();
+          this.cd.detectChanges();
+        }
+      })
+    } else {
+      this.spinner.show()
+      let data = {
+        startDate: moment(this.month + '-' + this.year, ["MMM-YYYY"]).format("YYYY-MM-01"),
+        endDate: moment(this.month + '-' + this.year, ["MMM-YYYY"]).format("YYYY-MM-31"),
+      }
+      this.post.getActiveCustomerListPOST(data).subscribe(res => {
+        if (res.status == "OK") {
+          this.dataCustList = res.data
+          this.spinner.hide()
+          this.cd.detectChanges();
+        } else {
+          this.dataCustList = [];
+          this.spinner.hide()
+          this.cd.detectChanges();
+        }
+      })
+    }
+  }
+  
+  vehList(veh: any, fuelDealerId: any,month: any, year:any){
+
+    this.month = month
+    this.year = year
+    this.dealerId = this.fuelDealerId
+    console.log(this.month, this.year, "11")
+    this.modalReference = this.modalService.open(veh)
+    this.modalReference.result.then((result: any) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason: any) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+
+    this.getActiveVehList()
+  }
+  
+
+  getActiveVehList() {
+    if (this.dealerId) {
+      this.spinner.show()
+      let data = {
+        fuelDealerId: this.dealerId,
+        startDate: moment(this.month + '-' + this.year, ["MMM-YYYY"]).format("YYYY-MM-01"),
+        endDate: moment(this.month + '-' + this.year, ["MMM-YYYY"]).format("YYYY-MM-31"),
+      }
+      this.post.getActiveVehicleListPOST(data).subscribe(res => {
+        if (res.status == "OK") {
+          this.dataVehList = res.data
+          this.spinner.hide()
+          this.cd.detectChanges();
+        } else {
+          this.dataVehList = [];
+          this.spinner.hide();
+          this.cd.detectChanges();
+        }
+      })
+    } else {
+      this.spinner.show()
+      let data = {
+        startDate: moment(this.month + '-' + this.year, ["MMM-YYYY"]).format("YYYY-MM-01"),
+        endDate: moment(this.month + '-' + this.year, ["MMM-YYYY"]).format("YYYY-MM-31"),
+      }
+      this.post.getActiveVehicleListPOST(data).subscribe(res => {
+        if (res.status == "OK") {
+          this.dataVehList = res.data
+          this.spinner.hide()
+          this.cd.detectChanges();
+        } else {
+          this.dataVehList = [];
+          this.spinner.hide()
+          this.cd.detectChanges();
+        }
+      })
     }
   }
 }
