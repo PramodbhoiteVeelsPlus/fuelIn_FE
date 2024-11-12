@@ -342,9 +342,43 @@ export class TablesWidget17Component {
       })
   }
 
+  customizeStatusDealer(status: any, fuelDealerId: any, customizeStatus: string) {
+    console.log("status", status)
+    if (customizeStatus == "ON") {
+        customizeStatus = "OFF";
+        let data = {
+          customizeStatus: customizeStatus,
+          fuelDealerId: fuelDealerId,
+        }
+        this.post.updateCustomizeStatusPOST(data)
+          .subscribe(res => {
+            if (res) {
+              alert("Status Updated..")
+              this.getAllDealerList();
+            }
+          })
+      
+    } else if (customizeStatus == "OFF") {
+      customizeStatus = "ON";
+      let data = {
+        customizeStatus: customizeStatus,
+        fuelDealerId: fuelDealerId,
+      }
+      this.post.updateCustomizeStatusPOST(data)
+        .subscribe(res => {
+          if (res) {
+            alert("Status Updated..")
+            this.getAllDealerList();
+          }
+        })
+    } else {
+      alert("Please Select");
+    }
+  }
+
   demoDealerActive(status: any, fuelDealerId: any, demoDealer: string) {
     if (demoDealer == "TRUE") {
-      if (status.target.checked) {
+      
         demoDealer = "FALSE";
         let data = {
           demoDealer: demoDealer,
@@ -357,7 +391,7 @@ export class TablesWidget17Component {
               alert("Updated..")
             }
           })
-      }
+      
     } else if (demoDealer == "FALSE") {
       demoDealer = "TRUE";
 

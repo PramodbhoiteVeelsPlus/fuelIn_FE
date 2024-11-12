@@ -1,520 +1,566 @@
-<div class="container-fluid" *ngIf="acceesGroup == '7'"> 
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
+<div class="container-fluid" *ngIf="acceesGroup == '7'">
+    <ul ngbNav #customNav="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified" style="width: 100%;">
+        <li [ngbNavItem]="1">
+            <a ngbNavLink>
+                <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                <span class="d-none d-sm-block" style="font-size: 13.5px;">Customer Details</span>
+            </a>
+            <ng-template ngbNavContent>
+                <ng-template [ngTemplateOutlet]="tab1"></ng-template>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+            <a ngbNavLink>
+                <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                <span class="d-none d-sm-block" style="font-size: 13.5px;">Customize Details</span>
+            </a>
+            <ng-template ngbNavContent>
+                <ng-template [ngTemplateOutlet]="tab2"></ng-template>
+            </ng-template>
+        </li>
+    </ul>
+    <div [ngbNavOutlet]="customNav"></div>
+    
+    <ng-template #tab1>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
 
-                    <form [formGroup]="customerForm">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div *ngIf="acceesGroup == '7'" class="col-md-10">
-                                        <span *ngIf="editCustDetails">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <h3>
-                                                    </h3>
+                        <form [formGroup]="customerForm">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div *ngIf="acceesGroup == '7'" class="col-md-10">
+                                            <span *ngIf="editCustDetails">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <h3>
+                                                        </h3>
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <label class="labelMargin" for="companyName">Corporate ID
-                                                                :</label>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <label class="labelMargin" for="companyName">Corporate
+                                                                    ID
+                                                                    :</label>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input class="form-control"
+                                                                    [(ngModel)]="veelsPlusBranchID"
+                                                                    [ngModelOptions]="{standalone: true}" disabled>
+                                                            </div>
                                                         </div>
-                                                        <div class="col-md-8">
-                                                            <input class="form-control" [(ngModel)]="veelsPlusBranchID"
-                                                                [ngModelOptions]="{standalone: true}" disabled>
+                                                        <br>
+
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <label class="labelMargin" for="companyName">Company
+                                                                    Name
+                                                                    :</label>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input class="form-control" placeholder="Company Name"
+                                                                    [(ngModel)]="companyName"
+                                                                    [ngModelOptions]="{standalone: true}">
+                                                            </div>
+                                                        </div>
+                                                        <br>
+
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <label class="labelMargin"
+                                                                    for="businessType">Constitution
+                                                                    Of Business:</label>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input class="form-control"
+                                                                    placeholder="Constitution Of Business"
+                                                                    [(ngModel)]="businessType"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    oninput="let p=this.selectionStart; this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <label class="labelMargin" for="firstName">Owner Name
+                                                                    :</label>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input class="form-control" [(ngModel)]="hostName"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    placeholder="Full Name"
+                                                                    oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                                                                    disabled>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <label class="labelMargin" for="mobile">Owner Mobile
+                                                                    Number
+                                                                    :</label>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input class="form-control" type="number"
+                                                                    [(ngModel)]="phone1"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    placeholder="Mobile Number"
+                                                                    oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                                                                    disabled>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <label class="labelMargin" for="email">Owner E-mail
+                                                                    :</label>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input class="form-control" [(ngModel)]="email1"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    placeholder="E-mail">
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-2"> </div>
+                                                    <div class="col-md-4">
+                                                        <div *ngIf="acceesGroup == '7'" style="text-align:right;">
+                                                            <button type="submit" class="btn btn-primary"
+                                                                (click)=updateCustomerData();>Update</button> &nbsp;
+                                                            &nbsp;
                                                         </div>
                                                     </div>
-                                                    <br>
+                                                </div>
+                                            </span>
 
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <label class="labelMargin" for="companyName">Company Name
-                                                                :</label>
-                                                        </div>
-                                                        <div class="col-md-8">
-                                                            <input class="form-control" placeholder="Company Name"
-                                                                [(ngModel)]="companyName"
-                                                                [ngModelOptions]="{standalone: true}">
-                                                        </div>
+                                            <span *ngIf="!editCustDetails">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <i class="fas fa-edit" style="color: #4e9b4e;cursor: pointer;"
+                                                            (click)="editCustDetail()"></i>
+                                                        <h3>
+
+                                                        </h3>
                                                     </div>
-                                                    <br>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <label class="labelMargin" for="companyName">Corporate
+                                                                    ID
+                                                                    :</label>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input class="form-control"
+                                                                    [(ngModel)]="veelsPlusBranchID"
+                                                                    [ngModelOptions]="{standalone: true}" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <label class="labelMargin" for="companyName">Company
+                                                                    Name
+                                                                    :</label>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input class="form-control" [(ngModel)]="companyName"
+                                                                    [ngModelOptions]="{standalone: true}" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <label class="labelMargin"
+                                                                    for="businessType">Constitution
+                                                                    Of Business:</label>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input class="form-control" [(ngModel)]="businessType"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    placeholder="Constitution Of Business"
+                                                                    oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                                                                    disabled>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <label class="labelMargin" for="firstName">Owner Name
+                                                                    :</label>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input class="form-control" [(ngModel)]="hostName"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    placeholder="Full Name" disabled
+                                                                    oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                                                                    readonly>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <label class="labelMargin" for="mobile">Owner Mobile
+                                                                    Number
+                                                                    :</label>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input class="form-control" type="number"
+                                                                    [(ngModel)]="phone1"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    placeholder="Mobile Number"
+                                                                    oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                                                                    disabled>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <label class="labelMargin" for="email">Owner E-mail
+                                                                    :</label>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input class="form-control" [(ngModel)]="email1"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    placeholder="E-mail" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                    </div>
+                                                </div>
+                                            </span>
+
+                                            <hr>
+                                            <span *ngIf="editAddressDetails">
+                                                <form [formGroup]="corporateForm">
 
                                                     <div class="row">
                                                         <div class="col-md-4">
-                                                            <label class="labelMargin" for="businessType">Constitution
-                                                                Of Business:</label>
-                                                        </div>
-                                                        <div class="col-md-8">
-                                                            <input class="form-control"
-                                                                placeholder="Constitution Of Business"
-                                                                [(ngModel)]="businessType"
+                                                            <label>GST Number :</label>
+                                                            <input class="form-control" [(ngModel)]="GSTNumber"
                                                                 [ngModelOptions]="{standalone: true}"
-                                                                oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                                                placeholder="Enter GST Number" minlength="15"
+                                                                maxlength="15">
+                                                            <br>
                                                         </div>
-                                                    </div>
-                                                    <br>
-                                                </div>
 
-                                                <div class="col-md-6">
-                                                    <div class="row">
                                                         <div class="col-md-4">
-                                                            <label class="labelMargin" for="firstName">Owner Name
-                                                                :</label>
-                                                        </div>
-                                                        <div class="col-md-8">
+                                                            <label>Key Person Name :</label>
                                                             <input class="form-control" [(ngModel)]="hostName"
                                                                 [ngModelOptions]="{standalone: true}"
-                                                                placeholder="Full Name"
-                                                                oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
-                                                                disabled>
+                                                                placeholder="Enter HostName" disabled
+                                                                oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                                            <br>
                                                         </div>
+
+                                                        <div class="col-md-4">
+                                                            <label>Key Person Mobile :</label>
+                                                            <input class="form-control" [(ngModel)]="phone1"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                placeholder="Enter Host Phone" disabled>
+                                                        </div>
+                                                        <br>
+
                                                     </div>
-                                                    <br>
 
                                                     <div class="row">
-                                                        <div class="col-md-4">
-                                                            <label class="labelMargin" for="mobile">Owner Mobile Number
-                                                                :</label>
-                                                        </div>
-                                                        <div class="col-md-8">
-                                                            <input class="form-control" type="number"
-                                                                [(ngModel)]="phone1"
-                                                                [ngModelOptions]="{standalone: true}"
-                                                                placeholder="Mobile Number"
-                                                                oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
-                                                                disabled>
+                                                        <div class="col-md-2"> </div>
+                                                        <div class="col-md-4" style="text-align: right;">
+                                                            <button type="submit" class="btn btn-primary btn-md"
+                                                                (click)="updateCorporate()">Update</button>
                                                         </div>
                                                     </div>
-                                                    <br>
+                                                </form>
+                                            </span>
 
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <label class="labelMargin" for="email">Owner E-mail
-                                                                :</label>
-                                                        </div>
-                                                        <div class="col-md-8">
-                                                            <input class="form-control" [(ngModel)]="email1"
-                                                                [ngModelOptions]="{standalone: true}"
-                                                                placeholder="E-mail">
-                                                        </div>
-                                                    </div>
-                                                    <br>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-2"> </div>
-                                                <div class="col-md-4">
-                                                    <div *ngIf="acceesGroup == '7'" style="text-align:right;">
-                                                        <button type="submit" class="btn btn-primary"
-                                                            (click)=updateCustomerData();>Update</button> &nbsp; &nbsp;
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </span>
-
-                                        <span *ngIf="!editCustDetails">
-                                            <div class="row">
-                                                <div class="col-md-6">
+                                            <span *ngIf="!editAddressDetails">
+                                                <form [formGroup]="corporateForm">
                                                     <i class="fas fa-edit" style="color: #4e9b4e;cursor: pointer;"
-                                                        (click)="editCustDetail()"></i>
-                                                    <h3>
-
-                                                    </h3>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <label class="labelMargin" for="companyName">Corporate ID
-                                                                :</label>
-                                                        </div>
-                                                        <div class="col-md-8">
-                                                            <input class="form-control" [(ngModel)]="veelsPlusBranchID"
-                                                                [ngModelOptions]="{standalone: true}" disabled>
-                                                        </div>
-                                                    </div>
-                                                    <br>
+                                                        (click)="editAddressDetail()"></i>
 
                                                     <div class="row">
                                                         <div class="col-md-4">
-                                                            <label class="labelMargin" for="companyName">Company Name
-                                                                :</label>
-                                                        </div>
-                                                        <div class="col-md-8">
-                                                            <input class="form-control" [(ngModel)]="companyName"
-                                                                [ngModelOptions]="{standalone: true}" disabled>
-                                                        </div>
-                                                    </div>
-                                                    <br>
-
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <label class="labelMargin" for="businessType">Constitution
-                                                                Of Business:</label>
-                                                        </div>
-                                                        <div class="col-md-8">
-                                                            <input class="form-control" [(ngModel)]="businessType"
+                                                            <label>GST Number :</label>
+                                                            <input class="form-control" [(ngModel)]="GSTNumber"
                                                                 [ngModelOptions]="{standalone: true}"
-                                                                placeholder="Constitution Of Business"
-                                                                oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
-                                                                disabled>
+                                                                placeholder="Enter GST Number" minlength="15"
+                                                                maxlength="15" disabled>
+                                                            <br>
                                                         </div>
-                                                    </div>
-                                                    <br>
-                                                </div>
 
-                                                <div class="col-md-6">
-                                                    <div class="row">
                                                         <div class="col-md-4">
-                                                            <label class="labelMargin" for="firstName">Owner Name
-                                                                :</label>
-                                                        </div>
-                                                        <div class="col-md-8">
+
+                                                            <label>Key Person Name :</label>
                                                             <input class="form-control" [(ngModel)]="hostName"
                                                                 [ngModelOptions]="{standalone: true}"
-                                                                placeholder="Full Name" disabled
-                                                                oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                                                                placeholder="Enter HostName" disabled
+                                                                oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                                            <br>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label>Key Person Mobile :</label>
+                                                            <input class="form-control" [(ngModel)]="phone1"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                placeholder="Enter Host Phone" disabled>
+                                                        </div>
+                                                        <br>
+                                                    </div>
+                                                </form>
+                                            </span>
+
+                                            <hr>
+                                            <span *ngIf="editOtherDetails">
+                                                <form [formGroup]="infoForm">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label for="address1">Address Line 1<span class="red"
+                                                                    style="color: red;">*</span>:</label>
+                                                            <input class="form-control" [(ngModel)]="address1"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                placeholder="Enter Address Line 1"
+                                                                oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                                            <br>
+                                                            <label for="address2">Address Line 2<span class="red"
+                                                                    style="color: red;">*</span>:</label>
+                                                            <input class="form-control" [(ngModel)]="address2"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                placeholder="Enter Address Line 2"
+                                                                oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                                            <br>
+                                                            <label for="address2">City Area<span class="red"
+                                                                    style="color: red;">*</span>:</label>
+                                                            <input class="form-control" [(ngModel)]="city"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                placeholder="Enter City Area"
+                                                                oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                                            <br>
+                                                        </div>
+                                                        <div class="col-md-4">
+
+                                                            <label for="address2">City<span class="red"
+                                                                    style="color: red;">*</span> :</label>
+                                                            <input class="form-control" [(ngModel)]="city"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                placeholder="Enter City"
+                                                                oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                                            <br>
+                                                            <label for="pinCode">PinCode<span class="red"
+                                                                    style="color: red;">*</span>:</label>
+                                                            <input type="number" class="form-control" [(ngModel)]="pin"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                placeholder="Enter PinCode">
+                                                            <br>
+                                                        </div>
+                                                        <div class="col-md-4">
+
+                                                            <label for="state">State :</label>
+                                                            <select class="form-control" style="color: #9EA79E;"
+                                                                [(ngModel)]="state"
+                                                                [ngModelOptions]="{standalone: true}" required
+                                                                placeholder="Select State">
+                                                                <option value="">Select State</option>
+                                                                <option value="ANDHRA PRADESH">Andhra Pradesh</option>
+                                                                <option value="ARUNACHAL PRADESH">Arunachal Pradesh
+                                                                </option>
+                                                                <option value="ASSAM">Assam</option>
+                                                                <option value="BIHAR">Bihar</option>
+                                                                <option value="CHHATTISGARH">Chhattisgarh</option>
+                                                                <option value="GOA">Goa</option>
+                                                                <option value="GUJARAT">Gujarat</option>
+                                                                <option value="HARYANA">Haryana</option>
+                                                                <option value="HIMACHAL PRADESH">Himachal Pradesh
+                                                                </option>
+                                                                <option value="JHARKHAND">Jharkhand</option>
+                                                                <option value="KARNATAKA">Karnataka</option>
+                                                                <option value="KERALA">Kerala</option>
+                                                                <option value="MADHYA PRADESH">Madhya Pradesh</option>
+                                                                <option value="MAHARASHTRA">Maharashtra</option>
+                                                                <option value="MANIPUR">Manipur</option>
+                                                                <option value="MEGHALAYA">Meghalaya</option>
+                                                                <option value="MIZORAM">Mizoram</option>
+                                                                <option value="NAGALAND">Nagaland</option>
+                                                                <option value="ODISHA">Odisha</option>
+                                                                <option value="PUNJAB">Punjab</option>
+                                                                <option value="RAJASTHAN">Rajasthan</option>
+                                                                <option value="SIKKIM">Sikkim</option>
+                                                                <option value="TAMIL NADU">Tamil Nadu</option>
+                                                                <option value="TELANGANA">Telangana</option>
+                                                                <option value="TRIPURA">Tripura</option>
+                                                                <option value="UTTAR PRADESH">Uttar Pradesh</option>
+                                                                <option value="UTTARAKHAND">Uttarakhand</option>
+                                                                <option value="WEST BENGAL">West Bengal</option>
+                                                                <option value="ANDAMAN AND NICOBAR ISLANDS">Andaman and
+                                                                    Nicobar Islands</option>
+                                                                <option value="CHANDIGARH">Chandigarh</option>
+                                                                <option
+                                                                    value="DADRA AND NAGAR HAVELI AND DAMAN AND DIU">
+                                                                    Dadra and Nagar Haveli
+                                                                    and Daman and Diu</option>
+                                                                <option value="DELHI">Delhi</option>
+                                                                <option value="LAKSHADWEEP">Lakshadweep</option>
+                                                                <option value="PUDUCHERRY">Puducherry (Pondicherry)
+                                                                </option>
+                                                                <option value="JAMMU AND KASHMIR">Jammu and Kashmir
+                                                                </option>
+                                                                <option value="LADAKH">Ladakh</option>
+                                                            </select>
+                                                            <br>
+
+                                                            <label for="country">Country :</label>
+                                                            <input class="form-control" [(ngModel)]="country"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                placeholder="Enter country"
+                                                                oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
                                                                 readonly>
                                                         </div>
                                                     </div>
-                                                    <br>
 
                                                     <div class="row">
-                                                        <div class="col-md-4">
-                                                            <label class="labelMargin" for="mobile">Owner Mobile Number
-                                                                :</label>
+                                                        <div class="col-md-2"> </div>
+                                                        <div class="col-md-4" style="text-align: right;">
+                                                            <button type="submit" class="btn btn-primary"
+                                                                [disabled]="!infoForm.valid"
+                                                                (click)="onSubmitInfoAddress()">Update</button> &nbsp;
+                                                            &nbsp;
                                                         </div>
-                                                        <div class="col-md-8">
-                                                            <input class="form-control" type="number"
-                                                                [(ngModel)]="phone1"
+                                                    </div>
+                                                </form>
+                                            </span>
+
+                                            <span *ngIf="!editOtherDetails">
+                                                <form [formGroup]="infoForm">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <i class="fas fa-edit"
+                                                                style="color: #4e9b4e;cursor: pointer;"
+                                                                (click)="editOtherDetail()"></i>
+
+                                                            <label for="address1">Address Line 1<span class="red"
+                                                                    style="color: red;">*</span>:</label>
+                                                            <input class="form-control" [(ngModel)]="address1"
                                                                 [ngModelOptions]="{standalone: true}"
-                                                                placeholder="Mobile Number"
-                                                                oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                                                                placeholder="Enter Address Line 1" disabled
+                                                                oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                                            <br>
+                                                            <label for="address2">Address Line 2<span class="red"
+                                                                    style="color: red;">*</span>:</label>
+                                                            <input class="form-control" [(ngModel)]="address2"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                placeholder="Enter Address Line 2" disabled
+                                                                oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                                            <br>
+                                                            <label for="address2">City Area<span class="red"
+                                                                    style="color: red;">*</span>:</label>
+                                                            <input class="form-control" [(ngModel)]="city"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                placeholder="Enter City Area" disabled
+                                                                oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                                            <br>
+                                                        </div>
+                                                        <div class="col-md-4">
+
+                                                            <label for="address2">City<span class="red"
+                                                                    style="color: red;">*</span> :</label>
+                                                            <input class="form-control" [(ngModel)]="city"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                placeholder="Enter City" disabled
+                                                                oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                                                            <br>
+                                                            <label for="pinCode">PinCode<span class="red"
+                                                                    style="color: red;">*</span>:</label>
+                                                            <input type="number" class="form-control" [(ngModel)]="pin"
+                                                                [ngModelOptions]="{standalone: true}" disabled
+                                                                placeholder="Enter PinCode">
+                                                            <br>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label for="state">State :</label>
+                                                            <input class="form-control" [(ngModel)]="state"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                placeholder="Enter State" readonly
+                                                                oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                                                                disabled>
+                                                            <br>
+
+                                                            <label for="country">Country :</label>
+                                                            <input class="form-control" [(ngModel)]="country"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                placeholder="Enter country" readonly
+                                                                oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
                                                                 disabled>
                                                         </div>
                                                     </div>
-                                                    <br>
-
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <label class="labelMargin" for="email">Owner E-mail
-                                                                :</label>
-                                                        </div>
-                                                        <div class="col-md-8">
-                                                            <input class="form-control" [(ngModel)]="email1"
-                                                                [ngModelOptions]="{standalone: true}"
-                                                                placeholder="E-mail" disabled>
-                                                        </div>
-                                                    </div>
-                                                    <br>
-                                                </div>
-                                            </div>
-                                        </span>
-
-                                        <hr>
-                                        <span *ngIf="editAddressDetails">
-                                            <form [formGroup]="corporateForm">
-
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <label>GST Number :</label>
-                                                        <input class="form-control" [(ngModel)]="GSTNumber"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            placeholder="Enter GST Number" minlength="15"
-                                                            maxlength="15">
-                                                        <br>
-                                                    </div>
-
-                                                    <div class="col-md-4">
-                                                        <label>Key Person Name :</label>
-                                                        <input class="form-control" [(ngModel)]="hostName"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            placeholder="Enter HostName" disabled
-                                                            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
-                                                        <br>
-                                                    </div>
-
-                                                    <div class="col-md-4">
-                                                        <label>Key Person Mobile :</label>
-                                                        <input class="form-control" [(ngModel)]="phone1"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            placeholder="Enter Host Phone" disabled>
-                                                    </div>
-                                                    <br>
-
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col-md-2"> </div>
-                                                    <div class="col-md-4" style="text-align: right;">
-                                                        <button type="submit" class="btn btn-primary btn-md"
-                                                            (click)="updateCorporate()">Update</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </span>
-
-                                        <span *ngIf="!editAddressDetails">
-                                            <form [formGroup]="corporateForm">
-                                                <i class="fas fa-edit" style="color: #4e9b4e;cursor: pointer;"
-                                                    (click)="editAddressDetail()"></i>
-
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <label>GST Number :</label>
-                                                        <input class="form-control" [(ngModel)]="GSTNumber"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            placeholder="Enter GST Number" minlength="15" maxlength="15"
-                                                            disabled>
-                                                        <br>
-                                                    </div>
-
-                                                    <div class="col-md-4">
-
-                                                        <label>Key Person Name :</label>
-                                                        <input class="form-control" [(ngModel)]="hostName"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            placeholder="Enter HostName" disabled
-                                                            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
-                                                        <br>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <label>Key Person Mobile :</label>
-                                                        <input class="form-control" [(ngModel)]="phone1"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            placeholder="Enter Host Phone" disabled>
-                                                    </div>
-                                                    <br>
-                                                </div>
-                                            </form>
-                                        </span>
-
-                                        <hr>
-                                        <span *ngIf="editOtherDetails">
-                                            <form [formGroup]="infoForm">
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <label for="address1">Address Line 1<span class="red"
-                                                                style="color: red;">*</span>:</label>
-                                                        <input class="form-control" [(ngModel)]="address1"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            placeholder="Enter Address Line 1"
-                                                            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
-                                                        <br>
-                                                        <label for="address2">Address Line 2<span class="red"
-                                                                style="color: red;">*</span>:</label>
-                                                        <input class="form-control" [(ngModel)]="address2"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            placeholder="Enter Address Line 2"
-                                                            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
-                                                        <br>
-                                                        <label for="address2">City Area<span class="red"
-                                                                style="color: red;">*</span>:</label>
-                                                        <input class="form-control" [(ngModel)]="city"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            placeholder="Enter City Area"
-                                                            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
-                                                        <br>
-                                                    </div>
-                                                    <div class="col-md-4">
-
-                                                        <label for="address2">City<span class="red"
-                                                                style="color: red;">*</span> :</label>
-                                                        <input class="form-control" [(ngModel)]="city"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            placeholder="Enter City"
-                                                            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
-                                                        <br>
-                                                        <label for="pinCode">PinCode<span class="red"
-                                                                style="color: red;">*</span>:</label>
-                                                        <input type="number" class="form-control" [(ngModel)]="pin"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            placeholder="Enter PinCode">
-                                                        <br>
-                                                    </div>
-                                                    <div class="col-md-4">
-
-                                                        <label for="state">State :</label>
-                                                        <select class="form-control" style="color: #9EA79E;"
-                                                            [(ngModel)]="state" [ngModelOptions]="{standalone: true}"
-                                                            required placeholder="Select State">
-                                                            <option value="">Select State</option>
-                                                            <option value="ANDHRA PRADESH">Andhra Pradesh</option>
-                                                            <option value="ARUNACHAL PRADESH">Arunachal Pradesh</option>
-                                                            <option value="ASSAM">Assam</option>
-                                                            <option value="BIHAR">Bihar</option>
-                                                            <option value="CHHATTISGARH">Chhattisgarh</option>
-                                                            <option value="GOA">Goa</option>
-                                                            <option value="GUJARAT">Gujarat</option>
-                                                            <option value="HARYANA">Haryana</option>
-                                                            <option value="HIMACHAL PRADESH">Himachal Pradesh</option>
-                                                            <option value="JHARKHAND">Jharkhand</option>
-                                                            <option value="KARNATAKA">Karnataka</option>
-                                                            <option value="KERALA">Kerala</option>
-                                                            <option value="MADHYA PRADESH">Madhya Pradesh</option>
-                                                            <option value="MAHARASHTRA">Maharashtra</option>
-                                                            <option value="MANIPUR">Manipur</option>
-                                                            <option value="MEGHALAYA">Meghalaya</option>
-                                                            <option value="MIZORAM">Mizoram</option>
-                                                            <option value="NAGALAND">Nagaland</option>
-                                                            <option value="ODISHA">Odisha</option>
-                                                            <option value="PUNJAB">Punjab</option>
-                                                            <option value="RAJASTHAN">Rajasthan</option>
-                                                            <option value="SIKKIM">Sikkim</option>
-                                                            <option value="TAMIL NADU">Tamil Nadu</option>
-                                                            <option value="TELANGANA">Telangana</option>
-                                                            <option value="TRIPURA">Tripura</option>
-                                                            <option value="UTTAR PRADESH">Uttar Pradesh</option>
-                                                            <option value="UTTARAKHAND">Uttarakhand</option>
-                                                            <option value="WEST BENGAL">West Bengal</option>
-                                                            <option value="ANDAMAN AND NICOBAR ISLANDS">Andaman and
-                                                                Nicobar Islands</option>
-                                                            <option value="CHANDIGARH">Chandigarh</option>
-                                                            <option value="DADRA AND NAGAR HAVELI AND DAMAN AND DIU">
-                                                                Dadra and Nagar Haveli
-                                                                and Daman and Diu</option>
-                                                            <option value="DELHI">Delhi</option>
-                                                            <option value="LAKSHADWEEP">Lakshadweep</option>
-                                                            <option value="PUDUCHERRY">Puducherry (Pondicherry)</option>
-                                                            <option value="JAMMU AND KASHMIR">Jammu and Kashmir</option>
-                                                            <option value="LADAKH">Ladakh</option>
-                                                        </select>
-                                                        <br>
-
-                                                        <label for="country">Country :</label>
-                                                        <input class="form-control" [(ngModel)]="country"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            placeholder="Enter country"
-                                                            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
-                                                            readonly>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col-md-2"> </div>
-                                                    <div class="col-md-4" style="text-align: right;">
-                                                        <button type="submit" class="btn btn-primary"
-                                                            [disabled]="!infoForm.valid"
-                                                            (click)="onSubmitInfoAddress()">Update</button> &nbsp;
-                                                        &nbsp;
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </span>
-
-                                        <span *ngIf="!editOtherDetails">
-                                            <form [formGroup]="infoForm">
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <i class="fas fa-edit" style="color: #4e9b4e;cursor: pointer;"
-                                                            (click)="editOtherDetail()"></i>
-
-                                                        <label for="address1">Address Line 1<span class="red"
-                                                                style="color: red;">*</span>:</label>
-                                                        <input class="form-control" [(ngModel)]="address1"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            placeholder="Enter Address Line 1" disabled
-                                                            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
-                                                        <br>
-                                                        <label for="address2">Address Line 2<span class="red"
-                                                                style="color: red;">*</span>:</label>
-                                                        <input class="form-control" [(ngModel)]="address2"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            placeholder="Enter Address Line 2" disabled
-                                                            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
-                                                        <br>
-                                                        <label for="address2">City Area<span class="red"
-                                                                style="color: red;">*</span>:</label>
-                                                        <input class="form-control" [(ngModel)]="city"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            placeholder="Enter City Area" disabled
-                                                            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
-                                                        <br>
-                                                    </div>
-                                                    <div class="col-md-4">
-
-                                                        <label for="address2">City<span class="red"
-                                                                style="color: red;">*</span> :</label>
-                                                        <input class="form-control" [(ngModel)]="city"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            placeholder="Enter City" disabled
-                                                            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
-                                                        <br>
-                                                        <label for="pinCode">PinCode<span class="red"
-                                                                style="color: red;">*</span>:</label>
-                                                        <input type="number" class="form-control" [(ngModel)]="pin"
-                                                            [ngModelOptions]="{standalone: true}" disabled
-                                                            placeholder="Enter PinCode">
-                                                        <br>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <label for="state">State :</label>
-                                                        <input class="form-control" [(ngModel)]="state"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            placeholder="Enter State" readonly
-                                                            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
-                                                            disabled>
-                                                        <br>
-
-                                                        <label for="country">Country :</label>
-                                                        <input class="form-control" [(ngModel)]="country"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            placeholder="Enter country" readonly
-                                                            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
-                                                            disabled>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </span>
+                                                </form>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <ng-template #contentExit let-c="close" let-d="dismiss">
+                            <ng-template #contentExit let-c="close" let-d="dismiss">
 
-                            <div class="modal-header">
-                                <h4 class="modal-title">
-                                    <label>
-                                        <h4>
-                                            <strong>
-                                                Service Request
-                                                <br>
-                                            </strong>
-                                        </h4>
-                                    </label>
-                                </h4>
-                                <button type="button" class="btn btn-danger" aria-label="Close"
-                                    (click)="d('Cross click')">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <label>Description:</label>
-                                    <input type="text" class="form-control" [(ngModel)]="reqDescription"
-                                        [ngModelOptions]="{standalone: true}" placeholder=" Enter Description">
-                                    <br>
-                                    <div class="col-md-5"></div>
-                                    <div class="col-md-2">
-                                        <button type="button" class="btn btn-outline-success my-2 my-sm-0"
-                                            aria-label="Close" (click)="requestDetail()">
-                                            Request</button>
+                                <div class="modal-header">
+                                    <h4 class="modal-title">
+                                        <label>
+                                            <h4>
+                                                <strong>
+                                                    Service Request
+                                                    <br>
+                                                </strong>
+                                            </h4>
+                                        </label>
+                                    </h4>
+                                    <button type="button" class="btn btn-danger" aria-label="Close"
+                                        (click)="d('Cross click')">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <label>Description:</label>
+                                        <input type="text" class="form-control" [(ngModel)]="reqDescription"
+                                            [ngModelOptions]="{standalone: true}" placeholder=" Enter Description">
+                                        <br>
+                                        <div class="col-md-5"></div>
+                                        <div class="col-md-2">
+                                            <button type="button" class="btn btn-outline-success my-2 my-sm-0"
+                                                aria-label="Close" (click)="requestDetail()">
+                                                Request</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </ng-template>
+                            </ng-template>
 
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </ng-template>
+
+    <ng-template #tab2>
+
+    </ng-template>
 </div>
