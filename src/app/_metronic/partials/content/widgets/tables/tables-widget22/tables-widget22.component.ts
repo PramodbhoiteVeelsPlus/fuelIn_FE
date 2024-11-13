@@ -78,7 +78,7 @@ export class TablesWidget22Component {
     startDate: new FormControl(),
     endDate: new FormControl(),
   });
-  dealerRequestData: any;
+  dealerRequestData: any = [];
   dealerRequestDataSearch: any = [];
   showLiteDealerRequest: boolean = false;
   rowNumberLiteDealerRequest: any;

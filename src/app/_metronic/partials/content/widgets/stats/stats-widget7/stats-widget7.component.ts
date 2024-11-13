@@ -60,12 +60,12 @@ export class StatsWidget7Component {
 
   acceesGroup: any;
   activityCountDetailsDealer: any = [];
-  activityCountDetailsTransporter: any[];
-  activityCountDetailsDealerAPP: any[];
+  activityCountDetailsTransporter: any=[];
+  activityCountDetailsDealerAPP: any = [];
   activityCountDetailsTransporterAPP: any[];
-  activityCountTransporters: any[];
-  activityCountDealers: any[];
-  activityCountTransporter: any[];
+  activityCountTransporters: any=[];
+  activityCountDealers: any = [];
+  activityCountTransporter: any=[];
 
   filter = new FormGroup({
     dealer: new FormControl(""),
@@ -317,7 +317,7 @@ export class StatsWidget7Component {
       );
     } else if (this.isAPP) {
       this.activityCountDetailsDealerAPPExcel.length = 0
-      this.activityCountDetailsDealerAPP.map((res) => {
+      this.activityCountDetailsDealerAPP.map((res: { activityCountModal: any; count: any; activityEntryFrom: any; }) => {
         let json = {
           modal: res.activityCountModal,
           count: res.count,

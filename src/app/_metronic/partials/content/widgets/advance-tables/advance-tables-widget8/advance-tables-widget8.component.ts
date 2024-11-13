@@ -55,7 +55,7 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 })
 
 export class AdvanceTablesWidget8Component {
-  dataArray: any;
+  dataArray: any = [];
   p: number = 1;
   p1: number = 1;
   total: number = 0;

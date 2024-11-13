@@ -68,7 +68,7 @@ type Tabs =
 
 export class TablesWidget24Component {
   veelsPlusPersonId: any;
-  demoDealerData: any;
+  demoDealerData: any = [];
   p: number = 1;
   p1: number = 1;
   total: number = 0;

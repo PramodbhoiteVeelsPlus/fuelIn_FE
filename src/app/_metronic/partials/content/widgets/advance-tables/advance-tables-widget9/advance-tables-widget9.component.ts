@@ -76,7 +76,7 @@ export class AdvanceTablesWidget9Component {
   p: number = 1;
   p1: number = 1;
   total: number = 0;
-  allentityLQList: any;
+  allentityLQList: any = [];
   entityCountLQList: any = [];
 
   constructor(private excelService: ExcelService,

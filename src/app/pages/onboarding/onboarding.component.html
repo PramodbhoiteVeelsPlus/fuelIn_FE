@@ -1,7 +1,7 @@
 
 <!-- ADMIN Login accessGroupId 7 -->
 <div *ngIf="isAdmin">
-  <ul ngbNav #dashboard="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified" style="width: 100%;">
+  <ul ngbNav #onboard="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified" style="width: 100%;">
     <li [ngbNavItem]="1">
       <a ngbNavLink>
         <span class="d-none d-sm-block" style="font-size: 15px;">DEALER LIST</span>
@@ -27,5 +27,5 @@
       </ng-template>
     </li>
   </ul>
-  <div [ngbNavOutlet]="dashboard"></div>
+  <div [ngbNavOutlet]="onboard"></div>
 </div>
