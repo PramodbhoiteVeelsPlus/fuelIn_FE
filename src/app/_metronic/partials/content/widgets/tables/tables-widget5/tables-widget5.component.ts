@@ -1,16 +1,71 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Injectable, OnInit, ViewChild } from '@angular/core';
+import { NgbDateAdapter, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ModalConfig } from 'src/app/_metronic/partials/layout/modals/modal.config';
 import { Modal4Component } from 'src/app/_metronic/partials/layout/modals/modal4/modal4.component';
+import { WidgetService } from '../../widgets.services';
 
 type Tabs =
   | 'kt_table_widget_5_tab_1'
   | 'kt_table_widget_5_tab_2'
   | 'kt_table_widget_5_tab_3';
 
+@Injectable()
+export class CustomAdapter extends NgbDateAdapter<string> {
+
+  readonly DELIMITER = '-';
+
+  fromModel(value: string | null): NgbDateStruct | null {
+    if (value) {
+      let date = value.split(this.DELIMITER);
+      return {
+        day: parseInt(date[0], 10),
+        month: parseInt(date[1], 10),
+        year: parseInt(date[2], 10)
+      };
+    }
+    return null;
+  }
+
+  toModel(date: NgbDateStruct | null): string | null {
+    return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : null;
+  }
+}
+
+/**
+ * This Service handles how the date is rendered and parsed from keyboard i.e. in the bound input field.
+ */
+@Injectable()
+export class CustomDateParserFormatter extends NgbDateParserFormatter {
+
+  readonly DELIMITER = '/';
+
+  parse(value: string): NgbDateStruct | null {
+    if (value) {
+      let date = value.split(this.DELIMITER);
+      return {
+        day: parseInt(date[0], 10),
+        month: parseInt(date[1], 10),
+        year: parseInt(date[2], 10)
+      };
+    }
+    return null;
+  }
+
+  format(date: NgbDateStruct | null): string {
+    return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : '';
+  }
+}
+
 @Component({
   selector: 'app-tables-widget5',
   templateUrl: './tables-widget5.component.html',
+  providers: [
+    { provide: NgbDateAdapter, useClass: CustomAdapter },
+    { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }
+  ]
 })
+
 export class TablesWidget5Component implements OnInit {
 
   modalConfig: ModalConfig = {
@@ -20,8 +75,91 @@ export class TablesWidget5Component implements OnInit {
   };
 
   @ViewChild('modal') private modal4Component: Modal4Component;
-  constructor() { }
+  dealerLoginVPId: any;
+  vpPersonId: any;
+  loginSQLCorporateId: any;
+  fuelDealerId: any;
+  fuelTerminalData: any = [];
+  fuelTerminalDataList: any = [];
 
+  constructor(
+    private post: WidgetService,
+    private spinner: NgxSpinnerService,
+    config: NgbDatepickerConfig,
+    public cd: ChangeDetectorRef,
+    private modalService: NgbModal,) {
+    const currentDate = new Date();
+    config.minDate = { year: 2018, month: 1, day: 1 };
+    config.maxDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
+    config.outsideDays = 'hidden';
+  }
+
+  ngOnInit(): void {
+    var element = JSON.parse(localStorage.getItem('element') || '{}');
+    this.dealerLoginVPId = element.veelsPlusCorporateID;
+    this.vpPersonId = element.veelsPlusId
+    this.getCorporateById(this.dealerLoginVPId);
+    this.cd.detectChanges()
+  }
+
+  getCorporateById(dealerLoginVPId: any) {
+    let data = {
+      veelsplusCorporateId: dealerLoginVPId
+    }
+    this.post.getBranchByVeelsplusIdPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          if (res.data.length) {
+            this.loginSQLCorporateId = res.data[0].corporateId;
+            this.getfuelDealerIdByCorporateId(this.loginSQLCorporateId);
+            this.cd.detectChanges()
+          }
+          else {
+            alert("Getting Error..! Please Logout & Login again..!")
+            this.cd.detectChanges()
+          }
+        }
+      })
+  }
+
+  // getfuelDealerIdByDealerCorporateId
+  getfuelDealerIdByCorporateId(loginSQLCorporateId: any) {
+    let data = {
+      corporateId: loginSQLCorporateId
+    }
+    this.post.getfuelDealerIdByCorporateIdPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          this.fuelDealerId = res.data[0].fuelDealerId;
+          this.getFuelTerminal(this.fuelDealerId);
+          this.cd.detectChanges()
+        }
+        else {
+          this.cd.detectChanges()
+        }
+      })
+  }
+
+  getFuelTerminal(fuelDealerId: any) {
+
+    let dataTerminal = {
+      fuelDealerId:fuelDealerId,
+        }
+
+    this.post.getFuelTerminalPOST(dataTerminal)
+    .subscribe(res =>
+      {
+        if (res.status == "OK") {
+           this.fuelTerminalData = res
+           this.fuelTerminalDataList = res.data;
+           this.cd.detectChanges()
+        } else {
+          this.fuelTerminalDataList = [];
+          this.cd.detectChanges()
+        }
+      })
+  }
+  
   posArray = [
     {
       AccountsignzyStatus: "",
@@ -164,8 +302,6 @@ export class TablesWidget5Component implements OnInit {
       upiId: "five@five"
     }
   ];
-
-  ngOnInit(): void { }
 
   async openModal() {
     return await this.modal4Component.open();
