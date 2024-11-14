@@ -160,14 +160,15 @@ export class TablesWidget22Component {
 
       this.post.getDealerRequestDetailsPOST(data)
         .subscribe(res => {
-          if (res.status == "OK" && res.data.length) {
+          if (res.status == "OK" && res.data.length && Array.isArray(res.data)) {
             this.dealerRequestData = res.data
             this.dealerRequestDataSearch = res.data
             localStorage.setItem('dealerRequestData', JSON.stringify(res.data));
             this.spinner.hide()
             this.cd.detectChanges();
           } else {
-            localStorage.setItem('dealerRequestData', JSON.stringify(res.data));
+            this.dealerRequestData = []
+            localStorage.setItem('dealerRequestData', JSON.stringify(''));
             this.spinner.hide()
             this.cd.detectChanges();
           }
@@ -203,14 +204,15 @@ export class TablesWidget22Component {
 
       this.post.getDealerRequestDetailsPOST(data)
         .subscribe(res => {
-          if (res.status == "OK" && res.data.length) {
+          if (res.status == "OK" && res.data.length && Array.isArray(res.data)) {
             this.dealerRequestData = res.data
             this.dealerRequestDataSearch = res.data
             localStorage.setItem('dealerRequestData', JSON.stringify(res.data));
             this.spinner.hide()
             this.cd.detectChanges();
           } else {
-            localStorage.setItem('dealerRequestData', JSON.stringify(res.data));
+            this.dealerRequestData = []
+            localStorage.setItem('dealerRequestData', JSON.stringify(''));
             this.spinner.hide()
             this.cd.detectChanges();
           }

@@ -129,8 +129,10 @@ export class TablesWidget19Component {
     this.filterForm.controls['demoDealer'].setValue('');
     if(!this.liteDealerData.length){
       this.getLiteDealerDetails();
+      this.cd.detectChanges();
     }else{
       this.getLiteDealerDetails1();
+      this.cd.detectChanges();
     }
     this.cd.detectChanges();
   }
@@ -169,7 +171,7 @@ export class TablesWidget19Component {
 
       this.post.getLiteDealerDetailsPOST(data)
         .subscribe(res => {
-          if (res.status == "OK") {
+          if (res.status == "OK" && Array.isArray(res.data)) {
             this.liteDealerData = res.data
             this.liteDealerDataSearch = res.data
             localStorage.setItem('liteDealerData', JSON.stringify(res.data));
@@ -177,7 +179,7 @@ export class TablesWidget19Component {
             this.cd.detectChanges();
           } else {
             this.liteDealerData = []
-            localStorage.setItem('liteDealerData', JSON.stringify(res.data));
+            localStorage.setItem('liteDealerData', JSON.stringify(''));
             this.spinner.hide()
             this.cd.detectChanges();
           }
@@ -186,27 +188,6 @@ export class TablesWidget19Component {
   }
 
   getLiteDealerDetails1() {
-    if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
-      this.spinner.show()
-      let data = {
-        startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
-        endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD")
-      }
-
-      this.post.getLiteDealerDetailsPOST(data)
-        .subscribe(res => {
-          if (res.status == "OK") {
-            this.liteDealerData = res.data
-            this.liteDealerDataSearch = res.data
-            this.spinner.hide()
-            this.cd.detectChanges();
-          } else {
-            alert("Data Not Found..!")
-            this.spinner.hide()
-            this.cd.detectChanges();
-          }
-        })
-    } else {
       this.spinner.show()
       let data = {
 
@@ -221,13 +202,14 @@ export class TablesWidget19Component {
             this.spinner.hide()
             this.cd.detectChanges();
           } else {
-            localStorage.setItem('liteDealerData', JSON.stringify(res.data));
+            this.liteDealerData = []
+            localStorage.setItem('liteDealerData', JSON.stringify(''));
             this.spinner.hide()
             this.cd.detectChanges();
           }
         })
     }
-  }
+  
 
   changeValueLiteDealerList(i: any, pin: any, GSTNumber: any, email: any, city: any, state: any, onBoardingStatus: any, demoDealer: any, fuelDealerId: any, hostPhone: any, userId: any, personId: any, headQuarterName: any, customerId: any) {
 

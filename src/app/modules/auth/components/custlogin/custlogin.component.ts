@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from '../login/login.service';
@@ -48,6 +48,7 @@ export class CustloginComponent {
     private post: AuthService,
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
+    public cd: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
@@ -56,6 +57,7 @@ export class CustloginComponent {
       phone: ['', [Validators.required]],
       password: ['', [Validators.required]],
     });
+    this.cd.detectChanges()
   }
 
   // convenience getter for easy access to form fields

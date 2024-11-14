@@ -119,8 +119,10 @@ export class TablesWidget23Component {
     this.veelsPlusPersonId = element.veelsPlusId;
     this.filterForm.controls["isCreatedAt"].setValue("created") 
     if(!this.requestCallData.length){
+      console.log("oqoo", Array.isArray(this.requestCallData))
       this.getRequestCallDetails();
     }else{
+      console.log("oqo11o", Array.isArray(this.requestCallData))
       this.getRequestCallDetails1();
     }
     this.cd.detectChanges();
@@ -183,15 +185,17 @@ export class TablesWidget23Component {
 
       this.post.getRequestCallDetailsPOST(data)
         .subscribe(res => {
-          if (res.status == "OK" && res.data.length) {
+          if (res.status == "OK" && res.data.length && Array.isArray(res.data)) {
             this.requestCallData = res.data
             this.requestCallDataSearch = res.data
             localStorage.setItem('requestCallData', JSON.stringify(res.data));
             this.spinner.hide()
+            this.cd.detectChanges();
           } else {
-            localStorage.setItem('requestCallData', JSON.stringify(res.data));
+            localStorage.setItem('requestCallData', JSON.stringify(''));
             alert("Data Not Found..!")
             this.spinner.hide()
+            this.cd.detectChanges();
           }
         })
     }
@@ -249,7 +253,8 @@ export class TablesWidget23Component {
             localStorage.setItem('requestCallData', JSON.stringify(res.data));
             this.spinner.hide()
           } else {
-            localStorage.setItem('requestCallData', JSON.stringify(res.data));
+            this.requestCallData = []
+            localStorage.setItem('requestCallData', JSON.stringify(''));
             alert("Data Not Found..!")
             this.spinner.hide()
           }

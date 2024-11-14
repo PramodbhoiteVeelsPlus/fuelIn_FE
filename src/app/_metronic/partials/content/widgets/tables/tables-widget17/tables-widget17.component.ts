@@ -188,7 +188,7 @@ export class TablesWidget17Component {
             this.cd.detectChanges();
           } else {
             this.allDealerList = []
-            localStorage.setItem('allDealerList', JSON.stringify(res.data));
+            localStorage.setItem('allDealerList', JSON.stringify(''));
             this.spinner.hide()
             this.cd.detectChanges();
           }
@@ -236,7 +236,7 @@ export class TablesWidget17Component {
             this.spinner.hide()
             this.cd.detectChanges();
           } else {
-            localStorage.setItem('allDealerList', JSON.stringify(res.data));
+            localStorage.setItem('allDealerList', JSON.stringify(''));
             this.spinner.hide()
             this.cd.detectChanges();
           }
@@ -498,6 +498,7 @@ export class TablesWidget17Component {
     // Trim the query and convert it to lowercase for case-insensitive search
     let query = this.searchData
     query = query.trim().toLowerCase();
+    console.log("data", this.searchData)
 
     // Filter the data based on the search query    
     this.allDealerList = this.allDealerListSearch.filter((item: { companyName: any; }) =>

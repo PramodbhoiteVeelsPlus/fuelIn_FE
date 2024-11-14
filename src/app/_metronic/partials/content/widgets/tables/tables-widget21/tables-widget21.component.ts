@@ -85,6 +85,7 @@ export class TablesWidget21Component {
   fuelDealerConversionStatus: any;
   modalReference: any;
   closeResult: string;
+  primeDealerReq: any = [];
 
   constructor(
     private post: WidgetService,
@@ -101,15 +102,9 @@ export class TablesWidget21Component {
 
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
-    this.primeDealerReqList = JSON.parse(localStorage.getItem('primeDealerReqList') || '{}');
+    // this.primeDealerReq = JSON.parse(localStorage.getItem('primeDealerReq') || '{}');
     this.veelsPlusPersonId = element.veelsPlusId;
-    if(!this.primeDealerReqList.length){
-      this.getPrimeDealerReqList();
-      this.cd.detectChanges();
-    }else{
-      this.getPrimeDealerReqList1();
-      this.cd.detectChanges();
-    }
+    this.getPrimeDealerReqList();
     this.cd.detectChanges();
   }
 
@@ -123,11 +118,12 @@ export class TablesWidget21Component {
     this.post.getPrimeDealerReqListPOST(data).subscribe(res => {
       if (res.status == "OK") {
         this.primeDealerReqList = res.data;
-        localStorage.setItem('primeDealerReqList', JSON.stringify(res.data));
+        this.primeDealerReq = res.data
+        localStorage.setItem('primeDealerReq', JSON.stringify(res.data));
         this.spinner.hide()
       } else {
-        this.primeDealerReqList = [];
-        localStorage.setItem('primeDealerReqList', JSON.stringify(res.data));
+        this.primeDealerReq = [];
+        localStorage.setItem('primeDealerReq', JSON.stringify(''));
         this.spinner.hide()
       }
     })
@@ -140,16 +136,17 @@ export class TablesWidget21Component {
 
     this.post.getPrimeDealerReqListPOST(data).subscribe(res => {
       if (res.status == "OK") {
-        this.primeDealerReqList = res.data;
-        localStorage.setItem('primeDealerReqList', JSON.stringify(res.data));
+        this.primeDealerReq = res.data;
+        localStorage.setItem('primeDealerReq', JSON.stringify(res.data));
         this.spinner.hide()
       } else {
-        localStorage.setItem('primeDealerReqList', JSON.stringify(res.data));
+        this.primeDealerReq = []
+        localStorage.setItem('primeDealerReq', JSON.stringify(''));
         this.spinner.hide()
       }
     })
   }
-  
+
   pageChangeEvent(event: number) {
     this.p = event;
     this.getPrimeDealerReqList();

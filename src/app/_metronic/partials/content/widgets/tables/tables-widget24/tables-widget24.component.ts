@@ -99,13 +99,13 @@ export class TablesWidget24Component {
 
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
-    this.demoDealerData = JSON.parse(localStorage.getItem('demoDealerData') || '{}');
+    // this.demoDealerData = JSON.parse(localStorage.getItem('demoDealerData') || '{}');
     this.veelsPlusPersonId = element.veelsPlusId;
-    if(!this.demoDealerData.length){
+    // if(!this.demoDealerData.length){
       this.getDemoDealerDetails();
-    }else{
-      this.getDemoDealerDetails1();
-    }
+    // }else{
+    //   this.getDemoDealerDetails1();
+    // }
     this.cd.detectChanges();
   }
 
@@ -128,7 +128,7 @@ export class TablesWidget24Component {
           this.cd.detectChanges();
         } else {
           this.demoDealerData = []
-          localStorage.setItem('demoDealerData', JSON.stringify(res.data));
+          localStorage.setItem('demoDealerData', JSON.stringify(''));
           this.spinner.hide()
           this.cd.detectChanges();
         }
@@ -148,7 +148,8 @@ export class TablesWidget24Component {
           this.spinner.hide()
           this.cd.detectChanges();
         } else {
-          localStorage.setItem('demoDealerData', JSON.stringify(res.data));
+          this.demoDealerData = []
+          localStorage.setItem('demoDealerData', JSON.stringify(''));
           this.spinner.hide()
           this.cd.detectChanges();
         }

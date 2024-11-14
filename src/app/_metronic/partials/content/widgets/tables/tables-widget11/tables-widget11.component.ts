@@ -125,7 +125,7 @@ export class TablesWidget11Component implements OnInit {
         this.cd.detectChanges();
       } else {
         this.dealerList = [];
-        localStorage.setItem('dealerList', JSON.stringify(res.data));
+        localStorage.setItem('dealerList', JSON.stringify(''));
         this.spinner.hide()
         this.cd.detectChanges();
       }
@@ -145,7 +145,7 @@ export class TablesWidget11Component implements OnInit {
         this.spinner.hide()
         this.cd.detectChanges();
       } else {
-        localStorage.setItem('dealerList', JSON.stringify(res.data));
+        localStorage.setItem('dealerList', JSON.stringify(''));
         this.spinner.hide()
         this.cd.detectChanges();
       }

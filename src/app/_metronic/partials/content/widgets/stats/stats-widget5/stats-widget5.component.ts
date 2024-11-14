@@ -60,7 +60,9 @@ export class StatsWidget5Component {
           }
           this.cd.detectChanges()
         } else {
+          this.cd.detectChanges()
         }
+        this.cd.detectChanges()
       });
   }
 
