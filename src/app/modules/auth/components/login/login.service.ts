@@ -23,14 +23,6 @@ export class LoginService {
     public baseURL = environment.apiUrl;
 
     private loginURL = this.baseURL + 'register/login';
-    private getpayURL = this.baseURL + 'customer/getPay';
-    private getcustDataURL = this.baseURL + 'register/getcustData';
-    private getupdatepayStatusURL = this.baseURL + 'user/updateUserpayStatus';
-
-    private getorderIdURL = this.baseURL + 'customer/getorderId';
-    private addPaymentDetailsURL = this.baseURL + 'paymentdetails/addPaymentDetails';
-    private updateCorpPayStatusURL = this.baseURL + 'corporate/updateCorpPayStatus';
-    private getPayInfoURL = this.baseURL + 'register/getPayInfo';
 
 
     // loginURL

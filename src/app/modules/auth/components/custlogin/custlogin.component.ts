@@ -177,6 +177,7 @@ export class CustloginComponent {
     this.post.searchDealerByMobile(data).subscribe((res) => {
       if ((res.status = "OK")) {
         this.fuelDealerSQLId = res.data[0].fuelDealerId;
+        localStorage.setItem('dealerId', this.fuelDealerSQLId);
       } else {
       }
     });
