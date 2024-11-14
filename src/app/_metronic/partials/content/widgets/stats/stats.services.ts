@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -9,9 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
     providedIn: 'root',
 })
 export class StatsService {
-    searchDealerByMobile(data: { mobileNumber: any; }) {
-      throw new Error('Method not implemented.');
-    }
+    
     fuelDealerId: any;
     year: any;
     headerName1: any;
@@ -127,8 +124,10 @@ export class StatsService {
     private getFastagTransactionByDateURL = this.baseURL + 'fastag/getFastagTransactionByDate';
     private getFastagTransactionByDateLQURL = this.baseURL + 'fastag/getFastagTransactionByDateLQ'; 
     private getCreditDetailsByDealerIdURL = this.baseURL + 'dealerDashboard/getCreditDetailsByDealerId';
-    private searchDealerByMobileURL = this.baseURL + 'fuelDealerCustMap/getDealerDetailsByDealerPhoneNumber'
-    private getDealerOnboardReportByAdminURL = this.baseURL + 'tripReports/getDealerOnboardReportByAdmin'
+    private searchDealerByMobileURL = this.baseURL + 'fuelDealerCustMap/getDealerDetailsByDealerPhoneNumber';
+    private getDealerOnboardReportByAdminURL = this.baseURL + 'tripReports/getDealerOnboardReportByAdmin';
+    private getCustomizeURL = this.baseURL + 'customize/getCustomize';
+    private addCustomizeURL = this.baseURL + 'customize/addCustomize';
 
 
 
@@ -1044,6 +1043,26 @@ export class StatsService {
       })
     }
 
+    // getCustomizeURL
+    getCustomizePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getCustomizeURL, body, {
+          headers: headers
+        })
+      }
+  
+    // addCustomizeURL
+    addCustomizePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addCustomizeURL, body, {
+          headers: headers
+        })
+      }
+  
 
 
 

@@ -20,7 +20,7 @@
         </li>
     </ul>
     <div [ngbNavOutlet]="customNav"></div>
-    
+
     <ng-template #tab1>
         <div class="row">
             <div class="col-12">
@@ -561,6 +561,193 @@
     </ng-template>
 
     <ng-template #tab2>
+        <!-- CREDIT Menu Start -->
+        <div class="row">
+            <div class="col-lg-3">
+                <label class="labelMargin"><b>CREDIT</b></label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="!isCREDIT">
+                    <input type="checkbox" [checked]="waive" (change)="changeCustomizeStatus('CREDIT', 'CREDIT', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="isCREDIT">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('CREDIT', 'CREDIT', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <hr>
+        <div class="row" *ngIf="isCREDIT">
+            <div class="col-lg-3">
+                <label class="labelMargin">Add Account</label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isAddAcc">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('CREDIT', 'AddAccount', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isAddAcc">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('CREDIT', 'AddAccount', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-3">
+                <label class="labelMargin">View Account</label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isViewAcc">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('CREDIT', 'ViewAccount', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isViewAcc">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('CREDIT', 'ViewAccount', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row" *ngIf="isCREDIT">
+            <div class="col-lg-3">
+                <label class="labelMargin">Add Sales</label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isAddSale">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('CREDIT', 'AddSales', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isAddSale">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('CREDIT', 'AddSales', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-3">
+                <label class="labelMargin">View Sales</label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isViewSale">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('CREDIT', 'ViewSales', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isViewSale">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('CREDIT', 'ViewSales', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row" *ngIf="isCREDIT">
+            <div class="col-lg-3">
+                <label class="labelMargin">Add Payments</label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isAddPayment">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('CREDIT', 'AddPayments', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isAddPayment">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('CREDIT', 'AddPayments', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-3">
+                <label class="labelMargin">View Payments</label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isViewPayment">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('CREDIT', 'ViewPayments', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isViewPayment">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('CREDIT', 'ViewPayments', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row" *ngIf="isCREDIT">
+            <div class="col-lg-3">
+                <label class="labelMargin">Create Statement</label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isCreateStatement">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('CREDIT', 'CreateStatement', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isCreateStatement">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('CREDIT', 'CreateStatement', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-3">
+                <label class="labelMargin">Book/Ledger</label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isBookLedger">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('CREDIT', 'Book/Ledger', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isBookLedger">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('CREDIT', 'Book/Ledger', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row" *ngIf="isCREDIT">
+            <div class="col-lg-3">
+                <label class="labelMargin">Saved Invoice</label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isSavedInv">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('CREDIT', 'SavedInvoice', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isSavedInv">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('CREDIT', 'SavedInvoice', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-3">
+                <label class="labelMargin">Add Lube Tax GST Sale</label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isAddLubeTax">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('CREDIT', 'AddLubeTaxGSTSale', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isAddLubeTax">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('CREDIT', 'AddLubeTaxGSTSale', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <hr *ngIf="isCREDIT">
+        <!-- CREDIT Menu End -->
+
+
 
     </ng-template>
 </div>
