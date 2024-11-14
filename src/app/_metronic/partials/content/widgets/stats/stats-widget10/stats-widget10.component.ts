@@ -150,6 +150,21 @@ export class StatsWidget10Component {
   personId: any;
   createdDate: any;
   businessType: any;
+  fuelDealerSQLId: any;
+  waive: any;
+  isCREDIT: boolean = true;
+  isAddAcc: boolean = true;
+  creditData: any = [];
+  isViewAcc: boolean = true;
+  isAddSale: boolean = true;
+  isViewSale: boolean = true;
+  isAddPayment: boolean = true;
+  isViewPayment: boolean = true;
+  isCreateStatement: boolean = true;
+  isBookLedger: boolean = true;
+  isSavedInv: boolean = true;
+  isAddLubeTax: boolean = true;
+  isSHIFT: boolean = true;
 
   constructor(
     private post: StatsService,
@@ -219,14 +234,27 @@ export class StatsWidget10Component {
           this.country = res.data[0].country;
           this.pin = res.data[0].pin;
           this.businessType = res.data[0].businessType
-
+          this.getDealerIdByPhone(this.phone1)
           localStorage.setItem('kycId', this.kycId);
           this.kycForm.controls["transporterBusinessType"].setValue(res.data[0].businessType)
-
           this.getBranchByCorporateVeelsplusId(this.vpcorporateId);
           this.cd.detectChanges();
         }
       })
+  }
+
+  getDealerIdByPhone(phoneNumber: any) {
+    const data = {
+      mobileNumber: phoneNumber,
+    };
+    this.post.searchDealerByMobilePOST(data).subscribe((res) => {
+      if ((res.status = "OK")) {
+        this.fuelDealerSQLId = res.data[0].fuelDealerId;
+        this.getCustomize(this.fuelDealerSQLId);
+        this.cd.detectChanges();
+      } else {
+      }
+    });
   }
 
   getBranchByCorporateVeelsplusId(corporateId: string) {
@@ -235,14 +263,14 @@ export class StatsWidget10Component {
     }
     this.post.getBranchVeelsplusId(data)
       .subscribe(result => {
-        if(result.status){
-        this.allBranch = result.data[0];
-        this.corporateId = result.data[0].veelsPlusCorporateID
-        this.veelsPlusBranchID = result.data[0].veelsPlusBranchID
+        if (result.status) {
+          this.allBranch = result.data[0];
+          this.corporateId = result.data[0].veelsPlusCorporateID
+          this.veelsPlusBranchID = result.data[0].veelsPlusBranchID
 
-        this.getAllBranchByCorporateVeelsplusId(result.data[0].veelsPlusCorporateID);
-        this.cd.detectChanges();
-        } else { 
+          this.getAllBranchByCorporateVeelsplusId(result.data[0].veelsPlusCorporateID);
+          this.cd.detectChanges();
+        } else {
           alert("Seesion TimeOut Please Login Again..!")
           this.router.navigate(['/auth/login'])
         }
@@ -420,5 +448,111 @@ export class StatsWidget10Component {
     else {
       alert("Please Enter Description!")
     }
+  }
+
+  getCustomize(dealerId: any) {
+    this.creditData = [];
+    this.spinner.show();
+    const data = {
+      customizeDealerId: dealerId,
+    };
+    this.post.getCustomizePOST(data)
+      .subscribe((res) => {
+        if ((res.status = "OK") && (res.data.length)) {
+          //CREDIT MENU
+          if (res.data[0].dataCREDIT.length) {
+            this.creditData = res.data[0].dataCREDIT;
+            this.creditData.map((res: any) => {
+              if (res.customizeSubMenu == "CREDIT") {
+                this.isCREDIT = false;
+              } else if (res.customizeSubMenu == "AddAccount") {
+                this.isAddAcc = false;
+              } else if (res.customizeSubMenu == "ViewAccount") {
+                this.isViewAcc = false;
+              } else if (res.customizeSubMenu == "AddSales") {
+                this.isAddSale = false;
+              } else if (res.customizeSubMenu == "ViewSales") {
+                this.isViewSale = false;
+              } else if (res.customizeSubMenu == "AddPayments") {
+                this.isAddPayment = false;
+              } else if (res.customizeSubMenu == "ViewPayments") {
+                this.isViewPayment = false;
+              } else if (res.customizeSubMenu == "CreateStatement") {
+                this.isCreateStatement = false;
+              } else if (res.customizeSubMenu == "Book/Ledger") {
+                this.isBookLedger = false;
+              } else if (res.customizeSubMenu == "SavedInvoice") {
+                this.isSavedInv = false;
+              } else if (res.customizeSubMenu == "AddLubeTaxGSTSale") {
+                this.isAddLubeTax = false;
+              } else {
+              }
+              this.cd.detectChanges();
+            })
+          } else {
+            this.isCREDIT = true;
+          }
+          //SHIFT MENU
+          if (res.data[1].dataSHIFT.length) {
+            this.creditData = res.data[0].dataCREDIT;
+            this.creditData.map((res: any) => {
+              if (res.customizeSubMenu == "AddAccount") {
+                this.isAddAcc = false;
+              } else if (res.customizeSubMenu == "ViewAccount") {
+                this.isAddAcc = false;
+              } else if (res.customizeSubMenu == "AddSales") {
+                this.isAddAcc = false;
+              } else if (res.customizeSubMenu == "ViewSales") {
+                this.isAddAcc = false;
+              } else if (res.customizeSubMenu == "AddPayments") {
+                this.isAddAcc = false;
+              } else if (res.customizeSubMenu == "ViewPayments") {
+                this.isAddAcc = false;
+              } else if (res.customizeSubMenu == "CreateStatement") {
+                this.isAddAcc = false;
+              } else if (res.customizeSubMenu == "Book/Ledger") {
+                this.isAddAcc = false;
+              } else if (res.customizeSubMenu == "SavedInvoice") {
+                this.isAddAcc = false;
+              } else if (res.customizeSubMenu == "AddLubeTaxGSTSale") {
+                this.isAddAcc = false;
+              } else {
+
+              }
+              this.cd.detectChanges();
+            })
+          } else {
+            this.isSHIFT = true;
+          }
+
+          this.cd.detectChanges();
+          this.spinner.hide();
+        } else {
+          this.spinner.hide();
+          this.cd.detectChanges();
+        }
+      });
+  }
+
+  changeCustomizeStatus(menu: any, subMenu: any, status: any) {
+    this.spinner.show();
+    const data = {
+      customizeDealerId: this.fuelDealerSQLId,
+      customizeMenu: menu,
+      customizeSubMenu: subMenu,
+      customizeStatus: status,
+      createdBy: "ADMIN",
+    }
+    this.post.addCustomizePOST(data)
+      .subscribe((res) => {
+        if (res.status == "OK") {
+          this.getCustomize(this.fuelDealerSQLId);
+          alert("Status Updated..!");
+        } else {
+          alert("Error to Update..!");
+          this.spinner.hide();
+        }
+      })
+
   }
 }
