@@ -10,7 +10,7 @@ import { StatsService } from '../stats.services';
 export class StatsWidget6Component {
 
   acceesGroup: any;
-  gstDetails: any;
+  gstDetails: any =[];
 
   gstForm = new FormGroup({
     gst: new FormControl('', Validators.required),

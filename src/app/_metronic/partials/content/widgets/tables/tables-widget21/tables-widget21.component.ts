@@ -105,16 +105,14 @@ export class TablesWidget21Component {
     this.veelsPlusPersonId = element.veelsPlusId;
     if(!this.primeDealerReqList.length){
       this.getPrimeDealerReqList();
+      this.cd.detectChanges();
     }else{
       this.getPrimeDealerReqList1();
+      this.cd.detectChanges();
     }
     this.cd.detectChanges();
   }
 
-  pageChangeEvent(event: number) {
-    this.p = event;
-    this.getPrimeDealerReqList();
-  }
 
   getPrimeDealerReqList() {
     this.spinner.show();
@@ -150,6 +148,11 @@ export class TablesWidget21Component {
         this.spinner.hide()
       }
     })
+  }
+  
+  pageChangeEvent(event: number) {
+    this.p = event;
+    this.getPrimeDealerReqList();
   }
 
   onBoarding1(primeReq: any, ele: any, ele1: any, fuelDealerConversionStatus: any, fuelDealerConversionId: any, accessId: any, personId: any, firstName: any, lastName: any, companyName: any, city: any, email1: any, state: any, fuelDealerId: any, brandName: any, hostPhone: any) {

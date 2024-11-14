@@ -34,6 +34,7 @@ export class ModalsService {
   private fuelStaffRegisterURL = this.baseURL + 'fuelVendor/fuelStaffRegister'
   private addDealerStaffAccessURL = this.baseURL + 'userAccess/addDealerStaffAccess'
   private renewMappingStaffURL = this.baseURL + 'fuelStaff/renewMappingStaff';  
+  private addBankDetailsURL = this.baseURL + 'bankDetails/addBankDetails';
 
   setHeader() {
     this.token = JSON.parse(localStorage.getItem('authenticationToken') || '{}');
@@ -126,6 +127,16 @@ export class ModalsService {
     let headers = new HttpHeaders();
     headers = headers.set('authenticationToken', this.token);
     return this.http.post(this.renewMappingStaffURL, body, {
+      headers: headers
+    })
+  }
+  
+  // addBankDetailsURL
+  addBankDetailsPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.addBankDetailsURL, body, {
       headers: headers
     })
   }

@@ -60,12 +60,12 @@ export class StatsWidget9Component {
 
   acceesGroup: any;
   activityCountDetailsDealer: any = [];
-  activityCountDetailsTransporter: any[];
-  activityCountDetailsDealerAPP: any[];
-  activityCountDetailsTransporterAPP: any[];
-  activityCountTransporters: any[];
-  activityCountDealers: any[];
-  activityCountTransporter: any[];
+  activityCountDetailsTransporter: any = [];
+  activityCountDetailsDealerAPP: any = [];
+  activityCountDetailsTransporterAPP: any = [];
+  activityCountTransporters: any = [];
+  activityCountDealers: any = [];
+  activityCountTransporter: any = [];
 
   filter = new FormGroup({
     dealer: new FormControl(""),

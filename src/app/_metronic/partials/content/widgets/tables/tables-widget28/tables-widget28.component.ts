@@ -77,8 +77,8 @@ export class TablesWidget28Component {
   fuelDealerId: any;
   isCredit: boolean = false;
   isPayment: boolean = false;
-  allCredit: any;
-  allPayment: any;
+  allCredit: any = [];
+  allPayment: any  =[];
   corporateId: any;
   fuelDealerCustomMapId: any;
   grandTotal: any;

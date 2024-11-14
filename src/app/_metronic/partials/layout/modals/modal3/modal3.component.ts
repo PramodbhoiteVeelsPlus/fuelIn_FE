@@ -95,6 +95,7 @@ export class Modal3Component {
   loginSQLCorporateId: any;
   FuelVeelsVendorID: any;
   fuelDealerId: any;
+  personId: any;
 
   constructor(
     private post: ModalsService,
@@ -114,6 +115,7 @@ export class Modal3Component {
     this.managerVPPersonId = element.veelsPlusId;
     this.managerPersonId = element.personId;
     this.managerName = element.firstName + " " + element.lastName;
+    this.personId = element.personId
     this.getCorporateById(this.dealerLoginVPId);
     this.cd.detectChanges()
   }
@@ -163,6 +165,7 @@ export class Modal3Component {
       this.modalRef.result.then(resolve, resolve);
     });
   }
+
   async close(): Promise<void> {
     if (
       this.modalConfig.shouldClose === undefined ||
@@ -174,6 +177,7 @@ export class Modal3Component {
       this.modalRef.close(result);
     }
   }
+
   async dismiss(): Promise<void> {
     if (this.modalConfig.disableDismissButton !== undefined) {
       return;
@@ -189,9 +193,49 @@ export class Modal3Component {
     }
   }
 
-  submit() {
-    console.log("Submitted")
-  }
+  
+ addBankDetails() {
+  if(this.addBankDetailsForm.value.accountNumber){
+    if(this.addBankDetailsForm.value.AccPhoneNumber){
+    if(this.addBankDetailsForm.value.ifsc){
+
+      this.spinner.show()
+      let data = {
+        accountNumber:this.addBankDetailsForm.value.accountNumber,
+        accountHolderName:this.addBankDetailsForm.value.accountHolderName,
+        ifsc:this.addBankDetailsForm.value.ifsc,
+        corporateId:this.loginSQLCorporateId,
+        branchName:this.addBankDetailsForm.value.branchName,
+        bankName:this.addBankDetailsForm.value.bankName,
+        phone:this.addBankDetailsForm.value.AccPhoneNumber,
+        personId:this.personId ,
+        upiId: this.addBankDetailsForm.value.upiId ,
+        accountType: this.addBankDetailsForm.value.accountType ,
+        dealerId:this.fuelDealerId
+      }
+      this.post.addBankDetailsPOST(data)
+        .subscribe(res=>{
+          if (res.status == "OK"){
+            alert(res.msg)
+            this.spinner.hide();
+            // this.getBankDetailsByDealerId(this.fuelDealerId)
+            this.close();          
+          }
+          else{
+            this.spinner.hide();
+          }
+        })
+      }else{
+        alert("Please Enter IFSC..!")
+        this.spinner.hide();
+      }}else{
+        alert("Please Enter Mobile Number..!")
+        this.spinner.hide();
+      }}else{
+        alert("Please Enter Account Number..!")
+        this.spinner.hide();
+      }
+    }
 
 
 }

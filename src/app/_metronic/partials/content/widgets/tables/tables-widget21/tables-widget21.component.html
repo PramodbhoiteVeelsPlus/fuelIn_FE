@@ -15,9 +15,9 @@
 
                     </tr>
                 </thead>
-                <tbody
-                    *ngFor="let data of primeDealerReqList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
-                    <tr>
+                <tbody>
+                    <tr
+                    *ngFor="let data of primeDealerReqList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total };">
                         <td> {{data.FuelVeelsId}} </td>
                         <td>{{data.corporateCreatedAt | date:"d MMM, yyyy"}}</td>
                         <td>{{data.companyName}}</td>

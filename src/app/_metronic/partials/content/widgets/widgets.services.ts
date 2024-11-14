@@ -108,6 +108,7 @@ export class WidgetService {
   private updateCustomizeStatusURL = this.baseURL + 'customize/updateCustomizeStatus'; 
   private getActiveCustomerListURL = this.baseURL + 'adminOutstand/getActiveCustomerList';
   private getActiveVehicleListURL = this.baseURL + 'adminOutstand/getActiveVehicleList';
+  private getFuelTerminalURL = this.baseURL + 'fuelTerminals/getFuelTerminal'
 
 
   setHeader() {
@@ -943,6 +944,16 @@ export class WidgetService {
     let headers = new HttpHeaders();
     headers = headers.set('authenticationToken', this.token);
     return this.http.post(this.getActiveVehicleListURL, body, {
+      headers: headers
+    })
+  }
+  
+  // getFuelTerminalURL
+  getFuelTerminalPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getFuelTerminalURL, body, {
       headers: headers
     })
   }
