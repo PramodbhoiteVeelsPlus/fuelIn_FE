@@ -572,6 +572,7 @@ export class StatsWidget10Component {
           } else {
             this.isCREDIT = true;
           }
+          console.log("cr", this.isCREDIT)
           //SHIFT MENU
           if (res.data[1].dataSHIFT.length) {
             this.shiftData = res.data[1].dataSHIFT;

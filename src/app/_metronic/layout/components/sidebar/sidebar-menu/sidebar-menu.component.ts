@@ -73,6 +73,40 @@ export class SidebarMenuComponent implements OnInit {
   isLedgerShiftWise: boolean = true;
   isLedgerDayWise: boolean = true;
   isLedgerShiftTimeWise: boolean = true;
+  isLedgerMonthWise: boolean = true;
+  pumpData: any = [];
+  reportData: any = [];
+  isPUMP: boolean = true;
+  isInfra: boolean = true;
+  isCashBill: boolean = true;
+  isFuelPrice: boolean = true;
+  isLubricant: boolean = true;
+  isAddLubricant: boolean = true;
+  isAddLubricantPurchase: boolean = true;
+  isViewLubricantPurchase: boolean = true;
+  isAddLubeTaxSale: boolean = true;
+  isOldAccounting: boolean = true;
+  isOilCompany: boolean = true;
+  isBank: boolean = true;
+  isCash: boolean = true;
+  isPOS: boolean = true;
+  isStaff: boolean = true;
+  isFastag: boolean = true;
+  isAccInfo: boolean = true;
+  isAllTollTran: boolean = true;
+  isActiveVeh: boolean = true;
+  isTollPlaza: boolean = true;
+  isTotalRecharge: boolean = true;
+  isVehSummary: boolean = true;
+  isREPORT: boolean = true;
+  isDailyReportEntries: boolean = true;
+  isDailyReport: boolean = true;
+  isMonthlyReport: boolean = true;
+  isVatBook: boolean = true;
+  isProfitReport: boolean = true;
+  isSummaryReport: boolean = true;
+  isViswasaTxExcel: boolean = true;
+  isSalesPurReport: boolean = true;
 
   constructor(private router: Router,
     private post: StatsService,
@@ -116,9 +150,9 @@ export class SidebarMenuComponent implements OnInit {
     };
     this.post.getCustomizePOST(data)
       .subscribe((res) => {
-        if ((res.status = "OK")) {          
+        if ((res.status = "OK")) {
           localStorage.setItem('customizeData', JSON.stringify(res.data));
-          
+
           //CREDIT MENU
           if (res.data[0].dataCREDIT.length) {
             this.creditData = res.data[0].dataCREDIT;
@@ -283,19 +317,19 @@ export class SidebarMenuComponent implements OnInit {
                 this.isCredit = false;
               } else if (res.customizeSubMenu == "Accounting") {
                 this.isAccounting = false;
-              }else if (res.customizeSubMenu == "dsr") {
+              } else if (res.customizeSubMenu == "dsr") {
                 this.isdsr = false;
               } else if (res.customizeSubMenu == "Creditsales") {
                 this.isCreditsales = false;
-              }else if (res.customizeSubMenu == "Shift") {
+              } else if (res.customizeSubMenu == "Shift") {
                 this.isShift = false;
               } else if (res.customizeSubMenu == "LedgerShiftWise") {
                 this.isLedgerShiftWise = false;
-              }  else if (res.customizeSubMenu == "LedgerDayWise") {
+              } else if (res.customizeSubMenu == "LedgerDayWise") {
                 this.isLedgerDayWise = false;
-              }  else if (res.customizeSubMenu == "LedgerMonthWise") {
-                this.isAccounting = false;
-              }  else if (res.customizeSubMenu == "LedgerShiftTimeWise") {
+              } else if (res.customizeSubMenu == "LedgerMonthWise") {
+                this.isLedgerMonthWise = false;
+              } else if (res.customizeSubMenu == "LedgerShiftTimeWise") {
                 this.isLedgerShiftTimeWise = false;
               } else {
               }
@@ -304,6 +338,91 @@ export class SidebarMenuComponent implements OnInit {
           } else {
             this.isLEDGER = true;
           }
+          //PUMP MENU
+          if (res.data[7].dataPUMP.length) {
+            this.pumpData = res.data[7].dataPUMP;
+            this.pumpData.map((res: any) => {
+              if (res.customizeSubMenu == "PUMP") {
+                this.isPUMP = false;
+              } else if (res.customizeSubMenu == "Infra") {
+                this.isInfra = false;
+              } else if (res.customizeSubMenu == "CashBill") {
+                this.isCashBill = false;
+              } else if (res.customizeSubMenu == "FuelPrice") {
+                this.isFuelPrice = false;
+              } else if (res.customizeSubMenu == "Lubricant") {
+                this.isLubricant = false;
+              } else if (res.customizeSubMenu == "Lube-AddLubricant") {
+                this.isAddLubricant = false;
+              } else if (res.customizeSubMenu == "Lube-AddLubricantPurchase") {
+                this.isAddLubricantPurchase = false;
+              } else if (res.customizeSubMenu == "Lube-ViewLubricantPurchase") {
+                this.isViewLubricantPurchase = false;
+              } else if (res.customizeSubMenu == "Lube-AddLubeTaxSale") {
+                this.isAddLubeTaxSale = false;
+              } else if (res.customizeSubMenu == "OldAccounting") {
+                this.isOldAccounting = false;
+              } else if (res.customizeSubMenu == "OldAcc-OilCompany") {
+                this.isOilCompany = false;
+              } else if (res.customizeSubMenu == "OldAcc-Bank") {
+                this.isBank = false;
+              } else if (res.customizeSubMenu == "OldAcc-Cash") {
+                this.isCash = false;
+              } else if (res.customizeSubMenu == "OldAcc-Pos") {
+                this.isPOS = false;
+              } else if (res.customizeSubMenu == "OldAcc-Staff") {
+                this.isStaff = false;
+              } else if (res.customizeSubMenu == "Fastag") {
+                this.isFastag = false;
+              } else if (res.customizeSubMenu == "FT-AccInfo") {
+                this.isAccInfo = false;
+              } else if (res.customizeSubMenu == "FT-AllTollTran") {
+                this.isAllTollTran = false;
+              } else if (res.customizeSubMenu == "FT-ActiveVeh") {
+                this.isActiveVeh = false;
+              } else if (res.customizeSubMenu == "FT-TollPlaza") {
+                this.isTollPlaza = false;
+              } else if (res.customizeSubMenu == "FT-TotalRecharge") {
+                this.isTotalRecharge = false;
+              } else if (res.customizeSubMenu == "FT-VehSummary") {
+                this.isVehSummary = false;
+              } else {
+              }
+              this.cd.detectChanges();
+            })
+          } else {
+            this.isPUMP = true;
+          }
+          //REPORT MENU
+          if (res.data[8].dataREPORT.length) {
+            this.reportData = res.data[8].dataREPORT;
+            this.reportData.map((res: any) => {
+              if (res.customizeSubMenu == "REPORT") {
+                this.isREPORT = false;
+              } else if (res.customizeSubMenu == "DailyReportEntries") {
+                this.isDailyReportEntries = false;
+              } else if (res.customizeSubMenu == "DailyReport") {
+                this.isDailyReport = false;
+              } else if (res.customizeSubMenu == "MonthlyReport") {
+                this.isMonthlyReport = false;
+              } else if (res.customizeSubMenu == "VatBook") {
+                this.isVatBook = false;
+              } else if (res.customizeSubMenu == "ProfitReport") {
+                this.isProfitReport = false;
+              } else if (res.customizeSubMenu == "SummaryReport") {
+                this.isSummaryReport = false;
+              } else if (res.customizeSubMenu == "ViswasaTxExcel") {
+                this.isViswasaTxExcel = false;
+              } else if (res.customizeSubMenu == "SalesPurReport") {
+                this.isSalesPurReport = false;
+              } else {
+              }
+              this.cd.detectChanges();
+            })
+          } else {
+            this.isREPORT = true;
+          }
+
 
 
           this.cd.detectChanges();
