@@ -39,7 +39,7 @@
     </div>
 
     <!-- Credit -->
-    <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+    <div *ngIf="isCREDIT" class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
       <span class="menu-link">
         <span class="menu-icon">
           <app-keenicon name="element-plus" class="fs-2"></app-keenicon>
@@ -49,7 +49,7 @@
         <span class="menu-arrow"></span>
       </span>
       <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-        <div class="menu-item menu-accordion" routerLinkActive="active" routerLink="/crafted/pages/wizards/horizontal"
+        <div *ngIf="isAddAcc" class="menu-item menu-accordion" routerLinkActive="active" routerLink="/crafted/pages/wizards/horizontal"
           data-kt-menu-trigger="click">
           <span class="menu-link">
             <span class="menu-bullet">
@@ -59,7 +59,7 @@
             </span>
           </span>
         </div>
-        <div class="menu-item menu-accordion" routerLinkActive="active" routerLink="/crafted/pages/profile"
+        <div *ngIf="isViewAcc" class="menu-item menu-accordion" routerLinkActive="active" routerLink="/crafted/pages/profile"
           data-kt-menu-trigger="click">
           <span class="menu-link">
             <span class="menu-bullet">
@@ -69,7 +69,7 @@
             </span>
           </span>
         </div>
-        <div class="menu-item menu-accordion" routerLinkActive="active" routerLink="/crafted/pages/profile"
+        <div *ngIf="isAddSale" class="menu-item menu-accordion" routerLinkActive="active" routerLink="/crafted/pages/profile"
           data-kt-menu-trigger="click">
           <span class="menu-link">
             <span class="menu-bullet">
@@ -79,7 +79,7 @@
             </span>
           </span>
         </div>
-        <div class="menu-item menu-accordion" routerLinkActive="active" routerLink="/crafted/pages/profile"
+        <div *ngIf="isViewSale" class="menu-item menu-accordion" routerLinkActive="active" routerLink="/crafted/pages/profile"
           data-kt-menu-trigger="click">
           <span class="menu-link">
             <span class="menu-bullet">
@@ -89,7 +89,7 @@
             </span>
           </span>
         </div>
-        <div class="menu-item menu-accordion" routerLinkActive="active" routerLink="/crafted/pages/profile"
+        <div *ngIf="isAddPayment" class="menu-item menu-accordion" routerLinkActive="active" routerLink="/crafted/pages/profile"
           data-kt-menu-trigger="click">
           <span class="menu-link">
             <span class="menu-bullet">
@@ -99,7 +99,7 @@
             </span>
           </span>
         </div>
-        <div class="menu-item menu-accordion" routerLinkActive="active" routerLink="/crafted/pages/profile"
+        <div *ngIf="isViewPayment" class="menu-item menu-accordion" routerLinkActive="active" routerLink="/crafted/pages/profile"
           data-kt-menu-trigger="click">
           <span class="menu-link">
             <span class="menu-bullet">
@@ -109,7 +109,7 @@
             </span>
           </span>
         </div>
-        <div class="menu-item menu-accordion" routerLinkActive="active" routerLink="/crafted/pages/profile"
+        <div *ngIf="isCreateStatement" class="menu-item menu-accordion" routerLinkActive="active" routerLink="/crafted/pages/profile"
           data-kt-menu-trigger="click">
           <span class="menu-link">
             <span class="menu-bullet">
@@ -119,7 +119,7 @@
             </span>
           </span>
         </div>
-        <div class="menu-item menu-accordion" routerLinkActive="active" routerLink="/crafted/pages/profile"
+        <div *ngIf="isBookLedger" class="menu-item menu-accordion" routerLinkActive="active" routerLink="/crafted/pages/profile"
           data-kt-menu-trigger="click">
           <span class="menu-link">
             <span class="menu-bullet">
@@ -129,7 +129,7 @@
             </span>
           </span>
         </div>
-        <div class="menu-item menu-accordion" routerLinkActive="active" routerLink="/crafted/pages/profile"
+        <div *ngIf="isSavedInv" class="menu-item menu-accordion" routerLinkActive="active" routerLink="/crafted/pages/profile"
           data-kt-menu-trigger="click">
           <span class="menu-link">
             <span class="menu-bullet">
@@ -139,7 +139,7 @@
             </span>
           </span>
         </div>
-        <div class="menu-item menu-accordion" routerLinkActive="active" routerLink="/crafted/pages/profile"
+        <div *ngIf="isAddLubeTax" class="menu-item menu-accordion" routerLinkActive="active" routerLink="/crafted/pages/profile"
           data-kt-menu-trigger="click">
           <span class="menu-link">
             <span class="menu-bullet">
@@ -153,7 +153,7 @@
     </div>
 
     <!-- Shift -->
-    <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+    <div *ngIf="isSHIFT" class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
       <span class="menu-link">
         <span class="menu-icon">
           <app-keenicon name="profile-circle" class="fs-2"></app-keenicon>
@@ -163,29 +163,143 @@
         <span class="menu-arrow"></span>
       </span>
       <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-        <div class="menu-item">
-          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/account/overview">
+        <div *ngIf="isAddShift" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+          <span class="menu-link">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
-            <span class="menu-title">Overview
+            <span class="menu-title">Add Shift
             </span>
-          </a>
+          </span>
         </div>
-        <div class="menu-item">
-          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/account/settings">
+        <div *ngIf="isViewShift" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+          <span class="menu-link">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
-            <span class="menu-title">Settings
+            <span class="menu-title">View Shift
             </span>
-          </a>
+          </span>
         </div>
-      </div>
+        <div *ngIf="isAddShiftTime" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">Add Shift Time
+            </span>
+          </span>
+        </div>
+        <div *ngIf="isPosDetails" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">POS Details
+            </span>
+          </span>
+        </div>
+        <div *ngIf="isBook" class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">Book/Ledger
+            </span>
+            <span class="menu-arrow"></span>
+          </span>
+          <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+            <div *ngIf="isBookShiftWise" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+              <span class="menu-link">
+                <span class="menu-bullet">
+                  <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Shift Wise
+                </span>
+              </span>
+            </div>
+            <div *ngIf="isBookDayWise" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+              <span class="menu-link">
+                <span class="menu-bullet">
+                  <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Day Wise
+                </span>
+              </span>
+            </div>
+            <div *ngIf="isBookMonthWise" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+              <span class="menu-link">
+                <span class="menu-bullet">
+                  <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Month Wise
+                </span>
+              </span>
+            </div>
+            <div *ngIf="isBookShiftTimeWise" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+              <span class="menu-link">
+                <span class="menu-bullet">
+                  <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">ShiftTime Wise
+                </span>
+              </span>
+            </div>
+            <div *ngIf="isBookOperatorWise" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+              <span class="menu-link">
+                <span class="menu-bullet">
+                  <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">OperatorWise
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="isStaffManage" class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">Staff Management
+            </span>
+            <span class="menu-arrow"></span>
+          </span>
+          <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+            <div *ngIf="isStaffAddStaff" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+              <span class="menu-link">
+                <span class="menu-bullet">
+                  <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Add Staff
+                </span>
+              </span>
+            </div>
+            <div *ngIf="isStaffAttendance" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+              <span class="menu-link">
+                <span class="menu-bullet">
+                  <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Attendance
+                </span>
+              </span>
+            </div>
+            <div *ngIf="isStaffSalary" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+              <span class="menu-link">
+                <span class="menu-bullet">
+                  <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Staff Salary
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>      
     </div>
 
     <!-- Inventory -->
-    <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+    <div *ngIf="isINVENTORY" class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
       <span class="menu-link">
         <span class="menu-icon">
           <app-keenicon name="element-plus" class="fs-2"></app-keenicon>
@@ -195,92 +309,38 @@
         <span class="menu-arrow"></span>
       </span>
       <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-        <div class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click">
+        <div *ngIf="isAddOilPurchase" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
           <span class="menu-link">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
-            <span class="menu-title">Profile
+            <span class="menu-title">Add Oil Company Purchase
             </span>
-            <span class="menu-arrow"></span>
           </span>
-          <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-            <div class="menu-item">
-              <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/pages/profile/overview">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">Overview</span>
-              </a>
-            </div>
-            <div class="menu-item">
-              <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/pages/profile/projects">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">Projects</span>
-              </a>
-            </div>
-            <div class="menu-item">
-              <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/pages/profile/campaigns">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">Campaigns</span>
-              </a>
-            </div>
-            <div class="menu-item">
-              <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/pages/profile/documents">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">Documents</span>
-              </a>
-            </div>
-            <div class="menu-item">
-              <a class="menu-link without-sub" routerLinkActive="active"
-                routerLink="/crafted/pages/profile/connections">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">Connections</span>
-              </a>
-            </div>
-          </div>
         </div>
-        <div class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click">
+        <div *ngIf="isViewOilPurchase" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
           <span class="menu-link">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
-            <span class="menu-title">Wizards
+            <span class="menu-title">View Oil Company Purchase
             </span>
-            <span class="menu-arrow"></span>
           </span>
-          <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-            <div class="menu-item">
-              <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/pages/wizards/horizontal">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">Horizontal</span>
-              </a>
-            </div>
-            <div class="menu-item">
-              <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/pages/wizards/vertical">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">Vertical</span>
-              </a>
-            </div>
-          </div>
+        </div>
+        <div *ngIf="isAddVarPercentage" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">Add Variation Percentage
+            </span>
+          </span>
         </div>
       </div>
     </div>
 
     <!-- Accounting -->
-    <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+    <div *ngIf="isACCOUNTING" class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
       <span class="menu-link">
         <span class="menu-icon">
           <app-keenicon name="profile-circle" class="fs-2"></app-keenicon>
@@ -290,29 +350,65 @@
         <span class="menu-arrow"></span>
       </span>
       <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-        <div class="menu-item">
-          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/account/overview">
+        <div *ngIf="isAddAccounting" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+          <span class="menu-link">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
-            <span class="menu-title">Overview
+            <span class="menu-title">Add Accounting
             </span>
-          </a>
+          </span>
         </div>
-        <div class="menu-item">
-          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/account/settings">
+        <div *ngIf="isViewAccounting" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+          <span class="menu-link">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
-            <span class="menu-title">Settings
+            <span class="menu-title">View Accounting
             </span>
-          </a>
+          </span>
         </div>
+        <div *ngIf="isAccBookLedger" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">Book/Ledger
+            </span>
+          </span>
+        </div>
+        <div *ngIf="isAddBank" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">Add Bank Account
+            </span>
+          </span>
+        </div>
+        <div *ngIf="isViewBank" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">View Bank Account
+            </span>
+          </span>
+        </div>
+        <div *ngIf="isPos" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">POS
+            </span>
+          </span>
+        </div>        
       </div>
     </div>
 
     <!-- Expense -->
-    <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+    <div *ngIf="isEXPENSE" class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
       <span class="menu-link">
         <span class="menu-icon">
           <app-keenicon name="element-plus" class="fs-2"></app-keenicon>
@@ -322,92 +418,29 @@
         <span class="menu-arrow"></span>
       </span>
       <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-        <div class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click">
+        <div *ngIf="isExpenseAccounting" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
           <span class="menu-link">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
-            <span class="menu-title">Profile
+            <span class="menu-title"> Expense Accounting
             </span>
-            <span class="menu-arrow"></span>
           </span>
-          <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-            <div class="menu-item">
-              <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/pages/profile/overview">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">Overview</span>
-              </a>
-            </div>
-            <div class="menu-item">
-              <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/pages/profile/projects">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">Projects</span>
-              </a>
-            </div>
-            <div class="menu-item">
-              <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/pages/profile/campaigns">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">Campaigns</span>
-              </a>
-            </div>
-            <div class="menu-item">
-              <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/pages/profile/documents">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">Documents</span>
-              </a>
-            </div>
-            <div class="menu-item">
-              <a class="menu-link without-sub" routerLinkActive="active"
-                routerLink="/crafted/pages/profile/connections">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">Connections</span>
-              </a>
-            </div>
-          </div>
         </div>
-        <div class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click">
+        <div *ngIf="isDailyReportExpense" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
           <span class="menu-link">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
-            <span class="menu-title">Wizards
+            <span class="menu-title"> Daily Report Expense
             </span>
-            <span class="menu-arrow"></span>
           </span>
-          <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-            <div class="menu-item">
-              <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/pages/wizards/horizontal">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">Horizontal</span>
-              </a>
-            </div>
-            <div class="menu-item">
-              <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/pages/wizards/vertical">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">Vertical</span>
-              </a>
-            </div>
-          </div>
         </div>
       </div>
     </div>
 
     <!-- DSR -->
-    <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+    <div *ngIf="isDSR" class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
       <span class="menu-link">
         <span class="menu-icon">
           <app-keenicon name="profile-circle" class="fs-2"></app-keenicon>
@@ -417,21 +450,21 @@
         <span class="menu-arrow"></span>
       </span>
       <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-        <div class="menu-item">
-          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/account/overview">
+        <div *ngIf="isDsr" class="menu-item">
+          <a class="menu-link without-sub" routerLinkActive="active"  >
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
-            <span class="menu-title">Overview
+            <span class="menu-title">DSR
             </span>
           </a>
         </div>
-        <div class="menu-item">
-          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/account/settings">
+        <div *ngIf="isTankDsr" class="menu-item">
+          <a class="menu-link without-sub" routerLinkActive="active"  >
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
-            <span class="menu-title">Settings
+            <span class="menu-title">Tank DSR
             </span>
           </a>
         </div>
@@ -439,7 +472,7 @@
     </div>
 
     <!-- Ledger -->
-    <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+    <div *ngIf="isLEDGER" class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
       <span class="menu-link">
         <span class="menu-icon">
           <app-keenicon name="element-plus" class="fs-2"></app-keenicon>
@@ -449,87 +482,100 @@
         <span class="menu-arrow"></span>
       </span>
       <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-        <div class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click">
+        <div *ngIf="isCredit" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
           <span class="menu-link">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
-            <span class="menu-title">Profile
+            <span class="menu-title">Credit
             </span>
-            <span class="menu-arrow"></span>
           </span>
-          <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-            <div class="menu-item">
-              <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/pages/profile/overview">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">Overview</span>
-              </a>
-            </div>
-            <div class="menu-item">
-              <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/pages/profile/projects">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">Projects</span>
-              </a>
-            </div>
-            <div class="menu-item">
-              <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/pages/profile/campaigns">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">Campaigns</span>
-              </a>
-            </div>
-            <div class="menu-item">
-              <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/pages/profile/documents">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">Documents</span>
-              </a>
-            </div>
-            <div class="menu-item">
-              <a class="menu-link without-sub" routerLinkActive="active"
-                routerLink="/crafted/pages/profile/connections">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">Connections</span>
-              </a>
-            </div>
-          </div>
         </div>
-        <div class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click">
+        <div *ngIf="isAccounting" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
           <span class="menu-link">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
-            <span class="menu-title">Wizards
+            <span class="menu-title">Accounting
+            </span>
+          </span>
+        </div>
+        <div *ngIf="isdsr" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">DSR
+            </span>
+          </span>
+        </div>
+        <div *ngIf="isCreditsales" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">Credit Sales
+            </span>
+          </span>
+        </div>
+        <div *ngIf="isShift" class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">Shift
             </span>
             <span class="menu-arrow"></span>
           </span>
           <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-            <div class="menu-item">
-              <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/pages/wizards/horizontal">
+            <div *ngIf="isLedgerShiftWise" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+              <span class="menu-link">
                 <span class="menu-bullet">
                   <span class="bullet bullet-dot"></span>
                 </span>
-                <span class="menu-title">Horizontal</span>
-              </a>
+                <span class="menu-title">Shift Wise
+                </span>
+              </span>
             </div>
-            <div class="menu-item">
-              <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/pages/wizards/vertical">
+            <div *ngIf="isLedgerDayWise" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+              <span class="menu-link">
                 <span class="menu-bullet">
                   <span class="bullet bullet-dot"></span>
                 </span>
-                <span class="menu-title">Vertical</span>
-              </a>
+                <span class="menu-title">Day Wise
+                </span>
+              </span>
+            </div>
+            <div *ngIf="isBookMonthWise" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+              <span class="menu-link">
+                <span class="menu-bullet">
+                  <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Month Wise
+                </span>
+              </span>
+            </div>
+            <div *ngIf="isLedgerShiftTimeWise" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+              <span class="menu-link">
+                <span class="menu-bullet">
+                  <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">ShiftTime Wise
+                </span>
+              </span>
+            </div>
+            <div *ngIf="isBookOperatorWise" class="menu-item menu-accordion" routerLinkActive="here show"  data-kt-menu-trigger="click">
+              <span class="menu-link">
+                <span class="menu-bullet">
+                  <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">OperatorWise
+                </span>
+              </span>
             </div>
           </div>
         </div>
+
       </div>
     </div>
 
@@ -544,24 +590,7 @@
         <span class="menu-arrow"></span>
       </span>
       <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-        <div class="menu-item">
-          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/account/overview">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title">Overview
-            </span>
-          </a>
-        </div>
-        <div class="menu-item">
-          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/crafted/account/settings">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title">Settings
-            </span>
-          </a>
-        </div>
+        
       </div>
     </div>
 
