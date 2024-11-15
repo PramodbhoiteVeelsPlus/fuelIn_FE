@@ -578,7 +578,6 @@
                 </label>
             </div>
         </div>
-        <hr>
         <div class="row" *ngIf="isCREDIT">
             <div class="col-lg-3">
                 <label class="labelMargin">Add Account</label>
@@ -744,7 +743,7 @@
                 </label>
             </div>
         </div>
-        <hr *ngIf="isCREDIT">
+        <hr>
         <!-- CREDIT Menu End -->
 
         <!-- SHIFT Menu Start -->
@@ -763,7 +762,6 @@
                 </label>
             </div>
         </div>
-        <hr>
         <div class="row" *ngIf="isSHIFT">
             <div class="col-lg-3">
                 <label class="labelMargin">Add Shift</label>
@@ -832,7 +830,7 @@
         </div>
         <div class="row" *ngIf="isSHIFT">
             <div class="col-lg-3">
-                <label class="labelMargin">Book/Ledger</label>
+                <label class="labelMargin"><b>Book/Ledger</b></label>
             </div>
             <div class="col-lg-1" style="padding: 15px;">
                 <label class="switch" *ngIf="isBook">
@@ -848,8 +846,9 @@
             </div>
         </div>
         <div class="row" *ngIf="isSHIFT">
-            <div class="col-lg-3">
-                <label class="labelMargin">Shift Wise</label>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">Shift Wise</label>
             </div>
             <div class="col-lg-1" style="padding: 15px;">
                 <label class="switch" *ngIf="isBookShiftWise">
@@ -863,9 +862,8 @@
                     <span class="slider round"></span>
                 </label>
             </div>
-            <!-- <div class="col-lg-1"></div> -->
-            <div class="col-lg-3">
-                <label class="labelMargin">Day Wise</label>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">Day Wise</label>
             </div>
             <div class="col-lg-1" style="padding: 15px;">
                 <label class="switch" *ngIf="isBookDayWise">
@@ -879,8 +877,8 @@
                     <span class="slider round"></span>
                 </label>
             </div>
-            <div class="col-lg-3">
-                <label class="labelMargin">Month Wise</label>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">Month Wise</label>
             </div>
             <div class="col-lg-1" style="padding: 15px;">
                 <label class="switch" *ngIf="isBookMonthWise">
@@ -896,9 +894,9 @@
             </div>
         </div>
         <div class="row" *ngIf="isSHIFT">
-            <!-- <div class="col-lg-1"></div> -->
-            <div class="col-lg-3">
-                <label class="labelMargin">ShiftTime Wise</label>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">ShiftTime Wise</label>
             </div>
             <div class="col-lg-1" style="padding: 15px;">
                 <label class="switch" *ngIf="isBookShiftTimeWise">
@@ -912,9 +910,8 @@
                     <span class="slider round"></span>
                 </label>
             </div>
-            <!-- <div class="col-lg-1"></div> -->
-            <div class="col-lg-3">
-                <label class="labelMargin">Operator Wise</label>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">Operator Wise</label>
             </div>
             <div class="col-lg-1" style="padding: 15px;">
                 <label class="switch" *ngIf="isBookOperatorWise">
@@ -931,7 +928,7 @@
         </div>
         <div class="row" *ngIf="isSHIFT">
             <div class="col-lg-3">
-                <label class="labelMargin">Staff Management</label>
+                <label class="labelMargin"><b>Staff Management</b></label>
             </div>
             <div class="col-lg-1" style="padding: 15px;">
                 <label class="switch" *ngIf="isStaffManage">
@@ -947,8 +944,9 @@
             </div>
         </div>
         <div class="row" *ngIf="isSHIFT">
-            <div class="col-lg-3">
-                <label class="labelMargin">Add Staff</label>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">Add Staff</label>
             </div>
             <div class="col-lg-1" style="padding: 15px;">
                 <label class="switch" *ngIf="isStaffAddStaff">
@@ -962,9 +960,8 @@
                     <span class="slider round"></span>
                 </label>
             </div>
-            <!-- <div class="col-lg-1"></div> -->
-            <div class="col-lg-3">
-                <label class="labelMargin">Attendance</label>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">Attendance</label>
             </div>
             <div class="col-lg-1" style="padding: 15px;">
                 <label class="switch" *ngIf="isStaffAttendance">
@@ -978,8 +975,8 @@
                     <span class="slider round"></span>
                 </label>
             </div>
-            <div class="col-lg-3">
-                <label class="labelMargin">Staff Salary</label>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">Staff Salary</label>
             </div>
             <div class="col-lg-1" style="padding: 15px;">
                 <label class="switch" *ngIf="isStaffSalary">
@@ -994,7 +991,7 @@
                 </label>
             </div>
         </div>
-        <hr *ngIf="isSHIFT">
+        <hr>
         <!-- SHIFT Menu End -->
 
         <!-- INVENTORY Menu Start -->
@@ -1015,7 +1012,6 @@
                 </label>
             </div>
         </div>
-        <hr>
         <div class="row" *ngIf="isINVENTORY">
             <div class="col-lg-3">
                 <label class="labelMargin">Add Oil Company Purchase</label>
@@ -1066,7 +1062,7 @@
                 </label>
             </div>
         </div>
-        <hr *ngIf="isINVENTORY">
+        <hr>
         <!-- INVENTORY Menu End -->
 
         <!-- ACCOUNTING Menu Start -->
@@ -1087,7 +1083,6 @@
                 </label>
             </div>
         </div>
-        <hr>
         <div class="row" *ngIf="isACCOUNTING">
             <div class="col-lg-3">
                 <label class="labelMargin">Add Accounting</label>
@@ -1187,7 +1182,7 @@
                 </label>
             </div>
         </div>
-        <hr *ngIf="isACCOUNTING">
+        <hr>
         <!-- ACCOUNTING Menu End -->
 
         <!-- EXPENSE Menu Start -->
@@ -1208,7 +1203,6 @@
                 </label>
             </div>
         </div>
-        <hr>
         <div class="row" *ngIf="isEXPENSE">
             <div class="col-lg-3">
                 <label class="labelMargin">Expense Accounting</label>
@@ -1242,7 +1236,7 @@
                 </label>
             </div>
         </div>
-        <hr *ngIf="isEXPENSE">
+        <hr>
         <!-- EXPENSE Menu End -->
 
         <!-- DSR Menu Start -->
@@ -1261,7 +1255,6 @@
                 </label>
             </div>
         </div>
-        <hr>
         <div class="row" *ngIf="isDSR">
             <div class="col-lg-3">
                 <label class="labelMargin">DSR</label>
@@ -1291,7 +1284,7 @@
                 </label>
             </div>
         </div>
-        <hr *ngIf="isDSR">
+        <hr>
         <!-- DSR Menu End -->
 
         <!-- LEDGER Menu Start -->
@@ -1301,8 +1294,7 @@
             </div>
             <div class="col-lg-1" style="padding: 15px;">
                 <label class="switch" *ngIf="!isLEDGER">
-                    <input type="checkbox" [checked]="waive"
-                        (change)="changeCustomizeStatus('LEDGER', 'LEDGER', 'ON')">
+                    <input type="checkbox" [checked]="waive" (change)="changeCustomizeStatus('LEDGER', 'LEDGER', 'ON')">
                     <span class="slider round"></span>
                 </label>
                 <label class="switch" *ngIf="isLEDGER">
@@ -1312,7 +1304,6 @@
                 </label>
             </div>
         </div>
-        <hr>
         <div class="row" *ngIf="isLEDGER">
             <div class="col-lg-3">
                 <label class="labelMargin">Credit </label>
@@ -1324,8 +1315,7 @@
                     <span class="slider round"></span>
                 </label>
                 <label class="switch" *ngIf="!isCredit">
-                    <input type="checkbox" [checked]="waive"
-                        (change)="changeCustomizeStatus('LEDGER', 'Credit', 'ON')">
+                    <input type="checkbox" [checked]="waive" (change)="changeCustomizeStatus('LEDGER', 'Credit', 'ON')">
                     <span class="slider round"></span>
                 </label>
             </div>
@@ -1352,13 +1342,11 @@
             </div>
             <div class="col-lg-1" style="padding: 15px;">
                 <label class="switch" *ngIf="isdsr">
-                    <input type="checkbox" checked="checked"
-                        (change)="changeCustomizeStatus('LEDGER', 'dsr', 'OFF')">
+                    <input type="checkbox" checked="checked" (change)="changeCustomizeStatus('LEDGER', 'dsr', 'OFF')">
                     <span class="slider round"></span>
                 </label>
                 <label class="switch" *ngIf="!isdsr">
-                    <input type="checkbox" [checked]="waive"
-                        (change)="changeCustomizeStatus('LEDGER', 'dsr', 'ON')">
+                    <input type="checkbox" [checked]="waive" (change)="changeCustomizeStatus('LEDGER', 'dsr', 'ON')">
                     <span class="slider round"></span>
                 </label>
             </div>
@@ -1379,8 +1367,599 @@
                 </label>
             </div>
         </div>
-        <hr *ngIf="isEXPENSE">
-        <!-- EXPENSE Menu End -->
+        <div class="row" *ngIf="isLEDGER">
+            <div class="col-lg-3">
+                <label class="labelMargin"><b>Shift</b> </label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isShift">
+                    <input type="checkbox" checked="checked" (change)="changeCustomizeStatus('LEDGER', 'Shift', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isShift">
+                    <input type="checkbox" [checked]="waive" (change)="changeCustomizeStatus('LEDGER', 'Shift', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row" *ngIf="isLEDGER">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">Shift Wise </label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isLedgerShiftWise">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('LEDGER', 'Ledger-ShiftWise', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isLedgerShiftWise">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('LEDGER', 'Ledger-ShiftWise', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">Day Wise</label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isLedgerDayWise">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('LEDGER', 'Ledger-DayWise', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isLedgerDayWise">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('LEDGER', 'Ledger-DayWise', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">Month Wise </label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isLedgerMonthWise">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('LEDGER', 'Ledger-MonthWise', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isLedgerMonthWise">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('LEDGER', 'Ledger-MonthWise', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row" *ngIf="isLEDGER">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">Shift Time Wise</label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isLedgerShiftTimeWise">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('LEDGER', 'Ledger-ShiftTimeWise', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isLedgerShiftTimeWise">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('LEDGER', 'Ledger-ShiftTimeWise', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <hr>
+        <!-- LEDGER Menu End -->
+
+        <!-- PUMP Menu Start -->
+        <div class="row">
+            <div class="col-lg-3">
+                <label class="labelMargin"><b>PUMP</b></label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="!isPUMP">
+                    <input type="checkbox" [checked]="waive" (change)="changeCustomizeStatus('PUMP', 'PUMP', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="isPUMP">
+                    <input type="checkbox" checked="checked" (change)="changeCustomizeStatus('PUMP', 'PUMP', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row" *ngIf="isPUMP">
+            <div class="col-lg-3">
+                <label class="labelMargin">Infra </label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isInfra">
+                    <input type="checkbox" checked="checked" (change)="changeCustomizeStatus('PUMP', 'Infra', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isInfra">
+                    <input type="checkbox" [checked]="waive" (change)="changeCustomizeStatus('PUMP', 'Infra', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-3">
+                <label class="labelMargin">Cash Bill</label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isCashBill">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('PUMP', 'CashBill', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isCashBill">
+                    <input type="checkbox" [checked]="waive" (change)="changeCustomizeStatus('PUMP', 'CashBill', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row" *ngIf="isPUMP">
+            <div class="col-lg-3">
+                <label class="labelMargin">Fuel Price </label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isFuelPrice">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('PUMP', 'FuelPrice', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isFuelPrice">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('PUMP', 'FuelPrice', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row" *ngIf="isPUMP">
+            <div class="col-lg-3">
+                <label class="labelMargin"><b>Lubricant </b></label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isLubricant">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('PUMP', 'Lubricant', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isLubricant">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('PUMP', 'Lubricant', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row" *ngIf="isPUMP">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">Add Lubricant </label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isAddLubricant">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('PUMP', 'Lube-AddLubricant', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isAddLubricant">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('PUMP', 'Lube-AddLubricant', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">Add Lubricant Purchase </label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isAddLubricantPurchase">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('PUMP', 'Lube-AddLubricantPurchase', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isAddLubricantPurchase">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('PUMP', 'Lube-AddLubricantPurchase', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">View Lubricant Purchase </label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isViewLubricantPurchase">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('PUMP', 'Lube-ViewLubricantPurchase', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isViewLubricantPurchase">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('PUMP', 'Lube-ViewLubricantPurchase', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row" *ngIf="isPUMP">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">Add Lube Tax GST Sale </label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isAddLubeTaxSale">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('PUMP', 'Lube-AddLubeTaxSale', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isAddLubeTaxSale">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('PUMP', 'Lube-AddLubeTaxSale', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row" *ngIf="isPUMP">
+            <div class="col-lg-3">
+                <label class="labelMargin"><b>Old Accounting</b> </label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isOldAccounting">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('PUMP', 'OldAccounting', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isOldAccounting">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('PUMP', 'OldAccounting', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row" *ngIf="isPUMP">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">Oil Company</label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isOilCompany">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('PUMP', 'OldAcc-OilCompany', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isOilCompany">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('PUMP', 'OldAcc-OilCompany', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">Bank</label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isBank">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('PUMP', 'OldAcc-Bank', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isBank">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('PUMP', 'OldAcc-Bank', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">Cash </label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isCash">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('PUMP', 'OldAcc-Cash', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isCash">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('PUMP', 'OldAcc-Cash', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row" *ngIf="isPUMP">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">POS</label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isPOS">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('PUMP', 'OldAcc-Pos', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isPOS">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('PUMP', 'OldAcc-Pos', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">Staff </label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isStaff">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('PUMP', 'OldAcc-Staff', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isStaff">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('PUMP', 'OldAcc-Staff', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row" *ngIf="isPUMP">
+            <div class="col-lg-3">
+                <label class="labelMargin"><b>Fastag</b> </label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isFastag">
+                    <input type="checkbox" checked="checked" (change)="changeCustomizeStatus('PUMP', 'Fastag', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isFastag">
+                    <input type="checkbox" [checked]="waive" (change)="changeCustomizeStatus('PUMP', 'Fastag', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row" *ngIf="isPUMP">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">Account Info</label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isAccInfo">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('PUMP', 'FT-AccInfo', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isAccInfo">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('PUMP', 'FT-AccInfo', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">All Toll Transaction</label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isAllTollTran">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('PUMP', 'FT-AllTollTran', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isAllTollTran">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('PUMP', 'FT-AllTollTran', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">Active Vehicle </label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isActiveVeh">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('PUMP', 'FT-ActiveVeh', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isActiveVeh">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('PUMP', 'FT-ActiveVeh', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row" *ngIf="isPUMP">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">Toll Plaza</label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isTollPlaza">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('PUMP', 'FT-TollPlaza', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isTollPlaza">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('PUMP', 'FT-TollPlaza', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">Total Recharge </label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isTotalRecharge">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('PUMP', 'FT-TotalRecharge', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isTotalRecharge">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('PUMP', 'FT-TotalRecharge', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="col-lg-2">
+                <label class="labelMargin fs-5">Vehicle Summary</label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isVehSummary">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('PUMP', 'FT-VehSummary', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isVehSummary">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('PUMP', 'FT-VehSummary', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <hr>
+        <!-- PUMP Menu End -->
+
+        <!-- REPORT Menu Start -->
+        <div class="row">
+            <div class="col-lg-3">
+                <label class="labelMargin"><b>REPORT</b></label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="!isREPORT">
+                    <input type="checkbox" [checked]="waive" (change)="changeCustomizeStatus('REPORT', 'REPORT', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="isREPORT">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('REPORT', 'REPORT', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row" *ngIf="isREPORT">
+            <div class="col-lg-3">
+                <label class="labelMargin">Daily Report Entries </label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isDailyReportEntries">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('REPORT', 'DailyReportEntries', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isDailyReportEntries">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('REPORT', 'DailyReportEntries', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-3">
+                <label class="labelMargin">Daily Report</label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isDailyReport">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('REPORT', 'DailyReport', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isDailyReport">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('REPORT', 'DailyReport', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row" *ngIf="isREPORT">
+            <div class="col-lg-3">
+                <label class="labelMargin">Monthly Report </label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isMonthlyReport">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('REPORT', 'MonthlyReport', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isMonthlyReport">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('REPORT', 'MonthlyReport', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-3">
+                <label class="labelMargin">VAT Book</label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isVatBook">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('REPORT', 'VatBook', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isVatBook">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('REPORT', 'VatBook', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row" *ngIf="isREPORT">
+            <div class="col-lg-3">
+                <label class="labelMargin">Profit Report</label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isProfitReport">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('REPORT', 'ProfitReport', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isProfitReport">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('REPORT', 'ProfitReport', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-3">
+                <label class="labelMargin">Summary Report </label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isSummaryReport">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('REPORT', 'SummaryReport', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isSummaryReport">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('REPORT', 'SummaryReport', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row" *ngIf="isREPORT">
+            <div class="col-lg-3">
+                <label class="labelMargin">Viswasa Tx Excel </label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isViswasaTxExcel">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('REPORT', 'ViswasaTxExcel', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isViswasaTxExcel">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('REPORT', 'ViswasaTxExcel', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-3">
+                <label class="labelMargin">Sales Purchase Report</label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="isSalesPurReport">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('REPORT', 'SalesPurReport', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!isSalesPurReport">
+                    <input type="checkbox" [checked]="waive"
+                        (change)="changeCustomizeStatus('REPORT', 'SalesPurReport', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <hr>
+        <!-- REPORT Menu End -->
 
     </ng-template>
 </div>
