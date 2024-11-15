@@ -37,6 +37,7 @@ export class StatsWidget5Component {
   }
 
   getDealerIdByPhone(dealerMobile: any) {
+    this.spinner.show();
     let data = {
       mobileNumber: dealerMobile,
     };
@@ -59,10 +60,13 @@ export class StatsWidget5Component {
             this.isPayment = true;            
           }
           this.cd.detectChanges()
+          this.spinner.hide();
         } else {
           this.cd.detectChanges()
+          this.spinner.hide();
         }
         this.cd.detectChanges()
+        this.spinner.hide();
       });
   }
 

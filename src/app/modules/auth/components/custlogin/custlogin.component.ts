@@ -144,7 +144,6 @@ export class CustloginComponent {
 
   selectBusiness(i: string | number, refer: any) {
     this.modalRefCancel.close('close')
-    console.log("i", i)
     localStorage.setItem('isLoggedin', 'true');
     localStorage.setItem('element', JSON.stringify(this.element[i]));
     localStorage.setItem('username', this.username);
@@ -159,7 +158,6 @@ export class CustloginComponent {
     }, (reason: any) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
-    this.router.navigate(['/dashboard']);
   }
 
 
@@ -178,7 +176,9 @@ export class CustloginComponent {
       if ((res.status = "OK")) {
         this.fuelDealerSQLId = res.data[0].fuelDealerId;
         localStorage.setItem('dealerId', this.fuelDealerSQLId);
+        this.router.navigate(['/dashboard']);
       } else {
+        this.router.navigate(['/dashboard']);
       }
     });
   }

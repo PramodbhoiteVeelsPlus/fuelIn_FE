@@ -1,19 +1,41 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { ListWidgetService } from '../listWidget.services';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-lists-widget3',
   templateUrl: './lists-widget3.component.html',
 })
 export class ListsWidget3Component {
-  
-   array = [
-    {companyName: "1 A PRAMOD_S TRADERS", totalPurchase: 91160, totalPayment: 33000, netOS: 112970},
-    {companyName: "A A AAA", totalPurchase: 110000, totalPayment: 0, netOS: 110000},
-    {companyName: "A PRATHAM_S TRADERS", totalPurchase: 0, totalPayment: 0, netOS: 85100},
-    {companyName: "REALMEOW TRANSLINES", totalPurchase: 0, totalPayment: 0, netOS: 84350},
-    {companyName: "BB AAA", totalPurchase: 0, totalPayment: 0, netOS: 76220}]
-  constructor() {}
-  ngOnInit(){
-console.log(this.array)
+
+  array: any[]
+  fuelDealerId: any;
+
+  constructor(private post: ListWidgetService,
+    private spinner: NgxSpinnerService,
+    private cd: ChangeDetectorRef,) { }
+
+  ngOnInit(): void {
+    this.spinner.show();
+    this.fuelDealerId = localStorage.getItem("dealerId");
+    this.getGraphDataByDealerId(this.fuelDealerId)
+  }
+
+
+  getGraphDataByDealerId(fuelDealerId: any) {
+    this.spinner.show();
+    let data = {
+      fuelDealerId: fuelDealerId
+    }
+    this.post.getTopFiveAccByFuelDealerIdPOST(data)
+      .subscribe(res => {
+        if (res.status == 'OK') {
+          this.array = res.data;
+          this.cd.detectChanges();
+          this.spinner.hide();
+        } else {
+          this.spinner.hide();
+        }
+      })
   }
 }
