@@ -188,7 +188,7 @@ export class TablesWidget17Component {
             this.cd.detectChanges();
           } else {
             this.allDealerList = []
-            localStorage.setItem('allDealerList', JSON.stringify(''));
+            localStorage.setItem('allDealerList', JSON.stringify([]));
             this.spinner.hide()
             this.cd.detectChanges();
           }
@@ -236,7 +236,7 @@ export class TablesWidget17Component {
             this.spinner.hide()
             this.cd.detectChanges();
           } else {
-            localStorage.setItem('allDealerList', JSON.stringify(''));
+            localStorage.setItem('allDealerList', JSON.stringify([]));
             this.spinner.hide()
             this.cd.detectChanges();
           }

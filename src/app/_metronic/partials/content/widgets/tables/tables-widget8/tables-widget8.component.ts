@@ -136,7 +136,7 @@ export class TablesWidget8Component implements OnInit {
         this.cd.detectChanges();
       } else {
         this.fastagCustData = [];
-        localStorage.setItem('fastagCustData', JSON.stringify(''));
+        localStorage.setItem('fastagCustData', JSON.stringify([]));
         this.spinner.hide();
         this.cd.detectChanges();
       }
@@ -157,7 +157,7 @@ export class TablesWidget8Component implements OnInit {
         this.cd.detectChanges();
       } else {
         this.spinner.hide();
-        localStorage.setItem('fastagCustData', JSON.stringify(''));
+        localStorage.setItem('fastagCustData', JSON.stringify([]));
         this.cd.detectChanges();
       }
     })

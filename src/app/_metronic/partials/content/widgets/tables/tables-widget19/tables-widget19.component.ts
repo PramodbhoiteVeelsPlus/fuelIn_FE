@@ -179,7 +179,7 @@ export class TablesWidget19Component {
             this.cd.detectChanges();
           } else {
             this.liteDealerData = []
-            localStorage.setItem('liteDealerData', JSON.stringify(''));
+            localStorage.setItem('liteDealerData', JSON.stringify([]));
             this.spinner.hide()
             this.cd.detectChanges();
           }
@@ -203,7 +203,7 @@ export class TablesWidget19Component {
             this.cd.detectChanges();
           } else {
             this.liteDealerData = []
-            localStorage.setItem('liteDealerData', JSON.stringify(''));
+            localStorage.setItem('liteDealerData', JSON.stringify([]));
             this.spinner.hide()
             this.cd.detectChanges();
           }

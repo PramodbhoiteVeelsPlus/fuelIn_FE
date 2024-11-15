@@ -98,6 +98,24 @@ export class CustloginComponent {
             localStorage.setItem('userdata', JSON.stringify(res.data));
             localStorage.setItem('element', JSON.stringify(res.element));
             localStorage.setItem('authenticationToken', JSON.stringify(res.authenticationToken));
+            localStorage.setItem('customizeData', JSON.stringify([]));
+            localStorage.setItem('kycId', '');
+            localStorage.setItem('fastagLQData', JSON.stringify([]));
+            localStorage.setItem('dealerList', JSON.stringify([]));
+            localStorage.setItem('allDealerList', JSON.stringify([]));
+            localStorage.setItem('primeDealerData', JSON.stringify([]));
+            localStorage.setItem('liteDealerData', JSON.stringify([]));
+            localStorage.setItem('primeDealerReq', JSON.stringify([]));
+            localStorage.setItem('dealerRequestData', JSON.stringify([]));
+            localStorage.setItem('requestCallData', JSON.stringify([]));
+            localStorage.setItem('demoDealerData', JSON.stringify([]));
+            localStorage.setItem('removedDealerData', JSON.stringify([]));
+            localStorage.setItem('dealerList', JSON.stringify([]));
+            localStorage.setItem('creditData', JSON.stringify([]));
+            localStorage.setItem('allentityList', JSON.stringify([]));
+            localStorage.setItem('fastagData', JSON.stringify([]));
+            localStorage.setItem('fastagCustData', JSON.stringify([]));
+            localStorage.setItem('allEntityIdLQList', JSON.stringify([]));
 
             if (res.element.accessGroupId == 12 || res.element.accessGroupId == 14 || res.element.accessGroupId == 19 || res.element.accessGroupId == 21 || res.element.accessGroupId == 17 || res.element.accessGroupId == 18) {
               var element = JSON.parse(localStorage.getItem("element") || '{}');

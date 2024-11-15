@@ -192,7 +192,7 @@ export class TablesWidget23Component {
             this.spinner.hide()
             this.cd.detectChanges();
           } else {
-            localStorage.setItem('requestCallData', JSON.stringify(''));
+            localStorage.setItem('requestCallData', JSON.stringify([]));
             alert("Data Not Found..!")
             this.spinner.hide()
             this.cd.detectChanges();
@@ -254,7 +254,7 @@ export class TablesWidget23Component {
             this.spinner.hide()
           } else {
             this.requestCallData = []
-            localStorage.setItem('requestCallData', JSON.stringify(''));
+            localStorage.setItem('requestCallData', JSON.stringify([]));
             alert("Data Not Found..!")
             this.spinner.hide()
           }

@@ -168,7 +168,7 @@ export class TablesWidget22Component {
             this.cd.detectChanges();
           } else {
             this.dealerRequestData = []
-            localStorage.setItem('dealerRequestData', JSON.stringify(''));
+            localStorage.setItem('dealerRequestData', JSON.stringify([]));
             this.spinner.hide()
             this.cd.detectChanges();
           }
@@ -212,7 +212,7 @@ export class TablesWidget22Component {
             this.cd.detectChanges();
           } else {
             this.dealerRequestData = []
-            localStorage.setItem('dealerRequestData', JSON.stringify(''));
+            localStorage.setItem('dealerRequestData', JSON.stringify([]));
             this.spinner.hide()
             this.cd.detectChanges();
           }
