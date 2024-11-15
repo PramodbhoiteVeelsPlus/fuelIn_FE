@@ -240,7 +240,7 @@ export class TablesWidget18Component {
             this.cd.detectChanges();
           } else {
             this.primeDealerData = []
-            localStorage.setItem('primeDealerData', JSON.stringify(''));
+            localStorage.setItem('primeDealerData', JSON.stringify([]));
             this.spinner.hide()
             this.cd.detectChanges();
           }
@@ -327,7 +327,7 @@ export class TablesWidget18Component {
             this.spinner.hide()
             this.cd.detectChanges();
           } else {
-            localStorage.setItem('primeDealerData', JSON.stringify(''));
+            localStorage.setItem('primeDealerData', JSON.stringify([]));
             this.spinner.hide()
             this.cd.detectChanges();
           }

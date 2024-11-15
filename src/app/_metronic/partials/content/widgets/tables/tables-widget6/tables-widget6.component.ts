@@ -145,7 +145,7 @@ export class TablesWidget6Component implements OnInit {
         this.cd.detectChanges();
       } else {
         this.dealerList = [];
-        localStorage.setItem('dealerList', JSON.stringify(''));
+        localStorage.setItem('dealerList', JSON.stringify([]));
         this.spinner.hide()
         this.cd.detectChanges();
       }
@@ -161,7 +161,7 @@ export class TablesWidget6Component implements OnInit {
         this.cd.detectChanges();
       } else {
         this.dealerList = [];
-        localStorage.setItem('dealerList', JSON.stringify(''));
+        localStorage.setItem('dealerList', JSON.stringify([]));
         this.cd.detectChanges();
       }
     })
@@ -222,7 +222,7 @@ export class TablesWidget6Component implements OnInit {
           this.cd.detectChanges();
         } else {
           this.creditData = [];
-          localStorage.setItem('creditData', JSON.stringify(''));
+          localStorage.setItem('creditData', JSON.stringify([]));
           this.spinner.hide()
           this.cd.detectChanges();
         }
@@ -244,7 +244,7 @@ export class TablesWidget6Component implements OnInit {
           this.cd.detectChanges();
         } else {
           this.creditData = [];
-          localStorage.setItem('creditData', JSON.stringify(''));
+          localStorage.setItem('creditData', JSON.stringify([]));
           this.cd.detectChanges();
         }
       })

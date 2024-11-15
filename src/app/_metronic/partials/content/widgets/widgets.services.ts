@@ -109,6 +109,9 @@ export class WidgetService {
   private getActiveCustomerListURL = this.baseURL + 'adminOutstand/getActiveCustomerList';
   private getActiveVehicleListURL = this.baseURL + 'adminOutstand/getActiveVehicleList';
   private getFuelTerminalURL = this.baseURL + 'fuelTerminals/getFuelTerminal'
+  private updateFuelTerminalPOSStatusURL = this.baseURL + 'fuelTerminals/updateFuelTerminalPOSStatus';
+  private deleteFuelTerminalURL = this.baseURL + 'fuelTerminals/deleteFuelTerminal';
+  private updateFuelTerminalPOSNameURL = this.baseURL + 'fuelTerminals/updateFuelTerminalPOSName'; 
 
 
   setHeader() {
@@ -954,6 +957,36 @@ export class WidgetService {
     let headers = new HttpHeaders();
     headers = headers.set('authenticationToken', this.token);
     return this.http.post(this.getFuelTerminalURL, body, {
+      headers: headers
+    })
+  }
+  
+  // updateFuelTerminalPOSStatusURL
+  updateFuelTerminalPOSStatusPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateFuelTerminalPOSStatusURL, body, {
+      headers: headers
+    })
+  }
+  
+  // deleteFuelTerminalURL
+  deleteFuelTerminalPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.deleteFuelTerminalURL, body, {
+      headers: headers
+    })
+  }
+  
+  // updateFuelTerminalPOSNameURL
+  updateFuelTerminalPOSNamePOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateFuelTerminalPOSNameURL, body, {
       headers: headers
     })
   }

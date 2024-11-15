@@ -41,6 +41,76 @@
       color: #F8285A;
       /* Change text color if needed */
     }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+      align-items: center;
+      padding: 10px;
+    }
+
+    /* Hide default HTML checkbox */
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    /* The slider */
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+  
+  input:checked + .slider {
+    background-color: green;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  label {
+    display: inline-block;
+    padding: 20px;
+    font-size: medium;
+  }
   </style>
 </head>
 
@@ -91,43 +161,62 @@
           <td> {{ i + 1 }} </td>
 
           <td>
-            <span *ngIf="data.terminalStatus == 'MAPPED' " class="badge badge-light-warning fs-6 fw-bolder">
+            <span *ngIf="data.terminalStatus == 'MAPPED' ">
               {{ data.terminalType }}
             </span>
-            <span *ngIf="data.terminalStatus != 'MAPPED' " class="badge badge-light-danger fs-6 fw-bolder">
+            <span *ngIf="data.terminalStatus != 'MAPPED' ">
               {{ data.terminalType }}
             </span>
           </td>
 
           <td>
-            <span *ngIf="data.terminalStatus == 'MAPPED' " class="badge badge-light-warning fs-6 fw-bolder">
+            <span *ngIf="data.terminalStatus == 'MAPPED' ">
               {{ data.terminalName }}
             </span>
-            <span *ngIf="data.terminalStatus != 'MAPPED' " class="badge badge-light-danger fs-6 fw-bolder">
+            <span *ngIf="data.terminalStatus != 'MAPPED' ">
               {{ data.terminalName }}
             </span>
           </td>
 
           <td>
-            <span *ngIf="data.terminalStatus == 'MAPPED' " class="badge badge-light-warning fs-6 fw-bolder">
+            <span *ngIf="data.terminalStatus == 'MAPPED' ">
               {{ data.attachedBankName }}
             </span>
-            <span *ngIf="data.terminalStatus != 'MAPPED' " class="badge badge-light-danger fs-6 fw-bolder">
+            <span *ngIf="data.terminalStatus != 'MAPPED' ">
               {{ data.attachedBankName }}
             </span>
           </td>
 
           <td>
             <div class="d-flex justify-content-center flex-shrink-0">
-              <a class="btn btn-icon badge badge-light-success">
-                <app-keenicon name="switch" class="fs-3"></app-keenicon>
+              <div class="col-lg-1" style="padding: 15px;">
+                <!-- <app-keenicon name="switch" class="fs-3"></app-keenicon> -->
+                <label class="switch" *ngIf = "data.terminalStatus == 'MAPPED'">
+                  <input type="checkbox" checked="checked"
+                    (change)="updateMappingPOS($event,data.fuelTerminalsId,data.terminalStatus)">
+                  <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf = "data.terminalStatus != 'MAPPED'">
+                  <input type="checkbox" [checked]="waive"
+                    (change)="updateMappingPOS($event,data.fuelTerminalsId,data.terminalStatus)">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              &nbsp;&nbsp;
+              &nbsp;&nbsp;
+              &nbsp;&nbsp;
+              <div class="col-lg-1" style="padding: 15px;">
+              <a class="btn btn-icon badge badge-light-warning" (click)="updatePOS(editPOS,data.fuelTerminalsId,data.terminalName,data.attachedAccountId,data.terminalType)">
+                <app-keenicon name="pencil" class="fs-3" ></app-keenicon>
               </a>
-              <a class="btn btn-icon badge badge-light-warning">
-                <app-keenicon name="pencil" class="fs-3"></app-keenicon>
+              </div>
+              &nbsp;&nbsp;
+              
+              <div class="col-lg-1" style="padding: 15px;">
+              <a class="btn btn-icon badge badge-light-danger" (click)="delete(data.fuelTerminalsId)">
+                <app-keenicon name="trash" class="fs-3" ></app-keenicon>
               </a>
-              <a class="btn btn-icon badge badge-light-danger">
-                <app-keenicon name="trash" class="fs-3"></app-keenicon>
-              </a>
+              </div>
             </div>
           </td>
 
@@ -136,6 +225,79 @@
       <!-- end::Table body -->
     </table>
     <!-- end::Table -->
+     
+    <ng-template #editPOS let-c="close" let-d="dismiss">
+
+      <div class="modal-header">
+          <h4 class="modal-title">
+              <label>
+                  <h4>
+                      <strong>
+                          Update POS Sytem <br></strong>
+                  </h4>
+              </label>
+          </h4>
+          <button type="button" class="btn btn-danger" aria-label="Close"
+              (click)="d('Cross click')">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          <form [formGroup]="updateTerminal">
+
+              <div class="row">
+                  <div class="col-md-1"></div>
+                  <div class="col-md-5">
+                      <label class="labelNewMargin">Terminal Name:</label>
+                  </div>
+                  <div class="col-md-6">
+                      <input class="form-control"
+                          oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                          type="text" formControlName="terminalName"
+                          placeholder="Terminal Name">
+                  </div>
+              </div>
+              <br>
+              <div class="row">
+                  <div class="col-md-1"></div>
+                  <div class="col-md-5">
+                      <label class="labelNewMargin">Select Account:</label>
+                  </div>
+                  <div class="col-md-6">
+                      <span *ngIf = "isOILCOUpdate">
+                          <select class="form-select"   formControlName="accountDetails">
+                              <option value="">Select Account</option>
+                              <option value="21" > OIL COMPANY </option>
+                          </select>
+                      </span>
+                      <span *ngIf = "!isOILCOUpdate">
+                      <select class="form-select" 
+                      (change)="getBankAcc1($event)"  formControlName="accountDetails" required>
+                          <option value="">Select Account</option>
+                          <option *ngFor="let data of bankAccList1" [value]="data.bankDetailsId"  >
+                                      {{data.bankName}}-{{data.accountNumber}}
+                          </option>
+                      </select>
+                      </span>
+                  </div>
+              </div>
+
+              <br>
+              <div class="row">
+                  <div class="col-md-4"></div>
+                  <div class="col-auto">
+                      <button type="submit" class="btn btn-outline-success my-2 my-sm-0"
+                          (click)="updatePOSName()">Update</button>
+                  </div>&nbsp;&nbsp;
+                  <div class="col-auto">
+                      <button type="submit" class="btn btn-danger"
+                          (click)="d('Cross click')">Cancel</button>
+                  </div>
+              </div>
+          </form>
+      </div>
+  </ng-template>
+
   </div>
   <!-- end::Table container -->
 </div>

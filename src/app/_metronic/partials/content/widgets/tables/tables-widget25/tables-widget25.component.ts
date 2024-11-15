@@ -160,7 +160,7 @@ getRemovedDealerDetails(){
         localStorage.setItem('removedDealerData', JSON.stringify(res.data));
         this.spinner.hide()
       } else {
-        localStorage.setItem('removedDealerData', JSON.stringify(''));
+        localStorage.setItem('removedDealerData', JSON.stringify([]));
         alert("Data Not Found..!")
         this.spinner.hide()
       }
@@ -200,7 +200,7 @@ getRemovedDealerDetails1(){
         this.spinner.hide()
       } else {
         this.removedDealerData = []
-        localStorage.setItem('removedDealerData', JSON.stringify(''));
+        localStorage.setItem('removedDealerData', JSON.stringify([]));
         alert("Data Not Found..!")
         this.spinner.hide()
       }
