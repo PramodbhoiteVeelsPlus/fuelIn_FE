@@ -531,7 +531,6 @@ export class StatsWidget10Component {
   }
 
   getCustomize(dealerId: any) {
-    this.creditData = [];
     this.spinner.show();
     const data = {
       customizeDealerId: dealerId,
@@ -541,6 +540,19 @@ export class StatsWidget10Component {
         if ((res.status = "OK") && (res.data.length)) {
           //CREDIT MENU
           if (res.data[0].dataCREDIT.length) {
+            this.creditData = [];
+            this.isCREDIT = true;
+            this.isAddAcc = true;
+            this.isViewAcc = true;
+            this.isAddSale = true;
+            this.isViewSale = true;
+            this.isAddPayment = true;
+            this.isViewPayment = true;
+            this.isCreateStatement = true;
+            this.isBookLedger = true;
+            this.isSavedInv = true;
+            this.isAddLubeTax = true;
+
             this.creditData = res.data[0].dataCREDIT;
             this.creditData.map((res: any) => {
               if (res.customizeSubMenu == "CREDIT") {
@@ -570,11 +582,38 @@ export class StatsWidget10Component {
               this.cd.detectChanges();
             })
           } else {
+            this.creditData = [];
             this.isCREDIT = true;
+            this.isAddAcc = true;
+            this.isViewAcc = true;
+            this.isAddSale = true;
+            this.isViewSale = true;
+            this.isAddPayment = true;
+            this.isViewPayment = true;
+            this.isCreateStatement = true;
+            this.isBookLedger = true;
+            this.isSavedInv = true;
+            this.isAddLubeTax = true;
           }
-          console.log("cr", this.isCREDIT)
           //SHIFT MENU
           if (res.data[1].dataSHIFT.length) {
+            this.shiftData = [];
+            this.isSHIFT = true;
+            this.isAddShift = true;
+            this.isViewShift = true;
+            this.isBook = true;
+            this.isAddShiftTime = true;
+            this.isStaffManage = true;
+            this.isPosDetails = true;
+            this.isBookShiftWise = true;
+            this.isBookDayWise = true;
+            this.isBookMonthWise = true;
+            this.isBookShiftTimeWise = true;
+            this.isBookOperatorWise = true;
+            this.isStaffAddStaff = true;
+            this.isStaffAttendance = true;
+            this.isStaffSalary = true;
+
             this.shiftData = res.data[1].dataSHIFT;
             this.shiftData.map((res: any) => {
               if (res.customizeSubMenu == "SHIFT") {
@@ -613,10 +652,31 @@ export class StatsWidget10Component {
               this.cd.detectChanges();
             })
           } else {
+            this.shiftData = [];
             this.isSHIFT = true;
+            this.isAddShift = true;
+            this.isViewShift = true;
+            this.isBook = true;
+            this.isAddShiftTime = true;
+            this.isStaffManage = true;
+            this.isPosDetails = true;
+            this.isBookShiftWise = true;
+            this.isBookDayWise = true;
+            this.isBookMonthWise = true;
+            this.isBookShiftTimeWise = true;
+            this.isBookOperatorWise = true;
+            this.isStaffAddStaff = true;
+            this.isStaffAttendance = true;
+            this.isStaffSalary = true;
           }
           //INVENTORY MENU
           if (res.data[2].dataINVENTORY.length) {
+            this.inventoryData = [];
+            this.isINVENTORY = true;
+            this.isAddOilPurchase = true;
+            this.isViewOilPurchase = true;
+            this.isAddVarPercentage = true;
+
             this.inventoryData = res.data[2].dataINVENTORY;
             this.inventoryData.map((res: any) => {
               if (res.customizeSubMenu == "INVENTORY") {
@@ -633,10 +693,23 @@ export class StatsWidget10Component {
               this.cd.detectChanges();
             })
           } else {
+            this.inventoryData = [];
             this.isINVENTORY = true;
+            this.isAddOilPurchase = true;
+            this.isViewOilPurchase = true;
+            this.isAddVarPercentage = true;
           }
           //ACCOUNTING MENU
           if (res.data[3].dataACCOUNTING.length) {
+            this.accountingData = [];
+            this.isACCOUNTING = true;
+            this.isAddAccounting = true;
+            this.isViewAccounting = true;
+            this.isAccBookLedger = true;
+            this.isAddBank = true;
+            this.isViewBank = true;
+            this.isPos = true;
+
             this.accountingData = res.data[3].dataACCOUNTING;
             this.accountingData.map((res: any) => {
               if (res.customizeSubMenu == "ACCOUNTING") {
@@ -658,10 +731,22 @@ export class StatsWidget10Component {
               this.cd.detectChanges();
             })
           } else {
+            this.accountingData = [];
             this.isACCOUNTING = true;
+            this.isAddAccounting = true;
+            this.isViewAccounting = true;
+            this.isAccBookLedger = true;
+            this.isAddBank = true;
+            this.isViewBank = true;
+            this.isPos = true;
           }
           //EXPENSE MENU
           if (res.data[4].dataEXPENSE.length) {
+            this.expenseData = [];
+            this.isEXPENSE = true;
+            this.isExpenseAccounting = true;
+            this.isDailyReportExpense = true;
+
             this.expenseData = res.data[4].dataEXPENSE;
             this.expenseData.map((res: any) => {
               if (res.customizeSubMenu == "EXPENSE") {
@@ -675,10 +760,18 @@ export class StatsWidget10Component {
               this.cd.detectChanges();
             })
           } else {
+            this.expenseData = [];
             this.isEXPENSE = true;
+            this.isExpenseAccounting = true;
+            this.isDailyReportExpense = true;
           }
           //DSR MENU
           if (res.data[5].dataDSR.length) {
+            this.dsrData = [];
+            this.isDSR = true;
+            this.isDsr = true;
+            this.isTankDsr = true;
+
             this.dsrData = res.data[5].dataDSR;
             this.dsrData.map((res: any) => {
               if (res.customizeSubMenu == "DSR") {
@@ -692,10 +785,25 @@ export class StatsWidget10Component {
               this.cd.detectChanges();
             })
           } else {
+            this.dsrData = [];
             this.isDSR = true;
+            this.isDsr = true;
+            this.isTankDsr = true;
           }
           //LEDGER MENU
           if (res.data[6].dataLEDGER.length) {
+            this.ledgerData = [];
+            this.isLEDGER = true;
+            this.isCredit = true;
+            this.isAccounting = true;
+            this.isdsr = true;
+            this.isCreditsales = true;
+            this.isShift = true;
+            this.isLedgerShiftWise = true;
+            this.isLedgerDayWise = true;
+            this.isLedgerMonthWise = true;
+            this.isLedgerShiftTimeWise = true;
+
             this.ledgerData = res.data[6].dataLEDGER;
             this.ledgerData.map((res: any) => {
               if (res.customizeSubMenu == "LEDGER") {
@@ -723,10 +831,44 @@ export class StatsWidget10Component {
               this.cd.detectChanges();
             })
           } else {
+            this.ledgerData = [];
             this.isLEDGER = true;
+            this.isCredit = true;
+            this.isAccounting = true;
+            this.isdsr = true;
+            this.isCreditsales = true;
+            this.isShift = true;
+            this.isLedgerShiftWise = true;
+            this.isLedgerDayWise = true;
+            this.isLedgerMonthWise = true;
+            this.isLedgerShiftTimeWise = true;
           }
           //PUMP MENU
           if (res.data[7].dataPUMP.length) {
+            this.pumpData = [];
+            this.isPUMP = true;
+            this.isInfra = true;
+            this.isCashBill = true;
+            this.isFuelPrice = true;
+            this.isLubricant = true;
+            this.isAddLubricant = true;
+            this.isAddLubricantPurchase = true;
+            this.isViewLubricantPurchase = true;
+            this.isAddLubeTaxSale = true;
+            this.isOldAccounting = true;
+            this.isOilCompany = true;
+            this.isBank = true;
+            this.isCash = true;
+            this.isPOS = true;
+            this.isStaff = true;
+            this.isFastag = true;
+            this.isAccInfo = true;
+            this.isAllTollTran = true;
+            this.isActiveVeh = true;
+            this.isTollPlaza = true;
+            this.isTotalRecharge = true;
+            this.isVehSummary = true;
+
             this.pumpData = res.data[7].dataPUMP;
             this.pumpData.map((res: any) => {
               if (res.customizeSubMenu == "PUMP") {
@@ -778,10 +920,43 @@ export class StatsWidget10Component {
               this.cd.detectChanges();
             })
           } else {
+            this.pumpData = [];
             this.isPUMP = true;
+            this.isInfra = true;
+            this.isCashBill = true;
+            this.isFuelPrice = true;
+            this.isLubricant = true;
+            this.isAddLubricant = true;
+            this.isAddLubricantPurchase = true;
+            this.isViewLubricantPurchase = true;
+            this.isAddLubeTaxSale = true;
+            this.isOldAccounting = true;
+            this.isOilCompany = true;
+            this.isBank = true;
+            this.isCash = true;
+            this.isPOS = true;
+            this.isStaff = true;
+            this.isFastag = true;
+            this.isAccInfo = true;
+            this.isAllTollTran = true;
+            this.isActiveVeh = true;
+            this.isTollPlaza = true;
+            this.isTotalRecharge = true;
+            this.isVehSummary = true;
           }
           //REPORT MENU
           if (res.data[8].dataREPORT.length) {
+            this.reportData = [];
+            this.isREPORT = true;
+            this.isDailyReportEntries = true;
+            this.isDailyReport = true;
+            this.isMonthlyReport = true;
+            this.isVatBook = true;
+            this.isProfitReport = true;
+            this.isSummaryReport = true;
+            this.isViswasaTxExcel = true;
+            this.isSalesPurReport = true;
+
             this.reportData = res.data[8].dataREPORT;
             this.reportData.map((res: any) => {
               if (res.customizeSubMenu == "REPORT") {
@@ -807,7 +982,16 @@ export class StatsWidget10Component {
               this.cd.detectChanges();
             })
           } else {
+            this.reportData = [];
             this.isREPORT = true;
+            this.isDailyReportEntries = true;
+            this.isDailyReport = true;
+            this.isMonthlyReport = true;
+            this.isVatBook = true;
+            this.isProfitReport = true;
+            this.isSummaryReport = true;
+            this.isViswasaTxExcel = true;
+            this.isSalesPurReport = true;
           }
 
           this.cd.detectChanges();
