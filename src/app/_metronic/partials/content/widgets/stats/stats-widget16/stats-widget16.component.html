@@ -1,10 +1,432 @@
 <div class="card-body">
- 
-  <div class="fw-bold" [ngClass]="'text-inverse-' + color + ' fs-5'">
-    Credit Sales
-  </div>
-  <div [ngClass]="'text-inverse-' + color" class="fw-bold text-white me-2 lh-1 ls-n2">
-    ₹ {{ thisMonthCrSale | number:'1.2-2'}}
+
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Add Khata</h4>
+          <ng-template #content let-c="close" let-d="dismiss">
+            <div class="modal-header">
+              <h4 class="text-center">
+                Alert Details
+              </h4>
+
+              <div class="text-center mb-4" *ngIf="isAlert" style="position: absolute; top: 14%; left: 50%; 
+                          transform: translate(-50%, -50%);">
+                <div class="row justify-content-center">
+                  <div class="col-xl-10" style="color: red">
+                    <i class="fa fa-exclamation-triangle fa-fw fa-6x"></i>
+                  </div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <table class="table table-hover table-striped">
+                <thead>
+                  <tr>
+                    <th>Date Of Alert</th>
+                    <th>Petrol Pump Name</th>
+                    <th>City</th>
+                    <th>Remarks</th>
+
+                  </tr>
+                </thead>
+                <tbody *ngFor="let charges of viewCorpFlag; let i = index;">
+                  <tr>
+                    <td>{{charges.corporateFlagCreatedAt| date:"d MMM, yyyy"}}</td>
+                    <td><b> {{charges.companyName}}</b> <br>
+                      {{charges.firstName}} {{charges.lastName}} <br>
+                      {{charges.phone1}}</td>
+                    <td>{{charges.city}}</td>
+                    <td>{{charges.corporateFlagPurpose}}</td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </ng-template>
+
+          <!-- <ngb-alert type="danger" *ngIf="error" [dismissible]="false">{{ error }}</ngb-alert> -->
+
+          <form [formGroup]="corporateMappingForm">
+            <!-- <aw-wizard #mago [navBarLayout]="'large-empty-symbols'">
+              <aw-wizard-step stepId="firstStep">
+                <ng-template awWizardStepSymbol>
+                  <i class="fas fa-user"></i>
+                </ng-template>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row mb-3">
+                      <label class="col-md-3 col-form-label">Mobile Number<span style="color: red;">*</span></label>
+                      <div class="col-md-9">
+                        <input type="number" class="form-control" formControlName="phoneNumber"
+                          (blur)="searchCorporateByPhone()"
+                          [class.is-invalid]="userMobile.invalid && userMobile.touched"
+                          placeholder="Enter Mobile Number" onkeypress="return this.value.length < 10;"
+                          oninput="if(this.value.length=10)">
+                        <div *ngIf="(userMobile.invalid && userMobile.touched) || userMobile.dirty">
+                          <small *ngIf="userMobile.errors?.required" class="text-danger">
+                            Mobile Number is required</small>
+                          <small *ngIf="userMobile.errors?.pattern" class="text-danger">
+                            Please enter valid 10 Digit Mobile Number</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label class="col-md-3 col-form-label">Khata Name<span style="color: red;">*</span></label>
+                      <div class="col-md-9">
+                        <input class="form-control" name="khataName" type="text" placeholder="Enter Khata Name"
+                          formControlName="carrierName"
+                          oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label class="col-md-3 col-form-label">GST</label>
+                      <div class="col-md-9">
+                        <input class="form-control" name="GST" type="text" placeholder="Enter GST"
+                          formControlName="gstNo"
+                          oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                          onkeypress="return this.value.length < 15;">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label class="col-md-3 col-form-label">Cr. Limit Amount<span style="color: red;">*</span></label>
+                      <div class="col-md-9">
+                        <input class="form-control" name="creditLimitAmount" type="number"
+                          placeholder="Enter Credit Limit Amount" formControlName="maxCreditAmount">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label class="col-md-3 col-form-label">Cr. Limit Days<span style="color: red;">*</span></label>
+                      <div class="col-md-9">
+                        <input class="form-control" name="creditLimitDays" min="0" type="number"
+                          placeholder="Enter Credit Limit Days" formControlName="creditDayLimit"
+                          (change)="disableError()">
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <ul class="list-inline wizard mb-0">
+                  <li *ngIf="ischeckValidation" class="next list-inline-item float-end"><button class="btn btn-primary"
+                      awNextStep>Next</button>
+                  </li>
+                </ul>
+              </aw-wizard-step>
+
+              <aw-wizard-step stepId="secondStep">
+                <ng-template awWizardStepSymbol>
+                  <i class="fas fa-user-circle"></i>
+                </ng-template>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row mb-3">
+                      <label class="col-md-3 col-form-label">First name<span style="color: red;">*</span></label>
+                      <div class="col-md-9">
+                        <input class="form-control" name="firstName" type="text" placeholder="Enter First name"
+                          formControlName="firstName"
+                          oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label class="col-md-3 col-form-label">Last name<span style="color: red;">*</span></label>
+                      <div class="col-md-9">
+                        <input class="form-control" name="lastName" type="text" placeholder="Enter lastName"
+                          formControlName="lastName"
+                          oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                      </div>
+                    </div>
+                    <div *ngIf="!isCarrierFound" class="row mb-3">
+                      <label class="col-md-3 col-form-label">Email</label>
+                      <div class="col-md-9">
+                        <input class="form-control" name="Email" type="text" placeholder="Enter Email"
+                          formControlName="carrierEmail"
+                          [class.is-invalid]="primEmailUser.invalid && primEmailUser.touched"
+                          placeholder="Enter Email Address">
+                        <div *ngIf="(primEmailUser.invalid && primEmailUser.touched) || primEmailUser.dirty">
+                          <small *ngIf="primEmailUser.errors?.pattern" class="text-danger">
+                            Please enter valid email address</small>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div *ngIf="!isCarrierFound" class="row mb-3">
+                      <label class="col-md-3 col-form-label">Address Line 1</label>
+                      <div class="col-md-9">
+                        <input class="form-control" name="addressLine1" type="text" placeholder="Enter Address Line 1"
+                          formControlName="address1"
+                          oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                      </div>
+                    </div>
+
+                    <div *ngIf="!isCarrierFound" class="row mb-3">
+                      <label class="col-md-3 col-form-label">Address Line 2</label>
+                      <div class="col-md-9">
+                        <input class="form-control" name="addressLine2" type="text" placeholder="Enter Address Line 2"
+                          formControlName="address2"
+                          oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                      </div>
+                    </div>
+
+
+                    <div *ngIf="!isCarrierFound" class="row mb-3">
+                      <label class="col-md-3 col-form-label">City<span style="color: red;">*</span></label>
+                      <div class="col-md-9">
+                        <input class="form-control" name="city" type="text" placeholder="Enter City"
+                          formControlName="city"
+                          oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                      </div>
+                    </div>
+                    <div *ngIf="!isCarrierFound" class="row mb-3">
+                      <label class="col-md-3 col-form-label">State<span style="color: red;">*</span></label>
+                      <div class="col-md-9">
+                        <input *ngIf="isCarrierFound" class="form-control" name="state" type="text"
+                          placeholder="Enter State" formControlName="state">
+                        <select *ngIf="!isCarrierFound" class="form-control" formControlName="state" required
+                          placeholder="Select state">
+                          <option value="">Select State</option>
+                          <option value="ANDHRA PRADESH">Andhra Pradesh</option>
+                          <option value="ARUNACHAL PRADESH">Arunachal Pradesh</option>
+                          <option value="ASSAM">Assam</option>
+                          <option value="BIHAR">Bihar</option>
+                          <option value="CHHATTISGARH">Chhattisgarh</option>
+                          <option value="GOA">Goa</option>
+                          <option value="GUJARAT">Gujarat</option>
+                          <option value="HARYANA">Haryana</option>
+                          <option value="HIMACHAL PRADESH">Himachal Pradesh</option>
+                          <option value="JHARKHAND">Jharkhand</option>
+                          <option value="KARNATAKA">Karnataka</option>
+                          <option value="KERALA">Kerala</option>
+                          <option value="MADHYA PRADESH">Madhya Pradesh</option>
+                          <option value="MAHARASHTRA">Maharashtra</option>
+                          <option value="MANIPUR">Manipur</option>
+                          <option value="MEGHALAYA">Meghalaya</option>
+                          <option value="MIZORAM">Mizoram</option>
+                          <option value="NAGALAND">Nagaland</option>
+                          <option value="ODISHA">Odisha</option>
+                          <option value="PUNJAB">Punjab</option>
+                          <option value="RAJASTHAN">Rajasthan</option>
+                          <option value="SIKKIM">Sikkim</option>
+                          <option value="TAMIL NADU">Tamil Nadu</option>
+                          <option value="TELANGANA">Telangana</option>
+                          <option value="TRIPURA">Tripura</option>
+                          <option value="UTTAR PRADESH">Uttar Pradesh</option>
+                          <option value="UTTARAKHAND">Uttarakhand</option>
+                          <option value="WEST BENGAL">West Bengal</option>
+                          <option value="ANDAMAN AND NICOBAR ISLANDS">Andaman and Nicobar Islands</option>
+                          <option value="CHANDIGARH">Chandigarh</option>
+                          <option value="DADRA AND NAGAR HAVELI AND DAMAN AND DIU">Dadra and Nagar Haveli and Daman and
+                            Diu</option>
+                          <option value="DELHI">Delhi</option>
+                          <option value="LAKSHADWEEP">Lakshadweep</option>
+                          <option value="PUDUCHERRY">Puducherry (Pondicherry)</option>
+                          <option value="JAMMU AND KASHMIR">Jammu and Kashmir</option>
+                          <option value="LADAKH">Ladakh</option>
+                        </select>
+                      </div>
+                    </div>
+
+
+                    <div *ngIf="isCarrierFound" class="row mb-3">
+                      <label class="col-md-3 col-form-label">Email</label>
+                      <div class="col-md-9">
+                        <input class="form-control" name="Email" type="text" placeholder="Enter Email"
+                          formControlName="carrierEmail" placeholder="Email Address">
+
+                      </div>
+                    </div>
+
+                    <div *ngIf="isCarrierFound" class="row mb-3">
+                      <label class="col-md-3 col-form-label">Address Line 1</label>
+                      <div class="col-md-9">
+                        <input class="form-control" name="addressLine1" type="text" placeholder="Enter Address Line 1"
+                          formControlName="address1"
+                          oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                      </div>
+                    </div>
+
+                    <div *ngIf="isCarrierFound" class="row mb-3">
+                      <label class="col-md-3 col-form-label">Address Line 2</label>
+                      <div class="col-md-9">
+                        <input class="form-control" name="addressLine2" type="text" placeholder="Enter Address Line 2"
+                          formControlName="address2"
+                          oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                      </div>
+                    </div>
+
+
+                    <div *ngIf="isCarrierFound" class="row mb-3">
+                      <label class="col-md-3 col-form-label">City<span style="color: red;">*</span></label>
+                      <div class="col-md-9">
+                        <input class="form-control" name="city" type="text" placeholder="Enter City"
+                          formControlName="city"
+                          oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                      </div>
+                    </div>
+                    <div *ngIf="isCarrierFound" class="row mb-3">
+                      <label class="col-md-3 col-form-label">State<span style="color: red;">*</span></label>
+                      <div class="col-md-9">
+                        <input *ngIf="isCarrierFound" class="form-control" name="state" type="text"
+                          placeholder="Enter State" formControlName="state" disabled>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <ul class="list-inline wizard mb-0">
+                  <li class="previous list-inline-item"><button class="btn btn-primary" awPreviousStep>Previous</button>
+                  </li>
+                  <li *ngIf="isCarrierFound" class="next list-inline-item float-end"><button class="btn btn-primary"
+                      awNextStep (click)="submitNewCorp()">Next</button>
+                  </li>
+                  <li *ngIf="!isCarrierFound" class="next list-inline-item float-end"><button class="btn btn-primary"
+                      [disabled]="!corporateMappingForm.valid" awNextStep (click)="submit()">Next</button>
+                  </li>
+                </ul>
+              </aw-wizard-step>
+
+              <aw-wizard-step stepId="thirdStep">
+                <ng-template awWizardStepSymbol>
+                  <i class="fas fa-check-circle"></i>
+                </ng-template>
+                <div class="row justify-content-center">
+                  <div class="col-lg-6">
+                    <div class="text-center">
+                      <div class="mb-4">
+                        <i class="mdi mdi-check-circle-outline text-success display-4"></i>
+                      </div>
+                      <div>
+                        <h5>{{success}}</h5>
+                        <br><br>
+                        <button class="btn btn-success" (click)="checkOutstandingInSavedStatement(previousOut)">Add prev
+                          Outstanding</button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <button class="btn btn-success" (click)="openVehicle(addVehicle)">Add
+                          Vehicles</button>
+
+                        <ng-template #previousOut let-c="close" let-d="dismiss">
+                          <div class="modal-header">
+                            <h6 class="modal-title">
+                              <strong>
+                                Add Previous Outstanding Amount
+                              </strong>
+                            </h6>
+                          </div>
+                          <div class="modal-body">
+                            <form>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <label><b>Previous Outstanding Amount :</b>
+                                  </label>
+                                  <input class="form-control" type="number" style="font-size: 0.750rem;" min="0"
+                                    [(ngModel)]="prevOutstanding" [ngModelOptions]="{standalone: true}"
+                                    placeholder="Enter Amount">
+                                </div>
+
+                              </div>
+                              <br><br>
+                              <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-3">
+                                  <button type="button" class="btn btn-primary" aria-label="Close"
+                                    (click)="addOutstandAmount()">Add</button>
+                                </div>
+                                &nbsp;&nbsp;&nbsp;
+                                <div class="col-md-3">
+                                  <button type="button" class="btn btn-secondary" aria-label="Close"
+                                    (click)="d('Cross click')">Close</button>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </ng-template>
+
+                        <ng-template #addVehicle let-c="close" let-d="dismiss">
+                          <div class="modal-header">
+                            <h6 class="modal-title">
+                              <strong>
+                                Add Vehicle
+                              </strong>
+                            </h6>
+                          </div>
+                          <div class="modal-body">
+                            <form [formGroup]="addVehicleForm">
+                              <div class="row">
+                                <div class="col-lg-12">
+                                  <div class="table-responsive mb-0">
+                                    <table class="table table-centered table-nowrap">
+                                      <thead class="table-light">
+                                        <tr>
+                                          <th>Sr No</th>
+                                          <th>Vehicle Number</th>
+                                          <th>Action</th>
+
+                                        </tr>
+                                      </thead>
+                                      <tbody *ngFor="let charges of addVehicleData; let i = index;">
+                                        <tr>
+                                          <td>
+                                            {{i+1}}
+                                          </td>
+
+                                          <td>
+                                            <input type="text" class="form-control" [(ngModel)]="charges.vehicleNumber"
+                                              [ngModelOptions]="{standalone: true}" placeholder="Enter Vehicle no."
+                                              oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                                              (blur)="setVehicleNumber()" />
+                                          </td>
+
+                                          <td>
+
+                                            &nbsp;&nbsp;
+                                            <button *ngIf="i != 0 " type="cancel" class="btn btn-primary"
+                                              (click)="removeVehicle(i)">Delete</button>
+                                          </td>
+
+                                        </tr>
+                                      </tbody>
+                                      <button type="submit" class="btn btn-success" (click)="addVehicleForCr()">
+                                        Add
+                                      </button>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                            </form>
+
+                            <div class="row">
+
+                              <div class="col-auto">
+                                <button type="submit" class="btn btn-primary"
+                                  (click)="addFuelCreditVehicle()">Submit</button>
+                              </div>&nbsp;&nbsp;
+                              <div class="col-md-3">
+                                <button type="button" class="btn btn-secondary" aria-label="Close"
+                                  (click)="d('Cross click')">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                        </ng-template>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <ul *ngIf="showRefrsh" class="list-inline wizard mb-0">
+                  <li class="next list-inline-item float-end">
+                    <button class="btn btn-primary" (click)="goToStep('firstStep')">OK</button>
+                  </li>
+                </ul>
+              </aw-wizard-step>
+            </aw-wizard> -->
+          </form>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 </div>

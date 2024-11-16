@@ -25,66 +25,73 @@
     <div class="modal-body">
 
 
-      <div class="d-flex align-items-center mb-8">
-        <!-- begin::Description -->
-        <div class="flex-grow-1">
-          <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
-            <span class="badge badge-light-primary fs-6 fw-bolder">
-              Terminal Type </span>
-          </a>
+      <form [formGroup]="terminal">
+        <div class="d-flex align-items-center mb-8">
+          <!-- begin::Description -->
+          <div class="flex-grow-1">
+            <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+              <span class="badge badge-light-primary fs-6 fw-bolder">
+                Terminal Type </span>
+            </a>
+          </div>
+          <span class="badge badge-light-primary fs-6 fw-bolder">
+            <select class="form-select form-select-sm form-select-solid" data-placeholder="" data-hide-search="true"
+              (change)="getAccountByType($event)" style="width: 220px;" formControlName="terminalType">
+              <option value=""> Select Type </option>
+              <option value="BANK CARD"> BANK CARD </option>
+              <option value="UPI"> UPI </option>
+              <option value="AMERICAN EXPRESS"> AMERICAN EXPRESS </option>
+              <option value="OIL COMPANY FLEET PROGRAM"> OIL COMPANY FLEET PROGRAM </option>
+              <option value="OIL COMPANY RETAIL PROGRAM"> OIL COMPANY RETAIL PROGRAM </option>
+              <option value="OTHER"> OTHER </option>
+            </select>
+          </span>
+          <!-- end::Description -->
         </div>
-        <span class="badge badge-light-primary fs-6 fw-bolder">
-          <select class="form-select form-select-sm form-select-solid" data-placeholder="" data-hide-search="true"
-            style="width: 220px;" [(ngModel)]="terminalType">
-            <option value=""> Select Type </option>
-            <option value="BANK CARD"> BANK CARD </option>
-            <option value="UPI"> UPI </option>
-            <option value="AMERICAN EXPRESS"> AMERICAN EXPRESS </option>
-            <option value="OIL COMPANY FLEET PROGRAM"> OIL COMPANY FLEET PROGRAM </option>
-            <option value="OIL COMPANY RETAIL PROGRAM"> OIL COMPANY RETAIL PROGRAM </option>
-            <option value="OTHER"> OTHER </option>
-          </select>
-        </span>
-        <!-- end::Description -->
-      </div>
 
-      <div class="d-flex align-items-center mb-8">
-        <!-- begin::Description -->
-        <div class="flex-grow-1">
-          <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
-            <span class="badge badge-light-info fs-6 fw-bolder">
-              Terminal Name </span>
-          </a>
+        <div class="d-flex align-items-center mb-8">
+          <!-- begin::Description -->
+          <div class="flex-grow-1">
+            <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+              <span class="badge badge-light-info fs-6 fw-bolder">
+                Terminal Name </span>
+            </a>
+          </div>
+          <span class="badge badge-light-info fs-6 fw-bolder">
+            <input type="text" placeholder="Terminal Name" class="form-control" formControlName="terminalName">
+          </span>
+          <!-- end::Description -->
         </div>
-        <span class="badge badge-light-info fs-6 fw-bolder">
-          <input type="text" placeholder="Terminal Name" class="form-control" [(ngModel)]="terminalName">
-        </span>
-        <!-- end::Description -->
-      </div>
 
-      <div class="d-flex align-items-center mb-8">
-        <!-- begin::Description -->
-        <div class="flex-grow-1">
-          <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
-            <span class="badge badge-light-success fs-6 fw-bolder">
-              Select Account </span>
-          </a>
+        <div class="d-flex align-items-center mb-8">
+          <!-- begin::Description -->
+          <div class="flex-grow-1">
+            <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+              <span class="badge badge-light-success fs-6 fw-bolder">
+                Select Account </span>
+            </a>
+          </div>
+          <div class="col-md-6">
+            <span *ngIf="isOilCo">
+              <select class="form-select" formControlName="accountDetails">
+                <option value="21"> OIL COMPANY </option>
+              </select>
+            </span>
+            <span *ngIf="!isOilCo">
+              <select class="form-select" (change)="getBankAcc($event)" formControlName="accountDetails" required>
+                <option value="">Select Account</option>
+                <option *ngFor="let data of bankAccList1" [value]="data.bankDetailsId">
+                  {{data.bankName}}-{{data.accountNumber}}
+                </option>
+              </select>
+            </span>
+          </div>
+          <!-- end::Description -->
         </div>
-        <span class="badge badge-light-success fs-6 fw-bolder">
-          <select class="form-select form-select-sm form-select-solid" data-placeholder="" data-hide-search="true"
-            style="width: 220px;" [(ngModel)]="selectAccount">
-            <option value=""> Select Account </option>
-            <option value="KOTAK"> KOTAK </option>
-            <option value="AXIS"> AXIS </option>
-            <option value="SBI"> SBI </option>
-          </select>
-        </span>
-        <!-- end::Description -->
-      </div>
-
+      </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-success" (click)="submit()">
+      <button type="button" class="btn btn-outline-success" (click)="submitTerminal()">
         Submit
       </button>
       <button type="button" class="btn btn-outline-danger" (click)="close()">

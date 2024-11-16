@@ -1,0 +1,54 @@
+<div class="card-header">
+    <b>View Khata</b>
+</div>
+
+<div class="row">
+<div class="col-sm-3">
+    <div class="text-sm-end">
+        <label><b> Total outstanding </b> : </label>
+            <b> {{crOutstanding2}} </b>
+    </div>
+</div>
+
+<div class="col-sm-3">
+    <div class="text-sm-end">
+        <label><b> Customer Advance </b> :</label>
+        <span>
+            {{(advanceAmt) * (-1) }} CR
+        </span>
+    </div>
+</div>
+</div>
+
+<!-- <div class="row"> -->
+<br>
+<div>
+    <ul ngbNav #viewAcc="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified" style="width: 100%;">
+      <li [ngbNavItem]="1">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">PROFILE </span>
+        </a>
+        <ng-template ngbNavContent>
+            <app-tables-widget30 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget30>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="2">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">CR. AMOUNT LIMIT </span>
+        </a>
+        <ng-template ngbNavContent>
+            <app-tables-widget18 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget18>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="3">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">CR. DAYS LIMIT</span>
+        </a>
+        <ng-template ngbNavContent>
+          <app-tables-widget19 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget19>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="viewAcc"></div>
+  </div>
+<!-- </div> -->

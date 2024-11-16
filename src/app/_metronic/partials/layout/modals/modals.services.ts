@@ -35,6 +35,9 @@ export class ModalsService {
   private addDealerStaffAccessURL = this.baseURL + 'userAccess/addDealerStaffAccess'
   private renewMappingStaffURL = this.baseURL + 'fuelStaff/renewMappingStaff';  
   private addBankDetailsURL = this.baseURL + 'bankDetails/addBankDetails';
+  private getBankAccByBankIdURL = this.baseURL + 'bankDetails/getBankAccByBankId';
+  private getBankDetailsByDealerIdURL = this.baseURL + 'bankDetails/getBankDetailsByDealerId';
+  private submitTerminalURL = this.baseURL + 'fuelTerminals/addFuelTerminal';
 
   setHeader() {
     this.token = JSON.parse(localStorage.getItem('authenticationToken') || '{}');
@@ -137,6 +140,36 @@ export class ModalsService {
     let headers = new HttpHeaders();
     headers = headers.set('authenticationToken', this.token);
     return this.http.post(this.addBankDetailsURL, body, {
+      headers: headers
+    })
+  }
+  
+  // getBankAccByBankIdURL
+  getBankAccByBankIdPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getBankAccByBankIdURL, body, {
+      headers: headers
+    })
+  }
+  
+  // getBankDetailsByDealerIdURL
+  getBankDetailsByDealerIdPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getBankDetailsByDealerIdURL, body, {
+      headers: headers
+    })
+  }
+  
+  // submitTerminalURL
+  submitTerminalPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.submitTerminalURL, body, {
       headers: headers
     })
   }

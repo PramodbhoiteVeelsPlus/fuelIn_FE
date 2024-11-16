@@ -8,19 +8,19 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
     providedIn: 'root',
 })
 export class StatsService {
-    
+
     fuelDealerId: any;
     year: any;
     headerName1: any;
     product: any;
 
-    
+
     setRouteForDSR(fuelDealerId: string, year: any, headerName1: any, product: any) {
         this.fuelDealerId = fuelDealerId;
         this.year = year;
         this.headerName1 = headerName1;
         this.product = product;
-      }
+    }
 
     constructor(private http: HttpClient,
         private router: Router
@@ -122,12 +122,14 @@ export class StatsService {
     private getAllVeelsplusUserURL = this.baseURL + 'fuelVendor/getAllVeelsplusUser'
     private assignKitNumberToPersonIdURL = this.baseURL + 'fuelVendor/assignKitNumberToPersonId'
     private getFastagTransactionByDateURL = this.baseURL + 'fastag/getFastagTransactionByDate';
-    private getFastagTransactionByDateLQURL = this.baseURL + 'fastag/getFastagTransactionByDateLQ'; 
+    private getFastagTransactionByDateLQURL = this.baseURL + 'fastag/getFastagTransactionByDateLQ';
     private getCreditDetailsByDealerIdURL = this.baseURL + 'dealerDashboard/getCreditDetailsByDealerId';
     private searchDealerByMobileURL = this.baseURL + 'fuelDealerCustMap/getDealerDetailsByDealerPhoneNumber';
     private getDealerOnboardReportByAdminURL = this.baseURL + 'tripReports/getDealerOnboardReportByAdmin';
     private getCustomizeURL = this.baseURL + 'customize/getCustomize';
     private addCustomizeURL = this.baseURL + 'customize/addCustomize';
+    private searchCarrierByMobileURL = this.baseURL + 'fuelDealerCustMap/getCustomerIdBycorporatePhoneNumber';
+    private getFlagStatusByCorpIdURL = this.baseURL + 'fuelDealerCustMap/getFlagStatusByCorpId';
 
 
 
@@ -137,7 +139,7 @@ export class StatsService {
 
     setHeader() {
         this.token = JSON.parse(localStorage.getItem('authenticationToken') || '{}');
-        
+
     }
 
 
@@ -902,7 +904,7 @@ export class StatsService {
             headers: headers
         })
     }
-    
+
     //getAllFastagTransactionsLQByDateURL
     getAllFastagTransactionsLQByDatePOST(body: Object): Observable<any> {
         this.setHeader();
@@ -912,7 +914,7 @@ export class StatsService {
             headers: headers
         })
     }
-    
+
     //deleteFastagLQURL
     deleteFastagLQPOST(body: Object): Observable<any> {
         this.setHeader();
@@ -925,122 +927,122 @@ export class StatsService {
 
     // getAllDealersListURL
     getAllDealersListPOST(body: Object): Observable<any> {
-      this.setHeader();
-      let headers = new HttpHeaders();
-      headers = headers.set('authenticationToken', this.token);
-      return this.http.get(this.getAllDealersListURL,{
-        headers: headers
-      })
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.get(this.getAllDealersListURL, {
+            headers: headers
+        })
     }
 
     // getDealerIDCorpIdURL
     getDealerIDCorpIdPOST(body: Object): Observable<any> {
-      this.setHeader();
-      let headers = new HttpHeaders();
-      headers = headers.set('authenticationToken', this.token);
-      return this.http.post(this.getDealerIDCorpIdURL, body, {
-        headers: headers
-      })
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getDealerIDCorpIdURL, body, {
+            headers: headers
+        })
     }
 
     // getFuelProductIdByDealerIdURL
     getFuelProductIdByDealerIdPOST(body: Object): Observable<any> {
-      this.setHeader();
-      let headers = new HttpHeaders();
-      headers = headers.set('authenticationToken', this.token);
-      return this.http.post(this.getFuelProductIdByDealerIdURL, body, {
-        headers: headers
-      })
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFuelProductIdByDealerIdURL, body, {
+            headers: headers
+        })
     }
 
     // getCountUnAssignTagURL
     getCountUnAssignTagPOST(body: Object): Observable<any> {
-      this.setHeader();
-      let headers = new HttpHeaders();
-      headers = headers.set('authenticationToken', this.token);
-      return this.http.post(this.getCountUnAssignTagURL, body, {
-        headers: headers
-      })
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getCountUnAssignTagURL, body, {
+            headers: headers
+        })
     }
 
     // getCountAssignTagByPersonIdURL
     getCountAssignTagByPersonIdPOST(body: Object): Observable<any> {
-      this.setHeader();
-      let headers = new HttpHeaders();
-      headers = headers.set('authenticationToken', this.token);
-      return this.http.post(this.getCountAssignTagByPersonIdURL, body, {
-        headers: headers
-      })
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getCountAssignTagByPersonIdURL, body, {
+            headers: headers
+        })
     }
 
     // getAllVeelsplusUserURL
     getAllVeelsplusUserPOST(body: Object): Observable<any> {
-      this.setHeader();
-      let headers = new HttpHeaders();
-      headers = headers.set('authenticationToken', this.token);
-      return this.http.post(this.getAllVeelsplusUserURL, body, {
-        headers: headers
-      })
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAllVeelsplusUserURL, body, {
+            headers: headers
+        })
     }
 
     // assignKitNumberToPersonIdURL
     assignKitNumberToPersonIdPOST(body: Object): Observable<any> {
-      this.setHeader();
-      let headers = new HttpHeaders();
-      headers = headers.set('authenticationToken', this.token);
-      return this.http.post(this.assignKitNumberToPersonIdURL, body, {
-        headers: headers
-      })
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.assignKitNumberToPersonIdURL, body, {
+            headers: headers
+        })
     }
 
     // getFastagTransactionByDateURL
     getFastagTransactionByDatePOST(body: Object): Observable<any> {
-      this.setHeader();
-      let headers = new HttpHeaders();
-      headers = headers.set('authenticationToken', this.token);
-      return this.http.post(this.getFastagTransactionByDateURL, body, {
-        headers: headers
-      })
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFastagTransactionByDateURL, body, {
+            headers: headers
+        })
     }
 
     // getFastagTransactionByDateLQURL
     getFastagTransactionByDateLQPOST(body: Object): Observable<any> {
-      this.setHeader();
-      let headers = new HttpHeaders();
-      headers = headers.set('authenticationToken', this.token);
-      return this.http.post(this.getFastagTransactionByDateLQURL, body, {
-        headers: headers
-      })
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFastagTransactionByDateLQURL, body, {
+            headers: headers
+        })
     }
 
     // getCreditDetailsByDealerIdURL
     getCreditDetailsByDealerIdPOST(body: Object): Observable<any> {
-      this.setHeader();
-      let headers = new HttpHeaders();
-      headers = headers.set('authenticationToken', this.token);
-      return this.http.post(this.getCreditDetailsByDealerIdURL, body, {
-        headers: headers
-      })
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getCreditDetailsByDealerIdURL, body, {
+            headers: headers
+        })
     }
 
     // searchDealerByMobileURL
     searchDealerByMobilePOST(body: Object): Observable<any> {
-      this.setHeader();
-      let headers = new HttpHeaders();
-      headers = headers.set('authenticationToken', this.token);
-      return this.http.post(this.searchDealerByMobileURL, body, {
-        headers: headers
-      })
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.searchDealerByMobileURL, body, {
+            headers: headers
+        })
     }
 
     // getDealerOnboardReportByAdminURL
     getDealerOnboardReportByAdminPOST(body: Object): Observable<any> {
-      this.setHeader();
-      let headers = new HttpHeaders();
-      headers = headers.set('authenticationToken', this.token);
-      return this.http.post(this.getDealerOnboardReportByAdminURL, body, {
-        headers: headers
-      })
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getDealerOnboardReportByAdminURL, body, {
+            headers: headers
+        })
     }
 
     // getCustomizeURL
@@ -1049,20 +1051,41 @@ export class StatsService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.getCustomizeURL, body, {
-          headers: headers
+            headers: headers
         })
-      }
-  
+    }
+
     // addCustomizeURL
     addCustomizePOST(body: Object): Observable<any> {
         this.setHeader();
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.addCustomizeURL, body, {
-          headers: headers
+            headers: headers
         })
-      }
-  
+    }
+
+    // searchCarrierByMobileURL
+    searchCarrierByMobilePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.searchCarrierByMobileURL, body, {
+            headers: headers
+        })
+    }
+
+
+    // getFlagStatusByCorpIdURL
+    getFlagStatusByCorpIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFlagStatusByCorpIdURL, body, {
+            headers: headers
+        })
+    }
+
 
 
 

@@ -1,6 +1,9 @@
-import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, TemplateRef, ViewChild } from '@angular/core';
 import { ModalConfig } from '../modal.config';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ModalsService } from '../modals.services';
 
 @Component({
   selector: 'app-modal4',
@@ -12,11 +15,37 @@ export class Modal4Component {
 
   private modalRef: NgbModalRef;
 
+  terminal = new FormGroup({
+    terminalType: new FormControl('', Validators.required),
+    terminalName: new FormControl(''),
+    bankName: new FormControl(''),
+    accountDetails: new FormControl('', Validators.required),
+  });
+
   terminalType: any = "";
   terminalName: any;
   selectAccount: any = "";
-  constructor(private modalService: NgbModal
+  isOilCo: boolean = false;
+  bankAccList: any = [];
+  bankAccList1: any = [];
+  fuelDealerId: any;
+  dealerLoginVPId: any;
+  vpPersonId: any;
+  loginSQLCorporateId: any;
+
+  constructor(private modalService: NgbModal,
+    private spinner: NgxSpinnerService,
+    private post: ModalsService,
+    public cd: ChangeDetectorRef,
   ) {
+  }
+
+  ngOnInit(): void {
+    var element = JSON.parse(localStorage.getItem('element') || '{}');
+    this.dealerLoginVPId = element.veelsPlusCorporateID;
+    this.vpPersonId = element.veelsPlusId
+    this.getCorporateById(this.dealerLoginVPId);
+    this.cd.detectChanges()
   }
 
   open(): Promise<boolean> {
@@ -51,8 +80,130 @@ export class Modal4Component {
     }
   }
 
-  submit() {
-    console.log("Submitted")
+  getCorporateById(dealerLoginVPId: any) {
+    let data = {
+      veelsplusCorporateId: dealerLoginVPId
+    }
+    this.post.getBranchByVeelsplusIdPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          if (res.data.length) {
+            this.loginSQLCorporateId = res.data[0].corporateId;
+            this.getfuelDealerIdByCorporateId(this.loginSQLCorporateId);
+            this.cd.detectChanges()
+          }
+          else {
+            alert("Getting Error..! Please Logout & Login again..!")
+            this.cd.detectChanges()
+          }
+        }
+      })
+  }
+
+  // getfuelDealerIdByDealerCorporateId
+  getfuelDealerIdByCorporateId(loginSQLCorporateId: any) {
+    let data = {
+      corporateId: loginSQLCorporateId
+    }
+    this.post.getfuelDealerIdByCorporateIdPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          this.fuelDealerId = res.data[0].fuelDealerId;
+          this.getBankDetailsByDealerId(this.fuelDealerId)
+          this.cd.detectChanges()
+        }
+        else {
+          this.cd.detectChanges()
+        }
+      })
+  }
+
+  getAccountByType(id: any) {
+    if (id.target.value == "OIL COMPANY FLEET PROGRAM" || id.target.value == "OIL COMPANY RETAIL PROGRAM") {
+      this.isOilCo = true;
+      this.terminal.controls['accountDetails'].setValue("21")
+      this.terminal.controls['bankName'].setValue('OIL COMPANY')
+    } else {
+      this.isOilCo = false;
+      this.terminal.controls['accountDetails'].setValue("")
+    }
+  }
+
+  getBankAcc(id: any) {
+    this.spinner.show();
+    let data = {
+      bankDetailsId: id.target.value,
+    }
+    this.post.getBankAccByBankIdPOST(data)
+      .subscribe(res => {
+        if (res.status == 'OK') {
+          this.terminal.controls['bankName'].setValue(res.data[0].bankName + '-' + res.data[0].accountNumber)
+          this.spinner.hide();
+        }
+        else {
+          this.spinner.hide();
+        }
+      })
+
+  }
+
+  getBankDetailsByDealerId(fuelDealerId: any) {
+    this.bankAccList.length = 0;
+    this.bankAccList1.length = 0;
+    let data = {
+      dealerId: fuelDealerId
+    }
+    this.post.getBankDetailsByDealerIdPOST(data)
+      .subscribe(res => {
+        if (res.data.length) {
+          this.bankAccList = res.data;
+          this.bankAccList1 = res.data1;
+        }
+      })
+  }
+
+  submitTerminal() {
+    if (this.terminal.value.terminalType) {
+      if (this.terminal.value.terminalName) {
+        if (this.terminal.value.accountDetails && this.terminal.value.bankName) {
+          this.spinner.show()
+          let data = {
+            terminalType: this.terminal.value.terminalType,
+            terminalName: this.terminal.value.terminalName,
+            fuelDealerId: this.fuelDealerId,
+            corporateId: this.loginSQLCorporateId,
+            attachedAccountId: this.terminal.value.accountDetails,
+            attachedBankName: this.terminal.value.bankName,
+          }
+
+          this.post.submitTerminalPOST(data).subscribe((result: { status: string; }) => {
+            if (result.status == "OK") {
+              alert("Terminal Added Successfully")
+              this.terminal.reset();
+              this.terminal.controls['accountDetails'].setValue("")
+              this.terminal.controls['terminalType'].setValue("")
+              this.modalRef.close('close')
+              this.spinner.hide();
+            } else {
+              alert("Error to Add Terminal")
+              this.modalRef.close('close')
+              this.spinner.hide();
+            }
+          })
+        } else {
+          alert("Please Select Account")
+          this.spinner.hide();
+        }
+      } else {
+        alert("Please Enter Terminal Name")
+        this.spinner.hide();
+      }
+
+    } else {
+      alert("Please Select Terminal Type")
+      this.spinner.hide();
+    }
+
   }
 
 

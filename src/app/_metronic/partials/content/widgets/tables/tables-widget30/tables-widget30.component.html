@@ -1,0 +1,296 @@
+<!-- begin::Header -->
+<div class="card-header border-0 pt-5">
+  <h3 class="card-title align-items-start flex-column">
+    <div class="row">
+        <div class="col-lg-10">
+
+            <div class="search-box me-2 mb-2 d-inline-block">
+                <div class="position-relative">
+                  <input class="form-control" type="text" (input)="onSearch()" placeholder="Search" [(ngModel)]="searchData"
+                    [ngModelOptions]="{standalone: true}">
+                  <i class="bx bx-search-alt search-icon"></i>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-1">
+            <span style="font-size: 25px;cursor: pointer;" (click)="allCustomerPDFDownload()"
+                ngbTooltip="Download PDF" placement="bottom"><i class="fas fa-file-pdf"></i></span>
+        </div>
+        <div class="col-lg-1">
+            <span style="font-size: 25px;cursor: pointer;" (click)="allCustomerExcelDownload()"
+                ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv"></i></span>
+        </div>
+    </div>
+    <!-- <span class="card-label fw-bolder fs-3 mb-1">Rate Overview</span> -->
+  </h3>
+</div>
+<!-- end::Header -->
+<!-- begin::Body -->
+<div class="card-body py-3">
+  <!-- begin::Table container -->
+  <div class="table-responsive mb-0">
+    <table class="table table-centered table-nowrap">
+      <thead class="table-light">
+        <tr>
+          <th></th>
+          <th>Khata Name</th>
+          <th>Added On</th>
+          <th>Email</th>
+          <th>Mobile</th>
+          <th>GST</th>
+          <th>Rating</th>
+          <th>Vehicles</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody
+        *ngFor="let data of mappingAccData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+        <tr style="color: red;" *ngIf="data.corporateReviewFlag == 'TRUE'">
+          <td>
+            <!-- <a class="expand-row"
+              (click)="changeValue(i,data.previousOutstand,data.maxCreditAmount,data.creditDayLimit,data.manualNumberStart,data.manualNumberEnd,data.fuelDealerCustomerMapId,data.mappingStatus)"
+              style="font-size: 19px;">
+              +
+            </a> -->
+          </td>
+          <td>
+            <b> {{ data.companyName }} </b> <br>
+            {{ data.hostName }}
+          </td>
+          <td> {{ data.mappingCreatedDate | date:"d MMM, yyyy" }} </td>
+          <td> {{ data.mappingEmail }} </td>
+          <td> {{ data.hostPhone }} </td>
+          <td> {{ data.mappingGST }} </td>
+          <td style="text-align: left;">
+            <span *ngIf="(data.avgScore) > 0 && (data.avgScore) <= 20"
+              style="cursor:pointer;color: black; font-size: 20px;">
+              ★ ☆ ☆ ☆ ☆
+            </span>
+            <span *ngIf="(data.avgScore) >= 21 && (data.avgScore) <= 40"
+              style="cursor:pointer;color: black; font-size: 20px;">
+              ★ ★ ☆ ☆ ☆
+            </span>
+            <span *ngIf="(data.avgScore) >= 41 && (data.avgScore) <= 60"
+              style="cursor:pointer;color: black; font-size: 20px;">
+              ★ ★ ★ ☆ ☆
+            </span>
+            <span *ngIf="(data.avgScore) >= 61 && (data.avgScore) <= 80"
+              style="cursor:pointer;color: black; font-size: 20px;">
+              ★ ★ ★ ★ ☆
+            </span>
+            <span *ngIf="(data.avgScore) > 80" style="cursor:pointer;color: black; font-size: 20px;">
+              ★ ★ ★ ★ ★
+            </span>
+          </td>
+          <td >
+            {{ data.totalVehicleNumber }} </td>
+          <td>
+            <!-- <div ngbDropdown placement="bottom-left">
+              <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                aria-expanded="true"></i>
+              <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                <a class="dropdown-item" href="javascript: void(0);"
+                  (click)="updateName(editName, data.fuelDealerCustomerMapId, data.companyName, data.hostName, data.mappingGST, data.mappingEmail, data.maxCreditAmount, data.creditDayLimit, data.mappingAddress1, data.mappingAddress2, data.mappingCity)">
+                  &nbsp; Edit</a>
+                <span>
+                  <a class="dropdown-item" href="javascript: void(0);"
+                    (click)="checkOutstandingInSavedStatement(previousOut, data.fuelDealerCustomerMapId, data.previousOutstand, data.companyName)">
+                    &nbsp; Add Previous O/s</a>
+                </span>
+
+                <a class="dropdown-item" href="javascript: void(0);"
+                  (click)="openManualNo(manualNo, data.fuelDealerCustomerMapId, data.manualNumberStart, data.manualNumberEnd, data.companyName)">
+                  &nbsp; Add Bill Nos.</a>
+                <a class="dropdown-item" href="javascript: void(0);"
+                  (click)="openVehicle(addVehicle, data.fuelDealerCustomerMapId, data.fuelCorporateId, data.companyName)">
+                  &nbsp; Add Vehicle</a>
+                <a *ngIf="data.corporateFlagDealerId != fuelDealerId " class="dropdown-item" href="javascript: void(0);"
+                  (click)="updateCorporateReview(updateFlag,data.fuelCorporateId,data.companyName)">
+                  &nbsp; Add Alert</a>
+                <a *ngIf="data.corporateFlagDealerId == fuelDealerId " class="dropdown-item" href="javascript: void(0);"
+                  (click)="updateCorporateFlag(updateFlagCorp,data.fuelCorporateId,data.companyName)">
+                  &nbsp; Add Alert</a>
+              </div>
+            </div> -->
+          </td>
+        </tr>
+
+        <!-- <tr *ngIf="data.corporateReviewFlag == 'FALSE'">
+          <td style="cursor: pointer;">
+            <a class="expand-row"
+              (click)="changeValue(i,data.previousOutstand,data.maxCreditAmount,data.creditDayLimit,data.manualNumberStart,data.manualNumberEnd,data.fuelDealerCustomerMapId,data.mappingStatus)"
+              style="font-size: 19px;">
+              +
+            </a>
+          </td>
+          <td> <b> {{data.companyName}} </b> <br>
+            {{data.hostName}}
+          </td>
+          <td> {{data.mappingCreatedDate | date:"d MMM, yyyy"}} </td>
+          <td>
+            <span *ngIf="data.mappingEmail != 'undefined' && data.mappingEmail != 'null'">
+              {{data.mappingEmail}}
+            </span>
+          </td>
+          <td>{{data.hostPhone}}</td>
+          <td>
+            <span *ngIf="data.mappingGST != 'undefined' && data.mappingGST != 'null'">
+              {{data.mappingGST}}
+            </span>
+          </td>
+          <td style="text-align: left;">
+            <span *ngIf="(data.avgScore) > 0 && (data.avgScore) <= 20"
+              style="cursor:pointer;color: black; font-size: 20px;">
+              ★ ☆ ☆ ☆ ☆
+            </span>
+            <span *ngIf="(data.avgScore) >= 21 && (data.avgScore) <= 40"
+              style="cursor:pointer;color: black; font-size: 20px;">
+              ★ ★ ☆ ☆ ☆
+            </span>
+            <span *ngIf="(data.avgScore) >= 41 && (data.avgScore) <= 60"
+              style="cursor:pointer;color: black; font-size: 20px;">
+              ★ ★ ★ ☆ ☆
+            </span>
+            <span *ngIf="(data.avgScore) >= 61 && (data.avgScore) <= 80"
+              style="cursor:pointer;color: black; font-size: 20px;">
+              ★ ★ ★ ★ ☆
+            </span>
+            <span *ngIf="(data.avgScore) > 80" style="cursor:pointer;color: black; font-size: 20px;">
+              ★ ★ ★ ★ ★
+            </span>
+          </td>
+          <td (click)="getVehicleByCustMapId(viewVehicle,data.fuelDealerCustomerMapId, data.companyName)">
+            {{data.totalVehicleNumber}}</td>
+          <td style="text-align: left;cursor: pointer;">
+            <div ngbDropdown placement="bottom-left">
+              <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                aria-expanded="true"></i>
+              <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                <a class="dropdown-item" href="javascript: void(0);"
+                  (click)="updateName(editName, data.fuelDealerCustomerMapId, data.companyName, data.hostName, data.mappingGST, data.mappingEmail, data.maxCreditAmount, data.creditDayLimit, data.mappingAddress1, data.mappingAddress2, data.mappingCity)">
+                  &nbsp; Edit</a>
+                <span>
+                  <a class="dropdown-item" href="javascript: void(0);"
+                    (click)="checkOutstandingInSavedStatement(previousOut, data.fuelDealerCustomerMapId, data.previousOutstand, data.companyName)">
+                    &nbsp; Add Previous O/s</a>
+                </span>
+
+                <a class="dropdown-item" href="javascript: void(0);"
+                  (click)="openManualNo(manualNo, data.fuelDealerCustomerMapId, data.manualNumberStart, data.manualNumberEnd, data.companyName)">
+                  &nbsp; Add Bill Nos.</a>
+                <a class="dropdown-item" href="javascript: void(0);"
+                  (click)="openVehicle(addVehicle, data.fuelDealerCustomerMapId, data.fuelCorporateId, data.companyName)">
+                  &nbsp; Add Vehicle</a>
+                <a *ngIf="data.corporateFlagDealerId != fuelDealerId " class="dropdown-item" href="javascript: void(0);"
+                  (click)="updateCorporateReview(updateFlag,data.fuelCorporateId,data.companyName)">
+                  &nbsp; Add Alert</a>
+                <a *ngIf="data.corporateFlagDealerId == fuelDealerId " class="dropdown-item" href="javascript: void(0);"
+                  (click)="updateCorporateFlag(updateFlagCorp,data.fuelCorporateId,data.companyName)">
+                  &nbsp; Add Alert</a>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr *ngIf="show  && i == rowNumber" class="sub-table no-bg">
+          <td colspan="12" class="p-0">
+            <table class="table mb-0 table-striped">
+              <thead class="table-light">
+                <tr>
+                  <th></th>
+                  <th style="text-align: left;">Previous O/s</th>
+                  <th style="text-align: left;">Cr Amount Limit</th>
+                  <th style="text-align: left;">Cr Days Limit</th>
+                  <th style="text-align: left;">Bill Nos. Set</th>
+                  <th style="text-align: left;">Mapping</th>
+                  <th style="text-align: left;">SMS</th>
+                  <th style="text-align: left;">Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td> {{previousOutstandExpand}} </td>
+                  <td> {{maxCreditAmountExpand}} </td>
+                  <td> {{creditDayLimitExpand}} </td>
+                  <td> from {{manualNumberStartExpand}} to {{manualNumberEndExpand}} </td>
+                  <td style="text-align: left;">
+                    <div *ngIf="data.mappingStatus == 'ACTIVE'">
+                      <label class="switch">
+                        <input type="checkbox" checked="checked"
+                          (change)="updateMapping($event,fuelDealerCustomerMapIdExpand,'ACTIVE')">
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                    <div *ngIf="data.mappingStatus != 'ACTIVE'">
+                      <label class="switch">
+                        <input type="checkbox" [checked]="off"
+                          (change)="updateMapping($event,fuelDealerCustomerMapIdExpand,'INACTIVE')">
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </td>
+
+                  <td style="text-align: left;" *ngIf="isDisableSMS == 'FALSE' ">
+                    <div *ngIf="data.isMappingSMS == 'TRUE'">
+                      <label class="switch">
+                        <input type="checkbox" checked="checked"
+                          (change)="updateSms(data.fuelDealerCustomerMapId,data.isMappingSMS)">
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                    <div *ngIf="data.isMappingSMS == 'FALSE'">
+                      <label class="switch">
+                        <input type="checkbox" [checked]="off"
+                          (change)="updateSms(data.fuelDealerCustomerMapId,data.isMappingSMS)">
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </td>
+                  <td style="text-align: left;" *ngIf="isDisableSMS == 'TRUE' " (click)="smsAlert()">
+                    <label class="switch">
+                      <input type="checkbox" [checked]="off" disabled>
+                      <span class="slider round"></span>
+                    </label>
+                  </td>
+
+                  <td style="text-align: left;" *ngIf="isDisableEmail == 'FALSE' ">
+                    <div *ngIf="data.isMappingEmail == 'TRUE'">
+                      <label class="switch">
+                        <input type="checkbox" checked="checked"
+                          (change)="updateEmail(data.fuelDealerCustomerMapId,data.isMappingEmail)">
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                    <div *ngIf="data.isMappingEmail == 'FALSE'">
+                      <label class="switch">
+                        <input type="checkbox" [checked]="off"
+                          (change)="updateEmail(data.fuelDealerCustomerMapId,data.isMappingEmail)">
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </td>
+                  <td style="text-align: left;" *ngIf="isDisableEmail == 'TRUE' " (click)="emailAlert()">
+                    <label class="switch">
+                      <input type="checkbox" [checked]="off" disabled>
+                      <span class="slider round"></span>
+                    </label>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr> -->
+      </tbody>
+    </table>
+
+    <!-- begin::Pagination -->
+    <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+        style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+    </pagination-controls>
+    <!-- end::Pagination -->
+  </div>
+  <!-- end::Table container -->
+</div>

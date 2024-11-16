@@ -111,7 +111,8 @@ export class WidgetService {
   private getFuelTerminalURL = this.baseURL + 'fuelTerminals/getFuelTerminal'
   private updateFuelTerminalPOSStatusURL = this.baseURL + 'fuelTerminals/updateFuelTerminalPOSStatus';
   private deleteFuelTerminalURL = this.baseURL + 'fuelTerminals/deleteFuelTerminal';
-  private updateFuelTerminalPOSNameURL = this.baseURL + 'fuelTerminals/updateFuelTerminalPOSName'; 
+  private updateFuelTerminalPOSNameURL = this.baseURL + 'fuelTerminals/updateFuelTerminalPOSName';
+  private getMappingAccByFuelDealerIdURL = this.baseURL + 'crCustomers/getMappingAccByFuelDealerId'; 
 
 
   setHeader() {
@@ -987,6 +988,16 @@ export class WidgetService {
     let headers = new HttpHeaders();
     headers = headers.set('authenticationToken', this.token);
     return this.http.post(this.updateFuelTerminalPOSNameURL, body, {
+      headers: headers
+    })
+  }
+  
+  // getMappingAccByFuelDealerIdURL
+  getMappingAccByFuelDealerIdPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getMappingAccByFuelDealerIdURL, body, {
       headers: headers
     })
   }
