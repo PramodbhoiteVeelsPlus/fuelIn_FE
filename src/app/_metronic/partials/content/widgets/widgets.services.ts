@@ -126,6 +126,7 @@ export class WidgetService {
   private updateManualNumberURL = this.baseURL + 'fuelDealerCustMap/updateManualNumber';
   private addFlagForCorpURL = this.baseURL + 'fuelDealerCustMap/addFlagForCorp';
   private updateFlagForCorpURL = this.baseURL + 'fuelDealerCustMap/updateFlagForCorp';
+  private sendSmsToMappedCorpNewURL = this.baseURL + 'fuelDealerCustMap/sendSmsToMappedCorpNew';
 
 
   setHeader() {
@@ -1145,6 +1146,15 @@ export class WidgetService {
     })
   }
 
+  // sendSmsToMappedCorpNewURL
+  sendSmsToMappedCorpNewPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.sendSmsToMappedCorpNewURL, body, {
+      headers: headers
+    })
+  }
 
 
 
