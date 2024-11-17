@@ -1,27 +1,143 @@
+<head>
+  <style>
+    .btn.btn-icon.badge.badge-light-success {
+      background-color: #DFFFEA;
+      color: #DFFFEA;
+      transition: background-color 0.3s, color 0.3s;
+      /* Smooth transition */
+    }
+
+    .btn.btn-icon.badge.badge-light-success:hover {
+      background-color: #17C653;
+      /* Change to success color */
+      color: #17C653;
+      /* Change text color if needed */
+    }
+
+    .btn.btn-icon.badge.badge-light-warning {
+      background-color: #FFF8DD;
+      color: #FFF8DD;
+      transition: background-color 0.3s, color 0.3s;
+      /* Smooth transition */
+    }
+
+    .btn.btn-icon.badge.badge-light-warning:hover {
+      background-color: #F6C000;
+      /* Change to  color */
+      color: #F6C000;
+      /* Change text color if needed */
+    }
+
+    .btn.btn-icon.badge.badge-light-danger {
+      background-color: #FFEEF3;
+      color: #FFEEF3;
+      transition: background-color 0.3s, color 0.3s;
+      /* Smooth transition */
+    }
+
+    .btn.btn-icon.badge.badge-light-danger:hover {
+      background-color: #F8285A;
+      /* Change to  color */
+      color: #F8285A;
+      /* Change text color if needed */
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+      align-items: center;
+      padding: 10px;
+    }
+
+    /* Hide default HTML checkbox */
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    /* The slider */
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+  
+  input:checked + .slider {
+    background-color: green;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  label {
+    display: inline-block;
+    padding: 20px;
+    font-size: medium;
+  }
+  </style>
+</head>
+
 <!-- begin::Header -->
 <div class="card-header border-0 pt-5">
   <h3 class="card-title align-items-start flex-column">
     <div class="row">
-        <div class="col-lg-10">
+      <div class="col-lg-10">
 
-            <div class="search-box me-2 mb-2 d-inline-block">
-                <div class="position-relative">
-                  <input class="form-control" type="text" (input)="onSearch()" placeholder="Search" [(ngModel)]="searchData"
-                    [ngModelOptions]="{standalone: true}">
-                  <i class="bx bx-search-alt search-icon"></i>
-                </div>
-            </div>
-
+        <div class="search-box me-2 mb-2 d-inline-block">
+          <div class="position-relative">
+            <input class="form-control" type="text" (input)="onSearch()" placeholder="Search" [(ngModel)]="searchData"
+              [ngModelOptions]="{standalone: true}">
+            <i class="bx bx-search-alt search-icon"></i>
+          </div>
         </div>
 
-        <div class="col-lg-1">
-            <span style="font-size: 25px;cursor: pointer;" (click)="allCustomerPDFDownload()"
-                ngbTooltip="Download PDF" placement="bottom"><i class="fas fa-file-pdf"></i></span>
-        </div>
-        <div class="col-lg-1">
-            <span style="font-size: 25px;cursor: pointer;" (click)="allCustomerExcelDownload()"
-                ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv"></i></span>
-        </div>
+      </div>
+
+      <div class="col-lg-1">
+        <span style="font-size: 25px;cursor: pointer;" (click)="allCustomerPDFDownload()" ngbTooltip="Download PDF"
+          placement="bottom"><i class="fas fa-file-pdf"></i></span>
+      </div>
+      <div class="col-lg-1">
+        <span style="font-size: 25px;cursor: pointer;" (click)="allCustomerExcelDownload()" ngbTooltip="Download CSV"
+          placement="bottom"><i class="fas fa-file-csv"></i></span>
+      </div>
     </div>
     <!-- <span class="card-label fw-bolder fs-3 mb-1">Rate Overview</span> -->
   </h3>
@@ -49,11 +165,11 @@
         *ngFor="let data of mappingAccData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
         <tr style="color: red;" *ngIf="data.corporateReviewFlag == 'TRUE'">
           <td>
-            <!-- <a class="expand-row"
+            <a class="expand-row"
               (click)="changeValue(i,data.previousOutstand,data.maxCreditAmount,data.creditDayLimit,data.manualNumberStart,data.manualNumberEnd,data.fuelDealerCustomerMapId,data.mappingStatus)"
               style="font-size: 19px;">
               +
-            </a> -->
+            </a>
           </td>
           <td>
             <b> {{ data.companyName }} </b> <br>
@@ -84,10 +200,10 @@
               ★ ★ ★ ★ ★
             </span>
           </td>
-          <td >
+          <td (click)="getVehicleByCustMapId(viewVehicle,data.fuelDealerCustomerMapId, data.companyName)">
             {{ data.totalVehicleNumber }} </td>
           <td>
-            <!-- <div ngbDropdown placement="bottom-left">
+            <div ngbDropdown placement="bottom-left">
               <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
                 aria-expanded="true"></i>
               <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
@@ -103,9 +219,9 @@
                 <a class="dropdown-item" href="javascript: void(0);"
                   (click)="openManualNo(manualNo, data.fuelDealerCustomerMapId, data.manualNumberStart, data.manualNumberEnd, data.companyName)">
                   &nbsp; Add Bill Nos.</a>
-                <a class="dropdown-item" href="javascript: void(0);"
+                <!-- <a class="dropdown-item" href="javascript: void(0);"
                   (click)="openVehicle(addVehicle, data.fuelDealerCustomerMapId, data.fuelCorporateId, data.companyName)">
-                  &nbsp; Add Vehicle</a>
+                  &nbsp; Add Vehicle</a> -->
                 <a *ngIf="data.corporateFlagDealerId != fuelDealerId " class="dropdown-item" href="javascript: void(0);"
                   (click)="updateCorporateReview(updateFlag,data.fuelCorporateId,data.companyName)">
                   &nbsp; Add Alert</a>
@@ -113,11 +229,11 @@
                   (click)="updateCorporateFlag(updateFlagCorp,data.fuelCorporateId,data.companyName)">
                   &nbsp; Add Alert</a>
               </div>
-            </div> -->
+            </div>
           </td>
         </tr>
 
-        <!-- <tr *ngIf="data.corporateReviewFlag == 'FALSE'">
+        <tr *ngIf="data.corporateReviewFlag == 'FALSE'">
           <td style="cursor: pointer;">
             <a class="expand-row"
               (click)="changeValue(i,data.previousOutstand,data.maxCreditAmount,data.creditDayLimit,data.manualNumberStart,data.manualNumberEnd,data.fuelDealerCustomerMapId,data.mappingStatus)"
@@ -180,9 +296,9 @@
                 <a class="dropdown-item" href="javascript: void(0);"
                   (click)="openManualNo(manualNo, data.fuelDealerCustomerMapId, data.manualNumberStart, data.manualNumberEnd, data.companyName)">
                   &nbsp; Add Bill Nos.</a>
-                <a class="dropdown-item" href="javascript: void(0);"
+                <!-- <a class="dropdown-item" href="javascript: void(0);"
                   (click)="openVehicle(addVehicle, data.fuelDealerCustomerMapId, data.fuelCorporateId, data.companyName)">
-                  &nbsp; Add Vehicle</a>
+                  &nbsp; Add Vehicle</a> -->
                 <a *ngIf="data.corporateFlagDealerId != fuelDealerId " class="dropdown-item" href="javascript: void(0);"
                   (click)="updateCorporateReview(updateFlag,data.fuelCorporateId,data.companyName)">
                   &nbsp; Add Alert</a>
@@ -282,15 +398,341 @@
               </tbody>
             </table>
           </td>
-        </tr> -->
+        </tr>
       </tbody>
     </table>
 
+
     <!-- begin::Pagination -->
     <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
-        style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+      style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
     </pagination-controls>
     <!-- end::Pagination -->
   </div>
+  
+  <ng-template #viewVehicle let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h6 class="modal-title">
+        <strong>
+          View Vehicle For {{customerNameVehicle}}
+        </strong>
+      </h6>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="table-responsive mb-0">
+            <table class="table table-centered table-nowrap">
+              <thead class="table-light">
+                <tr>
+                  <th>Sr No</th>
+                  <th>Vehicle Number</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let charges of modalVehicleData; let i = index;">
+                <tr>
+                  <td>
+                    {{i+1}}
+                  </td>
+
+                  <td>
+                    {{charges.vehicleNumber}}
+                  </td>
+
+                  <td>
+                    <div class="text-center">
+                      <button class="btn btn-danger"
+                        (click)="removeVehiclefromCustomerMapId(charges.idfuelCreditVehicle)">Delete</button>
+                    </div>
+                  </td>
+
+                </tr>
+              </tbody>
+
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-md-3">
+          <button type="button" class="btn btn-secondary" aria-label="Close" (click)="d('Cross click')">Close</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #editName let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title">
+        <strong>
+          &nbsp;&nbsp;&nbsp;
+          Update for {{updateCompanyName}} </strong>
+      </h4>
+    </div>
+    <div class="modal-body">
+
+      <div class="row">
+        <div class="col-md-3">
+          <label class="labelNewMargin">Khata :</label>
+        </div>
+        <div class="col-md-6">
+          <input class="form-control"
+            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+            [(ngModel)]="updateCompanyName" [ngModelOptions]="{standalone: true}">
+        </div>
+      </div>
+      <br>
+
+      <div class="row">
+        <div class="col-md-3">
+          <label class="labelNewMargin">Person Name :</label>
+        </div>
+        <div class="col-md-6">
+          <input class="form-control"
+            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+            [(ngModel)]="updatePersonName" [ngModelOptions]="{standalone: true}">
+        </div>
+      </div>
+      <br>
+
+      <div class="row">
+        <div class="col-md-3">
+          <label class="labelNewMargin">Email Id :</label>
+        </div>
+        <div class="col-md-6">
+          <input class="form-control" [(ngModel)]="updateMail" [ngModelOptions]="{standalone: true}">
+        </div>
+      </div>
+      <br>
+
+      <div class="row">
+        <div class="col-md-3">
+          <label class="labelNewMargin">GST Number :</label>
+        </div>
+        <div class="col-md-6">
+          <input class="form-control" max="15"
+            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+            [(ngModel)]="updateGST" [ngModelOptions]="{standalone: true}">
+        </div>
+      </div>
+      <br>
+
+      <div class="row">
+        <div class="col-md-3">
+          <label class="labelNewMargin">Cr Amount Limit :</label>
+        </div>
+        <div class="col-md-6">
+          <input class="form-control" type="number" [(ngModel)]="updateMaxCRLimit"
+            [ngModelOptions]="{standalone: true}">
+        </div>
+      </div>
+      <br>
+
+      <div class="row">
+        <div class="col-md-3">
+          <label class="labelNewMargin">Cr Days Limit :</label>
+        </div>
+        <div class="col-md-6">
+          <input class="form-control" type="number" [(ngModel)]="creditDayLimit"
+            [ngModelOptions]="{standalone: true}">
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-3">
+          <label class="labelNewMargin">Address Line1 :</label>
+        </div>
+        <div class="col-md-6">
+          <input class="form-control" [(ngModel)]="mappingAddress1"
+            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+            [ngModelOptions]="{standalone: true}">
+        </div>
+      </div>
+      <br>
+
+      <div class="row">
+        <div class="col-md-3">
+          <label class="labelNewMargin">Address Line2 :</label>
+        </div>
+        <div class="col-md-6">
+          <input class="form-control" max="15"
+            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+            [(ngModel)]="mappingAddress2" [ngModelOptions]="{standalone: true}">
+        </div>
+      </div>
+      <br>
+
+      <div class="row">
+        <div class="col-md-3">
+          <label class="labelNewMargin">City :</label>
+        </div>
+        <div class="col-md-6">
+          <input class="form-control" max="15"
+            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+            [(ngModel)]="mappingCity" [ngModelOptions]="{standalone: true}">
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-primary" (click)="updateNameByMapId()">Update</button>
+        </div>&nbsp;&nbsp;
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-secondary" (click)="closeModalUpdate()">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </ng-template>
+
+  <ng-template #previousOut let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h6 class="modal-title">
+        <strong>
+          Add Previous Outstanding Amount for {{companyNameOust}}
+        </strong>
+      </h6>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="row">
+          <div class="col-md-12">
+            <label><b>Previous Outstanding Amount :</b>
+              {{previousOutstandForModal}}</label>
+            <input class="form-control" type="number" style="font-size: 0.750rem;" min="0"
+              [(ngModel)]="pendingOutstanding" [ngModelOptions]="{standalone: true}" placeholder="Enter Amount">
+          </div>
+
+        </div>
+        <br><br>
+        <div class="row">
+          <div class="col-md-3"></div>
+          <div class="col-md-3">
+            <button type="button" class="btn btn-primary" aria-label="Close"
+              (click)="addOutstandAmount()">Update</button>
+          </div>
+          &nbsp;&nbsp;&nbsp;
+          <div class="col-md-3">
+            <button type="button" class="btn btn-secondary" aria-label="Close"
+              (click)="d('Cross click')">Close</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+
+  <ng-template #manualNo let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h6 class="modal-title">
+        <strong>
+          Add Manual Number Range for {{companyNameManual}}
+        </strong>
+      </h6>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="row">
+          <div class="col-md-12">
+            <label><b>Manual No. Range :</b>
+              From {{manualNumberStart}} To {{manualNumberEnd}}</label>
+          </div>
+          <div class="col-md-6">
+            <input class="form-control" type="number" style="font-size: 0.750rem;" min="0"
+              [(ngModel)]="manualNumberStart" [ngModelOptions]="{standalone: true}" placeholder="manual number start">
+          </div>
+          <div class="col-md-6">
+            <input class="form-control" type="number" style="font-size: 0.750rem;" min="0"
+              [(ngModel)]="manualNumberEnd" [ngModelOptions]="{standalone: true}" placeholder="manual number end">
+          </div>
+
+        </div>
+        <br><br>
+        <div class="row">
+          <div class="col-md-3"></div>
+          <div class="col-md-3">
+            <button type="button" class="btn btn-primary" aria-label="Close"
+              (click)="checkManualNumRange()">Update</button>
+          </div>
+          <div class="col-md-3">
+            <button type="button" class="btn btn-secondary" aria-label="Close"
+              (click)="d('Cross click')">Close</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+
+  <ng-template #updateFlag let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title">
+        <strong>
+          &nbsp;&nbsp;&nbsp;
+          Remarks For Customer {{companyNameRemark}} </strong>
+      </h4>
+    </div>
+    <div class="modal-body">
+
+      <div class="row">
+        <div class="col-auto">
+          <label class="labelNewMargin"> Remarks :</label>
+        </div>
+        <div class="col-md-6">
+          <input class="form-control"
+            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+            [(ngModel)]="corporateFlagPurpose" [ngModelOptions]="{standalone: true}">
+        </div>
+
+      </div>
+      <div class="row">
+
+      </div>
+
+      <hr>
+      <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-primary" (click)="addFlagForCorp()">ADD</button>
+        </div>&nbsp;&nbsp;
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-secondary" (click)="closeModalUpdate()">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </ng-template>
+
+  <ng-template #updateFlagCorp let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title">
+        <strong>
+          &nbsp;&nbsp;&nbsp;
+          Remove Community Alert for {{companyNameRemark}}? </strong>
+      </h4>
+    </div>
+    <div class="modal-body">
+
+      <div class="row">
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-primary" (click)="updateFlagForCorp()">Yes</button>
+        </div>&nbsp;&nbsp;
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-secondary" (click)="closeModalUpdate()">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </ng-template>
+
   <!-- end::Table container -->
 </div>

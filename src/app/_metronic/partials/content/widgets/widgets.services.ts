@@ -113,6 +113,19 @@ export class WidgetService {
   private deleteFuelTerminalURL = this.baseURL + 'fuelTerminals/deleteFuelTerminal';
   private updateFuelTerminalPOSNameURL = this.baseURL + 'fuelTerminals/updateFuelTerminalPOSName';
   private getMappingAccByFuelDealerIdURL = this.baseURL + 'crCustomers/getMappingAccByFuelDealerId'; 
+  private getfuelCreditVehicleByfuelDealerCustomerMapIdURL = this.baseURL + 'fuelVehicleDetails/getfuelCreditVehicleByfuelDealerCustomerMapId';
+  private checkCustomerPreviousOutstandingIsAddedOrNotURL = this.baseURL + "fuelCreditInvoice/checkCustomerPreviousOutstandingIsAddedOrNot";
+  private updateCustDealerReqURL = this.baseURL + 'fuelDealerCustMap/updateCustDealerReq';
+  private updateMappingSmsStatusURL = this.baseURL + 'fuelDealerCustMap/updateMappingSmsStatus';
+  private getCorporateRequestByDealerURL = this.baseURL + 'fuelDealerCustMap/getCorporateRequestByDealer';
+  private updateMappingEmailStatusURL = this.baseURL + 'fuelDealerCustMap/updateMappingEmailStatus';
+  private RemovefuelCreditVehicleByIdfuelCreditVehicleURL = this.baseURL + 'fuelVehicleDetails/RemovefuelCreditVehicleByIdfuelCreditVehicle';
+  private updateMappingCompanyNamePostURL = this.baseURL + 'fuelDealerCustMap/updateCompanyName';
+  private updatePreviousOutstandingURL = this.baseURL + 'fuelDealerCustMap/updatePreviousOutstanding';
+  private checkManualNumRangeURL = this.baseURL + 'fuelDealerCustMap/checkManualNumRange';
+  private updateManualNumberURL = this.baseURL + 'fuelDealerCustMap/updateManualNumber';
+  private addFlagForCorpURL = this.baseURL + 'fuelDealerCustMap/addFlagForCorp';
+  private updateFlagForCorpURL = this.baseURL + 'fuelDealerCustMap/updateFlagForCorp';
 
 
   setHeader() {
@@ -1001,7 +1014,136 @@ export class WidgetService {
       headers: headers
     })
   }
+  
+  // getfuelCreditVehicleByfuelDealerCustomerMapIdURL
+  getfuelCreditVehicleByfuelDealerCustomerMapIdPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getfuelCreditVehicleByfuelDealerCustomerMapIdURL, body, {
+      headers: headers
+    })
+  }
+  
+  // checkCustomerPreviousOutstandingIsAddedOrNotURL
+  checkCustomerPreviousOutstandingIsAddedOrNotPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.checkCustomerPreviousOutstandingIsAddedOrNotURL, body, {
+      headers: headers
+    })
+  }
+  
+  // updateCustDealerReqURL
+  updateCustDealerReqPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateCustDealerReqURL, body, {
+      headers: headers
+    })
+  }
+  
+  // updateMappingSmsStatusURL
+  updateMappingSmsStatusPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateMappingSmsStatusURL, body, {
+      headers: headers
+    })
+  }
+  
+  // getCorporateRequestByDealerURL
+  getCorporateRequestByDealerPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getCorporateRequestByDealerURL, body, {
+      headers: headers
+    })
+  }
+  
+  // updateMappingEmailStatusURL
+  updateMappingEmailStatusPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateMappingEmailStatusURL, body, {
+      headers: headers
+    })
+  }
+  
+  // RemovefuelCreditVehicleByIdfuelCreditVehicleURL
+  RemovefuelCreditVehicleByIdfuelCreditVehiclePOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.RemovefuelCreditVehicleByIdfuelCreditVehicleURL, body, {
+      headers: headers
+    })
+  }
 
+  // updateMappingCompanyNamePostURL
+  updateMappingCompanyNamePost(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateMappingCompanyNamePostURL, body, {
+      headers: headers
+    })
+  }
+
+  // updatePreviousOutstandingURL
+  updatePreviousOutstandingPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updatePreviousOutstandingURL, body, {
+      headers: headers
+    })
+  }
+
+  // checkManualNumRangeURL
+  checkManualNumRangePOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.checkManualNumRangeURL, body, {
+      headers: headers
+    })
+  }
+
+  // updateManualNumberURL
+  updateManualNumberPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateManualNumberURL, body, {
+      headers: headers
+    })
+  }
+
+  // addFlagForCorpURL
+  addFlagForCorpPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.addFlagForCorpURL, body, {
+      headers: headers
+    })
+  }
+
+  // updateFlagForCorpURL
+  updateFlagForCorpPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateFlagForCorpURL, body, {
+      headers: headers
+    })
+  }
 
 
 
