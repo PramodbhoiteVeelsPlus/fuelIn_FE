@@ -40,6 +40,7 @@ export class CustloginComponent {
     dealerCity: new FormControl(''),
     dealerState: new FormControl('', [Validators.required]),
   });
+  fuelDealerCorporateId: any;
   get userMobile() {
     return this.referForm.get('dealerMobile')
   }
@@ -193,7 +194,9 @@ export class CustloginComponent {
     this.post.searchDealerByMobile(data).subscribe((res) => {
       if ((res.status = "OK")) {
         this.fuelDealerSQLId = res.data[0].fuelDealerId;
+        this.fuelDealerCorporateId = res.data[0].corporateId;
         localStorage.setItem('dealerId', this.fuelDealerSQLId);
+        localStorage.setItem('dealerCorporateId', this.fuelDealerCorporateId);
         this.router.navigate(['/dashboard']);
       } else {
         this.router.navigate(['/dashboard']);

@@ -381,7 +381,7 @@
                     <span *ngIf="showamount">
                       <input type="number" class="form-control" [(ngModel)]="charges.creditAmount"
                         [ngModelOptions]="{standalone: true}" placeholder="Enter Credit Amount"
-                        (blur)="amountCalculateNEW(i)" readonly />
+                        (blur)="amountCalculateNEW(i)" disabled/>
                     </span>
                   </td>
                   <td>
@@ -411,7 +411,7 @@
         <button *ngIf="isVehSelect" type="submit" class="btn btn-primary"
           (click)="submitByDealerNEW1()">Submit</button>&nbsp;&nbsp;
         <button *ngIf="!isVehSelect" type="submit" class="btn btn-primary"
-          (click)="selectVehicle()">Submit</button>&nbsp;&nbsp;
+          (click)="selectVehicle()">Submit1</button>&nbsp;&nbsp;
         <button type="submit" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
       </div>
       <ng-template #removeTable let-c="close" let-d="dismiss">
@@ -423,6 +423,8 @@
           <button type="button" class="btn btn-link" aria-label="Close" (click)="d('Cross click')">
             Cancel
           </button>
+          &nbsp;&nbsp;
+          &nbsp;&nbsp;
 
           <button type="button" class="btn btn-link" aria-label="Close" (click)="removeRequestIndex()">
             OK

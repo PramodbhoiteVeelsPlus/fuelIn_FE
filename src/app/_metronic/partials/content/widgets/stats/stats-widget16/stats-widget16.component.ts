@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, Injectable, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbDateAdapter, NgbDateParserFormatter, NgbDatepickerConfig, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateAdapter, NgbDateParserFormatter, NgbDatepickerConfig, NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ExcelService } from 'src/app/pages/excel.service';
 import { StatsService } from '../stats.services';
@@ -76,7 +76,7 @@ export class StatsWidget16Component {
     requestTypeCR: new FormControl(),
     mobile: new FormControl(),
     vehicleNumber: new FormControl(),
-    productPrice: new FormControl(''),
+    productPrice: new FormControl(),
     priceDate: new FormControl(),
     selectPersonId: new FormControl('', [Validators.required]),
     manualCrNumber: new FormControl(),
@@ -103,7 +103,6 @@ export class StatsWidget16Component {
   customerId: any;
   viewCorpFlag: any = [];
   modalRef: any;
-  modalService: any;
   closeResult: string;
   CreditRequestDataArray: any = [];
   fuelProductId: any;
@@ -119,7 +118,7 @@ export class StatsWidget16Component {
   loginSQLCorporateId: any;
   settingRate: any;
   allProductPriceList: any = [];
-  acceesGroup: number;
+  acceesGroup: any;
   managerPersonId: any;
   managerName: string;
   managerVPPersonId: any;
@@ -158,8 +157,10 @@ export class StatsWidget16Component {
   isBalance1: boolean;
   isCRQUANTITY: boolean;
   isQUANTITY: boolean;
+  fleetStatus: any;
 
   constructor(
+    private modalService: NgbModal,
     private post: StatsService,
     private spinner: NgxSpinnerService,
     config: NgbDatepickerConfig,
@@ -175,7 +176,8 @@ export class StatsWidget16Component {
     this.managerVPPersonId = element.veelsPlusId
     this.managerPersonId = element.personId
     this.managerName = element.firstName + ' ' + element.lastName
-    this.requestTransporter.controls["requestType"].setValue("showamount"); 
+    this.acceesGroup = element.accessGroupId;
+    this.requestTransporter.controls["requestType"].setValue("showamount");
     this.getCorporateById(this.dealerLoginVPId);
     this.cd.detectChanges()
   }
@@ -583,11 +585,7 @@ export class StatsWidget16Component {
         if (res.data.length) {
           alert('Manual number series already Assign To Other Customer')
           this.combineManualNumber = '';
-          // this.requestTransporterLube.controls["manualCrNumber"].setValue('')
-          // this.requestTransporterLubeTax.controls["manualCrNumber"].setValue('')
           this.requestTransporter.controls["manualCrNumber"].setValue('')
-          // this.requestTransporterAdvance.controls["advanceManualCrAmount"].setValue('')
-
           if (this.CreditRequestDataArray.length) {
             this.CreditRequestDataArray[i].manualNumber = '';
           }
@@ -698,7 +696,7 @@ export class StatsWidget16Component {
     if (this.requestTransporter.value.productPrice) {
       if (this.CreditRequestDataArray[i].creditAmount) {
         if (this.CreditRequestDataArray[i].creditAmount > 0) {
-          // this.CreditRequestDataArray[i].creditQuantity = Number((this.CreditRequestDataArray[i].creditAmount) / (this.requestTransporter.value.productPrice)).toFixed(2)
+          this.CreditRequestDataArray[i].creditQuantity = Number((this.CreditRequestDataArray[i].creditAmount) / (this.requestTransporter.value.productPrice)).toFixed(2)
           this.requestTransporter.controls["reqQuantity"].setValue(this.CreditRequestDataArray[i].creditQuantity)
           this.requestTransporter.controls["reqCreditAmount"].setValue(this.CreditRequestDataArray[i].creditAmount)
           this.requestTransporter.controls["actualCreditQuantity"].setValue(this.CreditRequestDataArray[i].creditQuantity)
@@ -721,7 +719,7 @@ export class StatsWidget16Component {
     if (this.requestTransporter.value.productPrice) {
       if (this.CreditRequestDataArray[i].creditQuantity) {
         if (this.CreditRequestDataArray[i].creditQuantity > 0) {
-          // this.CreditRequestDataArray[i].creditAmount = Number((this.requestTransporter.value.productPrice) * (this.CreditRequestDataArray[i].creditQuantity)).toFixed(2)
+          this.CreditRequestDataArray[i].creditAmount = Number((this.requestTransporter.value.productPrice) * (this.CreditRequestDataArray[i].creditQuantity)).toFixed(2)
           this.requestTransporter.controls["reqQuantity"].setValue(this.CreditRequestDataArray[i].creditQuantity)
           this.requestTransporter.controls["reqCreditAmount"].setValue((this.CreditRequestDataArray[i].creditAmount))
           this.requestTransporter.controls["actualCreditQuantity"].setValue(this.CreditRequestDataArray[i].creditQuantity)
@@ -751,8 +749,6 @@ export class StatsWidget16Component {
         this.closeResult = `Dismissed`;
       }
     );
-
-
   }
 
   getFuelStaffIdByfuelDealerId(fuelDealerId: any) {
@@ -780,6 +776,12 @@ export class StatsWidget16Component {
                 if (this.personId) {
                   if (this.requestTransporter.value.manualCrNumber) {
 
+                    if (this.acceesGroup == '2' || this.acceesGroup == '3' || this.acceesGroup == '4') {
+                      this.fleetStatus = "TRUE"
+                    }
+                    else {
+                      this.fleetStatus = "FALSE"
+                    }
                     let data = {
                       crDetails: this.CreditRequestDataArray,
                       fuelDealerCustomerMapId: this.fuelDealerCorpMapIdNew,
@@ -789,7 +791,7 @@ export class StatsWidget16Component {
                       fuelDealerId: this.fuelDealerSQLId,
                       vehicleId: this.vehicleId,
                       driverId: this.personId,
-                      // fleetNoFleetStatus: this.fleetStatus,
+                      fleetNoFleetStatus: this.fleetStatus,
                       fuelProductId: this.requestTransporter.value.productName,
                       fuelCorporateId: this.loginSQLCorporateId,
                       creditSource: "DEALER",
@@ -809,6 +811,7 @@ export class StatsWidget16Component {
                       isMappingEmail: this.emailMappingStatus,
                       autoManualStatus: this.autoManualStatus
                     }
+
                     this.post.addCreditReqByDealerForAllPOST(data)
                       .subscribe(res => {
                         if (res.status == "OK") {
@@ -906,6 +909,12 @@ export class StatsWidget16Component {
                   if (this.personId) {
                     if (this.requestTransporter.value.manualCrNumber) {
 
+                      if (this.acceesGroup == '2' || this.acceesGroup == '3' || this.acceesGroup == '4') {
+                        this.fleetStatus = "TRUE"
+                      }
+                      else {
+                        this.fleetStatus = "FALSE"
+                      }
                       let data = {
                         crDetails: this.CreditRequestDataArray,
                         fuelDealerCustomerMapId: this.fuelDealerCorpMapIdNew,
@@ -915,7 +924,7 @@ export class StatsWidget16Component {
                         fuelDealerId: this.fuelDealerSQLId,
                         vehicleId: this.vehicleId,
                         driverId: this.personId,
-                        // fleetNoFleetStatus: this.fleetStatus,
+                        fleetNoFleetStatus: this.fleetStatus,
                         fuelProductId: this.requestTransporter.value.productName,
                         fuelCorporateId: this.loginSQLCorporateId,
                         creditSource: "DEALER",
@@ -937,6 +946,7 @@ export class StatsWidget16Component {
                         isMappingSMS: this.smsMappingStatus,
                         isMappingEmail: this.emailMappingStatus
                       }
+
                       this.post.addCreditReqByDealerForAllPOST(data)
                         .subscribe(res => {
                           if (res.status == "OK") {
@@ -1053,7 +1063,7 @@ export class StatsWidget16Component {
     this.addFormRequest();
 
   }
-  
+
   removeRequestIndex() {
     this.CreditRequestDataArray.splice(this.indexFuelCr, 1);
     this.count = this.count - 1;

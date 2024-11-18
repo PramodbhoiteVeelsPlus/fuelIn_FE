@@ -1,169 +1,366 @@
 <div class="card-body p-0">
   <!-- begin::Header -->
-  <div class="px-9 pt-7 card-rounded h-275px w-100" [ngClass]="'bg-' + color">
-    <!-- begin::Heading -->
-    <div class="d-flex flex-stack">
-      <h3 class="m-0 text-white fw-bolder fs-3">Sales Summary</h3>
-      <div class="ms-1">
-        <!-- begin::Menu -->
-        <button
-          type="button"
-          class="
-            btn btn-sm btn-icon btn-color-white btn-active-white
-            border-0
-            me-n3
-          "
-          [ngClass]="'btn-active-color-' + color"
-          data-kt-menu-trigger="click"
-          data-kt-menu-placement="bottom-end"
-          data-kt-menu-flip="top-end"
-        >
-          <app-keenicon name="category" class="fs-2"></app-keenicon>
-        </button>
-        <app-dropdown-menu1></app-dropdown-menu1>
-        <!-- end::Menu -->
+  <div class="px-9 pt-7 card-rounded h-275px w-100">
+    <!-- begin::Heading --> <br>
+    <div class="row">
+      <div class="col-lg-12">
+        <form [formGroup]="requestVehicle">
+          <div class="row">
+            <div class="col-lg-2">
+              <label for="example-text-input" class="col-form-label">Date</label>
+            </div>
+            <div class="col-lg-10">
+              <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" (click)="endDate.toggle()" readonly
+                style="background-color: #ffffff;" formControlName="priceDate" ngbDatepicker #endDate="ngbDatepicker">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-lg-2">
+              <label for="example-text-input" class="col-form-label">Product</label>
+            </div>
+            <div class="col-md-10">
+              <select class="form-control" formControlName="productName" (change)="getPriceVehicle($event,setFuelPrice)"
+                required>
+                <option value="">Select Product </option>
+                <option *ngFor="let data of productInfo" [value]="data.fuelProductsId">
+                  {{data.productName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-lg-2">
+              <label for="example-text-input" class="col-form-label">Rate</label>
+            </div>
+            <div class="col-lg-10">
+              <select class="form-control" formControlName="productPrice" (change)="setPrice($event)" required>
+                <option value="">Select </option>
+                <option *ngFor="let data of productPriceDetails" [value]="data.productSellingPrice">
+                  {{data.productSellingPrice}}
+                </option>
+              </select>
+            </div>
+            <!-- Set Fuel Price -->
+            <ng-template #setFuelPrice let-c="close" let-d="dismiss">
+              <div class="modal-header">
+                <h4 class="text-center">
+                  Set Fuel Price
+                </h4>
+                <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="unitForm">
+
+                  <div class="row">
+
+                    <div class="col-md-5">
+                      <label class="labelNewMargin"><b>Select Date</b></label>
+                    </div>
+                    <div class="col-md-6">
+                      <input class="form-control" formControlName="productPriceDate" ngbDatepicker
+                        #startDate="ngbDatepicker" readonly style="background-color: #ffffff;"
+                        (click)="startDate.toggle()">
+
+                    </div>
+
+                  </div>
+                  <div class="row" *ngFor="let data of allProductPriceList">
+
+                    <div class="col-md-5">
+                      <label class="labelNewMargin"> <b>
+                          {{data.productName}}
+                        </b></label>
+                    </div>
+                    <div class="col-md-6">
+                      <input class="form-control form-control-sm mr-1 w-40" style="font-size: 0.750rem;" type="number"
+                        onkeypress="return this.value.length < 6;" [(ngModel)]="data.sellingPrice"
+                        [ngModelOptions]="{standalone: true}" placeholder="Enter Price">
+                    </div>
+                  </div>
+
+                  <br>
+                  <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                      <button class="btn btn-outline-success my-2 my-sm-0" type="button"
+                        (click)="addFuelPrice()">Submit</button>
+                      &nbsp;&nbsp;
+                      <button class="btn btn-danger" type="button" (click)="d('Cross click')">Cancel</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </ng-template>
+          </div>
+
+          <br>
+          <div class="row">
+            <div class="col-lg-2">
+              <label for="example-text-input" class="col-form-label">Vehicle Number</label>
+            </div>
+            <div class="col-lg-10">
+              <input class="form-control" type="text" list="allVehicleData" placeholder="select vehicle"
+                formControlName="vehicleNumber" #myinput
+                (change)="getDetailsOfVehicleByfuelDealerCustomerMapIdId($event)">
+              <datalist id="allVehicleData">
+                <option *ngFor="let data of allVehicleData" [value]="data.vehicleNumber">
+              </datalist>
+            </div>
+          </div>
+          <ng-template #content let-c="close" let-d="dismiss">
+            <div class="modal-header">
+              <h4 class="text-center">
+                Alert Details
+              </h4>
+
+              <div class="text-center mb-4" *ngIf="isAlert" style="position: absolute; top: 14%; left: 50%; 
+                                          transform: translate(-50%, -50%);">
+                <div class="row justify-content-center">
+                  <div class="col-xl-10" style="color: red">
+                    <i class="fa fa-exclamation-triangle fa-fw fa-6x"></i>
+                  </div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <table class="table table-hover table-striped">
+                <thead>
+                  <tr>
+                    <th>Date Of Alert</th>
+                    <th>Petrol Pump Name</th>
+                    <th>City</th>
+                    <th>Remarks</th>
+
+                  </tr>
+                </thead>
+                <tbody *ngFor="let charges of viewCorpFlag; let i = index;">
+                  <tr>
+                    <td>{{charges.corporateFlagCreatedAt| date:"d MMM, yyyy"}}</td>
+                    <td><b> {{charges.companyName}}</b> <br>
+                      {{charges.firstName}} {{charges.lastName}} <br>
+                      {{charges.phone1}}</td>
+                    <td>{{charges.city}}</td>
+                    <td>{{charges.corporateFlagPurpose}}</td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </ng-template>
+          <div class="row" *ngIf="isVehicleViewed">
+            <div class="col-lg-12">
+              <br>
+              <label *ngIf="!isCustomerSelect" for="example-text-input" class="col-form-label">click on Customer to
+                select khata</label>
+
+              <div class="col col-xl-12 col-lg-12">
+                <div class="table-responsive mb-0">
+                  <table class="table table-centered table-nowrap">
+                    <thead style="border-width: 1px; border-color: #000;">
+                      <tr>
+                        <th style="border-width: 1px; border-color: #000;">Khata </th>
+                        <th style="border-width: 1px; border-color: #000;">Person Name</th>
+                        <th style="border-width: 1px; border-color: #000;">Phone Number</th>
+                        <th style="border-width: 1px; border-color: #000;">Bill Nos. Set</th>
+
+                      </tr>
+                    </thead>
+                    <tbody *ngFor="let vehicleList of customerVehicleList; let i = index;">
+                      <tr style="cursor: pointer;"
+                        (click)="getvehicleDetailsForCR(vehicleList.fuelDealerCustomerMapId,vehicleList.vehicleNumber,vehicleList.idfuelCreditVehicle,vehicleList.mappingPreviousStatus,vehicleList.mappingCompanyName,vehicleList.companyName)">
+
+                        <td *ngIf="vehicleList.mappingPreviousStatus == 'TRUE'"
+                          style="border-width: 1px; border-color: #000;">
+                          <input type="text" class="form-control" [(ngModel)]="vehicleList.mappingCompanyName"
+                            [ngModelOptions]="{standalone: true}" placeholder="Khata Name" readonly />
+
+                        </td>
+                        <td *ngIf="vehicleList.mappingPreviousStatus == 'FALSE'"
+                          style="border-width: 1px; border-color: #000;">
+                          <input type="text" class="form-control" [(ngModel)]="vehicleList.companyName"
+                            [ngModelOptions]="{standalone: true}" placeholder="Khata Name" readonly />
+
+                        </td>
+                        <td *ngIf="vehicleList.mappingPreviousStatus == 'FALSE'"
+                          style="border-width: 1px; border-color: #000;">
+                          <input type="text" class="form-control" [(ngModel)]="vehicleList.hostName"
+                            [ngModelOptions]="{standalone: true}" placeholder="person name" readonly />
+
+                        </td>
+                        <td *ngIf="vehicleList.mappingPreviousStatus == 'TRUE'"
+                          style="border-width: 1px; border-color: #000;">
+                          <input type="text" class="form-control" [(ngModel)]="vehicleList.mappingCustomerName"
+                            [ngModelOptions]="{standalone: true}" placeholder="person name" readonly />
+
+                        </td>
+                        <td style="border-width: 1px; border-color: #000;">
+                          <input type="text" class="form-control" [(ngModel)]="vehicleList.hostPhone"
+                            [ngModelOptions]="{standalone: true}" placeholder="phone number" readonly />
+                        </td>
+                        <td style="border-width: 1px; border-color: #000;">
+                          {{vehicleList.manualNumberStart}} - {{vehicleList.manualNumberEnd}}
+                        </td>
+
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <br><br>
+
+          <div class="row">
+            <div class="col-lg-2">
+              <label for="example-text-input" class="col-form-label">Type</label>
+            </div>
+            <div class="col-md-10">
+              <input type="radio" value="showamount" checked name="requestType" formControlName="requestType"
+                (change)="changeVehicleAmountToQuantity()">
+              &nbsp; <label class="labelNewMargin">Amount</label>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="radio" value="!showamount" name="requestType" formControlName="requestType"
+                (change)="changeVehicleQuantityToAmount()">
+              &nbsp; <label class="labelNewMargin">Quantity</label>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col col-xl-12 col-lg-12">
+              <div class="card-body table-responsive">
+                <table class="table table-hover table-striped">
+                  <thead>
+                    <tr>
+                      <th>Khata</th>
+                      <th>Bill Number</th>
+                      <th *ngIf="vehicleAmtType">Amount</th>
+                      <th *ngIf="!vehicleAmtType">Quantity</th>
+                      <th *ngIf="!vehicleAmtType">Amount</th>
+                      <th *ngIf="vehicleAmtType">Quantity</th>
+                      <th></th>
+
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let charges of CreditVehicleRequestDataArray; let i = index;">
+                    <tr *ngIf="isCustomerSelect">
+                      <td>
+                        <input type="text" class="form-control" [(ngModel)]="mappingCompanyNameForVehicle"
+                          [ngModelOptions]="{standalone: true}" placeholder="Khata Name" readonly disabled />
+                      </td>
+
+                      <td>
+                        <span *ngIf="autoManualStatus == 'TRUE'">
+                          <input type="text" class="form-control" placeholder="Bill Number Automation Active"
+                            readonly />
+                        </span>
+                        <span *ngIf="autoManualStatus != 'TRUE'">
+                          <input type="text" class="form-control" [(ngModel)]="charges.manualNumber"
+                            [ngModelOptions]="{standalone: true}" placeholder="Enter Bill / Ref Number"
+                            (blur)="setManualNumberVehicle(i)" />
+                        </span>
+                      </td>
+
+                      <td *ngIf="vehicleAmtType">
+                        <input type="text" class="form-control" [(ngModel)]="charges.creditAmount"
+                          [ngModelOptions]="{standalone: true}" placeholder="Enter Credit Amount"
+                          (blur)="amountCalculateVehicle(i)" />
+                      </td>
+                      <td *ngIf="!vehicleAmtType">
+                        <input type="number" class="form-control" [(ngModel)]="charges.creditQuantity"
+                          [ngModelOptions]="{standalone: true}" (blur)="quantityCalculateVehicle(i)"
+                          placeholder="Enter Credit Quantity" />
+                      </td>
+
+                      <td *ngIf="vehicleAmtType">
+                        <input type="number" class="form-control" [(ngModel)]="charges.creditQuantity"
+                          [ngModelOptions]="{standalone: true}" placeholder="Enter Credit Quantity" readonly disabled />
+                      </td>
+
+                      <td *ngIf="!vehicleAmtType">
+                        <input type="text" class="form-control" [(ngModel)]="charges.creditAmount"
+                          [ngModelOptions]="{standalone: true}" placeholder="Enter Credit Amount" disabled />
+                      </td>
+
+                      <td>
+
+                        <button type="submit" class="btn btn-success" (click)="addFormVehicleRequest()">Add
+                        </button>
+                        &nbsp;&nbsp;
+                        <button *ngIf="i != 0 " type="cancel" class="btn btn-primary"
+                          (click)="removeFormRequestVehicle(i,removeTable)">Delete
+                        </button>
+                      </td>
+                    </tr>
+                    <tr *ngIf="!isCustomerSelect">
+                      <td>
+                        <input type="text" class="form-control" [(ngModel)]="mappingCompanyNameForVehicle"
+                          [ngModelOptions]="{standalone: true}" placeholder="Khata Name" readonly disabled />
+                      </td>
+
+                      <td>
+                        <input type="text" class="form-control" [(ngModel)]="charges.manualNumber"
+                          [ngModelOptions]="{standalone: true}" placeholder="Enter Bill / Ref Number"
+                          (blur)="setManualNumberVehicle(i)" disabled />
+                      </td>
+
+                      <td>
+                        <input type="number" class="form-control" [(ngModel)]="charges.creditQuantity"
+                          [ngModelOptions]="{standalone: true}" placeholder="Enter Credit Quantity" readonly disabled />
+                      </td>
+
+                      <td>
+                        <input type="text" class="form-control" [(ngModel)]="charges.creditAmount"
+                          [ngModelOptions]="{standalone: true}" placeholder="Enter Credit Amount" disabled />
+                      </td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </div>
+            </div>
+          </div>
+          <br>
+        </form>
+
+        <div class="row">
+          <div class="col-md-4">
+            <!-- <button type="submit" class="btn btn-primary" (click)="submitByDealerForVehicle()">Submit</button> -->
+            &nbsp;
+            <!-- <button type="submit" class="btn btn-secondary" (click)="closeModal()">Cancel</button> -->
+          </div>&nbsp;&nbsp;
+          <div class="col-md-2">
+          </div>
+        </div>
       </div>
     </div>
-    <!-- end::Heading -->
-    <!-- begin::Balance -->
-    <div class="d-flex text-center flex-column text-white pt-8">
-      <span class="fw-bold fs-7">You Balance</span>
-      <span class="fw-bolder fs-2x pt-1">$37,562.00</span>
-    </div>
+
+    <ng-template #removeTable let-c="close" let-d="dismiss">
+
+      <div class="modal-body">
+        <h6>Are you sure you want to delete this element ?</h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-link" aria-label="Close" (click)="d('Cross click')">
+          Cancel
+        </button>
+
+        <!-- <button type="button" class="btn btn-link" aria-label="Close" (click)="removeVehicleIndex()">
+          OK
+        </button> -->
+      </div>
+    </ng-template>
     <!-- end::Balance -->
   </div>
   <!-- end::Header -->
-  <!-- begin::Items -->
-  <div
-    class="
-      shadow-xs
-      card-rounded
-      mx-9
-      mb-9
-      px-6
-      py-9
-      position-relative
-      z-index-1
-      bg-body
-    "
-    [style.margin-top]="'-100px'"
-  >
-    <!-- begin::Item -->
-    <div class="d-flex align-items-center mb-6">
-      <!-- begin::Symbol -->
-      <div class="symbol symbol-45px w-40px me-5">
-        <span class="symbol-label bg-lighten">
-          <app-keenicon name="document" class="fs-1"></app-keenicon>
-        </span>
-      </div>
-      <!-- end::Symbol -->
-      <!-- begin::Description -->
-      <div class="d-flex align-items-center flex-wrap w-100">
-        <!-- begin::Title -->
-        <div class="mb-1 pe-3 flex-grow-1">
-          <a href="#" class="fs-5 text-gray-800 text-hover-primary fw-bolder">
-            Sales
-          </a>
-          <div class="text-gray-500 fw-bold fs-7">100 Regions</div>
-        </div>
-        <!-- end::Title -->
-        <!-- begin::Label -->
-        <div class="d-flex align-items-center">
-          <div class="fw-bolder fs-5 text-gray-800 pe-1">$2,5b</div>
-          <app-keenicon name="arrow-up" class="fs-5 text-success ms-1"></app-keenicon>
-        </div>
-        <!-- end::Label -->
-      </div>
-      <!-- end::Description -->
-    </div>
-    <!-- end::Item -->
-    <!-- begin::Item -->
-    <div class="d-flex align-items-center mb-6">
-      <!-- begin::Symbol -->
-      <div class="symbol symbol-45px w-40px me-5">
-        <span class="symbol-label bg-lighten">
-          <app-keenicon name="category" class="fs-1"></app-keenicon>
-        </span>
-      </div>
-      <!-- end::Symbol -->
-      <!-- begin::Description -->
-      <div class="d-flex align-items-center flex-wrap w-100">
-        <!-- begin::Title -->
-        <div class="mb-1 pe-3 flex-grow-1">
-          <a href="#" class="fs-5 text-gray-800 text-hover-primary fw-bolder">
-            Revenue
-          </a>
-          <div class="text-gray-500 fw-bold fs-7">Quarter 2/3</div>
-        </div>
-        <!-- end::Title -->
-        <!-- begin::Label -->
-        <div class="d-flex align-items-center">
-          <div class="fw-bolder fs-5 text-gray-800 pe-1">$1,7b</div>
-          <app-keenicon name="category" class="fs-5 text-danger ms-1"></app-keenicon>
-        </div>
-        <!-- end::Label -->
-      </div>
-      <!-- end::Description -->
-    </div>
-    <!-- end::Item -->
-    <!-- begin::Item -->
-    <div class="d-flex align-items-center mb-6">
-      <!-- begin::Symbol -->
-      <div class="symbol symbol-45px w-40px me-5">
-        <span class="symbol-label bg-lighten">
-          <app-keenicon name="elc005.svg" class="fs-1"></app-keenicon>
-        </span>
-      </div>
-      <!-- end::Symbol -->
-      <!-- begin::Description -->
-      <div class="d-flex align-items-center flex-wrap w-100">
-        <!-- begin::Title -->
-        <div class="mb-1 pe-3 flex-grow-1">
-          <a href="#" class="fs-5 text-gray-800 text-hover-primary fw-bolder">
-            Growth
-          </a>
-          <div class="text-gray-500 fw-bold fs-7">80% Rate</div>
-        </div>
-        <!-- end::Title -->
-        <!-- begin::Label -->
-        <div class="d-flex align-items-center">
-          <div class="fw-bolder fs-5 text-gray-800 pe-1">$8,8m</div>
-          <app-keenicon name="arrow-up" class="fs-5 text-success ms-1"></app-keenicon>
-        </div>
-        <!-- end::Label -->
-      </div>
-      <!-- end::Description -->
-    </div>
-    <!-- end::Item -->
-    <!-- begin::Item -->
-    <div class="d-flex align-items-center">
-      <!-- begin::Symbol -->
-      <div class="symbol symbol-45px w-40px me-5">
-        <span class="symbol-label bg-lighten">
-          <app-keenicon name="document" class="fs-1"></app-keenicon>
-        </span>
-      </div>
-      <!-- end::Symbol -->
-      <!-- begin::Description -->
-      <div class="d-flex align-items-center flex-wrap w-100">
-        <!-- begin::Title -->
-        <div class="mb-1 pe-3 flex-grow-1">
-          <a href="#" class="fs-5 text-gray-800 text-hover-primary fw-bolder">
-            Dispute
-          </a>
-          <div class="text-gray-500 fw-bold fs-7">3090 Refunds</div>
-        </div>
-        <!-- end::Title -->
-        <!-- begin::Label -->
-        <div class="d-flex align-items-center">
-          <div class="fw-bolder fs-5 text-gray-800 pe-1">$270m</div>
-          <app-keenicon name="arrow-down" class="fs-5 text-danger ms-1"></app-keenicon>
-        </div>
-        <!-- end::Label -->
-      </div>
-      <!-- end::Description -->
-    </div>
-    <!-- end::Item -->
-  </div>
-  <!-- end::Items -->
 </div>
