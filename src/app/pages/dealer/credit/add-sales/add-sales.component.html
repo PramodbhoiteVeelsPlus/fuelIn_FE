@@ -1,0 +1,44 @@
+<div class="card-header">
+    <b>Add Sales</b>
+</div>
+
+<!-- <div class="row"> -->
+    <br>
+    <div>
+        <ul ngbNav #addSales="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified" style="width: 100%;">
+          <li [ngbNavItem]="1">
+            <a ngbNavLink>
+              <span class="d-none d-sm-block" style="font-size: 15px;">FUEL </span>
+            </a>
+            <ng-template ngbNavContent>
+                <app-stats-widget16 class="card card-xxl-stretch mb-5 mb-xl-8"></app-stats-widget16>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="2">
+            <a ngbNavLink>
+              <span class="d-none d-sm-block" style="font-size: 15px;">VEHICLE </span>
+            </a>
+            <ng-template ngbNavContent>
+                <app-tables-widget31 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget31>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="3">
+            <a ngbNavLink>
+              <span class="d-none d-sm-block" style="font-size: 15px;">LUBE</span>
+            </a>
+            <ng-template ngbNavContent>
+              <app-tables-widget33 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget33>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="4">
+            <a ngbNavLink>
+              <span class="d-none d-sm-block" style="font-size: 15px;">ADVANCE</span>
+            </a>
+            <ng-template ngbNavContent>
+              <app-tables-widget33 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget33>
+            </ng-template>
+          </li>
+        </ul>
+        <div [ngbNavOutlet]="addSales"></div>
+      </div>
+    <!-- </div> -->

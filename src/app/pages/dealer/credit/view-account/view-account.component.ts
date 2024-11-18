@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbDateAdapter, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { StatsService } from 'src/app/_metronic/partials/content/widgets/stats/stats.services';
-import { ExcelService } from '../../excel.service';
 import { WidgetService } from 'src/app/_metronic/partials/content/widgets/widgets.services';
 
 @Injectable()
@@ -74,7 +73,6 @@ export class ViewAccountComponent {
     private post: WidgetService,
     private spinner: NgxSpinnerService,
     config: NgbDatepickerConfig,
-    private excelService: ExcelService,
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router) { }

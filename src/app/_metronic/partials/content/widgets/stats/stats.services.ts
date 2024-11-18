@@ -130,6 +130,18 @@ export class StatsService {
     private addCustomizeURL = this.baseURL + 'customize/addCustomize';
     private searchCarrierByMobileURL = this.baseURL + 'fuelDealerCustMap/getCustomerIdBycorporatePhoneNumber';
     private getFlagStatusByCorpIdURL = this.baseURL + 'fuelDealerCustMap/getFlagStatusByCorpId';
+    private getPriceByDealerProductIdByDateURL = this.baseURL + 'fuelPrice/getPriceByDealerProductIdByDate'; 
+    private getfuelDealerIdByCorporateIdURL = this.baseURL + 'fuelDealerCustMap/getFuelDealerIdfromCorporateId';
+    private addFuelPriceByDealerIdURL = this.baseURL + 'fuelPrice/addFuelPriceByDealerId';
+    private getCorporatesAllMappedRequestByDealerURL = this.baseURL + 'fuelDealerCustMap/getCorporatesAllMappedRequestByDealer';
+    private getCorporateInfoByfuelDealerCustomerMapIdURL = this.baseURL + 'fuelDealerCustMap/getCorporateInfoByfuelDealerCustomerMapId1';
+    private getOutstandingByCustMapIdURL = this.baseURL + 'crCustomers/getOutstandingByCustMapId';
+    private checkManualNumRangeForNotAssignURL = this.baseURL + 'fuelDealerCustMap/checkManualNumRangeForNotAssign';
+    private getManualNumberURL = this.baseURL + 'fuelDealerCustMap/getManualNumber';
+    private getfuelCreditVehicleByfuelDealerCustomerMapIdURL = this.baseURL + 'fuelVehicleDetails/getfuelCreditVehicleByfuelDealerCustomerMapId';
+    private VehicleByRegistrationNumberURL = this.baseURL + 'vehicle/searchVehicleByRegistrationNumber';
+    private getFuelStaffIdByfuelDealerIdURL = this.baseURL + 'fuelStaff/getFuelStaffIdByfuelDealerId'; 
+    private addCreditReqByDealerForAllURL = this.baseURL + 'fuelDealerCustMap/addCreditReqByDealerForAll';
 
 
 
@@ -1086,7 +1098,125 @@ export class StatsService {
         })
     }
 
+    // getPriceByDealerProductIdByDateURL
+    getPriceByDealerProductIdByDatePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getPriceByDealerProductIdByDateURL, body, {
+            headers: headers
+        })
+    }
 
+    // getfuelDealerIdByCorporateIdURL
+    getfuelDealerIdByCorporateIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getfuelDealerIdByCorporateIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // addFuelPriceByDealerIdURL
+    addFuelPriceByDealerIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addFuelPriceByDealerIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getCorporatesAllMappedRequestByDealerURL
+    getCorporatesAllMappedRequestByDealerPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getCorporatesAllMappedRequestByDealerURL, body, {
+            headers: headers
+        })
+    }
+
+    // getCorporateInfoByfuelDealerCustomerMapIdURL
+    getCorporateInfoByfuelDealerCustomerMapIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getCorporateInfoByfuelDealerCustomerMapIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getOutstandingByCustMapIdURL
+    getOutstandingByCustMapIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getOutstandingByCustMapIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // checkManualNumRangeForNotAssignURL
+    checkManualNumRangeForNotAssignPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.checkManualNumRangeForNotAssignURL, body, {
+            headers: headers
+        })
+    }
+
+    // getManualNumberURL
+    getManualNumberPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getManualNumberURL, body, {
+            headers: headers
+        })
+    }
+
+    // getfuelCreditVehicleByfuelDealerCustomerMapIdURL
+    getfuelCreditVehicleByfuelDealerCustomerMapIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getfuelCreditVehicleByfuelDealerCustomerMapIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // VehicleByRegistrationNumberURL
+    VehicleByRegistrationNumberPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.VehicleByRegistrationNumberURL, body, {
+            headers: headers
+        })
+    }
+
+    // getFuelStaffIdByfuelDealerIdURL
+    getFuelStaffIdByfuelDealerIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFuelStaffIdByfuelDealerIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // addCreditReqByDealerForAllURL
+    addCreditReqByDealerForAllPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addCreditReqByDealerForAllURL, body, {
+            headers: headers
+        })
+    }
 
 
 

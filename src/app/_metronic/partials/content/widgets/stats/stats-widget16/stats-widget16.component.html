@@ -1,432 +1,435 @@
-<div class="card-body">
+<br>
+<div class="row">
 
+  <div class="col-lg-12">
+    <form [formGroup]="requestTransporter">
+      <div class="row">
+        <div class="col-lg-2">
+          <label for="example-text-input" class="col-form-label">Date</label>
+        </div>
+        <div class="col-lg-10">
+          <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" (click)="endDate.toggle()" readonly
+            style="background-color: #ffffff;" formControlName="priceDate" ngbDatepicker #endDate="ngbDatepicker"
+            (dateSelect)="logValue()">
+        </div>
+      </div>
+      <br>
 
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title mb-4">Add Khata</h4>
-          <ng-template #content let-c="close" let-d="dismiss">
-            <div class="modal-header">
-              <h4 class="text-center">
-                Alert Details
-              </h4>
+      <div class="row">
+        <div class="col-lg-2">
+          <label for="example-text-input" class="col-form-label">Product</label>
+        </div>
+        <div class="col-lg-10">
+          <select class="form-control" formControlName="productName" (change)="getPrice($event,setFuelPrice)" required>
+            <option value="">Select Product </option>
+            <option *ngFor="let data of productInfo" [value]="data.fuelProductsId">
+              {{data.productName}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <br>
 
-              <div class="text-center mb-4" *ngIf="isAlert" style="position: absolute; top: 14%; left: 50%; 
-                          transform: translate(-50%, -50%);">
-                <div class="row justify-content-center">
-                  <div class="col-xl-10" style="color: red">
-                    <i class="fa fa-exclamation-triangle fa-fw fa-6x"></i>
-                  </div>
+      <div class="row">
+        <div class="col-lg-2">
+          <label for="example-text-input" class="col-form-label">Rate</label>
+        </div>
+        <div class="col-lg-10">
+          <select class="form-control" formControlName="productPrice" (change)="setPrice($event)" required>
+            <option value="">Select </option>
+            <option *ngFor="let data of productPriceDetails" [value]="data.productSellingPrice">
+              {{data.productSellingPrice}}
+            </option>
+          </select>
+        </div>
+
+        <ng-template #setFuelPrice let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="text-center">
+              Set Fuel Price
+            </h4>
+            <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="unitForm">
+              <div class="row">
+                <div class="col-md-5">
+                  <label class="labelNewMargin"><b>Select Date</b></label>
+                </div>
+                <div class="col-md-6">
+                  <input class="form-control" formControlName="productPriceDate" ngbDatepicker
+                    #startDate="ngbDatepicker" readonly style="background-color: #ffffff;" (click)="startDate.toggle()">
                 </div>
               </div>
-              <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
-                <span aria-hidden="true">&times;</span>
-              </button>
+              <br>
+              <div class="row" *ngFor="let data of allProductPriceList">
+                <div class="col-md-5">
+                  <label class="labelNewMargin"> <b>
+                      {{data.productName}}
+                    </b></label>
+                </div>
+                <div class="col-md-6">
+                  <input class="form-control form-control-sm mr-1 w-40" style="font-size: 0.750rem;" type="number"
+                    onkeypress="return this.value.length < 6;" [(ngModel)]="data.sellingPrice"
+                    [ngModelOptions]="{standalone: true}" placeholder="Enter Price">
+                </div>
+                <br><br>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="button"
+                    (click)="addFuelPrice()">Submit</button>
+                  &nbsp;&nbsp;
+                  <button class="btn btn-danger" type="button" (click)="d('Cross click')">Cancel</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </ng-template>
+
+      </div>
+    </form>
+    <br>
+    <form [formGroup]="requestTransporter1">
+      <div class="row">
+        <div class="col-lg-2">
+          <label for="example-text-input" class="col-form-label">Khata</label>
+        </div>
+
+        <div class="col-lg-10">
+          <input class="form-control" type="text" list="corporateList" #myinput placeholder="Select Khata"
+            formControlName="selectedCorp" (change)="getDetailsByfuelDealerCustomerMapIdId($event)">
+          <datalist id="corporateList">
+            <option *ngFor="let data of corporateList" [value]="data.companyName">
+          </datalist>
+        </div>
+
+        <ng-template #viewFlagModel let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="text-center">
+              Show Details
+            </h4>
+            <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <table class="table table-hover table-striped">
+              <thead>
+                <tr>
+                  <th align=left>Date Of Alert</th>
+                  <th align=left>Petrol Pump Name</th>
+                  <th align=left>City</th>
+                  <th align=left>Remarks</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let charges of viewCorpFlag; let i = index;">
+                <tr>
+                  <td>{{charges.corporateFlagCreatedAt| date:"d MMM, yyyy"}}</td>
+                  <td><b> {{charges.companyName}}</b> <br>
+                    {{charges.firstName}} {{charges.lastName}} <br>
+                    {{charges.phone1}}</td>
+                  <td>{{charges.city}}</td>
+                  <td>{{charges.corporateFlagPurpose}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-template>
+      </div>
+    </form>
+    <br>
+
+    <div class="row">
+      <div class="col-lg-12">
+
+        <ng-template #content let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="text-center">
+              Alert Details
+            </h4>
+
+            <div class="text-center mb-4" *ngIf="isAlert" style="position: absolute; top: 14%; left: 50%; 
+                                          transform: translate(-50%, -50%);">
+              <div class="row justify-content-center">
+                <div class="col-xl-10" style="color: red">
+                  <i class="fa fa-exclamation-triangle fa-fw fa-6x"></i>
+                </div>
+              </div>
             </div>
-            <div class="modal-body">
-              <table class="table table-hover table-striped">
-                <thead>
-                  <tr>
-                    <th>Date Of Alert</th>
-                    <th>Petrol Pump Name</th>
-                    <th>City</th>
-                    <th>Remarks</th>
+            <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <table class="table table-hover table-striped">
+              <thead>
+                <tr>
+                  <th>Date Of Alert</th>
+                  <th>Petrol Pump Name</th>
+                  <th>City</th>
+                  <th>Remarks</th>
 
-                  </tr>
-                </thead>
-                <tbody *ngFor="let charges of viewCorpFlag; let i = index;">
-                  <tr>
-                    <td>{{charges.corporateFlagCreatedAt| date:"d MMM, yyyy"}}</td>
-                    <td><b> {{charges.companyName}}</b> <br>
-                      {{charges.firstName}} {{charges.lastName}} <br>
-                      {{charges.phone1}}</td>
-                    <td>{{charges.city}}</td>
-                    <td>{{charges.corporateFlagPurpose}}</td>
-                  </tr>
+                </tr>
+              </thead>
+              <tbody *ngFor="let charges of viewCorpFlag; let i = index;">
+                <tr>
+                  <td>{{charges.corporateFlagCreatedAt| date:"d MMM, yyyy"}}</td>
+                  <td><b> {{charges.companyName}}</b> <br>
+                    {{charges.firstName}} {{charges.lastName}} <br>
+                    {{charges.phone1}}</td>
+                  <td>{{charges.city}}</td>
+                  <td>{{charges.corporateFlagPurpose}}</td>
+                </tr>
 
-                </tbody>
-              </table>
+              </tbody>
+            </table>
+          </div>
+        </ng-template>
+        <ng-template #content let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="text-center">
+              Alert Details
+            </h4>
+
+            <div class="text-center mb-4" *ngIf="isAlert" style="position: absolute; top: 14%; left: 50%; 
+                          transform: translate(-50%, -50%);">
+              <div class="row justify-content-center">
+                <div class="col-xl-10" style="color: red">
+                  <i class="fa fa-exclamation-triangle fa-fw fa-6x"></i>
+                </div>
+              </div>
             </div>
-          </ng-template>
+            <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <table class="table table-hover table-striped">
+              <thead>
+                <tr>
+                  <th>Date Of Alert</th>
+                  <th>Petrol Pump Name</th>
+                  <th>City</th>
+                  <th>Remarks</th>
 
-          <!-- <ngb-alert type="danger" *ngIf="error" [dismissible]="false">{{ error }}</ngb-alert> -->
+                </tr>
+              </thead>
+              <tbody *ngFor="let charges of viewCorpFlag; let i = index;">
+                <tr>
+                  <td>{{charges.corporateFlagCreatedAt| date:"d MMM, yyyy"}}</td>
+                  <td><b> {{charges.companyName}}</b> <br>
+                    {{charges.firstName}} {{charges.lastName}} <br>
+                    {{charges.phone1}}</td>
+                  <td>{{charges.city}}</td>
+                  <td>{{charges.corporateFlagPurpose}}</td>
+                </tr>
 
-          <form [formGroup]="corporateMappingForm">
-            <!-- <aw-wizard #mago [navBarLayout]="'large-empty-symbols'">
-              <aw-wizard-step stepId="firstStep">
-                <ng-template awWizardStepSymbol>
-                  <i class="fas fa-user"></i>
-                </ng-template>
-                <div class="row">
-                  <div class="col-12">
-                    <div class="row mb-3">
-                      <label class="col-md-3 col-form-label">Mobile Number<span style="color: red;">*</span></label>
-                      <div class="col-md-9">
-                        <input type="number" class="form-control" formControlName="phoneNumber"
-                          (blur)="searchCorporateByPhone()"
-                          [class.is-invalid]="userMobile.invalid && userMobile.touched"
-                          placeholder="Enter Mobile Number" onkeypress="return this.value.length < 10;"
-                          oninput="if(this.value.length=10)">
-                        <div *ngIf="(userMobile.invalid && userMobile.touched) || userMobile.dirty">
-                          <small *ngIf="userMobile.errors?.required" class="text-danger">
-                            Mobile Number is required</small>
-                          <small *ngIf="userMobile.errors?.pattern" class="text-danger">
-                            Please enter valid 10 Digit Mobile Number</small>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row mb-3">
-                      <label class="col-md-3 col-form-label">Khata Name<span style="color: red;">*</span></label>
-                      <div class="col-md-9">
-                        <input class="form-control" name="khataName" type="text" placeholder="Enter Khata Name"
-                          formControlName="carrierName"
-                          oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
-                      </div>
-                    </div>
-                    <div class="row mb-3">
-                      <label class="col-md-3 col-form-label">GST</label>
-                      <div class="col-md-9">
-                        <input class="form-control" name="GST" type="text" placeholder="Enter GST"
-                          formControlName="gstNo"
-                          oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
-                          onkeypress="return this.value.length < 15;">
-                      </div>
-                    </div>
-                    <div class="row mb-3">
-                      <label class="col-md-3 col-form-label">Cr. Limit Amount<span style="color: red;">*</span></label>
-                      <div class="col-md-9">
-                        <input class="form-control" name="creditLimitAmount" type="number"
-                          placeholder="Enter Credit Limit Amount" formControlName="maxCreditAmount">
-                      </div>
-                    </div>
-                    <div class="row mb-3">
-                      <label class="col-md-3 col-form-label">Cr. Limit Days<span style="color: red;">*</span></label>
-                      <div class="col-md-9">
-                        <input class="form-control" name="creditLimitDays" min="0" type="number"
-                          placeholder="Enter Credit Limit Days" formControlName="creditDayLimit"
-                          (change)="disableError()">
-                      </div>
-                    </div>
+              </tbody>
+            </table>
+          </div>
+        </ng-template>
+        <div class="table-responsive mb-0" *ngIf="isSelected1">
+          <div class="text-center mb-4" *ngIf="isAlert"
+            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <div class="row justify-content-center">
+              <div class="col-xl-10" style="color: red">
+                <i class="fa fa-exclamation-triangle fa-fw fa-6x"></i>
+              </div>
+            </div>
+          </div>
+          <table class="table table-centered table-nowrap">
+            <thead>
+              <tr>
+                <th style="text-align: left;border-width: 1px; border-color: #000;">Khata Name</th>
+                <th style="text-align: left;border-width: 1px; border-color: #000;">Key Person Name</th>
+                <th style="text-align: left;border-width: 1px; border-color: #000;">Key Person Mobile</th>
+                <th style="text-align: left;border-width: 1px; border-color: #000;">Bill Nos. Set</th>
+                <th style="text-align: left;border-width: 1px; border-color: #000;">Outstanding</th>
+                <th style="text-align: left;border-width: 1px; border-color: #000;">Alert</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align: left;border-width: 1px; border-color: #000;">{{dealerName}}</td>
+                <td style="text-align: left;border-width: 1px; border-color: #000;">
+                  {{personName}}
+                </td>
+                <td style="text-align: left;border-width: 1px; border-color: #000;"> {{personPhone1}} </td>
+                <td style="text-align: left;border-width: 1px; border-color: #000;">
+                  {{rangeFrom}} - {{rangeTo}}
+                </td>
+                <td style="text-align: left;border-width: 1px; border-color: #000;color: red;">
+                  <span *ngIf="calOutstanding< 0">
+                    <li class="fas fa-rupee-sign"></li> {{(calOutstanding)*(-1) | number:'1.2-2'}} CR
+                  </span>
+                  <span *ngIf="calOutstanding >= 0">
+                    <li class="fas fa-rupee-sign"></li> {{(calOutstanding) | number:'1.2-2'}}
+                  </span>
 
-                  </div>
-                </div>
-                <ul class="list-inline wizard mb-0">
-                  <li *ngIf="ischeckValidation" class="next list-inline-item float-end"><button class="btn btn-primary"
-                      awNextStep>Next</button>
-                  </li>
-                </ul>
-              </aw-wizard-step>
+                </td>
+                <td style="text-align: left;border-width: 1px; border-color: #000; cursor:pointer;"
+                  (click)="viewFlag(viewFlagModel)">
+                  <span *ngIf="viewCorpFlag.length" class="col-md-1" style="color:rgb(255, 0, 0);cursor:pointer;">
+                    <i class="fa fa-exclamation-triangle fa-fw fa-3x"></i>
+                  </span>
 
-              <aw-wizard-step stepId="secondStep">
-                <ng-template awWizardStepSymbol>
-                  <i class="fas fa-user-circle"></i>
-                </ng-template>
-                <div class="row">
-                  <div class="col-12">
-                    <div class="row mb-3">
-                      <label class="col-md-3 col-form-label">First name<span style="color: red;">*</span></label>
-                      <div class="col-md-9">
-                        <input class="form-control" name="firstName" type="text" placeholder="Enter First name"
-                          formControlName="firstName"
-                          oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
-                      </div>
-                    </div>
-                    <div class="row mb-3">
-                      <label class="col-md-3 col-form-label">Last name<span style="color: red;">*</span></label>
-                      <div class="col-md-9">
-                        <input class="form-control" name="lastName" type="text" placeholder="Enter lastName"
-                          formControlName="lastName"
-                          oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
-                      </div>
-                    </div>
-                    <div *ngIf="!isCarrierFound" class="row mb-3">
-                      <label class="col-md-3 col-form-label">Email</label>
-                      <div class="col-md-9">
-                        <input class="form-control" name="Email" type="text" placeholder="Enter Email"
-                          formControlName="carrierEmail"
-                          [class.is-invalid]="primEmailUser.invalid && primEmailUser.touched"
-                          placeholder="Enter Email Address">
-                        <div *ngIf="(primEmailUser.invalid && primEmailUser.touched) || primEmailUser.dirty">
-                          <small *ngIf="primEmailUser.errors?.pattern" class="text-danger">
-                            Please enter valid email address</small>
-                        </div>
-                      </div>
-                    </div>
+                  <span *ngIf="!viewCorpFlag.length" class="col-md-1">
+                    None
+                  </span>
+                </td>
+              </tr>
 
-                    <div *ngIf="!isCarrierFound" class="row mb-3">
-                      <label class="col-md-3 col-form-label">Address Line 1</label>
-                      <div class="col-md-9">
-                        <input class="form-control" name="addressLine1" type="text" placeholder="Enter Address Line 1"
-                          formControlName="address1"
-                          oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
-                      </div>
-                    </div>
+            </tbody>
+          </table>
 
-                    <div *ngIf="!isCarrierFound" class="row mb-3">
-                      <label class="col-md-3 col-form-label">Address Line 2</label>
-                      <div class="col-md-9">
-                        <input class="form-control" name="addressLine2" type="text" placeholder="Enter Address Line 2"
-                          formControlName="address2"
-                          oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
-                      </div>
-                    </div>
-
-
-                    <div *ngIf="!isCarrierFound" class="row mb-3">
-                      <label class="col-md-3 col-form-label">City<span style="color: red;">*</span></label>
-                      <div class="col-md-9">
-                        <input class="form-control" name="city" type="text" placeholder="Enter City"
-                          formControlName="city"
-                          oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
-                      </div>
-                    </div>
-                    <div *ngIf="!isCarrierFound" class="row mb-3">
-                      <label class="col-md-3 col-form-label">State<span style="color: red;">*</span></label>
-                      <div class="col-md-9">
-                        <input *ngIf="isCarrierFound" class="form-control" name="state" type="text"
-                          placeholder="Enter State" formControlName="state">
-                        <select *ngIf="!isCarrierFound" class="form-control" formControlName="state" required
-                          placeholder="Select state">
-                          <option value="">Select State</option>
-                          <option value="ANDHRA PRADESH">Andhra Pradesh</option>
-                          <option value="ARUNACHAL PRADESH">Arunachal Pradesh</option>
-                          <option value="ASSAM">Assam</option>
-                          <option value="BIHAR">Bihar</option>
-                          <option value="CHHATTISGARH">Chhattisgarh</option>
-                          <option value="GOA">Goa</option>
-                          <option value="GUJARAT">Gujarat</option>
-                          <option value="HARYANA">Haryana</option>
-                          <option value="HIMACHAL PRADESH">Himachal Pradesh</option>
-                          <option value="JHARKHAND">Jharkhand</option>
-                          <option value="KARNATAKA">Karnataka</option>
-                          <option value="KERALA">Kerala</option>
-                          <option value="MADHYA PRADESH">Madhya Pradesh</option>
-                          <option value="MAHARASHTRA">Maharashtra</option>
-                          <option value="MANIPUR">Manipur</option>
-                          <option value="MEGHALAYA">Meghalaya</option>
-                          <option value="MIZORAM">Mizoram</option>
-                          <option value="NAGALAND">Nagaland</option>
-                          <option value="ODISHA">Odisha</option>
-                          <option value="PUNJAB">Punjab</option>
-                          <option value="RAJASTHAN">Rajasthan</option>
-                          <option value="SIKKIM">Sikkim</option>
-                          <option value="TAMIL NADU">Tamil Nadu</option>
-                          <option value="TELANGANA">Telangana</option>
-                          <option value="TRIPURA">Tripura</option>
-                          <option value="UTTAR PRADESH">Uttar Pradesh</option>
-                          <option value="UTTARAKHAND">Uttarakhand</option>
-                          <option value="WEST BENGAL">West Bengal</option>
-                          <option value="ANDAMAN AND NICOBAR ISLANDS">Andaman and Nicobar Islands</option>
-                          <option value="CHANDIGARH">Chandigarh</option>
-                          <option value="DADRA AND NAGAR HAVELI AND DAMAN AND DIU">Dadra and Nagar Haveli and Daman and
-                            Diu</option>
-                          <option value="DELHI">Delhi</option>
-                          <option value="LAKSHADWEEP">Lakshadweep</option>
-                          <option value="PUDUCHERRY">Puducherry (Pondicherry)</option>
-                          <option value="JAMMU AND KASHMIR">Jammu and Kashmir</option>
-                          <option value="LADAKH">Ladakh</option>
-                        </select>
-                      </div>
-                    </div>
-
-
-                    <div *ngIf="isCarrierFound" class="row mb-3">
-                      <label class="col-md-3 col-form-label">Email</label>
-                      <div class="col-md-9">
-                        <input class="form-control" name="Email" type="text" placeholder="Enter Email"
-                          formControlName="carrierEmail" placeholder="Email Address">
-
-                      </div>
-                    </div>
-
-                    <div *ngIf="isCarrierFound" class="row mb-3">
-                      <label class="col-md-3 col-form-label">Address Line 1</label>
-                      <div class="col-md-9">
-                        <input class="form-control" name="addressLine1" type="text" placeholder="Enter Address Line 1"
-                          formControlName="address1"
-                          oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
-                      </div>
-                    </div>
-
-                    <div *ngIf="isCarrierFound" class="row mb-3">
-                      <label class="col-md-3 col-form-label">Address Line 2</label>
-                      <div class="col-md-9">
-                        <input class="form-control" name="addressLine2" type="text" placeholder="Enter Address Line 2"
-                          formControlName="address2"
-                          oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
-                      </div>
-                    </div>
-
-
-                    <div *ngIf="isCarrierFound" class="row mb-3">
-                      <label class="col-md-3 col-form-label">City<span style="color: red;">*</span></label>
-                      <div class="col-md-9">
-                        <input class="form-control" name="city" type="text" placeholder="Enter City"
-                          formControlName="city"
-                          oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
-                      </div>
-                    </div>
-                    <div *ngIf="isCarrierFound" class="row mb-3">
-                      <label class="col-md-3 col-form-label">State<span style="color: red;">*</span></label>
-                      <div class="col-md-9">
-                        <input *ngIf="isCarrierFound" class="form-control" name="state" type="text"
-                          placeholder="Enter State" formControlName="state" disabled>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-                <ul class="list-inline wizard mb-0">
-                  <li class="previous list-inline-item"><button class="btn btn-primary" awPreviousStep>Previous</button>
-                  </li>
-                  <li *ngIf="isCarrierFound" class="next list-inline-item float-end"><button class="btn btn-primary"
-                      awNextStep (click)="submitNewCorp()">Next</button>
-                  </li>
-                  <li *ngIf="!isCarrierFound" class="next list-inline-item float-end"><button class="btn btn-primary"
-                      [disabled]="!corporateMappingForm.valid" awNextStep (click)="submit()">Next</button>
-                  </li>
-                </ul>
-              </aw-wizard-step>
-
-              <aw-wizard-step stepId="thirdStep">
-                <ng-template awWizardStepSymbol>
-                  <i class="fas fa-check-circle"></i>
-                </ng-template>
-                <div class="row justify-content-center">
-                  <div class="col-lg-6">
-                    <div class="text-center">
-                      <div class="mb-4">
-                        <i class="mdi mdi-check-circle-outline text-success display-4"></i>
-                      </div>
-                      <div>
-                        <h5>{{success}}</h5>
-                        <br><br>
-                        <button class="btn btn-success" (click)="checkOutstandingInSavedStatement(previousOut)">Add prev
-                          Outstanding</button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <button class="btn btn-success" (click)="openVehicle(addVehicle)">Add
-                          Vehicles</button>
-
-                        <ng-template #previousOut let-c="close" let-d="dismiss">
-                          <div class="modal-header">
-                            <h6 class="modal-title">
-                              <strong>
-                                Add Previous Outstanding Amount
-                              </strong>
-                            </h6>
-                          </div>
-                          <div class="modal-body">
-                            <form>
-                              <div class="row">
-                                <div class="col-md-12">
-                                  <label><b>Previous Outstanding Amount :</b>
-                                  </label>
-                                  <input class="form-control" type="number" style="font-size: 0.750rem;" min="0"
-                                    [(ngModel)]="prevOutstanding" [ngModelOptions]="{standalone: true}"
-                                    placeholder="Enter Amount">
-                                </div>
-
-                              </div>
-                              <br><br>
-                              <div class="row">
-                                <div class="col-md-3"></div>
-                                <div class="col-md-3">
-                                  <button type="button" class="btn btn-primary" aria-label="Close"
-                                    (click)="addOutstandAmount()">Add</button>
-                                </div>
-                                &nbsp;&nbsp;&nbsp;
-                                <div class="col-md-3">
-                                  <button type="button" class="btn btn-secondary" aria-label="Close"
-                                    (click)="d('Cross click')">Close</button>
-                                </div>
-                              </div>
-                            </form>
-                          </div>
-                        </ng-template>
-
-                        <ng-template #addVehicle let-c="close" let-d="dismiss">
-                          <div class="modal-header">
-                            <h6 class="modal-title">
-                              <strong>
-                                Add Vehicle
-                              </strong>
-                            </h6>
-                          </div>
-                          <div class="modal-body">
-                            <form [formGroup]="addVehicleForm">
-                              <div class="row">
-                                <div class="col-lg-12">
-                                  <div class="table-responsive mb-0">
-                                    <table class="table table-centered table-nowrap">
-                                      <thead class="table-light">
-                                        <tr>
-                                          <th>Sr No</th>
-                                          <th>Vehicle Number</th>
-                                          <th>Action</th>
-
-                                        </tr>
-                                      </thead>
-                                      <tbody *ngFor="let charges of addVehicleData; let i = index;">
-                                        <tr>
-                                          <td>
-                                            {{i+1}}
-                                          </td>
-
-                                          <td>
-                                            <input type="text" class="form-control" [(ngModel)]="charges.vehicleNumber"
-                                              [ngModelOptions]="{standalone: true}" placeholder="Enter Vehicle no."
-                                              oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
-                                              (blur)="setVehicleNumber()" />
-                                          </td>
-
-                                          <td>
-
-                                            &nbsp;&nbsp;
-                                            <button *ngIf="i != 0 " type="cancel" class="btn btn-primary"
-                                              (click)="removeVehicle(i)">Delete</button>
-                                          </td>
-
-                                        </tr>
-                                      </tbody>
-                                      <button type="submit" class="btn btn-success" (click)="addVehicleForCr()">
-                                        Add
-                                      </button>
-                                    </table>
-                                  </div>
-                                </div>
-                              </div>
-                            </form>
-
-                            <div class="row">
-
-                              <div class="col-auto">
-                                <button type="submit" class="btn btn-primary"
-                                  (click)="addFuelCreditVehicle()">Submit</button>
-                              </div>&nbsp;&nbsp;
-                              <div class="col-md-3">
-                                <button type="button" class="btn btn-secondary" aria-label="Close"
-                                  (click)="d('Cross click')">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </ng-template>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <ul *ngIf="showRefrsh" class="list-inline wizard mb-0">
-                  <li class="next list-inline-item float-end">
-                    <button class="btn btn-primary" (click)="goToStep('firstStep')">OK</button>
-                  </li>
-                </ul>
-              </aw-wizard-step>
-            </aw-wizard> -->
-          </form>
         </div>
       </div>
     </div>
+    <br>
+
+    <form [formGroup]="requestTransporter">
+      <div class="row">
+        <div class="col-lg-2">
+          <label for="example-text-input" class="col-form-label">Type</label>
+        </div>
+
+        <div class="col-md-10">
+          <input type="radio" value="showamount" checked name="requestType" formControlName="requestType"
+            (change)="changeAmountToQuantity($event)">
+          &nbsp; <label class="labelNewMargin">Amount</label>
+
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="radio" value="!showamount" name="requestType" formControlName="requestType"
+            (change)="changeQuantityToAmount($event)">
+          &nbsp; <label class="labelNewMargin">Quantity</label>
+        </div>
+      </div>
+    </form>
+
+    <div class="row">
+      <div class="col-md-12">
+        <form [formGroup]="requestTransporter">
+          <div class="card-body table-responsive">
+            <table class="table table-hover table-striped">
+              <thead>
+                <tr>
+                  <th>Bill Number</th>
+                  <th>Details (Vehicle/Barrel)</th>
+                  <th *ngIf="!showamount">Amount</th>
+                  <th *ngIf="!showamount">Quantity</th>
+                  <th *ngIf="showamount">Quantity</th>
+                  <th *ngIf="showamount">Amount</th>
+
+                </tr>
+              </thead>
+              <tbody *ngFor="let charges of CreditRequestDataArray; let i = index;">
+                <tr>
+                  <td>
+                    <span *ngIf="autoManualStatus == 'TRUE'"> <input type="text" class="form-control"
+                        placeholder="Bill Number Automation Active" readonly />
+                    </span>
+                    <span *ngIf="autoManualStatus != 'TRUE'"> <input type="text" class="form-control"
+                        [(ngModel)]="charges.manualNumber" [ngModelOptions]="{standalone: true}"
+                        placeholder="Enter Bill / Ref Number" (blur)="setManualNumber(i)" />
+                    </span>
+                  </td>
+
+                  <td *ngIf="isFuelVehicles">
+                    <input class="form-control" type="text" list="fuelVehicles" [(ngModel)]="charges.vehicleNumber"
+                      oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                      [ngModelOptions]="{standalone: true}" placeholder="Enter vehicle no./ barrel"
+                      (blur)="setVehicleNumber(i)">
+                    <datalist id="fuelVehicles">
+                      <option *ngFor="let data of fuelVehicles" [value]="data.vehicleNumber">
+                    </datalist>
+                  </td>
+                  <td *ngIf="!isFuelVehicles">
+                    <input type="text" class="form-control" [(ngModel)]="charges.vehicleNumber"
+                      oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                      [ngModelOptions]="{standalone: true}" placeholder="Enter vehicle no./ barrel"
+                      (blur)="setVehicleNumber(i)" />
+                  </td>
+                  <td *ngIf="!showamount">
+                    <span *ngIf="!showamount">
+                      <input type="number" class="form-control" [(ngModel)]="charges.creditAmount"
+                        [ngModelOptions]="{standalone: true}" placeholder="Enter Credit Amount"
+                        (blur)="amountCalculateNEW(i)" />
+                    </span>
+
+                  </td>
+                  <td *ngIf="showamount">
+                    <span *ngIf="showamount">
+                      <input type="number" class="form-control" [(ngModel)]="charges.creditQuantity"
+                        [ngModelOptions]="{standalone: true}" placeholder="Enter Credit Quantity"
+                        (blur)="quantityCalculateNEW(i)" />
+                    </span>
+                  </td>
+
+                  <td *ngIf="!showamount">
+                    <span *ngIf="!showamount">
+                      <input type="number" class="form-control" [(ngModel)]="charges.creditQuantity"
+                        [ngModelOptions]="{standalone: true}" placeholder="Credit Quantity" disabled />
+                    </span>
+
+                  </td>
+                  <td *ngIf="showamount">
+                    <span *ngIf="showamount">
+                      <input type="number" class="form-control" [(ngModel)]="charges.creditAmount"
+                        [ngModelOptions]="{standalone: true}" placeholder="Enter Credit Amount"
+                        (blur)="amountCalculateNEW(i)" readonly />
+                    </span>
+                  </td>
+                  <td>
+                    <button *ngIf="isVehSelect" type="submit" class="btn btn-success my-2 my-sm-0"
+                      (click)="addFormRequest()">
+                      Add
+                    </button>
+                    <button *ngIf="!isVehSelect" type="submit" class="btn btn-success" (click)="selectVehicle()">
+                      Add
+                    </button>
+                    &nbsp;&nbsp;
+                    <button *ngIf="i != 0 " type="cancel" class="btn btn-primary"
+                      (click)="removeFormRequest(i,removeTable)">Delete</button>
+                  </td>
+                </tr>
+              </tbody>
+              <br>
+
+            </table>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+
+      <div class="col-lg-12">
+        <button *ngIf="isVehSelect" type="submit" class="btn btn-primary"
+          (click)="submitByDealerNEW1()">Submit</button>&nbsp;&nbsp;
+        <button *ngIf="!isVehSelect" type="submit" class="btn btn-primary"
+          (click)="selectVehicle()">Submit</button>&nbsp;&nbsp;
+        <button type="submit" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+      </div>
+      <ng-template #removeTable let-c="close" let-d="dismiss">
+
+        <div class="modal-body">
+          <h6>Are you sure you want to delete this element ?</h6>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-link" aria-label="Close" (click)="d('Cross click')">
+            Cancel
+          </button>
+
+          <button type="button" class="btn btn-link" aria-label="Close" (click)="removeRequestIndex()">
+            OK
+          </button>
+        </div>
+      </ng-template>
+    </div>
 
   </div>
-
 </div>
