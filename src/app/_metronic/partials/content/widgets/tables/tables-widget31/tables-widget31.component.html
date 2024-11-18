@@ -1,315 +1,328 @@
 <head>
-  <style>
-    .btn.btn-icon.badge.badge-light-success {
-      background-color: #DFFFEA;
-      color: #DFFFEA;
-      transition: background-color 0.3s, color 0.3s;
-      /* Smooth transition */
-    }
+    <style>
+        .btn.btn-icon.badge.badge-light-success {
+            background-color: #DFFFEA;
+            color: #DFFFEA;
+            transition: background-color 0.3s, color 0.3s;
+            /* Smooth transition */
+        }
 
-    .btn.btn-icon.badge.badge-light-success:hover {
-      background-color: #17C653;
-      /* Change to success color */
-      color: #17C653;
-      /* Change text color if needed */
-    }
+        .btn.btn-icon.badge.badge-light-success:hover {
+            background-color: #17C653;
+            /* Change to success color */
+            color: #17C653;
+            /* Change text color if needed */
+        }
 
-    .btn.btn-icon.badge.badge-light-warning {
-      background-color: #FFF8DD;
-      color: #FFF8DD;
-      transition: background-color 0.3s, color 0.3s;
-      /* Smooth transition */
-    }
+        .btn.btn-icon.badge.badge-light-warning {
+            background-color: #FFF8DD;
+            color: #FFF8DD;
+            transition: background-color 0.3s, color 0.3s;
+            /* Smooth transition */
+        }
 
-    .btn.btn-icon.badge.badge-light-warning:hover {
-      background-color: #F6C000;
-      /* Change to  color */
-      color: #F6C000;
-      /* Change text color if needed */
-    }
+        .btn.btn-icon.badge.badge-light-warning:hover {
+            background-color: #F6C000;
+            /* Change to  color */
+            color: #F6C000;
+            /* Change text color if needed */
+        }
 
-    .btn.btn-icon.badge.badge-light-danger {
-      background-color: #FFEEF3;
-      color: #FFEEF3;
-      transition: background-color 0.3s, color 0.3s;
-      /* Smooth transition */
-    }
+        .btn.btn-icon.badge.badge-light-danger {
+            background-color: #FFEEF3;
+            color: #FFEEF3;
+            transition: background-color 0.3s, color 0.3s;
+            /* Smooth transition */
+        }
 
-    .btn.btn-icon.badge.badge-light-danger:hover {
-      background-color: #F8285A;
-      /* Change to  color */
-      color: #F8285A;
-      /* Change text color if needed */
-    }
+        .btn.btn-icon.badge.badge-light-danger:hover {
+            background-color: #F8285A;
+            /* Change to  color */
+            color: #F8285A;
+            /* Change text color if needed */
+        }
 
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 60px;
-      height: 34px;
-      align-items: center;
-      padding: 10px;
-    }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            align-items: center;
+            padding: 10px;
+        }
 
-    /* Hide default HTML checkbox */
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
+        /* Hide default HTML checkbox */
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
 
-    /* The slider */
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      -webkit-transition: .4s;
-      transition: .4s;
-    }
+        /* The slider */
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
 
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 26px;
-      width: 26px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      -webkit-transition: .4s;
-      transition: .4s;
-    }
-  
-  input:checked + .slider {
-    background-color: green;
-  }
-  
-  input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
-  }
-  
-  input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-  }
-  
-  /* Rounded sliders */
-  .slider.round {
-    border-radius: 34px;
-  }
-  
-  .slider.round:before {
-    border-radius: 50%;
-  }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
 
-  label {
-    display: inline-block;
-    padding: 20px;
-    font-size: medium;
-  }
-  </style>
+        input:checked+.slider {
+            background-color: green;
+        }
+
+        input:focus+.slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked+.slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        label {
+            display: inline-block;
+            padding: 20px;
+            font-size: medium;
+        }
+    </style>
 </head>
 
 <!-- begin::Header -->
 <div class="card-header border-0 pt-5">
-  <h3 class="card-title align-items-start flex-column">
-    <div class="row">
-      <div class="col-lg-10">
-        <form [formGroup]="filterForm">
-            <div class="row">
-                <label for="example-text-input" class="col-auto col-form-label">Date Range </label>
-                <div class="col-md-2">
-                    <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
-                        name="startDate" ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker
-                        #startDate="ngbDatepicker" formControlName="startDate">
-                </div>
-                <div class="col-md-2">
-                    <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
-                        name="endDate" ngbTooltip="End Date" (click)="endDate.toggle()" ngbDatepicker
-                        #endDate="ngbDatepicker" formControlName="endDate">
-                </div>
-                <div class="col-lg-1">
-                    <button type="button" class="btn btn-primary" name="button"
-                        (click)="getMapAccountOSDetailsByDate()">
-                        Submit
-                    </button>
-                </div>
-                <div class="col-lg-1">
-                    <button type="submit" class="btn btn-secondary" name="button" (click)="clearFilterForm()">
-                        Cancel
-                    </button>
-                </div>
-                <div class="col-lg-1"></div>
+    <h3 class="card-title align-items-start flex-column">
+        <div class="row">
+            <div class="col-lg-10">
+                <form [formGroup]="filterForm">
+                    <div class="row">
+                        <label for="example-text-input" class="col-auto col-form-label">Date Range </label>
+                        <div class="col-lg-2">
+                            <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                style="background-color: #ffffff;" name="startDate" ngbTooltip="Start Date"
+                                (click)="startDate.toggle()" ngbDatepicker #startDate="ngbDatepicker"
+                                formControlName="startDate">
+                        </div>
+                        <div class="col-lg-2">
+                            <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                style="background-color: #ffffff;" name="endDate" ngbTooltip="End Date"
+                                (click)="endDate.toggle()" ngbDatepicker #endDate="ngbDatepicker"
+                                formControlName="endDate">
+                        </div>
+                        <div class="col-lg-1">
+                            <button type="button" class="btn btn-primary" name="button"
+                                (click)="getMapAccountOSDetailsByDate()">
+                                Submit
+                            </button>
+                        </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div class="col-lg-1">
+                            <button type="submit" class="btn btn-secondary" name="button" (click)="clearFilterForm()">
+                                Cancel
+                            </button>
+                        </div>
+                        <div class="col-lg-1"></div>
 
-                <!-- <div class="col-lg-1">
-                    <span style="font-size: 25px;cursor: pointer;" (click)="downloadPDF()" ngbTooltip="Download PDF"
-                        placement="bottom"><i class="fas fa-file-pdf"></i>
-                    </span>
-                </div> -->
-                <!-- <div class="col-lg-1">
-                    <span style="font-size: 25px;cursor: pointer;" (click)="downloadExcel()"
-                        ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv"></i>
-                    </span>
-                </div> -->
+                        <div class="col-lg-1">
+                            <span style="font-size: 25px;cursor: pointer;" (click)="downloadPDF()"
+                                ngbTooltip="Download PDF" placement="bottom"><i class="fas fa-file-pdf"></i>
+                            </span>
+                        </div>
+                        <div class="col-lg-1">
+                            <span style="font-size: 25px;cursor: pointer;" (click)="downloadExcel()"
+                                ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv"></i>
+                            </span>
+                        </div>
 
-                <!-- <div class="col-lg-1">
-                    <button class="btn btn-success" type="button" (click)=" printPdf()">
-                        Print
-                    </button>
-                </div> -->
+                        <div class="col-lg-1">
+                            <button class="btn btn-success" type="button" (click)=" printPdf()">
+                                Print
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="search-box me-2 mb-2 d-inline-block">
+                            <div class="position-relative">
+                                <input class="form-control" type="text" (input)="onSearch()" placeholder="Search"
+                                    [(ngModel)]="searchData" [ngModelOptions]="{standalone: true}">
+                                <i class="bx bx-search-alt search-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
             </div>
-        </form>
-
-      </div>
-    </div>
-    <!-- <span class="card-label fw-bolder fs-3 mb-1">Rate Overview</span> -->
-  </h3>
+        </div>
+        <!-- <span class="card-label fw-bolder fs-3 mb-1">Rate Overview</span> -->
+    </h3>
 </div>
 <!-- end::Header -->
 <!-- begin::Body -->
 <div class="card-body py-3">
-  <!-- begin::Table container -->
-  <div class="table-responsive mb-0">
-    
-    <table class="table table-centered table-nowrap">
-      <thead class="table-light">
-          <tr>
-              <th style="text-align: left;">Khata Name</th>
-              <th style="text-align: left;">Cr Amount Limit</th>
-              <th style="text-align: left;">Cr Days Limit</th>
-              <th style="text-align: left;">Opening O/s</th>
-              <th style="text-align: left;">Total Purchase</th>
-              <th style="text-align: left;">Total Payment</th>
-              <th style="text-align: left;">Net O/s</th>
-              <th style="text-align: left;">Pending Days</th>
-              <th>Action</th>
-          </tr>
-      </thead>
+    <!-- begin::Table container -->
+    <div class="table-responsive mb-0">
 
-      <tbody
-          *ngFor="let data of mappingAccData2  | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total } ; let i = index">
-          <tr *ngIf="data.mappingStatus != 'ACTIVE'" style="color: purple;">
-              <td> <b>{{data.companyName}}</b> <br> {{data.hostName}} </td>
-              <td> ₹ {{data.maxCreditAmount}} </td>
-              <td> {{data.creditDayLimit}} </td>
-              <td>
-                  <span *ngIf="data.openningOS < 0 ">
-                      ₹ {{data.openningOS *(-1) | number:'1.2-2'}} CR
-                  </span>
-                  <span *ngIf="data.openningOS >= 0 ">
-                      ₹ {{data.openningOS | number:'1.2-2'}}
-                  </span>
-              </td>
-              <td> ₹ {{ data.totalPurchaseAmt | number:'1.2-2'}} </td>
-              <td> ₹ {{ data.totalPaymentAmt  | number:'1.2-2'}} </td>
-              <td>
-                  <span *ngIf="data.netOS < 0 ">
-                      ₹ {{(data.netOS)*(-1) | number:'1.2-2'}} CR
-                  </span>
-                  <span *ngIf="data.netOS >= 0 ">
-                      <span *ngIf="data.netOS < ((data.maxCreditAmount * 90)/100)">
-                          ₹ {{(data.netOS) | number:'1.2-2'}}
-                      </span>
-                      <span *ngIf="data.netOS >= ((data.maxCreditAmount * 90)/100)" style="color: red;">
-                          ₹ {{data.netOS | number:'1.2-2'}}
-                      </span>
-                  </span>
-              </td>
-              <td>
-                  <span *ngIf="data.netOS < data.creditDayLimit">
-                      {{data.pendingDays}}
-                  </span>
-                  <span *ngIf="data.netOS >= data.creditDayLimit" style="color: red;">
-                      {{data.pendingDays}}
-                  </span>
-              </td>
-              <td style="text-align: left;cursor: pointer;">
-                  <div ngbDropdown placement="bottom-left">
-                      <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
-                          aria-expanded="true"></i>
-                      <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
-                          <a class="dropdown-item" href="javascript: void(0);">
-                              &nbsp;
-                              <span *ngIf="data.smsStatus == 'TRUE'">
-                                  O/s SMS Already Send
-                              </span>
-                              <!-- <span *ngIf="data.smsStatus == 'FALSE'"
-                              (click)="sendSms(data.fuelDealerCustomerMapId,data.hostPhone,data.totalOutstanding,data.isMappingSMS,data.isMappingEmail)">
-                              Send O/s SMS
-                          </span>  -->
-                          </a>
-                      </div>
-                  </div>
-              </td>
-          </tr>
-          <tr *ngIf="data.mappingStatus == 'ACTIVE'">
-              <td> <b>{{data.companyName}}</b> <br> {{data.hostName}} </td>
-              <td> ₹ {{data.maxCreditAmount}} </td>
-              <td> {{data.creditDayLimit}} </td>
-              <td>
-                  <span *ngIf="data.openningOS < 0 ">
-                      ₹ {{(data.openningOS)*(-1) | number:'1.2-2'}} CR
-                  </span>
-                  <span *ngIf="data.openningOS >= 0 ">
-                      ₹ {{data.openningOS | number:'1.2-2'}}
-                  </span>
-              </td>
-              <td> ₹ {{ data.totalPurchaseAmt | number:'1.2-2'}} </td>
-              <td> ₹ {{ data.totalPaymentAmt | number:'1.2-2'}} </td>
-              <td>
-                  <span *ngIf="data.netOS < 0 ">
-                      ₹ {{(data.netOS)*(-1) | number:'1.2-2'}} CR
-                  </span>
-                  <span *ngIf="data.netOS >= 0 ">
-                      <span *ngIf="data.netOS < ((data.maxCreditAmount * 90)/100)">
-                          ₹ {{(data.netOS) | number:'1.2-2'}}
-                      </span>
-                      <span *ngIf="data.netOS >= ((data.maxCreditAmount * 90)/100)" style="color: red;">
-                          ₹ {{data.netOS | number:'1.2-2'}}
-                      </span>
-                  </span>
-              </td>
-              <td>
-                  <span *ngIf="data.netOS < data.creditDayLimit">
-                      {{data.pendingDays}}
-                  </span>
-                  <span *ngIf="data.netOS >= data.creditDayLimit" style="color: red;">
-                      {{data.pendingDays}}
-                  </span>
-              </td>
-              <td style="text-align: left;cursor: pointer;">
-                  <div ngbDropdown placement="bottom-left">
-                      <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
-                          aria-expanded="true"></i>
-                      <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
-                          <a class="dropdown-item" href="javascript: void(0);">
-                              &nbsp;
-                              <span *ngIf="data.smsStatus == 'TRUE'">
-                                  O/s SMS Already Send
-                              </span>
-                              <!-- <span *ngIf="data.smsStatus == 'FALSE'"
+        <table class="table table-centered table-nowrap">
+            <thead class="table-light">
+                <tr>
+                    <th style="text-align: left;">Khata Name</th>
+                    <th style="text-align: left;">Cr Amount Limit</th>
+                    <th style="text-align: left;">Cr Days Limit</th>
+                    <th style="text-align: left;">Opening O/s</th>
+                    <th style="text-align: left;">Total Purchase</th>
+                    <th style="text-align: left;">Total Payment</th>
+                    <th style="text-align: left;">Net O/s</th>
+                    <th style="text-align: left;">Pending Days</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody
+                *ngFor="let data of mappingAccData2  | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total } ; let i = index">
+                <tr *ngIf="data.mappingStatus != 'ACTIVE'" style="color: purple;">
+                    <td> <b>{{data.companyName}}</b> <br> {{data.hostName}} </td>
+                    <td> ₹ {{data.maxCreditAmount}} </td>
+                    <td> {{data.creditDayLimit}} </td>
+                    <td>
+                        <span *ngIf="data.openningOS < 0 ">
+                            ₹ {{data.openningOS *(-1) | number:'1.2-2'}} CR
+                        </span>
+                        <span *ngIf="data.openningOS >= 0 ">
+                            ₹ {{data.openningOS | number:'1.2-2'}}
+                        </span>
+                    </td>
+                    <td> ₹ {{ data.totalPurchaseAmt | number:'1.2-2'}} </td>
+                    <td> ₹ {{ data.totalPaymentAmt | number:'1.2-2'}} </td>
+                    <td>
+                        <span *ngIf="data.netOS < 0 ">
+                            ₹ {{(data.netOS)*(-1) | number:'1.2-2'}} CR
+                        </span>
+                        <span *ngIf="data.netOS >= 0 ">
+                            <span *ngIf="data.netOS < ((data.maxCreditAmount * 90)/100)">
+                                ₹ {{(data.netOS) | number:'1.2-2'}}
+                            </span>
+                            <span *ngIf="data.netOS >= ((data.maxCreditAmount * 90)/100)" style="color: red;">
+                                ₹ {{data.netOS | number:'1.2-2'}}
+                            </span>
+                        </span>
+                    </td>
+                    <td>
+                        <span *ngIf="data.netOS < data.creditDayLimit">
+                            {{data.pendingDays}}
+                        </span>
+                        <span *ngIf="data.netOS >= data.creditDayLimit" style="color: red;">
+                            {{data.pendingDays}}
+                        </span>
+                    </td>
+                    <td style="text-align: left;cursor: pointer;">
+                        <div ngbDropdown placement="bottom-left">
+                            <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                                aria-expanded="true"></i>
+                            <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                                <a class="dropdown-item" href="javascript: void(0);">
+                                    &nbsp;
+                                    <span *ngIf="data.smsStatus == 'TRUE'">
+                                        O/s SMS Already Send
+                                    </span>
+                                    <span *ngIf="data.smsStatus == 'FALSE'"
+                                        (click)="sendSms(data.fuelDealerCustomerMapId,data.hostPhone,data.totalOutstanding,data.isMappingSMS,data.isMappingEmail)">
+                                        Send O/s SMS
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="data.mappingStatus == 'ACTIVE'">
+                    <td> <b>{{data.companyName}}</b> <br> {{data.hostName}} </td>
+                    <td> ₹ {{data.maxCreditAmount}} </td>
+                    <td> {{data.creditDayLimit}} </td>
+                    <td>
+                        <span *ngIf="data.openningOS < 0 ">
+                            ₹ {{(data.openningOS)*(-1) | number:'1.2-2'}} CR
+                        </span>
+                        <span *ngIf="data.openningOS >= 0 ">
+                            ₹ {{data.openningOS | number:'1.2-2'}}
+                        </span>
+                    </td>
+                    <td> ₹ {{ data.totalPurchaseAmt | number:'1.2-2'}} </td>
+                    <td> ₹ {{ data.totalPaymentAmt | number:'1.2-2'}} </td>
+                    <td>
+                        <span *ngIf="data.netOS < 0 ">
+                            ₹ {{(data.netOS)*(-1) | number:'1.2-2'}} CR
+                        </span>
+                        <span *ngIf="data.netOS >= 0 ">
+                            <span *ngIf="data.netOS < ((data.maxCreditAmount * 90)/100)">
+                                ₹ {{(data.netOS) | number:'1.2-2'}}
+                            </span>
+                            <span *ngIf="data.netOS >= ((data.maxCreditAmount * 90)/100)" style="color: red;">
+                                ₹ {{data.netOS | number:'1.2-2'}}
+                            </span>
+                        </span>
+                    </td>
+                    <td>
+                        <span *ngIf="data.netOS < data.creditDayLimit">
+                            {{data.pendingDays}}
+                        </span>
+                        <span *ngIf="data.netOS >= data.creditDayLimit" style="color: red;">
+                            {{data.pendingDays}}
+                        </span>
+                    </td>
+                    <td style="text-align: left;cursor: pointer;">
+                        <div ngbDropdown placement="bottom-left">
+                            <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                                aria-expanded="true"></i>
+                            <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                                <a class="dropdown-item" href="javascript: void(0);">
+                                    &nbsp;
+                                    <span *ngIf="data.smsStatus == 'TRUE'">
+                                        O/s SMS Already Send
+                                    </span>
+                                    <!-- <span *ngIf="data.smsStatus == 'FALSE'"
                                   (click)="sendSms(data.fuelDealerCustomerMapId,data.hostPhone,data.totalOutstanding,data.isMappingSMS,data.isMappingEmail)">
                                   Send O/s SMS
                               </span> -->
-                          </a>
-                      </div>
-                  </div>
-              </td>
-          </tr>
-      </tbody>
-  </table>
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
 
-    <!-- begin::Pagination -->
-    <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
-      style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
-    </pagination-controls>
-    <!-- end::Pagination -->
-  </div>
+        <!-- begin::Pagination -->
+        <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+            style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+        </pagination-controls>
+        <!-- end::Pagination -->
+    </div>
 
-  <!-- end::Table container -->
+    <!-- end::Table container -->
 </div>

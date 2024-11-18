@@ -1,0 +1,299 @@
+<br>
+<!-- begin::Header -->
+<div *ngIf="managerView">
+    <div class="card-header border-0 pt-5">
+        <h3 class="card-title align-items-start flex-column">
+            <div class="row">
+                <div class="col-lg-10">
+                    <form [formGroup]="searchDiscountForm">
+
+                        <div class="row">
+                            <label for="example-text-input" class="col-auto col-form-label">Khata</label>
+                            <div class="col-md-3">
+                                <input class="form-control" type="text" list="allCorporateList" placeholder="Khata"
+                                    formControlName="customerName" (change)="getDetailsByCustomerName($event)">
+                                <datalist id="allCorporateList">
+                                    <option *ngFor="let data of allCorporateList" [value]="data.companyName">
+                                </datalist>
+                            </div>
+                            <label for="example-text-input" class="col-auto col-form-label">Date Range </label>
+                            <div class="col-md-2">
+                                <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                    style="background-color: #ffffff;" name="startDate" ngbTooltip="Start Date"
+                                    (click)="startDate.toggle()" ngbDatepicker #startDate="ngbDatepicker"
+                                    formControlName="startDate">
+                            </div>
+                            <div class="col-md-2">
+                                <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                    style="background-color: #ffffff;" name="endDate" ngbTooltip="End Date"
+                                    (click)="endDate.toggle()" ngbDatepicker #endDate="ngbDatepicker"
+                                    formControlName="endDate">
+                            </div>
+                            <div class="col-md-1">
+                                <button class="btn btn-primary" (click)="getMapAccounts()">
+                                    Submit
+                                </button>
+                            </div>
+                            <div class="col-md-1">
+                                <button type="submit" class="btn btn-secondary" name="button"
+                                    (click)="clearDaysLimit()">
+                                    Cancel
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <!-- <span class="card-label fw-bolder fs-3 mb-1">Rate Overview</span> -->
+        </h3>
+    </div>
+    <!-- end::Header -->
+    <!-- begin::Body -->
+    <div class="card-body py-3">
+        <!-- begin::Table container -->
+        <div class="table-responsive mb-0">
+
+            <table class="table table-hover table-striped">
+                <thead>
+                    <th>Credit Days Limit</th>
+                    <th>Opening Outstanding</th>
+                    <th>Total Purchase</th>
+                    <th>Total Payment</th>
+                    <th>Net Outstanding</th>
+                </thead>
+                <tbody *ngFor="let data of mapAccData">
+                    <tr>
+                        <td><b> {{data.creditDayLimit}}</b> </td>
+                        <td>
+                            <span *ngIf="data.openningOS < 0">
+                                ₹ &nbsp; <b> {{data.openningOS * (-1) | number:'1.2-2'}}
+                                    CR</b>
+                            </span>
+                            <span *ngIf="data.openningOS >= 0">
+                                ₹ &nbsp; <b>{{data.openningOS | number:'1.2-2'}}
+                                </b>
+                            </span>
+                        </td>
+                        <td> ₹ &nbsp;<b>{{data.totalPurchaseAmt | number:'1.2-2'}}</b> </td>
+                        <td> ₹ &nbsp;<b>{{data.totalPaymentAmt| number:'1.2-2' }}</b></td>
+
+                        <td style="text-align: left;">
+                            <span *ngIf="data.netOS < 0">
+                                ₹ &nbsp; <b> {{data.netOS *(-1) | number:'1.2-2'}}
+                                    CR</b>
+                            </span>
+                            <span *ngIf="data.netOS >= 0">
+                                ₹ &nbsp; <b>{{data.netOS | number:'1.2-2'}}
+                                </b>
+                            </span>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+
+
+        <div class="row" *ngIf="showCrDaysLimitTable">
+            <div class="card-body table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Cr. Cycle Starts</th>
+                            <th>Cr. Cycle Ends</th>
+                            <th>Total Purchase</th>
+                            <th>Total Payment</th>
+                            <th>View Statement</th>
+
+                        </tr>
+                    </thead>
+                    <tbody
+                        *ngFor="let data of fuelPaymentIntervalAll | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+
+                        <tr>
+                            <td style="text-align: left;">
+                                {{data.startDate | date:"d MMM, yyyy"}}
+                            </td>
+                            <td style="text-align: left;">
+                                {{data.endDate | date:"d MMM, yyyy"}}
+                            </td>
+
+
+                            <td style="text-align: left;">
+                                <span *ngIf="data.creditAmountInterval"> ₹ &nbsp;{{data.creditAmountInterval |
+                                    number:'1.2-2'}}</span>
+                                <span *ngIf="!data.creditAmountInterval"> ₹ &nbsp; 0.00</span>
+
+                            </td>
+
+                            <td style="text-align: left;">
+                                <span *ngIf="data.grandTotalAmountInterval"> ₹ &nbsp; {{data.grandTotalAmountInterval |
+                                    number:'1.2-2'}} </span>
+                                <span *ngIf="!data.grandTotalAmountInterval"> ₹ &nbsp;0.00</span>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- begin::Pagination -->
+                <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                    style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                </pagination-controls>
+                <!-- end::Pagination -->
+            </div>
+        </div>
+
+        <!-- end::Table container -->
+    </div>
+</div>
+
+
+<div *ngIf="!managerView">
+    <span *ngIf="!isFuelStatement">
+        <form [formGroup]="searchDiscountForm">
+
+            <div class="row">
+                <label for="example-text-input" class="col-auto col-form-label">Khata</label>
+                <div class="col-md-3">
+                    <input class="form-control" type="text" list="allCorporateList" placeholder="Khata"
+                        formControlName="customerName" (change)="getDetailsByCustomerName($event)">
+                    <datalist id="allCorporateList">
+                        <option *ngFor="let data of allCorporateList" [value]="data.companyName">
+                    </datalist>
+                </div>
+                <label for="example-text-input" class="col-auto col-form-label">Date Range </label>
+                <div class="col-md-2">
+                    <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+                        name="startDate" ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker
+                        #startDate="ngbDatepicker" formControlName="startDate">
+                </div>
+                <div class="col-md-2">
+                    <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+                        name="endDate" ngbTooltip="End Date" (click)="endDate.toggle()" ngbDatepicker
+                        #endDate="ngbDatepicker" formControlName="endDate">
+                </div>
+
+                <div class="col-md-1">
+                    <button class="btn btn-primary" (click)="getMapAccounts()">
+                        Submit
+                    </button>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-secondary" name="button" (click)="clearDaysLimit()">
+                        Cancel
+                    </button>
+                </div>
+
+            </div>
+        </form>
+        <hr>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card-body table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <th>Credit Days Limit</th>
+                            <th>Opening Outstanding</th>
+                            <th>Total Purchase</th>
+                            <th>Total Payment</th>
+                            <th>Net Outstanding</th>
+                        </thead>
+                        <tbody *ngFor="let data of mapAccData">
+                            <tr>
+                                <td><b> {{data.creditDayLimit}}</b> </td>
+                                <td>
+                                    <span *ngIf="data.openningOS< 0">
+                                        ₹ &nbsp; <b> {{data.openningOS * (-1) | number:'1.2-2'}}
+                                            CR</b>
+                                    </span>
+                                    <span *ngIf="data.openningOS >= 0">
+                                        ₹ &nbsp; <b>{{data.openningOS | number:'1.2-2'}}
+                                        </b>
+                                    </span>
+                                </td>
+                                <td> ₹ &nbsp;<b>{{data.totalPurchaseAmt | number:'1.2-2'}}</b> </td>
+                                <td> ₹ &nbsp;<b>{{data.totalPaymentAmt| number:'1.2-2' }}</b></td>
+
+                                <td style="text-align: left;">
+                                    <span *ngIf="data.netOS < 0">
+                                        ₹ &nbsp; <b> {{data.netOS *(-1) | number:'1.2-2'}}
+                                            CR</b>
+                                    </span>
+                                    <span *ngIf="data.netOS >= 0">
+                                        ₹ &nbsp; <b>{{data.netOS | number:'1.2-2'}}
+                                        </b>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="showCrDaysLimitTable">
+            <div class="card-body table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Cr. Cycle Starts</th>
+                            <th>Cr. Cycle Ends</th>
+                            <th>Total Purchase</th>
+                            <th>Total Payment</th>
+                            <th>View Statement</th>
+
+                        </tr>
+                    </thead>
+                    <tbody
+                        *ngFor="let data of fuelPaymentIntervalAll | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+
+                        <tr>
+                            <td style="text-align: left;">
+                                {{data.startDate | date:"d MMM, yyyy"}}
+                            </td>
+                            <td style="text-align: left;">
+                                {{data.endDate | date:"d MMM, yyyy"}}
+                            </td>
+
+
+                            <td style="text-align: left;">
+                                <span *ngIf="data.creditAmountInterval"> ₹ &nbsp;{{data.creditAmountInterval |
+                                    number:'1.2-2'}}</span>
+                                <span *ngIf="!data.creditAmountInterval"> ₹ &nbsp; 0.00</span>
+
+                            </td>
+
+                            <td style="text-align: left;">
+                                <span *ngIf="data.grandTotalAmountInterval"> ₹ &nbsp;
+                                    {{data.grandTotalAmountInterval | number:'1.2-2'}} </span>
+                                <span *ngIf="!data.grandTotalAmountInterval"> ₹ &nbsp;0.00</span>
+
+                            </td>
+                            <!-- <td style="color: blue;cursor: pointer;"
+                                (click)="updateTotalInvCreditAmtForInterval(data.startDate,data.endDate)">View
+                                Statement</td> -->
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- begin::Pagination -->
+                <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                    style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                </pagination-controls>
+                <!-- end::Pagination -->
+            </div>
+
+
+
+
+        </div>
+
+    </span>
+
+</div>

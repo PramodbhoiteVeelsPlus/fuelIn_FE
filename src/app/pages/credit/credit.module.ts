@@ -8,9 +8,10 @@ import { SharedModule } from "../../_metronic/shared/shared.module";
 import { ModalsModule, WidgetsModule } from '../../_metronic/partials';
 import { AddAccountComponent } from './add-account/add-account.component';
 import { ViewAccountComponent } from './view-account/view-account.component';
+import { ViewAccountDetailsComponent } from './view-account-details/view-account-details.component';
 
 @NgModule({
-  declarations: [AddAccountComponent, ViewAccountComponent],
+  declarations: [AddAccountComponent, ViewAccountComponent, ViewAccountDetailsComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -25,6 +26,10 @@ import { ViewAccountComponent } from './view-account/view-account.component';
       {
         path: 'viewAccount',
         component: ViewAccountComponent,
+      },
+      {
+        path: 'viewAccountDetails',
+        component: ViewAccountDetailsComponent,
       },
     ]),
     WidgetsModule,

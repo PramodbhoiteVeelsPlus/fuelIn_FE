@@ -9,6 +9,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root',
 })
 export class WidgetService {
+  FCInvoiceListDetails: any = [];
+  activeStartDate: string;
+  activeEndDate: string;
+  totalOutstanding: number;
+  crOutstanding2: number;
+  setRouteForActiveArray: any = [];
  
 
   constructor(private http: HttpClient,
@@ -127,6 +133,14 @@ export class WidgetService {
   private addFlagForCorpURL = this.baseURL + 'fuelDealerCustMap/addFlagForCorp';
   private updateFlagForCorpURL = this.baseURL + 'fuelDealerCustMap/updateFlagForCorp';
   private sendSmsToMappedCorpNewURL = this.baseURL + 'fuelDealerCustMap/sendSmsToMappedCorpNew';
+  private getCustomerByCustomerIdURL = this.baseURL + 'customer/getCustomerBycustomerId';
+  private getCorporateInfoByfuelDealerCustomerMapIdURL = this.baseURL + 'fuelDealerCustMap/getCorporateInfoByfuelDealerCustomerMapId1'
+  private getFuelCreditRequestCorporateByfuelDealerIdURL = this.baseURL + 'fuelDealerCustMap/getFuelCreditRequestCorporateByfuelDealerId'
+  private getMapAccountsURL = this.baseURL + 'crCustomers/getMapAccounts';
+  private allCrAndPaymentForIntervalURL = this.baseURL + 'fuelCreditInvoice/allCrAndPaymentForInterval';
+  private getAccountTransactionLogBYfuelDealerCustomMapIdByDateRangeURL = this.baseURL + 'accounttransaclog/getAccountTransactionLogBYfuelDealerCustomMapIdByDateRange';
+  private getFuelCorpIdByMapIdURL = this.baseURL + 'fuelDealerCustMap/getFuelCorpIdByMapId';
+  private getAccessByPersonIdURL = this.baseURL + 'userAccess/getAccessByPersonId'
 
 
   setHeader() {
@@ -134,6 +148,22 @@ export class WidgetService {
     
   }
 
+  setRouteForActiveCustomer(activeRoute: string, allActiveCreditAccByDealer: any, startDate: string | null | undefined, endDate: string | null | undefined, totalOutstanding: any, crOutstanding2: number) {
+    this.FCInvoiceListDetails = [];
+    this.activeStartDate = '';
+    this.activeEndDate = '';
+    this.totalOutstanding = 0;
+    this.crOutstanding2 = 0;
+    let jsonStatement = {
+      activeRoute: activeRoute,
+      activeStartDate: startDate,
+      activeEndDate: endDate,
+      allActiveCreditAccByDealer: allActiveCreditAccByDealer,
+      totalOutstanding: totalOutstanding,
+      crOutstanding2: crOutstanding2
+    }
+    this.setRouteForActiveArray.push(jsonStatement)
+  }
 
 
   //////API Functions
@@ -1156,8 +1186,85 @@ export class WidgetService {
     })
   }
 
+  // getCustomerByCustomerIdURL
+  getCustomerByCustomerIdPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getCustomerByCustomerIdURL, body, {
+      headers: headers
+    })
+  }
 
+  // getCorporateInfoByfuelDealerCustomerMapIdURL
+  getCorporateInfoByfuelDealerCustomerMapIdPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getCorporateInfoByfuelDealerCustomerMapIdURL, body, {
+      headers: headers
+    })
+  }
 
+  // getFuelCreditRequestCorporateByfuelDealerIdURL
+  getFuelCreditRequestCorporateByfuelDealerIdPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getFuelCreditRequestCorporateByfuelDealerIdURL, body, {
+      headers: headers
+    })
+  }
+
+  // getMapAccountsURL
+  getMapAccountsPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getMapAccountsURL, body, {
+      headers: headers
+    })
+  }
+
+  // allCrAndPaymentForIntervalURL
+  allCrAndPaymentForIntervalPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.allCrAndPaymentForIntervalURL, body, {
+      headers: headers
+    })
+  }
+
+  // getAccountTransactionLogBYfuelDealerCustomMapIdByDateRangeURL
+  getAccountTransactionLogBYfuelDealerCustomMapIdByDateRangePOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getAccountTransactionLogBYfuelDealerCustomMapIdByDateRangeURL, body, {
+      headers: headers
+    })
+  }
+
+  // getFuelCorpIdByMapIdURL
+  getFuelCorpIdByMapIdPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getFuelCorpIdByMapIdURL, body, {
+      headers: headers
+    })
+  }
+
+  // getAccessByPersonIdURL
+  getAccessByPersonIdPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getAccessByPersonIdURL, body, {
+      headers: headers
+    })
+  }
 
 
 
