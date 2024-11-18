@@ -845,7 +845,7 @@
                 </label>
             </div>
         </div>
-        <div class="row" *ngIf="isSHIFT">
+        <div class="row" *ngIf="isSHIFT && isBook">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
                 <label class="labelMargin fs-5">Shift Wise</label>
@@ -893,7 +893,7 @@
                 </label>
             </div>
         </div>
-        <div class="row" *ngIf="isSHIFT">
+        <div class="row" *ngIf="isSHIFT && isBook">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
                 <label class="labelMargin fs-5">ShiftTime Wise</label>
@@ -943,7 +943,7 @@
                 </label>
             </div>
         </div>
-        <div class="row" *ngIf="isSHIFT">
+        <div class="row" *ngIf="isSHIFT && isStaffManage">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
                 <label class="labelMargin fs-5">Add Staff</label>
@@ -1382,7 +1382,7 @@
                 </label>
             </div>
         </div>
-        <div class="row" *ngIf="isLEDGER">
+        <div class="row" *ngIf="isLEDGER && isShift">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
                 <label class="labelMargin fs-5">Shift Wise </label>
@@ -1430,10 +1430,10 @@
                 </label>
             </div>
         </div>
-        <div class="row" *ngIf="isLEDGER">
+        <div class="row" *ngIf="isLEDGER && isShift">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
-                <label class="labelMargin fs-5">Shift Time Wise</label>
+                <label class="labelMargin fs-5">Shift Time Wise</label> 
             </div>
             <div class="col-lg-1" style="padding: 15px;">
                 <label class="switch" *ngIf="isLedgerShiftTimeWise">
@@ -1531,7 +1531,7 @@
                 </label>
             </div>
         </div>
-        <div class="row" *ngIf="isPUMP">
+        <div class="row" *ngIf="isPUMP && isLubricant">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
                 <label class="labelMargin fs-5">Add Lubricant </label>
@@ -1579,7 +1579,7 @@
                 </label>
             </div>
         </div>
-        <div class="row" *ngIf="isPUMP">
+        <div class="row" *ngIf="isPUMP && isLubricant">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
                 <label class="labelMargin fs-5">Add Lube Tax GST Sale </label>
@@ -1614,7 +1614,7 @@
                 </label>
             </div>
         </div>
-        <div class="row" *ngIf="isPUMP">
+        <div class="row" *ngIf="isPUMP && isOldAccounting">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
                 <label class="labelMargin fs-5">Oil Company</label>
@@ -1662,7 +1662,7 @@
                 </label>
             </div>
         </div>
-        <div class="row" *ngIf="isPUMP">
+        <div class="row" *ngIf="isPUMP && isOldAccounting">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
                 <label class="labelMargin fs-5">POS</label>
@@ -1710,7 +1710,7 @@
                 </label>
             </div>
         </div>
-        <div class="row" *ngIf="isPUMP">
+        <div class="row" *ngIf="isPUMP && isFastag">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
                 <label class="labelMargin fs-5">Account Info</label>
@@ -1758,7 +1758,7 @@
                 </label>
             </div>
         </div>
-        <div class="row" *ngIf="isPUMP">
+        <div class="row" *ngIf="isPUMP && isFastag">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
                 <label class="labelMargin fs-5">Toll Plaza</label>
