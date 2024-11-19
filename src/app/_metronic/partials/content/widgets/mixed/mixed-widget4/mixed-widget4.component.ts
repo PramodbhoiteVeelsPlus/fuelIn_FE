@@ -80,8 +80,8 @@ export class MixedWidget4Component {
     pos: new FormControl('', Validators.required),
   });
   customerName1: any;
-  isSelected1: boolean;
-  isCalculate: boolean;
+  isSelected1: boolean = false;
+  isCalculate: boolean = false;
   customerName: string;
   calOutstanding: number;
   fuelDealerCorpMapIdNew: string;
@@ -109,6 +109,7 @@ export class MixedWidget4Component {
   isSubmit: boolean = false;
   outstandingAmt: number;
   amountInWord: string;
+  isDisabled: boolean
   a = [
     '',
     'One ',
@@ -200,12 +201,14 @@ export class MixedWidget4Component {
     this.customerName1 = id.target.value;
     if (this.customerName1) {
       this.getCorporateInfoByfuelDealerCustomerMapId(this.customerName1);
+      this.cd.detectChanges()
     } else {
       this.isSelected1 = false;
       this.isCalculate = false;
       this.customerName = '';
       this.calOutstanding = 0;
       this.fuelDealerCorpMapIdNew = ''
+      this.cd.detectChanges()
     }
   }
 
@@ -252,12 +255,14 @@ export class MixedWidget4Component {
           this.isMappingSMS = res.data[0].isMappingSMS;
           // this.getDetailsByMapId(this.fuelDealerCorpMapIdNew);
           // this.getAllOutStanding(this.fuelDealerCorpMapIdNew)
+          this.cd.detectChanges()
         } else {
+          this.cd.detectChanges()
         }
       });
 
   }
-  
+
   getCorporateMappedListByDealerId(fuelDealerId: any) {
     let data = {
       fuelDealerId: fuelDealerId
@@ -271,7 +276,7 @@ export class MixedWidget4Component {
       }
       );
   }
-  
+
   getFlagStatusByCorpId(dealerCorporateId: any) {
     let data = {
       corporateIdForFlag: dealerCorporateId
@@ -298,7 +303,7 @@ export class MixedWidget4Component {
       }
     );
   }
-  
+
   getBankAcc1(id: any) {
     if (id.target.value == 'CASH') {
       this.isCash = true;
@@ -322,7 +327,7 @@ export class MixedWidget4Component {
       }
     }
   }
-  
+
   getFuelTerminal(fuelDealerId: any) {
     let dataTerminal = {
       fuelDealerId: fuelDealerId
@@ -336,7 +341,7 @@ export class MixedWidget4Component {
         }
       })
   }
-  
+
   getBankAcc1POS(id: any) {
     let dataTerminal = {
       terminalId: id.target.value
@@ -355,7 +360,7 @@ export class MixedWidget4Component {
         }
       })
   }
-  
+
   getBankDetailsByDealerId(fuelDealerId: any) {
     this.bankAccList.length = 0;
     let data = {
@@ -396,7 +401,7 @@ export class MixedWidget4Component {
       this.isSubmit = false;
     }
   }
-  
+
   onSearchChange(searchValue: any): void {
     if (searchValue) {
       // this.transform(searchValue);
@@ -410,7 +415,7 @@ export class MixedWidget4Component {
     }
 
   }
-  
+
   // transform(value: any): any {
   //   // console.log('InWord-1', value);
   //   if (value) {
@@ -445,7 +450,7 @@ export class MixedWidget4Component {
   //   }
   // }
 
-  
+
   AddPaymentDetailsByfuelDealerCustomerMapId() {
     this.isSubmit = false;
     this.isCalculate = false;
@@ -811,7 +816,7 @@ export class MixedWidget4Component {
     }
 
   }
-  
+
   clearAll() {
     this.addPaymentForm.reset();
     this.addPaymentForm.controls["paymentMethod"].setValue("");

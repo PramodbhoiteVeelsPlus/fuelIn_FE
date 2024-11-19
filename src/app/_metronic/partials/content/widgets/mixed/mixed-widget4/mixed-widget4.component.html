@@ -1,6 +1,6 @@
 <br>
 <!-- begin::Body -->
-<div class="card-body p-0">
+<div class="card-body">
   <div class="row">
     <div class="col-lg-12">
       <span *ngIf="dealerAccess">
@@ -191,7 +191,7 @@
                         </span>
                       </span>
                       <span *ngIf="isCash">
-                        <select class="form-select" formControlName="accountDetailsId" required>
+                        <select class="form-select" formControlName="accountDetailsId" required >
                           <option value="">Select Account</option>
                           <option value="20">Cash-In-Hand</option>
                           <option value="21">Oil-Company</option>
@@ -211,8 +211,8 @@
                   <div class="mb-3 row">
                     <label for="example-text-input" class="col-md-2 col-form-label">Amount</label>
                     <div class="col-sm-10">
-                      <!-- <input type="number" (input)="onSearchChange($event.target.value)" class="form-control"
-                        formControlName="paymentAmount" placeholder="Enter Amount"> -->
+                      <input type="number"  class="form-control"
+                        formControlName="paymentAmount" placeholder="Enter Amount">
                     </div>
                   </div>
                   <br>

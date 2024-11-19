@@ -12,6 +12,7 @@ import { ModalsModule, WidgetsModule } from 'src/app/_metronic/partials';
 import { SharedModule } from 'src/app/_metronic/shared/shared.module';
 import { ViewSalesComponent } from './view-sales/view-sales.component';
 import { AddPaymentsComponent } from './add-payments/add-payments.component';
+import { ViewPaymentsComponent } from './view-payments/view-payments.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { AddPaymentsComponent } from './add-payments/add-payments.component';
     AddSalesComponent, 
     ViewSalesComponent,
     AddPaymentsComponent,
+    ViewPaymentsComponent
   ],
   imports: [
     CommonModule,
@@ -52,6 +54,10 @@ import { AddPaymentsComponent } from './add-payments/add-payments.component';
       {
         path: 'addPayments',
         component: AddPaymentsComponent,
+      },
+      {
+        path: 'viewPayments',
+        component: ViewPaymentsComponent,
       },
     ]),
     WidgetsModule,
