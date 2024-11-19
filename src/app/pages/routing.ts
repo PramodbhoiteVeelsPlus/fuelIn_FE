@@ -76,6 +76,10 @@ const Routing: Routes = [
     loadChildren: () => import('./dealer/credit/credit.module').then((m) => m.CreditModule),
   },
   {
+    path: 'report',
+    loadChildren: () => import('./dealer/report/report.module').then((m) => m.ReportModule),
+  },
+  {
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full',
