@@ -1,6 +1,5 @@
 <div class="card-body p-0">
   <!-- begin::Header -->
-  <div class="px-9 pt-7 card-rounded h-275px w-100">
     <!-- begin::Heading --> <br>
     <div class="row">
       <div class="col-lg-12">
@@ -110,115 +109,116 @@
                 <option *ngFor="let data of allVehicleData" [value]="data.vehicleNumber">
               </datalist>
             </div>
-          </div>
-          <ng-template #content let-c="close" let-d="dismiss">
-            <div class="modal-header">
-              <h4 class="text-center">
-                Alert Details
-              </h4>
 
-              <div class="text-center mb-4" *ngIf="isAlert" style="position: absolute; top: 14%; left: 50%; 
+            <ng-template #content let-c="close" let-d="dismiss">
+              <div class="modal-header">
+                <h4 class="text-center">
+                  Alert Details
+                </h4>
+
+                <div class="text-center mb-4" *ngIf="isAlert" style="position: absolute; top: 14%; left: 50%; 
                                           transform: translate(-50%, -50%);">
-                <div class="row justify-content-center">
-                  <div class="col-xl-10" style="color: red">
-                    <i class="fa fa-exclamation-triangle fa-fw fa-6x"></i>
+                  <div class="row justify-content-center">
+                    <div class="col-xl-10" style="color: red">
+                      <i class="fa fa-exclamation-triangle fa-fw fa-6x"></i>
+                    </div>
                   </div>
                 </div>
+                <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
               </div>
-              <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <table class="table table-hover table-striped">
-                <thead>
-                  <tr>
-                    <th>Date Of Alert</th>
-                    <th>Petrol Pump Name</th>
-                    <th>City</th>
-                    <th>Remarks</th>
+              <div class="modal-body">
+                <table class="table table-hover table-striped">
+                  <thead>
+                    <tr>
+                      <th>Date Of Alert</th>
+                      <th>Petrol Pump Name</th>
+                      <th>City</th>
+                      <th>Remarks</th>
 
-                  </tr>
-                </thead>
-                <tbody *ngFor="let charges of viewCorpFlag; let i = index;">
-                  <tr>
-                    <td>{{charges.corporateFlagCreatedAt| date:"d MMM, yyyy"}}</td>
-                    <td><b> {{charges.companyName}}</b> <br>
-                      {{charges.firstName}} {{charges.lastName}} <br>
-                      {{charges.phone1}}</td>
-                    <td>{{charges.city}}</td>
-                    <td>{{charges.corporateFlagPurpose}}</td>
-                  </tr>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let charges of viewCorpFlag; let i = index;">
+                    <tr>
+                      <td>{{charges.corporateFlagCreatedAt| date:"d MMM, yyyy"}}</td>
+                      <td><b> {{charges.companyName}}</b> <br>
+                        {{charges.firstName}} {{charges.lastName}} <br>
+                        {{charges.phone1}}</td>
+                      <td>{{charges.city}}</td>
+                      <td>{{charges.corporateFlagPurpose}}</td>
+                    </tr>
 
-                </tbody>
-              </table>
-            </div>
-          </ng-template>
-          <div class="row" *ngIf="isVehicleViewed">
-            <div class="col-lg-12">
-              <br>
-              <label *ngIf="!isCustomerSelect" for="example-text-input" class="col-form-label">click on Customer to
-                select khata</label>
+                  </tbody>
+                </table>
+              </div>
+            </ng-template>
+            <div class="row" *ngIf="isVehicleViewed">
+              <div class="col-lg-12">
+                <br>
+                <label *ngIf="!isCustomerSelect" for="example-text-input" class="col-form-label">click on Customer to
+                  select khata</label>
 
-              <div class="col col-xl-12 col-lg-12">
-                <div class="table-responsive mb-0">
-                  <table class="table table-centered table-nowrap">
-                    <thead style="border-width: 1px; border-color: #000;">
-                      <tr>
-                        <th style="border-width: 1px; border-color: #000;">Khata </th>
-                        <th style="border-width: 1px; border-color: #000;">Person Name</th>
-                        <th style="border-width: 1px; border-color: #000;">Phone Number</th>
-                        <th style="border-width: 1px; border-color: #000;">Bill Nos. Set</th>
+                <div class="col col-xl-12 col-lg-12">
+                  <div class="table-responsive mb-0">
+                    <table class="table table-centered table-nowrap">
+                      <thead style="border-width: 1px; border-color: #000;">
+                        <tr>
+                          <th style="border-width: 1px; border-color: #000;">Khata </th>
+                          <th style="border-width: 1px; border-color: #000;">Person Name</th>
+                          <th style="border-width: 1px; border-color: #000;">Phone Number</th>
+                          <th style="border-width: 1px; border-color: #000;">Bill Nos. Set</th>
 
-                      </tr>
-                    </thead>
-                    <tbody *ngFor="let vehicleList of customerVehicleList; let i = index;">
-                      <tr style="cursor: pointer;"
-                        (click)="getvehicleDetailsForCR(vehicleList.fuelDealerCustomerMapId,vehicleList.vehicleNumber,vehicleList.idfuelCreditVehicle,vehicleList.mappingPreviousStatus,vehicleList.mappingCompanyName,vehicleList.companyName)">
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let vehicleList of customerVehicleList; let i = index;">
+                        <tr style="cursor: pointer;"
+                          (click)="getvehicleDetailsForCR(vehicleList.fuelDealerCustomerMapId,vehicleList.vehicleNumber,vehicleList.idfuelCreditVehicle,vehicleList.mappingPreviousStatus,vehicleList.mappingCompanyName,vehicleList.companyName)">
 
-                        <td *ngIf="vehicleList.mappingPreviousStatus == 'TRUE'"
-                          style="border-width: 1px; border-color: #000;">
-                          <input type="text" class="form-control" [(ngModel)]="vehicleList.mappingCompanyName"
-                            [ngModelOptions]="{standalone: true}" placeholder="Khata Name" readonly />
+                          <td *ngIf="vehicleList.mappingPreviousStatus == 'TRUE'"
+                            style="border-width: 1px; border-color: #000;">
+                            <input type="text" class="form-control" [(ngModel)]="vehicleList.mappingCompanyName"
+                              [ngModelOptions]="{standalone: true}" placeholder="Khata Name" disabled />
 
-                        </td>
-                        <td *ngIf="vehicleList.mappingPreviousStatus == 'FALSE'"
-                          style="border-width: 1px; border-color: #000;">
-                          <input type="text" class="form-control" [(ngModel)]="vehicleList.companyName"
-                            [ngModelOptions]="{standalone: true}" placeholder="Khata Name" readonly />
+                          </td>
+                          <td *ngIf="vehicleList.mappingPreviousStatus == 'FALSE'"
+                            style="border-width: 1px; border-color: #000;">
+                            <input type="text" class="form-control" [(ngModel)]="vehicleList.companyName"
+                              [ngModelOptions]="{standalone: true}" placeholder="Khata Name" disabled />
 
-                        </td>
-                        <td *ngIf="vehicleList.mappingPreviousStatus == 'FALSE'"
-                          style="border-width: 1px; border-color: #000;">
-                          <input type="text" class="form-control" [(ngModel)]="vehicleList.hostName"
-                            [ngModelOptions]="{standalone: true}" placeholder="person name" readonly />
+                          </td>
+                          <td *ngIf="vehicleList.mappingPreviousStatus == 'FALSE'"
+                            style="border-width: 1px; border-color: #000;">
+                            <input type="text" class="form-control" [(ngModel)]="vehicleList.hostName"
+                              [ngModelOptions]="{standalone: true}" placeholder="person name" disabled />
 
-                        </td>
-                        <td *ngIf="vehicleList.mappingPreviousStatus == 'TRUE'"
-                          style="border-width: 1px; border-color: #000;">
-                          <input type="text" class="form-control" [(ngModel)]="vehicleList.mappingCustomerName"
-                            [ngModelOptions]="{standalone: true}" placeholder="person name" readonly />
+                          </td>
+                          <td *ngIf="vehicleList.mappingPreviousStatus == 'TRUE'"
+                            style="border-width: 1px; border-color: #000;">
+                            <input type="text" class="form-control" [(ngModel)]="vehicleList.mappingCustomerName"
+                              [ngModelOptions]="{standalone: true}" placeholder="person name" disabled />
 
-                        </td>
-                        <td style="border-width: 1px; border-color: #000;">
-                          <input type="text" class="form-control" [(ngModel)]="vehicleList.hostPhone"
-                            [ngModelOptions]="{standalone: true}" placeholder="phone number" readonly />
-                        </td>
-                        <td style="border-width: 1px; border-color: #000;">
-                          {{vehicleList.manualNumberStart}} - {{vehicleList.manualNumberEnd}}
-                        </td>
+                          </td>
+                          <td style="border-width: 1px; border-color: #000;">
+                            <input type="text" class="form-control" [(ngModel)]="vehicleList.hostPhone"
+                              [ngModelOptions]="{standalone: true}" placeholder="phone number" disabled />
+                          </td>
+                          <td style="border-width: 1px; border-color: #000;">
+                            {{vehicleList.manualNumberStart}} - {{vehicleList.manualNumberEnd}}
+                          </td>
 
-                      </tr>
-                    </tbody>
-                  </table>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
+
               </div>
 
             </div>
-
           </div>
 
-          <br><br>
+          <br>
 
           <div class="row">
             <div class="col-lg-2">
@@ -234,7 +234,6 @@
               &nbsp; <label class="labelNewMargin">Quantity</label>
             </div>
           </div>
-
 
           <div class="row">
             <div class="col col-xl-12 col-lg-12">
@@ -262,7 +261,7 @@
                       <td>
                         <span *ngIf="autoManualStatus == 'TRUE'">
                           <input type="text" class="form-control" placeholder="Bill Number Automation Active"
-                            readonly />
+                            disabled />
                         </span>
                         <span *ngIf="autoManualStatus != 'TRUE'">
                           <input type="text" class="form-control" [(ngModel)]="charges.manualNumber"
@@ -296,7 +295,6 @@
 
                         <button type="submit" class="btn btn-success" (click)="addFormVehicleRequest()">Add
                         </button>
-                        &nbsp;&nbsp;
                         <button *ngIf="i != 0 " type="cancel" class="btn btn-primary"
                           (click)="removeFormRequestVehicle(i,removeTable)">Delete
                         </button>
@@ -335,9 +333,9 @@
 
         <div class="row">
           <div class="col-md-4">
-            <!-- <button type="submit" class="btn btn-primary" (click)="submitByDealerForVehicle()">Submit</button> -->
+            <button type="submit" class="btn btn-primary" (click)="submitByDealerForVehicle()">Submit</button>
             &nbsp;
-            <!-- <button type="submit" class="btn btn-secondary" (click)="closeModal()">Cancel</button> -->
+            <button type="submit" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
           </div>&nbsp;&nbsp;
           <div class="col-md-2">
           </div>
@@ -355,12 +353,11 @@
           Cancel
         </button>
 
-        <!-- <button type="button" class="btn btn-link" aria-label="Close" (click)="removeVehicleIndex()">
+        <button type="button" class="btn btn-link" aria-label="Close" (click)="removeVehicleIndex()">
           OK
-        </button> -->
+        </button>
       </div>
     </ng-template>
     <!-- end::Balance -->
-  </div>
   <!-- end::Header -->
 </div>

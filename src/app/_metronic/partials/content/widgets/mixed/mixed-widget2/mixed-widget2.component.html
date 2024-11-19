@@ -1,84 +1,278 @@
-<div class="card-header border-0 py-5" [ngClass]="'bg-' + chartColor">
-  <h3 class="card-title fw-bolder text-white">Sales Statistics</h3>
-  <div class="card-toolbar">
-    <!-- begin::Menu -->
-    <button
-      type="button"
-      class="
-        btn btn-sm btn-icon btn-color-white btn-active-white btn-active-color-
-        border-0
-        me-n3
-      "
-      data-kt-menu-trigger="click"
-      data-kt-menu-placement="bottom-end"
-      data-kt-menu-flip="top-end"
-    >
-      <app-keenicon name="category" class="fs-2"></app-keenicon>
-    </button>
-    <app-dropdown-menu1></app-dropdown-menu1>
-    <!-- end::Menu -->
-  </div>
-</div>
-<!-- end::Header -->
+<br>
 <!-- begin::Body -->
 <div class="card-body p-0">
-  <!-- begin::Chart -->
-  <div
-    #chartRef
-    class="mixed-widget-2-chart card-rounded-bottom"
-    [ngClass]="'bg-' + chartColor"
-  >
-    <apx-chart
-      [series]="chartOptions.series"
-      [chart]="chartOptions.chart"
-      [xaxis]="chartOptions.xaxis"
-      [yaxis]="chartOptions.yaxis"
-      [dataLabels]="chartOptions.dataLabels"
-      [stroke]="chartOptions.stroke"
-      [legend]="chartOptions.legend"
-      [fill]="chartOptions.fill"
-      [states]="chartOptions.states"
-      [tooltip]="chartOptions.tooltip"
-      [colors]="chartOptions.colors"
-      [markers]="chartOptions.markers"
-      [plotOptions]="chartOptions.plotOptions"
-    ></apx-chart>
-  </div>
-  <!-- end::Chart -->
-  <!-- begin::Stats -->
-  <div class="card-p mt-n20 position-relative">
-    <!-- begin::Row -->
-    <div class="row g-0">
-      <!-- begin::Col -->
-      <div class="col bg-light-warning px-6 py-8 rounded-2 me-7 mb-7">
-        <app-keenicon name="chart-simple" class="fs-3x text-warning d-block my-2"></app-keenicon>
-        <a href="#" class="text-warning fw-bold fs-6"> Weekly Sales </a>
+  <div class="row">
+    <div class="col-lg-12">
+      <form [formGroup]="requestTransporterLube">
+        <div class="row">
+          <div class="col-lg-2">
+            <label for="example-text-input" class="col-form-label">Date</label>
+          </div>
+          <div class="col-md-10">
+            <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" (click)="endDate.toggle()" readonly
+              style="background-color: #ffffff;" #myinput formControlName="estimatedRefuelDate" ngbDatepicker
+              #endDate="ngbDatepicker">
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-lg-2">
+            <label for="example-text-input" class="col-form-label">Product</label>
+          </div>
+          <div class="col-lg-10">
+            <label for="example-text-input" class="col-form-label">Lubricants</label>
+          </div>
+        </div>
+        <br>
+        <ng-template #viewFlagModel let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="text-center">
+              Show Details
+            </h4>
+            <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <table class="table table-hover table-striped">
+              <thead>
+                <tr>
+                  <th align=left>Date Of Alert</th>
+                  <th align=left>Petrol Pump Name</th>
+                  <th align=left>City</th>
+                  <th align=left>Remarks</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let charges of viewCorpFlag; let i = index;">
+                <tr>
+                  <td>{{charges.corporateFlagCreatedAt| date:"d MMM, yyyy"}}</td>
+                  <td><b> {{charges.companyName}}</b> <br>
+                    {{charges.firstName}} {{charges.lastName}} <br>
+                    {{charges.phone1}}</td>
+                  <td>{{charges.city}}</td>
+                  <td>{{charges.corporateFlagPurpose}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-template>
+        <br>
+        <form [formGroup]="requestTransporter1">
+          <div class="row">
+            <div class="col-lg-2">
+              <label for="example-text-input" class="col-form-label">Khata</label>
+            </div>
+
+            <div class="col-md-10">
+              <input class="form-control" type="text" list="corporateList" placeholder="Select Khata"
+                formControlName="selectedCorp" (change)="getDetailsByfuelDealerCustomerMapIdId($event)">
+              <datalist id="corporateList">
+                <option *ngFor="let data of corporateList" [value]="data.companyName">
+              </datalist>
+            </div>
+          </div>
+          <br>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <ng-template #content let-c="close" let-d="dismiss">
+                <div class="modal-header">
+                  <h4 class="text-center">
+                    Alert Details
+                  </h4>
+                  <div class="text-center mb-4" *ngIf="isAlert" style="position: absolute; top: 14%; left: 50%; 
+                                    transform: translate(-50%, -50%);">
+                    <div class="row justify-content-center">
+                      <div class="col-xl-10" style="color: red">
+                        <i class="fa fa-exclamation-triangle fa-fw fa-6x"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <table class="table table-hover table-striped">
+                    <thead>
+                      <tr>
+                        <th>Date Of Alert</th>
+                        <th>Petrol Pump Name</th>
+                        <th>City</th>
+                        <th>Remarks</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngFor="let charges of viewCorpFlag; let i = index;">
+                      <tr>
+                        <td>{{charges.corporateFlagCreatedAt| date:"d MMM, yyyy"}}</td>
+                        <td><b> {{charges.companyName}}</b> <br>
+                          {{charges.firstName}} {{charges.lastName}} <br>
+                          {{charges.phone1}}</td>
+                        <td>{{charges.city}}</td>
+                        <td>{{charges.corporateFlagPurpose}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </ng-template>
+              <div class="table-responsive mb-0" *ngIf="isSelected1">
+                <div class="text-center mb-4" *ngIf="isAlert"
+                  style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                  <div class="row justify-content-center">
+                    <div class="col-xl-10" style="color: red">
+                      <i class="fa fa-exclamation-triangle fa-fw fa-6x"></i>
+                    </div>
+                  </div>
+                </div>
+                <table class="table table-centered table-nowrap">
+                  <thead>
+                    <tr>
+                      <th style="text-align: left;border-width: 1px; border-color: #000;">Khata Name</th>
+                      <th style="text-align: left;border-width: 1px; border-color: #000;">Key Person Name</th>
+                      <th style="text-align: left;border-width: 1px; border-color: #000;">Key Person Mobile</th>
+                      <th style="text-align: left;border-width: 1px; border-color: #000;">Bill Nos. Set</th>
+                      <th style="text-align: left;border-width: 1px; border-color: #000;">Outstanding</th>
+                      <th style="text-align: left;border-width: 1px; border-color: #000;">Alert</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="text-align: left;border-width: 1px; border-color: #000;">{{dealerName}}</td>
+                      <td style="text-align: left;border-width: 1px; border-color: #000;">
+                        {{personName}}
+                      </td>
+                      <td style="text-align: left;border-width: 1px; border-color: #000;"> {{personPhone1}} </td>
+                      <td style="text-align: left;border-width: 1px; border-color: #000;;">
+                        {{rangeFrom}} - {{rangeTo}}
+                      </td>
+                      <td style="text-align: left;border-width: 1px; border-color: #000;">
+                        <span *ngIf="calOutstanding< 0">
+                          <li class="fas fa-rupee-sign"></li> {{(calOutstanding)*(-1) | number:'1.2-2'}} CR
+                        </span>
+                        <span *ngIf="calOutstanding >= 0">
+                          <li class="fas fa-rupee-sign"></li>{{(calOutstanding) | number:'1.2-2'}}
+                        </span>
+                      </td>
+                      <td style="text-align: left;border-width: 1px; border-color: #000;">
+                        <span *ngIf="viewCorpFlag.length" class="col-md-1" (click)="viewFlag(viewFlagModel)"
+                          style="color:red;cursor:pointer;font-size: x-large;">
+                          <i class="fa fa-exclamation-triangle fa-fw fa-3x"></i>
+                        </span>
+                        <span *ngIf="!viewCorpFlag.length">
+                          None
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <div class="row">
+          <div class="col col-xl-12 col-lg-12">
+            <div class="card-body table-responsive">
+              <table class="table table-hover table-striped">
+                <thead>
+                  <tr>
+                    <th>Lubricant Name</th>
+                    <th> Bill Number </th>
+                    <th>Details (Vehicle/Barrel)</th>
+                    <th>Amount</th>
+                    <th>Quantity</th>
+                    <th>Units</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let charges of CreditRequestDataLube; let i = index;">
+                  <tr>
+                    <td>
+                      <select class="form-control" [(ngModel)]="charges.lubeId" [ngModelOptions]="{standalone: true}"
+                        (change)="getLubeDetails($event,i)">
+                        <option value="">Select</option>
+                        <option *ngFor="let data of lubricantList" [value]="data.lubricantsId">
+                          {{data.lubricantsName}}
+                        </option>
+                      </select>
+                    </td>
+                    <td> 
+                      <span *ngIf="autoManualStatus == 'TRUE'">
+                        <input type="text" class="form-control" placeholder="Bill Number Automation Active" readonly />
+                      </span>
+                      <span *ngIf="autoManualStatus != 'TRUE'">
+                        <input type="text" class="form-control" [(ngModel)]="charges.manualNumberLube"
+                          [ngModelOptions]="{standalone: true}" placeholder="Enter Bill / Ref Number"
+                          (blur)="setManualNumberLube(i)" />
+                      </span>
+                    </td>
+
+                    <td>
+                      <input type="text" class="form-control" [(ngModel)]="charges.vehicleNumberLube"
+                        oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                        [ngModelOptions]="{standalone: true}" placeholder="Enter vehicle no./ barrel"
+                        (blur)="setVehicleNumberLube()" />
+                    </td>
+                    <td>
+                      <input type="number" class="form-control" [(ngModel)]="charges.creditAmountLube"
+                        [ngModelOptions]="{standalone: true}" placeholder="Enter Credit Amount"
+                        (blur)="setAmountLube()" />
+                    </td>
+
+                    <td>
+                      <input type="number" class="form-control" [(ngModel)]="charges.creditQuantityLube"
+                        [ngModelOptions]="{standalone: true}" placeholder="Enter Credit Quantity"
+                        (blur)="setQuantityLube()" />
+                    </td>
+                    <td>
+                      <select class="form-control" [(ngModel)]="charges.unitLube" [ngModelOptions]="{standalone: true}"
+                        disabled>
+                        <option value="Ltr">Ltr</option>
+                        <option value="Kg">Kg</option>
+                      </select>
+                    </td>
+                    <td>
+                      <button type="submit" class="btn btn-success" (click)="addFormRequestLube()">Add
+                      </button>
+                      &nbsp;&nbsp;
+                      <button *ngIf="i != 0 " type="cancel" class="btn btn-primary"
+                        (click)="removeFormRequestLube(i,removeTable)">Delete
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <br>
+      </form>
+
+      <div class="row">
+        <div class="col-md-4">
+          &nbsp;
+          <button type="submit" class="btn btn-primary" (click)="submitByDealerForLube()">Submit</button>
+          &nbsp;&nbsp;
+          <button type="submit" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+        </div>
+
+        <div class="col-md-2">
+        </div>
       </div>
-      <!-- end::Col -->
-      <!-- begin::Col -->
-      <div class="col bg-light-primary px-6 py-8 rounded-2 mb-7">
-        <app-keenicon name="briefcase" class="fs-3x text-primary d-block my-2"></app-keenicon>
-        <a href="#" class="text-primary fw-bold fs-6"> New Projects </a>
-      </div>
-      <!-- end::Col -->
+      <ng-template #removeTable let-c="close" let-d="dismiss">
+        <div class="modal-body">
+          <h6>Are you sure you want to delete this element ?</h6>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-link" aria-label="Close" (click)="d('Cross click')">
+            Cancel
+          </button>
+
+          <button type="button" class="btn btn-link" aria-label="Close" (click)="removeLubeIndex()">
+            OK
+          </button>
+        </div>
+      </ng-template>
     </div>
-    <!-- end::Row -->
-    <!-- begin::Row -->
-    <div class="row g-0">
-      <!-- begin::Col -->
-      <div class="col bg-light-danger px-6 py-8 rounded-2 me-7">
-        <app-keenicon name="abstract-26" class="fs-3x text-danger d-block my-2"></app-keenicon>
-        <a href="#" class="text-danger fw-bold fs-6 mt-2"> Item Orders </a>
-      </div>
-      <!-- end::Col -->
-      <!-- begin::Col -->
-      <div class="col bg-light-success px-6 py-8 rounded-2">
-        <app-keenicon name="sms" class="fs-3x text-success d-block my-2"></app-keenicon>
-        <a href="#" class="text-success fw-bold fs-6 mt-2"> Bug Reports </a>
-      </div>
-      <!-- end::Col -->
-    </div>
-    <!-- end::Row -->
   </div>
-  <!-- end::Stats -->
 </div>

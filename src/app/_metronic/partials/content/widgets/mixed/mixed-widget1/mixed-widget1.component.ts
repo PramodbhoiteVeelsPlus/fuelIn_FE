@@ -1,7 +1,6 @@
-import { ChangeDetectorRef, Component, Injectable, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Injectable, Input, ViewChild } from '@angular/core';
 import { NgbDateAdapter, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { WidgetService } from '../../widgets.services';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import moment from 'moment';
 import { MixedService } from '../mixed.services';
@@ -65,6 +64,7 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 })
 
 export class MixedWidget1Component {
+  @ViewChild("myinput") myInputField: ElementRef;
   @Input() color: string = '';
   dealerLoginVPId: any;
   dealerAccess: boolean = false;
@@ -110,7 +110,7 @@ export class MixedWidget1Component {
   managerName: string;
   CreditVehicleRequestDataArray: any = [];
   mappingCompanyNameForVehicle: string;
-  autoManualStatus: string;
+  autoManualStatus: any = 'FALSE';
   countVehicle: any = 1;
   CreditVehicleRequest = new CreditVehicleRequest()
   autoManualNumberAdvance: any;
@@ -126,13 +126,22 @@ export class MixedWidget1Component {
   vehicleMapId: any;
   fuelVehicleNumber: any;
   idfuelCreditVehicle: any;
-  vehicleAmtType: boolean = false;
-  rangeFrom: any;
-  rangeTo: any;
+  vehicleAmtType: boolean = true;
+  rangeFrom: any = 0;
+  rangeTo: any = 0;
   combineManualNumber: string;
   fuelDealerCorpMapIdNew: any;
   CreditRequest: any;
   indexFuelVehicle: number;
+  dealerCorporateId: any;
+  closeRequestDate = moment(new Date()).format("DD-MM-YYYY");
+  fuelDealerStaffId: any;
+  isBalance1: boolean = false;
+  isCRQUANTITY: boolean = false;
+  isQUANTITY: boolean = false;
+  autoManualNumber: any;
+  autoManualNumberLube: any;
+  autoManualNumberVehicle: any;
 
   constructor(
     private post: MixedService,
@@ -150,6 +159,7 @@ export class MixedWidget1Component {
   ngOnInit() {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
+    this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     this.acceesGroup = element.accessGroupId;
     this.managerVPPersonId = element.veelsPlusId
@@ -161,6 +171,8 @@ export class MixedWidget1Component {
         this.liteAccess = true
       }
     }
+    this.requestVehicle.controls["requestType"].setValue("showamount");
+    this.addFormVehicleRequest();
     this.getProductsByDealerId(this.fuelDealerId)
     this.getAllVehicle()
     this.cd.detectChanges()
@@ -171,7 +183,7 @@ export class MixedWidget1Component {
 
     if (this.requestVehicle.value.priceDate) {
       this.CreditRequestDataArray.length = 0;
-      // this.addFormRequest()
+      // this.addFormVehicleRequest()
       this.fuelProductId = id.target.value;
       let data = {
         dealerId: this.fuelDealerId,
@@ -189,13 +201,10 @@ export class MixedWidget1Component {
             this.requestVehicle.controls["estimatedRefuelDate"].setValue(this.requestVehicle.value.priceDate);
             this.requestVehicle.controls["productPrice"].setValue(res.data[0].productSellingPrice);
 
-            // this.productName1 = res.data[0].productName;
-            // this.productName11 = res.data[0].productCategory;
-            // this.productPrice = res.data[0].productSellingPrice;
+            this.cd.detectChanges()
           } else {
             alert("Please Set Fuel Price first for Selected Date..!")
-            // this.unitForm.controls["productPriceDate"].setValue(this.requestVehicle.value.priceDate)
-            // this.opensetFuelPrice(setFuelPrice)
+            this.cd.detectChanges()
           }
         })
     } else {
@@ -210,11 +219,7 @@ export class MixedWidget1Component {
           if (res.data.length) {
             this.productPriceDetails = res.data;
             this.requestVehicle.controls["productPrice"].setValue(res.data[0].productSellingPrice);
-            // this.productPrice = res.data[0].productSellingPrice;
             this.requestVehicle.controls["estimatedRefuelDate"].setValue(this.requestVehicle.value.priceDate);
-            // this.productName1 = res.data[0].productName;
-            // this.productName11 = res.data[0].productCategory;
-            // this.productPrice = res.data[0].productSellingPrice;
           } else {
             alert("Please Set Fuel Price first for Selected Date..!")
           }
@@ -236,8 +241,6 @@ export class MixedWidget1Component {
 
   setPrice(id: any) {
     this.settingRate = id.target.value;
-    // this.requestTransporter.controls["productPrice"].setValue(this.settingRate);
-    // this.requestTransporterAdvance.controls["productPrice"].setValue(this.settingRate);
     this.productPrice = this.settingRate;
   }
 
@@ -255,10 +258,7 @@ export class MixedWidget1Component {
           if (res.status == 'OK') {
             alert("Fuel Price Set Successfully!");
             this.allProductPriceList.length = 0;
-            // this.getPrice1(this.requestTransporter.value.productName)
-            // this.modalRef.close('close');
             this.spinner.hide();
-            // this.unitForm.controls['productPriceDate'].setValue(this.requestTransporter.value.priceDate);
           } else {
             alert("Getting Error!");
             this.spinner.hide();
@@ -283,10 +283,7 @@ export class MixedWidget1Component {
             if (res.status == 'OK') {
               alert("Fuel Price Set Successfully!");
               this.allProductPriceList.length = 0;
-              // this.getPrice1(this.requestTransporter.value.productName)
-              // this.modalRef.close('close');
               this.spinner.hide();
-              // this.unitForm.controls['productPriceDate'].setValue(this.requestTransporter.value.priceDate);
             } else {
               alert("Getting Error!");
               this.spinner.hide();
@@ -305,10 +302,12 @@ export class MixedWidget1Component {
       this.CreditVehicleRequestDataArray = [];
       this.mappingCompanyNameForVehicle = ""
       this.addFormVehicleRequest()
-      // this.getvehicleInfoByfuelDealerIdAndName(id.target.value);
+      this.getvehicleInfoByfuelDealerIdAndName(id.target.value);
+      this.cd.detectChanges()
     }
     else {
       alert("Please select vehicle")
+      this.cd.detectChanges()
     }
   }
 
@@ -318,6 +317,7 @@ export class MixedWidget1Component {
       this.CreditVehicleRequest = new CreditVehicleRequest();
       this.CreditVehicleRequest.manualNumber = this.autoManualNumberAdvance
       this.CreditVehicleRequestDataArray.push(this.CreditVehicleRequest);
+      this.cd.detectChanges()
     } else {
       this.countVehicle = this.countVehicle + 1;
       if (this.countVehicle < 12) {
@@ -328,13 +328,13 @@ export class MixedWidget1Component {
         this.countVehicle = 11;
         alert("Please save 10 credit entries, before adding more credit entries for a customer (max entries allowed per submit is currently capped at 5)")
       }
+      this.cd.detectChanges()
     }
 
   }
 
   getAllVehicle() {
     let creditArr;
-
     let data = {
       fuelDealerId: this.fuelDealerId
     }
@@ -386,7 +386,6 @@ export class MixedWidget1Component {
   }
 
   getvehicleInfoByfuelDealerIdAndName(vehicleNumber: any) {
-
     let data = {
       fuelDealerId: this.fuelDealerId,
       vehicleNumber: vehicleNumber,
@@ -398,19 +397,19 @@ export class MixedWidget1Component {
           if (this.customerVehicleList.length == 1) {
             this.isVehicleViewed = true;
             this.isCustomerSelect = true;
-            // this.vehicleMapId = res.data[0].fuelDealerCustomerMapId
-            // this.fuelVehicleNumber = vehicleNumber,
-            // this.idfuelCreditVehicle = res.data[0].idfuelCreditVehicle
-            // if(res.data[0].mappingPreviousStatus == 'TRUE'){
-            //   this.mappingCompanyNameForVehicle = res.data[0].mappingCompanyName
-            //   this.getCorporateInfoByfuelDealerCustomerMapId(res.data[0].mappingCompanyName);
-            // }else{
-            //   this.mappingCompanyNameForVehicle = res.data[0].companyName
-            //   this.getCorporateInfoByfuelDealerCustomerMapId(res.data[0].companyName);
-            // }
+            this.vehicleMapId = res.data[0].fuelDealerCustomerMapId
+            this.fuelVehicleNumber = vehicleNumber,
+              this.idfuelCreditVehicle = res.data[0].idfuelCreditVehicle
+            if (res.data[0].mappingPreviousStatus == 'TRUE') {
+              this.mappingCompanyNameForVehicle = res.data[0].mappingCompanyName
+            } else {
+              this.mappingCompanyNameForVehicle = res.data[0].companyName
+            }
+            this.cd.detectChanges()
           } else {
             this.isVehicleViewed = true;
             this.isCustomerSelect = false;
+            this.cd.detectChanges()
           }
 
 
@@ -427,10 +426,8 @@ export class MixedWidget1Component {
       this.idfuelCreditVehicle = idfuelCreditVehicle
     if (mappingPreviousStatus == 'TRUE') {
       this.mappingCompanyNameForVehicle = mappingCompanyName
-      // this.getCorporateInfoByfuelDealerCustomerMapId(mappingCompanyName);
     } else {
       this.mappingCompanyNameForVehicle = companyName
-      // this.getCorporateInfoByfuelDealerCustomerMapId(companyName);
     }
 
   }
@@ -443,7 +440,7 @@ export class MixedWidget1Component {
     this.vehicleAmtType = false;
   }
 
-  setManualNumberVehicle(i: string | number) {
+  setManualNumberVehicle(i: any) {
     if (Number(this.CreditVehicleRequest.manualNumber) >= Number(this.rangeFrom) && Number(this.CreditVehicleRequest.manualNumber) <= Number(this.rangeTo) || Number(this.rangeTo) == 0) {
       if (Number(this.rangeTo) == 0) {
         this.requestVehicle.controls["manualCrNumber"].setValue(this.CreditVehicleRequest.manualNumber)
@@ -463,7 +460,7 @@ export class MixedWidget1Component {
     }
   }
 
-  checkManualNumRangeForNotAssign(manualNumber: any, i: string | number, purpose: string) {
+  checkManualNumRangeForNotAssign(manualNumber: any, i: any, purpose: any) {
     let data = {
       manualNumber: manualNumber,
       fuelDealerId: this.fuelDealerId,
@@ -473,16 +470,12 @@ export class MixedWidget1Component {
         if (res.data.length) {
           alert('Manual number series already Assign To Other Customer')
           this.combineManualNumber = '';
-          // this.requestTransporter.controls["manualCrNumber"].setValue('')
-          // this.requestTransporterAdvance.controls["advanceManualCrAmount"].setValue('')
-
           if (this.CreditRequestDataArray.length) {
             this.CreditRequestDataArray[i].manualNumber = '';
           }
-
         } else {
           if (purpose == 'CREDIT') {
-            this.checkBillManualNumber(this.CreditRequest.manualNumber, i)
+            this.checkBillManualNumber(this.CreditVehicleRequest.manualNumber, i)
           }
           if (purpose == 'COMBINE') {
             this.checkBillnameCombine(this.combineManualNumber)
@@ -504,13 +497,10 @@ export class MixedWidget1Component {
         if (res.data.length) {
           alert('Manual number already exist')
           this.CreditRequestDataArray[i].manualNumber = '';
-          // this.requestTransporter.controls["manualCrNumber"].setValue('')
           this.CreditVehicleRequestDataArray[i].manualNumber = '';
           this.requestVehicle.controls["manualCrNumber"].setValue('')
-
         }
       })
-
   }
 
   checkBillnameCombine(manualNumber: string) {
@@ -530,250 +520,278 @@ export class MixedWidget1Component {
       })
 
   }
-  
-amountCalculateVehicle(i: number) {
-  if (this.requestVehicle.value.productPrice) {
-    if (this.CreditVehicleRequestDataArray[i].creditAmount) {
-      if (this.CreditVehicleRequestDataArray[i].creditAmount > 0) {
-        this.CreditVehicleRequestDataArray[i].creditQuantity = Number((this.CreditVehicleRequestDataArray[i].creditAmount) / (this.requestVehicle.value.productPrice)).toFixed(2)
-        this.requestVehicle.controls["reqQuantity"].setValue(this.CreditVehicleRequestDataArray[i].creditQuantity)
-        this.requestVehicle.controls["reqCreditAmount"].setValue(this.CreditVehicleRequestDataArray[i].creditAmount)
-        this.requestVehicle.controls["actualCreditQuantity"].setValue(this.CreditVehicleRequestDataArray[i].creditQuantity)
-        this.requestVehicle.controls["actualCreditAmount"].setValue(this.CreditVehicleRequestDataArray[i].creditAmount)
+
+  amountCalculateVehicle(i: number) {
+    if (this.requestVehicle.value.productPrice) {
+      if (this.CreditVehicleRequestDataArray[i].creditAmount) {
+        if (this.CreditVehicleRequestDataArray[i].creditAmount > 0) {
+          this.CreditVehicleRequestDataArray[i].creditQuantity = Number((this.CreditVehicleRequestDataArray[i].creditAmount) / (this.requestVehicle.value.productPrice)).toFixed(2)
+          this.requestVehicle.controls["reqQuantity"].setValue(this.CreditVehicleRequestDataArray[i].creditQuantity)
+          this.requestVehicle.controls["reqCreditAmount"].setValue(this.CreditVehicleRequestDataArray[i].creditAmount)
+          this.requestVehicle.controls["actualCreditQuantity"].setValue(this.CreditVehicleRequestDataArray[i].creditQuantity)
+          this.requestVehicle.controls["actualCreditAmount"].setValue(this.CreditVehicleRequestDataArray[i].creditAmount)
+        } else {
+
+        }
       } else {
-        
+      }
+    } else {
+      alert("Please Select product Price")
+    }
+  }
+
+  quantityCalculateVehicle(i: number) {
+    if (this.requestVehicle.value.productPrice) {
+      if (this.CreditVehicleRequestDataArray[i].creditQuantity) {
+        if (this.CreditVehicleRequestDataArray[i].creditQuantity > 0) {
+          this.CreditVehicleRequestDataArray[i].creditAmount = Number((this.CreditVehicleRequestDataArray[i].creditQuantity) * (this.requestVehicle.value.productPrice)).toFixed(2)
+          this.requestVehicle.controls["reqQuantity"].setValue(this.CreditVehicleRequestDataArray[i].creditQuantity)
+          this.requestVehicle.controls["reqCreditAmount"].setValue(this.CreditVehicleRequestDataArray[i].creditAmount)
+          this.requestVehicle.controls["actualCreditQuantity"].setValue(this.CreditVehicleRequestDataArray[i].creditQuantity)
+          this.requestVehicle.controls["actualCreditAmount"].setValue(this.CreditVehicleRequestDataArray[i].creditAmount)
+        } else {
+
+        }
+      } else {
+      }
+    } else {
+      alert("Please Select product Price")
+    }
+
+  }
+
+  removeFormRequestVehicle(i: number, removeTable: any) {
+    this.indexFuelVehicle = i;
+    this.modalRef = this.modalService.open(removeTable, { size: 'md' });
+    this.modalRef.result.then(
+      (result: any) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason: any) => {
+        this.closeResult = `Dismissed`;
+      }
+    );
+  }
+
+  getFuelStaffIdByfuelDealerId(fuelDealerId: any) {
+    let data = {
+      fuelDealerId: fuelDealerId,
+    }
+    this.post1.getFuelStaffIdByfuelDealerIdPOST(data)
+      .subscribe(res => {
+        if (res) {
+          this.fuelDealerStaffId = res.data[0].fuelDealerStaffId;
+        }
+        else {
+
+        }
+      })
+  }
+
+  submitByDealerForVehicle() {
+    if (this.acceesGroup == 12 || this.acceesGroup == 19) {
+      this.spinner.show()
+      if (this.requestVehicle.value.estimatedRefuelDate) {
+        if (this.requestVehicle.value.actualCreditAmount || this.requestVehicle.value.reqQuantity) {
+          if (this.vehicleMapId) {
+            if (this.requestVehicle.value.manualCrNumber) {
+
+              let data = {
+                idfuelCreditVehicle: this.idfuelCreditVehicle,
+                fuelVehicleNumber: this.fuelVehicleNumber,
+                customerVehicleList: this.CreditVehicleRequestDataArray,
+                fuelDealerVehicleMapId: this.vehicleMapId,
+                estimatedRefuelDate: moment(this.requestVehicle.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+                fuelDealerId: this.fuelDealerId,
+                fuelProductId: this.requestVehicle.value.productName,
+                lubricantsFuelCorporateId: this.dealerCorporateId,
+                creditSource: "DEALER",
+                // PANno: this.PANno,
+                vehicleTransDateTime: moment(this.closeRequestDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+                vehicleTransactionTime: moment(new Date()).format('hh:mm:ss'),
+                creditAmount: this.requestVehicle.value.actualCreditAmount,
+                transactionStatus: 'COMPLETE',
+                fuelDealerStaffId: this.fuelDealerStaffId,
+                actualCreditQuantity: this.requestVehicle.value.actualCreditQuantity,
+                createdAt: moment(this.todayDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+                productRate: this.requestVehicle.value.productPrice,
+                // personId: this.personId,
+                // isMappingSMS: this.smsMappingStatus,
+                // isMappingEmail: this.emailMappingStatus,
+                autoManualStatus: this.autoManualStatus
+              }
+              this.post.addCreditVehicleReqByDealerForAllPOST(data)
+                .subscribe(res => {
+                  if (res.status == "OK") {
+                    alert("Credit Added Sccessfully!");
+                    this.isBalance1 = false;
+                    this.spinner.hide();
+                    this.myInputField.nativeElement.focus();
+                    // this.checkDates(this.vehicleMapId, moment(this.requestVehicle.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
+                    this.isCRQUANTITY = false;
+                    this.isQUANTITY = false;
+                    this.CreditVehicleRequestDataArray = [];
+                    this.countVehicle = 1;
+                    if (this.autoManualStatus == 'TRUE') {
+
+                      this.updateAssignedAutoManualNumber('VEHICLE', res.count)
+                    } else {
+                      this.addFormVehicleRequest()
+                    }
+
+                    this.mappingCompanyNameForVehicle = "";
+                  } else {
+                    alert("Error to Created Request!")
+                    this.isBalance1 = false;
+                    this.spinner.hide();
+                  }
+                });
+            } else {
+              alert("Please Enter Bill / Ref Number!")
+              this.spinner.hide();
+            }
+          }
+          else {
+            alert("Please Select customer!")
+            this.spinner.hide();
+          }
+        }
+        else {
+          alert("Please Enter Amount or Quantity!")
+          this.spinner.hide();
+        }
+      }
+      else {
+        alert("Please Select Date!")
+        this.spinner.hide();
       }
 
+
     } else {
-    }
-  } else {
-    alert("Please Select product Price")
-  }
+      if (this.acceesGroup == 14 || this.acceesGroup == 21) {
+        this.spinner.show()
+        if (this.requestVehicle.value.estimatedRefuelDate) {
+          if (this.requestVehicle.value.actualCreditAmount || this.requestVehicle.value.reqQuantity) {
+            if (this.vehicleMapId) {
+              if (this.requestVehicle.value.productName) {
+                // if (this.personId) {
+                if (this.requestVehicle.value.manualCrNumber) {
 
-}
+                  let data = {
+                    idfuelCreditVehicle: this.idfuelCreditVehicle,
+                    fuelVehicleNumber: this.fuelVehicleNumber,
+                    customerVehicleList: this.CreditVehicleRequestDataArray,
+                    fuelDealerVehicleMapId: this.vehicleMapId,
+                    estimatedRefuelDate: moment(this.requestVehicle.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+                    fuelDealerId: this.fuelDealerId,
+                    fuelProductId: this.requestVehicle.value.productName,
+                    lubricantsFuelCorporateId: this.dealerCorporateId,
+                    creditSource: "DEALER",
+                    // PANno: this.PANno,
+                    vehicleTransDateTime: moment(this.closeRequestDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+                    vehicleTransactionTime: moment(new Date()).format('hh:mm:ss'),
+                    transactionStatus: 'COMPLETE',
+                    fuelDealerStaffId: this.fuelDealerStaffId,
+                    createdAt: moment(this.todayDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+                    productRate: this.requestVehicle.value.productPrice,
+                    manualCrNumber: this.requestVehicle.value.manualCrNumber,
+                    // personId: this.personId,
+                    managerVPPersonId: this.managerVPPersonId,
+                    managerPersonId: this.managerPersonId,
+                    managerName: this.managerName,
+                    autoManualStatus: this.autoManualStatus
+                  }
+                  this.post.addCreditVehicleReqByDealerForAllPOST(data)
+                    .subscribe(res => {
+                      if (res.status == "OK") {
+                        alert("Credit Added Sccessfully!");
+                        this.isBalance1 = false;
+                        this.spinner.hide();
+                        this.myInputField.nativeElement.focus();
+                        // this.checkDates(this.vehicleMapId, moment(this.requestVehicle.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
+                        this.isCRQUANTITY = false;
+                        this.isQUANTITY = false;
+                        this.countVehicle = 1;
+                        if (this.autoManualStatus == 'TRUE') {
 
-quantityCalculateVehicle(i: number) {
-  if (this.requestVehicle.value.productPrice) {
-    if (this.CreditVehicleRequestDataArray[i].creditQuantity) {
-      if (this.CreditVehicleRequestDataArray[i].creditQuantity > 0) {
-        this.CreditVehicleRequestDataArray[i].creditAmount = Number((this.CreditVehicleRequestDataArray[i].creditQuantity) * (this.requestVehicle.value.productPrice)).toFixed(2)
-        this.requestVehicle.controls["reqQuantity"].setValue(this.CreditVehicleRequestDataArray[i].creditQuantity)
-        this.requestVehicle.controls["reqCreditAmount"].setValue(this.CreditVehicleRequestDataArray[i].creditAmount)
-        this.requestVehicle.controls["actualCreditQuantity"].setValue(this.CreditVehicleRequestDataArray[i].creditQuantity)
-        this.requestVehicle.controls["actualCreditAmount"].setValue(this.CreditVehicleRequestDataArray[i].creditAmount)
-      } else {
-        
+                          this.updateAssignedAutoManualNumber('VEHICLE', res.count)
+                        } else {
+                          this.addFormVehicleRequest()
+                        }
+                        this.requestVehicle.controls["requestType"].setValue("showamount");
+                        // this.closeRequestForm.controls["requestTypeClose"].setValue("showamount");
+                      } else {
+                        alert("Error to Created Request!")
+                        this.isBalance1 = false;
+                        this.spinner.hide();
+                      }
+
+                    })
+
+                } else {
+                  alert("Please Enter Bill / Ref Number!")
+                  this.spinner.hide();
+                }
+              }
+              // else {                
+              //   this.spinner.hide();
+              // }
+            }
+            else {
+              alert("Please Select Product!")
+              this.spinner.hide();
+            }
+          }
+          else {
+            alert("Please Select Customer!")
+            this.spinner.hide();
+          }
+        }
+        else {
+          alert("Please Enter Amount & Quantity..!")
+          this.spinner.hide();
+        }
       }
-
-    } else {
+      else {
+        alert("Please Select Date!")
+        this.spinner.hide();
+      }
     }
-  } else {
-    alert("Please Select product Price")
   }
 
-}
+  updateAssignedAutoManualNumber(status: string, count: any) {
+    if (status == "VEHICLE") {
+      let data = {
+        fuelDealerId: this.fuelDealerId,
+        assignedAutoManualNumber: Number(this.autoManualNumberVehicle) + Number(count),
+        status: status
+      }
+      this.post.updateAssignedAutoManualNumberPOST(data)
+        .subscribe(res => {
+          // this.getfuelDealerIdByCorporateIdForCalling(status)
+        })
 
-removeFormRequestVehicle(i: number,removeTable: any) {
-
-  this.indexFuelVehicle = i;
-  this.modalRef = this.modalService.open(removeTable, {size : 'md'});
-  this.modalRef.result.then(
-    (result: any) => {
-      this.closeResult = `Closed with: ${result}`;
-    },
-    (reason: any) => {
-      this.closeResult = `Dismissed`;
     }
-  );
-}
+    else {
 
-// submitByDealerForVehicle() {
-//   if (this.acceesGroup == 12 || this.acceesGroup == 19) {
-//     this.spinner.show()
-//     if (this.requestVehicle.value.estimatedRefuelDate) {
-//       if (this.requestVehicle.value.actualCreditAmount || this.requestVehicle.value.reqQuantity) {
-//         if (this.vehicleMapId) {
-//                 if (this.requestVehicle.value.manualCrNumber) {
-
-//                     let data = {
-//                       idfuelCreditVehicle:this.idfuelCreditVehicle,
-//                       fuelVehicleNumber:this.fuelVehicleNumber,
-//                       customerVehicleList: this.CreditVehicleRequestDataArray,
-//                       fuelDealerVehicleMapId: this.vehicleMapId,
-//                       estimatedRefuelDate: moment(this.requestVehicle.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
-//                       fuelDealerId: this.fuelDealerId,
-//                       fuelProductId: this.requestVehicle.value.productName,
-//                       lubricantsFuelCorporateId: this.loginCorporateId,
-//                       creditSource: "DEALER",
-//                       PANno: this.PANno,
-//                       vehicleTransDateTime: moment(this.closeRequestDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
-//                       vehicleTransactionTime: moment(new Date()).format('hh:mm:ss'),
-//                       creditAmount: this.requestVehicle.value.actualCreditAmount,
-//                       transactionStatus: 'COMPLETE',
-//                       fuelDealerStaffId: this.fuelDealerStaffId,
-//                       actualCreditQuantity: this.requestVehicle.value.actualCreditQuantity,
-//                       createdAt: moment(this.todayDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
-//                       productRate: this.requestVehicle.value.productPrice,
-//                       personId: this.personId,
-//                       isMappingSMS:this.smsMappingStatus,
-//                       isMappingEmail:this.emailMappingStatus,
-//                       autoManualStatus:this.autoManualStatus
-//                     }
-//                     this.post1.addCreditVehicleReqByDealerForAllPost(data)
-//                       .subscribe(res => {
-//                         if (res.status == "OK") {
-//                           alert("Credit Added Sccessfully!");
-//                           this.isBalance1 = false;
-//                           this.spinner.hide();
-//                           this.myInputField.nativeElement.focus();                           
-//                           this.checkDates(this.vehicleMapId,moment(this.requestVehicle.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
-//                           this.isCRQUANTITY = false;
-//                           this.isQUANTITY = false;
-//                           this.CreditVehicleRequestDataArray = [];
-//                           this.countVehicle = 1;
-//                           if(this.autoManualStatus == 'TRUE'){
-
-//                             this.updateAssignedAutoManualNumber('VEHICLE',res.count)
-//                             }else{
-//                               this.addFormVehicleRequest()
-//                             }
-//                           this.requestTransporterLube.controls["requestType"].setValue("showamount");
-//                           this.requestTransporterLube.controls["requestTypeCR"].setValue("showamount");
-//                           this.requestTransporterLube.controls["priceDate"].setValue(this.todayDate);
-                         
-//                           this.mappingCompanyNameForVehicle = "";
-//                           this.requestTransporterLube.controls["manualCrNumber"].setValue("");
-//                           this.requestTransporterLube.controls["creditQuantity"].setValue("");
-//                           this.requestTransporterLube.controls["creditAmount"].setValue("");
-//                           this.requestTransporterLube.controls["vehicleNumber"].setValue("");
-//                         } else {
-//                           alert("Error to Created Request!")
-//                           this.isBalance1 = false;
-//                           this.spinner.hide();
-//                         }
-//                       });
-//             } else {
-//               alert("Please Enter Bill / Ref Number!")
-//         this.spinner.hide();
-//             }
-//         }
-//         else {
-//           alert("Please Select customer!")
-//           this.spinner.hide();
-//         }
-//       }
-//       else {
-//         alert("Please Enter Amount or Quantity!")
-//       this.spinner.hide();
-//       }
-//     }
-//     else {
-//       alert("Please Select Date!")
-//       this.spinner.hide();
-//     }
-
-
-//   } else {
-//     if (this.acceesGroup == 14 || this.acceesGroup == 21) {
-
-//       this.spinner.show()
-
-//       if (this.requestVehicle.value.estimatedRefuelDate) {
-//         if (this.requestVehicle.value.actualCreditAmount || this.requestVehicle.value.reqQuantity) {
-//           if (this.vehicleMapId) {
-//              if (this.requestVehicle.value.productName) {
-//               // if (this.personId) {
-//                   if (this.requestVehicle.value.manualCrNumber) {
-
-//                       let data = {
-//                         idfuelCreditVehicle:this.idfuelCreditVehicle,
-//                         fuelVehicleNumber:this.fuelVehicleNumber,
-//                         customerVehicleList: this.CreditVehicleRequestDataArray,
-//                         fuelDealerVehicleMapId: this.vehicleMapId,
-//                         estimatedRefuelDate: moment(this.requestVehicle.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
-//                         fuelDealerId: this.fuelDealerId,
-//                          fuelProductId: this.requestVehicle.value.productName,
-//                         lubricantsFuelCorporateId: this.loginCorporateId,
-//                         creditSource: "DEALER",
-//                         PANno: this.PANno,
-//                         vehicleTransDateTime: moment(this.closeRequestDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
-//                         vehicleTransactionTime: moment(new Date()).format('hh:mm:ss'),
-//                         transactionStatus: 'COMPLETE',
-//                         fuelDealerStaffId: this.fuelDealerStaffId,
-//                         createdAt: moment(this.todayDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
-//                         productRate: this.requestVehicle.value.productPrice,
-//                         manualCrNumber: this.requestVehicle.value.manualCrNumber,
-//                         personId: this.personId,
-//                         managerVPPersonId: this.managerVPPersonId,
-//                         managerPersonId: this.managerPersonId,
-//                         managerName:this.managerName,
-//                         autoManualStatus:this.autoManualStatus
-//                       }
-//                       this.post1.addCreditVehicleReqByDealerForAllPost(data)
-//                         .subscribe(res => {
-//                           if (res.status == "OK") {
-//                             alert("Credit Added Sccessfully!");
-//                             this.isBalance1 = false;
-//                             this.spinner.hide();
-//                             this.myInputField.nativeElement.focus();                       
-//                             this.checkDates(this.vehicleMapId,moment(this.requestVehicle.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
-//                             this.isCRQUANTITY = false;
-//                             this.isQUANTITY = false;
-//                             this.CreditRequestDataLube = [];
-//                             this.countVehicle = 1;
-//                             if(this.autoManualStatus == 'TRUE'){
-
-//                               this.updateAssignedAutoManualNumber('VEHICLE',res.count)
-//                               }else{
-//                                 this.addFormVehicleRequest()
-//                               }
-//                             this.requestTransporterLube.controls["requestType"].setValue("showamount");
-//                             this.requestVehicle.controls["requestType"].setValue("showamount");
-//                             this.requestTransporterLube.controls["requestTypeCR"].setValue("showamount");
-//                             this.closeRequestForm.controls["requestTypeClose"].setValue("showamount");
-//                             this.requestTransporterLube.controls["priceDate"].setValue(this.todayDate);
-//                             this.requestTransporterLube.controls["manualCrNumber"].setValue("");
-//                             this.requestTransporterLube.controls["creditQuantity"].setValue("");
-//                             this.requestTransporterLube.controls["creditAmount"].setValue("");
-//                             this.requestTransporterLube.controls["vehicleNumber"].setValue("");
-//                           } else {
-//                             alert("Error to Created Request!")
-//                             this.isBalance1 = false;
-//                             this.spinner.hide();
-//                           }                            
-
-//                         })
-                                 
-//              } else {
-//               alert("Please Enter Bill / Ref Number!")
-//             this.spinner.hide();
-//              }
-//           }
-//             // else {                
-//             //   this.spinner.hide();
-//             // }
-//         }
-//           else {
-//             alert("Please Select Product!")
-//             this.spinner.hide();
-//           }
-//         }
-//         else {
-//           alert("Please Select Customer!")
-//           this.spinner.hide();
-//         }
-//       }
-//         else {
-//           alert("Please Enter Amount & Quantity..!")
-//           this.spinner.hide();
-//         }}
-//         else {
-//           alert("Please Select Date!")
-//           this.spinner.hide();
-//         }
-
-
-//       }
-//     }
+    }
   }
+
+  closeModal() {
+    this.productPrice = '';
+    this.productPriceDetails.length = 0;
+    this.isSelected2 = false;
+    this.isVehicleViewed = false
+    this.requestVehicle.controls["vehicleNumber"].setValue('');
+    this.requestVehicle.controls["productPrice"].setValue('');
+    this.requestVehicle.controls["productName"].setValue('');
+
+  }
+
+  removeVehicleIndex() {
+    this.CreditVehicleRequestDataArray.splice(this.indexFuelVehicle, 1);
+    this.countVehicle = this.countVehicle - 1;
+
+  }
+}
 

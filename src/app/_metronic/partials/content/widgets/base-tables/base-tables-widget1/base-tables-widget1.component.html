@@ -1,1108 +1,1728 @@
-<div class="card card-custom" [ngClass]="cssClass">
+<div class="card card-custom">
   <!-- Header -->
   <div class="card-header border-0 pt-5">
-    <h3 class="card-title align-items-start flex-column">
-      <span class="card-label font-weight-bolder text-gray-900"
-        >Trending Items</span
-      >
-      <span class="text-muted mt-3 font-weight-bold font-size-sm"
-        >More than 400+ new members</span
-      >
-    </h3>
-    <div class="card-toolbar">
-      <ul class="nav nav-pills nav-pills-sm nav-dark-75">
-        <li
-          class="nav-item"
-          (click)="setCurrentTab(TABS[0])"
-          [style.cursor]="'pointer'"
-        >
-          <a
-            class="nav-link py-2 px-4"
-            [class.active]="currentTab === TABS[0]"
-            data-toggle="tab"
-            >Month</a
-          >
-        </li>
-        <li
-          class="nav-item"
-          (click)="setCurrentTab(TABS[1])"
-          [style.cursor]="'pointer'"
-        >
-          <a
-            class="nav-link py-2 px-4"
-            [class.active]="currentTab === TABS[1]"
-            data-toggle="tab"
-            >Week</a
-          >
-        </li>
-        <li
-          class="nav-item"
-          (click)="setCurrentTab(TABS[2])"
-          [style.cursor]="'pointer'"
-        >
-          <a
-            class="nav-link py-2 px-4"
-            [class.active]="currentTab === TABS[2]"
-            data-toggle="tab"
-            >Day</a
-          >
-        </li>
-      </ul>
+    <form [formGroup]="selectCorporate">
+      <div class="mb-3 row">
+        <label for="example-text-input" class="col-auto col-form-label">Khata</label>
+        <div class="col-md-3">
+          <input class="form-control" type="text" list="allCorporateList" placeholder="All Khata"
+            formControlName="selectCorporateId">
+          <datalist id="allCorporateList">
+            <option *ngFor="let data of allCorporateList" [value]="data.companyName">
+          </datalist>
+        </div>
+        <label for="example-text-input" class="col-auto col-form-label">Date Range</label>
+        <div class="col-md-2">
+          <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+            name="startDate" ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker
+            #startDate="ngbDatepicker" formControlName="startDate">
+        </div>
+        <div class="col-md-2">
+          <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+            name="endDate" ngbTooltip="End Date" (click)="endDate.toggle()" ngbDatepicker #endDate="ngbDatepicker"
+            formControlName="endDate">
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-primary" name="button" (click)="searchByCorp()">
+            Submit
+          </button>
+        </div>
+        <div class="col-auto">
+          <span style="font-size: 35px;cursor: pointer;" (click)="exportToPDF1()" ngbTooltip="Download PDF"
+            placement="bottom"><i class="fas fa-file-pdf"></i></span><br>
+        </div>
+        <div class="col-auto">
+          <span style="font-size: 35px;cursor: pointer;" (click)="downloadExcelForDealer()" ngbTooltip="Download CSV"
+            placement="bottom"><i class="fas fa-file-csv"></i></span><br>
+        </div>
+      </div>
+    </form>
+
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-auto">
+        <div class="table-responsive mb-0">
+          <table class="table table-centered table-nowrap">
+            <thead>
+              <tr>
+                <th *ngFor="let data of productWiseCRAmt" style="text-align: left; border: 2px solid #272829;">
+                  <span *ngIf="data.purpose == 'AdvAmt' ">
+                    ADVANCE
+                  </span>
+                  <span *ngIf="data.purpose == 'LUBETAX' ">
+                    LUBRICANTS-TAX
+                  </span>
+                  <span *ngIf="data.purpose != 'AdvAmt' && data.purpose != 'LUBETAX'">
+                    {{data.productName}}
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td *ngFor="let data of productWiseCRAmt" style="text-align: left; border: 2px solid #272829;">
+                  <b>
+                    ₹ {{data.totalCreditAmount | number:'1.2-2'}}
+                  </b>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
+
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="search-box">
+          <div class="position-relative">
+            <input class="form-control mr-md-4" type="text" placeholder="search"
+              oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+              [(ngModel)]="searchData" [ngModelOptions]="{standalone: true}" (input)="onSearch()">
+            <i class="bx bx-search-alt search-icon"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
   <!-- Body -->
   <div class="card-body pt-2 pb-0 mt-n3">
-    <div class="tab-content mt-5" id="myTabTables6">
-      <!--begin::Tap pane-->
-      <div
-        class="tab-pane fade"
-        [class.active]="currentTab === TABS[0]"
-        [class.show]="currentTab === TABS[0]"
-        id="kt_tab_pane_6_1"
-        role="tabpanel"
-        aria-labelledby="kt_tab_pane_6_1"
-      >
-        <!--begin::Table-->
-        <div class="table-responsive">
-          <table class="table table-borderless table-vertical-center">
-            <thead>
-              <tr>
-                <th class="p-0 w-50px"></th>
-                <th class="p-0" [ngClass]="progressWidth"></th>
-                <th class="p-0 min-w-100px"></th>
-                <th class="p-0 min-w-40px"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th class="pl-0 py-5">
-                  <div class="symbol symbol-50 symbol-light mr-2">
-                    <span class="symbol-label">
-                      <span
-                        [inlineSVG]="'./assets/media/svg/brand-logos/bebo.svg'"
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
-                    </span>
-                  </div>
-                </th>
-                <td class="py-6 pl-0">
-                  <a
-                    href="#"
-                    class="
-                      text-gray-900
-                      font-weight-bolder
-                      text-hover-primary
-                      mb-1
-                      font-size-lg
-                    "
-                    >Active Customers</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Best Customers</span
-                  >
-                </td>
-                <td>
-                  <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
-                        d-flex
-                        align-items-center
-                        justify-content-between
-                        mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
-                        71%
-                      </span>
-                      <span class="text-muted font-size-sm font-weight-bold">
-                        Progress
-                      </span>
-                    </div>
-                    <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-danger"
-                        role="progressbar"
-                        style="width: 71%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                  </div>
-                </td>
-                <td class="text-right pr-0">
-                  <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <app-keenicon name="arrow-right" class="fs-md text-success"></app-keenicon>
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <th class="pl-0 py-5">
-                  <div class="symbol symbol-50 symbol-light mr-2">
-                    <span class="symbol-label">
-                      <span
-                        [inlineSVG]="
-                          './assets/media/svg/brand-logos/kickstarter.svg'
-                        "
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
-                    </span>
-                  </div>
-                </th>
-                <td class="pl-0">
-                  <a
-                    href="#"
-                    class="
-                      text-gray-900
-                      font-weight-bolder
-                      text-hover-primary
-                      mb-1
-                      font-size-lg
-                    "
-                    >Bestseller Theme</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Amazing Templates</span
-                  >
-                </td>
-                <td>
-                  <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
-                        d-flex
-                        align-items-center
-                        justify-content-between
-                        mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
-                        50%
-                      </span>
-                      <span class="text-muted font-size-sm font-weight-bold">
-                        Progress
-                      </span>
-                    </div>
-                    <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-info"
-                        role="progressbar"
-                        style="width: 50%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                  </div>
-                </td>
-                <td class="text-right pr-0">
-                  <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <app-keenicon name="arrow-right" class="fs-md text-success"></app-keenicon>
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td class="pl-0 py-5">
-                  <div class="symbol symbol-50 symbol-light mr-2">
-                    <span class="symbol-label">
-                      <span
-                        [inlineSVG]="'./assets/media/svg/brand-logos/plurk.svg'"
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
-                    </span>
-                  </div>
-                </td>
-                <td class="pl-0">
-                  <a
-                    href="#"
-                    class="
-                      text-gray-900
-                      font-weight-bolder
-                      text-hover-primary
-                      mb-1
-                      font-size-lg
-                    "
-                    >Top Authors</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Successful Fellas</span
-                  >
-                </td>
-                <td>
-                  <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
-                        d-flex
-                        align-items-center
-                        justify-content-between
-                        mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
-                        65%
-                      </span>
-                      <span class="text-muted font-size-sm font-weight-bold">
-                        Progress
-                      </span>
-                    </div>
-                    <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-danger"
-                        role="progressbar"
-                        style="width: 65%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                  </div>
-                </td>
-                <td class="text-right pr-0">
-                  <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <app-keenicon name="arrow-right" class="fs-md text-success"></app-keenicon>
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <th class="pl-0 py-5">
-                  <div class="symbol symbol-50 symbol-light mr-2">
-                    <span class="symbol-label">
-                      <span
-                        [inlineSVG]="'./assets/media/svg/brand-logos/telegram.svg'"
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
-                    </span>
-                  </div>
-                </th>
-                <td class="pl-0">
-                  <a
-                    href="#"
-                    class="
-                      text-gray-900
-                      font-weight-bolder
-                      text-hover-primary
-                      mb-1
-                      font-size-lg
-                    "
-                    >Popular Authors</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Most Successful</span
-                  >
-                </td>
-                <td>
-                  <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
-                        d-flex
-                        align-items-center
-                        justify-content-between
-                        mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
-                        83%
-                      </span>
-                      <span class="text-muted font-size-sm font-weight-bold">
-                        Progress
-                      </span>
-                    </div>
-                    <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-success"
-                        role="progressbar"
-                        style="width: 83%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                  </div>
-                </td>
-                <td class="text-right pr-0">
-                  <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <app-keenicon name="arrow-right" class="fs-md text-success"></app-keenicon>
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <th class="pl-0 py-5">
-                  <div class="symbol symbol-50 symbol-light mr-2">
-                    <span class="symbol-label">
-                      <span
-                        [inlineSVG]="'./assets/media/svg/misc/puzzle.svg'"
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
-                    </span>
-                  </div>
-                </th>
-                <td class="pl-0">
-                  <a
-                    href="#"
-                    class="
-                      text-gray-900
-                      font-weight-bolder
-                      text-hover-primary
-                      mb-1
-                      font-size-lg
-                    "
-                    >New Users</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Awesome Users</span
-                  >
-                </td>
-                <td>
-                  <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
-                        d-flex
-                        align-items-center
-                        justify-content-between
-                        mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
-                        47%
-                      </span>
-                      <span class="text-muted font-size-sm font-weight-bold">
-                        Progress
-                      </span>
-                    </div>
-                    <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-primary"
-                        role="progressbar"
-                        style="width: 47%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                  </div>
-                </td>
-                <td class="text-right pr-0">
-                  <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <app-keenicon name="arrow-right" class="fs-md text-success"></app-keenicon>
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <!--end::Table-->
-      </div>
-      <!--end::Tap pane-->
+    <div class="table-responsive mb-0">
+      <table class="table table-centered table-nowrap">
+        <thead class="table-light">
+          <tr>
+            <th></th>
+            <th class="align-left">Date</th>
+            <th class="align-left">Khata Name</th>
+            <th class="align-left">Bill No.</th>
+            <th class="align-left">Product</th>
+            <th style="text-align: left;">Rate</th>
+            <th class="align-left">Vehicle No.</th>
+            <th class="align-left"> Amount</th>
+            <th class="align-left"> Quantity</th>
+            <th style="text-align: left;">View Details</th>
+            <th style="text-align: left;">Action</th>
 
-      <!--begin::Tap pane-->
-      <div
-        class="tab-pane fade"
-        [class.active]="currentTab === TABS[1]"
-        [class.show]="currentTab === TABS[1]"
-        id="kt_tab_pane_6_2"
-        role="tabpanel"
-        aria-labelledby="kt_tab_pane_6_2"
-      >
-        <!--begin::Table-->
-        <div class="table-responsive">
-          <table class="table table-borderless table-vertical-center">
-            <thead>
-              <tr>
-                <th class="p-0 w-50px"></th>
-                <th class="p-0" [ngClass]="progressWidth"></th>
-                <th class="p-0 min-w-100px"></th>
-                <th class="p-0 min-w-40px"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th class="pl-0 py-5">
-                  <div class="symbol symbol-50 symbol-light mr-2">
-                    <span class="symbol-label">
-                      <span
-                        [inlineSVG]="'./assets/media/svg/brand-logos/telegram.svg'"
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
-                    </span>
-                  </div>
-                </th>
-                <td class="pl-0">
-                  <a
-                    href="#"
-                    class="
-                      text-gray-900
-                      font-weight-bolder
-                      text-hover-primary
-                      mb-1
-                      font-size-lg
-                    "
-                    >Popular Authors</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Most Successful</span
-                  >
-                </td>
-                <td>
-                  <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
-                        d-flex
-                        align-items-center
-                        justify-content-between
-                        mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
-                        83%
-                      </span>
-                      <span class="text-muted font-size-sm font-weight-bold">
-                        Progress
-                      </span>
-                    </div>
-                    <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-success"
-                        role="progressbar"
-                        style="width: 83%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                  </div>
-                </td>
-                <td class="text-right pr-0">
-                  <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <app-keenicon name="arrow-right" class="fs-md text-success"></app-keenicon>
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <th class="pl-0 py-5">
-                  <div class="symbol symbol-50 symbol-light mr-2">
-                    <span class="symbol-label">
-                      <span
-                        [inlineSVG]="'./assets/media/svg/misc/puzzle.svg'"
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
-                    </span>
-                  </div>
-                </th>
-                <td class="pl-0">
-                  <a
-                    href="#"
-                    class="
-                      text-gray-900
-                      font-weight-bolder
-                      text-hover-primary
-                      mb-1
-                      font-size-lg
-                    "
-                    >New Users</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Awesome Users</span
-                  >
-                </td>
-                <td>
-                  <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
-                        d-flex
-                        align-items-center
-                        justify-content-between
-                        mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
-                        47%
-                      </span>
-                      <span class="text-muted font-size-sm font-weight-bold">
-                        Progress
-                      </span>
-                    </div>
-                    <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-primary"
-                        role="progressbar"
-                        style="width: 47%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                  </div>
-                </td>
-                <td class="text-right pr-0">
-                  <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <app-keenicon name="arrow-right" class="fs-md text-success"></app-keenicon>
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <th class="pl-0 py-5">
-                  <div class="symbol symbol-50 symbol-light mr-2">
-                    <span class="symbol-label">
-                      <span
-                        [inlineSVG]="'./assets/media/svg/brand-logos/bebo.svg'"
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
-                    </span>
-                  </div>
-                </th>
-                <td class="py-6 pl-0">
-                  <a
-                    href="#"
-                    class="
-                      text-gray-900
-                      font-weight-bolder
-                      text-hover-primary
-                      mb-1
-                      font-size-lg
-                    "
-                    >Active Customers</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Best Customers</span
-                  >
-                </td>
-                <td>
-                  <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
-                        d-flex
-                        align-items-center
-                        justify-content-between
-                        mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
-                        71%
-                      </span>
-                      <span class="text-muted font-size-sm font-weight-bold">
-                        Progress
-                      </span>
-                    </div>
-                    <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-danger"
-                        role="progressbar"
-                        style="width: 71%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                  </div>
-                </td>
-                <td class="text-right pr-0">
-                  <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <app-keenicon name="arrow-right" class="fs-md text-success"></app-keenicon>
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td class="pl-0 py-5">
-                  <div class="symbol symbol-50 symbol-light mr-2">
-                    <span class="symbol-label">
-                      <span
-                        [inlineSVG]="'./assets/media/svg/brand-logos/plurk.svg'"
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
-                    </span>
-                  </div>
-                </td>
-                <td class="pl-0">
-                  <a
-                    href="#"
-                    class="
-                      text-gray-900
-                      font-weight-bolder
-                      text-hover-primary
-                      mb-1
-                      font-size-lg
-                    "
-                    >Top Authors</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Successful Fellas</span
-                  >
-                </td>
-                <td>
-                  <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
-                        d-flex
-                        align-items-center
-                        justify-content-between
-                        mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
-                        65%
-                      </span>
-                      <span class="text-muted font-size-sm font-weight-bold">
-                        Progress
-                      </span>
-                    </div>
-                    <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-danger"
-                        role="progressbar"
-                        style="width: 65%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                  </div>
-                </td>
-                <td class="text-right pr-0">
-                  <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <app-keenicon name="arrow-right" class="fs-md text-success"></app-keenicon>
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <th class="pl-0 py-5">
-                  <div class="symbol symbol-50 symbol-light mr-2">
-                    <span class="symbol-label">
-                      <span
-                        [inlineSVG]="
-                          './assets/media/svg/brand-logos/kickstarter.svg'
-                        "
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
-                    </span>
-                  </div>
-                </th>
-                <td class="pl-0">
-                  <a
-                    href="#"
-                    class="
-                      text-gray-900
-                      font-weight-bolder
-                      text-hover-primary
-                      mb-1
-                      font-size-lg
-                    "
-                    >Bestseller Theme</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Amazing Templates</span
-                  >
-                </td>
-                <td>
-                  <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
-                        d-flex
-                        align-items-center
-                        justify-content-between
-                        mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
-                        50%
-                      </span>
-                      <span class="text-muted font-size-sm font-weight-bold">
-                        Progress
-                      </span>
-                    </div>
-                    <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-info"
-                        role="progressbar"
-                        style="width: 50%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                  </div>
-                </td>
-                <td class="text-right pr-0">
-                  <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <app-keenicon name="arrow-right" class="fs-md text-success"></app-keenicon>
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <!--end::Table-->
-      </div>
-      <!--end::Tap pane-->
+          </tr>
+        </thead>
+        <tbody
+          *ngFor="let data of allCreditReq | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+          <tr style="color: red;" *ngIf="data.corporateReviewFlag == 'TRUE'">
+            <td style="cursor: pointer;">
+              <a class="expand-row"
+                (click)="changeValue(i,data.mappingPreviousStatus,data.mappingCustomerName,data.hostName,data.hostPhone,data.byManager,data.managerName,data.productRate,data.advName,data.advMobile,data.vehicleNumber,data.lubeName,data.manualCrNumber)"
+                style="font-size: 19px;">
+                +
+              </a>
+            </td>
+            <td>
+              <span *ngIf="data.estimatedRefuelDate == '2022-01-01' ">
+                1 Jan, 2022
+              </span>
+              <span *ngIf="data.estimatedRefuelDate != '2022-01-01' ">
+                {{data.estimatedRefuelDate | date:"d MMM, yyyy" }}
+              </span>
+            </td>
+            <td style="width: 10%;">
+              <span *ngIf="data.mappingPreviousStatus =='TRUE'">
+                {{data.mappingCompanyName}}
+              </span>
+              <span *ngIf="data.mappingPreviousStatus =='FALSE'">
+                {{data.companyName}}
+              </span>
+            </td>
 
-      <!--begin::Tap pane-->
-      <div
-        class="tab-pane fade"
-        [class.active]="currentTab === TABS[2]"
-        [class.show]="currentTab === TABS[2]"
-        id="kt_tab_pane_6_3"
-        role="tabpanel"
-        aria-labelledby="kt_tab_pane_6_3"
-      >
-        <!--begin::Table-->
-        <div class="table-responsive">
-          <table class="table table-borderless table-vertical-center">
-            <thead>
-              <tr>
-                <th class="p-0 w-50px"></th>
-                <th class="p-0" [ngClass]="progressWidth"></th>
-                <th class="p-0 min-w-100px"></th>
-                <th class="p-0 min-w-40px"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="pl-0 py-5">
-                  <div class="symbol symbol-50 symbol-light mr-2">
-                    <span class="symbol-label">
-                      <span
-                        [inlineSVG]="'./assets/media/svg/brand-logos/plurk.svg'"
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
+            <td style="text-align: left;">
+              <span *ngIf="data.purpose == 'CREDIT'">
+                <span *ngIf="data.vehicleNumber == 'undefined'">
+                  {{data.manualCrNumber}}
+                </span>
+                <span *ngIf="data.vehicleNumber != 'undefined'">
+                  {{data.manualCrNumber}}
+                </span>
+              </span>
+              <span *ngIf="data.purpose == 'LUBE'">
+                <span *ngIf="data.vehicleNumber == 'undefined'">
+                  {{data.manualCrNumber}}
+                </span>
+                <span *ngIf="data.vehicleNumber != 'undefined'">
+                  {{data.manualCrNumber}}
+                </span>
+              </span>
+              <span *ngIf="data.purpose == 'LUBETAX'">
+                <span *ngIf="data.vehicleNumber == 'undefined'">
+                  {{data.manualCrNumber}}
+                </span>
+                <span *ngIf="data.vehicleNumber != 'undefined'">
+                  {{data.manualCrNumber}}
+                </span>
+              </span>
+              <span *ngIf="data.purpose == 'AdvAmt'">
+                <span *ngIf="data.advMobile == 'undefined'">
+                  {{data.manualCrNumber}}
+                </span>
+                <span *ngIf="data.advMobile != 'undefined' ">
+                  {{data.manualCrNumber}}
+                </span>
+              </span>
+            </td>
+
+            <td style="text-align: left;">
+              <span *ngIf="data.purpose == 'CREDIT'">
+                {{data.productName}}
+              </span>
+              <span *ngIf="data.purpose == 'LUBE'">
+                {{data.lubeName}}
+              </span>
+              <span *ngIf="data.purpose == 'LUBETAX'">
+                {{data.lubeName}}
+              </span>
+              <span *ngIf="data.purpose == 'AdvAmt'">
+                ADVANCE
+              </span>
+            </td>
+
+            <td>
+              <span *ngIf="data.advMobile == 'undefined' || data.advMobile == 'null'">
+                --
+              </span>
+              <span *ngIf="data.advMobile != 'undefined' || data.advMobile != 'null'">
+                {{data.productRate}}
+              </span>
+            </td>
+
+            <td style="text-align: left;">
+              <span *ngIf="data.purpose == 'CREDIT'">
+                <span *ngIf="data.vehicleNumber == 'undefined'">
+                </span>
+                <span *ngIf="data.vehicleNumber != 'undefined'">
+                  {{data.vehicleNumber}}
+                </span>
+              </span>
+              <span *ngIf="data.purpose == 'LUBE'">
+                <span *ngIf="data.vehicleNumber == 'undefined'">
+                </span>
+                <span *ngIf="data.vehicleNumber != 'undefined'">
+                  {{data.vehicleNumber}}
+                </span>
+              </span>
+              <span *ngIf="data.purpose == 'LUBETAX'">
+                <span *ngIf="data.vehicleNumber == 'undefined'">
+                </span>
+                <span *ngIf="data.vehicleNumber != 'undefined'">
+                  {{data.vehicleNumber}}
+                </span>
+              </span>
+            </td>
+
+            <td style="text-align: left;">
+              <span *ngIf="data.transactionStatus != 'CANCEL'">
+                <span *ngIf="data.transactionStatus != 'PENDING'">
+                  <span *ngIf="data.fuelcreditTaxDetails == 'EXCLUDE'">
+                    ₹ &nbsp; {{data.creditAmount| number:'1.2-2'}}
+                  </span>
+                  <span *ngIf="data.fuelcreditTaxDetails != 'EXCLUDE'">
+                    ₹ &nbsp; {{data.creditAmount | number:'1.2-2'}}
+                  </span>
+                </span>
+                <span *ngIf="data.transactionStatus == 'PENDING'">
+                  PENDING
+                </span>
+              </span>
+              <span *ngIf="data.transactionStatus == 'CANCEL'">
+                CANCELLED
+              </span>
+            </td>
+
+            <td style="text-align: left;">
+              <span *ngIf="data.purpose == 'CREDIT'">
+                <span *ngIf="data.transactionStatus == 'CANCEL'">
+                  CANCELLED
+                </span>
+                <span *ngIf="data.transactionStatus != 'CANCEL'">
+                  <span *ngIf="data.transactionStatus != 'PENDING'">
+                    <span *ngIf="data.productCategory == 'CNG'">
+                      {{data.actualCreditQuantity | number:'1.2-2'}} Kg
                     </span>
-                  </div>
-                </td>
-                <td class="pl-0">
-                  <a
-                    href="#"
-                    class="
-                      text-gray-900
-                      font-weight-bolder
-                      text-hover-primary
-                      mb-1
-                      font-size-lg
-                    "
-                    >Top Authors</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Successful Fellas</span
-                  >
-                </td>
-                <td>
-                  <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
-                        d-flex
-                        align-items-center
-                        justify-content-between
-                        mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
-                        65%
-                      </span>
-                      <span class="text-muted font-size-sm font-weight-bold">
-                        Progress
-                      </span>
-                    </div>
-                    <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-danger"
-                        role="progressbar"
-                        style="width: 65%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                  </div>
-                </td>
-                <td class="text-right pr-0">
-                  <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <app-keenicon name="arrow-right" class="fs-md text-success"></app-keenicon>
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <th class="pl-0 py-5">
-                  <div class="symbol symbol-50 symbol-light mr-2">
-                    <span class="symbol-label">
-                      <span
-                        [inlineSVG]="'./assets/media/svg/brand-logos/telegram.svg'"
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
+                    <span *ngIf="data.productCategory != 'CNG'">
+                      {{data.actualCreditQuantity | number:'1.2-2'}} Ltrs
                     </span>
-                  </div>
-                </th>
-                <td class="pl-0">
-                  <a
-                    href="#"
-                    class="
-                      text-gray-900
-                      font-weight-bolder
-                      text-hover-primary
-                      mb-1
-                      font-size-lg
-                    "
-                    >Popular Authors</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Most Successful</span
-                  >
-                </td>
-                <td>
-                  <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
-                        d-flex
-                        align-items-center
-                        justify-content-between
-                        mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
-                        83%
-                      </span>
-                      <span class="text-muted font-size-sm font-weight-bold">
-                        Progress
-                      </span>
-                    </div>
-                    <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-success"
-                        role="progressbar"
-                        style="width: 83%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                  </div>
-                </td>
-                <td class="text-right pr-0">
-                  <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <app-keenicon name="arrow-right" class="fs-md text-success"></app-keenicon>
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <th class="pl-0 py-5">
-                  <div class="symbol symbol-50 symbol-light mr-2">
-                    <span class="symbol-label">
-                      <span
-                        [inlineSVG]="'./assets/media/svg/misc/puzzle.svg'"
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
+                  </span>
+                  <span *ngIf="data.transactionStatus == 'PENDING'">
+                    PENDING
+                  </span>
+                </span>
+              </span>
+              <span *ngIf="data.purpose == 'LUBE'">
+                <span *ngIf="data.lubeUnit != 'undefined'">
+                  {{data.actualCreditQuantity | number:'1.2-2'}} {{data.lubeUnit}}
+                </span>
+                <span *ngIf="data.lubeUnit == 'undefined'">
+                  {{data.actualCreditQuantity | number:'1.2-2'}}
+                </span>
+              </span>
+              <span *ngIf="data.purpose == 'LUBETAX'">
+                <span *ngIf="data.lubeUnit != 'undefined'">
+                  {{data.actualCreditQuantity | number:'1.2-2'}} {{data.lubeUnit}}
+                </span>
+                <span *ngIf="data.lubeUnit == 'undefined'">
+                  {{data.actualCreditQuantity | number:'1.2-2'}}
+                </span>
+              </span>
+              <span *ngIf="data.purpose == 'AdvAmt'">
+                -
+              </span>
+            </td>
+
+            <td style="text-align: center;cursor: pointer;">
+              <button type="button" class="btn btn-primary btn-sm btn-rounded" (click)="openViewBill(viewBill,data.fuelCreditId,data.estimatedRefuelDate,data.mappingPreviousStatus,data.mappingCompanyName,
+                      data.companyName,data.hostPhone,data.purpose,data.vehicleNumber,data.manualCrNumber,data.productName,data.productRate,
+                      data.transactionStatus,data.productCategory,data.actualCreditQuantity,data.creditAmount)">
+                View Details
+              </button>
+            </td>
+
+            <td style="text-align: left;cursor: pointer;">
+              <div ngbDropdown placement="bottom-left">
+                <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                  aria-expanded="true"></i>
+                <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                  <span *ngIf="data.invoiceStatus == 'FALSE'">
+                    <span *ngIf="data.fuelShiftId && data.fuelShiftId != 'undefined'">
+                      <a class="dropdown-item" href="javascript: void(0);" (click)="askFordelete(deleteTemplate)">
+                        <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
                     </span>
-                  </div>
-                </th>
-                <td class="pl-0">
-                  <a
-                    href="#"
-                    class="
-                      text-gray-900
-                      font-weight-bolder
-                      text-hover-primary
-                      mb-1
-                      font-size-lg
-                    "
-                    >New Users</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Awesome Users</span
-                  >
-                </td>
-                <td>
-                  <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
-                        d-flex
-                        align-items-center
-                        justify-content-between
-                        mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
-                        47%
-                      </span>
-                      <span class="text-muted font-size-sm font-weight-bold">
-                        Progress
-                      </span>
-                    </div>
-                    <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-primary"
-                        role="progressbar"
-                        style="width: 47%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                  </div>
-                </td>
-                <td class="text-right pr-0">
-                  <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <app-keenicon name="arrow-right" class="fs-md text-success"></app-keenicon>
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <th class="pl-0 py-5">
-                  <div class="symbol symbol-50 symbol-light mr-2">
-                    <span class="symbol-label">
-                      <span
-                        [inlineSVG]="'./assets/media/svg/brand-logos/bebo.svg'"
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
+                    <span
+                      *ngIf="data.fuelShiftId == '' || data.fuelShiftId == 'undefined' || data.fuelShiftId === null">
+                      <a class="dropdown-item" href="javascript: void(0);"
+                        (click)="askForPass(PasswordTemplate,data.fuelCreditId,data.fuelDealerCustomerMapId,'CANCEL')">
+                        <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
                     </span>
-                  </div>
-                </th>
-                <td class="py-6 pl-0">
-                  <a
-                    href="#"
-                    class="
-                      text-gray-900
-                      font-weight-bolder
-                      text-hover-primary
-                      mb-1
-                      font-size-lg
-                    "
-                    >Active Customers</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Best Customers</span
-                  >
-                </td>
-                <td>
-                  <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
-                        d-flex
-                        align-items-center
-                        justify-content-between
-                        mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
-                        71%
-                      </span>
-                      <span class="text-muted font-size-sm font-weight-bold">
-                        Progress
-                      </span>
-                    </div>
-                    <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-danger"
-                        role="progressbar"
-                        style="width: 71%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                  </div>
-                </td>
-                <td class="text-right pr-0">
-                  <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <app-keenicon name="arrow-right" class="fs-md text-success"></app-keenicon>
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <th class="pl-0 py-5">
-                  <div class="symbol symbol-50 symbol-light mr-2">
-                    <span class="symbol-label">
-                      <span
-                        [inlineSVG]="
-                          './assets/media/svg/brand-logos/kickstarter.svg'
-                        "
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
+                  </span>
+                  <span *ngIf="data.invoiceStatus == 'TRUE'">
+                    <span *ngIf="data.fuelShiftId && data.fuelShiftId != 'undefined'">
+                      <a class="dropdown-item" href="javascript: void(0);" (click)="askFordelete(deleteTemplate)">
+                        <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
                     </span>
+                    <span
+                      *ngIf="data.fuelShiftId == '' || data.fuelShiftId == 'undefined' || data.fuelShiftId === null">
+                      <a class="dropdown-item" href="javascript: void(0);"
+                        (click)="askForPass(PasswordTemplate,data.fuelCreditId,data.fuelDealerCustomerMapId,'CANCEL')">
+                        <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
+                    </span>
+                  </span>
+                  <span *ngIf="data.invoiceStatus == 'FALSE'">
+                    <span *ngIf="data.fuelShiftId && data.fuelShiftId != 'undefined'">
+                      <a class="dropdown-item" href="javascript: void(0);" (click)="askForEdit(editTemplate)">
+                        <i class="fas fa-ban" style="color: green;"></i> &nbsp; Edit</a>
+                    </span>
+                    <span
+                      *ngIf="data.fuelShiftId == '' || data.fuelShiftId == 'undefined' || data.fuelShiftId === null">
+                      <a class="dropdown-item" href="javascript: void(0);"
+                        (click)="askForPassEdit(PasswordTemplateEdit,updateFuelCr,data.fuelCreditId,data.refuelForDriver,data.hostPhone,data.fuelProdId,data.productCategory,data.productRate,data.vehicleNumber,data.reqQuantity,data.reqCreditAmount,data.actualCreditQuantity,data.creditAmount,data.estimatedRefuelDate,data.vehicleId,data.vehicleVPStatus,data.fuelDealerCustomerMapId,data.manualCrNumber)">
+                        <i class="fas fa-ban" style="color: green;"></i> &nbsp; Edit</a>
+                    </span>
+                  </span>
+                  <span *ngIf="data.invoiceStatus == 'TRUE'">
+                    <span *ngIf="data.fuelShiftId && data.fuelShiftId != 'undefined'">
+                      <a class="dropdown-item" href="javascript: void(0);" (click)="askForEdit(deleteTemplate)">
+                        <i class="fas fa-ban" style="color: green;"></i> &nbsp; Edit</a>
+                    </span>
+                    <span
+                      *ngIf="data.fuelShiftId == '' || data.fuelShiftId == 'undefined' || data.fuelShiftId === null">
+                      <a class="dropdown-item" href="javascript: void(0);"
+                        (click)="askForPassEdit(PasswordTemplateEdit,updateFuelCr,data.fuelCreditId,data.refuelForDriver,data.hostPhone,data.fuelProdId,data.productCategory,data.productRate,data.vehicleNumber,data.reqQuantity,data.reqCreditAmount,data.actualCreditQuantity,data.creditAmount,data.estimatedRefuelDate,data.vehicleId,data.vehicleVPStatus,data.fuelDealerCustomerMapId,data.manualCrNumber)">
+                        <i class="fas fa-ban" style="color: green;"></i> &nbsp; Edit</a>
+                    </span>
+                  </span>
+
+
+                  <span *ngIf="data.invoiceStatus == 'CANCEL'">
+                    <span *ngIf="data.fuelShiftId && data.fuelShiftId != 'undefined'">
+                      <a class="dropdown-item" href="javascript: void(0);" (click)="askFordelete(deleteTemplate)">
+                        <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
+                    </span>
+                    <span
+                      *ngIf="data.fuelShiftId == '' || data.fuelShiftId == 'undefined' || data.fuelShiftId === null">
+                      <a class="dropdown-item" href="javascript: void(0);"
+                        (click)="askForPass(PasswordTemplate,data.fuelCreditId,data.fuelDealerCustomerMapId,'CANCEL')">
+                        <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
+                    </span>
+                  </span>
+                  <span *ngIf="data.invoiceStatus == 'CANCEL'">
+                    <span *ngIf="data.fuelShiftId && data.fuelShiftId != 'undefined'">
+                      <a class="dropdown-item" href="javascript: void(0);" (click)="askForEdit(editTemplate)">
+                        <i class="fas fa-ban" style="color: green;"></i> &nbsp; Edit</a>
+                    </span>
+                    <span
+                      *ngIf="data.fuelShiftId == '' || data.fuelShiftId == 'undefined' || data.fuelShiftId === null">
+                      <a class="dropdown-item" href="javascript: void(0);"
+                        (click)="askForPassEdit(PasswordTemplateEdit,updateFuelCr,data.fuelCreditId,data.refuelForDriver,data.hostPhone,data.fuelProdId,data.productCategory,data.productRate,data.vehicleNumber,data.reqQuantity,data.reqCreditAmount,data.actualCreditQuantity,data.creditAmount,data.estimatedRefuelDate,data.vehicleId,data.vehicleVPStatus,data.fuelDealerCustomerMapId,data.manualCrNumber)">
+                        <i class="fas fa-ban" style="color: green;"></i> &nbsp; Edit</a>
+                    </span>
+                  </span>
+
+                  <ng-template #deleteTemplate let-c="close" let-d="dismiss">
+                    <div class="modal-header">
+                      <h4 class="modal-title">
+                        <label>
+                          <h6>
+                            "Dear Customer, You added this Credit entry to Shift Or Saved Invoice, if you delete or edit
+                            this entry it will
+                            affect the shift tally Or Saved Invoice. Are you sure to delete ? "
+                          </h6>
+                        </label>
+                      </h4>
+                      <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                      </div>
+                      <div class="col-auto">
+                        <button class="btn btn-outline-success my-2 my-sm-0"
+                          (click)="askForPass(PasswordTemplate,data.fuelCreditId,data.fuelDealerCustomerMapId,'CANCEL')">YES</button>
+                      </div>
+                      <div class="col-auto">
+                        <button type="button" class="btn btn-danger" aria-label="Close"
+                          (click)="d('Cross click')">No</button>
+                      </div>
+                      <br>
+                    </div>
+                  </ng-template>
+
+                  <ng-template #editTemplate let-c="close" let-d="dismiss">
+                    <div class="modal-header">
+                      <h4 class="modal-title">
+                        <label>
+                          <h6>
+                            Dear Customer, You added this Credit entry to Shift Or Saved Invoice, if you delete or edit
+                            this entry it will
+                            affect the shift tally Or Saved Invoice. Are you sure to delete ?
+                          </h6>
+                        </label>
+                      </h4>
+                      <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+
+                      </div>
+                      <div class="col-auto">
+                        <button class="btn btn-outline-success my-2 my-sm-0"
+                          (click)="askForPassEdit(PasswordTemplateEdit,updateFuelCr,data.fuelCreditId,data.refuelForDriver,data.hostPhone,data.fuelProdId,data.productCategory,data.productRate,data.vehicleNumber,data.reqQuantity,data.reqCreditAmount,data.actualCreditQuantity,data.creditAmount,data.estimatedRefuelDate,data.vehicleId,data.vehicleVPStatus,data.fuelDealerCustomerMapId,data.manualCrNumber)">YES</button>
+                      </div>
+                      <div class="col-auto">
+                        <button type="button" class="btn btn-danger" aria-label="Close"
+                          (click)="d('Cross click')">No</button>
+                      </div>
+                      <br>
+                    </div>
+                  </ng-template>
+
+                </div>
+              </div>
+            </td>
+
+            <ng-template #PasswordTemplate let-c="close" let-d="dismiss">
+              <div class="modal-header">
+                <h4 class="modal-title">
+                  <label>
+                    <h4><strong>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Please Enter Password
+                      </strong></h4>
+                  </label>
+                </h4>
+                <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <input class="form-control" type="password" placeholder="password" [(ngModel)]="password"
+                      [ngModelOptions]="{standalone: true}">
                   </div>
-                </th>
-                <td class="pl-0">
-                  <a
-                    href="#"
-                    class="
-                      text-gray-900
-                      font-weight-bolder
-                      text-hover-primary
-                      mb-1
-                      font-size-lg
-                    "
-                    >Bestseller Theme</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Amazing Templates</span
-                  >
-                </td>
-                <td>
-                  <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
-                        d-flex
-                        align-items-center
-                        justify-content-between
-                        mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
-                        50%
-                      </span>
-                      <span class="text-muted font-size-sm font-weight-bold">
-                        Progress
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-outline-success my-2 my-sm-0"
+                    (click)="comparePasswordForDelete(cancelReq)">YES</button>
+                </div>
+                <div class="col-auto">
+                  <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">No</button>
+                </div>
+                <br>
+              </div>
+            </ng-template>
+            <ng-template #PasswordTemplateEdit let-c="close" let-d="dismiss">
+
+              <div class="modal-header">
+                <h4 class="modal-title">
+                  <label>
+                    <h4><strong>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Please Enter Password
+                      </strong></h4>
+                  </label>
+                </h4>
+                <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <input class="form-control" type="password" placeholder="password" [(ngModel)]="password"
+                      [ngModelOptions]="{standalone: true}">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-outline-success my-2 my-sm-0"
+                    (click)="comparePasswordForEdit(updateFuelCr)">YES</button>
+                </div>
+                <div class="col-auto">
+                  <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">No</button>
+                </div>
+                <br>
+              </div>
+            </ng-template>
+
+            <!-- Cancel Req Starts -->
+            <ng-template #cancelReq let-c="close" let-d="dismiss">
+              <div class="modal-header">
+                <h4 class="modal-title">
+                  <label>
+                    <h4><strong>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Do You Want To Cancel ?</strong></h4>
+                  </label>
+                </h4>
+                <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-4">
+                  </div>
+                  <div class="col-md-2">
+                    <button type="button" class="btn btn-outline-success my-2 my-sm-0" (click)="cancelFuelCreditReq()">
+                      Yes</button>
+                  </div>
+                  <div class="col-md-2">
+                    <button type="button" class="btn btn-danger" aria-label="Close"
+                      (click)="d('Cross click')">No</button>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+            <!-- Cancel Req Ends -->
+            <!-- Edit Cr -->
+            <ng-template #updateFuelCr let-c="close" let-d="dismiss">
+              <div class="modal-header">
+                <h4 class="modal-title">
+                  <strong>
+                    &nbsp;&nbsp;&nbsp;
+                    Edit Credit </strong>
+                </h4>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="requestEditCr">
+
+                  <div class="row">
+                    <div class="col-md-2">
+                      <label class="labelNewMargin">Product
+                        Name:</label>
+                    </div>
+                    <div class="col-md-3">
+                      <input class="form-control" placeholder="Product" formControlName="productCategory" readonly>
+                    </div>
+                    <div class="col-md-2">
+                      <label class="labelNewMargin">Product
+                        Rate:</label>
+                    </div>
+                    <div class="col-md-3">
+                      <input class="form-control" placeholder="Product Rate" formControlName="productRate" readonly>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-md-2">
+                      <label class="labelNewMargin">Previous
+                        Transaction Date:</label>
+                    </div>
+                    <div class="col-md-3">
+                      <input class="form-control" placeholder="DD-MM-YYYY" name="startDate"
+                        formControlName="estimatedRefuelDateForEdit" readonly>
+                    </div>
+
+                    <div class="col-md-5">
+                      <span style="color: red;">
+                        Please Check All Calculations before
+                        Update..!
                       </span>
                     </div>
-                    <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-info"
-                        role="progressbar"
-                        style="width: 50%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
+                  </div>
+                  <hr>
+                  <div class="row">
+
+                    <div class="col-md-2">
+                      <label class="labelNewMargin">Vehicle
+                        No:</label>
+                    </div>
+                    <div class="col-md-3">
+                      <input class="form-control form-control-sm mr-1 w-40" style="font-size: 0.750rem;" type="text"
+                        placeholder=" Enter Vehicle Number" aria-label="Search" formControlName="vehicleNumber"
+                        oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                        (blur)="submitSearchVehicleEdit()" required>
+                    </div>
+                    <div class="col-md-2">
+                      <label class="labelNewMargin">
+                        Bill No.:
+                      </label>
+                    </div>
+                    <div class="col-md-3">
+                      <input class="form-control form-control-sm mr-1 w-40" style="font-size: 0.750rem;" type="text"
+                        placeholder=" Enter Credit Number" aria-label="Search" [(ngModel)]="manualCrNumber"
+                        [ngModelOptions]="{standalone: true}" required>
                     </div>
                   </div>
-                </td>
-                <td class="text-right pr-0">
-                  <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <app-keenicon name="arrow-right" class="fs-md text-success"></app-keenicon>
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+
+                  <!-- Radio Button Logic Starts-->
+
+                  <br>
+                  <div class="row">
+                    <div class="col-md-2">
+                      <label class="labelNewMargin">Amount</label>
+                    </div>
+                    <div class="col-md-1">
+                      <input type="radio" value="AMOUNT" formControlName="requestType" (change)="getCompleteForEdit()">
+                    </div>
+                    <div class="col-md-3">
+                      <span *ngIf="!isAMOUNT">
+                        <input class="form-control form-control-sm mr-1 w-40" formControlName="reqCreditAmount"
+                          style="font-size: 0.750rem;" placeholder="Amount" type="number" readonly>
+                      </span>
+                      <span *ngIf="isAMOUNT">
+                        <input class="form-control form-control-sm mr-1 w-40" formControlName="reqCreditAmount"
+                          style="font-size: 0.750rem;" placeholder="Enter Request Amount" type="number"
+                          (blur)="amountCalculateForEdit()">
+                      </span>
+                    </div>
+                    <div class="col-md-1">
+                      Rs
+                    </div>
+                  </div>
+                  <br>
+
+                  <div class="row">
+                    <div class="col-md-2">
+                      <label class="labelNewMargin">Quantity</label>
+                    </div>
+                    <div class="col-md-1">
+                      <input type="radio" value="QUANTITY" formControlName="requestType" (change)="getPartialForEdit()">
+                    </div>
+                    <div class="col-md-3">
+                      <span *ngIf="!isQUANTITY">
+                        <input class="form-control form-control-sm mr-1 w-40" formControlName="reqQuantity"
+                          style="font-size: 0.750rem;" placeholder=" Quantity" type="number" readonly>
+                      </span>
+                      <span *ngIf="isQUANTITY">
+                        <input class="form-control form-control-sm mr-1 w-40" formControlName="reqQuantity"
+                          style="font-size: 0.750rem;" placeholder="Enter Request Quantity" type="number"
+                          (blur)="quantityCalculateForEdit()">
+                      </span>
+                    </div>
+                    <div class="col-md-1">
+                      Ltrs
+                    </div>
+                  </div>
+                  <hr>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-2">
+                      <button type="submit" class="btn btn-primary" (click)="updateCrRequest()">Update</button>
+                    </div>&nbsp;&nbsp;
+                    <div class="col-md-2">
+                      <button type="submit" class="btn btn-secondary" (click)="closeModalUpdateCr()">Cancel</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </ng-template>
+            <!-- Edit Cr -->
+
+            <ng-template #viewBill let-c="close" let-d="dismiss">
+              <div class="modal-body">
+                <div class="row noprint">
+                  <div class="col-md-8"></div>
+                  <div class="col-md-2">
+                    <button class="btn btn-success" printSectionId="sanjay" ngxPrint>print</button>
+
+                  </div>
+                </div>
+                <div id="sanjay">
+                  <div class="container">
+                    <form style="background-color: white;color: black;">
+                      <br>
+                      <div class="row fontStyleCss">
+                        <br><br> <br>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8 outerBoxStyle">
+                          <div class="row" style="font-size: 13px; font-weight: 600;">&nbsp;
+                            <!-- {{companyName}} -->
+                          </div>
+
+                          <!-- <div class="row">&nbsp;&nbsp; {{headQuarterName}}</div> -->
+
+                          <!-- <div class="row">&nbsp;&nbsp; CONTACT NO &nbsp;:&nbsp; {{managerMobile}}</div> -->
+
+                          <!-- <div class="row">&nbsp;&nbsp; GST NO &nbsp;:&nbsp; {{GSTNumber}}</div> -->
+
+                          <div class="row">
+                            <div class="col-md-12" style="text-align: left;">
+                              CREDIT BILL
+                            </div>
+                          </div>
+
+                          <hr style="border-top: 1px dashed rgb(52, 51, 56);margin-top: 1px;margin-bottom: 8px;">
+
+                          <div class="row">
+                            <div class="col-md-8">
+                              <span *ngIf="estimatedRefuelDateShow == '2022-01-01' ">
+                                1 Jan, 2022
+                              </span>
+                              <span *ngIf="estimatedRefuelDateShow != '2022-01-01' ">
+                                {{estimatedRefuelDateShow | date:"d MMM, yyyy" }}
+                              </span>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-12">
+
+                              <span *ngIf="mappingPreviousStatusShow =='TRUE'">
+                                {{mappingCompanyNameShow}}
+                              </span>
+                              <span *ngIf="mappingPreviousStatusShow =='FALSE'">
+                                {{companyNameShow}}
+                              </span>
+
+                            </div>
+                          </div>
+
+                          <div class="row" style="margin-top: 1%;">
+                            <div class="col-md-12">
+                              <table>
+                                <tbody>
+                                  <tr>
+                                    <td> MOBILE NO.</td>
+                                    <td>&nbsp;&nbsp;:&nbsp;{{hostPhoneShow}}
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td> BILL/REF NO.</td>
+                                    <td>&nbsp;&nbsp;:&nbsp;
+                                      <span *ngIf="purposeShow == 'CREDIT'">
+                                        <span *ngIf="vehicleNumberShow == 'undefined'">
+                                          {{manualCrNumberShow}}
+                                        </span>
+                                        <span *ngIf="vehicleNumberShow != 'undefined'">
+                                          {{manualCrNumberShow}}
+                                        </span>
+                                      </span>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>VEHICLE NO.</td>
+                                    <td>&nbsp;&nbsp;:&nbsp;
+
+                                      <span *ngIf="purposeShow == 'CREDIT'">
+                                        <span *ngIf="vehicleNumberShow == 'undefined'">
+
+                                        </span>
+                                        <span *ngIf="vehicleNumberShow != 'undefined'">
+                                          {{vehicleNumberShow}}
+                                        </span>
+                                      </span>
+                                    </td>
+                                  </tr>
+
+                                </tbody>
+                              </table>
+                            </div>
+
+                          </div>
+
+                          <hr style="border-top: 1px dashed rgb(52, 51, 56);margin-top: 3px;margin-bottom: 8px;">
+
+                          <div class="row">
+
+                            <div class="col-md-12">
+                              <table>
+                                <tbody>
+                                  <tr>
+                                    <td>PRODUCT</td>
+                                    <td>&nbsp;&nbsp;:&nbsp;
+                                      <span *ngIf="purposeShow == 'CREDIT'">
+                                        {{productNameShow}}
+                                      </span>
+                                      <span *ngIf="purposeShow == 'LUBE'">
+                                        {{productNameShow}}
+                                      </span>
+                                      <span *ngIf="purposeShow == 'LUBE'">
+                                        LUBRICANTS-TAX
+                                      </span>
+                                      <span *ngIf="purposeShow == 'AdvAmt'">
+                                        ADVANCE
+                                      </span>
+
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>RATE</td>
+                                    <td>&nbsp;&nbsp;:&nbsp;{{productRateShow}} Rs</td>
+                                  </tr>
+                                  <tr>
+                                    <td>QUANTITY</td>
+                                    <td>&nbsp;&nbsp;:&nbsp;
+                                      <span *ngIf="purposeShow == 'CREDIT'">
+                                        <span *ngIf="transactionStatusShow == 'CANCEL'">
+                                          CANCELLED
+                                        </span>
+                                        <span *ngIf="transactionStatusShow != 'CANCEL'">
+                                          <span *ngIf="transactionStatusShow != 'PENDING'">
+                                            <span *ngIf="productCategoryShow == 'CNG'">
+                                              {{actualCreditQuantityShow | number:'1.2-2'}} Kg
+                                            </span>
+                                            <span *ngIf="productCategoryShow != 'CNG'">
+                                              {{actualCreditQuantityShow | number:'1.2-2'}} Ltrs
+                                            </span>
+
+                                          </span>
+                                          <span *ngIf="transactionStatusShow == 'PENDING'">
+                                            PENDING
+                                          </span>
+                                        </span>
+                                      </span>
+
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>AMOUNT</td>
+                                    <td>&nbsp;&nbsp;:&nbsp; <span *ngIf="transactionStatusShow != 'CANCEL'">
+                                        <span *ngIf="transactionStatusShow != 'PENDING'">
+                                          {{creditAmountShow | number:'1.2-2'}} Rs
+                                        </span>
+                                        <span *ngIf="transactionStatusShow == 'PENDING'">
+                                          PENDING
+                                        </span>
+                                      </span>
+                                      <span *ngIf="transactionStatusShow == 'CANCEL'">
+                                        CANCELLED
+                                      </span>
+                                    </td>
+                                  </tr>
+
+
+                                </tbody>
+                              </table>
+
+                            </div>
+                          </div>
+
+                          <hr style="border-top: 1px dashed rgb(52, 51, 56);margin-top: 3px;margin-bottom: 8px;">
+
+                          <div class="row">
+                            <div class="col-md-12">For more details login to viswasa app</div>
+                          </div>
+
+                          <hr style="border-top: 1px dashed rgb(52, 51, 56);margin-top: 2%;">
+
+                          <div class="row" style="margin-top: -2%;">
+                            <div class="col-md-12">Thank you! Visit again.</div>
+                          </div>
+                          <br><br>
+                        </div>
+                        <div class="col-md-2"></div>
+                      </div>
+                      <br>
+                    </form>
+                  </div>
+                </div>
+                <div class="row noprint" style="text-align: center;align-items: center;">
+                  <div class="col-md-12" style="text-align: center;align-items: center;">
+                    <button class="btn btn-success" (click)="downloadBillRedFlag()"> download </button>&nbsp;
+                    <button type="button" class="btn btn-danger" aria-label="Close" style="width: 19%;"
+                      (click)="d('Cross click')">cancel</button>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </tr>
+
+          <tr *ngIf="data.corporateReviewFlag == 'FALSE'">
+            <td style="cursor: pointer;">
+              <a class="expand-row"
+                (click)="changeValue(i,data.mappingPreviousStatus,data.mappingCustomerName,data.hostName,data.hostPhone,data.byManager,data.managerName,data.productRate,data.advName,data.advMobile,data.vehicleNumber,data.lubeName,data.manualCrNumber)"
+                style="font-size: 19px;">
+                +
+              </a>
+            </td>
+            <td>
+              <span *ngIf="data.estimatedRefuelDate == '2022-01-01' ">
+                1 Jan, 2022
+              </span>
+              <span *ngIf="data.estimatedRefuelDate != '2022-01-01' ">
+                {{data.estimatedRefuelDate | date:"d MMM, yyyy" }}
+              </span>
+            </td>
+
+            <td>
+              <span *ngIf="data.mappingPreviousStatus =='TRUE'">
+                {{data.mappingCompanyName}}
+              </span>
+              <span *ngIf="data.mappingPreviousStatus =='FALSE'">
+                {{data.companyName}}
+              </span>
+            </td>
+
+            <td style="text-align: left;">
+              <span *ngIf="data.purpose == 'CREDIT'">
+                <span *ngIf="data.vehicleNumber == 'undefined'">
+                  {{data.manualCrNumber}}
+                </span>
+                <span *ngIf="data.vehicleNumber != 'undefined'">
+                  {{data.manualCrNumber}}
+                </span>
+              </span>
+              <span *ngIf="data.purpose == 'LUBE'">
+                <span *ngIf="data.vehicleNumber == 'undefined'">
+                  {{data.manualCrNumber}}
+                </span>
+                <span *ngIf="data.vehicleNumber != 'undefined'">
+                  {{data.manualCrNumber}}
+                </span>
+              </span>
+              <span *ngIf="data.purpose == 'LUBETAX'">
+                <span *ngIf="data.vehicleNumber == 'undefined'">
+                  {{data.manualCrNumber}}
+                </span>
+                <span *ngIf="data.vehicleNumber != 'undefined'">
+                  {{data.manualCrNumber}}
+                </span>
+              </span>
+
+              <span *ngIf="data.purpose == 'AdvAmt'">
+                <span *ngIf="data.advMobile == 'undefined'">
+                  {{data.manualCrNumber}}
+
+                </span>
+                <span *ngIf="data.advMobile != 'undefined' ">
+                  {{data.manualCrNumber}}
+                </span>
+              </span>
+
+            </td>
+            <td style="text-align: left;">
+              <span *ngIf="data.purpose == 'CREDIT'">
+                {{data.productName}}
+              </span>
+              <span *ngIf="data.purpose == 'LUBE'">
+                {{data.lubeName}}
+              </span>
+              <span *ngIf="data.purpose == 'LUBETAX'">
+                {{data.lubeName}}
+              </span>
+              <span *ngIf="data.purpose == 'AdvAmt'">
+                ADVANCE
+              </span>
+            </td>
+
+            <td>
+              <span *ngIf="data.advMobile == 'undefined' || data.advMobile == 'null'">
+                --
+              </span>
+              <span *ngIf="data.advMobile != 'undefined' || data.advMobile != 'null'">
+                {{ data.productRate}}
+              </span>
+            </td>
+
+            <td style="text-align: left;">
+              <span *ngIf="data.purpose == 'CREDIT'">
+                <span *ngIf="data.vehicleNumber == 'undefined'">
+
+                </span>
+                <span *ngIf="data.vehicleNumber != 'undefined'">
+                  {{data.vehicleNumber}}
+                </span>
+              </span>
+              <span *ngIf="data.purpose == 'LUBE'">
+                <span *ngIf="data.vehicleNumber == 'undefined'">
+                </span>
+                <span *ngIf="data.vehicleNumber != 'undefined'">
+                  {{data.vehicleNumber}}
+                </span>
+              </span>
+              <span *ngIf="data.purpose == 'LUBETAX'">
+                <span *ngIf="data.vehicleNumber == 'undefined'">
+                </span>
+                <span *ngIf="data.vehicleNumber != 'undefined'">
+                  {{data.vehicleNumber}}
+                </span>
+              </span>
+            </td>
+
+            <td style="text-align: left;">
+              <span *ngIf="data.transactionStatus != 'CANCEL'">
+                <span *ngIf="data.transactionStatus != 'PENDING'">
+                  <span *ngIf="data.fuelcreditTaxDetails == 'EXCLUDE'">
+                    ₹ &nbsp; {{data.creditAmount| number:'1.2-2'}}
+                  </span>
+                  <span *ngIf="data.fuelcreditTaxDetails != 'EXCLUDE'">
+                    ₹ &nbsp; {{data.creditAmount | number:'1.2-2'}}</span>
+                </span>
+                <span *ngIf="data.transactionStatus == 'PENDING'">
+                  PENDING
+                </span>
+              </span>
+              <span *ngIf="data.transactionStatus == 'CANCEL'">
+                CANCELLED
+              </span>
+            </td>
+
+            <td style="text-align: left;">
+              <span *ngIf="data.purpose == 'CREDIT'">
+                <span *ngIf="data.transactionStatus == 'CANCEL'">
+                  CANCELLED
+                </span>
+                <span *ngIf="data.transactionStatus != 'CANCEL'">
+                  <span *ngIf="data.transactionStatus != 'PENDING'">
+                    <span *ngIf="data.productCategory == 'CNG'">
+                      {{data.actualCreditQuantity | number:'1.2-2'}} Kg
+                    </span>
+                    <span *ngIf="data.productCategory != 'CNG'">
+                      {{data.actualCreditQuantity | number:'1.2-2'}} Ltrs
+                    </span>
+                  </span>
+                  <span *ngIf="data.transactionStatus == 'PENDING'">
+                    PENDING
+                  </span>
+                </span>
+              </span>
+              <span *ngIf="data.purpose == 'LUBE'">
+                <span *ngIf="data.lubeUnit != 'undefined'">
+                  {{data.actualCreditQuantity | number:'1.2-2'}} {{data.lubeUnit}}
+                </span>
+                <span *ngIf="data.lubeUnit == 'undefined'">
+                  {{data.actualCreditQuantity | number:'1.2-2'}}
+                </span>
+              </span>
+              <span *ngIf="data.purpose == 'LUBETAX'">
+                <span *ngIf="data.lubeUnit != 'undefined'">
+                  {{data.actualCreditQuantity | number:'1.2-2'}} {{data.lubeUnit}}
+                </span>
+                <span *ngIf="data.lubeUnit == 'undefined'">
+                  {{data.actualCreditQuantity | number:'1.2-2'}}
+                </span>
+              </span>
+              <span *ngIf="data.purpose == 'AdvAmt'">
+                -
+              </span>
+
+            </td>
+
+            <td style="text-align: left;cursor: pointer;">
+              <button type="button" class="btn btn-primary btn-sm btn-rounded" (click)="openViewBill(viewBill,data.fuelCreditId,data.estimatedRefuelDate,data.mappingPreviousStatus,data.mappingCompanyName,
+                    data.companyName,data.hostPhone,data.purpose,data.vehicleNumber,data.manualCrNumber,data.productName,data.productRate,
+                    data.transactionStatus,data.productCategory,data.actualCreditQuantity,data.creditAmount)">
+                View Details
+              </button>
+            </td>
+
+            <td style="text-align: left;cursor: pointer;">
+              <div ngbDropdown placement="bottom-left">
+                <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                  aria-expanded="true"></i>
+                <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                  <span *ngIf="data.invoiceStatus == 'FALSE'">
+                    <span *ngIf="data.fuelShiftId && data.fuelShiftId != 'undefined'">
+                      <a class="dropdown-item" href="javascript: void(0);" (click)="askFordelete(deleteTemplate)">
+                        <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
+                    </span>
+                    <span
+                      *ngIf="data.fuelShiftId == '' || data.fuelShiftId == 'undefined' || data.fuelShiftId === null">
+                      <a class="dropdown-item" href="javascript: void(0);"
+                        (click)="askForPass(PasswordTemplate,data.fuelCreditId,data.fuelDealerCustomerMapId,'CANCEL')">
+                        <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
+                    </span>
+                  </span>
+                  <span *ngIf="data.invoiceStatus == 'TRUE'">
+                    <span *ngIf="data.fuelShiftId && data.fuelShiftId != 'undefined'">
+                      <a class="dropdown-item" href="javascript: void(0);" (click)="askFordelete(deleteTemplate)">
+                        <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
+                    </span>
+                    <span
+                      *ngIf="data.fuelShiftId == '' || data.fuelShiftId == 'undefined' || data.fuelShiftId === null">
+                      <a class="dropdown-item" href="javascript: void(0);"
+                        (click)="askForPass(PasswordTemplate,data.fuelCreditId,data.fuelDealerCustomerMapId,'CANCEL')">
+                        <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
+                    </span>
+                  </span>
+                  <span *ngIf="data.invoiceStatus == 'FALSE'">
+                    <span *ngIf="data.fuelShiftId && data.fuelShiftId != 'undefined'">
+                      <a class="dropdown-item" href="javascript: void(0);" (click)="askForEdit(editTemplate)">
+                        <i class="fas fa-ban" style="color: green;"></i> &nbsp; Edit</a>
+                    </span>
+                    <span
+                      *ngIf="data.fuelShiftId == '' || data.fuelShiftId == 'undefined' || data.fuelShiftId === null">
+                      <a class="dropdown-item" href="javascript: void(0);"
+                        (click)="askForPassEdit(PasswordTemplateEdit,updateFuelCr,data.fuelCreditId,data.refuelForDriver,data.hostPhone,data.fuelProdId,data.productCategory,data.productRate,data.vehicleNumber,data.reqQuantity,data.reqCreditAmount,data.actualCreditQuantity,data.creditAmount,data.estimatedRefuelDate,data.vehicleId,data.vehicleVPStatus,data.fuelDealerCustomerMapId,data.manualCrNumber)">
+                        <i class="fas fa-ban" style="color: green;"></i> &nbsp; Edit</a>
+                    </span>
+                  </span>
+                  <span *ngIf="data.invoiceStatus == 'TRUE'">
+                    <span *ngIf="data.fuelShiftId && data.fuelShiftId != 'undefined'">
+                      <a class="dropdown-item" href="javascript: void(0);" (click)="askForEdit(deleteTemplate)">
+                        <i class="fas fa-ban" style="color: green;"></i> &nbsp; Edit</a>
+                    </span>
+                    <span
+                      *ngIf="data.fuelShiftId == '' || data.fuelShiftId == 'undefined' || data.fuelShiftId === null">
+                      <a class="dropdown-item" href="javascript: void(0);"
+                        (click)="askForPassEdit(PasswordTemplateEdit,updateFuelCr,data.fuelCreditId,data.refuelForDriver,data.hostPhone,data.fuelProdId,data.productCategory,data.productRate,data.vehicleNumber,data.reqQuantity,data.reqCreditAmount,data.actualCreditQuantity,data.creditAmount,data.estimatedRefuelDate,data.vehicleId,data.vehicleVPStatus,data.fuelDealerCustomerMapId,data.manualCrNumber)">
+                        <i class="fas fa-ban" style="color: green;"></i> &nbsp; Edit</a>
+                    </span>
+                  </span>
+
+                  <span *ngIf="data.invoiceStatus == 'CANCEL'">
+                    <span *ngIf="data.fuelShiftId && data.fuelShiftId != 'undefined'">
+                      <a class="dropdown-item" href="javascript: void(0);" (click)="askFordelete(deleteTemplate)">
+                        <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
+                    </span>
+                    <span
+                      *ngIf="data.fuelShiftId == '' || data.fuelShiftId == 'undefined' || data.fuelShiftId === null">
+                      <a class="dropdown-item" href="javascript: void(0);"
+                        (click)="askForPass(PasswordTemplate,data.fuelCreditId,data.fuelDealerCustomerMapId,'CANCEL')">
+                        <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
+                    </span>
+                  </span>
+                  <span *ngIf="data.invoiceStatus == 'CANCEL'">
+                    <span *ngIf="data.fuelShiftId && data.fuelShiftId != 'undefined'">
+                      <a class="dropdown-item" href="javascript: void(0);" (click)="askForEdit(editTemplate)">
+                        <i class="fas fa-ban" style="color: green;"></i> &nbsp; Edit</a>
+                    </span>
+                    <span
+                      *ngIf="data.fuelShiftId == '' || data.fuelShiftId == 'undefined' || data.fuelShiftId === null">
+                      <a class="dropdown-item" href="javascript: void(0);"
+                        (click)="askForPassEdit(PasswordTemplateEdit,updateFuelCr,data.fuelCreditId,data.refuelForDriver,data.hostPhone,data.fuelProdId,data.productCategory,data.productRate,data.vehicleNumber,data.reqQuantity,data.reqCreditAmount,data.actualCreditQuantity,data.creditAmount,data.estimatedRefuelDate,data.vehicleId,data.vehicleVPStatus,data.fuelDealerCustomerMapId,data.manualCrNumber)">
+                        <i class="fas fa-ban" style="color: green;"></i> &nbsp; Edit</a>
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </td>
+
+            <ng-template #PasswordTemplate let-c="close" let-d="dismiss">
+              <div class="modal-header">
+                <h4 class="modal-title">
+                  <label>
+                    <h4><strong>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Please Enter Password
+                      </strong></h4>
+                  </label>
+                </h4>
+                <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <input class="form-control" type="password" placeholder="password" [(ngModel)]="password"
+                      [ngModelOptions]="{standalone: true}">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-outline-success my-2 my-sm-0"
+                    (click)="comparePasswordForDelete(cancelReq)">YES</button>
+                </div>
+                <div class="col-auto">
+                  <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">No</button>
+                </div>
+                <br>
+              </div>
+            </ng-template>
+
+            <ng-template #PasswordTemplateEdit let-c="close" let-d="dismiss">
+              <div class="modal-header">
+                <h4 class="modal-title">
+                  <label>
+                    <h4><strong>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Please Enter Password
+                      </strong></h4>
+                  </label>
+                </h4>
+                <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <input class="form-control" type="password" placeholder="password" [(ngModel)]="password"
+                      [ngModelOptions]="{standalone: true}">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-outline-success my-2 my-sm-0"
+                    (click)="comparePasswordForEdit(updateFuelCr)">YES</button>
+                </div>
+                <div class="col-auto">
+                  <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">No</button>
+                </div>
+                <br>
+              </div>
+            </ng-template>
+
+            <!-- Cancel Req Starts -->
+            <ng-template #cancelReq let-c="close" let-d="dismiss">
+              <div class="modal-header">
+                <h4 class="modal-title">
+                  <label>
+                    <h4><strong>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Do You Want To Cancel ?</strong></h4>
+                  </label>
+                </h4>
+                <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-4">
+                  </div>
+                  <div class="col-md-2">
+                    <button type="button" class="btn btn-outline-success my-2 my-sm-0" (click)="cancelFuelCreditReq()">
+                      Yes</button>
+                  </div>
+                  <div class="col-md-2">
+                    <button type="button" class="btn btn-danger" aria-label="Close"
+                      (click)="d('Cross click')">No</button>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+            <!-- Cancel Req Ends -->
+            <!-- Edit Cr -->
+            <ng-template #updateFuelCr let-c="close" let-d="dismiss">
+              <div class="modal-header">
+                <h4 class="modal-title">
+                  <strong>
+                    &nbsp;&nbsp;&nbsp;
+                    Edit Credit </strong>
+                </h4>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="requestEditCr">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <label class="labelNewMargin">Product
+                        Name:</label>
+                    </div>
+                    <div class="col-md-3">
+                      <input class="form-control" placeholder="Product" formControlName="productCategory" readonly>
+                    </div>
+                    <div class="col-md-2">
+                      <label class="labelNewMargin">Product
+                        Rate:</label>
+                    </div>
+                    <div class="col-md-3">
+                      <input class="form-control" placeholder="Product Rate" formControlName="productRate" readonly>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-md-2">
+                      <label class="labelNewMargin">Previous
+                        Transaction Date:</label>
+                    </div>
+                    <div class="col-md-3">
+                      <input class="form-control" placeholder="DD-MM-YYYY" name="startDate"
+                        formControlName="estimatedRefuelDateForEdit" readonly>
+                    </div>
+
+                    <div class="col-md-5">
+                      <span style="color: red;">
+                        Please Check All Calculations before
+                        Update..!
+                      </span>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-md-2">
+                      <label class="labelNewMargin">Vehicle
+                        No:</label>
+                    </div>
+                    <div class="col-md-3">
+                      <input class="form-control form-control-sm mr-1 w-40" style="font-size: 0.750rem;" type="text"
+                        placeholder=" Enter Vehicle Number" aria-label="Search" formControlName="vehicleNumber"
+                        oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                        (blur)="submitSearchVehicleEdit()" required>
+                    </div>
+                    <div class="col-md-2">
+                      <label class="labelNewMargin">
+                        Bill No.:
+                      </label>
+                    </div>
+                    <div class="col-md-3">
+                      <input class="form-control form-control-sm mr-1 w-40" style="font-size: 0.750rem;" type="text"
+                        placeholder=" Enter Credit Number" aria-label="Search" [(ngModel)]="manualCrNumber"
+                        [ngModelOptions]="{standalone: true}" required>
+                    </div>
+                  </div>
+
+                  <!-- Radio Button Logic Starts-->
+                  <br>
+
+                  <div class="row">
+                    <div class="col-md-2">
+                      <label class="labelNewMargin">Amount</label>
+                    </div>
+                    <div class="col-md-1">
+                      <input type="radio" value="AMOUNT" formControlName="requestType" (change)="getCompleteForEdit()">
+                    </div>
+                    <div class="col-md-3">
+                      <span *ngIf="!isAMOUNT">
+                        <input class="form-control form-control-sm mr-1 w-40" formControlName="reqCreditAmount"
+                          style="font-size: 0.750rem;" placeholder="Amount" type="number" readonly>
+                      </span>
+                      <span *ngIf="isAMOUNT">
+                        <input class="form-control form-control-sm mr-1 w-40" formControlName="reqCreditAmount"
+                          style="font-size: 0.750rem;" placeholder="Enter Request Amount" type="number"
+                          (blur)="amountCalculateForEdit()">
+                      </span>
+                    </div>
+                    <div class="col-md-1">
+                      Rs
+                    </div>
+                  </div>
+
+                  <br>
+                  <div class="row">
+                    <div class="col-md-2">
+                      <label class="labelNewMargin">Quantity</label>
+                    </div>
+                    <div class="col-md-1">
+                      <input type="radio" value="QUANTITY" formControlName="requestType" (change)="getPartialForEdit()">
+                    </div>
+                    <div class="col-md-3">
+                      <span *ngIf="!isQUANTITY">
+                        <input class="form-control form-control-sm mr-1 w-40" formControlName="reqQuantity"
+                          style="font-size: 0.750rem;" placeholder=" Quantity" type="number" readonly>
+                      </span>
+                      <span *ngIf="isQUANTITY">
+                        <input class="form-control form-control-sm mr-1 w-40" formControlName="reqQuantity"
+                          style="font-size: 0.750rem;" placeholder="Enter Request Quantity" type="number"
+                          (blur)="quantityCalculateForEdit()">
+                      </span>
+                    </div>
+                    <div class="col-md-1">
+                      Ltrs
+                    </div>
+                  </div>
+                  <hr>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-2">
+                      <button type="submit" class="btn btn-primary" (click)="updateCrRequest()">Update</button>
+                    </div>&nbsp;&nbsp;
+                    <div class="col-md-2">
+                      <button type="submit" class="btn btn-secondary" (click)="closeModalUpdateCr()">Cancel</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </ng-template>
+
+            <ng-template #deleteTemplate let-c="close" let-d="dismiss">
+              <div class="modal-header">
+                <h4 class="modal-title">
+                  <label>
+                    <h6>
+                      "Dear Customer, You added this Credit entry to Shift Or Saved Invoice, if you delete or edit this
+                      entry it will
+                      affect the shift tally Or Saved Invoice. Are you sure to delete ? "
+                    </h6>
+                  </label>
+                </h4>
+                <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-outline-success my-2 my-sm-0"
+                    (click)="askForPass(PasswordTemplate,data.fuelCreditId,data.fuelDealerCustomerMapId,'CANCEL')">YES</button>
+                </div>
+                <div class="col-auto">
+                  <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">No</button>
+                </div>
+                <br>
+              </div>
+            </ng-template>
+
+            <ng-template #editTemplate let-c="close" let-d="dismiss">
+              <div class="modal-header">
+                <h4 class="modal-title">
+                  <label>
+                    <h6>
+                      Dear Customer, You added this Credit entry to Shift Or Saved Invoice, if you delete or edit this
+                      entry it will
+                      affect the shift tally Or Saved Invoice. Are you sure to delete ?
+                    </h6>
+                  </label>
+                </h4>
+                <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-outline-success my-2 my-sm-0"
+                    (click)="askForPassEdit(PasswordTemplateEdit,updateFuelCr,data.fuelCreditId,data.refuelForDriver,data.hostPhone,data.fuelProdId,data.productCategory,data.productRate,data.vehicleNumber,data.reqQuantity,data.reqCreditAmount,data.actualCreditQuantity,data.creditAmount,data.estimatedRefuelDate,data.vehicleId,data.vehicleVPStatus,data.fuelDealerCustomerMapId,data.manualCrNumber)">YES</button>
+                </div>
+                <div class="col-auto">
+                  <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">No</button>
+                </div>
+                <br>
+              </div>
+            </ng-template>
+          </tr>
+
+          <tr *ngIf="show  && i == rowNumber" class="sub-table no-bg">
+            <td align="center"> </td>
+            <td colspan="12" class="p-0">
+              <table class="table mb-0 table-striped">
+                <thead class="table-light">
+                  <tr>
+                    <th></th>
+                    <th style="text-align: left;">Key Person Name</th>
+                    <th style="text-align: left;">Key Person Mobile</th>
+                    <th style="text-align: left;">Other Details</th>
+                    <th style="text-align: left;" *ngIf="onlyDealerView">Created By</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td></td>
+                    <td style="text-align: left;">
+                      <span *ngIf="mappingPreviousStatus =='TRUE'">
+                        {{mappingCustomerName}}
+                      </span>
+                      <span *ngIf="mappingPreviousStatus =='FALSE'">
+                        {{hostName}}
+                      </span>
+                    </td>
+                    <td style="text-align: left;"> {{hostPhone}} </td>
+                    <td style="text-align: left;">
+                      <span *ngIf="data.purpose == 'CREDIT'">
+                        <span *ngIf="data.vehicleNumber == 'undefined'">
+                          {{data.manualCrNumber}}
+                        </span>
+                        <span *ngIf="data.vehicleNumber != 'undefined'">
+                          {{data.manualCrNumber}}
+                        </span>
+                      </span>
+                      <span *ngIf="data.purpose == 'LUBE'">
+                        <span *ngIf="data.vehicleNumber == 'undefined'">
+                          {{data.lubeName}}/ {{data.manualCrNumber}}
+                        </span>
+                        <span *ngIf="data.vehicleNumber != 'undefined'">
+                          {{data.lubeName}} / {{data.manualCrNumber}}
+                        </span>
+                      </span>
+                      <span *ngIf="data.purpose == 'LUBETAX'">
+                        <span *ngIf="data.vehicleNumber == 'undefined'">
+                          {{data.lubeName}}/ {{data.manualCrNumber}}
+                        </span>
+                        <span *ngIf="data.vehicleNumber != 'undefined'">
+                          {{data.lubeName}} / {{data.manualCrNumber}}
+                        </span>
+                      </span>
+                      <span *ngIf="data.purpose == 'AdvAmt'">
+                        <span *ngIf="data.advMobile == 'undefined'">
+                          {{data.advName}} {{data.manualCrNumber}}
+                        </span>
+                        <span *ngIf="data.advMobile != 'undefined' ">
+                          {{data.advName}} <span *ngIf="data.advMobile != 'null' "> {{data.advMobile}} </span>
+                          {{data.manualCrNumber}}
+                        </span>
+                      </span>
+                    </td>
+                    <td *ngIf="onlyDealerView" style="text-align: left;">
+                      {{data.firstName}} {{data.lastName}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- begin::Pagination -->
+      <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+        style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+      </pagination-controls>
+      <!-- end::Pagination -->
+
+      <ng-template #viewBill let-c="close" let-d="dismiss">
+        <div class="modal-body">
+          <div class="row noprint">
+            <div class="col-md-8"></div>
+            <div class="col-md-2">
+              <button class="btn btn-success" printSectionId="sanjay" ngxPrint>print</button>
+            </div>
+          </div>
+          <div id="sanjay">
+            <div class="container">
+              <form style="background-color: white;color: black;">
+                <br>
+                <div class="row fontStyleCss">
+                  <br><br> <br>
+                  <div class="col-md-2"></div>
+                  <div class="col-md-8 outerBoxStyle">
+                    <div class="row" style="font-size: 13px; font-weight: 600;">&nbsp;
+                      <!-- {{companyName}} -->
+                    </div>
+
+                    <!-- <div class="row">&nbsp;&nbsp; {{headQuarterName}}</div> -->
+
+                    <!-- <div class="row">&nbsp;&nbsp; CONTACT NO &nbsp;:&nbsp; {{managerMobile}}</div> -->
+
+                    <!-- <div class="row">&nbsp;&nbsp; GST NO &nbsp;:&nbsp; {{GSTNumber}}</div> -->
+
+                    <div class="row">
+                      <div class="col-md-12" style="text-align: left;">
+                        CREDIT BILL
+                      </div>
+                    </div>
+
+                    <hr style="border-top: 1px dashed rgb(52, 51, 56);margin-top: 1px;margin-bottom: 8px;">
+
+                    <div class="row">
+                      <div class="col-md-8">
+                        <span *ngIf="estimatedRefuelDateShow == '2022-01-01' ">
+                          1 Jan, 2022
+                        </span>
+                        <span *ngIf="estimatedRefuelDateShow != '2022-01-01' ">
+                          {{estimatedRefuelDateShow | date:"d MMM, yyyy" }}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-12">
+                        <span *ngIf="mappingPreviousStatusShow =='TRUE'">
+                          {{mappingCompanyNameShow}}
+                        </span>
+                        <span *ngIf="mappingPreviousStatusShow =='FALSE'">
+                          {{companyNameShow}}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="row" style="margin-top: 1%;">
+                      <div class="col-md-12">
+                        <table>
+                          <tbody>
+                            <tr>
+                              <td> MOBILE NO.</td>
+                              <td>&nbsp;&nbsp;:&nbsp;{{hostPhoneShow}}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td> BILL/REF NO.</td>
+                              <td>&nbsp;&nbsp;:&nbsp;
+                                <span *ngIf="purposeShow == 'CREDIT'">
+                                  <span *ngIf="vehicleNumberShow == 'undefined'">
+                                    {{manualCrNumberShow}}
+                                  </span>
+                                  <span *ngIf="vehicleNumberShow != 'undefined'">
+                                    {{manualCrNumberShow}}
+                                  </span>
+                                </span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>VEHICLE NO.</td>
+                              <td>&nbsp;&nbsp;:&nbsp;
+
+                                <span *ngIf="purposeShow == 'CREDIT'">
+                                  <span *ngIf="vehicleNumberShow == 'undefined'">
+
+                                  </span>
+                                  <span *ngIf="vehicleNumberShow != 'undefined'">
+                                    {{vehicleNumberShow}}
+                                  </span>
+                                </span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <hr style="border-top: 1px dashed rgb(52, 51, 56);margin-top: 3px;margin-bottom: 8px;">
+
+                    <div class="row">
+                      <div class="col-md-12">
+                        <table>
+                          <tbody>
+                            <tr>
+                              <td>PRODUCT</td>
+                              <td>&nbsp;&nbsp;:&nbsp;
+                                <span *ngIf="purposeShow == 'CREDIT'">
+                                  {{productNameShow}}
+                                </span>
+                                <span *ngIf="purposeShow == 'LUBE'">
+                                  {{productNameShow}}
+                                </span>
+                                <span *ngIf="purposeShow == 'LUBE'">
+                                  LUBRICANTS-TAX
+                                </span>
+                                <span *ngIf="purposeShow == 'AdvAmt'">
+                                  ADVANCE
+                                </span>
+
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>RATE</td>
+                              <td>&nbsp;&nbsp;:&nbsp;{{productRateShow}} Rs</td>
+                            </tr>
+                            <tr>
+                              <td>QUANTITY</td>
+                              <td>&nbsp;&nbsp;:&nbsp;
+                                <span *ngIf="purposeShow == 'CREDIT'">
+                                  <span *ngIf="transactionStatusShow == 'CANCEL'">
+                                    CANCELLED
+                                  </span>
+                                  <span *ngIf="transactionStatusShow != 'CANCEL'">
+                                    <span *ngIf="transactionStatusShow != 'PENDING'">
+                                      <span *ngIf="productCategoryShow == 'CNG'">
+                                        {{actualCreditQuantityShow | number:'1.2-2'}} Kg
+                                      </span>
+                                      <span *ngIf="productCategoryShow != 'CNG'">
+                                        {{actualCreditQuantityShow | number:'1.2-2'}} Ltrs
+                                      </span>
+
+                                    </span>
+                                    <span *ngIf="transactionStatusShow == 'PENDING'">
+                                      PENDING
+                                    </span>
+                                  </span>
+                                </span>
+
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>AMOUNT</td>
+                              <td>&nbsp;&nbsp;:&nbsp; <span *ngIf="transactionStatusShow != 'CANCEL'">
+                                  <span *ngIf="transactionStatusShow != 'PENDING'">
+                                    {{creditAmountShow | number:'1.2-2'}} Rs
+                                  </span>
+                                  <span *ngIf="transactionStatusShow == 'PENDING'">
+                                    PENDING
+                                  </span>
+                                </span>
+                                <span *ngIf="transactionStatusShow == 'CANCEL'">
+                                  CANCELLED
+                                </span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <hr style="border-top: 1px dashed rgb(52, 51, 56);margin-top: 3px;margin-bottom: 8px;">
+
+                    <div class="row">
+                      <div class="col-md-12">For more details login to viswasa app</div>
+                    </div>
+
+                    <hr style="border-top: 1px dashed rgb(52, 51, 56);margin-top: 2%;">
+
+                    <div class="row" style="margin-top: -2%;">
+                      <div class="col-md-12">Thank you! Visit again.</div>
+                    </div>
+                    <br><br>
+                  </div>
+
+                  <div class="col-md-2"></div>
+                </div>
+
+                <br>
+              </form>
+            </div>
+          </div>
+          <div class="row noprint" style="text-align: center;align-items: center;">
+
+            <div class="col-md-12" style="text-align: center;align-items: center;">
+              <button class="btn btn-success" (click)="downloadBillRedFlag()"> download </button>&nbsp;
+
+              <button type="button" class="btn btn-danger" aria-label="Close" style="width: 19%;"
+                (click)="d('Cross click')">cancel</button>
+            </div>
+          </div>
         </div>
-        <!--end::Table-->
-      </div>
-      <!--end::Tap pane-->
-      <!--end::Table-->
+      </ng-template>
+
     </div>
   </div>
 </div>

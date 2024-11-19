@@ -1,101 +1,263 @@
-<div class="card-body">
-  <!-- begin::Heading -->
-  <div class="d-flex flex-stack">
-    <!-- begin:Info -->
-    <div class="d-flex align-items-center">
-      <!-- begin:Image -->
-      <div class="symbol symbol-60px me-5">
-        <span class="symbol-label" [ngClass]="'bg-' + color + '-light'">
-          <img [src]="image" class="h-50 align-self-center" alt="" />
-        </span>
-      </div>
-      <!-- end:Image -->
+<br>
+<!-- begin::Body -->
+<div class="card-body p-0">
+  <div class="row">
+    <div class="col-lg-12">
+      <span *ngIf="dealerAccess">
+        <div class="row mb-2">
+          <div class="col-sm-4">
+          </div>
+          <div class="col-sm-8">
+            <div class="text-sm-end" *ngIf="accessGroup == '14' ">
+              <!-- <button *ngIf="isCreditPayment" type="button" class="btn btn-success btn-rounded mb-2 me-2"
+                routerLink="/credit/viewCrPayment" [routerLinkActive]="['router-link-active']">
 
-      <!-- begin:Title -->
-      <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pr-3">
-        <a href="#" class="text-gray-900 fw-bolder text-hover-primary fs-5">
-          {{ title }}
-        </a>
+                View Credit Payments </button> -->
+            </div>
+            <div class="text-sm-end" *ngIf="accessGroup != '14' ">
+              <!-- <button type="button" class="btn btn-success btn-rounded mb-2 me-2" routerLink="/credit/viewCrPayment"
+                [routerLinkActive]="['router-link-active']">
 
-        <span class="text-muted fw-bold">{{ date }}</span>
-      </div>
-      <!-- end:Title -->
+                View Credit Payments </button> -->
+            </div>
+          </div>
+
+          <div class="modal-body">
+            <form [formGroup]="addPaymentForm">
+              <div class="row">
+                <div class="col-sm-12">
+                  <br>
+                  <div class="mb-3 row">
+                    <label for="example-text-input" class="col-md-2 col-form-label">Date</label>
+                    <div class="col-md-10">
+                      <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+                        name="startDate" (click)="endDate.toggle()" formControlName="paymentDate" ngbDatepicker
+                        #endDate="ngbDatepicker">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="mb-3 row">
+                    <label for="example-text-input" class="col-md-2 col-form-label">Khata</label>
+                    <div class="col-sm-10">
+                      <input #myinput class="form-control" type="text" list="corporateList" placeholder="Select"
+                        formControlName="selectedCorp" (change)="getDetailsByfuelDealerCustomerMapIdId($event)">
+                      <datalist id="corporateList">
+                        <option *ngFor="let data of corporateList" [value]="data.companyName">
+                      </datalist>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row" *ngIf="isSelected1">
+                    <div class="col-sm-12">
+                      <div class="table-responsive mb-0">
+                        <table class="table table-centered table-nowrap">
+                          <thead style="border-width: 1px; border-color: black;">
+                            <tr>
+                              <th style="border-width: 1px; border-color: #000;">Khata Name</th>
+                              <th style="border-width: 1px; border-color: #000;">Key Person Name</th>
+                              <th style="border-width: 1px; border-color: #000;">Key Person Mobile</th>
+                              <th style="border-width: 1px; border-color: #000;">Outstanding</th>
+                              <th style="border-width: 1px; border-color: #000;">Alert</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td style="border-width: 1px; border-color: #000;"> {{dealerName}} </td>
+                              <td style="border-width: 1px; border-color: #000;"> {{personName}} </td>
+                              <td style="border-width: 1px; border-color: #000;"> {{personPhone1}} </td>
+                              <td style="border-width: 1px; border-color: #000;"> <span style="color:red"
+                                  *ngIf="calOutstanding < 0">
+                                  <li class="fas fa-rupee-sign"></li> {{(calOutstanding)*(-1) | number:'1.2-2'}} CR
+                                </span>
+                                <span style="color:red" *ngIf="calOutstanding >= 0">
+                                  <li class="fas fa-rupee-sign"></li> {{(calOutstanding) | number:'1.2-2'}}
+                                </span>
+                              </td>
+                              <td style="border-width: 1px; border-color: #000;">
+                                <div *ngIf="isFlag" class="col-md-1" (click)="viewFlag(viewFlagModel)"
+                                  style="color:red;cursor:pointer;font-size: x-large;">
+                                  <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+                                </div>
+                                <div *ngIf="!isFlag" class="col-md-1">
+                                  None
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                          <ng-template #viewFlagModel let-c="close" let-d="dismiss">
+                            <div class="modal-header">
+                              <h4 class="text-center">
+                                Show Details
+                              </h4>
+                              <button type="button" class="btn btn-danger" aria-label="Close"
+                                (click)="d('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <table class="table table-hover table-striped">
+                                <thead>
+                                  <tr>
+                                    <th align=left>Date of Alert</th>
+                                    <th align=left>Petrol Pump Name</th>
+                                    <th align=left>City</th>
+                                    <th align=left>Remarks</th>
+
+                                  </tr>
+                                </thead>
+                                <tbody *ngFor="let charges of viewCorpFlag; let i = index;">
+                                  <tr>
+                                    <td>{{charges.corporateFlagCreatedAt| date:"d MMM, yyyy"}}</td>
+                                    <td><b> {{charges.companyName}}</b> <br>
+                                      {{charges.firstName}} {{charges.lastName}} <br>
+                                      {{charges.phone1}}</td>
+                                    <td>{{charges.city}}</td>
+                                    <td>{{charges.corporateFlagPurpose}}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </ng-template>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="mb-3 row">
+                    <label for="example-text-input" class="col-md-2 col-form-label">Payment Mode</label>
+                    <div class="col-sm-10">
+                      <span *ngIf="!isPos">
+                        <select class="form-select" (change)="getBankAcc1($event)" formControlName="paymentMethod"
+                          required> >
+                          <option value="">Select </option>
+                          <option value="CASH">CASH</option>
+                          <option value="CHEQUE">CHEQUE</option>
+                          <option value="NET BANKING">NET BANKING</option>
+                          <option value="IMPS/NEFT/RTGS">IMPS/NEFT/RTGS</option>
+                          <option value="POS">POS/DIGITAL</option>
+                        </select>
+                      </span>
+                      <span *ngIf="isPos">
+                        <select class="form-select" (change)="getBankAcc1($event)" formControlName="paymentMethod"
+                          required>
+                          <option value="">Select</option>
+                          <option value="CASH">CASH</option>
+                          <option value="CHEQUE">CHEQUE</option>
+                          <option value="NET BANKING">NET BANKING</option>
+                          <option value="IMPS/NEFT/RTGS">IMPS/NEFT/RTGS</option>
+                          <option value="POS">POS/DIGITAL</option>
+                          <option *ngFor="let data of fuelTerminalDetails" [value]="data.terminalName">
+                            {{data.terminalName}}
+                          </option>
+                        </select>
+                      </span>
+
+                    </div>
+                  </div>
+                  <br>
+                  <div class="mb-3 row" *ngIf="isPos">
+                    <label for="example-text-input" class="col-md-2 col-form-label">POS</label>
+                    <div class="col-sm-10">
+                      <select class="form-select" (change)="getBankAcc1POS($event)" formControlName="pos" required>
+                        <option value="">Select </option>
+                        <option *ngFor="let data of fuelTerminalDetails" [value]="data.fuelTerminalsId">
+                          {{data.terminalName}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="mb-3 row">
+                    <label for="example-text-input" class="col-md-2 col-form-label">Account</label>
+                    <div class="col-sm-10">
+                      <span *ngIf="!isCash">
+                        <span *ngIf="isPos">
+                          <select class="form-select" formControlName="accountDetailsId" >
+                            <option value="">Select </option>
+                            <option *ngFor="let data of bankAccList" [value]="data.bankDetailsId">
+                              {{data.bankName}}-{{data.accountNumber}}
+                            </option>
+                            <option value="21">Oil-Company</option>
+                          </select>
+                        </span>
+                        <span *ngIf="!isPos">
+                          <select class="form-select" formControlName="accountDetailsId" (change)="checkSubmit()"
+                            required>
+                            <option value="">Select </option>
+                            <option *ngFor="let data of bankAccList" [value]="data.bankDetailsId">
+                              {{data.bankName}}-{{data.accountNumber}}
+                            </option>
+                          </select>
+                        </span>
+                      </span>
+                      <span *ngIf="isCash">
+                        <select class="form-select" formControlName="accountDetailsId" required>
+                          <option value="">Select Account</option>
+                          <option value="20">Cash-In-Hand</option>
+                          <option value="21">Oil-Company</option>
+                        </select>
+                      </span>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="mb-3 row">
+                    <label for="example-text-input" class="col-md-2 col-form-label">Payment Details</label>
+                    <div class="col-sm-10">
+                      <input (blur)="checkSubmit()" class="form-control" formControlName="paymentTransactionNo"
+                        placeholder="Enter Payment Details">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="mb-3 row">
+                    <label for="example-text-input" class="col-md-2 col-form-label">Amount</label>
+                    <div class="col-sm-10">
+                      <!-- <input type="number" (input)="onSearchChange($event.target.value)" class="form-control"
+                        formControlName="paymentAmount" placeholder="Enter Amount"> -->
+                    </div>
+                  </div>
+                  <br>
+                  <div class="mb-3 row" *ngIf="isCalculate">
+                    <!-- Amt in word -->
+                    <label for="example-text-input" class="col-md-2 col-form-label">Amt In Word</label>
+                    <div class="col-sm-10">
+                      <label for="example-text-input" class="col-md-8 col-form-label"> {{ amountInWord }} </label>
+
+                    </div>
+                  </div>
+                  <div class="mb-3 row" *ngIf="isCalculate">
+                    <label for="example-text-input" class="col-md-2 col-form-label">Current Outstanding</label>
+                    <div class="col-sm-10">
+                      <label for="example-text-input" class="col-md-8 col-form-label" *ngIf="outstandingAmt < 0">
+                        <li class="fas fa-rupee-sign"></li> {{(outstandingAmt)*(-1) | number:'1.2-2'}} CR
+                      </label>
+                      <label for="example-text-input" class="col-md-8 col-form-label" *ngIf="outstandingAmt >= 0">
+                        <li class="fas fa-rupee-sign"></li> {{(outstandingAmt) | number:'1.2-2'}}
+                      </label>
+
+                    </div>
+                  </div>
+                  <br><br>
+                  <div class="row">
+                    <div class="col-auto">
+                      <button *ngIf="!isSubmit" type="submit" class="btn btn-primary" disabled>Submit</button>
+                      <button *ngIf="isSubmit" type="submit" class="btn btn-primary"
+                        (click)="AddPaymentDetailsByfuelDealerCustomerMapId()">Submit</button>
+                    </div>
+                    <div class="col-auto">
+                      <button type="submit" class="btn btn-secondary" (click)="clearAll()">Cancel</button>
+                    </div>
+                  </div>
+                  <br><br>
+                  <br><br>
+
+                </div>
+              </div>
+            </form>
+
+          </div>
+
+        </div>
+      </span>
     </div>
-    <!-- begin:Info -->
-
-    <!-- begin:Menu -->
-    <div class="ms-1">
-      <button
-        type="button"
-        class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
-        data-kt-menu-trigger="click"
-        data-kt-menu-placement="bottom-end"
-        data-kt-menu-flip="top-end"
-      >
-        <app-keenicon name="category" class="fs-2"></app-keenicon>
-      </button>
-      <app-dropdown-menu1></app-dropdown-menu1>
-    </div>
-    <!-- end::Menu -->
   </div>
-  <!-- end::Heading -->
-
-  <!-- begin:Stats -->
-  <div class="d-flex flex-column w-100 mt-12">
-    <span class="text-gray-900 me-2 fw-bolder pb-3">Progress</span>
-
-    <div class="progress h-5px w-100">
-      <div
-        class="progress-bar"
-        [ngClass]="'bg-' + color"
-        role="progressbar"
-        [style.width]="progress"
-      ></div>
-    </div>
-  </div>
-  <!-- end:Stats -->
-
-  <!-- begin:Team -->
-  <div class="d-flex flex-column mt-10">
-    <div class="text-gray-900 me-2 fw-bolder pb-4">Team</div>
-
-    <div class="d-flex">
-      <a
-        href="#"
-        class="symbol symbol-35px me-2"
-        data-bs-toggle="tooltip"
-        title="Ana Stone"
-      >
-        <img src="./assets/media/avatars/300-6.jpg" alt="" />
-      </a>
-
-      <a
-        href="#"
-        class="symbol symbol-35px me-2"
-        data-bs-toggle="tooltip"
-        title="Mark Larson"
-      >
-        <img src="./assets/media/avatars/300-5.jpg" alt="" />
-      </a>
-
-      <a
-        href="#"
-        class="symbol symbol-35px me-2"
-        data-bs-toggle="tooltip"
-        title="Sam Harris"
-      >
-        <img src="./assets/media/avatars/300-9.jpg" alt="" />
-      </a>
-
-      <a
-        href="#"
-        class="symbol symbol-35px"
-        data-bs-toggle="tooltip"
-        title="Alice Micto"
-      >
-        <img src="./assets/media/avatars/300-10.jpg" alt="" />
-      </a>
-    </div>
-  </div>
-  <!-- end:Team -->
 </div>
