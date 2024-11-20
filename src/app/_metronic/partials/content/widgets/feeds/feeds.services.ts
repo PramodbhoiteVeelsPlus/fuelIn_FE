@@ -52,23 +52,10 @@ export class FeedsService {
     private getFuelCreditRequestCorporateByfuelDealerIdURL = this.baseURL + 'fuelDealerCustMap/getFuelCreditRequestCorporateByfuelDealerId';
     private getFuelCreditRequestByfuelDealerIdURL = this.baseURL + 'fuelDealerCustMap/getFuelCreditRequestByfuelDealerId';
     private getSalesPurchaseReportByDealerURL = this.baseURL + 'tripReports/getSalesPurchaseReportByDealer';
-    // private = this.baseURL + '';
-    // private = this.baseURL + '';
-    // private = this.baseURL + '';
-    // private = this.baseURL + '';
-    // private = this.baseURL + '';
-    // private = this.baseURL + '';
-    // private = this.baseURL + '';
-    // private = this.baseURL + '';
-    // private = this.baseURL + '';
-    // private = this.baseURL + '';
-    // private = this.baseURL + '';
-    // private = this.baseURL + '';
-
-
-
-
-
+    private addOpeningBalanceURL = this.baseURL + 'overallReport/addOpeningBalance';
+    private updateOpeningBalanceURL = this.baseURL + 'overallReport/updateOpeningBalance';
+    private deleteOpeningBalanceREPORTDataURL = this.baseURL + 'overallReport/deleteOpeningBalanceREPORTData';
+    private addReportDataURL = this.baseURL + 'overallReport/addReportData';
 
 
     setHeader() {
@@ -365,6 +352,46 @@ export class FeedsService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.getSalesPurchaseReportByDealerURL, body, {
+            headers: headers
+        })
+    }
+
+    // addOpeningBalanceURL
+    addOpeningBalancePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addOpeningBalanceURL, body, {
+            headers: headers
+        })
+    }
+
+    // updateOpeningBalanceURL
+    updateOpeningBalancePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateOpeningBalanceURL, body, {
+            headers: headers
+        })
+    }
+
+    // deleteOpeningBalanceREPORTDataURL
+    deleteOpeningBalanceREPORTDataPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.deleteOpeningBalanceREPORTDataURL, body, {
+            headers: headers
+        })
+    }
+
+    // addReportDataURL
+    addReportDataPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addReportDataURL, body, {
             headers: headers
         })
     }
