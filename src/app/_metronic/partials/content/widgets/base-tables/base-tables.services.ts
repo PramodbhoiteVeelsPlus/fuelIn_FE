@@ -30,6 +30,13 @@ export class BaseTablesService {
     private updateLastCRDateMapIdWiseURL = this.baseURL + 'fuelVendor/updateLastCRDateMapIdWise';
     private VehicleByRegistrationNumberURL = this.baseURL + 'vehicle/searchVehicleByRegistrationNumber';
     private updateCreditReqByDealerURL = this.baseURL + 'fuelDealerCustMap/editFuelCreditReqfuelCreditId';
+    private getCorporateInfoByfuelDealerCustomerMapIdURL = this.baseURL + 'fuelDealerCustMap/getCorporateInfoByfuelDealerCustomerMapId1';
+    private getAllCRPaymentByCustNameDealerURL = this.baseURL + 'accounttransaclog/getAllCRPaymentByCustNameDealer'; 
+    private getAllCRPaymentByDealerURL = this.baseURL + 'accounttransaclog/getAllCRPaymentByDealer';
+    private getAllCRPaymentByCorporateURL = this.baseURL + 'accounttransaclog/getAllCRPaymentByCorporate';
+    private removeTransactionLogURL = this.baseURL + 'accounttransaclog/removeTransactionLog';
+    private getAllDealersListURL = this.baseURL + 'dealerDashboard/getAllDealersList'; 
+    private updateAmountStatusByTranslogIdURL = this.baseURL + 'coinConversion/updateAmountStatusByTranslogId';
 
 
 
@@ -134,6 +141,76 @@ export class BaseTablesService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.updateCreditReqByDealerURL, body, {
+            headers: headers
+        })
+    }
+
+    // getCorporateInfoByfuelDealerCustomerMapIdURL
+    getCorporateInfoByfuelDealerCustomerMapIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getCorporateInfoByfuelDealerCustomerMapIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAllCRPaymentByCustNameDealerURL
+    getAllCRPaymentByCustNameDealerPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAllCRPaymentByCustNameDealerURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAllCRPaymentByDealerURL
+    getAllCRPaymentByDealerPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAllCRPaymentByDealerURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAllCRPaymentByCorporateURL
+    getAllCRPaymentByCorporatePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAllCRPaymentByCorporateURL, body, {
+            headers: headers
+        })
+    }
+
+    // removeTransactionLogURL
+    removeTransactionLogPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.removeTransactionLogURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAllDealersListURL
+    getAllDealersListPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAllDealersListURL, body, {
+            headers: headers
+        })
+    }
+
+    // updateAmountStatusByTranslogIdURL
+    updateAmountStatusByTranslogIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateAmountStatusByTranslogIdURL, body, {
             headers: headers
         })
     }

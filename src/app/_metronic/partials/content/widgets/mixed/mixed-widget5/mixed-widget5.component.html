@@ -1,57 +1,230 @@
 <div class="card-body d-flex flex-column pb-10 pb-lg-15">
   <div class="flex-grow-1">
-    <!-- begin::Info -->
-    <div class="d-flex align-items-center pe-2 mb-5">
-      <span class="text-muted fw-bolder fs-5 flex-grow-1">{{ time }}</span>
+    <form [formGroup]="searchDiscountForm">
+      <div class="row">
+        <label for="example-text-input" class="col-auto col-form-label">Customer Select </label>
+        <div class="col-lg-3">
+          <input class="form-control" type="text" list="allCorporateList" placeholder="select customer"
+            formControlName="customerName" (change)="getDetailsByCustomerName($event)">
+          <datalist id="allCorporateList">
+            <option *ngFor="let data of allCorporateList" [value]="data.companyName">
+          </datalist>
+        </div>
 
-      <div class="symbol symbol-50px">
-        <span class="symbol-label bg-light">
-          <img [src]="image" class="h-50 align-self-center" alt="" />
-        </span>
+        <label for="example-text-input" class="col-auto col-form-label">Date Range </label>
+        <div class="col-md-2">
+          <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+            name="startDate" ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker
+            #startDate="ngbDatepicker" formControlName="startDate">
+        </div>
+        <div class="col-md-2">
+          <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+            name="endDate" ngbTooltip="End Date" (click)="endDate.toggle()" ngbDatepicker #endDate="ngbDatepicker"
+            formControlName="endDate">
+        </div>
+
+        <div class="col-lg-1">
+          <button type="button" class="btn btn-primary w-md ms-1" name="button" (click)="getCrStatement()">
+            submit
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <br>
+  <div class="table-responsive mb-0">
+    <table class="table table-centered table-nowrap table-bordered" style="border: 1px solid black;">
+      <thead class="">
+        <tr>
+          <th style="text-align: left;">Opening Outstanding</th>
+          <th style="text-align: left;">Total Purchase</th>
+          <th style="text-align: left;">Total Payment</th>
+          <th style="text-align: left;">Net Outstanding</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let data of statementData">
+        <tr>
+          <td style="text-align: left;">
+            <span *ngIf="data.openningOS < 0">
+              <b>
+                <li class="fas fa-rupee-sign"></li> {{data.openningOS * (-1) | number:'1.2-2'}} /- CR
+              </b>
+            </span>
+            <span *ngIf="data.openningOS >= 0">
+              <b>
+                <li class="fas fa-rupee-sign"></li> {{data.openningOS | number:'1.2-2'}}
+                /-
+              </b>
+            </span>
+          </td>
+
+          <td style="text-align: left;"><b>
+              <li class="fas fa-rupee-sign"></li> {{data.totalPurchaseAmt | number:'1.2-2'}}
+            </b> </td>
+
+          <td style="text-align: left;"> <b>
+              <li class="fas fa-rupee-sign"></li> {{data.totalPaymentAmt| number:'1.2-2' }}
+            </b></td>
+
+          <td style="text-align: left;">
+            <span *ngIf="data.netOS < 0">
+              <b>
+                <li class="fas fa-rupee-sign"></li> {{data.netOS *(-1) |
+                number:'1.2-2'}}
+                /- CR
+              </b>
+            </span>
+            <span *ngIf="data.netOS >= 0">
+              <b>
+                <li class="fas fa-rupee-sign"></li> {{data.netOS | number:'1.2-2'}}
+                /-
+              </b>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <br>
+  <form [formGroup]="addForm">
+    <div class="row">
+      <div class="col-md-4">
+        <label>Add Manual Statement Number</label>
+        <input type="text" class="form-control" [(ngModel)]="manualSno" [ngModelOptions]="{standalone: true}"
+          placeholder="Enter Manual Statement Number" />
+      </div>
+      <div class="col-md-4">
+        <label>Add HSN Code</label>
+        <input type="text" class="form-control" [(ngModel)]="hsnCode" [ngModelOptions]="{standalone: true}"
+          placeholder="Enter HSN Code" />
+      </div>
+      <div class="col-md-4">
+        <label>Add Due Date</label>
+        <input class="form-control" placeholder="DD-MM-YYYY" style="background-color: #ffffff;" name="dueDate"
+          ngbTooltip="Due Date" (click)="dueDate.toggle()" ngbDatepicker #dueDate="ngbDatepicker"
+          formControlName="dueDate">
       </div>
     </div>
-    <!-- end::Info -->
+  </form>
+  <br>
 
-    <!-- begin::Link -->
-    <a href="#" class="text-gray-900 fw-bolder text-hover-primary fs-4">
-      {{ title }}
-    </a>
-    <!-- end::Link -->
+  <div class="row">
+    <div class="col-md-3">
+      <div class="row justify-content-center">
+        <div class="input-group bg-light rounded" (click)="createInvoiceWithoutPaymentDetails()">
+          <button class="btn bg-light">
+            Create Statement 1P
+          </button>
+          <button class="btn btn-primary" type="button" id="button-addon2">
+            <i class="bx bxs-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
 
-    <!-- begin::Desc -->
-    <p class="py-3">
-      <ng-content select="description"></ng-content>
-    </p>
-    <!-- end::Desc -->
+    <div class="col-md-5">
+      <div class="row justify-content-center">
+        <div class="input-group bg-light rounded" (click)="statementCreate()">
+          <button class="btn bg-light">
+            Create Statement 2P(Purchase & Payment Details)
+          </button>
+          <button class="btn btn-primary" type="button" id="button-addon2">
+            <i class="bx bxs-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="row justify-content-center">
+        <div class="input-group bg-light rounded" (click)="updateTotalInvCreditAmtForInterval()">
+          <button class="btn bg-light">
+            Create Statement 3P(Purchase Details)
+          </button>
+          <button class="btn btn-primary" type="button" id="button-addon2">
+            <i class="bx bxs-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <div class="row">
+    <div class="col-md-3">
+      <button class="btn btn-outline-success my-2 my-sm-0 btn-sm" (click)="createInvoiceWithoutPaymentDetails1()">
+        Old Create Statement1
+      </button>
+    </div>
+    <div class="col-md-5">
+      <button class="btn btn-outline-success my-2 my-sm-0 btn-sm" (click)="statementCreate1()">
+        Old Create Statement2
+      </button>
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-outline-success my-2 my-sm-0 btn-sm" (click)="updateTotalInvCreditAmtForInterval1()">
+        Old Create Statement3
+      </button>
+    </div>
+  </div><br>
+
+  <div class="table-responsive mb-0" *ngIf="isTable">
+    <table class="table table-centered table-nowrap">
+      <thead class="table-light">
+        <tr>
+          <th style="text-align: left;">sr no</th>
+          <th style="text-align: left;">Date</th>
+          <th style="text-align: left;">bill / ref number</th>
+          <th style="text-align: left;">vehicle no / other details</th>
+          <th style="text-align: left;">credit amount</th>
+        </tr>
+      </thead>
+      <tbody
+        *ngFor="let data of statementPurData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+        <tr>
+          <td style="text-align: left;"> {{i+1}} </td>
+          <td style="text-align: left;">
+            <span *ngIf="data.estimatedRefuelDate == '2022-01-01' ">
+              1 Jan, 2022
+            </span>
+            <span *ngIf="data.estimatedRefuelDate != '2022-01-01' ">
+              {{data.estimatedRefuelDate | date:"d MMM, yyyy"}}
+            </span>
+          </td>
+          <td>
+            {{data.manualCrNumber}}
+          </td>
+          <td style="text-align: left;">
+            <span *ngIf="data.purpose == 'CREDIT'">
+              <span *ngIf="data.vehicleNumber == 'undefined'">
+              </span>
+              <span *ngIf="data.vehicleNumber != 'undefined'">
+                {{data.vehicleNumber}}
+              </span>
+            </span>
+            <span *ngIf="data.purpose == 'LUBE'">
+              <span *ngIf="data.vehicleNumber == 'undefined'">
+                {{data.lubeName}}
+              </span>
+              <span *ngIf="data.vehicleNumber != 'undefined'">
+                {{data.vehicleNumber}} {{data.lubeName}}
+              </span>
+            </span>
+            <span *ngIf="data.purpose == 'AdvAmt'">
+              {{data.advName}} {{data.advMobile}}
+            </span>
+          </td>
+          <td style="text-align: left;"> {{data.creditAmount | number:'1.2-2'}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- begin::Pagination -->
+    <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+      style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+    </pagination-controls>
+    <!-- end::Pagination -->
+
   </div>
 
-  <!-- begin::Team -->
-  <div class="d-flex align-items-center">
-    <a
-      href="#"
-      class="symbol symbol-35px me-2"
-      data-bs-toggle="tooltip"
-      title="Ana Stone"
-    >
-      <img src="./assets/media/avatars/300-6.jpg" alt="" />
-    </a>
-
-    <a
-      href="#"
-      class="symbol symbol-35px me-2"
-      data-bs-toggle="tooltip"
-      title="Mark Larson"
-    >
-      <img src="./assets/media/avatars/300-5.jpg" alt="" />
-    </a>
-
-    <a
-      href="#"
-      class="symbol symbol-35px me-2"
-      data-bs-toggle="tooltip"
-      title="Sam Harris"
-    >
-      <img src="../assets/media/avatars/300-9.jpg" alt="" />
-    </a>
-  </div>
 </div>

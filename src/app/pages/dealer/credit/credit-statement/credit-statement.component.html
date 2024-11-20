@@ -1,0 +1,44 @@
+<div class="card-header">
+    <b>Credit Statement</b>
+  </div>
+  
+  <!-- <div class="row"> -->
+  <br>
+  <div>
+    <ul ngbNav #crStatement="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified" style="width: 100%;">
+      <li [ngbNavItem]="1">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">CUSTOMER </span>
+        </a>
+        <ng-template ngbNavContent>
+          <app-mixed-widget5 class="card card-xxl-stretch mb-5 mb-xl-8"></app-mixed-widget5>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="2">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">VEHICLE </span>
+        </a>
+        <ng-template ngbNavContent>
+          <app-mixed-widget9 class="card card-xl-stretch mb-xl-8" color="primary"></app-mixed-widget9>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="3">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">LUBE-TAX</span>
+        </a>
+        <ng-template ngbNavContent>
+          <app-mixed-widget2 class="card card-xxl-stretch mb-5 mb-xl-8"></app-mixed-widget2>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="4">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">INVOICE</span>
+        </a>
+        <ng-template ngbNavContent>
+          <app-mixed-widget3 class="card card-xxl-stretch mb-5 mb-xl-8"></app-mixed-widget3>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="crStatement"></div>
+  </div>
+  <!-- </div> -->

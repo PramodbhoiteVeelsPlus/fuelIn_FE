@@ -13,6 +13,11 @@ import { SharedModule } from 'src/app/_metronic/shared/shared.module';
 import { ViewSalesComponent } from './view-sales/view-sales.component';
 import { AddPaymentsComponent } from './add-payments/add-payments.component';
 import { ViewPaymentsComponent } from './view-payments/view-payments.component';
+import { CreditStatementComponent } from './credit-statement/credit-statement.component';
+import { FuelCreditInvoiceDocumentComponent } from './fuel-credit-invoice-document/fuel-credit-invoice-document.component';
+import { FuelCreditInvoiceDocNewComponent } from './fuel-credit-invoice-doc-new/fuel-credit-invoice-doc-new.component';
+import { FuelCreditInvoiceDocComponent } from './fuel-credit-invoice-doc/fuel-credit-invoice-doc.component';
+import { FuelCreditInvoiceVehicleComponent } from './fuel-credit-invoice-vehicle/fuel-credit-invoice-vehicle.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +27,12 @@ import { ViewPaymentsComponent } from './view-payments/view-payments.component';
     AddSalesComponent, 
     ViewSalesComponent,
     AddPaymentsComponent,
-    ViewPaymentsComponent
+    ViewPaymentsComponent,
+    CreditStatementComponent,
+    FuelCreditInvoiceDocumentComponent,
+    FuelCreditInvoiceDocNewComponent,
+    FuelCreditInvoiceDocComponent,
+    FuelCreditInvoiceVehicleComponent
   ],
   imports: [
     CommonModule,
@@ -58,6 +68,26 @@ import { ViewPaymentsComponent } from './view-payments/view-payments.component';
       {
         path: 'viewPayments',
         component: ViewPaymentsComponent,
+      },
+      {
+        path: 'creditStatement',
+        component: CreditStatementComponent,
+      },
+      {
+        path: 'fuelCreditInvoiceDocument/:id',
+        component: FuelCreditInvoiceDocumentComponent,
+      },
+      {
+        path: 'fuelCreditInvoiceDocNew/:id',
+        component: FuelCreditInvoiceDocNewComponent,
+      },
+      {
+        path: 'fuelCreditInvoiceDoc/:id',
+        component: FuelCreditInvoiceDocComponent,
+      },
+      {
+        path: 'fuelCreditInvoiceVehicle/:id',
+        component: FuelCreditInvoiceVehicleComponent,
       },
     ]),
     WidgetsModule,

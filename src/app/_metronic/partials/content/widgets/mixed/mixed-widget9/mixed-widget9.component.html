@@ -1,147 +1,133 @@
-<div class="card-header border-0 py-5">
-  <h3 class="card-title align-items-start flex-column">
-    <span class="card-label fw-bolder fs-3 mb-1">Sales Statistics</span>
+<br>
+<form [formGroup]="searchDiscountForm">
+  <div class="row">
+    <label for="example-text-input" class="col-lg-3 col-form-label">Customer Select </label>
+    <label for="example-text-input" class="col-lg-3 col-form-label">Vehicle Select </label>
+    <label for="example-text-input" class="col-md-2 col-form-label">Date Range </label>
+  </div>
+  <div class="row">
+    <div class="col-lg-3">
+      <input class="form-control" type="text" list="allCorporateList" placeholder="select customer"
+        formControlName="customerName" (change)="getDetailsByCustomerName($event)">
+      <datalist id="allCorporateList">
+        <option *ngFor="let data of allCorporateList" [value]="data.companyName">
+      </datalist>
+    </div>
 
-    <span class="text-muted fw-bold fs-7">Recent sales statistics</span>
-  </h3>
+    <div class="col-lg-3">
+      <input class="form-control" type="text" list="allVehicleList" placeholder="select Vehicle"
+        formControlName="vehicleNumber">
+      <datalist id="allVehicleList">
+        <option *ngFor="let data of allVehicleList" [value]="data.vehicleNumber">
+      </datalist>
+    </div>
 
-  <div class="card-toolbar">
-    <!-- begin::Menu -->
-    <button
-      type="button"
-      class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
-      data-kt-menu-trigger="click"
-      data-kt-menu-placement="bottom-end"
-      data-kt-menu-flip="top-end"
-    >
-      <app-keenicon name="category" class="fs-2"></app-keenicon>
-    </button>
-    <app-dropdown-menu1></app-dropdown-menu1>
-    <!-- end::Menu -->
+    <div class="col-md-2">
+      <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;" name="startDate"
+        ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker #startDate="ngbDatepicker"
+        formControlName="startDate">
+    </div>
+    <div class="col-md-2">
+      <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;" name="endDate"
+        ngbTooltip="End Date" (click)="endDate.toggle()" ngbDatepicker #endDate="ngbDatepicker"
+        formControlName="endDate">
+    </div>
+
+    <div class="col-lg-1">
+      <button type="button" class="btn btn-primary w-md ms-1" name="button" (click)="showAllDataByVehicle()">
+        submit
+      </button>
+    </div>
+  </div>
+</form>
+<br>
+<form [formGroup]="addForm">
+  <div class="row">
+    <div class="col-md-4">
+      <label>Add Manual Statement Number</label>
+      <input type="text" class="form-control" [(ngModel)]="manualSno" [ngModelOptions]="{standalone: true}"
+        placeholder="Enter Manual Statement Number" />
+    </div>
+    <div class="col-md-4">
+      <label>Add HSN Code</label>
+      <input type="text" class="form-control" [(ngModel)]="hsnCode" [ngModelOptions]="{standalone: true}"
+        placeholder="Enter HSN Code" />
+    </div>
+    <div class="col-md-4">
+      <label>Add Due Date</label>
+      <input class="form-control" placeholder="DD-MM-YYYY" style="background-color: #ffffff;" name="dueDate"
+        ngbTooltip="Due Date" (click)="dueDate.toggle()" ngbDatepicker #dueDate="ngbDatepicker"
+        formControlName="dueDate">
+    </div>
+  </div>
+</form>
+<br>
+
+<div class="row">
+  <div class="col-md-4">
+    <div class="row justify-content-center">
+      <div class="input-group bg-light rounded" (click)="gotoVehicleWiseStatement()">
+        <button class="btn bg-light">
+          Create Statement (Purchase Details)
+        </button>
+        <button class="btn btn-primary" type="button" id="button-addon2">
+          <i class="bx bxs-paper-plane"></i>
+        </button>
+
+      </div>
+    </div>
   </div>
 </div>
-<!-- end::Header -->
+<br>
 
-<!-- begin::Body -->
-<div class="card-body p-0 d-flex flex-column">
-  <!-- begin::Stats -->
-  <div class="card-px pt-5 pb-10 flex-grow-1">
-    <!-- begin::Row -->
-    <div class="row g-0 mt-5 mb-10">
-      <!-- begin::Col -->
-      <div class="col">
-        <div class="d-flex align-items-center me-2">
-          <!-- begin::Symbol -->
-          <div class="symbol symbol-50px me-3">
-            <div class="symbol-label bg-light-info">
-              <app-keenicon name="bucket" class="fs-1 text-info"></app-keenicon>
-            </div>
-          </div>
-          <!-- end::Symbol -->
+<div class="table-responsive mb-0" *ngIf="isTable1">
+  <table class="table table-centered table-nowrap">
+    <thead class="table-light">
+      <tr>
+        <th style="text-align: left;">sr no</th>
+        <th style="text-align: left;">date</th>
+        <th style="text-align: left;">billed to</th>
+        <th style="text-align: left;">bill / ref number</th>
+        <th style="text-align: left;">credit amount</th>
+      </tr>
+    </thead>
+    <tbody
+      *ngFor="let data of allDiscountedData1 | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
 
-          <!-- begin::Title -->
-          <div>
-            <div class="fs-4 text-gray-900 fw-bolder">$2,034</div>
-            <div class="fs-7 text-muted fw-bold">Author Sales</div>
-          </div>
-          <!-- end::Title -->
-        </div>
-      </div>
-      <!-- end::Col -->
+      <tr>
+        <td style="text-align: left;"> {{i+1}} </td>
+        <td style="text-align: left;">
+          <span *ngIf="data.estimatedRefuelDate == '2022-01-01' ">
+            1 Jan, 2022
+          </span>
+          <span *ngIf="data.estimatedRefuelDate != '2022-01-01' ">
+            {{data.estimatedRefuelDate | date:"d MMM, yyyy"}}
+          </span>
 
-      <!-- begin::Col -->
-      <div class="col">
-        <div class="d-flex align-items-center me-2">
-          <!-- begin::Symbol -->
-          <div class="symbol symbol-50px me-3">
-            <div class="symbol-label bg-light-danger">
-              <app-keenicon name="abstract-26" class="fs-1 text-danger"></app-keenicon>
-            </div>
-          </div>
-          <!-- end::Symbol -->
+        </td>
+        <td style="text-align: left;">
+          {{data.companyName}}
 
-          <!-- begin::Title -->
-          <div>
-            <div class="fs-4 text-gray-900 fw-bolder">$706</div>
-            <div class="fs-7 text-muted fw-bold">Commision</div>
-          </div>
-          <!-- end::Title -->
-        </div>
-      </div>
-      <!-- end::Col -->
-    </div>
-    <!-- end::Row -->
+        </td>
+        <td style="text-align: left;">
+          {{data.manualCrNumber}} &nbsp;&nbsp;
+          <span *ngIf="data.purpose == 'LUBE'">
+            {{data.lubeName}}
+          </span>
+          <span *ngIf="data.purpose == 'AdvAmt'">
+            {{data.advName}} {{data.advMobile}}
+          </span>
+        </td>
+        <td style="text-align: left;"> {{data.creditAmount | number:'1.2-2'}}</td>
 
-    <!-- begin::Row -->
-    <div class="row g-0">
-      <!-- begin::Col -->
-      <div class="col">
-        <div class="d-flex align-items-center me-2">
-          <!-- begin::Symbol -->
-          <div class="symbol symbol-50px me-3">
-            <div class="symbol-label bg-light-success">
-              <app-keenicon name="basket" class="fs-1 text-success"></app-keenicon>
-            </div>
-          </div>
-          <!-- end::Symbol -->
+      </tr>
+    </tbody>
+  </table>
 
-          <!-- begin::Title -->
-          <div>
-            <div class="fs-4 text-gray-900 fw-bolder">$49</div>
-            <div class="fs-7 text-muted fw-bold">Average Bid</div>
-          </div>
-          <!-- end::Title -->
-        </div>
-      </div>
-      <!-- end::Col -->
+  <!-- begin::Pagination -->
+  <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+    style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+  </pagination-controls>
+  <!-- end::Pagination -->
 
-      <!-- begin::Col -->
-      <div class="col">
-        <div class="d-flex align-items-center me-2">
-          <!-- begin::Symbol -->
-          <div class="symbol symbol-50px me-3">
-            <div class="symbol-label bg-light-primary">
-              <app-keenicon name="ecm010.svg" class="fs-1 text-primary"></app-keenicon>
-            </div>
-          </div>
-          <!-- end::Symbol -->
-
-          <!-- begin::Title -->
-          <div>
-            <div class="fs-4 text-gray-900 fw-bolder">$5.8M</div>
-            <div class="fs-7 text-muted fw-bold">All Time Sales</div>
-          </div>
-          <!-- end::Title -->
-        </div>
-      </div>
-      <!-- end::Col -->
-    </div>
-    <!-- end::Row -->
-  </div>
-  <!-- end::Stats -->
-
-  <!-- begin::Chart -->
-  <div
-    #chartRef
-    class="mixed-widget-6-chart card-rounded-bottom"
-    [style.height]="chartHeight"
-  >
-    <apx-chart
-      [series]="chartOptions.series"
-      [chart]="chartOptions.chart"
-      [xaxis]="chartOptions.xaxis"
-      [yaxis]="chartOptions.yaxis"
-      [dataLabels]="chartOptions.dataLabels"
-      [stroke]="chartOptions.stroke"
-      [legend]="chartOptions.legend"
-      [fill]="chartOptions.fill"
-      [states]="chartOptions.states"
-      [tooltip]="chartOptions.tooltip"
-      [colors]="chartOptions.colors"
-      [markers]="chartOptions.markers"
-      [plotOptions]="chartOptions.plotOptions"
-    ></apx-chart>
-  </div>
-  <!-- end::Chart -->
 </div>
-<!-- end::Body -->
