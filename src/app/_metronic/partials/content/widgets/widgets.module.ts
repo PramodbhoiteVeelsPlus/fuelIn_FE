@@ -47,6 +47,7 @@ import { ChartsWidget5Component } from './charts/charts-widget5/charts-widget5.c
 import { ChartsWidget6Component } from './charts/charts-widget6/charts-widget6.component';
 import { ChartsWidget7Component } from './charts/charts-widget7/charts-widget7.component';
 import { ChartsWidget8Component } from './charts/charts-widget8/charts-widget8.component';
+import { FeedsWidget1Component } from './feeds/feeds-widget1/feeds-widget1.component';
 import { FeedsWidget2Component } from './feeds/feeds-widget2/feeds-widget2.component';
 import { FeedsWidget3Component } from './feeds/feeds-widget3/feeds-widget3.component';
 import { FeedsWidget4Component } from './feeds/feeds-widget4/feeds-widget4.component';
@@ -177,11 +178,15 @@ import { TablesWidget33Component } from './tables/tables-widget33/tables-widget3
     ChartsWidget6Component,
     ChartsWidget7Component,
     ChartsWidget8Component,
+
+    //Feeds
+    FeedsWidget1Component,
     FeedsWidget2Component,
     FeedsWidget3Component,
     FeedsWidget4Component,
     FeedsWidget5Component,
     FeedsWidget6Component,
+
     MixedWidget2Component,
     MixedWidget3Component,
     MixedWidget5Component,
@@ -315,6 +320,8 @@ import { TablesWidget33Component } from './tables/tables-widget33/tables-widget3
     ChartsWidget6Component,
     ChartsWidget7Component,
     ChartsWidget8Component,
+
+    FeedsWidget1Component,
     FeedsWidget2Component,
     FeedsWidget3Component,
     FeedsWidget4Component,
