@@ -1,40 +1,98 @@
-<div
-  class="
-    card-body
-    p-0
-    d-flex
-    justify-content-between
-    flex-column
-    overflow-hidden
-  "
->
-  <div class="d-flex flex-stack flex-wrap flex-grow-1 px-9 pt-9 pb-3">
-    <div class="me-2">
-      <span class="fw-bolder text-gray-800 d-block fs-3">Sales</span>
-
-      <span class="text-gray-500 fw-bold">Oct 8 - Oct 26 2021</span>
+<br>
+<form [formGroup]="lubeTaxForm">
+  <div class="row">
+    <label for="example-text-input" class="col-lg-3 col-form-label">Customer Select </label>
+    <label for="example-text-input" class="col-md-2 col-form-label">Date Range </label>
+  </div>
+  <div class="row">
+    <div class="col-lg-3">
+      <input class="form-control" type="text" list="allCorporateList" placeholder="select customer"
+        formControlName="customer" (change)="getDetailsByCustomerName($event)">
+      <datalist id="allCorporateList">
+        <option *ngFor="let data of allCorporateList" [value]="data.companyName">
+      </datalist>
     </div>
 
-    <div class="fw-bolder fs-3" [ngClass]="'fs-3 text-' + chartColor">
-      $15,300
+    <div class="col-md-2">
+      <input class="form-control" placeholder="DD-MM-YYYY" style="background-color: #ffffff;" name="startDate"
+        (click)="startDate.toggle()" formControlName="startDate" ngbDatepicker #startDate="ngbDatepicker">
+    </div>
+    <div class="col-md-2">
+      <input class="form-control" placeholder="DD-MM-YYYY" style="background-color: #ffffff;" name="endDate"
+        (click)="endDate.toggle()" formControlName="endDate" ngbDatepicker #endDate="ngbDatepicker">
+    </div>
+
+    <div class="col-lg-1">
+      <button type="button" class="btn btn-primary w-md ms-1" name="button" (click)="getLubeTaxStatement()">
+        submit
+      </button>
     </div>
   </div>
-
-  <div #chartRef class="mixed-widget-10-chart" [style.height]="chartHeight">
-    <apx-chart
-      [series]="chartOptions.series"
-      [chart]="chartOptions.chart"
-      [xaxis]="chartOptions.xaxis"
-      [yaxis]="chartOptions.yaxis"
-      [dataLabels]="chartOptions.dataLabels"
-      [stroke]="chartOptions.stroke"
-      [legend]="chartOptions.legend"
-      [fill]="chartOptions.fill"
-      [states]="chartOptions.states"
-      [tooltip]="chartOptions.tooltip"
-      [colors]="chartOptions.colors"
-      [markers]="chartOptions.markers"
-      [plotOptions]="chartOptions.plotOptions"
-    ></apx-chart>
+</form>
+<br>
+<form [formGroup]="addForm">
+  <div class="row">
+    <div class="col-md-4">
+      <label>Add Manual Statement Number</label>
+      <input type="text" class="form-control" [(ngModel)]="manualSno" [ngModelOptions]="{standalone: true}"
+        placeholder="Enter Manual Statement Number" />
+    </div>
+    <div class="col-md-4">
+      <label>Add HSN Code</label>
+      <input type="text" class="form-control" [(ngModel)]="hsnCode" [ngModelOptions]="{standalone: true}"
+        placeholder="Enter HSN Code" />
+    </div>
+    <div class="col-md-4">
+      <label>Add Due Date</label>
+      <input class="form-control" placeholder="DD-MM-YYYY" style="background-color: #ffffff;" name="dueDate"
+        ngbTooltip="Due Date" (click)="dueDate.toggle()" ngbDatepicker #dueDate="ngbDatepicker"
+        formControlName="dueDate">
+    </div>
   </div>
+</form>
+<br>
+<div class="row">
+  <div class="col-md-4">
+    <div class="row justify-content-center">
+      <div class="input-group bg-light rounded" (click)="gotoLubeTaxStatement()">
+        <button class="btn bg-light">
+          Lube-Tax Statement (Purchase Details)
+        </button>
+        <button class="btn btn-primary" type="button" id="button-addon2">
+          <i class="bx bxs-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="table-responsive mb-0" *ngIf="isLubeTable">
+  <table class="table table-centered table-nowrap">
+    <thead class="table-light">
+      <tr>
+        <th style="text-align: left;">sr no</th>
+        <th style="text-align: left;">date</th>
+        <th style="text-align: left;">Product</th>
+        <th style="text-align: left;">bill / ref number</th>
+        <th style="text-align: left;">vehicle no / other details</th>
+        <th style="text-align: left;">credit amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of lubeTaxData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+        <td style="text-align: left;"> {{i+1}} </td>
+        <td style="text-align: left;"> {{ data.estimatedRefuelDate | date:"d MMM, yyyy"}}</td>
+        <td style="text-align: left;"> {{ data.lubeName }}</td>
+        <td style="text-align: left;"> {{ data.manualCrNumber }}</td>
+        <td style="text-align: left;"> {{ data.vehicleNumber }}</td>
+        <td style="text-align: left;"> {{ data.creditAmount| number:'1.2-2' }}</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <!-- begin::Pagination -->
+  <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+    style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+  </pagination-controls>
+  <!-- end::Pagination -->
 </div>

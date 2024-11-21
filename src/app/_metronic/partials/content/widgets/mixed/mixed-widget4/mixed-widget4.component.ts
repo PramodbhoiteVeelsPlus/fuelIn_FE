@@ -5,6 +5,7 @@ import { StatsService } from '../../stats/stats.services';
 import { MixedService } from '../mixed.services';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import moment from 'moment';
+import numWords from 'num-words';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -149,6 +150,9 @@ export class MixedWidget4Component {
   managerVPPersonId: any;
   managerPersonId: any;
   isSelected: boolean;
+  rupeesWrd: any;
+  paisaWrd: any;
+  amountInWords: string;
 
   constructor(
     private post: MixedService,
@@ -405,6 +409,20 @@ export class MixedWidget4Component {
   onSearchChange(searchValue: any): void {
     if (searchValue) {
       // this.transform(searchValue);
+          var osForWrd = ''
+          osForWrd = (searchValue).toFixed(2)
+          var osForWrd1 = osForWrd.split(".")
+          this.rupeesWrd = osForWrd1[0]
+          this.paisaWrd = osForWrd1[1]
+          if (this.rupeesWrd != 0 && this.paisaWrd != 0) {
+            this.amountInWords = numWords((this.rupeesWrd)) + " rupees and " + numWords((this.paisaWrd)) + " paisa only";
+          } else if (this.rupeesWrd != 0) {
+            this.amountInWords = numWords((this.rupeesWrd)) + " rupees";
+          } else if (this.paisaWrd != 0) {
+            this.amountInWords = numWords((this.paisaWrd)) + " paisa only";
+          } else {
+            this.amountInWords = "";
+          }
       this.checkSubmit()
       this.isCalculate = true;
       this.outstandingAmt = (Number(this.calOutstanding) - (searchValue))
@@ -413,42 +431,7 @@ export class MixedWidget4Component {
       this.isCalculate = false;
       this.isSubmit = false;
     }
-
   }
-
-  // transform(value: any): any {
-  //   // console.log('InWord-1', value);
-  //   if (value) {
-  //     const number = parseFloat(value).toFixed(2).split('.');
-  //     const num = parseInt(number[0]);
-  //     // console.log('InWord-2', num);
-  //     const digit = parseInt(number[1]);
-  //     if (num) {
-  //       if ((num.toString()).length > 9) { return ''; }
-  //       const n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
-  //       const d = ('00' + digit).substr(-2).match(/^(\d{2})$/);
-  //       // console.log('InWord-3', n);
-  //       // console.log('InWord-4', d);
-  //       if (!n) { return ''; }
-  //       let str = '';
-  //       // console.log('InWord-5', str);
-  //       str += (Number(n[1]) !== 0) ? (this.a[Number(n[1])] || this.b[n[1][0]] + ' ' + this.a[n[1][1]]) + 'Crore ' : '';
-  //       str += (Number(n[2]) !== 0) ? (this.a[Number(n[2])] || this.b[n[2][0]] + ' ' + this.a[n[2][1]]) + 'Lakh ' : '';
-  //       str += (Number(n[3]) !== 0) ? (this.a[Number(n[3])] || this.b[n[3][0]] + ' ' + this.a[n[3][1]]) + 'Thousand ' : '';
-  //       str += (Number(n[4]) !== 0) ? (this.a[Number(n[4])] || this.b[n[4][0]] + ' ' + this.a[n[4][1]]) + 'Hundred ' : '';
-  //       str += (Number(n[5]) !== 0) ? (this.a[Number(n[5])] || this.b[n[5][0]] + ' ' + this.a[n[5][1]]) + 'Rupees ' : '';
-  //       str += (Number(d[1]) !== 0) ? ((str !== '') ? 'and ' : '') + (this.a[Number(d[1])] || this.b[d[1][0]] + ' ' + this.a[d[1][1]]) + 'Paise Only' : 'Only';
-  //       // console.log('IN Word :', str);
-  //       this.amountInWord = str;
-  //       // this.amountInWord1 = str;
-  //       return str;
-  //     } else {
-  //       return '';
-  //     }
-  //   } else {
-  //     return '';
-  //   }
-  // }
 
 
   AddPaymentDetailsByfuelDealerCustomerMapId() {

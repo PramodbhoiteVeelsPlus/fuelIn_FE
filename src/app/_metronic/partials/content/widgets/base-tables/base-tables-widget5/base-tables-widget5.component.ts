@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Injectable, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbDateAdapter, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateAdapter, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig, NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ExcelService } from 'src/app/pages/excel.service';
 import { BaseTablesService } from '../base-tables.services';
@@ -8,6 +8,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import moment from 'moment';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable'
+import * as XLSX from 'xlsx';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<any> {
@@ -56,28 +57,44 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   }
 }
 
+
 @Component({
-  selector: 'app-base-tables-widget6',
-  templateUrl: './base-tables-widget6.component.html',
+  selector: 'app-base-tables-widget5',
+  templateUrl: './base-tables-widget5.component.html',
   providers: [
     { provide: NgbDateAdapter, useClass: CustomAdapter },
     { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }
   ]
 })
+export class BaseTablesWidget5Component implements OnInit {
+  filterForm = new FormGroup({
+    customerName: new FormControl(''),
+    fiscalyear: new FormControl("", Validators.required)
+  });
 
-export class BaseTablesWidget6Component implements OnInit {
   fuelDealerId: any;
-  dealerData: any;
   dealerCorporateId: any;
-  accessGroup: any;
-  acceesGroup: number;
-  dealerView: boolean;
+  acceesGroup: any;
+  dealerView: boolean = false;
   ownerName: string;
   dealerMobile: any;
   dealerLoginVPId: any;
   managerVPPersonId: any;
   managerPersonId: any;
   managerName: string;
+  p: number = 1;
+  p1: number = 1;
+  total: number = 0;
+  fuelDealerCorpMapId: string;
+  customerName: any;
+  accessGroup: any;
+  isAccountNameTableShow: boolean = false;
+  isSelectedAccountName: boolean = false;
+  accountNameList: any = [];
+  allCorporateList: any = [];
+  transactionData: any = [];
+  quantity: string;
+  dealerData: any = [];
   companyName: any;
   oilCompanyName: any;
   state: any;
@@ -87,30 +104,21 @@ export class BaseTablesWidget6Component implements OnInit {
   headerName1: any;
   headerName3: string;
   GSTNumber: string;
-
-  filterForm = new FormGroup({
-    customerName: new FormControl(''),
-    year: new FormControl("", Validators.required),
-    month: new FormControl("", Validators.required),
-    startDate: new FormControl(""),
-    endDate: new FormControl(""),
-    customerNameDAY: new FormControl(''),
-    yearDAY: new FormControl("", Validators.required),
-    monthDAY: new FormControl("", Validators.required),
-    productNameDAY: new FormControl("", Validators.required),
-  });
-  fuelDealerCorpMapId: string;
-  customerName: any;
-  isAccountNameTableShow: boolean = false;
-  isSelectedAccountName: boolean = false;
-  accountNameList: any;
-  allCorporateList: any = [];
-  transactionData: any = [];
-  quantity: string;
   transactionDataExcel: any = [];
-  p: number = 1;
-  p1: number = 1;
-  total: number = 0;
+  ficMonths: any = [];
+  previousYear: number;
+  dayWiseData: any = [];
+  year: string;
+  month: string;
+  financialYear: string;
+  financialYear2: string;
+  fiscalyear1: any;
+  fiscalyear2: any;
+  currentMonth: number;
+  startDate: number;
+  endDate: number;
+  yearWiseData: any = [];
+  yearWiseDataExcel: any = [];
 
   constructor(
     private modalService: NgbModal,
@@ -148,12 +156,67 @@ export class BaseTablesWidget6Component implements OnInit {
     this.headerName1 = this.companyName;
     // this.headerName2 = res.data[0].address1+', '+res.data[0].address2+', '+res.data[0].city;
     this.headerName3 = this.state + '-' + this.pin + '  ' + "GST: " + this.GSTNumber;
-    this.filterForm.controls["startDate"].setValue("01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear())
-    this.filterForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
+    this.year = moment(new Date()).format("YYYY");
+    this.month = moment(new Date()).format("MMM");
+
+    this.financialYear = "Apr " + (new Date().getFullYear())
+    this.financialYear2 = "Apr " + (new Date().getFullYear())
+    if (Number(moment(this.financialYear).format("MM")) > Number(moment(this.month).format("MM"))) {
+      this.fiscalyear1 = "Apr " +(new Date().getFullYear() - 1) + " - " + "Mar "+ (new Date().getFullYear())
+      this.fiscalyear2 = "Apr " + (new Date().getFullYear()) + " - " + "Mar " + (new Date().getFullYear() + 1)
+      console.log(" ,", this.fiscalyear1, this.fiscalyear2)
+    } else {
+      this.fiscalyear1 = "Apr " +(new Date().getFullYear() - 1) + " - " + "Mar "+ (new Date().getFullYear())
+      this.fiscalyear2 = "Apr " + (new Date().getFullYear()) + " - " + "Mar " + (new Date().getFullYear() + 1)
+      console.log("11 ,", this.fiscalyear1, this.fiscalyear2)
+    }
+    this.currentMonth = new Date().getMonth() + 1
+    this.filterForm.controls['fiscalyear'].setValue(this.fiscalyear2);
     this.getFuelCreditCorporateByfuelDealerId(this.fuelDealerId)
+    this.getFCYear()
     this.cd.detectChanges()
   }
 
+  getFCYear() {
+    // Get the current date
+    const currentDate = new Date();
+
+    // Calculate the start date of the current financial year
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+    const currentFinancialYearStart = new Date(currentYear, 3, 1); // Assuming the financial year starts on April 1st
+
+    if (Number(moment(currentDate).format("MM")) > 3) {
+      // Calculate the start date of the previous financial year
+      this.previousYear = currentYear - 1;
+    } else {
+      this.previousYear = currentYear - 2;
+    }
+    const previousFinancialYearStart = new Date(this.previousYear, 3, 1);
+
+    // Loop over the months of the previous financial year
+    let startDate = previousFinancialYearStart;
+    while (startDate < currentDate) {
+      const year = startDate.getFullYear();
+      const month = startDate.getMonth() + 1;
+      const dataJSON = {
+        month: '',
+        year: '',
+        monthName: '',
+        monthYear: ''
+      }
+      dataJSON.month = moment(month, ["M"]).format("MM")
+      dataJSON.monthName = moment(month, ["M"]).format("MMM")
+      dataJSON.year = moment(year, ["YYYY"]).format("YYYY")
+      dataJSON.monthYear = dataJSON.month + ' ' + dataJSON.year
+
+      this.ficMonths.push(dataJSON)
+      // Increment the month
+      startDate.setMonth(startDate.getMonth() + 1);
+    }
+    console.log(`Previous financial year:`, this.ficMonths);
+
+  }
 
   getDetailsByCustomerMapName(id: any) {
     this.fuelDealerCorpMapId = '';
@@ -207,7 +270,6 @@ export class BaseTablesWidget6Component implements OnInit {
 
   }
 
-
   getFuelCreditCorporateByfuelDealerId(fuelDealerId: any) {
     this.allCorporateList = []
     let data = {
@@ -223,192 +285,115 @@ export class BaseTablesWidget6Component implements OnInit {
       });
   }
 
-  getTransaction() {
+
+  getYearWise() {
+    if (this.filterForm.value.fiscalyear == this.fiscalyear1) {
+      this.startDate = new Date().getFullYear() - 2
+      this.endDate = new Date().getFullYear() - 1
+    } else if (this.filterForm.value.fiscalyear == this.fiscalyear2) {
+      this.startDate = new Date().getFullYear() - 1
+      this.endDate = new Date().getFullYear()
+    } else {
+
+    }
+
     if (this.fuelDealerCorpMapId) {
 
-      this.transactionData.length = 0
+      this.yearWiseData = []
       this.spinner.show()
       let data = {
         fuelDealerCustomerMapId: this.fuelDealerCorpMapId,
-        startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
-        endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+        startDate: moment(this.startDate, ["YYYY"]).format("YYYY-04-01"),
+        endDate: moment(this.endDate, ["YYYY"]).format("YYYY-03-31")
       }
 
-      this.post.getTransactionwiseLedgerByMapIdPOST(data)
+      this.post.getMonthlyCrDetailsPOST(data)
         .subscribe(res => {
           if (res.status == "OK" && res.data.length) {
-            this.transactionData = res.data;
+            this.yearWiseData = res.data;
             this.spinner.hide();
+            this.cd.detectChanges()
 
           } else {
             alert("Data Not Found..!")
             this.spinner.hide();
+            this.cd.detectChanges()
           }
         })
     } else {
 
-      this.transactionData.length = 0
+      this.yearWiseData = []
       this.spinner.show()
       let data = {
         fuelDealerId: this.fuelDealerId,
-        startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
-        endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+        startDate: moment(this.startDate, ["YYYY"]).format("YYYY-04-01"),
+        endDate: moment(this.endDate, ["YYYY"]).format("YYYY-03-31")
       }
 
-      this.post.getTransactionwiseLedgerByMapIdPOST(data)
+      this.post.getMonthlyCrDetailsPOST(data)
         .subscribe(res => {
           if (res.status == "OK" && res.data.length) {
-            this.transactionData = res.data;
+            this.yearWiseData = res.data;
             this.spinner.hide();
+            this.cd.detectChanges()
 
           } else {
             alert("Data Not Found..!")
             this.spinner.hide();
+            this.cd.detectChanges()
           }
         })
     }
   }
 
   exportToPDF() {
-    if (this.accessGroup == 12 || this.accessGroup == 14 || this.accessGroup == 19 || this.accessGroup == 21) {
+    var doc = new jsPDF('l', 'pt');
+    doc.setFontSize(12);
+    doc.text(this.headerName1, 40, 25);
+    doc.setFontSize(8);
+    // doc.text(this.headerName2,40, 40 );   
+    doc.text(this.headerName3, 40, 55);
+    doc.setFontSize(12);
+    doc.text("Credit Book (month-wise)", 350, 35);
 
-      var cols = [["Date", "Khata name", "Key person name", "Key person mobile", "Description", "Quantity", "Debit (Purchase)", "Credit (Payment)", "Balance (Outstanding)"]];
-      var rows = [];
-      for (var key in this.transactionData) {
+    autoTable(doc, {
+      html: '#excel-table1',
+      startY: 70,
 
-        if (this.transactionData[key].quantity) {
-          this.quantity = this.transactionData[key].quantity + ' ' + 'Ltrs'
-        } else {
-          this.quantity = ' '
-        }
-
-        var temp = [
-          moment(this.transactionData[key].date).format("DD-MM-YYYY"),
-          this.transactionData[key].companyName,
-          this.transactionData[key].hostName,
-          this.transactionData[key].hostPhone,
-          this.transactionData[key].description + ', ' + this.transactionData[key].product,
-          this.quantity,
-          Number(this.transactionData[key].purchase).toFixed(2),
-          Number(this.transactionData[key].payment).toFixed(2),
-          this.transactionData[key].balance
-
-        ];
-        rows.push(temp);
-      }
-
-      var doc = new jsPDF('l', 'pt');
-
-      doc.setFontSize(12);
-      doc.text(this.headerName1, 40, 25);
-      doc.setFontSize(8);
-      // doc.text(this.headerName2,40, 40 );   
-      doc.text(this.headerName3, 40, 55);
-      if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
-        doc.text("DATE : " + moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("DD MMM YYYY") + ' To ' + moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("DD MMM YYYY"), 40, 70);
-      }
-      doc.setFontSize(12);
-      doc.text("Credit Book (Transaction Wise)", 340, 35);
-
-      autoTable(doc, {
-        columnStyles: {
-          0: { cellWidth: 70 },      // date
-          1: { cellWidth: 110 },     // CustomerName
-          2: { cellWidth: 110 },     //KeyPersonName
-          3: { cellWidth: 80 },     //KeyPersonMobile
-          4: { cellWidth: 90 },     //Description
-          5: { cellWidth: 70 },     //Quantity
-          6: { cellWidth: 80 },     //Debit_Purchase
-          7: { cellWidth: 80 },     //Credit_Payment
-          8: { cellWidth: 90 },     //Balance_Outstanding
-
-        },
-
-        margin: { top: 80 },
-        head: cols,
-        body: rows,
-        theme: 'grid',
-        didDrawCell: (data) => { },
-      });
-
-      doc.save("CreditBook_TransactionWise.pdf");
-
-    }
+      theme: 'grid',
+      didDrawCell: (data) => { },
+    });
+    doc.save("CreditBook_MonthWise.pdf");
   }
 
 
+  /*name of the excel-file which will be downloaded. */
+  fileName = 'DaywiseReport.xlsx';
   exportexcel() {
-    if (this.accessGroup == 12 || this.accessGroup == 14 || this.accessGroup == 19 || this.accessGroup == 21) {
+    this.yearWiseDataExcel.length = 0
 
-      this.transactionDataExcel.length = 0
+    this.yearWiseData.map((res: { month: string; year: string; purchase: any; payment: any; balance: any; }) => {
 
-      this.transactionData.map((res: { quantity: string; date: moment.MomentInput; companyName: any; hostName: any; hostPhone: any; description: string; product: string; purchase: any; payment: any; balance: any; }) => {
-
-        if (res.quantity) {
-          this.quantity = res.quantity + ' ' + 'Ltrs'
-        } else {
-          this.quantity = ' '
-        }
-
-
-        let json = {
-          Date: moment(res.date).format("DD-MM-YYYY"),
-          KhataName: res.companyName,
-          KeyPersonName: res.hostName,
-          KeyPersonMobile: res.hostPhone,
-          Description: res.description + ', ' + res.product,
-          Quantity: this.quantity,
-          Debit_Purchase: Number(res.purchase).toFixed(2),
-          Credit_Payment: Number(res.payment).toFixed(2),
-          Balance_Outstanding: res.balance
-        };
+      let json = {
+        Month: res.month + ',' + res.year,
+        SalesAmount: res.purchase,
+        PaymentAmount: res.payment,
+        Balance: res.balance,
+      };
 
 
-        this.transactionDataExcel.push(json);
-      });
+      this.yearWiseDataExcel.push(json);
+    });
 
-      this.excelService.exportAsExcelFile(
-        this.transactionDataExcel,
-        "TransactionWiseReport"
-      );
+    this.excelService.exportAsExcelFile(
+      this.yearWiseDataExcel,
+      "yearWiseReport"
+    );
 
-    } else {
-      this.transactionDataExcel.length = 0
-
-      this.transactionData.map((res: { quantity: string; date: moment.MomentInput; companyName: any; hostName: any; hostPhone: any; description: string; product: string; purchase: any; payment: any; balance: any; }) => {
-
-        if (res.quantity) {
-          this.quantity = res.quantity + ' ' + 'Ltrs'
-        } else {
-          this.quantity = ' '
-        }
-
-        let json = {
-          Date: moment(res.date).format("DD-MM-YYYY"),
-          PumpName: res.companyName,
-          KeyPersonName: res.hostName,
-          KeyPersonMobile: res.hostPhone,
-          Description: res.description + ', ' + res.product,
-          Quantity: this.quantity,
-          Debit_Purchase: Number(res.purchase).toFixed(2),
-          Credit_Payment: Number(res.payment).toFixed(2),
-          Balance_Outstanding: res.balance
-        };
-
-
-        this.transactionDataExcel.push(json);
-      });
-
-      this.excelService.exportAsExcelFile(
-        this.transactionDataExcel,
-        "TransactionWiseReport"
-      );
-
-    }
   }
 
   pageChangeEvent(event: number) {
     this.p = event;
-    this.getTransaction();
+    this.getYearWise();
   }
 }

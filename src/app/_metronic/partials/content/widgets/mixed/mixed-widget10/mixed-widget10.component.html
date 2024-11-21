@@ -1,39 +1,471 @@
-<div class="card-body d-flex flex-column p-0">
-  <div class="flex-grow-1 card-p pb-0">
-    <div class="d-flex flex-stack flex-wrap">
-      <div class="me-2">
-        <a href="#" class="text-gray-900 text-hover-primary fw-bolder fs-3">
-          Generate Reports
-        </a>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
 
-        <div class="text-muted fs-7 fw-bold">
-          Finance and accounting reports
+  #page-wrap {
+    width: 700px;
+    margin: 0 auto;
+  }
+
+  .bg-invoice {
+    background-color: #e7e8ea;
+  }
+
+  .table-head {
+    font-size: 14px;
+    background-color: #e6e6fa !important;
+  }
+
+  .table-row {
+    font-size: 12px;
+  }
+
+  .main-table {
+    width: -webkit-fill-available;
+  }
+
+  .border-black {
+    border: 1px solid black;
+  }
+
+  .child-table {
+    width: -webkit-fill-available;
+    color: black;
+    text-align: center;
+
+  }
+
+  .border-gray {
+    border: 1px solid #8080802e;
+  }
+
+  .A4 {
+    background: white;
+    width: 23cm;
+    height: 40.7cm;
+    display: block;
+    margin: 0 auto;
+    padding: 1px 1px;
+    margin-bottom: 0.5cm;
+    box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+
+    box-sizing: border-box;
+    font-size: 12pt;
+    /* //line-height:normal; */
+  }
+
+  @media print {
+    .page-break {
+      display: block;
+      page-break-before: always;
+
+      size: A4 portrait;
+    }
+  }
+
+  @media print {
+    body {
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact;
+    }
+
+    .A4 {
+      box-shadow: none;
+      margin: 0;
+      width: auto;
+      height: auto;
+    }
+
+    .noprint {
+      display: none;
+    }
+
+    .print {
+      display: block;
+    }
+  }
+</style>
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!-- statement 2 start -->
+<html *ngIf="accessGroup != '2' && accessGroup != '51'" xmlns="https://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+
+  <title>Editable Statement</title>
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <script type='text/javascript' src='../../../../../../assets/EditableInvoice/js/jquery-1.3.2.min1.js'></script>
+  <script type='text/javascript' src='../../../../../../assets/EditableInvoice/js/example1.js'></script>
+</head>
+
+<body id="contentToConvert">
+  <div id="page-wrap">
+    <div class="row noprint">
+      <div class="col-md-8"></div>
+      <div class="col-auto">
+        <button class="btn btn-success" onclick="window.print()">print</button>
+      </div>
+    </div>
+
+    <div id="sanjay">
+      <div class="container">
+        <div class="col-12 mr-2 px-1 py-1 container border-black" id="htmlData">
+          <div>
+            <div class="bg-invoice">
+              <div class="row px-4 py-4">
+                <div class="col-8">
+                  <h3><b>{{companyName}}</b></h3>
+                  <h5> {{oilCompanyName}} petrol pump</h5>
+                  <h6> {{address1}} {{address2}} {{city}} <br>{{state}} {{pin}}</h6>
+                </div>
+                <div class="col-4">
+                  <h4>&nbsp;</h4>
+                  <!-- <h6>GST : {{GSTNumber}}</h6> -->
+                  <h6 *ngIf="hsnCode">HSN Code : {{hsnCode}}</h6>
+                  <h6>Phone : <span *ngIf="mobileStatus">
+                      {{managerMobile}}
+                    </span>
+                    <span *ngIf="!mobileStatus">
+                      {{phone1}}
+                    </span>
+                  </h6><br>
+                  <h6><b>Invoice No. : <span>{{sysGeneInvoiceNumber}}</span></b></h6>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="row">
+                <div class="col-md-8 container text-left">
+                  <h4>
+                    {{billedToName}} <br></h4>
+                  <h6> {{billedToAddressLine1}} {{billedToAddressLine2}} <br>
+                    {{billedToCity}}, {{billedToConeenorState}}-{{billedToConneenorPincode}} <br>
+                    {{billedToMobile}} &nbsp;&nbsp;&nbsp;&nbsp; GST- {{billedToGstNo}} <br> </h6>
+                  <h4> Vehicle : <b> {{vehicleNumber}} </b>
+                  </h4>
+                  <h5 class="" style="font-size: 15px;">
+                    ( {{startDate | date:'dd MMM yyyy'}} to {{endDate | date:'dd MMM yyyy'}} )
+                  </h5>
+                </div>
+              </div>
+            </div>
+            <div class="container text-center" style="border: 1px solid black; font-size: 15px;">
+              <p>
+                <span *ngIf="manualNumber!=undefined">
+                  <span *ngIf="manualNumber!=''">
+                    statement: {{manualNumber}}
+                  </span>
+                </span>
+              </p>
+            </div>
+            <table class="table main-table">
+              <div>
+                <table class="child-table">
+                  <thead>
+                    <tr>
+                      <th class="table-head">Sr.No</th>
+                      <th class="table-head">Date</th>
+                      <th class="table-head">Description</th>
+                      <th class="table-head">Product</th>
+                      <th class="table-head">Price</th>
+                      <th class="table-head">Quantity</th>
+                      <th class="table-head">Purchase</th>
+                    </tr>
+                  </thead>
+
+                  <tbody class="table-row">
+                    <tr *ngFor="let data of fcDetails; let i = index">
+                      <td class="border-gray"> {{i+1}} </td>
+                      <td class="border-gray">
+                        <span *ngIf="(data.estimatedRefuelDate | date:'d MMM y') == '1 Jan 2021' ">
+                          1 Jan 2022
+                        </span>
+                        <span *ngIf="(data.estimatedRefuelDate | date:'d MMM y') != '1 Jan 2021' ">
+                          {{data.estimatedRefuelDate | date:'d MMM y'}}
+                        </span>
+                      </td>
+
+                      <td class="border-gray">
+                        <span *ngIf="data.manualCrNumber == ''">
+                        </span>
+                        <span *ngIf="data.manualCrNumber != ''">
+                          <span *ngIf="data.manualCrNumber != 'null'">
+                            {{data.manualCrNumber}}
+                          </span>
+                          <span *ngIf="data.manualCrNumber == 'null'">
+                          </span>
+                        </span>
+                      </td>
+
+                      <td class="border-gray">
+                        <span *ngIf="data.purpose == 'LUBE' ">
+                          {{data.productName}}
+                        </span>
+                        <span *ngIf="data.purpose == 'CREDIT' ">
+                          {{data.productName}}
+                        </span>
+                        <span *ngIf="data.purpose == 'AdvAmt' ">
+                          ADVANCE
+                        </span>
+                      </td>
+                      <td class="border-gray">
+                        <span *ngIf="data.purpose == 'CREDIT' ">
+                          {{data.productRate}}
+                        </span>
+                      </td>
+                      <td class="border-gray">
+                        <span *ngIf="data.purpose == 'CREDIT' ">
+                          <span *ngIf='data.productCategory == "CNG" '>
+                            {{data.actualCreditQuantity | number:'1.2-2'}} Kg
+                          </span>
+                          <span *ngIf='data.productCategory != "CNG" '>
+                            {{data.actualCreditQuantity | number:'1.2-2'}} Ltr
+                          </span>
+                        </span>
+                        <span *ngIf="data.purpose == 'LUBE' ">
+                          {{data.actualCreditQuantity | number:'1.2-2'}} {{data.lubeUnit}}
+                        </span>
+                      </td>
+                      <td class="border-gray" style="background: #ffc0cb94 !important;">
+                        {{data.creditAmount | number:'1.2-2'}}
+                      </td>
+                    </tr>
+                    <tr style="font-weight: bold;" class="border-gray">
+                      <td colspan="6" class="border-gray table-head" style="text-align: end;">Grand Total</td>
+                      <td class="border-gray table-head">{{creditAmount | number:'1.2-2'}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p class="table-row">statement generated on: {{fuelInvoiceCreatedAt | date:"dd/MM/yyyy"}} </p>
+                <div class="row px-4 py-4" style="padding-bottom: 0rem !important;">
+                  <div class="col text-center border border-success px-1 py-1 mr-1">
+                    <h5 class="text-primary"><b> Total Amount </b></h5>
+                    <b>
+                      <span>
+                        <i class="fas fa-rupee-sign"></i> {{ creditAmount | number:'1.2-2'}}
+                      </span>
+                    </b>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="row px-4 py-4" style="padding-bottom: 0rem !important;">
+                  <div class="col text-center border border-success px-1 py-1 mr-1"
+                    *ngFor="let data of productQuantityDetails">
+                    <h5 class=""><b> {{data.productName}} </b></h5>
+                    <b>
+                      <span *ngIf="data.productCategory == 'CNG' ">
+                        {{data.quantity | number:'1.2-2'}} Kg
+                      </span>
+                      <span *ngIf="data.productCategory != 'CNG' ">
+                        {{data.quantity | number:'1.2-2'}} Ltrs
+                      </span>
+                    </b>
+                  </div>
+                </div>
+              </div>
+              <tr>
+              </tr>
+              <br>
+              <div class="row">
+                <div class="col-md-8">
+                  <strong> Please pay <span *ngIf="isDueDate == 'TRUE' "> before Due Date {{dueDate}} </span>: </strong>
+                  {{amountInWords}}
+                </div>
+
+                <div class="col-md-6">
+                  <span *ngFor="let data of bankAccList; let i = index">
+                    <div class="container border  px-2 py-2" *ngIf="data.uniqueStatus == 'TRUE' ">
+                      <strong>Bank Account No :</strong>{{data.accountNumber}} <br>
+                      <strong>IFSC Code:</strong> {{data.ifsc}} <br>
+                      <strong>UPI ID:</strong> {{data.upiId}} <br>
+                    </div>
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  Certified that the particulars given above are true and correct. Terms and Conditions apply.
+                  <br>
+                  <strong> For {{companyName}} </strong>
+                </div>
+              </div>
+            </table>
+          </div>
         </div>
       </div>
-
-      <div class="fw-bolder fs-3" [ngClass]="'text-' + chartColor">$24,500</div>
     </div>
   </div>
+</body>
 
-  <div
-    #chartRef
-    class="mixed-widget-7-chart card-rounded-bottom"
-    [style.height]="chartHeight"
-  >
-    <apx-chart
-      [series]="chartOptions.series"
-      [chart]="chartOptions.chart"
-      [xaxis]="chartOptions.xaxis"
-      [yaxis]="chartOptions.yaxis"
-      [dataLabels]="chartOptions.dataLabels"
-      [stroke]="chartOptions.stroke"
-      [legend]="chartOptions.legend"
-      [fill]="chartOptions.fill"
-      [states]="chartOptions.states"
-      [tooltip]="chartOptions.tooltip"
-      [colors]="chartOptions.colors"
-      [markers]="chartOptions.markers"
-      [plotOptions]="chartOptions.plotOptions"
-    ></apx-chart>
+</html>
+
+
+
+<!-- PDF Declaration on Vehicle Fleet-->
+
+<html *ngIf="accessGroup == '2' || accessGroup == '51'" xmlns="https://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+  <title>Editable Statement</title>
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <script type='text/javascript' src='../../../../../../assets/EditableInvoice/js/jquery-1.3.2.min1.js'></script>
+  <script type='text/javascript' src='../../../../../../assets/EditableInvoice/js/example1.js'></script>
+</head>
+
+<body id="contentToConvert">
+  <div id="page-wrap">
+    <div class="row noprint">
+      <div class="col-md-8"></div>
+      <div class="col-auto">
+        <button class="btn btn-success" onclick="window.print()">print</button>
+      </div>
+    </div>
+
+    <div id="sanjay">
+      <div class="container">
+        <div class="col-12 mr-2 px-1 py-1 container border-black" id="htmlData">
+          <div class="row">
+            <div class="col-10 row px-10x py-10"> </div>
+            <div class="col-2 row px-10x py-10">
+              <b>
+                Dated: &nbsp;&nbsp; / &nbsp;&nbsp; /2021
+              </b>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 row px-4x py-4"> </div>
+            <div class="col-4 row px-4x py-4">
+              <b>Declaration on Vehicle Fleet</b>
+            </div>
+            <div class="col-4 row px-4x py-4"> </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 container text-md-right"> </div>
+            <p>To</p>
+            <p>TVS Credit Services Ltd,</p>
+            <p>RO – “Chaitanya”, No.12,</p>
+            <p>Khader Nawaz Khan Road,</p>
+            <p>Nungambakkam, Chennai – 600006</p>
+            <div class="col-md-8 container text-md-right"> </div>
+          </div><br>
+
+          <div class="row">
+            <div class="col-md-4 container text-md-right"> </div>
+            <b>Sub: Fuel Financing for ({{companyName}})</b>
+            <div class="col-md-8 container text-md-right"> </div>
+          </div><br>
+          <div class="row">
+            <div class="col-md-4 container text-md-right">
+              <b><u>Transporter Name</u> :- {{companyName}} </b>
+            </div>
+            <div class="col-md-8 container text-md-right"> </div>
+          </div><br>
+          <div class="row">
+            <div class="col-md-4 container text-md-right">
+              <b><u>Address</u> :- <span *ngIf="address1"> {{address1}}, </span><span *ngIf="address2"> {{address2}},
+                </span><span *ngIf="city"> {{city}}, </span><span *ngIf="state"> {{state}} </span> <span
+                  *ngIf="pin">-{{pin}} </span> </b>
+            </div>
+            <div class="col-md-8 container text-md-right"> </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 container text-md-right">
+              <p>Dear Sir/Madam,</p>
+            </div>
+            <div class="col-md-8 container text-md-right"> </div>
+          </div><br>
+          <div class="row">
+            <div class="col-md-12 container text-md-right">
+              <p>Pursuant to the Fuel Financing Facility proposed by TVS Credit Services Ltd, please find below
+                details of the vehicle fleet under our management, with the proposed Fuel Financing Facility to be
+                restricted to payment of purchase invoices raised on us for refueling of vehicles listed below.</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 container text-md-right">
+              <b>Vehicle Registration Number:</b>
+            </div>
+            <div class="col-md-8 container text-md-right"> </div>
+
+          </div>
+          <div class="bg-invoice">
+            <table class="table main-table">
+              <div>
+                <table class="child-table">
+                  <thead>
+                    <tr>
+                      <th class="table-head">Sr.No</th>
+                      <th class="table-head">Vehicle Number</th>
+                      <th class="table-head"></th>
+                      <th class="table-head"></th>
+                    </tr>
+                  </thead>
+                  <tbody class="table-row">
+                    <tr *ngFor="let data of vehicleData; let i = index">
+                      <td class="border-gray"> {{i+1}} </td>
+                      <td class="border-gray">{{data.vehicleNumber}}</td>
+                      <td class="border-gray"></td>
+                      <td class="border-gray"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <br>
+            </table>
+          </div>
+          <div class="row">
+            <div class="col-md-4 container text-md-right">
+              <p> Yours Truly,</p>
+            </div>
+            <div class="col-md-8 container text-md-right"> </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 container text-md-right">
+              <p> {{companyName}} </p>
+            </div>
+            <div class="col-md-8 container text-md-right"> </div>
+          </div><br>
+          <div class="row">
+            <div class="col-md-4 container text-md-right">
+              <p>Authorized Signatory</p>
+            </div>
+            <div class="col-md-8 container text-md-right"> </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 container text-md-right">
+              <p> Name:</p>
+            </div>
+            <div class="col-md-8 container text-md-right"> </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 container text-md-right">
+              <p> Designation:</p>
+            </div>
+            <div class="col-md-8 container text-md-right"> </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 container text-md-right">
+              <p> Date:</p>
+            </div>
+            <div class="col-md-8 container text-md-right"> </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+</body>
+
+</html>
+<!-- statement 2 end -->

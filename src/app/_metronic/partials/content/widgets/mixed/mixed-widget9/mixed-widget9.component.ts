@@ -240,7 +240,7 @@ export class MixedWidget9Component implements OnInit {
       }
       localStorage.setItem("hsnCode", this.hsnCode);
       localStorage.setItem("termsAndConditions", this.termAndCondition)
-      this.router.navigate(['../credit/fuelCreditVehicleInvoiceDocument/' + '0'], { queryParams: { s: '0' } });
+      this.router.navigate(['/credit/fuelCreditInvoiceVehicle/' + '0'], { queryParams: { s: '0' } });
     } else {
       alert("Please click on submit first.. ")
     }

@@ -1,0 +1,294 @@
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  #page-wrap {
+    width: 700px;
+    margin: 0 auto;
+  }
+
+  .bg-invoice {
+    background-color: #e7e8ea;
+  }
+
+  .table-head {
+    font-size: 14px;
+    background-color: #e6e6fa !important;
+  }
+
+  .table-row {
+    font-size: 12px;
+  }
+
+  .main-table {
+    width: -webkit-fill-available;
+  }
+
+  .border-black {
+    border: 1px solid black;
+  }
+
+  .child-table {
+    width: -webkit-fill-available;
+    color: black;
+    text-align: center;
+
+  }
+
+  .border-gray {
+    border: 1px solid #8080802e;
+  }
+
+  .A4 {
+    background: white;
+    width: 23cm;
+    height: 40.7cm;
+    display: block;
+    margin: 0 auto;
+    padding: 1px 1px;
+    margin-bottom: 0.5cm;
+    box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+
+    box-sizing: border-box;
+    font-size: 12pt;
+    /* //line-height:normal; */
+  }
+
+  @media print {
+    .page-break {
+      display: block;
+      page-break-before: always;
+
+      size: A4 portrait;
+    }
+  }
+
+  @media print {
+    body {
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact;
+    }
+
+    .A4 {
+      box-shadow: none;
+      margin: 0;
+      width: auto;
+      height: auto;
+    }
+
+    .noprint {
+      display: none;
+    }
+
+    .print {
+      display: block;
+    }
+  }
+</style>
+
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="https://www.w3.org/1999/xhtml">
+
+<body id="contentToConvert">
+
+  <div id="page-wrap">
+    <div class="col-md-12 noprint">
+
+      &nbsp; <button class="noprint" style="font-size: medium;" onclick="window.print()"> &nbsp;&nbsp;<i
+          class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
+    </div>
+
+    <div id="sanjay">
+      <div class="container">
+        <div class="col-12 mr-2 px-1 py-1 container border-black" id="htmlData">
+          <div>
+            <div class="bg-invoice">
+              <div class="row px-4 py-4">
+                <div class="col-8">
+                  <h3><b>{{companyName}}</b></h3>
+                  <h5> {{oilCompanyName}} petrol pump</h5>
+                  <!-- <h6> {{address1}} {{address2}} {{city}} <br>{{state}} {{pin}}</h6> -->
+                </div>
+
+                <div class="col-4">
+                  <h4>&nbsp;</h4>
+                  <!-- <h6>GST : {{GSTNumber}}</h6> -->
+                  <h6 *ngIf="hsnCode">HSN Code : {{hsnCode}}</h6>
+                  <h6>Phone :
+                    {{phone1}}</h6><br>
+
+                  <h6><b>Invoice No. : <span>{{sysGeneInvoiceNumber}}</span></b></h6>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div style="text-align: center;">
+              <div class="col-12">
+                <b style="font-size: 21px;">
+                  Invoice
+                </b>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-8 container text-left">
+                <h4>
+                  {{billedToName}} <br></h4>
+                <h6> {{billedToAddressLine1}} {{billedToAddressLine2}} <br>
+                  {{billedToCity}}, {{billedToConeenorState}}-{{billedToConneenorPincode}} <br></h6>
+
+                <h5 class="" style="font-size: 15px;">
+                  ( {{startDate | date:'dd MMM yyyy'}} to {{endDate | date:'dd MMM yyyy'}} )
+                </h5>
+              </div>
+            </div>
+            <hr>
+            <div class="container text-center" style="border: 1px solid black; font-size: 15px;">
+              <p>
+                <span *ngIf="manualNumber!=undefined">
+                  <span *ngIf="manualNumber!=''">
+                    statement: {{manualNumber}}
+                  </span>
+                </span>
+              </p>
+            </div>
+            <br><br>
+            <div class="table-responsive">
+              <table class="child-table">
+                <thead class="table-head border-gray">
+                  <tr>
+                    <th style="text-align: center;"> Sr.No </th>
+                    <th style="text-align: center;"> Date </th>
+                    <th style="text-align: center;"> Product </th>
+                    <th style="text-align: center;"> Quantity In Pieces </th>
+                    <th style="text-align: center;"> Quantity </th>
+                    <th style="text-align: center;"> Basic Amount </th>
+                    <th style="text-align: center;"> Tax </th>
+                    <th style="text-align: center;"> CGST </th>
+                    <th style="text-align: center;"> SGST </th>
+                    <th style="text-align: center;"> IGST </th>
+                    <th style="text-align: center;"> Total Amount </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of lubeTaxData; let i = index">
+                    <td class="border-gray"> {{i+1}} </td>
+                    <td class="border-gray"> {{ data.estimatedRefuelDate | date:"d MMM, yyyy" }} </td>
+                    <td class="border-gray"> {{ data.lubeName }} </td>
+                    <td class="border-gray">
+                      <span *ngIf="data.quantityInPieces != 'undefined'">
+                        {{ data.quantityInPieces }}
+                      </span>
+                      <span *ngIf="data.quantityInPieces == 'undefined'">
+                        -
+                      </span>
+                    </td>
+                    <td class="border-gray"> {{ data.actualCreditQuantity }} </td>
+                    <td class="border-gray"> {{ data.fuelcreditBeforeTax | number:'1.2-2' }} </td>
+                    <td class="border-gray"> {{ data.fuelcreditGST }} %, <br>
+                      <i class="fas fa-rupee-sign" style="font-size: 10Px;"></i> {{ data.fuelcreditGSTAmount |
+                      number:'1.2-2' }}
+                    </td>
+                    <td class="border-gray">
+                      <span *ngIf="data.fuelcreditCGST">
+                        {{ data.fuelcreditCGST }} %
+                      </span>
+                      <span *ngIf="!data.fuelcreditCGST">
+                        -
+                      </span>
+                      &nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td class="border-gray">
+                      <span *ngIf="data.fuelcreditSGST">
+                        {{ data.fuelcreditSGST }} %
+                      </span>
+                      <span *ngIf="!data.fuelcreditSGST">
+                        -
+                      </span>
+                      &nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td class="border-gray">
+                      <span *ngIf="data.fuelcreditIGST">
+                        {{ data.fuelcreditIGST }} %
+                      </span>
+                      <span *ngIf="!data.fuelcreditIGST">
+                        -
+                      </span>
+                      &nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td class="border-gray"> {{ data.creditAmount| number:'1.2-2' }} </td>
+                  </tr>
+
+                  <tr style="font-weight: bold;" class="border-gray">
+                    <td colspan="10" class="border-gray table-head" style="text-align: end;">Grand Total
+                    </td>
+                    <td class="border-gray table-head" style="text-align: center;">
+                      {{totalPurchase | number:'1.2-2'}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="table-row">statement generated on: {{fuelInvoiceCreatedAt | date:"dd/MM/yyyy"}} </p>
+
+            <div class="row px-4 py-4" style="padding-bottom: 0rem !important; text-transform: lowercase;">
+              <div *ngFor="let data of productData" class="col text-center border border-success px-1 py-1 mr-1">
+                <h5 class="text-primary"><b> {{data.productName}} </b></h5>
+                <b> {{data.quantity | number:'1.2-2'}} {{data.productUnit}} </b>
+              </div>
+            </div>
+
+            <div class="row px-4 py-4">
+              <div class="col text-center border border-success px-1 py-1 mr-1">
+                <h5 class="text-primary"><b>Total Tax</b></h5>
+                <span>
+                  <i class="fas fa-rupee-sign"></i>
+                  {{totalTaxAmt}}
+                </span>
+              </div>
+              <div class="col text-center border border-success px-1 py-1 mr-1">
+                <h5 class="text-primary"><b>Total Purchase</b></h5>
+                <span>
+                  <i class="fas fa-rupee-sign"></i>
+                  {{totalPurchase}}
+                </span>
+              </div>
+            </div>
+
+            <div class="container border border-success px-2 py-2 alert alert-success">
+              <h5> Please Pay </h5>
+              <h5>
+                <i class="fas fa-rupee-sign"></i>
+                {{totalPurchase}}
+              </h5>
+              <h5 class=""> <i class="fas fa-rupee-sign"></i> {{amountInWords}} </h5>
+            </div>
+            <span *ngIf="(totalPurchase) > 0">
+              <div class="container border-gray px-2 py-2 alert">
+                <p> Please pay <span *ngIf="isDueDate == 'TRUE' "> before Due Date {{dueDate}} </span> <br>
+              </div>
+            </span>
+            <br> <br>
+            <div class="row">
+              <div class="col-md-12">
+                Certified that the particulars given above are true and correct. Terms and Conditions apply.
+                <br>
+                <strong> For {{companyName}} </strong>
+
+              </div>
+            </div>
+            <!-- </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html>

@@ -332,7 +332,7 @@ export class MixedWidget5Component {
           localStorage.setItem("hsnCode", this.hsnCode);
           localStorage.setItem("termsAndConditions", this.termsAndConditions)
 
-          this.router.navigate(['../credit/fuelCreditInvoiceDoc/' + '0'], { queryParams: { s: '0' } });
+          this.router.navigate(['/credit/fuelCreditInvoiceDoc/' + '0'], { queryParams: { s: '0' } });
         }
       });
   }

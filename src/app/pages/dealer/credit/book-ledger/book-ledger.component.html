@@ -1,0 +1,28 @@
+<div class="card-header">
+    <b>Book/Ledger</b>
+  </div>
+  
+  <!-- <div class="row"> -->
+  <br>
+  <div>
+    <ul ngbNav #bookLedger="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified" style="width: 100%;">
+      <li [ngbNavItem]="1">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">AMOUNT </span>
+        </a>
+        <ng-template ngbNavContent>
+          <app-tiles-widget1 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tiles-widget1>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="2">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">QUANTITY </span>
+        </a>
+        <ng-template ngbNavContent>
+            <app-tiles-widget3 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tiles-widget3>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="bookLedger"></div>
+  </div>
+  <!-- </div> -->

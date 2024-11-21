@@ -18,6 +18,9 @@ import { FuelCreditInvoiceDocumentComponent } from './fuel-credit-invoice-docume
 import { FuelCreditInvoiceDocNewComponent } from './fuel-credit-invoice-doc-new/fuel-credit-invoice-doc-new.component';
 import { FuelCreditInvoiceDocComponent } from './fuel-credit-invoice-doc/fuel-credit-invoice-doc.component';
 import { FuelCreditInvoiceVehicleComponent } from './fuel-credit-invoice-vehicle/fuel-credit-invoice-vehicle.component';
+import { LubeTaxStatementComponent } from './lube-tax-statement/lube-tax-statement.component';
+import { FuelCrInvoiceComponent } from './fuel-cr-invoice/fuel-cr-invoice.component';
+import { BookLedgerComponent } from './book-ledger/book-ledger.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,10 @@ import { FuelCreditInvoiceVehicleComponent } from './fuel-credit-invoice-vehicle
     FuelCreditInvoiceDocumentComponent,
     FuelCreditInvoiceDocNewComponent,
     FuelCreditInvoiceDocComponent,
-    FuelCreditInvoiceVehicleComponent
+    FuelCreditInvoiceVehicleComponent,
+    LubeTaxStatementComponent,
+    FuelCrInvoiceComponent,
+    BookLedgerComponent
   ],
   imports: [
     CommonModule,
@@ -88,6 +94,18 @@ import { FuelCreditInvoiceVehicleComponent } from './fuel-credit-invoice-vehicle
       {
         path: 'fuelCreditInvoiceVehicle/:id',
         component: FuelCreditInvoiceVehicleComponent,
+      },
+      {
+        path: 'lubeTaxStatement/:id',
+        component: LubeTaxStatementComponent,
+      },
+      {
+        path: 'fuelCrInvoice/:id',
+        component: FuelCrInvoiceComponent,
+      },
+      {
+        path: 'bookLedger',
+        component: BookLedgerComponent,
       },
     ]),
     WidgetsModule,

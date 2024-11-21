@@ -37,6 +37,10 @@ export class BaseTablesService {
     private removeTransactionLogURL = this.baseURL + 'accounttransaclog/removeTransactionLog';
     private getAllDealersListURL = this.baseURL + 'dealerDashboard/getAllDealersList'; 
     private updateAmountStatusByTranslogIdURL = this.baseURL + 'coinConversion/updateAmountStatusByTranslogId';
+    private getCorporateInfoByCorporateCustomerMapIdURL = this.baseURL + 'fuelDealerCustMap/getCorporateInfoByCorporateCustomerMapId'; 
+    private getTransactionwiseLedgerByMapIdURL = this.baseURL + 'crCustomers/getTransactionwiseLedgerByMapId';
+    private getDayWiseLedgerByMapIdURL = this.baseURL + 'crCustomers/getDayWiseLedger';
+    private getMonthlyCrDetailsURL = this.baseURL + 'crCustomers/getMonthlyCrDetails';
 
 
 
@@ -211,6 +215,46 @@ export class BaseTablesService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.updateAmountStatusByTranslogIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getCorporateInfoByCorporateCustomerMapIdURL
+    getCorporateInfoByCorporateCustomerMapIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getCorporateInfoByCorporateCustomerMapIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getTransactionwiseLedgerByMapIdURL
+    getTransactionwiseLedgerByMapIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getTransactionwiseLedgerByMapIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getDayWiseLedgerByMapIdURL
+    getDayWiseLedgerByMapIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getDayWiseLedgerByMapIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getMonthlyCrDetailsURL
+    getMonthlyCrDetailsPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getMonthlyCrDetailsURL, body, {
             headers: headers
         })
     }

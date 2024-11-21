@@ -20,6 +20,8 @@ export class MixedService {
     array: any = [];
     array1: any = [];
     array2: any = [];
+    lubeTax1: any;
+    oldInvoice5: any;
 
     constructor(private http: HttpClient,
         private router: Router
@@ -53,6 +55,10 @@ export class MixedService {
     private getSelectedMobileNumberByDealerIdURL = this.baseURL + 'fuelCreditInvoice/getSelectedMobileNumberByDealerId';
     private getFuelCreditVehicleListByfuelDealerCustMapIdURL = this.baseURL + 'fuelDealerCustMap/getFuelCreditVehicleListByfuelDealerCustMapId';
     private getCRSalesByVehicleNumberURL = this.baseURL + 'fuelCreditInvoice/getCRSalesByVehicleNumber';
+    private viewVehicleVishwasaByMobileNumberURL = this.baseURL + 'register/viewVehicleVishwasaByMobileNumber';
+    private getLubeTaxStatementURL = this.baseURL + 'crCustomers/getLubeTaxStatement';
+    private getCreditByCustMapIdDateURL = this.baseURL + "fuelCreditInvoice/getCreditByCustMapIdDate";
+    private getCreditByCustMapIdDateVehicleURL = this.baseURL + "fuelCreditInvoice/getCreditByCustMapIdDateVehicle"; 
 
 
     setHeader() {
@@ -271,6 +277,46 @@ export class MixedService {
         })
     }
 
+    // viewVehicleVishwasaByMobileNumberURL
+    viewVehicleVishwasaByMobileNumberPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.viewVehicleVishwasaByMobileNumberURL, body, {
+            headers: headers
+        })
+    }
+
+    // getLubeTaxStatementURL
+    getLubeTaxStatementPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getLubeTaxStatementURL, body, {
+            headers: headers
+        })
+    }
+
+    // getCreditByCustMapIdDateURL
+    getCreditByCustMapIdDatePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getCreditByCustMapIdDateURL, body, {
+            headers: headers
+        })
+    }
+
+    // getCreditByCustMapIdDateVehicleURL
+    getCreditByCustMapIdDateVehiclePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getCreditByCustMapIdDateVehicleURL, body, {
+            headers: headers
+        })
+    }
+
     lrForInvoice(customerMapID: any, startDate: any, endDate: any, routeVar: any) {
         this.routerVar = routeVar
         this.custMappingID = customerMapID;
@@ -298,5 +344,26 @@ export class MixedService {
         this.array = array;
         this.array1 = array1;
         this.array2 = array2;
+    }
+
+    lrForInvoiceLube(customerMapID: any, startDate: any, endDate: any, routeVar: any) {
+        this.routerVar = routeVar
+        this.custMappingID = customerMapID;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    lubeTaxStatement(lubeTax1: any) {
+        this.lubeTax1 = lubeTax1
+    }
+
+    lrForInvoice5(customerMapID: any, startDate: any, endDate: any) {
+        this.custMappingID = customerMapID;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    lrOldInvoice5(oldInvoice5: any) {
+        this.oldInvoice5 = oldInvoice5
     }
 }

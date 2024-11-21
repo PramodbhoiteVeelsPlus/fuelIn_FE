@@ -1,0 +1,103 @@
+<br>
+<form [formGroup]="filterForm">
+  <div class="mb-3 row">
+    <label for="example-text-input" class="col-auto col-form-label">Khata</label>
+    <div class="col-md-3">
+      <input class="form-control" type="text" list="allCorporateList" placeholder="all khata"
+        formControlName="customerName" (change)="getDetailsByCustomerMapName($event)">
+      <datalist id="allCorporateList">
+        <option *ngFor="let data of allCorporateList" [value]="data.companyName">
+      </datalist>
+    </div>
+
+    <label for="example-text-input" class="col-auto col-form-label">Date Range</label>
+    <div class="col-md-2">
+      <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;" name="startDate"
+        ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker #startDate="ngbDatepicker"
+        formControlName="startDate">
+    </div>
+    <div class="col-md-2">
+      <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;" name="endDate"
+        ngbTooltip="End Date" (click)="endDate.toggle()" ngbDatepicker #endDate="ngbDatepicker"
+        formControlName="endDate">
+    </div>
+    <div class="col-md-1">
+      <button type="button" class="btn btn-md btn-primary" (click)="getTransaction()">
+        view
+      </button>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-auto">
+      <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF" placement="bottom"
+        (click)="exportToPDF()"><i class="fas fa-file-pdf"></i></span>
+    </div>
+    <div class="col-auto">
+      <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download Excel" placement="bottom"
+        (click)="exportexcel()"><i class="fas fa-file-csv"></i></span>
+    </div>
+  </div>
+</form>
+<hr>
+
+<div class="table-responsive">            
+    <table class="table table-hover b">
+        
+        <thead class="table-light">
+            <tr>
+                <th > Transaction date</th>
+                <th > Khata name</th>     
+                <th > Details </th>
+                <th > Product </th>
+                <th > Sales Quantity </th>
+                <th > Sales Amount </th>
+                <th > Payment Amount </th>
+                <th > Balance  </th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let data of transactionData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+            <tr>
+                <td >    
+                <span *ngIf = "data.date == '2022-01-01' ">
+                    1 Jan, 2022
+                </span>
+                <span *ngIf = "data.date != '2022-01-01' ">
+                    {{data.date | date:"d MMM, yyyy" }} 
+                </span> 
+                </td> 
+                <td > {{ data.companyName }} </td>
+                <td> {{ data.description }} </td>
+                <td> {{ data.product }} </td>
+                <td *ngIf="data.purpose == 'CREDIT'">
+                  {{ data.quantity }} Ltrs
+                </td>
+                <td *ngIf="data.purpose != 'CREDIT'">
+                  
+                </td>
+
+                <td>  <i class="fa-solid fa-indian-rupee-sign"></i>
+                  {{ data.purchase | number:'1.2-2'}} 
+                </td>
+                <td>  <i class="fa-solid fa-indian-rupee-sign"></i>
+                  {{ data.payment | number:'1.2-2'}} 
+                </td>
+
+                <td> 
+                   <i class="fa-solid fa-indian-rupee-sign"></i>
+                  <span *ngIf="data.balance < 0">
+                    {{ data.balance * (-1) | number:'1.2-2'}} CR
+                  </span> 
+                  <span *ngIf="data.balance >= 0">
+                    {{ data.balance | number:'1.2-2'}}
+                  </span>
+                   </td>
+
+            </tr>
+        </tbody>
+    </table>
+    
+    <!-- begin::Pagination -->
+    <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+      style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+    </pagination-controls>
+    <!-- end::Pagination -->
+</div>    

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { StatsService } from '../../stats/stats.services';
 import { MixedService } from '../mixed.services';
+import { FormGroup, FormControl } from '@angular/forms';
 import moment from 'moment';
 import numWords from 'num-words';
 
@@ -56,66 +57,54 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 }
 
 @Component({
-  selector: 'app-mixed-widget6',
-  templateUrl: './mixed-widget6.component.html',
+  selector: 'app-mixed-widget14',
+  templateUrl: './mixed-widget14.component.html',
   providers: [
     { provide: NgbDateAdapter, useClass: CustomAdapter },
     { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }
   ]
 })
 
-export class MixedWidget6Component implements OnInit {
-  @Input() chartColor: string = '';
-  @Input() chartHeight: string;
-  chartOptions: any = {};
+export class MixedWidget14Component implements OnInit {
+  accessGroup: any;
   fuelDealerId: any;
   dealerCorporateId: any;
-  oldInvoice: any;
-  manualNumber: string | null;
-  isDueDate: string | null;
-  dueDate: string;
-  hsnCode: string | null;
-  termAndCondition: string | null;
-  statementPurData: any = [];
-  statementData: any = [];
-  productDetails: any = [];
-  lubeDetails: any = [];
-  statementPayData: any;
-  openningOS: any;
-  totalPurchaseAmt: any;
-  totalPaymentAmt: any;
-  netOS: any;
-  sysGeneInvoiceNumber: string;
-  period: string;
-  fuelInvoiceCreatedAt: Date;
-  periodStartDate: string;
-  periodEndDate: string;
-  fuelDealerCustomerMapId: any;
-  startDate: string;
-  endDate: string;
-  accessGroup: any;
-  bankAccList: any = [];
-  billedToCityArea: any;
-  billedToGstNo: any;
-  billedToName: any;
-  billedToMobile: any;
-  billedToCity: any;
-  billedToAddressLine1: any;
-  billedToAddressLine2: any;
-  billedToConeenorState: any;
-  billedToConneenorPincode: any;
   dealerData: any;
+  customerName: any;
   companyName: any;
   oilCompanyName: any;
   state: any;
   pin: any;
   city: any;
-  managerMobile: any;
-  mobileStatus: boolean = false;
   phone1: any;
-  rupeesWrd: any;
+  hsnCode: string | null;
+  fuelDealerCustomerMapId: any;
+  billedToName: any;
+  billedToGstNo: any;
+  billedToAddressLine1: any;
+  fuelInvoiceCreatedAt: Date;
+  periodStartDate: string;
+  periodEndDate: string;
+  startDate: string;
+  endDate: string;
+  manualNumber: string | null;
+  totalInvoiceAmt: number;
+  creditArrayList: any = [];
+  array: any = [];
+  savedInvoiceData: any = [];
+  vehData: any = [];
+  vehicleNo: any;
+  creditAmountNew: any = 0;
+  statementData: never[];
+  openningOS: any;
+  totalPurchaseAmt: any;
+  totalPaymentAmt: any;
+  netOS: any;
+  bankAccList: any;
   paisaWrd: any;
+  rupeesWrd: any;
   amountInWords: string;
+  oldInvoice5: any;
 
   constructor(
     private post: MixedService,
@@ -136,8 +125,11 @@ export class MixedWidget6Component implements OnInit {
     this.dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
+    if (localStorage.getItem('hsnCode') != "undefined") {
+      this.hsnCode = localStorage.getItem('hsnCode');
+    }
+    this.oldInvoice5 = this.post.oldInvoice5
     this.accessGroup = element.accessGroupId;
-    this.oldInvoice = this.post.oldInvoice1
     this.companyName = this.dealerData.companyName
     this.oilCompanyName = this.dealerData.brandName
     this.state = this.dealerData.state
@@ -147,49 +139,128 @@ export class MixedWidget6Component implements OnInit {
     if (localStorage.getItem('manualSno') != "undefined") {
       this.manualNumber = localStorage.getItem('manualSno');
     }
-    this.isDueDate = localStorage.getItem('isDueDate');
-    this.dueDate = moment(localStorage.getItem('dueDate'), ["DD-MM-YYYY"]).format("D MMM y");
-    if (localStorage.getItem('hsnCode') != "undefined") {
-      this.hsnCode = localStorage.getItem('hsnCode');
-    }
-    if (this.accessGroup == 12 || this.accessGroup == 14 || this.accessGroup == 19 || this.accessGroup == 21) {
-      // this.getVBCorporateById(this.veelsplusCorporate);
-      this.getCredit();
-    }
+    this.getCredit()
     this.getBankDetailsByDealerId(this.fuelDealerId)
-    this.getManagerMobileByfuelDealerId(this.fuelDealerId)
-    this.termAndCondition = localStorage.getItem('termsAndConditions');
     this.cd.detectChanges()
   }
 
+
+  getInfobyCustomerMapId() {
+
+    const data = {
+      fuelDealerCustomerMapId: this.fuelDealerCustomerMapId,
+    };
+    this.post.getdataBycustomerMapIdPOST(data)
+      .subscribe(res => {
+        if (res.status == 'OK') {
+          if (res.data[0].mappingPreviousStatus == 'TRUE') {
+
+            this.billedToName = res.data[0].mappingCompanyName;
+            this.billedToGstNo = res.data[0].mappingGST;
+            this.billedToAddressLine1 = res.data[0].city;
+
+          } else {
+            this.billedToName = res.data[0].companyName;
+            this.billedToGstNo = res.data[0].GSTNumber;
+            this.billedToAddressLine1 = res.data[0].city;
+
+          }
+          this.billedToAddressLine1 = res.data[0].city;
+          this.cd.detectChanges()
+        }
+      }
+      );
+  }
+
   getCredit() {
-    let crId;
+    let crId: any;
     crId = this.post.custMappingID;
-    this.period = '2021-2022';
+    // this.period = '2021-2022';
     this.fuelInvoiceCreatedAt = new Date();
     let startDate = '';
     startDate = this.post.startDate;
     this.periodStartDate = startDate;
-    // console.log('StartDate: ' + startDate);
+    console.log('StartDate: ' + startDate, crId);
     let endDate = '';
     endDate = this.post.endDate;
     this.periodEndDate = endDate;
-    // console.log('EndDate: ' + endDate);
+    console.log('EndDate: ' + endDate);
     this.fuelDealerCustomerMapId = crId;
-    this.getCrStatement()
+    this.getCreditSavedInvoice(crId)
+    // this.getCrStatement()
 
     this.startDate = moment(this.periodStartDate, ['DD-MM-YYYY']).format('YYYY-MM-DD'),
       this.endDate = moment(this.periodEndDate, ['DD-MM-YYYY']).format('YYYY-MM-DD')
+    // console.log('time conversion');
+    // console.log(this.startDate);
+    // console.log(this.endDate);
 
     let day = moment(new Date()).format('DDMMYYHHmmss')
-    this.sysGeneInvoiceNumber = ('VI' + day)
+    // this.sysGeneInvoiceNumber = ('VI'+day)
+    // console.log('time conversion111');
+    // console.log(this.sysGeneInvoiceNumber);
+
+
+  }
+
+  getCreditSavedInvoice(fuelDealerCustomerMapId: any) {
+    this.spinner.show()
+    let data = {
+      custMapId: fuelDealerCustomerMapId,
+      startDate: moment(this.periodStartDate, ['DD-MM-YYYY']).format('YYYY-MM-DD'),
+      endDate: moment(this.periodEndDate, ['DD-MM-YYYY']).format('YYYY-MM-DD')
+    }
+
+    this.post.getCreditByCustMapIdDatePOST(data).subscribe(res => {
+      if (res.status == "OK") {
+        this.savedInvoiceData = res.data;
+        this.vehData = res.dataVeh;
+
+        for (let item of this.vehData) {
+          this.vehicleNo = item.vehicleNumber
+          this.getAllCreditDetailsByVehicleId()
+        }
+
+        for (let item of this.savedInvoiceData) {
+          this.creditAmountNew += Number(item.creditAmount);
+        }
+
+        this.getCrStatement()
+        // this.transform(Math.round(((Number(this.creditAmountNew) - Number(this.totalTransactionAmountNew)) + Number(this.savedPreviousOutstanding))));
+        this.spinner.hide()
+        this.cd.detectChanges()
+      } else {
+        this.spinner.hide()
+        this.cd.detectChanges()
+      }
+    })
+  }
+
+  getAllCreditDetailsByVehicleId() {
+    this.spinner.show()
+    this.totalInvoiceAmt = 0
+    let data = {
+      custMapId: this.fuelDealerCustomerMapId,
+      startDate: moment(this.periodStartDate, ['DD-MM-YYYY']).format('YYYY-MM-DD'),
+      endDate: moment(this.periodEndDate, ['DD-MM-YYYY']).format('YYYY-MM-DD'),
+      vehicle: this.vehicleNo
+    }
+    this.post.getCreditByCustMapIdDateVehiclePOST(data)
+      .subscribe(res => {
+        if (res.status == 'OK') {
+          this.creditArrayList = res.data;
+          this.array.push(res.data)
+          this.spinner.hide()
+          this.cd.detectChanges()
+        } else {
+          this.spinner.hide()
+          this.cd.detectChanges()
+        }
+      });
   }
 
   getCrStatement() {
     this.statementData = []
-    this.statementPurData = []
-    this.productDetails = []
-    this.lubeDetails = []
     this.spinner.show();
     let data = {
       CorporateMapId: this.fuelDealerCustomerMapId,
@@ -201,17 +272,12 @@ export class MixedWidget6Component implements OnInit {
       .subscribe(res => {
         if (res.status == "OK") {
           this.statementData = res.data;
-          this.statementPurData = res.data1;
-          this.statementPayData = res.data2;
-          this.productDetails = res.data3;
-          this.lubeDetails = res.data5;
           this.openningOS = res.data[0].openningOS
           this.totalPurchaseAmt = res.data[0].totalPurchaseAmt
           this.totalPaymentAmt = res.data[0].totalPaymentAmt
           this.netOS = res.data[0].netOS
-          // this.transform(Math.round(Number(this.netOS)));
           var osForWrd = ''
-          osForWrd = (this.netOS).toFixed(2)
+          osForWrd = (this.totalPurchaseAmt).toFixed(2)
           var osForWrd1 = osForWrd.split(".")
           this.rupeesWrd = osForWrd1[0]
           this.paisaWrd = osForWrd1[1]
@@ -224,6 +290,7 @@ export class MixedWidget6Component implements OnInit {
           } else {
             this.amountInWords = "";
           }
+          // this.transform(Math.round(Number(this.netOS)));
           this.getInfobyCustomerMapId()
           this.spinner.hide();
           this.cd.detectChanges()
@@ -246,54 +313,5 @@ export class MixedWidget6Component implements OnInit {
           this.cd.detectChanges()
         }
       })
-  }
-  
-  getInfobyCustomerMapId() {
-    const data = {
-      fuelDealerCustomerMapId: this.fuelDealerCustomerMapId,
-    };
-    this.post.getdataBycustomerMapIdPOST(data)
-      .subscribe(res => {
-        if (res.status == 'OK') {
-          this.billedToCityArea = res.data[0].cityArea;
-          if (res.data[0].mappingPreviousStatus == 'TRUE') {
-
-            this.billedToName = res.data[0].mappingCompanyName;
-            this.billedToGstNo = res.data[0].mappingGST;
-            this.billedToMobile = res.data[0].hostPhone;
-            this.cd.detectChanges()
-
-          } else {
-            this.billedToName = res.data[0].companyName;
-            this.billedToGstNo = res.data[0].GSTNumber;
-            this.billedToMobile = res.data[0].hostPhone;
-            this.cd.detectChanges()
-
-          }
-          this.billedToCity = res.data[0].city;
-          this.billedToAddressLine1 = res.data[0].address1;
-          this.billedToAddressLine2 = res.data[0].address2;
-          this.billedToConeenorState = res.data[0].state;
-          this.billedToConneenorPincode = res.data[0].pin;
-          this.cd.detectChanges()
-        }
-      }
-      );
-  }
-  
-  getManagerMobileByfuelDealerId(fuelDealerId: any) {
-    const data = {
-      fuelDealerId: fuelDealerId,
-    };
-    this.post.getSelectedMobileNumberByDealerIdPOST(data)
-      .subscribe(res => {
-        if (res.data.length) {
-          this.managerMobile = res.data[0].mobile;
-          this.mobileStatus = true;
-        } else {
-          this.mobileStatus = false;
-        }
-      }
-      );
   }
 }

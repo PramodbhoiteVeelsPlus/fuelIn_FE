@@ -1,23 +1,31 @@
-<!--begin::Tiles Widget 3-->
-<div
-  class="card card-custom bgi-no-repeat bgi-no-repeat bgi-size-cover"
-  [ngClass]="cssClass"
-  [ngStyle]="{ height: widgetHeight }"
-  style="background-image: url('./assets/media/misc/bg-2.jpg')"
->
-  <!--begin::Body-->
-  <div class="card-body d-flex flex-column">
-    <!--begin::Title-->
-    <a
-      class="
-        text-gray-900-75 text-hover-primary
-        font-weight-bolder font-size-h3
-        cursor-pointer
-      "
-      >Properties</a
-    >
-    <!--end::Title-->
-  </div>
-  <!--end::Body-->
+
+<br>
+<div>
+  <ul ngbNav #bookLedger="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified" style="width: 100%;">
+    <li [ngbNavItem]="1">
+      <a ngbNavLink>
+        <span class="d-none d-sm-block" style="font-size: 15px;">TRANSACTION </span>
+      </a>
+      <ng-template ngbNavContent>
+        <app-base-tables-widget6 class="card card-xxl-stretch mb-5 mb-xl-8"></app-base-tables-widget6>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="2">
+      <a ngbNavLink>
+        <span class="d-none d-sm-block" style="font-size: 15px;">DAY </span>
+      </a>
+      <ng-template ngbNavContent>
+          <app-base-tables-widget4 class="card card-xxl-stretch mb-5 mb-xl-8"></app-base-tables-widget4>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="3">
+      <a ngbNavLink>
+        <span class="d-none d-sm-block" style="font-size: 15px;">MONTH </span>
+      </a>
+      <ng-template ngbNavContent>
+          <app-base-tables-widget5 class="card card-xxl-stretch mb-5 mb-xl-8"></app-base-tables-widget5>
+      </ng-template>
+    </li>
+  </ul>
+  <div [ngbNavOutlet]="bookLedger"></div>
 </div>
-<!--end::Tiles Widget 3-->

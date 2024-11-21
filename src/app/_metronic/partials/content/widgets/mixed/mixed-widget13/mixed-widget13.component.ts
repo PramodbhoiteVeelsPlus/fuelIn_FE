@@ -56,43 +56,45 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 }
 
 @Component({
-  selector: 'app-mixed-widget11',
-  templateUrl: './mixed-widget11.component.html',
+  selector: 'app-mixed-widget13',
+  templateUrl: './mixed-widget13.component.html',
   providers: [
     { provide: NgbDateAdapter, useClass: CustomAdapter },
     { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }
   ]
 })
 
-export class MixedWidget11Component implements OnInit {
+export class MixedWidget13Component implements OnInit {
+  accessGroup: any;
+  fuelDealerId: any;
+  dealerCorporateId: any;
+  dealerData: any;
+  customerName: any;
 
-  lubeTaxForm = new FormGroup({
-    customer: new FormControl(''),
-    startDate: new FormControl(''),
-    endDate: new FormControl(''),
-    selectCorporateMapIdLubeTax: new FormControl(),
-  })
+  savedInvoice = new FormGroup({
+    selectCorporateMapId: new FormControl(""),
+    startDate: new FormControl(""),
+    endDate: new FormControl(""),
+  });
 
   addForm = new FormGroup({
     dueDate: new FormControl('')
   })
 
-  customerName: any;
-  dealerData: any;
-  fuelDealerId: any;
-  dealerCorporateId: any;
-  accessGroup: any;
+  fuelCorporateId: any;
   allCorporateList: any = [];
-  lubeTaxData: any = [];
-  isLubeTable: boolean = false;
-  termsAndConditions: any;
+  totalInvoiceAmt: any;
+  totalInvoiceQuantity: any;
+  savedInvoiceData: any = [];
+  totalInvoicePaymentAmt: any;
+  isSavedInvoice: boolean = false;
   manualSno: any;
   hsnCode: any;
+  fuelDealerCorpMapIdNew: any;
+  manualNumberEnd: any;
   p: number = 1;
   p1: number = 1;
   total: number = 0;
-  fuelDealerCorpMapIdNew: any;
-  manualNumberEnd: any;
 
   constructor(
     private post: MixedService,
@@ -121,7 +123,7 @@ export class MixedWidget11Component implements OnInit {
     this.spinner.show()
     this.customerName = id.target.value;
     if (this.customerName == "ALL") {
-      this.lubeTaxForm.controls["selectCorporateMapIdLubeTax"].setValue("");
+      this.savedInvoice.controls["selectCorporateMapId"].setValue("");
     }
     this.getCorporateInfoByfuelDealerCustomerMapId(this.customerName);
     this.spinner.hide()
@@ -129,8 +131,12 @@ export class MixedWidget11Component implements OnInit {
     // this.getCorporateInfoByfuelDealerCustomerMapId2(this.customerName);
   }
 
+  getDetailsByCorpForStatementforDiscount(id: any) {
+    this.fuelCorporateId = id.target.value;
+  }
+
   getCorporateInfoByfuelDealerCustomerMapId(customerName: any) {
-  
+
     const data = {
       fuelDealerId: this.fuelDealerId,
       customerName: customerName,
@@ -139,8 +145,8 @@ export class MixedWidget11Component implements OnInit {
       .subscribe(res => {
         if (res) {
           this.fuelDealerCorpMapIdNew = res.data[0].fuelDealerCustomerMapId;
-          this.manualNumberEnd =  res.data[0].manualNumberEnd
-          this.lubeTaxForm.controls['selectCorporateMapIdLubeTax'].setValue(res.data[0].fuelDealerCustomerMapId);
+          this.manualNumberEnd = res.data[0].manualNumberEnd
+          this.savedInvoice.controls['selectCorporateMapId'].setValue(res.data[0].fuelDealerCustomerMapId);
 
         } else {
           this.spinner.hide()
@@ -163,28 +169,33 @@ export class MixedWidget11Component implements OnInit {
       );
   }
 
-  getLubeTaxStatement() {
-    if (this.lubeTaxForm.value.selectCorporateMapIdLubeTax && this.lubeTaxForm.value.startDate && this.lubeTaxForm.value.endDate) {
-      this.post.lrForInvoiceLube(this.lubeTaxForm.value.selectCorporateMapIdLubeTax, moment(this.lubeTaxForm.value.startDate, ["DD-MM-YYYY"]).format('DD-MM-YYYY'), moment(this.lubeTaxForm.value.endDate, ["DD-MM-YYYY"]).format('DD-MM-YYYY'), this.termsAndConditions);
+  getSavedInvoice() {
+    if (this.savedInvoice.value.selectCorporateMapId, this.savedInvoice.value.startDate, this.savedInvoice.value.endDate) {
 
-      this.lubeTaxData = [];
-      this.spinner.show();
+      this.post.lrForInvoice5(this.savedInvoice.value.selectCorporateMapId, moment(this.savedInvoice.value.startDate, ["DD-MM-YYYY"]).format('DD-MM-YYYY'), moment(this.savedInvoice.value.endDate, ["DD-MM-YYYY"]).format('DD-MM-YYYY'));
+      this.spinner.show()
       let data = {
-        custMapId: this.lubeTaxForm.value.selectCorporateMapIdLubeTax,
-        startDate: moment(this.lubeTaxForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
-        endDate: moment(this.lubeTaxForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD")
+        custMapId: this.savedInvoice.value.selectCorporateMapId,
+        startDate: moment(this.savedInvoice.value.startDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+        endDate: moment(this.savedInvoice.value.endDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
       }
 
-      this.post.getLubeTaxStatementPOST(data).subscribe(res => {
-        if (res.status == "OK" && res.allPurData.length) {
-          this.lubeTaxData = res.allPurData;
-          this.isLubeTable = true;
-          this.spinner.hide();
+      this.post.getCreditByCustMapIdDatePOST(data).subscribe(res => {
+        if (res.status == "OK") {
+          this.savedInvoiceData = res.data;
+          this.totalInvoiceAmt = res.dataTotal[0].totalCr
+          this.totalInvoiceQuantity = res.dataTotal[0].totalQuantity
+          if (res.dataPayTotal[0].totalPayment) {
+            this.totalInvoicePaymentAmt = res.dataPayTotal[0].totalPayment
+          } else {
+            this.totalInvoicePaymentAmt = 0
+          }
+          this.isSavedInvoice = true
+          this.spinner.hide()
           this.cd.detectChanges()
         } else {
-          alert("Data Not Found..!")
-          this.isLubeTable = false;
-          this.spinner.hide();
+          this.isSavedInvoice = false
+          this.spinner.hide()
           this.cd.detectChanges()
         }
       })
@@ -193,27 +204,21 @@ export class MixedWidget11Component implements OnInit {
     }
   }
 
-  gotoLubeTaxStatement() {
-    this.post.lubeTaxStatement("TRUE");
-    if (this.lubeTaxData.length) {
-      localStorage.setItem("manualSno", this.manualSno);
-      if (this.addForm.value.dueDate) {
-        localStorage.setItem("isDueDate", "TRUE");
-        localStorage.setItem("dueDate", this.addForm.value.dueDate);
-      } else {
-        localStorage.setItem("isDueDate", "FALSE");
-      }
-      localStorage.setItem("hsnCode", this.hsnCode);
-      localStorage.setItem("termsAndConditions", this.termsAndConditions)
-      this.router.navigate(['/credit/lubeTaxStatement/' + '0'], { queryParams: { s: '0' } });
-
-    } else {
-      alert("Please click on submit first.. ")
-    }
-  }
-  
   pageChangeEvent(event: number) {
     this.p = event;
-    this.getLubeTaxStatement();
+    this.getSavedInvoice();
+  }
+
+  goToInvoice() {
+    this.post.lrOldInvoice5("TRUE");
+    localStorage.setItem("manualSno", this.manualSno);
+    if (this.addForm.value.dueDate) {
+      localStorage.setItem("isDueDate", "TRUE");
+      localStorage.setItem("dueDate", this.addForm.value.dueDate);
+    } else {
+      localStorage.setItem("isDueDate", "FALSE");
+    }
+    localStorage.setItem("hsnCode", this.hsnCode);
+    this.router.navigate(['/credit/fuelCrInvoice/' + '0'], { queryParams: { s: '0' } });
   }
 }

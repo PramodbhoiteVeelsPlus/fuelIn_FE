@@ -56,15 +56,15 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 }
 
 @Component({
-  selector: 'app-mixed-widget10',
-  templateUrl: './mixed-widget10.component.html',
+  selector: 'app-mixed-widget12',
+  templateUrl: './mixed-widget12.component.html',
   providers: [
     { provide: NgbDateAdapter, useClass: CustomAdapter },
     { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }
   ]
 })
 
-export class MixedWidget10Component implements OnInit {
+export class MixedWidget12Component implements OnInit {
   @Input() chartColor: string = '';
   @Input() chartHeight: string;
   chartOptions: any = {};
@@ -72,7 +72,7 @@ export class MixedWidget10Component implements OnInit {
   dealerData: any;
   fuelDealerId: any;
   accessGroup: any;
-  oldInvoice: any;
+  lubeTax1: any;
   companyName: any;
   oilCompanyName: any;
   state: any;
@@ -87,16 +87,7 @@ export class MixedWidget10Component implements OnInit {
   managerMobile: any;
   mobileStatus: boolean = false;
   sysGeneInvoiceNumber: string;
-  fcDetails: any = [];
   fuelDealerCustomerMapId: any;
-  creditAmount: any;
-  productQuantityDetails: any = [];
-  vehicleNumber: any;
-  fuelInvoiceCreatedAt: Date;
-  periodStartDate: string;
-  periodEndDate: string;
-  startDate: string;
-  endDate: string;
   billedToCityArea: any;
   billedToName: any;
   billedToGstNo: any;
@@ -106,10 +97,15 @@ export class MixedWidget10Component implements OnInit {
   billedToAddressLine2: any;
   billedToConeenorState: any;
   billedToConneenorPincode: any;
-  bankAccList: any = [];
-  vehicleData: any = [];
-  address1: any;
-  address2: any;
+  fuelInvoiceCreatedAt: Date;
+  periodStartDate: string;
+  periodEndDate: string;
+  startDate: string;
+  endDate: string;
+  lubeTaxData: any = [];
+  totalPurchase: any;
+  totalTaxAmt: any;
+  productData: any = [];
   rupeesWrd: any;
   paisaWrd: any;
   amountInWords: string;
@@ -134,7 +130,7 @@ export class MixedWidget10Component implements OnInit {
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
     this.accessGroup = element.accessGroupId;
-    this.oldInvoice = this.post.oldInvoice3
+    this.lubeTax1 = this.post.lubeTax1
     this.companyName = this.dealerData.companyName
     this.oilCompanyName = this.dealerData.brandName
     this.state = this.dealerData.state
@@ -152,137 +148,133 @@ export class MixedWidget10Component implements OnInit {
     if (this.accessGroup == 12 || this.accessGroup == 14 || this.accessGroup == 19 || this.accessGroup == 21) {
       this.getCredit();
     } else {
-      this.getVehicleDataByMobile(element.phone1)
+      // this.getVehicleDataByMobile(element.phone1)
     }
-    this.getBankDetailsByDealerId(this.fuelDealerId)
-    this.getManagerMobileByfuelDealerId(this.fuelDealerId)
+    // this.getBankDetailsByDealerId(this.fuelDealerId)
+    // this.getManagerMobileByfuelDealerId(this.fuelDealerId)
     let day = moment(new Date()).format('DDMMYYHHmmss')
     this.sysGeneInvoiceNumber = ('VI' + day)
     this.termAndCondition = localStorage.getItem('termsAndConditions');
     this.cd.detectChanges()
   }
 
-  getManagerMobileByfuelDealerId(fuelDealerId: any) {
-    const data = {
-      fuelDealerId: fuelDealerId,
-    };
-    this.post.getSelectedMobileNumberByDealerIdPOST(data)
-      .subscribe(res => {
-        if (res.data.length) {
-          this.managerMobile = res.data[0].mobile;
-          this.mobileStatus = true;
-        } else {
-          this.mobileStatus = false;
-        }
-      }
-      );
-  }
-
-  getCredit() {
-    this.fcDetails = this.post.array;
-    this.fuelDealerCustomerMapId = this.post.selectCorporateMapIdVehicle;
-    this.getInfobyCustomerMapId()
-    this.creditAmount = this.post.array1[0].creditAmount;
-    var osForWrd = ''
-    osForWrd = (this.creditAmount).toFixed(2)
-    var osForWrd1 = osForWrd.split(".")
-    this.rupeesWrd = osForWrd1[0]
-    this.paisaWrd = osForWrd1[1]
-    if (this.rupeesWrd != 0 && this.paisaWrd != 0) {
-      this.amountInWords = numWords((this.rupeesWrd)) + " rupees and " + numWords((this.paisaWrd)) + " paisa only";
-    } else if (this.rupeesWrd != 0) {
-      this.amountInWords = numWords((this.rupeesWrd)) + " rupees";
-    } else if (this.paisaWrd != 0) {
-      this.amountInWords = numWords((this.paisaWrd)) + " paisa only";
-    } else {
-      this.amountInWords = "";
-    }
-    // this.transform(Math.round(this.creditAmount))
-    this.productQuantityDetails = this.post.array2;
-
-    this.vehicleNumber = this.post.vehicleNumber;
-    this.fuelInvoiceCreatedAt = new Date();
-    let startDate = '';
-    startDate = this.post.startDate;
-    this.periodStartDate = startDate;
-    // console.log('StartDate: ' + startDate);
-    let endDate = '';
-    endDate = this.post.endDate;
-    this.periodEndDate = endDate;
-    // console.log('EndDate: ' + endDate); 
-    this.startDate = moment(this.periodStartDate, ['DD-MM-YYYY']).format('YYYY-MM-DD'),
-      this.endDate = moment(this.periodEndDate, ['DD-MM-YYYY']).format('YYYY-MM-DD')
-
-    let day = moment(new Date()).format('DDMMYYHHmmss')
-    this.sysGeneInvoiceNumber = ('VI' + day)
-    // console.log('time conversion111');
-    // console.log(this.sysGeneInvoiceNumber);
-
-  }
-
+  
   getInfobyCustomerMapId() {
     const data = {
       fuelDealerCustomerMapId: this.fuelDealerCustomerMapId,
     };
     this.post.getdataBycustomerMapIdPOST(data)
       .subscribe(res => {
-        if (res.status == 'OK') {
+        if (res.status === 'OK') {
           this.billedToCityArea = res.data[0].cityArea;
-          if (res.data[0].mappingPreviousStatus == 'TRUE') {
+          if (res.data[0].mappingPreviousStatus === 'TRUE') {
+
             this.billedToName = res.data[0].mappingCompanyName;
             this.billedToGstNo = res.data[0].mappingGST;
             this.billedToMobile = res.data[0].hostPhone;
-            this.cd.detectChanges()
+
+            if (res.data[0].mappingCity) {  
+              this.billedToCity = res.data[0].mappingCity;  
+            }else{
+              this.billedToCity = res.data[0].city;
+            }
+            if (res.data[0].mappingAddress1) {   
+              this.billedToAddressLine1 = res.data[0].mappingAddress1;  
+            }else{
+              this.billedToAddressLine1 = res.data[0].address1;
+
+            }
+            if (res.data[0].mappingAddress2) {   
+              this.billedToAddressLine2 = res.data[0].mappingAddress2;    
+            }else{
+              this.billedToAddressLine2 = res.data[0].address2;
+            }
           } else {
             this.billedToName = res.data[0].companyName;
-            this.billedToGstNo = res.data[0].GSTNumber;
+            this.billedToGstNo = res.data[0].GSTNumber; 
+            this.billedToAddressLine2 = res.data[0].address2;
+            this.billedToAddressLine1 = res.data[0].address1;
+            this.billedToCity = res.data[0].city;
             this.billedToMobile = res.data[0].hostPhone;
-            this.cd.detectChanges()
+
           }
-          this.billedToCity = res.data[0].city;
-          this.billedToAddressLine1 = res.data[0].address1;
-          this.billedToAddressLine2 = res.data[0].address2;
+          this.cd.detectChanges()
+          
           this.billedToConeenorState = res.data[0].state;
           this.billedToConneenorPincode = res.data[0].pin;
-          this.cd.detectChanges()
         }
       }
       );
   }
+  
+  getCredit() {
+    let crId: any;
+    crId = this.post.custMappingID;
+    // this.period = '2021-2022';
+    this.fuelInvoiceCreatedAt = new Date();
+    let startDate = '';
+    startDate = this.post.startDate;
+    this.periodStartDate = startDate;
+    console.log('StartDate: ' + startDate);
+    let endDate = '';
+    endDate = this.post.endDate;
+    this.periodEndDate = endDate;
+    console.log('EndDate: ' + endDate);
+    this.fuelDealerCustomerMapId = crId;
+    this.getLubeTaxStatement(crId)
+    this.getInfobyCustomerMapId()
 
-  getBankDetailsByDealerId(fuelDealerId: any) {
-    this.bankAccList.length = 0;
-    let data = {
-      dealerId: fuelDealerId
-    }
-    this.post.getBankDetailsByDealerIdPOST(data)
-      .subscribe(res => {
-        if (res.data.length) {
-          this.bankAccList = res.data1;
-          this.cd.detectChanges()
-        }
-      })
+    this.startDate = moment(this.periodStartDate, ['DD-MM-YYYY']).format('YYYY-MM-DD'),
+    this.endDate = moment(this.periodEndDate, ['DD-MM-YYYY']).format('YYYY-MM-DD')
+    // console.log('time conversion');
+    // console.log(this.startDate);
+    // console.log(this.endDate);
+
+    let day = moment(new Date()).format('DDMMYYHHmmss')
+    this.sysGeneInvoiceNumber = ('VI'+day)
+    // console.log('time conversion111');
+    // console.log(this.sysGeneInvoiceNumber);
+    
+    
+  }
+      
+getLubeTaxStatement(fuelDealerCustomerMapId: any){
+  this.spinner.show();
+  let data = {
+    custMapId: fuelDealerCustomerMapId, 
+    startDate: moment(this.periodStartDate, ['DD-MM-YYYY']).format('YYYY-MM-DD'),
+    endDate: moment(this.periodEndDate, ['DD-MM-YYYY']).format('YYYY-MM-DD')
   }
 
-  getVehicleDataByMobile(mobileNumber: any) {
-    let data = {
-      mobileNumber: mobileNumber
+  console.log(data)
+  this.post.getLubeTaxStatementPOST(data).subscribe(res => {
+    if(res.status == "OK"){
+      this.lubeTaxData = res.allPurData;
+      this.totalPurchase = res.purData[0].totalPurchase;
+      this.totalTaxAmt = res.taxData[0].totalPurchase;
+      this.productData = res.prodData;
+      console.log(this.lubeTaxData)
+      var osForWrd = ''
+      osForWrd = (this.totalPurchase).toFixed(2)
+      var osForWrd1 = osForWrd.split(".")
+      this.rupeesWrd = osForWrd1[0]
+      this.paisaWrd = osForWrd1[1]
+      if (this.rupeesWrd != 0 && this.paisaWrd != 0) {
+        this.amountInWords = numWords((this.rupeesWrd)) + " rupees and " + numWords((this.paisaWrd)) + " paisa only";
+      } else if (this.rupeesWrd != 0) {
+        this.amountInWords = numWords((this.rupeesWrd)) + " rupees";
+      } else if (this.paisaWrd != 0) {
+        this.amountInWords = numWords((this.paisaWrd)) + " paisa only";
+      } else {
+        this.amountInWords = "";
+      }
+      // this.transform(Math.round(this.totalPurchase))
+      this.spinner.hide();
+      this.cd.detectChanges()
+    } else {
+      this.spinner.hide();
+      this.cd.detectChanges()
     }
-    this.post.viewVehicleVishwasaByMobileNumberPOST(data)
-      .subscribe(res => {
-        if (res.status == "OK") {
-          this.vehicleData = res.data
-          if (res.data2.length) {
-            this.companyName = res.data2[0].companyName;
-            this.address1 = res.data2[0].address1;
-            this.address2 = res.data2[0].address2;
-            this.city = res.data2[0].city;
-            this.state = res.data2[0].state;
-            this.pin = res.data2[0].pin;
-          }
-        } else {
-
-        }
-      })
-  }
+  })
+}
 }

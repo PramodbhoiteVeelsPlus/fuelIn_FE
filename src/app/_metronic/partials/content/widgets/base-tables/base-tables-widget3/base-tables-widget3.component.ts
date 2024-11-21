@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Injectable, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbDateAdapter, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateAdapter, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig, NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ExcelService } from 'src/app/pages/excel.service';
 import { BaseTablesService } from '../base-tables.services';
@@ -56,38 +56,16 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   }
 }
 
+
 @Component({
-  selector: 'app-base-tables-widget6',
-  templateUrl: './base-tables-widget6.component.html',
+  selector: 'app-base-tables-widget3',
+  templateUrl: './base-tables-widget3.component.html',
   providers: [
     { provide: NgbDateAdapter, useClass: CustomAdapter },
     { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }
   ]
 })
-
-export class BaseTablesWidget6Component implements OnInit {
-  fuelDealerId: any;
-  dealerData: any;
-  dealerCorporateId: any;
-  accessGroup: any;
-  acceesGroup: number;
-  dealerView: boolean;
-  ownerName: string;
-  dealerMobile: any;
-  dealerLoginVPId: any;
-  managerVPPersonId: any;
-  managerPersonId: any;
-  managerName: string;
-  companyName: any;
-  oilCompanyName: any;
-  state: any;
-  pin: any;
-  city: any;
-  phone1: any;
-  headerName1: any;
-  headerName3: string;
-  GSTNumber: string;
-
+export class BaseTablesWidget3Component implements OnInit {
   filterForm = new FormGroup({
     customerName: new FormControl(''),
     year: new FormControl("", Validators.required),
@@ -99,18 +77,40 @@ export class BaseTablesWidget6Component implements OnInit {
     monthDAY: new FormControl("", Validators.required),
     productNameDAY: new FormControl("", Validators.required),
   });
-  fuelDealerCorpMapId: string;
-  customerName: any;
-  isAccountNameTableShow: boolean = false;
-  isSelectedAccountName: boolean = false;
-  accountNameList: any;
-  allCorporateList: any = [];
-  transactionData: any = [];
-  quantity: string;
-  transactionDataExcel: any = [];
+
+  fuelDealerId: any;
+  dealerCorporateId: any;
+  acceesGroup: any;
+  dealerView: boolean = false;
+  ownerName: string;
+  dealerMobile: any;
+  dealerLoginVPId: any;
+  managerVPPersonId: any;
+  managerPersonId: any;
+  managerName: string;
   p: number = 1;
   p1: number = 1;
   total: number = 0;
+  fuelDealerCorpMapId: string;
+  customerName: any;
+  accessGroup: any;
+  isAccountNameTableShow: boolean = false;
+  isSelectedAccountName: boolean = false;
+  accountNameList: any = [];
+  allCorporateList: any = [];
+  transactionData: any = [];
+  quantity: string;
+  dealerData: any = [];
+  companyName: any;
+  oilCompanyName: any;
+  state: any;
+  pin: any;
+  city: any;
+  phone1: any;
+  headerName1: any;
+  headerName3: string;
+  GSTNumber: string;
+  transactionDataExcel: any =[];
 
   constructor(
     private modalService: NgbModal,
@@ -148,12 +148,11 @@ export class BaseTablesWidget6Component implements OnInit {
     this.headerName1 = this.companyName;
     // this.headerName2 = res.data[0].address1+', '+res.data[0].address2+', '+res.data[0].city;
     this.headerName3 = this.state + '-' + this.pin + '  ' + "GST: " + this.GSTNumber;
-    this.filterForm.controls["startDate"].setValue("01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear())
+    this.filterForm.controls["startDate"].setValue( "01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear() )
     this.filterForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
     this.getFuelCreditCorporateByfuelDealerId(this.fuelDealerId)
     this.cd.detectChanges()
   }
-
 
   getDetailsByCustomerMapName(id: any) {
     this.fuelDealerCorpMapId = '';
@@ -207,7 +206,6 @@ export class BaseTablesWidget6Component implements OnInit {
 
   }
 
-
   getFuelCreditCorporateByfuelDealerId(fuelDealerId: any) {
     this.allCorporateList = []
     let data = {
@@ -225,7 +223,6 @@ export class BaseTablesWidget6Component implements OnInit {
 
   getTransaction() {
     if (this.fuelDealerCorpMapId) {
-
       this.transactionData.length = 0
       this.spinner.show()
       let data = {
@@ -239,14 +236,14 @@ export class BaseTablesWidget6Component implements OnInit {
           if (res.status == "OK" && res.data.length) {
             this.transactionData = res.data;
             this.spinner.hide();
-
+            this.cd.detectChanges()
           } else {
             alert("Data Not Found..!")
             this.spinner.hide();
+            this.cd.detectChanges()
           }
         })
     } else {
-
       this.transactionData.length = 0
       this.spinner.show()
       let data = {
@@ -260,10 +257,12 @@ export class BaseTablesWidget6Component implements OnInit {
           if (res.status == "OK" && res.data.length) {
             this.transactionData = res.data;
             this.spinner.hide();
-
+            this.cd.detectChanges()
           } else {
             alert("Data Not Found..!")
             this.spinner.hide();
+            this.cd.detectChanges()
+
           }
         })
     }
@@ -302,7 +301,7 @@ export class BaseTablesWidget6Component implements OnInit {
       doc.setFontSize(12);
       doc.text(this.headerName1, 40, 25);
       doc.setFontSize(8);
-      // doc.text(this.headerName2,40, 40 );   
+      // doc.text(this.headerName2, 40, 40);
       doc.text(this.headerName3, 40, 55);
       if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
         doc.text("DATE : " + moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("DD MMM YYYY") + ' To ' + moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("DD MMM YYYY"), 40, 70);
@@ -334,6 +333,9 @@ export class BaseTablesWidget6Component implements OnInit {
       doc.save("CreditBook_TransactionWise.pdf");
 
     }
+  }
+  headerName2(headerName2: any, arg1: number, arg2: number) {
+    throw new Error('Method not implemented.');
   }
 
 
@@ -406,7 +408,7 @@ export class BaseTablesWidget6Component implements OnInit {
 
     }
   }
-
+  
   pageChangeEvent(event: number) {
     this.p = event;
     this.getTransaction();

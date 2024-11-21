@@ -1,0 +1,275 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml">
+
+<head>
+  <title>Editable Statement</title>
+</head>
+
+<body id="contentToConvert">
+  <div id="page-wrap">
+    <!-- <div class="col-md-12">
+            &nbsp; <button class="noprint" style="font-size: medium;" onclick="window.print()"> &nbsp;&nbsp;<i class="fa fa-print"
+                    aria-hidden="true"></i> &nbsp;</button>
+        </div> -->
+    <div class="col-auto">
+      <!-- <button class="btn btn-success" printSectionId="sanjay" [useExistingCss]="true" ngxPrint>print </button> -->
+    </div>
+
+    <div id="sanjay">
+      <div class="container col-12 mr-2 px-1 py-1 container border border-success">
+        <div class="col-12 mr-2 px-1 py-1 container border border-success" id="htmlData">
+          <div class="border border-success alert alert-secondary">
+            <div class="row px-4 py-2">
+              <div class="col-8">
+                <h3><b>{{companyName}}</b></h3>
+                <h5> {{oilCompanyName}} petrol pump </h5>
+                <!-- <h6> {{fromAddress}} </h6> -->
+              </div>
+
+              <div class="col-4">
+                <!-- <h6>GST : {{GSTNumber}}</h6> -->
+                <h6 *ngIf="hsnCode">HSN Code : {{hsnCode}}</h6>
+
+                <!-- <h6><b>Invoice No. : <span> VPFCINV{{invoiceCode}} </span></b></h6> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="border border-success my-2">
+          <div class="row">
+            <div class="col-9">
+              <h4><b>&nbsp;&nbsp;{{billedToName}}</b></h4>
+              <h5>&nbsp;&nbsp; {{billedToAddressLine1}}
+              </h5>
+              <h4 class="" style="font-size: 15px;">
+                &nbsp;&nbsp;({{startDate | date:'dd MMM yyyy'}} to {{endDate | date:'dd MMM yyyy'}} )
+              </h4>
+            </div>
+
+            <div class="col-3">
+              <h4>&nbsp;</h4>
+              <h4 class="" style="font-size: 12px;">
+                GST : {{billedToGstNo}}
+              </h4>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div *ngIf="manualNumber" class="container text-center" style="border: 1px solid black; font-size: 15px;">
+          <p>
+            <span *ngIf="manualNumber!=undefined">
+              <span *ngIf="manualNumber!=''">
+                statement: {{manualNumber}}
+              </span>
+            </span>
+          </p>
+        </div>
+        <br><br>
+
+        <div class="col-12 mr-2 container px-1 py-1 mr-1">
+          <table class="table table-striped" style="border: 1px solid black">
+            <thead style="border: 1px solid black">
+              <tr>
+                <th style="text-align: center; border: 1px solid black;">Sr.No</th>
+                <th style="text-align: center; border: 1px solid black;">Date</th>
+                <th style="text-align: center; border: 1px solid black;">Product</th>
+                <th style="text-align: center; border: 1px solid black;">Vehicle No</th>
+                <th style="text-align: center; border: 1px solid black;">Bill / Ref No </th>
+                <th style="text-align: center; border: 1px solid black;">Quantity</th>
+                <th style="text-align: center; border: 1px solid black;">Rate</th>
+                <th style="text-align: center; border: 1px solid black;">Credit Amount</th>
+                <th style="text-align: center; border: 1px solid black;">Total Amount</th>
+              </tr>
+            </thead>
+            <tbody style="border: 1px solid black" *ngFor="let data1 of array; let i = index">
+              <td rowspan="15" style="text-align: center; border: 1px solid black;">
+                <span> {{i+1}} </span>
+              </td>
+              <tr *ngFor="let data of data1;">
+                <td style="text-align: center; border: 1px solid black;">
+                  {{data.estimatedRefuelDate | date:'d MMM y'}}
+                </td>
+                <td style="text-align: center; border: 1px solid black;">
+                  <span *ngIf="data.purpose == 'LUBE' ">
+                    {{data.productName}}
+                  </span>
+                  <span *ngIf="data.purpose == 'CREDIT' ">
+                    {{data.productName}}
+                  </span>
+                  <span *ngIf="data.purpose == 'AdvAmt' ">
+                    ADVANCE
+                  </span>
+                  <span *ngIf="data.purpose == 'LUBETAX'">
+                    LUBRICANTS-TAX
+                  </span>
+                </td>
+
+                <td style="text-align: center; border: 1px solid black;">
+                  <span *ngIf="data.purpose == 'CREDIT'">
+                    <span *ngIf="data.vehicleNumber == 'undefined'">
+
+                    </span>
+                    <span *ngIf="data.vehicleNumber != 'undefined'">
+                      {{data.vehicleNumber}}
+                    </span>
+                  </span>
+                  <span *ngIf="data.purpose == 'LUBE'">
+                    <span *ngIf="data.vehicleNumber == 'undefined'">
+                      {{data.lubeName}}
+                    </span>
+                    <span *ngIf="data.vehicleNumber != 'undefined'">
+                      {{data.vehicleNumber}} {{data.lubeName}}
+                    </span>
+                  </span>
+                  <span *ngIf="data.purpose == 'AdvAmt'">
+                    {{data.advName}} {{data.advMobile}}
+                  </span>
+                  <span *ngIf="data.purpose == 'LUBETAX'">
+                    <span *ngIf="data.vehicleNumber == 'undefined'">
+
+                    </span>
+                    <span *ngIf="data.vehicleNumber != 'undefined'">
+                      {{ data.vehicleNumber}}
+                    </span>
+                  </span>
+                </td>
+                <td style="text-align: center; border: 1px solid black;">
+                  {{ data.manualCrNumber }}
+                </td>
+                <td style="text-align: center; border: 1px solid black;">
+                  <span *ngIf="data.purpose == 'CREDIT' ">
+                    <span *ngIf='data.productCategory == "CNG" '>
+                      {{data.actualCreditQuantity | number:'1.2-2'}} Kg
+                    </span>
+                    <span *ngIf='data.productCategory != "CNG" '>
+                      {{data.actualCreditQuantity | number:'1.2-2'}} Ltr
+                    </span>
+                  </span>
+                  <span *ngIf="data.purpose == 'LUBE' ">
+                    {{data.actualCreditQuantity | number:'1.2-2'}} {{data.lubeUnit}}
+                  </span>
+                  <span *ngIf="data.purpose == 'LUBETAX' ">
+                    {{data.actualCreditQuantity | number:'1.2-2'}} {{data.lubeUnit}}
+                  </span>
+                </td>
+                <td style="text-align: center; border: 1px solid black;"> {{data.productRate}} </td>
+
+                <td style="text-align: center; border: 1px solid black;">
+                  {{data.creditAmount | number:'1.2-2'}}
+                </td>
+              </tr>
+              <tr *ngFor="let data2 of data1; let i = index" style="border: 1px solid black">
+                <td *ngIf="i === 0" style="text-align: center; border: 1px solid black;"></td>
+                <td *ngIf="i === 0" style="text-align: center; border: 1px solid black;"></td>
+                <td *ngIf="i === 0" style="text-align: center; border: 1px solid black;"></td>
+                <td *ngIf="i === 0" style="text-align: center; border: 1px solid black;"></td>
+                <td *ngIf="i === 0" style="text-align: center; border: 1px solid black;"></td>
+                <td *ngIf="i === 0" style="text-align: center; border: 1px solid black;"><b> Total </b></td>
+                <td *ngIf="i === 0" style="text-align: center; border: 1px solid black;"> <b>{{ data2.total }}</b></td>
+                <td *ngIf="i === 0" style="text-align: center; border: 1px solid black;"> <b>{{ data2.total }}</b></td>
+              </tr>
+            </tbody>
+            <tbody style="border: 1px solid black">
+              <tr style="border: 1px solid black">
+                <td style="text-align: center; border: 1px solid black;"></td>
+                <td style="text-align: center; border: 1px solid black;"></td>
+                <td style="text-align: center; border: 1px solid black;"></td>
+                <td style="text-align: center; border: 1px solid black;"></td>
+                <td style="text-align: center; border: 1px solid black;"></td>
+                <td style="text-align: center; border: 1px solid black;"></td>
+                <td style="text-align: center; border: 1px solid black;"></td>
+                <td style="text-align: center; border: 1px solid black;"><b> Total </b></td>
+                <td style="text-align: center; border: 1px solid black;"><b>{{ creditAmountNew }}</b> </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="row px-4 py-4">
+          <div class="col text-center border border-success px-1 py-1 mr-1">
+            <h5 class="text-primary"><b> opening outstanding </b></h5>
+            <b>
+              <span *ngIf="openningOS<0">
+                <i class="fas fa-rupee-sign"></i>
+                {{openningOS *(-1) | number:'1.2-2'}} CR
+              </span>
+              <span *ngIf="openningOS >= 0">
+                <i class="fas fa-rupee-sign"></i>
+                {{openningOS | number:'1.2-2'}}
+
+              </span>
+            </b>
+          </div>
+          <div class="col text-center border border-success px-1 py-1 mr-1">
+            <h5 class="text-primary"><b> total purchase</b></h5>
+            <b> <i class="fas fa-rupee-sign"></i> {{totalPurchaseAmt | number:'1.2-2'}} </b>
+          </div>
+          <div class="col text-center border border-success px-1 py-1 mr-1">
+            <h5 class="text-primary"><b>total payment</b></h5>
+            <b><i class="fas fa-rupee-sign"></i> {{totalPaymentAmt | number:'1.2-2'}}
+            </b>
+            <br>
+          </div>
+
+          <div class="col text-center border border-success px-1 py-1 mr-1">
+            <h5 class="text-primary"><b> net outstanding </b></h5>
+            <b>
+              <span *ngIf="(netOS) < 0">
+                <i class="fas fa-rupee-sign"></i>
+                {{(netOS) *(-1) |
+                number:'1.2-2'}}
+                CR
+              </span>
+              <span *ngIf="(netOS) >= 0">
+                <i class="fas fa-rupee-sign"></i>
+                {{(netOS) |
+                number:'1.2-2'}}
+
+              </span>
+
+            </b>
+          </div>
+        </div>
+        <span *ngIf="(netOS) > 0">
+          <!-- <div class="container border border-success px-2 py-2 alert alert-success">
+            <p> Please pay <span class="" *ngIf="(netOS) >= 0">
+                <i class="fas fa-rupee-sign"></i>
+                {{(netOS) |
+                number:'1.0-0'}}
+              </span> <span *ngIf="isDueDate == 'TRUE' "> before Due Date {{dueDate}} </span> <br>
+             </p>
+            <p class=""> <i class="fas fa-rupee-sign"></i> {{amountInWord}}</p>
+          </div> -->
+        </span>
+
+        <span *ngFor="let data of bankAccList; let i = index">
+          <div class="container border border-success px-2 py-2" *ngIf="data.uniqueStatus == 'TRUE' ">
+            <b style="font-size: 17px;"> Please make a payment to</b><br>
+            <p> <b>Beneficiary Name : </b> {{data.accountHolderName}} </p>
+            <p> <b>Bank Name : </b> {{data.bankName}} , {{data.branchName}}</p>
+            <p> <b>Account Number : </b> {{data.accountNumber}} </p>
+            <p> <b>IFSC Code : </b> {{data.ifsc}} </p>
+            <p> <b>UPI Id : </b> {{data.upiId}} </p>
+          </div>
+        </span>
+        <span>
+          <div class="container border border-success px-2 py-2">
+            <div class="row px-4 py-4">
+              <div class="col-8">
+                <b style="font-size: 12px;"> Receiver's Signature</b>
+              </div>
+
+              <div class="col-4">
+                <p> <b>For {{companyName}} </b> </p><br>
+                <b style="font-size: 12px;"> Authorized Signature :</b>
+              </div>
+            </div>
+          </div>
+        </span>
+
+      </div>
+    </div>
+  </div>
+</body>

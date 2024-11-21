@@ -132,6 +132,12 @@ import { TablesWidget30Component } from './tables/tables-widget30/tables-widget3
 import { TablesWidget31Component } from './tables/tables-widget31/tables-widget31.component';
 import { TablesWidget32Component } from './tables/tables-widget32/tables-widget32.component';
 import { TablesWidget33Component } from './tables/tables-widget33/tables-widget33.component';
+import { MixedWidget12Component } from './mixed/mixed-widget12/mixed-widget12.component';
+import { MixedWidget13Component } from './mixed/mixed-widget13/mixed-widget13.component';
+import { MixedWidget14Component } from './mixed/mixed-widget14/mixed-widget14.component';
+import { BaseTablesWidget3Component } from './base-tables/base-tables-widget3/base-tables-widget3.component';
+import { BaseTablesWidget4Component } from './base-tables/base-tables-widget4/base-tables-widget4.component';
+import { BaseTablesWidget5Component } from './base-tables/base-tables-widget5/base-tables-widget5.component';
 // import { routes } from 'src/app/app-routing.module';
 @NgModule({
   declarations: [
@@ -258,7 +264,13 @@ import { TablesWidget33Component } from './tables/tables-widget33/tables-widget3
     TablesWidget30Component,
     TablesWidget31Component,
     TablesWidget32Component,
-    TablesWidget33Component
+    TablesWidget33Component,
+    MixedWidget12Component,
+    MixedWidget13Component,
+    MixedWidget14Component,
+    BaseTablesWidget3Component,
+    BaseTablesWidget4Component,
+    BaseTablesWidget5Component
   ],
   imports: [
     ReactiveFormsModule,
@@ -399,7 +411,13 @@ import { TablesWidget33Component } from './tables/tables-widget33/tables-widget3
     TablesWidget30Component,
     TablesWidget31Component,
     TablesWidget32Component,
-    TablesWidget33Component
+    TablesWidget33Component,
+    MixedWidget12Component,
+    MixedWidget13Component,
+    MixedWidget14Component,
+    BaseTablesWidget3Component,
+    BaseTablesWidget4Component,
+    BaseTablesWidget5Component
   ],
   providers: [NgbActiveModal, ExcelService],
 })

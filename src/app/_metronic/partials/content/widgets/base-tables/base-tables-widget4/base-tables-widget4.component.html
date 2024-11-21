@@ -1,0 +1,76 @@
+<br>
+<form [formGroup]="filterForm">
+  <div class="mb-3 row">
+    <label for="example-text-input" class="col-auto col-form-label">Khata</label>
+    <div class="col-md-3">
+      <input class="form-control" type="text" list="allCorporateList" placeholder="all khata"
+        formControlName="customerName" (change)="getDetailsByCustomerMapName($event)">
+      <datalist id="allCorporateList">
+        <option *ngFor="let data of allCorporateList" [value]="data.companyName">
+      </datalist>
+    </div>
+
+    <label for="example-text-input" class="col-auto col-form-label">Month</label>
+    <div class="col-md-2">
+      <select class="form-control" formControlName="monthDAY" required>
+        <option value=""> Select Month </option>
+        <option *ngFor="let data of ficMonths" [value]="data.monthYear"> {{data.monthName}} {{data.year}} </option>
+      </select>
+    </div>
+
+    <div class="col-md-1">
+      <button type="button" class="btn btn-md btn-primary" (click)="getDayWise()">
+        view
+      </button>
+    </div>
+
+    <div class="col-md-1"></div>
+    <div class="col-auto">
+      <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF" placement="bottom"
+        (click)="exportToPDF()"><i class="fas fa-file-pdf"></i></span>
+    </div>
+    <div class="col-auto">
+      <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download Excel" placement="bottom"
+        (click)="exportexcel()"><i class="fas fa-file-csv"></i></span>
+    </div>
+  </div>
+</form>
+<hr>
+
+<div class="table-responsive">
+  <table id="excel-table" class="table table-hover b">
+    <thead class="table-light">
+      <tr>
+        <th> Date </th>
+        <th> Sales Amount </th>
+        <th> Payment Amount </th>
+        <th> Balance </th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let data of dayWiseData">
+      <tr>
+        <td> {{ data.date | date:"d MMM, yyyy"}} </td>
+        <td> <i class="fa-solid fa-indian-rupee-sign"></i>
+          {{ data.purchase | number:'1.2-2'}}
+        </td>
+        <td> <i class="fa-solid fa-indian-rupee-sign"></i>
+          {{ data.payment | number:'1.2-2'}}
+        </td>
+        <td> <i class="fa-solid fa-indian-rupee-sign"></i>
+          <span *ngIf="data.balance < 0 ">
+            {{(data.balance)*(-1) | number:"1.2-2"}} CR
+          </span>
+          <span *ngIf="data.balance >= 0 ">
+            {{data.balance | number:"1.2-2"}}
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- begin::Pagination -->
+  <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+    style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+  </pagination-controls>
+  <!-- end::Pagination -->
+</div>

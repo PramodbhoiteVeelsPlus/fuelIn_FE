@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { StatsService } from '../../stats/stats.services';
 import { MixedService } from '../mixed.services';
 import moment from 'moment';
+import numWords from 'num-words';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -109,6 +110,9 @@ export class MixedWidget8Component implements OnInit {
   mobileStatus: boolean = false;
   phone1: any;
   statementDetails: any = [];
+  paisaWrd: any;
+  rupeesWrd: any;
+  amountInWords: string;
 
   constructor(
     private post: MixedService,
@@ -204,6 +208,20 @@ export class MixedWidget8Component implements OnInit {
           this.totalPaymentAmt = res.data[0].totalPaymentAmt
           this.netOS = res.data[0].netOS
           // this.transform(Math.round(Number(this.netOS)));
+          var osForWrd = ''
+          osForWrd = (this.netOS).toFixed(2)
+          var osForWrd1 = osForWrd.split(".")
+          this.rupeesWrd = osForWrd1[0]
+          this.paisaWrd = osForWrd1[1]
+          if (this.rupeesWrd != 0 && this.paisaWrd != 0) {
+            this.amountInWords = numWords((this.rupeesWrd)) + " rupees and " + numWords((this.paisaWrd)) + " paisa only";
+          } else if (this.rupeesWrd != 0) {
+            this.amountInWords = numWords((this.rupeesWrd)) + " rupees";
+          } else if (this.paisaWrd != 0) {
+            this.amountInWords = numWords((this.paisaWrd)) + " paisa only";
+          } else {
+            this.amountInWords = "";
+          }
           this.getInfobyCustomerMapId()
           this.spinner.hide();
           this.cd.detectChanges()
@@ -227,7 +245,7 @@ export class MixedWidget8Component implements OnInit {
         }
       })
   }
-  
+
   getInfobyCustomerMapId() {
     const data = {
       fuelDealerCustomerMapId: this.fuelDealerCustomerMapId,
@@ -260,7 +278,7 @@ export class MixedWidget8Component implements OnInit {
       }
       );
   }
-  
+
   getManagerMobileByfuelDealerId(fuelDealerId: any) {
     const data = {
       fuelDealerId: fuelDealerId,
