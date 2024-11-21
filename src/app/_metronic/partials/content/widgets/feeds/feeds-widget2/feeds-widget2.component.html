@@ -1,107 +1,135 @@
-<!-- begin::Body -->
-<div class="card-body pb-0">
-  <!-- begin::Header -->
-  <div class="d-flex align-items-center mb-5">
-    <!-- begin::User -->
-    <div class="d-flex align-items-center flex-grow-1">
-      <!-- begin::Avatar -->
-      <div class="symbol symbol-45px me-5">
-        <img src="./assets/media/avatars/300-23.jpg" alt="" />
+<div class="row">
+  <div class="col-12">
+      <div class="card">
+          <div class="card-body">
+              <form [formGroup]="filterForm">
+                  <div class="mb-3 row">
+                      <label for="example-text-input" class="col-md-2" style="text-align: center;">Product</label>
+                      <div class="col-md-2">
+                          <p style="text-align: center;">Month</p>
+                      </div>
+                      <div class="col-md-2">
+                          <p style="text-align: center;">Year</p>
+                      </div>
+                  </div>
+
+                  <div class="row">
+                      <div class="col-md-2">
+                          <select class="form-select" formControlName="product" required>
+                              <option value=""> Select Product </option>
+                              <option *ngFor="let data of productsList" [value]="data.fuelProductsId">
+                                  {{data.productName}} </option>
+                          </select>
+                      </div>
+                      <div class="col-md-2">
+                          <select class="form-select" formControlName="month">
+                              <option value="">Select</option>
+                              <option value="01">Jan</option>
+                              <option value="02">Feb</option>
+                              <option value="03">Mar</option>
+                              <option value="04">Apr</option>
+                              <option value="05">May</option>
+                              <option value="06">Jun</option>
+                              <option value="07">Jul</option>
+                              <option value="08">Aug</option>
+                              <option value="09">Sep</option>
+                              <option value="10">Oct</option>
+                              <option value="11">Nov</option>
+                              <option value="12">Dec</option>
+                          </select>
+                      </div>
+                      <div class="col-md-2">
+                          <select formControlName="year" class="form-select" required>
+                              <option value={{currentYear}}> {{currentYear}} </option>
+                              <option value={{lastYear}}> {{lastYear}} </option>
+                              <option value={{last2Year}}> {{last2Year}} </option>
+                              <option value={{lastFourthYear}}> {{lastFourthYear}} </option>
+                              <option value={{lastFifthYear}}> {{lastFifthYear}} </option>
+                          </select>
+                      </div>
+                      <div class="col-md-2">
+                          <button class="btn btn-primary" (click)="submit()"> Submit </button>
+                      </div>
+                      
+                      <div class="col-sm-1">
+                          <!-- <div *ngIf="dsrBookDetails.length" class="text-sm-end"> -->
+                              <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download CSV"
+                                  placement="bottom" (click)="exportExcel()"><i
+                                      class="fas fa-file-csv"></i></span>
+
+                          <!-- </div> -->
+                      </div>
+                  </div>
+                  
+              </form>
+              <br><br>
+              <div class="row">
+                  <div class="table-responsive mb-0"> 
+                      <table id="excel-table" class="table table-centered table-nowrap table-borderd">
+                          <thead>
+                              <tr style=" border-bottom: 2px solid black;"> 
+                                  <th colspan="4"></th>
+                                  <th style="font-size: x-large;" colspan="9"> 
+                                  <b> {{ petrolPump }} {{ month }} {{ productName }} Sales/Purchase Sheet</b> 
+                                  </th> 
+                              </tr>
+                          </thead>
+                          <thead>
+                              <tr>
+                                  
+                              </tr>
+                              <tr>
+                                  <th> Sr No </th>
+                                  <th> Product </th>
+                                  <th> Invoice No </th>
+                                  <th> Party Name </th>
+                                  <th> GST No </th>
+                                  <th> Date </th>
+                                  <th> Opening Stock </th>
+                                  <th> Purchase Qty(LTR) </th>
+                                  <th> Rate </th>
+                                  <th> Purchase Amount </th>
+                                  <th> Sales Qty(LTR) </th>
+                                  <th> Sales Amount </th>
+                                  <th> Closing Stock </th>
+                              </tr>
+                          </thead>
+                          <tbody> 
+                              <tr *ngFor="let data of salesPurData; let i= index">
+                                  <td> {{ i+1 }} </td>
+                                  <td> {{ data.product }} </td>
+                                  <td> {{ data.invoiceNo }} </td>
+                                  <td> {{ oilCompanyName }} </td>
+                                  <td> {{ GSTNumber }} </td>
+                                  <td> {{ data.date | date:"d MMM, yyyy"}} </td>
+                                  <td> {{ data.openingStock | number:'1.2-2' }} </td>
+                                  <td> {{ data.purchaseQuantity | number:'1.2-2' }} </td>
+                                  <td> {{ data.rate | number:'1.2-2' }} </td>
+                                  <td> {{ data.purchaseAmt | number:'1.2-2' }} </td>
+                                  <td> {{ data.salesQuantity | number:'1.2-2' }} </td>
+                                  <td> {{ data.salesAmt | number:'1.2-2' }} </td>
+                                  <td> {{ data.closingStock | number:'1.2-2' }} </td>
+                              </tr>
+                              <tr>
+                                  <td></td>
+                                  <td> Total </td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td> </td>
+                                  <td> </td>
+                                  <td> {{ totalPurQty| number:'1.2-2' }} </td>
+                                  <td></td>
+                                  <td> {{ totalPurAmt| number:'1.2-2' }} </td>
+                                  <td> {{ totalSales | number:'1.2-2' }} </td>
+                                  <td> {{ totalSalesAmt | number:'1.2-2' }} </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>    
+              </div>
+
+          </div>
       </div>
-      <!-- end::Avatar -->
-
-      <!-- begin::Info -->
-      <div class="d-flex flex-column">
-        <a href="#" class="text-gray-800 text-hover-primary fs-6 fw-bolder">
-          Nick Logan
-        </a>
-
-        <span class="text-gray-500 fw-bold">PHP, SQLite, Artisan CLI</span>
-      </div>
-      <!-- end::Info -->
-    </div>
-    <!-- end::User -->
-
-    <!-- begin::Menu -->
-    <div class="my-0">
-      <button
-        type="button"
-        class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
-        data-kt-menu-trigger="click"
-        data-kt-menu-placement="bottom-end"
-        data-kt-menu-flip="top-end"
-      >
-        <app-keenicon name="category" class="fs-2"></app-keenicon>
-      </button>
-      <app-dropdown-menu1></app-dropdown-menu1>
-    </div>
-    <!-- end::Menu -->
   </div>
-  <!-- end::Header -->
-
-  <!-- begin::Post -->
-  <div class="mb-5">
-    <!-- begin::Text -->
-    <p class="text-gray-800 fw-normal mb-5">
-      Outlines keep you honest. They stop you from indulging in poorly
-      thought-out metaphors about driving and keep you focused on the overall
-      structure of your post
-    </p>
-    <!-- end::Text -->
-
-    <!-- begin::Toolbar -->
-    <div class="d-flex align-items-center mb-5">
-      <a
-        href="#"
-        class="
-          btn btn-sm btn-light btn-color-muted btn-active-light-success
-          px-4
-          py-2
-          me-4
-        "
-      >
-        <app-keenicon name="element-plus" class="fs-2"></app-keenicon>
-        120
-      </a>
-
-      <a
-        href="#"
-        class="
-          btn btn-sm btn-light btn-color-muted btn-active-light-danger
-          px-4
-          py-2
-        "
-      >
-        <app-keenicon name="heart" class="fs-2"></app-keenicon>
-        15
-      </a>
-    </div>
-    <!-- end::Toolbar -->
-  </div>
-  <!-- end::Post -->
-
-  <!-- begin::Separator -->
-  <div class="separator mb-4"></div>
-  <!-- end::Separator -->
-
-  <!-- begin::Reply input -->
-  <form class="position-relative mb-6">
-    <textarea
-      class="form-control border-0 p-0 pe-10 resize-none min-h-25px"
-      rows="1"
-      placeholder="Reply.."
-    ></textarea>
-
-    <div class="position-absolute top-0 end-0 me-n5">
-      <span class="btn btn-icon btn-sm btn-active-color-primary pe-0 me-2">
-        <app-keenicon name="paper-clip" class="fs-2 mb-3"></app-keenicon>
-      </span>
-
-      <span class="btn btn-icon btn-sm btn-active-color-primary ps-0">
-        <app-keenicon name="geolocation" class="fs-2 mb-3"></app-keenicon>
-      </span>
-    </div>
-  </form>
-  <!-- edit::Reply input -->
 </div>
-<!-- end::Body -->
