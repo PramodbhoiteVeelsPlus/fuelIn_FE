@@ -8,16 +8,18 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
     providedIn: 'root',
 })
 export class FeedsService {
+    header: any;
+    user: any;
+    token: any = "";
+    dailyProfitId: any;
 
     constructor(private http: HttpClient,
         private router: Router
     ) { }
 
-
-    header: any;
-    user: any;
-    token: any = "";
-
+    dailyProfit(dailyProfitId: any) {
+        this.dailyProfitId = dailyProfitId;
+    }
 
     public baseURL = environment.apiUrl;
 
@@ -56,6 +58,16 @@ export class FeedsService {
     private updateOpeningBalanceURL = this.baseURL + 'overallReport/updateOpeningBalance';
     private deleteOpeningBalanceREPORTDataURL = this.baseURL + 'overallReport/deleteOpeningBalanceREPORTData';
     private addReportDataURL = this.baseURL + 'overallReport/addReportData';
+    private getFuelCreditRequestByfuelDealerIdAndFuelCorporateId1URL = this.baseURL + 'fuelDealerCustMap/getFuelCreditRequestByfuelDealerIdAndFuelCorporateId1';
+    private getDailyProfitReportURL = this.baseURL + 'dailyProfitReport/getDailyProfitReport';
+    private addReportOpeningBalanceURL = this.baseURL + 'dailyProfitReport/addOpeningBalance';
+    private getDailyReportOpeningBalanceURL = this.baseURL + 'dailyProfitReport/getOpeningBalance';
+    private deleteDailyProfitReportURL = this.baseURL + 'dailyProfitReport/deleteDailyProfitReport';
+    private addDailyReportURL = this.baseURL + 'dailyProfitReport/addDailyReport';
+    private checkReportByDateURL = this.baseURL + 'dailyProfitReport/checkReportByDate';
+    private updateDailyProfitReportURL = this.baseURL + 'dailyProfitReport/updateDailyProfitReport';
+    
+
 
 
     setHeader() {
@@ -395,6 +407,87 @@ export class FeedsService {
             headers: headers
         })
     }
+
+    // getFuelCreditRequestByfuelDealerIdAndFuelCorporateId1URL
+    getFuelCreditRequestByfuelDealerIdAndFuelCorporateId1POST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFuelCreditRequestByfuelDealerIdAndFuelCorporateId1URL, body, {
+            headers: headers
+        })
+    }
+
+    // getDailyProfitReportURL
+    getDailyProfitReportPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getDailyProfitReportURL, body, {
+            headers: headers
+        })
+    }
+
+    // addReportOpeningBalanceURL
+    addReportOpeningBalancePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addReportOpeningBalanceURL, body, {
+            headers: headers
+        })
+    }
+
+    // getDailyReportOpeningBalanceURL
+    getDailyReportOpeningBalancePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getDailyReportOpeningBalanceURL, body, {
+            headers: headers
+        })
+    }
+
+    // deleteDailyProfitReportURL
+    deleteDailyProfitReportPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.deleteDailyProfitReportURL, body, {
+            headers: headers
+        })
+    }
+
+    // addDailyReportURL
+    addDailyReportPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addDailyReportURL, body, {
+            headers: headers
+        })
+    }
+
+    // checkReportByDateURL
+    checkReportByDatePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.checkReportByDateURL, body, {
+            headers: headers
+        })
+    }
+
+    // updateDailyProfitReportURL
+    updateDailyProfitReportPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateDailyProfitReportURL, body, {
+            headers: headers
+        })
+    }
+
 
 
 

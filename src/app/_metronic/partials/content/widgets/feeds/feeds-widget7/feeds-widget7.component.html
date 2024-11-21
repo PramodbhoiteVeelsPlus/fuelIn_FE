@@ -1,0 +1,245 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="https://www.w3.org/1999/xhtml">
+
+<head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    #page-wrap {
+      width: 700px;
+      margin: 0 auto;
+    }
+
+    .bg-invoice {
+      background-color: #e7e8ea;
+    }
+
+    .table-head {
+      font-size: 14px;
+      background-color: #e6e6fa !important;
+    }
+
+    .table-row {
+      font-size: 12px;
+    }
+
+    .main-table {
+      width: -webkit-fill-available;
+    }
+
+    .border-black {
+      border: 1px solid black;
+    }
+
+    .child-table {
+      width: -webkit-fill-available;
+      color: black;
+      text-align: center;
+
+    }
+
+    .border-gray {
+      border: 1px solid #8080802e;
+    }
+
+    .A4 {
+      background: white;
+      width: 23cm;
+      height: 40.7cm;
+      display: block;
+      margin: 0 auto;
+      padding: 1px 1px;
+      margin-bottom: 0.5cm;
+      box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+
+      box-sizing: border-box;
+      font-size: 12pt;
+    }
+
+    @media print {
+      .page-break {
+        display: block;
+        page-break-before: always;
+
+        size: A4 portrait;
+      }
+    }
+
+    @media print {
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .A4 {
+        box-shadow: none;
+        margin: 0;
+        width: auto;
+        height: auto;
+      }
+
+      .noprint {
+        display: none;
+      }
+
+      .print {
+        display: block;
+      }
+    }
+  </style>
+</head>
+
+<body id="contentToConvert">
+  <div id="page-wrap">
+    <div class="col-md-12">
+      &nbsp; <button class="noprint" style="font-size: medium;" onclick="window.print()"> &nbsp;&nbsp;<i
+          class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
+      &nbsp;&nbsp;
+      <button class="noprint" style="font-size: medium;" (click)="downloadReport()">Download </button>
+      &nbsp;&nbsp;
+      <button class="noprint" style="font-size: medium;" routerLink="/report/summaryReport"
+        [routerLinkActive]="['router-link-active']">
+        Back
+      </button>
+    </div>
+
+    <div id="sanjay">
+      <div class="container" style="width: 700px">
+        <div class="col-12 mr-2 px-1 py-1 container border border-success" id="htmlData">
+          <div class="border border-success alert alert-primary">
+            <div class="row px-4 py-2" style="text-align: center;">
+              <h3>Profit and Loss Statement</h3>
+            </div>
+            <div class="row px-4 py-2" style="text-align: center;">
+              <h2> {{petrolPump}}, {{city}} </h2>
+            </div>
+            <h5>Statement Date: {{statementDate | date:'dd MMM yyyy' }}</h5>
+            <h6 style="margin-left: 500px;">Generated On: {{createdAt | date:'dd MMM yyyy' }}</h6>
+            <br>
+          </div>
+          <br>
+          <div class="row" style="padding-left: 50px;">
+            <div class="col-md-6 fs-6"><b>Opening : {{opening | number:'1.2-2'}} </b></div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-5">
+              <div style="padding-left: 50px;">
+                <div class="fs-5">Income Details </div><br>
+                <table class="table table-hover table-striped table-bordered">
+                  <thead style="background-color: skyblue">
+                    <tr>
+                      <th style="text-align: center; border: 1px solid black"> Type </th>
+                      <th style="text-align: center; border: 1px solid black"> Amount </th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let data of incomeData">
+
+                    <tr *ngIf="data.incomeAmount > 0">
+                      <td style="text-align: center; border: 1px solid black">
+                        {{data.incomeType}}
+                      </td>
+                      <td style="text-align: center; border: 1px solid black">
+                        {{data.incomeAmount | number:'1.2-2'}}
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody>
+                    <tr>
+                      <td style="text-align: center; border: 1px solid black">
+                        <b> Total </b>
+                      </td>
+                      <td style="text-align: center; border: 1px solid black">
+                        <b> {{totalIncome | number:'1.2-2'}} </b>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div style="padding-left: 50px;">
+                <div class="fs-5">Expense Details </div><br>
+                <table class="table table-hover table-striped table-bordered">
+                  <thead style="background-color: skyblue">
+                    <tr>
+                      <th style="text-align: center; border: 1px solid black"> Type </th>
+                      <th style="text-align: center; border: 1px solid black"> Amount </th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let data of expenseData">
+                    <tr *ngIf="data.expenseAmount > 0">
+                      <td style="text-align: center; border: 1px solid black">
+                        {{data.expenseType}}
+                      </td>
+                      <td style="text-align: center; border: 1px solid black">
+                        {{data.expenseAmount | number:'1.2-2'}}
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody>
+                    <tr>
+                      <td style="text-align: center; border: 1px solid black">
+                        <b> Total </b>
+                      </td>
+                      <td style="text-align: center; border: 1px solid black">
+                        <b> {{totalExpense | number:'1.2-2'}} </b>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <br><br>
+          <div class="row">
+            <div class="col-md-5">
+              <div style="padding-left: 50px;">
+                <div class="fs-5">Calculation Details </div>
+                <table class="table table-hover table-striped table-nowrap">
+                  <thead clss="table-light">
+                    <tr>
+                      <th style="text-align: center; border: 1px solid black"> Income </th>
+                      <th style="text-align: center; border: 1px solid black">
+                        {{ totalIncome | number:'1.2-2'}}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="text-align: center; border: 1px solid black">
+                        Expense
+                      </td>
+                      <td style="text-align: center; border: 1px solid black">
+                        {{ totalExpense | number:'1.2-2'}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="text-align: center; border: 1px solid black">
+                        Total
+                      </td>
+                      <td *ngIf="totalAmt < 0" style="text-align: center; border: 1px solid black">
+                        {{totalAmt * (-1) | number:'1.2-2'}} CR
+                      </td>
+                      <td *ngIf="totalAmt >= 0" style="text-align: center; border: 1px solid black">
+                        {{totalAmt | number:'1.2-2'}}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html>

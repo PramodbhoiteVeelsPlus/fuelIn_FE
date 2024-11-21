@@ -14,6 +14,9 @@ import { ProfitReportComponent } from './profit-report/profit-report.component';
 import { SummaryReportComponent } from './summary-report/summary-report.component';
 import { ViswasaTxExcelComponent } from './viswasa-tx-excel/viswasa-tx-excel.component';
 import { SalesPurchaseReportComponent } from './sales-purchase-report/sales-purchase-report.component';
+import { AddSummaryReportComponent } from './summary-report/add-summary-report/add-summary-report.component';
+import { ViewSummaryReportComponent } from './summary-report/view-summary-report/view-summary-report.component';
+import { UpdateSummaryReportComponent } from './summary-report/update-summary-report/update-summary-report.component';
 
 @NgModule({
   declarations: [DailyReportEntriesComponent, DailyReportComponent, MonthlyReportComponent,
@@ -50,6 +53,18 @@ import { SalesPurchaseReportComponent } from './sales-purchase-report/sales-purc
       {
         path: 'summaryReport',
         component: SummaryReportComponent,
+      },
+      {
+        path: 'addSummaryReport',
+        component: AddSummaryReportComponent,
+      },
+      {
+        path: 'updateSummaryReport',
+        component: UpdateSummaryReportComponent,
+      },
+      {
+        path: 'viewSummaryReport',
+        component: ViewSummaryReportComponent,
       },
       {
         path: 'viswasaTxEcel',
