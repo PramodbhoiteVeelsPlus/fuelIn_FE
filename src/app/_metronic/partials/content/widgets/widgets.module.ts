@@ -139,6 +139,12 @@ import { BaseTablesWidget3Component } from './base-tables/base-tables-widget3/ba
 import { BaseTablesWidget4Component } from './base-tables/base-tables-widget4/base-tables-widget4.component';
 import { BaseTablesWidget5Component } from './base-tables/base-tables-widget5/base-tables-widget5.component';
 import { FeedsWidget7Component } from './feeds/feeds-widget7/feeds-widget7.component';
+import { BaseTablesWidget7Component } from './base-tables/base-tables-widget7/base-tables-widget7.component';
+import { BaseTablesWidget8Component } from './base-tables/base-tables-widget8/base-tables-widget8.component';
+import { BaseTablesWidget9Component } from './base-tables/base-tables-widget9/base-tables-widget9.component';
+import { BaseTablesWidget10Component } from './base-tables/base-tables-widget10/base-tables-widget10.component';
+import { BaseTablesWidget11Component } from './base-tables/base-tables-widget11/base-tables-widget11.component';
+import { BaseTablesWidget12Component } from './base-tables/base-tables-widget12/base-tables-widget12.component';
 // import { routes } from 'src/app/app-routing.module';
 @NgModule({
   declarations: [
@@ -254,11 +260,11 @@ import { FeedsWidget7Component } from './feeds/feeds-widget7/feeds-widget7.compo
     StatsWidget13Component,
     StatsWidget14Component,
     AdvanceTablesWidget5Component,
-    AdvanceTablesWidget6Component, 
+    AdvanceTablesWidget6Component,
     StatsWidget15Component,
-    AdvanceTablesWidget7Component, 
+    AdvanceTablesWidget7Component,
     AdvanceTablesWidget8Component,
-    AdvanceTablesWidget9Component, 
+    AdvanceTablesWidget9Component,
     AdvanceTablesWidget10Component,
     AdvanceTablesWidget11Component,
     StatsWidget16Component,
@@ -272,7 +278,13 @@ import { FeedsWidget7Component } from './feeds/feeds-widget7/feeds-widget7.compo
     MixedWidget14Component,
     BaseTablesWidget3Component,
     BaseTablesWidget4Component,
-    BaseTablesWidget5Component
+    BaseTablesWidget5Component,
+    BaseTablesWidget7Component,
+    BaseTablesWidget8Component,
+    BaseTablesWidget9Component,
+    BaseTablesWidget10Component,
+    BaseTablesWidget11Component,
+    BaseTablesWidget12Component
   ],
   imports: [
     ReactiveFormsModule,
@@ -405,9 +417,9 @@ import { FeedsWidget7Component } from './feeds/feeds-widget7/feeds-widget7.compo
     AdvanceTablesWidget5Component,
     AdvanceTablesWidget6Component,
     StatsWidget15Component,
-    AdvanceTablesWidget7Component, 
+    AdvanceTablesWidget7Component,
     AdvanceTablesWidget8Component,
-    AdvanceTablesWidget9Component, 
+    AdvanceTablesWidget9Component,
     AdvanceTablesWidget10Component,
     AdvanceTablesWidget11Component,
     StatsWidget16Component,
@@ -421,8 +433,14 @@ import { FeedsWidget7Component } from './feeds/feeds-widget7/feeds-widget7.compo
     MixedWidget14Component,
     BaseTablesWidget3Component,
     BaseTablesWidget4Component,
-    BaseTablesWidget5Component
+    BaseTablesWidget5Component,
+    BaseTablesWidget7Component,
+    BaseTablesWidget8Component,
+    BaseTablesWidget9Component,
+    BaseTablesWidget10Component,
+    BaseTablesWidget11Component,
+    BaseTablesWidget12Component
   ],
   providers: [NgbActiveModal, ExcelService],
 })
-export class WidgetsModule {}
+export class WidgetsModule { }

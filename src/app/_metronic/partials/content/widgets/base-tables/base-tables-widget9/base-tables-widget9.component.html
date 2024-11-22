@@ -1,0 +1,311 @@
+<br>
+<form [formGroup]="selectCorporate">
+  <form [formGroup]="searchDiscountForm">
+    <div class="row">
+      <label for="example-text-input" class="col-auto col-form-label">
+        Customer Name
+      </label>
+      <div class="col-md-2">
+        <select class="form-control" formControlName="selectCorporateMapId"
+          (change)="getDetailsByCorpForStatementforDiscount($event)" (change)="getCustomerPreviousOutstanding()">
+          <option value="">Select Customer</option>
+          <option *ngFor="let data of allCorporateList" [value]="data.fuelDealerCustomerMapId">
+            {{ data.companyName }}
+          </option>
+        </select>
+      </div>
+
+      <label for="example-text-input" class="col-auto col-form-label">Date Range
+      </label>
+
+      <div class="col-md-2">
+        <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" (click)="startDate.toggle()"
+          onkeydown="return false" formControlName="startDate" ngbDatepicker #startDate="ngbDatepicker" />
+      </div>
+
+      <div class="col-md-2">
+        <input class="form-control" placeholder="DD-MM-YYYY" name="endDate" (click)="endDate.toggle()"
+          onkeydown="return false" formControlName="endDate" ngbDatepicker #endDate="ngbDatepicker" />
+      </div>
+
+      <label for="example-text-input" class="col-auto col-form-label">
+        Type
+      </label>
+
+      <div class="col-md-1">
+
+        <select class="form-control" formControlName="setInvoiceType">
+          <option value="all">all</option>
+          <option value="typeCredit">CREDIT</option>
+          <option value="typeLubeTax">LUBE TAX</option>
+        </select>
+      </div>
+
+      <div class="col-auto">
+        <button class="btn btn-primary" (click)="showAlldiscountedCR()">
+          Submit
+        </button>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-10" style="text-align: center">
+        <label for="example-text-input" class="col-auto col-form-label">
+          click on [+] to mention pump's contact number on statement
+        </label>
+
+        &nbsp;
+        <button class="btn btn-outline-success my-2 my-sm-0 btn-sm" (click)="openSelectMobile(selectMobile)">
+          +
+        </button>
+
+        <ng-template #selectMobile let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="text-center">Select Mobile</h4>
+            <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="unitForm">
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-auto">
+                  <b>Select</b>
+                </div>
+                <div class="col-auto">
+                  <select class="form-control" formControlName="mobile" required>
+                    <option value="">Select</option>
+                    <option *ngFor="let data of managerList" [value]="data.phone1">
+                      {{ data.firstName }} {{ data.lastName }} /
+                      {{ data.phone1 }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <br />
+              <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="button" (click)="submitMobile()">
+                    Select
+                  </button>
+                  &nbsp;&nbsp;
+                  <button class="btn btn-danger" type="button" (click)="d('Cross click')">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </form>
+            <br />
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-auto">
+                <b>Selected : {{ managerMobile }} </b>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+    <br>
+
+    <div class="row">
+      <div class="col-md-3">
+        <label for="example-text-input">Manual Statement Number
+        </label>
+        <input class="form-control" type="text" [(ngModel)]="invoiceNo" placeholder="Enter Statement Number"
+          [ngModelOptions]="{ standalone: true }" />
+      </div>
+
+      <div class="col-md-2">
+        <label for="example-text-input">HSN Code
+        </label>
+        <input class="form-control" type="text" [(ngModel)]="hsnCode" placeholder="Enter HSN Code"
+          [ngModelOptions]="{ standalone: true }" />
+      </div>
+      <div class="col-md-2">
+        <label for="example-text-input">Due Date
+        </label>
+        <input class="form-control" placeholder="DD-MM-YYYY" name="dueDate" (click)="dueDate.toggle()"
+          onkeydown="return false" formControlName="dueDate" ngbDatepicker #dueDate="ngbDatepicker" />
+      </div>
+      <div *ngIf="isNoRequest == true || isNoRequestPayment == true" class="col-md-2">
+        <button class="btn btn-success" (click)="statementCreate()">
+          Create Statement
+        </button>
+      </div>
+
+      <div *ngIf="!isNoRequest" class="col-md-4">
+        <span style="color: red">No Credit Request Found!</span>
+      </div>
+    </div>
+  </form>
+  <br>
+  <div class="row">
+    <div class="card-body table-responsive">
+      <table class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th style="text-align: center">Sr No</th>
+            <th style="text-align: center">Date</th>
+            <th style="text-align: center">Bill / Ref Number</th>
+            <th style="text-align: center">Product</th>
+            <th style="text-align: center">Credit Amount</th>
+            <th style="text-align: center">Credit Quantity</th>
+            <th *ngIf="showPaymetCreditTable" style="text-align: center">Payment
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngIf="!showPaymetCreditTable">
+          <tr
+            *ngFor="let data of allDiscountedData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+            <td style="text-align: center">{{ i + 1 }}</td>
+
+            <td style="text-align: center">
+              {{ data.estimatedRefuelDate | date: "mediumDate" }}
+            </td>
+
+            <td style="text-align: center">
+              {{ data.manualCrNumber }}
+            </td>
+
+            <td style="text-align: center">
+              <span *ngIf="data.purpose == 'LUBE'">
+                {{ data.productName }}
+              </span>
+              <span *ngIf="data.purpose == 'CREDIT'">
+                {{ data.productName }}
+              </span>
+              <span *ngIf="data.purpose == 'AdvAmt'">
+                ADVANCE
+              </span>
+              <span *ngIf="data.purpose == 'LUBETAX'">
+                LUBRICANTS-TAX
+              </span>
+            </td>
+
+            <td style="text-align: center">
+              {{ data.creditAmount | number: "1.2-2" }}
+            </td>
+
+            <td style="text-align: center">
+              <span *ngIf="data.purpose == 'CREDIT'">
+                <span *ngIf="data.productCategory == 'CNG'">
+                  {{
+                  data.actualCreditQuantity | number: "1.2-2"
+                  }}
+                  Kg
+                </span>
+                <span *ngIf="data.productCategory != 'CNG'">
+                  {{
+                  data.actualCreditQuantity | number: "1.2-2"
+                  }}
+                  Ltr
+                </span>
+              </span>
+              <span *ngIf="data.purpose == 'LUBE'">
+                {{ data.actualCreditQuantity | number: "1.2-2" }}
+                {{ data.lubeUnit }}
+              </span>
+              <span *ngIf="data.purpose == 'LUBETAX'">
+                {{ data.actualCreditQuantity | number: "1.2-2" }}
+                {{ data.lubeUnit }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="showPaymetCreditTable">
+          <tr
+            *ngFor="let data of combineCreditAndPaymentDetails | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total };let i = index">
+            <td class="border-gray">{{ i + 1 }}</td>
+            <td class="border-gray">
+              <span *ngIf="
+    (data.date | date: 'd MMM y') == '1 Jan 2021'
+  ">
+                1 Jan 2022
+              </span>
+              <span *ngIf="
+    (data.date | date: 'd MMM y') != '1 Jan 2021'
+  ">
+                {{ data.date | date: "d MMM y" }}
+              </span>
+            </td>
+            <td class="border-gray">
+              <span *ngIf="data.description == ''"> </span>
+              <span *ngIf="data.description != ''">
+                <span *ngIf="data.description != 'null'">
+                  {{ data.description }}
+                </span>
+                <span *ngIf="data.description == 'null'"> </span>
+              </span>
+            </td>
+
+            <td class="border-gray">
+              <span *ngIf="data.purpose == 'LUBE'">
+                {{ data.productName }}
+              </span>
+              <span *ngIf="data.purpose == 'CREDIT'">
+                {{ data.productName }}
+              </span>
+              <span *ngIf="data.purpose == 'AdvAmt'">
+                ADVANCE
+              </span>
+              <span *ngIf="data.payment"> - </span>
+              <span *ngIf="data.purpose == 'LUBETAX'">
+                LUBRICANTS-TAX
+              </span>
+            </td>
+            <td class="border-gray">
+              <span *ngIf="!data.purchase"> - </span>
+              <span *ngIf="data.purchase">
+                {{ data.purchase | number: "1.2-2" }}
+              </span>
+            </td>
+            <td class="border-gray">
+              <span *ngIf="data.purpose == 'CREDIT'">
+                <span *ngIf="data.productCategory == 'CNG'">
+                  {{ data.actualCreditQuantity | number: "1.2-2" }}
+                </span>
+                <span *ngIf="data.productCategory != 'CNG'">
+                  {{ data.actualCreditQuantity | number: "1.2-2" }}
+                </span>
+              </span>
+              <span *ngIf="data.purpose == 'LUBE'">
+                {{ data.actualCreditQuantity | number: "1.2-2" }}
+              </span>
+              <span *ngIf="!data.actualCreditQuantity"> - </span>
+              <span *ngIf="data.purpose == 'LUBETAX'">
+                {{ data.actualCreditQuantity | number: "1.2-2" }}
+                {{ data.lubeUnit }}
+              </span>
+            </td>
+            <td *ngIf="showPaymetCreditTable" class="border-gray">
+              <span *ngIf="!data.payment"> - </span>
+              <span *ngIf="data.payment">
+                {{ data.payment | number: "1.2-2" }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="showPaymetCreditTable">
+        <!-- begin::Pagination -->
+        <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+          style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+        </pagination-controls>
+        <!-- end::Pagination -->
+      </div>
+
+      <div *ngIf="!showPaymetCreditTable">
+        <!-- begin::Pagination -->
+        <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+          style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+        </pagination-controls>
+        <!-- end::Pagination -->
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,94 @@
+<br>
+<form [formGroup]="filterForm">
+  <div class="mb-3 row">
+    <label for="example-text-input" class="col-auto col-form-label">Khata</label>
+    <div class="col-md-3">
+      <input class="form-control" type="text" list="allCorporateList" placeholder="all khata"
+        (change)="getDetailsByCustomerMapName($event)" formControlName="customerName">
+      <datalist id="allCorporateList">
+        <option *ngFor="let data of allCorporateList" [value]="data.companyName">
+      </datalist>
+    </div>
+    <div class="col-md-1"></div>
+    <label for="example-text-input" class="col-auto col-form-label">Year</label>
+    <div class="col-md-3">
+      <select class="form-control" formControlName="fiscalyear" required>
+        <option value={{fiscalyear1}}> {{fiscalyear1}} </option>
+        <option value={{fiscalyear2}}> {{fiscalyear2}} </option>
+      </select>
+    </div>
+    <div class="col-md-1">
+      <button type="button" class="btn btn-md btn-primary" (click)="getYearQtyWise()">
+        view
+      </button>
+    </div>
+    <div class="col-md-1 text-sm-end">
+      <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF" placement="bottom"
+        (click)="exportToPDFMONTHQty()"><i class="fas fa-file-pdf"></i></span>
+    </div>
+
+    <!-- <div class="col-md-1 text-sm-end">
+            <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download Excel" placement="bottom" 
+            (click)="exportexcelMonthQty()"><i class="fas fa-file-csv"></i></span>
+        </div>  -->
+  </div>
+</form>
+
+<div class="card-body table-responsive">
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <table id="excel-table2" class="table table-hover b">
+        <thead class="table-light">
+          <tr>
+            <th> Month </th>
+            <th> Product </th>
+            <th> Amount </th>
+            <th> Quantity </th>
+            <th> Sales Amount </th>
+            <th> Payment Amount </th>
+            <th> Balance </th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let data of yearWiseQtyData">
+          <tr>
+            <td> {{ data.month }} {{data.year}} </td>
+            <td colspan="3">
+          <tr *ngFor="let dataCr of data.crData">
+            <td class="p-0" [style.min-width]="'100px'">{{dataCr.product}}</td>
+            <td class="p-0" [style.min-width]="'100px'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i
+                class="fa-solid fa-indian-rupee-sign"></i>
+              {{dataCr.purchase | number:'1.2-2'}}</td>
+            <td class="p-0" [style.min-width]="'100px'">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              {{dataCr.quantity | number:'1.2-2'}}
+              <span *ngIf="dataCr.product == 'CNG'">
+                Kg
+              </span>
+              <span *ngIf="dataCr.product != 'CNG'">
+                Ltr
+              </span>
+            </td> <br>
+          </tr>
+          </td>
+          <td> <i class="fa-solid fa-indian-rupee-sign"></i>
+            {{ data.purchase | number:'1.2-2'}}
+          </td>
+          <td> <i class="fa-solid fa-indian-rupee-sign"></i>
+            {{ data.payment | number:'1.2-2'}}
+          </td>
+          <td> <i class="fa-solid fa-indian-rupee-sign"></i>
+            <span *ngIf="data.balance < 0 ">
+              {{(data.balance)*(-1) | number:"1.2-2"}} CR
+            </span>
+            <span *ngIf="data.balance >= 0 ">
+              {{data.balance | number:"1.2-2"}}
+            </span>
+          </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>

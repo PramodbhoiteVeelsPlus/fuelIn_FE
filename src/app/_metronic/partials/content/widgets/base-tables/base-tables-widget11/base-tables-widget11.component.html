@@ -1,0 +1,1053 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml">
+
+<head>
+  <title>Editable Statement</title>
+</head>
+
+<body id="contentToConvert" *ngIf="showStatement4">
+
+  <div id="page-wrap">
+    <div class="col-md-12">
+      &nbsp; <button class="noprint" style="font-size: medium;" onclick="window.print()"> &nbsp;&nbsp;<i
+          class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
+    </div>
+
+    <div id="sanjay">
+      <div class="container">
+        <div class="col-12 mr-2 px-1 py-1 container border border-success" id="htmlData">
+          <div class="border border-success alert alert-secondary">
+            <div class="row px-4 py-4">
+              <div class="col-8">
+                <h3><b>{{companyName}}</b></h3>
+                <h5> {{oilCompanyName}} petrol pump </h5>
+                <!-- <h6> {{address1}} {{address2}} {{city}} <br>{{state}} {{pin}}</h6> -->
+              </div>
+              <div class="col-4">
+                <h4>&nbsp;</h4>
+                <h6>GST : {{GSTNumber}}</h6>
+                <h6 *ngIf="hsnCode">HSN Code : {{hsnCode}}</h6>
+                <h6>Phone : <span *ngIf="mobileStatus">
+                    {{managerMobile}}
+                  </span>
+                  <span *ngIf="!mobileStatus">
+                    {{phone1}}
+                  </span>
+                </h6><br>
+                <h6><b>Invoice No. : <span> VPFCINV{{invoiceCode}} </span></b></h6>
+              </div>
+            </div>
+          </div>
+          <div class="border border-success my-2">
+            <div class="row">
+              <div class="col-9">
+                <h4><b>&nbsp;&nbsp;{{billedToName}}</b></h4>
+                <h5>&nbsp;&nbsp; {{billedToAddressLine1}}
+                  {{billedToCityArea}} {{billedToCity}}
+                  {{billedToConneenorPincode}}
+                </h5>
+                <h4 class="" style="font-size: 15px;">
+                  &nbsp;&nbsp;({{periodStartDate | date:'dd MMM yyyy'}} to {{periodEndDate | date:'dd MMM yyyy'}} )
+                </h4>
+              </div>
+              <div class="col-3">
+                <h4>&nbsp;</h4>
+                <h5> Phone : <span *ngIf="billedToMobile != 'undefined' ">
+                    {{billedToMobile}}
+                  </span>
+                </h5>
+                <h4 class="" style="font-size: 12px;">
+                  GST : {{billedToGstNo}}
+                </h4>
+              </div>
+            </div>
+          </div>
+          <br>
+
+          <div class="container text-center" style="border: 1px solid black; font-size: 15px;">
+            <p>
+              <span *ngIf="manualInvoiceNumber!=undefined">
+                <span *ngIf="manualInvoiceNumber!=''">
+                  statement: {{manualInvoiceNumber}}
+                </span>
+              </span>
+            </p>
+          </div>
+
+          <table class="table table-striped">
+            <thead class="">
+              <tr>
+                <th style="text-align: center;">Sr.No</th>
+                <th>Date</th>
+                <th>Bill / Ref No</th>
+                <th>Vehicle No / other details</th>
+                <th>Product</th>
+                <th>Rate</th>
+                <th>Quantity</th>
+                <th>Credit Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of creditArrayList; let i = index">
+                <td> {{i+1}} </td>
+                <td>
+                  <span *ngIf="(data.estimatedRefuelDate | date:'d MMM y') == '1 Jan 2021' ">
+                    1 Jan 2022
+                  </span>
+                  <span *ngIf="(data.estimatedRefuelDate | date:'d MMM y') != '1 Jan 2021' ">
+                    {{data.estimatedRefuelDate | date:'d MMM y'}}
+                  </span>
+                </td>
+                <td>
+                  <span *ngIf="data.manualCrNumber == ''">
+                  </span>
+                  <span *ngIf="data.manualCrNumber != ''">
+                    <span *ngIf="data.manualCrNumber != 'null'">
+                      {{data.manualCrNumber}}
+                    </span>
+                    <span *ngIf="data.manualCrNumber == 'null'">
+                    </span>
+                  </span>
+                </td>
+                <td>
+                  <span *ngIf="data.purpose == 'CREDIT'">
+                    <span *ngIf="data.vehicleNumber == 'undefined'">
+                    </span>
+                    <span *ngIf="data.vehicleNumber != 'undefined'">
+                      {{data.vehicleNumber}}
+                    </span>
+                  </span>
+                  <span *ngIf="data.purpose == 'LUBE'">
+                    <span *ngIf="data.vehicleNumber == 'undefined'">
+                      {{data.lubeName}}
+                    </span>
+                    <span *ngIf="data.vehicleNumber != 'undefined'">
+                      {{data.vehicleNumber}} {{data.lubeName}}
+                    </span>
+                  </span>
+                  <span *ngIf="data.purpose == 'AdvAmt'">
+                    {{data.advName}} {{data.advMobile}}
+                  </span>
+                  <span *ngIf="data.purpose == 'LUBETAX'">
+                    <span *ngIf="data.vehicleNumber == 'undefined'">
+                    </span>
+                    <span *ngIf="data.vehicleNumber != 'undefined'">
+                      {{data.vehicleNumber}}
+                    </span>
+                  </span>
+                </td>
+                <td>
+                  <span *ngIf="data.purpose == 'LUBE' ">
+                    {{data.productName}}
+                  </span>
+                  <span *ngIf="data.purpose == 'CREDIT' ">
+                    {{data.productName}}
+                  </span>
+                  <span *ngIf="data.purpose == 'AdvAmt' ">
+                    ADVANCE
+                  </span>
+                  <span *ngIf="data.purpose == 'LUBETAX'">
+                    LUBRICANTS-TAX
+                  </span>
+                </td>
+                <td> {{data.productRate}} </td>
+                <td>
+                  <span *ngIf="data.purpose == 'CREDIT' ">
+                    <span *ngIf='data.productCategory == "CNG" '>
+                      {{data.actualCreditQuantity | number:'1.2-2'}} Kg
+                    </span>
+                    <span *ngIf='data.productCategory != "CNG" '>
+                      {{data.actualCreditQuantity | number:'1.2-2'}} Ltr
+                    </span>
+                  </span>
+                  <span *ngIf="data.purpose == 'LUBE' ">
+                    {{data.actualCreditQuantity | number:'1.2-2'}} {{data.lubeUnit}}
+                  </span>
+                  <span *ngIf="data.purpose == 'LUBETAX' ">
+                    {{data.actualCreditQuantity | number:'1.2-2'}} {{data.lubeUnit}}
+                  </span>
+                </td>
+                <td>
+                  {{data.creditAmount | number:'1.2-2'}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="row px-4 py-4" style="padding-bottom: 0rem !important;">
+            <div class="col text-center border border-success px-1 py-1 mr-1"
+              *ngFor="let data of fuelProductTotalAmount">
+              <h5 class="text-primary"><b> {{data.productName}} </b></h5>
+              <b>
+                <span *ngIf="data.productCategory == 'CNG' ">
+                  {{data.quantity | number:'1.2-2'}} Kg
+                </span>
+                <span *ngIf="data.productCategory != 'CNG' ">
+                  {{data.quantity | number:'1.2-2'}} Ltrs
+                </span>
+              </b>
+            </div>
+          </div>
+
+          <div *ngIf="invoiceOf != 'LUBE TAX' " class="row px-4 py-4">
+            <div class="col text-center border border-success px-1 py-1 mr-1">
+              <h5 class="text-primary"><b> opening outstanding </b></h5>
+              <b>
+                <span *ngIf="savedPreviousOutstanding<0">
+                  <i class="fas fa-rupee-sign"></i>
+                  {{savedPreviousOutstanding *(-1) | number:'1.2-2'}} CR
+                </span>
+                <span *ngIf="savedPreviousOutstanding >= 0">
+                  <i class="fas fa-rupee-sign"></i>
+                  <!-- {{lastOpOutstanding | number:'1.2-2'}} -->
+                  {{savedPreviousOutstanding | number:'1.2-2'}}
+                </span>
+              </b>
+            </div>
+            <div class="col text-center border border-success px-1 py-1 mr-1">
+              <h5 class="text-primary"><b> total purchase</b></h5>
+              <b> <i class="fas fa-rupee-sign"></i> {{creditAmountNew | number:'1.2-2'}} </b>
+            </div>
+            <div class="col text-center border border-success px-1 py-1 mr-1">
+              <h5 class="text-primary"><b>total payment</b></h5>
+              <b><i class="fas fa-rupee-sign"></i> {{totalTransactionAmountNew | number:'1.2-2'}}
+              </b>
+              <br>
+              <b>
+                <span *ngIf="discountcalNew != '00'">
+                  <span *ngIf="discountcalNew == '0'">
+                    -
+                  </span>
+                  <span *ngIf="discountcalNew != '0'">
+                    <span *ngIf="discountcalNew == 'null'">
+                      -
+                    </span>
+                    <span *ngIf="discountcalNew != 'null'">
+                      rewards:
+                    </span>
+                  </span>
+                </span>
+                <span *ngIf="discountcalNew == '00'">
+                  -
+                </span>
+              </b>
+              <br>
+              <b> <span *ngIf="discountcalNew == '00'">
+                </span>
+                <span *ngIf="discountcalNew != '00'">
+                  <span *ngIf="discountcalNew == '0'">
+                  </span>
+                  <span *ngIf="discountcalNew != '0'">
+                    <span *ngIf="discountcalNew == 'null'">
+
+                    </span>
+                    <span *ngIf="discountcalNew != 'null'">
+                      <i class="fas fa-rupee-sign"></i>
+                      {{discountcalNew | number:'1.2-2'}}
+                    </span>
+                  </span>
+                </span> </b>
+            </div>
+            <div class="col text-center border border-success px-1 py-1 mr-1">
+              <h5 class="text-primary"><b> net outstanding </b></h5>
+              <b>
+                <span *ngIf="((savedTotalPurchase - savedTotalPayment) ++ savedPreviousOutstanding) < 0">
+                  <i class="fas fa-rupee-sign"></i>
+                  {{((savedTotalPurchase - savedTotalPayment) ++
+                  savedPreviousOutstanding) *(-1) |
+                  number:'1.2-2'}}
+                  CR
+                </span>
+                <span *ngIf="((savedTotalPurchase - savedTotalPayment) ++ savedPreviousOutstanding) >= 0">
+                  <i class="fas fa-rupee-sign"></i>
+                  {{((savedTotalPurchase - savedTotalPayment) ++ savedPreviousOutstanding) |
+                  number:'1.2-2'}}
+                </span>
+              </b>
+            </div>
+          </div>
+
+          <div *ngIf="invoiceOf == 'LUBE TAX' " class="row px-4 py-4">
+            <div class="col text-center border border-success px-1 py-1 mr-1">
+              <h5 class="text-primary"><b> total purchase</b></h5>
+              <b> <i class="fas fa-rupee-sign"></i> {{creditAmountNew | number:'1.2-2'}} </b>
+            </div>
+          </div>
+
+          <div *ngIf="invoiceOf != 'LUBE TAX' " class="row px-4 py-4">
+            <div class="col border-gray text-center px-1 py-1 mr-1">
+              <h5 class=""><b> credit outstanding </b></h5>
+              <b> <i class="fas fa-rupee-sign"></i> {{totalCreditOutstanding | number:'1.2-2'}}
+              </b>
+            </div>
+            <div class="col text-center px-1 py-1 mr-1 border-gray">
+              <h5 class=""><b> total lubricant purchase</b></h5>
+              <b> <i class="fas fa-rupee-sign"></i> {{totalLubePurchase | number:'1.2-2'}}
+              </b>
+            </div>
+            <div class="col text-center  px-1 py-1 mr-1 border-gray">
+              <h5 class=""><b>final outstanding</b></h5>
+              <b><i class="fas fa-rupee-sign"></i> {{finalNETOutstanding | number:'1.2-2'}}
+              </b>
+            </div>
+          </div>
+
+          <span *ngIf="((savedTotalPurchase - savedTotalPayment) ++ savedPreviousOutstanding) > 0">
+            <div class="container border border-success px-2 py-2 alert alert-success" *ngIf="invoiceOf != 'LUBE TAX' ">
+              <p> Please pay <span *ngIf="dueDate"> before Due Date {{dueDate}} </span> <br> <span class=""
+                  *ngIf="((savedTotalPurchase - savedTotalPayment) ++ savedPreviousOutstanding) >= 0">
+                  <i class="fas fa-rupee-sign"></i>
+                  {{((savedTotalPurchase - savedTotalPayment) ++ savedPreviousOutstanding) |
+                  number:'1.0-0'}}
+                </span></p>
+              <!-- <p class=""> <i class="fas fa-rupee-sign"></i> {{amountInWord}}</p> -->
+            </div>
+            <div class="container border border-success px-2 py-2 alert alert-success" *ngIf="invoiceOf == 'LUBE TAX' ">
+              <p> Please pay <span *ngIf="dueDate"> before Due Date {{dueDate}} </span> <br> <span class=""
+                  *ngIf="((savedTotalPurchase - savedTotalPayment) ) >= 0">
+                  <i class="fas fa-rupee-sign"></i>
+                  {{((savedTotalPurchase - savedTotalPayment) ) |
+                  number:'1.0-0'}}
+                </span></p>
+              <!-- <p class=""> <i class="fas fa-rupee-sign"></i> {{amountInWord}}</p> -->
+            </div>
+          </span>
+
+          <p>statement generated on: {{invoiceDate | date:"dd/MM/yyyy"}} </p>
+          <br>
+          <br>
+          <div class="container border-success border px-2 py-2">
+            <p style="text-align: left; ">Certified that the particulars given above
+              are true and correct.
+            </p>
+            <br>
+            <p style="text-align: left;">For {{companyName}} </p>
+            <p style="text-align: left;"> T & C Apply </p>
+          </div>
+          <div class="py-1 px-4">
+            <p style="text-align: right;">powered by <img src="../../../../../../assets/images/vplogo.png" alt="logo"
+                width="60" height="20"></p>
+          </div>
+          <br>
+          <br>
+          <div class="container border border-success px-2 py-1 mb-1">
+            <h4>payment supporting details
+            </h4>
+          </div>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Transaction Details</th>
+                <th>Payment Method</th>
+                <th>Cheque No.</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of paymentArrayList; let i = index">
+                <td> {{data.chequeDate | date:'d MMM y'}} </td>
+                <td> {{data.paymentMethod}} </td>
+                <td> {{data.chequeNO}} </td>
+                <td>
+                  <!-- {{data.grandTotalAmount + data.advancePayment | number:'1.2-2'}} -->
+                  {{data.grandTotalAmount | number:'1.2-2'}}
+
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="col text-center border border-success px-1 py-1 mt-1">
+            <h5>total payment</h5>
+            <b> <i class="fas fa-rupee-sign"></i> {{totalTransactionAmountNew | number:'1.2-2'}}
+            </b>
+          </div>
+          <br>
+          <span *ngFor="let data of bankAccList; let i = index">
+            <div class="container border border-success px-2 py-2" *ngIf="data.uniqueStatus == 'TRUE' ">
+              <b style="font-size: 17px;"> Please make a payment to</b><br>
+              <p> <b>Beneficiary Name : </b> {{data.accountHolderName}} </p>
+              <p> <b>Bank Name : </b> {{data.bankName}} , {{data.branchName}}</p>
+              <p> <b>Account Number : </b> {{data.accountNumber}} </p>
+              <p> <b>IFSC Code : </b> {{data.ifsc}} </p>
+              <p> <b>UPI Id : </b> {{data.upiId}} </p>
+            </div>
+          </span>
+        </div>
+        <br><br><br><br>
+        <div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+
+<body id="contentToConvert" *ngIf="showStatement5">
+  <div id="page-wrap">
+    <div class="col-md-12">
+      &nbsp; <button class="noprint" style="font-size: medium;" onclick="window.print()"> &nbsp;&nbsp;<i
+          class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
+    </div>
+
+    <div id="sanjay">
+      <div class="container">
+        <div class="col-12 mr-2 px-1 py-1 container border-black" id="htmlData">
+          <div>
+            <div class="bg-invoice">
+              <div class="row px-4 py-4">
+                <div class="col-8">
+                  <h3><b>{{companyName}}</b></h3>
+                  <h5> {{oilCompanyName}} petrol pump</h5>
+                  <!-- <h6> {{address1}} {{address2}} {{city}} <br>{{state}} {{pin}}</h6> -->
+                </div>
+                <div class="col-4">
+                  <h4>&nbsp;</h4>
+                  <h6>GST : {{GSTNumber}}</h6>
+                  <h6 *ngIf="hsnCode">HSN Code : {{hsnCode}}</h6>
+                  <h6>Phone : <span *ngIf="mobileStatus">
+                      {{managerMobile}}
+                    </span>
+                    <span *ngIf="!mobileStatus">
+                      {{phone1}}
+                    </span>
+                  </h6><br>
+                  <h6><b>Invoice No. : <span> VPFCINV{{invoiceCode}} </span></b></h6>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-9">
+                <h4><b>&nbsp;&nbsp;{{billedToName}}</b></h4>
+                <h5>&nbsp;&nbsp; {{billedToAddressLine1}}
+                  {{billedToCityArea}} {{billedToCity}}
+                  {{billedToConneenorPincode}}
+                </h5>
+                <h4 class="" style="font-size: 15px;">
+                  &nbsp;&nbsp;({{periodStartDate | date:'dd MMM yyyy'}} to {{periodEndDate | date:'dd MMM yyyy'}} )
+                </h4>
+              </div>
+
+              <div class="col-3">
+                <h4>&nbsp;</h4>
+                <h5> Phone : <span *ngIf="billedToMobile != 'undefined' ">
+                    {{billedToMobile}}
+                  </span>
+                </h5>
+                <h4 class="" style="font-size: 12px;">
+                  GST : {{billedToGstNo}}
+                </h4>
+              </div>
+            </div>
+            <br>
+
+            <table class="table main-table">
+              <div class="container text-center" style="border: 1px solid black; font-size: 15px;">
+                <p>
+                  <span *ngIf="manualInvoiceNumber!=undefined">
+                    <span *ngIf="manualInvoiceNumber!=''">
+                      statement: {{manualInvoiceNumber}}
+                    </span>
+                  </span>
+                </p>
+              </div>
+              <tr>
+                <div class="row">
+                  <br>
+                </div>
+                <table class="child-table">
+                  <thead>
+                    <tr>
+                      <th class="table-head">Sr.No</th>
+                      <th class="table-head">Date</th>
+                      <th class="table-head">Description</th>
+                      <th class="table-head">Vehicle No.</th>
+                      <th class="table-head">Product|Price</th>
+                      <th class="table-head">Quantity</th>
+                      <th class="table-head">Purchase</th>
+                      <th class="table-head">Payment</th>
+                    </tr>
+                  </thead>
+
+                  <tbody class="table-row">
+                    <tr *ngFor="let data of creditPaymentCombineArrayDetails; let i = index">
+                      <td class="border-gray"> {{i+1}} </td>
+                      <td class="border-gray">
+                        <span *ngIf="(data.date | date:'d MMM y') == '1 Jan 2021' ">
+                          1 Jan 2022
+                        </span>
+                        <span *ngIf="(data.date | date:'d MMM y') != '1 Jan 2021' ">
+                          {{data.date | date:'d MMM y'}}
+                        </span>
+                      </td>
+                      <td class="border-gray">
+                        <span *ngIf="data.description == ''">
+                        </span>
+                        <span *ngIf="data.description != ''">
+                          <span *ngIf="data.description != 'null'">
+                            {{data.description}}
+                          </span>
+                          <span *ngIf="data.description == 'null'">
+                          </span>
+                        </span>
+                      </td>
+                      <td class="border-gray">
+                        <span *ngIf="data.purpose == 'CREDIT'">
+                          <span *ngIf="data.vehicleNumber == 'undefined'">
+                          </span>
+                          <span *ngIf="data.vehicleNumber != 'undefined'">
+                            {{data.vehicleNumber}}
+                          </span>
+                          <span *ngIf="data.vehicleNumber == ''">
+                            -
+                          </span>
+                        </span>
+                        <span *ngIf="data.purpose == 'LUBE'">
+
+                          <span *ngIf="data.vehicleNumber == 'undefined'">
+                            {{data.lubeName}}
+                          </span>
+                          <span *ngIf="data.vehicleNumber != 'undefined'">
+                            {{data.vehicleNumber}} {{data.lubeName}}
+                          </span>
+                        </span>
+                        <span *ngIf="data.purpose == 'AdvAmt'">
+                          {{data.advName}} {{data.advMobile}}
+                        </span>
+                        <span *ngIf="data.vehicleNumber == ''">
+                          -
+                        </span>
+                        <span *ngIf="data.purpose == 'LUBETAX'">
+                          <span *ngIf="data.vehicleNumber == 'undefined'">
+                            -
+                          </span>
+                          <span *ngIf="data.vehicleNumber != 'undefined'">
+                            {{data.vehicleNumber}}
+                          </span>
+                        </span>
+                      </td>
+                      <td class="border-gray">
+                        <span *ngIf="data.purpose == 'LUBE' ">
+                          {{data.product}}
+                        </span>
+                        <span *ngIf="data.purpose == 'CREDIT' ">
+                          {{data.product}} | {{data.productRate}}
+                        </span>
+                        <span *ngIf="data.purpose == 'AdvAmt' ">
+                          ADVANCE
+                        </span>
+                        <span *ngIf="data.product == '' ">
+                          -
+                        </span>
+                        <span *ngIf="data.purpose == 'LUBETAX'">
+                          LUBRICANTS-TAX
+                        </span>
+                      </td>
+                      <td class="border-gray">
+                        <span *ngIf="data.purpose == 'CREDIT' ">
+                          <span *ngIf='data.productCategory == "CNG" '>
+                            {{data.actualCreditQuantity | number:'1.2-2'}}
+                          </span>
+                          <span *ngIf='data.productCategory != "CNG" '>
+                            {{data.actualCreditQuantity | number:'1.2-2'}}
+                          </span>
+                        </span>
+                        <span *ngIf="data.purpose == 'LUBE' ">
+                          {{data.actualCreditQuantity | number:'1.2-2'}}
+                        </span>
+                        <span *ngIf="data.actualCreditQuantity == '' ">
+                          -
+                        </span>
+                        <span *ngIf="data.purpose == 'LUBETAX' ">
+                          {{data.actualCreditQuantity | number:'1.2-2'}} {{data.lubeUnit}}
+                        </span>
+                      </td>
+                      <td class="border-gray" style="background: #ffc0cb94 !important;">
+                        <span *ngIf="data.purchase == '' ">
+                          -
+                        </span>
+                        <span *ngIf="data.purchase != '' ">
+                          {{data.purchase | number:'1.2-2'}}
+                        </span>
+                      </td>
+                      <td class="border-gray" style="
+                                background: #b0c4de94 !important;
+                            ">
+                        <span *ngIf="data.payment == '' ">
+                          -
+                        </span>
+                        <span *ngIf="data.payment != '' ">
+                          {{data.payment | number:'1.2-2'}}
+                        </span>
+                      </td>
+                    </tr>
+                    <tr style="font-weight: bold;" class="border-gray">
+                      <td colspan="6" class="border-gray table-head" style="text-align: end;">Grand Total</td>
+                      <td class="border-gray table-head">{{creditAmountNew | number:'1.2-2'}}</td>
+                      <td class="border-gray table-head">{{totalTransactionAmountNew | number:'1.2-2'}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p class="table-row">statement generated on: {{invoiceDate | date:"dd/MM/yyyy"}} </p>
+              </tr>
+              <tr>
+                <div class="row px-4 py-4" style="padding-bottom: 0rem !important; text-transform: lowercase;">
+                  <div class="col border-gray text-center  px-1 py-1 mr-1" *ngFor="let data of fuelProductTotalAmount">
+                    <h5 class=""><b> {{data.productName}} </b></h5>
+                    <b>
+                      <span *ngIf="data.productCategory == 'CNG' ">
+                        {{data.quantity | number:'1.2-2'}} Kg
+                      </span>
+                      <span *ngIf="data.productCategory != 'CNG' ">
+                        {{data.quantity | number:'1.2-2'}} Ltrs
+                      </span>
+                    </b>
+                  </div>
+                </div>
+
+                <div *ngIf="invoiceOf != 'LUBE TAX' " class="row px-4 py-4">
+                  <div class="col border-gray text-center px-1 py-1 mr-1">
+                    <h5 class=""><b> opening outstanding </b></h5>
+                    <b>
+                      <span *ngIf="savedPreviousOutstanding<0">
+                        <i class="fas fa-rupee-sign"></i>
+                        {{savedPreviousOutstanding *(-1) | number:'1.2-2'}} CR
+                      </span>
+                      <span *ngIf="savedPreviousOutstanding >= 0">
+                        <i class="fas fa-rupee-sign"></i>
+                        {{savedPreviousOutstanding | number:'1.2-2'}}
+                      </span>
+                    </b>
+                  </div>
+                  <div class="col text-center px-1 py-1 mr-1 border-gray">
+                    <h5 class=""><b> total purchase</b></h5>
+                    <b> <i class="fas fa-rupee-sign"></i> {{creditAmountNew | number:'1.2-2'}} </b>
+                  </div>
+                  <div class="col text-center  px-1 py-1 mr-1 border-gray">
+                    <h5 class=""><b>total payment</b></h5>
+                    <b><i class="fas fa-rupee-sign"></i> {{totalTransactionAmountNew | number:'1.2-2'}}
+                    </b>
+                  </div>
+                  <div class="col text-center border border-success px-1 py-1 mr-1">
+                    <b>
+                      <span style="color: green;"
+                        *ngIf="((savedTotalPurchase - savedTotalPayment) ++ savedPreviousOutstanding) < 0">
+                        <h5 class=""><b> net outstanding</b></h5>
+
+                        <i class="fas fa-rupee-sign"></i>
+                        {{((savedTotalPurchase - savedTotalPayment) ++
+                        savedPreviousOutstanding) *(-1) |
+                        number:'1.2-2'}}
+                        CR
+                      </span>
+                      <span style="color: red;"
+                        *ngIf="((savedTotalPurchase - savedTotalPayment) ++ savedPreviousOutstanding) >= 0">
+                        <h5 class=""><b> net outstanding</b></h5>
+
+                        <i class="fas fa-rupee-sign"></i>
+                        {{((savedTotalPurchase - savedTotalPayment) ++ savedPreviousOutstanding) |
+                        number:'1.2-2'}}
+                      </span>
+                    </b>
+                  </div>
+                </div>
+
+                <div *ngIf="invoiceOf == 'LUBE TAX' " class="row px-4 py-4">
+                  <div class="col text-center px-1 py-1 mr-1 border-gray">
+                    <h5 class=""><b> total purchase</b></h5>
+                    <b> <i class="fas fa-rupee-sign"></i> {{creditAmountNew | number:'1.2-2'}} </b>
+                  </div>
+                </div>
+
+                <div *ngIf="invoiceOf != 'LUBE TAX' " class="row px-4 py-4">
+                  <div class="col border-gray text-center px-1 py-1 mr-1">
+                    <h5 class=""><b> credit outstanding </b></h5>
+                    <b> <i class="fas fa-rupee-sign"></i> {{totalCreditOutstanding | number:'1.2-2'}}
+                    </b>
+                  </div>
+                  <div class="col text-center px-1 py-1 mr-1 border-gray">
+                    <h5 class=""><b> total lubricant purchase</b></h5>
+                    <b> <i class="fas fa-rupee-sign"></i> {{totalLubePurchase | number:'1.2-2'}}
+                    </b>
+                  </div>
+                  <div class="col text-center  px-1 py-1 mr-1 border-gray">
+                    <h5 class=""><b>final outstanding</b></h5>
+                    <b><i class="fas fa-rupee-sign"></i> {{finalNETOutstanding | number:'1.2-2'}}
+                    </b>
+                  </div>
+                </div>
+
+                <div style="color: rgb(43 154 43); margin-left:25px">
+                  <b>
+                    <span *ngIf="discountcalNew != '00'">
+                      <span *ngIf="discountcalNew == '0'">
+                        -
+                      </span>
+                      <span *ngIf="discountcalNew != '0'">
+                        <span *ngIf="discountcalNew == 'null'">
+                          -
+                        </span>
+                        <span *ngIf="discountcalNew != 'null'">
+                          rewards: <i class="fas fa-rupee-sign"></i> {{discountcalNew | number:'1.2-2'}}
+                        </span>
+                      </span>
+                    </span>
+                    <span *ngIf="discountcalNew == '00'">
+                      -
+                    </span>
+                  </b>
+                </div>
+                <span *ngIf="((savedTotalPurchase - savedTotalPayment) ++ savedPreviousOutstanding) > 0">
+                  <div class="container border-gray px-2 py-2 alert" *ngIf="invoiceOf != 'LUBE TAX' ">
+                    <p> Please pay <span *ngIf="dueDate"> before Due Date {{dueDate}} </span> <br> <span class=""
+                        *ngIf="((savedTotalPurchase - savedTotalPayment) ++ savedPreviousOutstanding) >= 0">
+                        <i class="fas fa-rupee-sign"></i>
+                        {{((savedTotalPurchase - savedTotalPayment) ++ savedPreviousOutstanding) |
+                        number:'1.0-0'}}
+                      </span></p>
+                    <!-- <p class=""> <i class="fas fa-rupee-sign"></i> {{amountInWord}}</p> -->
+                  </div>
+                  <div class="container border-gray px-2 py-2 alert" *ngIf="invoiceOf == 'LUBE TAX' ">
+                    <p> Please pay <span *ngIf="dueDate"> before Due Date {{dueDate}} </span> <br> <span class=""
+                        *ngIf="((savedTotalPurchase - savedTotalPayment)) >= 0">
+                        <i class="fas fa-rupee-sign"></i>
+                        {{((savedTotalPurchase - savedTotalPayment) ) |
+                        number:'1.0-0'}}
+                      </span></p>
+                    <!-- <p class=""> <i class="fas fa-rupee-sign"></i> {{amountInWord}}</p> -->
+                  </div>
+                </span>
+                <br>
+
+                <span *ngFor="let data of bankAccList; let i = index">
+                  <div class="container border border-success px-2 py-2" *ngIf="data.uniqueStatus == 'TRUE' ">
+                    <b style="font-size: 17px;"> Please make a payment to</b><br>
+                    <p> <b>Beneficiary Name : </b> {{data.accountHolderName}} </p>
+                    <p> <b>Bank Name : </b> {{data.bankName}} , {{data.branchName}}</p>
+                    <p> <b>Account Number : </b> {{data.accountNumber}} </p>
+                    <p> <b>IFSC Code : </b> {{data.ifsc}} </p>
+                    <p> <b>UPI Id : </b> {{data.upiId}} </p>
+                  </div>
+                </span>
+              </tr>
+              <tr>
+
+              </tr>
+              <br>
+              <div _ngcontent-rdc-c5="" class="bg-invoice" style="font-size: 12px;">
+                <div _ngcontent-rdc-c5="" class="row px-1 py-1" style="width: -webkit-fill-available;">
+                  <div class="col-9">
+                    <p>
+                      for more details login to viswasa <a
+                        href="https://play.google.com/store/apps/details?id=com.veelsplus.viswasa"><img
+                          _ngcontent-rdc-c5="" alt="logo" height="20"
+                          src="../../../../../../assets/images/google_play.png" width="60"></a>
+                    </p>
+                  </div>
+                  <div style="text-align:right;" class="col-3">
+                    <p>
+                      powered by
+                      <img _ngcontent-rdc-c5="" alt="logo" height="20" src="../../../../../../assets/images/vplogo.png"
+                        width="60">
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+
+<body id="contentToConvert" *ngIf="showStatement6">
+  <div id="page-wrap">
+    <div class="col-md-12 noprint">
+      &nbsp; <button class="noprint" style="font-size: medium;" onclick="window.print()"> &nbsp;&nbsp;<i
+          class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
+    </div>
+
+    <div id="sanjay">
+      <div class="container">
+        <div class="col-12 mr-2 px-1 py-1 container border-black" id="htmlData">
+          <div>
+            <div class="bg-invoice">
+              <div class="row px-4 py-4">
+                <div class="col-8">
+                  <h3><b>{{companyName}}</b></h3>
+                  <h5> {{oilCompanyName}} petrol pump</h5>
+                  <!-- <h6> {{address1}} {{address2}} {{city}} <br>{{state}} {{pin}}</h6> -->
+                </div>
+                <div class="col-4">
+                  <h4>&nbsp;</h4>
+                  <h6>GST : {{GSTNumber}}</h6>
+                  <h6 *ngIf="hsnCode">HSN Code : {{hsnCode}}</h6>
+                  <h6>Phone : <span *ngIf="mobileStatus">
+                      {{managerMobile}}
+                    </span>
+                    <span *ngIf="!mobileStatus">
+                      {{phone1}}
+                    </span>
+                  </h6><br>
+                  <h6><b>Invoice No. : <span> VPFCINV{{invoiceCode}} </span></b></h6>
+                </div>
+              </div>
+            </div>
+            <div style="text-align: center;">
+              <div class="col-12">
+                <b style="font-size: 21px;">
+                  Invoice
+                </b>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-9">
+                <h4><b>&nbsp;&nbsp;{{billedToName}}</b></h4>
+                <h5>&nbsp;&nbsp; {{billedToAddressLine1}} 
+                  {{billedToCityArea}} {{billedToCity}}
+                  {{billedToConneenorPincode}}
+                </h5>
+                <h4 class="" style="font-size: 15px;">
+                  &nbsp;&nbsp;({{periodStartDate | date:'dd MMM yyyy'}} to {{periodEndDate | date:'dd MMM yyyy'}} )
+                </h4>
+              </div>
+              <div class="col-3">
+                <h4>&nbsp;</h4>
+                <h5> Phone : <span *ngIf="billedToMobile != 'undefined' ">
+                    {{billedToMobile}}
+                  </span>
+                </h5>
+                <h4 class="" style="font-size: 12px;">
+                  GST : {{billedToGstNo}}
+                </h4>
+              </div>
+            </div>
+            <br>
+
+            <div class="container text-center" style="border: 1px solid black; font-size: 15px;">
+              <p>
+                <span *ngIf="manualInvoiceNumber!=undefined">
+                  <span *ngIf="manualInvoiceNumber!=''">
+                    statement: {{manualInvoiceNumber}}
+                  </span>
+                </span>
+              </p>
+            </div>
+
+            <table class="table main-table">
+              <div>
+                <table class="child-table">
+                  <thead>
+                    <tr>
+                      <th class="table-head">Sr.No</th>
+                      <th class="table-head">Date</th>
+                      <th class="table-head">Description</th>
+                      <th class="table-head">Vehicle No.</th>
+                      <th class="table-head">Product|Price</th>
+                      <th class="table-head">Quantity</th>
+                      <th class="table-head">Purchase</th>
+                    </tr>
+                  </thead>
+
+                  <tbody class="table-row">
+                    <tr *ngFor="let data of creditPaymentCombineArrayDetails; let i = index">
+                      <td class="border-gray"> {{i+1}} </td>
+                      <td class="border-gray">
+                        <span *ngIf="(data.estimatedRefuelDate | date:'d MMM y') == '1 Jan 2021' ">
+                          1 Jan 2022
+                        </span>
+                        <span *ngIf="(data.estimatedRefuelDate | date:'d MMM y') != '1 Jan 2021' ">
+                          {{data.estimatedRefuelDate | date:'d MMM y'}}
+                        </span>
+                      </td>
+                      <td class="border-gray">
+                        <span *ngIf="data.manualCrNumber == ''">
+                        </span>
+                        <span *ngIf="data.manualCrNumber != ''">
+                          <span *ngIf="data.manualCrNumber != 'null'">
+                            {{data.manualCrNumber}}
+                          </span>
+                          <span *ngIf="data.manualCrNumber == 'null'">
+                          </span>
+                        </span>
+                      </td>
+                      <td class="border-gray">
+                        <span *ngIf="data.purpose == 'CREDIT'">
+                          <span *ngIf="data.vehicleNumber == 'undefined'">
+
+                          </span>
+                          <span *ngIf="data.vehicleNumber != 'undefined'">
+                            {{data.vehicleNumber}}
+                          </span>
+                          <span *ngIf="data.vehicleNumber == ''">
+                            -
+                          </span>
+                        </span>
+                        <span *ngIf="data.purpose == 'LUBE'">
+                          <span *ngIf="data.vehicleNumber == 'undefined'">
+                            {{data.lubeName}}
+                          </span>
+                          <span *ngIf="data.vehicleNumber != 'undefined'">
+                            {{data.vehicleNumber}} {{data.lubeName}}
+                          </span>
+                        </span>
+                        <span *ngIf="data.purpose == 'AdvAmt'">
+                          {{data.advName}} {{data.advMobile}}
+                        </span>
+                        <span *ngIf="data.vehicleNumber == ''">
+                          -
+                        </span>
+                        <span *ngIf="data.purpose == 'LUBETAX'">
+                          <span *ngIf="data.vehicleNumber == 'undefined'">
+                          </span>
+                          <span *ngIf="data.vehicleNumber != 'undefined'">
+                            {{data.vehicleNumber}}
+                          </span>
+                        </span>
+                      </td>
+                      <td class="border-gray">
+                        <span *ngIf="data.purpose == 'LUBE' ">
+                          {{data.product}}
+                        </span>
+                        <span *ngIf="data.purpose == 'CREDIT' ">
+                          {{data.product}} | {{data.productRate}}
+                        </span>
+                        <span *ngIf="data.purpose == 'AdvAmt' ">
+                          ADVANCE
+                        </span>
+                        <span *ngIf="data.purpose == 'LUBETAX'">
+                          LUBRICANTS-TAX
+                        </span>
+                      </td>
+                      <td class="border-gray">
+                        <span *ngIf="data.purpose == 'CREDIT' ">
+                          <span *ngIf='data.productCategory == "CNG" '>
+                            {{data.actualCreditQuantity | number:'1.2-2'}} Kg
+                          </span>
+                          <span *ngIf='data.productCategory != "CNG" '>
+                            {{data.actualCreditQuantity | number:'1.2-2'}} Ltr
+                          </span>
+                        </span>
+                        <span *ngIf="data.purpose == 'LUBE' ">
+                          {{data.actualCreditQuantity | number:'1.2-2'}} {{data.lubeUnit}}
+                        </span>
+                        <span *ngIf="data.purpose == 'LUBETAX' ">
+                          {{data.actualCreditQuantity | number:'1.2-2'}} {{data.lubeUnit}}
+                        </span>
+                      </td>
+                      <td class="border-gray" style="background: #ffc0cb94 !important;">
+                        {{data.creditAmount | number:'1.2-2'}}
+                      </td>
+                    </tr>
+                    <tr style="font-weight: bold;" class="border-gray">
+                      <td colspan="6" class="border-gray table-head" style="text-align: end;">Grand Total</td>
+                      <td class="border-gray table-head">{{creditAmountNew | number:'1.2-2'}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p class="table-row">statement generated on: {{invoiceDate | date:"dd/MM/yyyy"}} </p>
+                <div class="row px-4 py-4" style="padding-bottom: 0rem !important;">
+                  <div class="col text-center border border-success px-1 py-1 mr-1">
+                    <h5 class="text-primary"><b> Total Amount </b></h5>
+                    <b>
+                      <span>
+                        <i class="fas fa-rupee-sign"></i> {{ creditAmountNew | number:'1.2-2'}}
+                      </span>
+                    </b>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="row px-4 py-4" style="padding-bottom: 0rem !important; text-transform: lowercase;">
+                  <div class="col text-center border border-success px-1 py-1 mr-1"
+                    *ngFor="let data of fuelProductTotalAmount">
+                    <h5 class=""><b> {{data.productName}} </b></h5>
+                    <b>
+                      <span *ngIf="data.productCategory == 'CNG' ">
+                        {{data.quantity | number:'1.2-2'}} Kg
+                      </span>
+                      <span *ngIf="data.productCategory != 'CNG' ">
+                        {{data.quantity | number:'1.2-2'}} Ltrs
+                      </span>
+                    </b>
+                  </div>
+                </div>
+
+                <div style="color: rgb(43 154 43); margin-left:25px">
+                  <b>
+                    <span *ngIf="discountcalNew != '00'">
+                      <span *ngIf="discountcalNew == '0'">
+                      </span>
+                      <span *ngIf="discountcalNew != '0'">
+                        <span *ngIf="discountcalNew == 'null'">
+                        </span>
+                        <span *ngIf="discountcalNew != 'null'">
+                          rewards: <i class="fas fa-rupee-sign"></i> {{discountcalNew | number:'1.2-2'}}
+                        </span>
+                      </span>
+                    </span>
+                    <span *ngIf="discountcalNew == '00'">
+                    </span>
+                  </b>
+
+                </div>
+                <span *ngIf="(creditAmountNew) > 0">
+                  <div class="container border-gray px-2 py-2 alert">
+                    <p> Please pay <span *ngIf="dueDate"> before Due Date {{dueDate}} </span> <br> <span class=""
+                        *ngIf="(creditAmountNew) >= 0">
+                        <i class="fas fa-rupee-sign"></i>
+                        {{creditAmountNew | number:'1.0-0'}}
+                      </span></p>
+                    <!-- <p class=""> <i class="fas fa-rupee-sign"></i> {{amountInWord}}</p> -->
+                  </div>
+                </span>
+                <p><b>Note : interest will be charged if bill not paid within 7 days</b></p>
+                <br>
+                <span *ngFor="let data of bankAccList; let i = index">
+                  <div class="container border border-success px-2 py-2" *ngIf="data.uniqueStatus == 'TRUE' ">
+                    <b style="font-size: 17px;"> Please make a payment to</b><br>
+                    <p> <b>Beneficiary Name : </b> {{data.accountHolderName}} </p>
+                    <p> <b>Bank Name : </b> {{data.bankName}} , {{data.branchName}}</p>
+                    <p> <b>Account Number : </b> {{data.accountNumber}} </p>
+                    <p> <b>IFSC Code : </b> {{data.ifsc}} </p>
+                    <p> <b>UPI Id : </b> {{data.upiId}} </p>
+                  </div>
+                </span>
+              </div>
+              <tr>
+              </tr>
+              <br>
+              <div style="border: 1px solid;">
+                <div _ngcontent-rdc-c5="" class="bg-invoice" style="font-size: 12px;">
+                  <div _ngcontent-rdc-c5="" class="row px-1 py-1" style="width: -webkit-fill-available;">
+                    <div class="col-9">
+                      <p>
+                        for more details login to viswasa <a
+                          href="https://play.google.com/store/apps/details?id=com.veelsplus.viswasa"><img
+                            _ngcontent-rdc-c5="" alt="logo" height="20"
+                            src="../../../../../../assets/images/google_play.png" width="60"></a>
+                      </p>
+                    </div>
+                    <div style="text-align:right;" class="col-3">
+                      <p>
+                        powered by
+                        <img _ngcontent-rdc-c5="" alt="logo" height="20"
+                          src="../../../../../../assets/images/vplogo.png" width="60">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

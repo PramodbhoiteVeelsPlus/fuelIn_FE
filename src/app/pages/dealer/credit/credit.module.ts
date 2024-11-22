@@ -21,6 +21,9 @@ import { FuelCreditInvoiceVehicleComponent } from './fuel-credit-invoice-vehicle
 import { LubeTaxStatementComponent } from './lube-tax-statement/lube-tax-statement.component';
 import { FuelCrInvoiceComponent } from './fuel-cr-invoice/fuel-cr-invoice.component';
 import { BookLedgerComponent } from './book-ledger/book-ledger.component';
+import { SavedInvoiceComponent } from './saved-invoice/saved-invoice.component';
+import { FuelCreditInvoiceManualComponent } from './fuel-credit-invoice-manual/fuel-credit-invoice-manual.component';
+import { AddLubeTaxGstSaleComponent } from './add-lube-tax-gst-sale/add-lube-tax-gst-sale.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,10 @@ import { BookLedgerComponent } from './book-ledger/book-ledger.component';
     FuelCreditInvoiceVehicleComponent,
     LubeTaxStatementComponent,
     FuelCrInvoiceComponent,
-    BookLedgerComponent
+    BookLedgerComponent,
+    SavedInvoiceComponent,
+    FuelCreditInvoiceManualComponent,
+    AddLubeTaxGstSaleComponent
   ],
   imports: [
     CommonModule,
@@ -106,6 +112,18 @@ import { BookLedgerComponent } from './book-ledger/book-ledger.component';
       {
         path: 'bookLedger',
         component: BookLedgerComponent,
+      },
+      {
+        path: 'savedInvoice',
+        component: SavedInvoiceComponent,
+      },
+      {
+        path: 'fuelCreditInvoiceManual/:id/:id1',
+        component: FuelCreditInvoiceManualComponent,
+      },
+      {
+        path: 'AddLubeTaxGstSale',
+        component: AddLubeTaxGstSaleComponent,
       },
     ]),
     WidgetsModule,

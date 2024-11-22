@@ -8,6 +8,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
     providedIn: 'root',
 })
 export class BaseTablesService {
+    creditValueforInvoice: any = [];
+    creditValueforInvoicePayment: any = [];
+    setRouteForActiveArray: any;
+    FCInvoiceListDetails: any = [];
+    activeStartDate: any;
+    activeEndDate: any;
+    isCustomer: string;
 
     constructor(private http: HttpClient,
         private router: Router
@@ -31,16 +38,41 @@ export class BaseTablesService {
     private VehicleByRegistrationNumberURL = this.baseURL + 'vehicle/searchVehicleByRegistrationNumber';
     private updateCreditReqByDealerURL = this.baseURL + 'fuelDealerCustMap/editFuelCreditReqfuelCreditId';
     private getCorporateInfoByfuelDealerCustomerMapIdURL = this.baseURL + 'fuelDealerCustMap/getCorporateInfoByfuelDealerCustomerMapId1';
-    private getAllCRPaymentByCustNameDealerURL = this.baseURL + 'accounttransaclog/getAllCRPaymentByCustNameDealer'; 
+    private getAllCRPaymentByCustNameDealerURL = this.baseURL + 'accounttransaclog/getAllCRPaymentByCustNameDealer';
     private getAllCRPaymentByDealerURL = this.baseURL + 'accounttransaclog/getAllCRPaymentByDealer';
     private getAllCRPaymentByCorporateURL = this.baseURL + 'accounttransaclog/getAllCRPaymentByCorporate';
     private removeTransactionLogURL = this.baseURL + 'accounttransaclog/removeTransactionLog';
-    private getAllDealersListURL = this.baseURL + 'dealerDashboard/getAllDealersList'; 
+    private getAllDealersListURL = this.baseURL + 'dealerDashboard/getAllDealersList';
     private updateAmountStatusByTranslogIdURL = this.baseURL + 'coinConversion/updateAmountStatusByTranslogId';
-    private getCorporateInfoByCorporateCustomerMapIdURL = this.baseURL + 'fuelDealerCustMap/getCorporateInfoByCorporateCustomerMapId'; 
+    private getCorporateInfoByCorporateCustomerMapIdURL = this.baseURL + 'fuelDealerCustMap/getCorporateInfoByCorporateCustomerMapId';
     private getTransactionwiseLedgerByMapIdURL = this.baseURL + 'crCustomers/getTransactionwiseLedgerByMapId';
     private getDayWiseLedgerByMapIdURL = this.baseURL + 'crCustomers/getDayWiseLedger';
     private getMonthlyCrDetailsURL = this.baseURL + 'crCustomers/getMonthlyCrDetails';
+    private getDayWiseLedgerQtyURL = this.baseURL + 'crCustomers/getDayWiseLedgerQty';
+    private getMonthlyCrDetailsQtyURL = this.baseURL + 'crCustomers/getMonthlyCrDetailsQty';
+    private getPreviousOutstandingByCustomerURL = this.baseURL + "fuelCreditInvoice/getPreviousOutstandingByCustomer";
+    private getFuelCreditRequestPersonListByfuelDealerIdURL = this.baseURL + 'fuelCreditInvoice/getFuelCreditRequestPersonListByfuelDealerId';
+    private allDiscountedAmountForManualURL = this.baseURL + "fuelCreditInvoice/allDiscountedAmountForManual";
+    private getdataBycustomerMapIdURL = this.baseURL + "fuelDealerCustMap/getdataBycustomerMapId";
+    private getManagerDetailsByDealerIdURL = this.baseURL + "fuelCreditInvoice/getManagerDetailsByDealerId";
+    private addManagerMobileToDOCURL = this.baseURL + "fuelCreditInvoice/addManagerMobileToDOC";
+    private getSelectedMobileNumberByDealerIdURL = this.baseURL + "fuelCreditInvoice/getSelectedMobileNumberByDealerId";
+    private getAccountTransactionLogBYfuelDealerCustomMapIdByDateRangeForManualURL = this.baseURL + 'accounttransaclog/getAccountTransactionLogBYfuelDealerCustomMapIdByDateRangeForManual';
+    private getOutstandingForSavedInvoiceByDateURL = this.baseURL + 'fuelCreditInvoice/getOutstandingForSavedInvoiceByDate';
+    private addfuelInvoiceFuelAndPaymentURL = this.baseURL + "fuelCreditInvoice/addfuelInvoiceFuelAndPayment";
+    private getAllSavedInvoiceListURL = this.baseURL + "fuelCreditInvoice/getAllSavedInvoiceList";
+    private deleteInvoiceDataByInvoiceIdURL = this.baseURL + "fuelCreditInvoice/deleteInvoiceDataByInvoiceId";
+    private getCreditPaymentForFuelInvoiceURL = this.baseURL + "fuelCreditInvoice/getCreditPaymentForFuelInvoice";
+    private getFuelCorpIdByMapIdURL = this.baseURL + "fuelDealerCustMap/getFuelCorpIdByMapId";
+    private calOutstandingAmountForSavedInvoiceURL = this.baseURL + "fuelCreditInvoice/getOpOutstandingByDateForSavedInvoice";
+    private getTotalTransactionCreditPaymentForFuelInvoiceURL = this.baseURL + "fuelCreditInvoice/getTotalTransactionCreditPaymentForFuelInvoice";
+    private getFuelInvoiceDataByInvoiceIdURL = this.baseURL + "fuelCreditInvoice/getFuelInvoiceDataByInvoiceId";
+    private getLubricantTotalURL = this.baseURL + "lubricants/getLubricantTotal";
+    private getCustomerDataByCorporateIdForSavedInvoiceURL = this.baseURL + "fuelCreditInvoice/getCustomerDataByCorporateIdForSavedInvoice";
+    private getBankDetailsByDealerIdURL = this.baseURL + 'bankDetails/getBankDetailsByDealerId';
+    private getCustomerDetailsByCrDaysLimitURL = this.baseURL + 'invoiceCrDaysLimit/getCustomerDetailsByCrDaysLimit';
+    private getCrDaysLimitByDealerIdURL = this.baseURL + 'invoiceCrDaysLimit/getCrDaysLimitByDealerId'; 
+    private addSavedInvoiceByCrDaysURL = this.baseURL + 'invoiceCrDaysLimit/addSavedInvoiceByCrDays';
 
 
 
@@ -257,5 +289,271 @@ export class BaseTablesService {
         return this.http.post(this.getMonthlyCrDetailsURL, body, {
             headers: headers
         })
+    }
+
+    // getDayWiseLedgerQtyURL
+    getDayWiseLedgerQtyPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getDayWiseLedgerQtyURL, body, {
+            headers: headers
+        })
+    }
+
+    // getMonthlyCrDetailsQtyURL
+    getMonthlyCrDetailsQtyPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getMonthlyCrDetailsQtyURL, body, {
+            headers: headers
+        })
+    }
+
+    // getPreviousOutstandingByCustomerURL
+    getPreviousOutstandingByCustomerPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getPreviousOutstandingByCustomerURL, body, {
+            headers: headers
+        })
+    }
+
+    // getFuelCreditRequestPersonListByfuelDealerIdURL
+    getFuelCreditRequestPersonListByfuelDealerIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFuelCreditRequestPersonListByfuelDealerIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // allDiscountedAmountForManualURL
+    allDiscountedAmountForManualPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.allDiscountedAmountForManualURL, body, {
+            headers: headers
+        })
+    }
+
+    // getdataBycustomerMapIdURL
+    getdataBycustomerMapIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getdataBycustomerMapIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getManagerDetailsByDealerIdURL
+    getManagerDetailsByDealerIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getManagerDetailsByDealerIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // addManagerMobileToDOCURL
+    addManagerMobileToDOCPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addManagerMobileToDOCURL, body, {
+            headers: headers
+        })
+    }
+
+    // getSelectedMobileNumberByDealerIdURL
+    getSelectedMobileNumberByDealerIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getSelectedMobileNumberByDealerIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAccountTransactionLogBYfuelDealerCustomMapIdByDateRangeForManualURL
+    getAccountTransactionLogBYfuelDealerCustomMapIdByDateRangeForManualPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAccountTransactionLogBYfuelDealerCustomMapIdByDateRangeForManualURL, body, {
+            headers: headers
+        })
+    }
+
+    // getOutstandingForSavedInvoiceByDateURL
+    getOutstandingForSavedInvoiceByDatePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getOutstandingForSavedInvoiceByDateURL, body, {
+            headers: headers
+        })
+    }
+
+    // addfuelInvoiceFuelAndPaymentURL
+    addfuelInvoiceFuelAndPaymentPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addfuelInvoiceFuelAndPaymentURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAllSavedInvoiceListURL
+    getAllSavedInvoiceListPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAllSavedInvoiceListURL, body, {
+            headers: headers
+        })
+    }
+
+    // deleteInvoiceDataByInvoiceIdURL
+    deleteInvoiceDataByInvoiceIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.deleteInvoiceDataByInvoiceIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getCreditPaymentForFuelInvoiceURL
+    getCreditPaymentForFuelInvoicePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getCreditPaymentForFuelInvoiceURL, body, {
+            headers: headers
+        })
+    }
+
+    // getFuelCorpIdByMapIdURL
+    getFuelCorpIdByMapIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFuelCorpIdByMapIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // calOutstandingAmountForSavedInvoiceURL
+    calOutstandingAmountForSavedInvoicePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.calOutstandingAmountForSavedInvoiceURL, body, {
+            headers: headers
+        })
+    }
+
+    // getTotalTransactionCreditPaymentForFuelInvoiceURL
+    getTotalTransactionCreditPaymentForFuelInvoicePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getTotalTransactionCreditPaymentForFuelInvoiceURL, body, {
+            headers: headers
+        })
+    }
+
+    // getFuelInvoiceDataByInvoiceIdURL
+    getFuelInvoiceDataByInvoiceIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFuelInvoiceDataByInvoiceIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getLubricantTotalURL
+    getLubricantTotalPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getLubricantTotalURL, body, {
+            headers: headers
+        })
+    }
+
+    // getCustomerDataByCorporateIdForSavedInvoiceURL
+    getCustomerDataByCorporateIdForSavedInvoicePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getCustomerDataByCorporateIdForSavedInvoiceURL, body, {
+            headers: headers
+        })
+    }
+
+    // getBankDetailsByDealerIdURL
+    getBankDetailsByDealerIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getBankDetailsByDealerIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getCustomerDetailsByCrDaysLimitURL
+    getCustomerDetailsByCrDaysLimitPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getCustomerDetailsByCrDaysLimitURL, body, {
+            headers: headers
+        })
+    }
+
+    // getCrDaysLimitByDealerIdURL
+    getCrDaysLimitByDealerIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getCrDaysLimitByDealerIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // addSavedInvoiceByCrDaysURL
+    addSavedInvoiceByCrDaysPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addSavedInvoiceByCrDaysURL, body, {
+            headers: headers
+        })
+    }
+
+    inilizeForInvoice() {
+        this.creditValueforInvoice = []
+    }
+
+    inilizeForInvoicePayment() {
+        this.creditValueforInvoicePayment = []
+    }
+
+    setRouteForSavedInvoice(FCInvoiceListDetails: any[], startDate: any, endDate: any, isCustomer: string) {
+        this.setRouteForActiveArray.length = 0;
+        this.FCInvoiceListDetails = FCInvoiceListDetails;
+        this.activeStartDate = startDate;
+        this.activeEndDate = endDate;
+        this.isCustomer = isCustomer;
     }
 }

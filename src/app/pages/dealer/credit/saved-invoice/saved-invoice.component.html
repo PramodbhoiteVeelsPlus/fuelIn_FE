@@ -1,0 +1,36 @@
+<div class="card-header">
+    <b>Saved Invoice</b>
+  </div>
+  
+  <!-- <div class="row"> -->
+  <br>
+  <div>
+    <ul ngbNav #savedInvoice="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified" style="width: 100%;">
+      <li [ngbNavItem]="1">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">ADD STATEMENT </span>
+        </a>
+        <ng-template ngbNavContent>
+          <app-base-tables-widget9 class="card card-xxl-stretch mb-5 mb-xl-8"></app-base-tables-widget9>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="2">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">STATEMENT LIST </span>
+        </a>
+        <ng-template ngbNavContent>
+            <app-base-tables-widget10 class="card card-xxl-stretch mb-5 mb-xl-8"></app-base-tables-widget10>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="3">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">STATEMENT(CREDIT DAYS LIMIT) </span>
+        </a>
+        <ng-template ngbNavContent>
+            <app-base-tables-widget12 class="card card-xxl-stretch mb-5 mb-xl-8"></app-base-tables-widget12>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="savedInvoice"></div>
+  </div>
+  <!-- </div> -->
