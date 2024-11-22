@@ -139,6 +139,8 @@ import { BaseTablesWidget3Component } from './base-tables/base-tables-widget3/ba
 import { BaseTablesWidget4Component } from './base-tables/base-tables-widget4/base-tables-widget4.component';
 import { BaseTablesWidget5Component } from './base-tables/base-tables-widget5/base-tables-widget5.component';
 import { FeedsWidget7Component } from './feeds/feeds-widget7/feeds-widget7.component';
+import { FeedsWidget8Component } from './feeds/feeds-widget8/feeds-widget8.component';
+import { FeedsWidget9Component } from './feeds/feeds-widget9/feeds-widget9.component';
 // import { routes } from 'src/app/app-routing.module';
 @NgModule({
   declarations: [
@@ -194,6 +196,8 @@ import { FeedsWidget7Component } from './feeds/feeds-widget7/feeds-widget7.compo
     FeedsWidget5Component,
     FeedsWidget6Component,
     FeedsWidget7Component,
+    FeedsWidget8Component,
+    FeedsWidget9Component,
 
     MixedWidget2Component,
     MixedWidget3Component,
@@ -342,6 +346,8 @@ import { FeedsWidget7Component } from './feeds/feeds-widget7/feeds-widget7.compo
     FeedsWidget5Component,
     FeedsWidget6Component,
     FeedsWidget7Component,
+    FeedsWidget8Component,
+    FeedsWidget9Component,
 
     MixedWidget2Component,
     MixedWidget3Component,
