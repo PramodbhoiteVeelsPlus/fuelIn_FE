@@ -12,6 +12,7 @@ export class FeedsService {
     user: any;
     token: any = "";
     dailyProfitId: any;
+    profitReportData: any = [];
 
     constructor(private http: HttpClient,
         private router: Router
@@ -19,6 +20,11 @@ export class FeedsService {
 
     dailyProfit(dailyProfitId: any) {
         this.dailyProfitId = dailyProfitId;
+    }
+
+    //profitReportPOST
+    profitReportPOST(data: any) {
+        this.profitReportData = data
     }
 
     public baseURL = environment.apiUrl;
@@ -66,6 +72,7 @@ export class FeedsService {
     private addDailyReportURL = this.baseURL + 'dailyProfitReport/addDailyReport';
     private checkReportByDateURL = this.baseURL + 'dailyProfitReport/checkReportByDate';
     private updateDailyProfitReportURL = this.baseURL + 'dailyProfitReport/updateDailyProfitReport';
+    private deleteProfitReportURL = this.baseURL + 'profitReport/deleteProfitReport';
     
 
 
@@ -484,6 +491,16 @@ export class FeedsService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.updateDailyProfitReportURL, body, {
+            headers: headers
+        })
+    }
+
+    // deleteProfitReportURL
+    deleteProfitReportPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.deleteProfitReportURL, body, {
             headers: headers
         })
     }

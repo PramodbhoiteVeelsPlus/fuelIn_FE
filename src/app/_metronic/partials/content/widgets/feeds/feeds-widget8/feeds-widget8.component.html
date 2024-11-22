@@ -1,0 +1,127 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">PROFIT REPORT</h4>
+        <br>
+
+        <div class="mb-3 row">
+          <div class="col-md-2"></div>
+          <label for="example-text-input" class="col-auto col-form-label">Month</label>
+          <div class="col-auto">
+            <select [(ngModel)]="month" [ngModelOptions]="{standalone: true}" class="form-select" required>
+              <option value="Jan"> Jan </option>
+              <option value="Feb"> Feb </option>
+              <option value="Mar"> Mar </option>
+              <option value="Apr"> Apr </option>
+              <option value="May"> May </option>
+              <option value="Jun"> Jun </option>
+              <option value="Jul"> Jul </option>
+              <option value="Aug"> Aug </option>
+              <option value="Sep"> Sep </option>
+              <option value="Oct"> Oct </option>
+              <option value="Nov"> Nov </option>
+              <option value="Dec"> Dec </option>
+            </select>
+          </div>
+
+          <label for="example-text-input" class="col-auto col-form-label">Year</label>
+          <div class="col-auto">
+            <select class="form-select" [(ngModel)]="year" [ngModelOptions]="{standalone: true}" required>
+              <option value={{currentYear}}> {{currentYear}} </option>
+              <option value={{lastYear}}> {{lastYear}} </option>
+              <option value={{last2Year}}> {{last2Year}} </option>
+              <option value={{lastFourthYear}}> {{lastFourthYear}} </option>
+              <option value={{lastFifthYear}}> {{lastFifthYear}} </option>
+            </select>
+          </div>
+          <div class="col-md-1"></div>
+          <div class="col-auto">
+            <button type="button" class="btn btn-md btn-primary" (click)="getProfitReport()">
+              Get Profit Report
+            </button>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+
+        <br><br>
+        <h5 style="color: red; text-align: center;">
+          <b>Note:</b> Please select Month, year and click on Get Profit Report for Updated Data..!
+        </h5>
+        <br><br>
+
+        <div *ngIf="allProfitReportDetails.length" class="table-responsive mb-0">
+          <table class="table table-centered table-nowrap">
+            <thead class="table-light">
+              <tr>
+                <th> Month </th>
+                <th> Fuel Purchase </th>
+                <th> Lube Purchase </th>
+                <th> Fuel Sales </th>
+                <th> Lube Sales </th>
+                <th> Expense Amount </th>
+                <th> Profit & Loss % </th>
+                <th> View Report </th>
+                <th> Action </th>
+              </tr>
+            </thead>
+            <tbody
+              *ngFor="let data of allProfitReportDetails; let i = index">
+              <tr>
+                <td> {{ data.profitReportMonth }} {{ data.profitReportYear }} </td>
+                <td> {{ data.profitReportFuelPurchase | number:"1.2-2" }} </td>
+                <td> {{ data.profitReportLubePurchase | number:"1.2-2" }} </td>
+                <td> {{ data.profitReportFuelSales | number:"1.2-2" }} </td>
+                <td> {{ data.profitReportLubeSales | number:"1.2-2" }} </td>
+                <td> {{ data.profitReportExpenseAmt | number:"1.2-2" }} </td>
+                <td>
+                  <span *ngIf="(((((data.profitReportFuelSales) + (data.profitReportLubeSales) + (data.profitReportAdvAmt)) 
+                      - ((data.profitReportFuelPurchase) + (data.profitReportLubePurchase) 
+                      + (data.profitReportExpenseAmt))) 
+                      / ((data.profitReportFuelPurchase) + (data.profitReportLubePurchase))) * 100) < 0 "
+                    style="color: red;">
+                    Loss {{ (((((data.profitReportFuelSales) + (data.profitReportLubeSales) +
+                    (data.profitReportAdvAmt))
+                    - ((data.profitReportFuelPurchase) + (data.profitReportLubePurchase)
+                    + (data.profitReportExpenseAmt)))
+                    / ((data.profitReportFuelPurchase) + (data.profitReportLubePurchase))) *
+                    100) * (-1) | number:"1.2-2" }} %
+                  </span>
+                  <span *ngIf="(((((data.profitReportFuelSales) + (data.profitReportLubeSales) + (data.profitReportAdvAmt)) 
+                      - ((data.profitReportFuelPurchase) + (data.profitReportLubePurchase) 
+                      + (data.profitReportExpenseAmt))) 
+                      / ((data.profitReportFuelPurchase) + (data.profitReportLubePurchase))) * 100) >= 0 ">
+                    Profit {{ (((((data.profitReportFuelSales) + (data.profitReportLubeSales) +
+                    (data.profitReportAdvAmt))
+                    - ((data.profitReportFuelPurchase) + (data.profitReportLubePurchase)
+                    + (data.profitReportExpenseAmt)))
+                    / ((data.profitReportFuelPurchase) + (data.profitReportLubePurchase))) *
+                    100) | number:"1.2-2" }} %
+                  </span>
+
+                </td>
+                <td> <button type="submit" class="btn btn-link" (click)="viewReport(data)">View</button> </td>
+                <td style="text-align: left;cursor: pointer;" aria-expanded="true">
+                  <div ngbDropdown placement="bottom-left">
+                    <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                      aria-expanded="true"></i>
+                    <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                      <a class="dropdown-item" href="javascript: void(0);" (click)="deleteReport(data.profitReportId)">
+                        <i class="fas fa-ban" style="color: red;"> </i> &nbsp;&nbsp; Remove
+                      </a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="!allProfitReportDetails.length" class="row" style="text-align: center;">
+          <h3> Select Month & Year and Get Profit Report..! </h3>
+        </div>
+
+        <br><br>
+      </div>
+    </div>
+  </div>
+</div>

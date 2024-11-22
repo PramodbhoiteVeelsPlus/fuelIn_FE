@@ -139,6 +139,8 @@ import { BaseTablesWidget3Component } from './base-tables/base-tables-widget3/ba
 import { BaseTablesWidget4Component } from './base-tables/base-tables-widget4/base-tables-widget4.component';
 import { BaseTablesWidget5Component } from './base-tables/base-tables-widget5/base-tables-widget5.component';
 import { FeedsWidget7Component } from './feeds/feeds-widget7/feeds-widget7.component';
+import { FeedsWidget8Component } from './feeds/feeds-widget8/feeds-widget8.component';
+import { FeedsWidget9Component } from './feeds/feeds-widget9/feeds-widget9.component';
 import { BaseTablesWidget7Component } from './base-tables/base-tables-widget7/base-tables-widget7.component';
 import { BaseTablesWidget8Component } from './base-tables/base-tables-widget8/base-tables-widget8.component';
 import { BaseTablesWidget9Component } from './base-tables/base-tables-widget9/base-tables-widget9.component';
@@ -200,6 +202,8 @@ import { BaseTablesWidget12Component } from './base-tables/base-tables-widget12/
     FeedsWidget5Component,
     FeedsWidget6Component,
     FeedsWidget7Component,
+    FeedsWidget8Component,
+    FeedsWidget9Component,
 
     MixedWidget2Component,
     MixedWidget3Component,
@@ -354,6 +358,8 @@ import { BaseTablesWidget12Component } from './base-tables/base-tables-widget12/
     FeedsWidget5Component,
     FeedsWidget6Component,
     FeedsWidget7Component,
+    FeedsWidget8Component,
+    FeedsWidget9Component,
 
     MixedWidget2Component,
     MixedWidget3Component,

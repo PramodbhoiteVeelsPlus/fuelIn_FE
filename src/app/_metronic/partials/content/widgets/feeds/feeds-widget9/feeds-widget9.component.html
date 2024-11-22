@@ -1,0 +1,532 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="https://www.w3.org/1999/xhtml">
+
+<head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    #page-wrap {
+      width: 700px;
+      margin: 0 auto;
+    }
+
+    .bg-invoice {
+      background-color: #e7e8ea;
+    }
+
+    .table-head {
+      font-size: 14px;
+      background-color: #e6e6fa !important;
+    }
+
+    .table-row {
+      font-size: 12px;
+    }
+
+    .main-table {
+      width: -webkit-fill-available;
+    }
+
+    .border-black {
+      border: 1px solid black;
+    }
+
+    .child-table {
+      width: -webkit-fill-available;
+      color: black;
+      text-align: center;
+
+    }
+
+    .border-gray {
+      border: 1px solid #8080802e;
+    }
+
+    .A4 {
+      background: white;
+      width: 23cm;
+      height: 40.7cm;
+      display: block;
+      margin: 0 auto;
+      padding: 1px 1px;
+      margin-bottom: 0.5cm;
+      box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+
+      box-sizing: border-box;
+      font-size: 12pt;
+    }
+
+    @media print {
+      .page-break {
+        display: block;
+        page-break-before: always;
+
+        size: A4 portrait;
+      }
+    }
+
+    @media print {
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .A4 {
+        box-shadow: none;
+        margin: 0;
+        width: auto;
+        height: auto;
+      }
+
+      .noprint {
+        display: none;
+      }
+
+      .print {
+        display: block;
+      }
+    }
+  </style>
+</head>
+
+<body id="contentToConvert">
+  <div id="page-wrap">
+    <div class="col-md-12">
+      &nbsp; <button class="noprint" style="font-size: medium;" onclick="window.print()"> &nbsp;&nbsp;<i
+          class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
+    </div>
+    <div id="sanjay">
+      <div class="container-fluid">
+        <div class="row" id="page-wrap">
+          <div class="col-lg-12">
+            <div class="invoice-title">
+              <div class="row">
+                <table>
+                  <tr>
+                    <td colspan="2">
+                      <img src="../../../../assets/images/fuel-in.png" alt="logo" height="100" />
+                    </td>
+                    <td colspan="5" style="text-align: center;">
+                      <h3>Profit and Loss Statement</h3>
+                      <h4>{{dealerCompanyName}}, {{dealerCity}}</h4> <br>
+                      <h5>{{month}} {{year}} </h5> <br>
+                    </td>
+                    <td style="text-align: right;">
+                      <br><br>
+                      <h6>Generated On: {{createdDate | date:'dd MMM yyyy' }}</h6>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <hr>
+              <hr>
+
+              <div class="py-2 mt-3">
+                <h3 class="font-size-15 fw-bold">Purchase Details</h3>
+              </div>
+              <div class="table-responsive">
+                <table class="table">
+                  <thead *ngIf="fuelPurchaseData.length">
+                    <tr>
+                      <td colspan="4" style="text-align: center;"><b>Fuel Purchase</b></td>
+                    </tr>
+                    <tr>
+                      <th>Sr.No.</th>
+                      <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="fuelPurchaseData.length">
+                    <tr *ngFor="let data of fuelPurchaseData; let i = index">
+                      <td> {{i + 1}} </td>
+                      <td> {{data.expenseDetails}} </td>
+                      <td> {{data.quantity | number:'1.2-2'}}
+                        <span *ngIf="data.expenseDetails == 'CNG'">
+                          Kg
+                        </span>
+                        <span *ngIf="data.expenseDetails != 'CNG'">
+                          Ltr
+                        </span>
+                      </td>
+                      <td> {{data.expenseAmount | number:'1.2-2'}} </td>
+                    </tr>
+                  </tbody>
+
+                  <thead *ngIf="lubePurchaseData.length">
+                    <tr>
+                      <td colspan="4" style="text-align: center;"><b>Lube Purchase</b></td>
+                    </tr>
+                    <tr>
+                      <th>Sr.No.</th>
+                      <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="lubePurchaseData.length">
+                    <tr *ngFor="let data of lubePurchaseData; let i = index">
+                      <td> {{i + 1}} </td>
+                      <td> LUBRICANT {{data.lubricantStockLubricantName}} </td>
+                      <td> {{data.lubricantStockQuantity | number:'1.2-2'}} {{data.lubricantStockLubricantUnit}} </td>
+                      <td> {{data.lubricantStockTotalAmt | number:'1.2-2'}} </td>
+                    </tr>
+
+                  </tbody>
+                  <tbody *ngIf="fuelPurchaseData.length || lubePurchaseData.length">
+                    <tr>
+                      <td colspan="2"></td>
+                      <td> <b>Total</b> </td>
+                      <td>
+                        <i class="fas fa-rupee-sign"></i>
+                        <b> {{ (profitReportFuelPurchase) + (profitReportLubePurchase) | number:'1.2-2'}} </b>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <hr>
+              <hr>
+
+              <div class="py-2 mt-3" *ngIf="fuelSalesData.length || lubeSalesData.length || cashBillLubeData.length">
+                <h3 class="font-size-15 fw-bold">Sales Details</h3>
+              </div>
+              <div class="table-responsive">
+                <table class="table">
+                  <thead *ngIf="fuelSalesData.length">
+                    <tr>
+                      <td colspan="4" style="text-align: center;"><b>Fuel Sales</b></td>
+                    </tr>
+                    <tr>
+                      <th>Sr.No.</th>
+                      <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="fuelSalesData.length">
+                    <tr *ngFor="let data of fuelSalesData; let i = index">
+                      <td> {{i + 1}} </td>
+                      <td> {{data.productName}} </td>
+                      <td> {{data.actualCreditQuantity | number:'1.2-2'}}
+                        <span *ngIf="data.productName == 'CNG'">
+                          Kg
+                        </span>
+                        <span *ngIf="data.productName != 'CNG'">
+                          Ltr
+                        </span>
+                      </td>
+                      <td> {{data.creditAmount | number:'1.2-2'}} </td>
+                    </tr>
+                  </tbody>
+
+                  <thead *ngIf="lubeSalesData.length">
+                    <tr>
+                      <td colspan="4" style="text-align: center;"><b>Lube Sales</b></td>
+                    </tr>
+                    <tr>
+                      <th>Sr.No.</th>
+                      <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="lubeSalesData.length">
+                    <tr *ngFor="let data of lubeSalesData; let i = index">
+                      <td> {{i + 1}} </td>
+                      <td> {{data.lubeName}} </td>
+                      <td> {{data.actualCreditQuantity | number:'1.2-2'}} {{data.lubeUnit}} </td>
+                      <td> {{data.creditAmount | number:'1.2-2'}} </td>
+                    </tr>
+                  </tbody>
+
+                  <thead *ngIf="cashBillLubeData.length">
+                    <tr>
+                      <td colspan="4" style="text-align: center;"><b>Cash Lube Sales</b></td>
+                    </tr>
+                    <tr>
+                      <th>Sr.No.</th>
+                      <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="cashBillLubeData.length">
+                    <tr *ngFor="let data of cashBillLubeData; let i = index">
+                      <td> {{i + 1}} </td>
+                      <td> {{data.lubeName}} </td>
+                      <td> {{data.actualCreditQuantity | number:'1.2-2'}} {{data.lubeUnit}} </td>
+                      <td> {{data.creditAmount | number:'1.2-2'}} </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="fuelSalesData.length || lubeSalesData.length || cashBillLubeData.length">
+                    <tr>
+                      <td colspan="2"></td>
+                      <td> <b>Total</b> </td>
+                      <td>
+                        <i class="fas fa-rupee-sign"></i>
+                        <b> {{ (profitReportFuelSales) + (profitReportLubeSales) | number:'1.2-2'}} </b>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <hr>
+              <hr>
+
+              <div class="py-2 mt-3" *ngIf="expenseData.length">
+                <h3 class="font-size-15 fw-bold">Expense Details</h3>
+              </div>
+              <div class="table-responsive" *ngIf="expenseData.length">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Sr.No.</th>
+                      <th>Date</th>
+                      <th>Type</th>
+                      <th>Details</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of expenseData; let i = index">
+                      <td> {{i + 1}} </td>
+                      <td> {{data.accountingDate | date:"d MMM, yyyy"}} </td>
+                      <td> {{data.accountingBook}} {{data.accountingTransactionType}} </td>
+                      <td> {{data.accountingDetails}} </td>
+                      <td> {{data.accountingAmout | number:'1.2-2'}} </td>
+                    </tr>
+
+                    <tr>
+                      <td colspan="3"></td>
+                      <td> <b>Total</b> </td>
+                      <td>
+                        <i class="fas fa-rupee-sign"></i>
+                        <b> {{ (profitReportExpenseAmt) | number:'1.2-2'}} </b>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <hr>
+
+              <div class="py-2 mt-3" *ngIf="variationData.length">
+                <h3 class="font-size-15 fw-bold">Variation Details</h3>
+              </div>
+              <div class="table-responsive" *ngIf="variationData.length">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Sr.No.</th>
+                      <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Amount/th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of variationData; let i = index">
+                      <td> {{i + 1}} </td>
+                      <td> {{data.productName}} </td>
+                      <td> {{data.variation}} </td>
+                      <td> {{data.variationAmt}} </td>
+                    </tr>
+                    <h3 *ngIf="monthlyVariationData" class="font-size-15 fw-bold">Entered Variation Details</h3>
+                    <tr *ngFor="let data of monthlyVariationData; let i = index">
+                      <td> {{i + 1}} </td>
+                      <td> {{data.productName}} </td>
+                      <td> {{data.totalQuantity}} </td>
+                      <td> {{data.totalAmount}} </td>
+                    </tr>
+
+                    <tr>
+                      <td></td>
+                      <td> <b>Total</b> </td>
+                      <td>
+                        <b> {{ (totalVariation) + (totalVariationQuantity)}} </b>
+                      </td>
+                      <td>
+                        <b> {{ (totalVariationAmt1) + (totalMonthVariationAmt)}} </b>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <hr>
+
+              <div class="py-2 mt-3">
+                <h3 class="font-size-15 fw-bold">Calculation Details</h3>
+              </div>
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th colspan="4"> </th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="4"> Total Sales </td>
+                      <td> {{(profitReportFuelSales) + (profitReportLubeSales) | number:'1.2-2'}} </td>
+                    </tr>
+
+                    <tr>
+                      <td colspan="4"> Total Purchase </td>
+                      <td> {{(profitReportFuelPurchase) + (profitReportLubePurchase) | number:'1.2-2'}} </td>
+                    </tr>
+
+                    <tr>
+                      <td colspan="4"> Total Variation </td>
+                      <td> {{(totalVariationAmt1) + (totalMonthVariationAmt) | number:'1.2-2'}} </td>
+                    </tr>
+
+                    <!-- <tr>
+                                <td colspan="3"></td> 
+                                <td style="text-align: right;">
+                                   <span *ngIf="((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) + (profitReportLubePurchase)) > 0">
+                                      <b>Gross Profit </b>
+                                   </span>   
+                                   <span *ngIf="((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) + (profitReportLubePurchase)) <= 0">
+                                      <b>Gross Loss </b>
+                                   </span>   
+                                </td>
+                                <td> 
+                                    
+                                   <span *ngIf="((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) + (profitReportLubePurchase)) > 0">
+                                    <i class="fas fa-rupee-sign"></i>
+                                    <b> {{ ((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) + (profitReportLubePurchase)) | number:'1.2-2'}} </b>
+                                   </span>   
+                                   <span style="color: red;" *ngIf="((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) + (profitReportLubePurchase)) <= 0">
+                                      <i class="fas fa-rupee-sign"></i>
+                                      <b> {{ (((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) + (profitReportLubePurchase)) * (-1)) | number:'1.2-2'}} </b>
+                                   </span>   
+                                </td>
+                            </tr> -->
+                  </tbody>
+                  <tbody>
+                    <tr>
+                      <td colspan="4">
+                        <span
+                          *ngIf="((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) + (profitReportLubePurchase)) + (totalVariationAmt) > 0">
+                          <b> Gross Profit </b>
+                        </span>
+                        <span
+                          *ngIf="((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) + (profitReportLubePurchase)) + (totalVariationAmt) <= 0">
+                          <b> Gross Loss </b>
+                        </span>
+                      </td>
+
+                      <td>
+                        <span
+                          *ngIf="((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) + (profitReportLubePurchase)) + (totalVariationAmt) > 0">
+                          <b> {{ ((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) +
+                            (profitReportLubePurchase)) + (totalVariationAmt) | number:'1.2-2'}} </b>
+                        </span>
+                        <span style="color: red;"
+                          *ngIf="((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) + (profitReportLubePurchase)) + (totalVariationAmt) <= 0">
+                          <b> {{ ((((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) +
+                            (profitReportLubePurchase)) + (totalVariationAmt)) * (-1)) | number:'1.2-2'}} </b>
+                        </span>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td colspan="4"> Total Expense </td>
+                      <td> {{(profitReportExpenseAmt) | number:'1.2-2'}} </td>
+                    </tr>
+
+                    <tr>
+                      <td colspan="3"></td>
+                      <td style="text-align: right;">
+                        <span
+                          *ngIf="(((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) + (profitReportLubePurchase))) - (profitReportExpenseAmt) + (totalVariationAmt) > 0">
+                          <b>Net Profit </b>
+                        </span>
+                        <span
+                          *ngIf="(((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) + (profitReportLubePurchase))) - (profitReportExpenseAmt) + (totalVariationAmt) <= 0">
+                          <b>Loss </b>
+                        </span>
+                      </td>
+                      <td>
+                        <span
+                          *ngIf="(((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) + (profitReportLubePurchase))) - (profitReportExpenseAmt) + (totalVariationAmt) > 0">
+                          <i class="fas fa-rupee-sign"></i>
+                          <b> {{ (((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) +
+                            (profitReportLubePurchase))) - (profitReportExpenseAmt) + (totalVariationAmt) |
+                            number:"1.2-2" }} </b>
+                        </span>
+                        <span style="color: red;"
+                          *ngIf="(((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) + (profitReportLubePurchase))) - (profitReportExpenseAmt) + (totalVariationAmt) <= 0">
+                          <i class="fas fa-rupee-sign"></i>
+                          <b> {{ (((((profitReportFuelSales) + (profitReportLubeSales)) - ((profitReportFuelPurchase) +
+                            (profitReportLubePurchase))) - (profitReportExpenseAmt) + (totalVariationAmt)) * (-1)) |
+                            number:'1.2-2'}} </b>
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="3"></td>
+                      <td style="text-align: right;">
+                        <span *ngIf="(((((profitReportFuelSales) + (profitReportLubeSales) ) 
+                                   - ((profitReportFuelPurchase) + (profitReportLubePurchase) 
+                                   + (profitReportExpenseAmt) + (totalVariationAmt))) 
+                                   / ((profitReportFuelPurchase) + (profitReportLubePurchase))) * 100) > 0">
+                          <b>Net Profit </b>
+                        </span>
+                        <span *ngIf="(((((profitReportFuelSales) + (profitReportLubeSales) ) 
+                                   - ((profitReportFuelPurchase) + (profitReportLubePurchase) 
+                                   + (profitReportExpenseAmt) + (totalVariationAmt))) 
+                                   / ((profitReportFuelPurchase) + (profitReportLubePurchase))) * 100) <= 0">
+                          <b>Loss </b>
+                        </span>
+                      </td>
+                      <td>
+                        <span *ngIf="(((((profitReportFuelSales) + (profitReportLubeSales) ) 
+                                   - ((profitReportFuelPurchase) + (profitReportLubePurchase) 
+                                   + (profitReportExpenseAmt) + (totalVariationAmt))) 
+                                   / ((profitReportFuelPurchase) + (profitReportLubePurchase))) * 100) > 0">
+                          <i class="fas fa-rupee-sign"></i>
+                          <b> {{ (((((profitReportFuelSales) + (profitReportLubeSales) )
+                            - ((profitReportFuelPurchase) + (profitReportLubePurchase)
+                            + (profitReportExpenseAmt) + (totalVariationAmt)))
+                            / ((profitReportFuelPurchase) + (profitReportLubePurchase))) * 100) | number:"1.2-2" }} %
+                          </b>
+                        </span>
+                        <span style="color: red;" *ngIf="(((((profitReportFuelSales) + (profitReportLubeSales) ) 
+                                   - ((profitReportFuelPurchase) + (profitReportLubePurchase) 
+                                   + (profitReportExpenseAmt) + (totalVariationAmt))) 
+                                   / ((profitReportFuelPurchase) + (profitReportLubePurchase))) * 100) <= 0">
+                          <i class="fas fa-rupee-sign"></i>
+                          <b> {{ (((((profitReportFuelSales) + (profitReportLubeSales) )
+                            - ((profitReportFuelPurchase) + (profitReportLubePurchase)
+                            + (profitReportExpenseAmt) + (totalVariationAmt)))
+                            / ((profitReportFuelPurchase) + (profitReportLubePurchase))) * 100) * (-1) |
+                            number:'1.2-2'}} %</b>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <hr>
+              <hr>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html>

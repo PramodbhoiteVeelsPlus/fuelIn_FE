@@ -17,6 +17,7 @@ import { SalesPurchaseReportComponent } from './sales-purchase-report/sales-purc
 import { AddSummaryReportComponent } from './summary-report/add-summary-report/add-summary-report.component';
 import { ViewSummaryReportComponent } from './summary-report/view-summary-report/view-summary-report.component';
 import { UpdateSummaryReportComponent } from './summary-report/update-summary-report/update-summary-report.component';
+import { ViewProfitReportComponent } from './profit-report/view-profit-report/view-profit-report.component';
 
 @NgModule({
   declarations: [DailyReportEntriesComponent, DailyReportComponent, MonthlyReportComponent,
@@ -49,6 +50,10 @@ import { UpdateSummaryReportComponent } from './summary-report/update-summary-re
       {
         path: 'profitReport',
         component: ProfitReportComponent,
+      },
+      {
+        path: 'viewProfitReport',
+        component: ViewProfitReportComponent,
       },
       {
         path: 'summaryReport',
