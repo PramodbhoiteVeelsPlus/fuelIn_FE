@@ -59,6 +59,9 @@ export class MixedService {
     private getLubeTaxStatementURL = this.baseURL + 'crCustomers/getLubeTaxStatement';
     private getCreditByCustMapIdDateURL = this.baseURL + "fuelCreditInvoice/getCreditByCustMapIdDate";
     private getCreditByCustMapIdDateVehicleURL = this.baseURL + "fuelCreditInvoice/getCreditByCustMapIdDateVehicle"; 
+    private getPosDetailsURL = this.baseURL + 'posDetails/getPosDetails';
+    private getShiftTimeDetailURL = this.baseURL + 'posDetails/getFuelShiftTimeDetails'; 
+    private getPosTerminalURL = this.baseURL + 'posDetails/getPosTerminals'; 
 
 
     setHeader() {
@@ -313,6 +316,36 @@ export class MixedService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.getCreditByCustMapIdDateVehicleURL, body, {
+            headers: headers
+        })
+    }
+
+    // getPosDetailsURL
+    getPosDetailsPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getPosDetailsURL, body, {
+            headers: headers
+        })
+    }
+
+    // getShiftTimeDetailURL
+    getShiftTimeDetailPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getShiftTimeDetailURL, body, {
+            headers: headers
+        })
+    }
+
+    // getPosTerminalURL
+    getPosTerminalPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getPosTerminalURL, body, {
             headers: headers
         })
     }

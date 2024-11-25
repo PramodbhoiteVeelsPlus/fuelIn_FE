@@ -1,0 +1,104 @@
+<br>
+<form [formGroup]="shiftForm">
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-auto">
+      <label><b>Select Shift :</b></label>
+      <select class="form-control" formControlName="shiftTimeId" (change)="getPosDetailsByOperatorTerminal()" required>
+        <option value=""> All Shift </option>
+        <option value="1"> STANDARD </option>
+        <option *ngFor="let data of fuelShiftTimeDetails" [value]="data.fuelShiftTimeId">
+          {{data.fuelShiftTimeShiftName}} {{data.fuelShiftTimeDetails}}
+        </option>
+      </select>
+    </div>
+    <div class="col-auto">
+      <label><b>Select Operator :</b></label>
+
+      <select class="form-control" (change)="getPosDetailsByOperatorTerminal()" formControlName="operatorStaffId"
+        required>
+        <option value="">All operators </option>
+        <option *ngFor="let data of staffDetails" [value]="data.fuelDealerStaffId">
+          {{data.firstName}} {{data.lastName}}
+        </option>
+      </select>
+    </div>
+    <div class="col-auto">
+      <label><b>Select POS :</b></label>
+
+      <select class="form-control" (change)="getPosDetailsByOperatorTerminal()" formControlName="terminalId" required>
+        <option value="">All POS </option>
+        <option *ngFor="let data of terminalDetails" [value]="data.fuelTerminalsId">
+          {{data.terminalName}}
+        </option>
+      </select>
+    </div>
+    <div class="col-auto">
+      <label> <b> Start Date </b> </label>
+
+      <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;" name="startDate"
+        (click)="endDate.toggle()" ngbDatepicker #endDate="ngbDatepicker" formControlName="date">
+    </div>
+    <div class="col-auto">
+      <label><b> End Date </b></label>
+
+      <input class="form-control" placeholder="DD-MM-YYYY" name="endDate" readonly style="background-color: #ffffff;"
+        (click)="endDate.toggle()" formControlName="endDate" ngbDatepicker #endDate="ngbDatepicker">
+    </div>
+    <div class="col-auto">
+      <br>
+      <button type="button" class="btn btn-primary" style="margin: 7px" (click)="getPosDetailsByOperatorTerminal()">
+        Submit
+      </button>
+    </div>
+  </div>
+  <br><br>
+  <div class="row">
+    <div class="col-md-9"></div>
+
+    <div class="col-md-1">
+      <span style="font-size: 35px;cursor: pointer;" (click)="exportToPDF()" ngbTooltip="Download PDF"
+        placement="bottom"><i class="fas fa-file-pdf"></i></span><br>
+    </div>
+
+    <div class="col-md-1">
+      <span style="font-size: 35px;cursor: pointer;" (click)="exportExcel()" ngbTooltip="Download CSV"
+        placement="bottom"><i class="fas fa-file-csv"></i></span><br>
+    </div>
+
+
+  </div>
+  <br>
+  <div class="table-responsive mb-0">
+    <table id="excel-table" class="table table-centered table-nowrap">
+      <thead class="table-light">
+        <tr>
+          <th style="text-align: left;"> Date </th>
+          <th style="text-align: left;"> Shift </th>
+          <th style="text-align: left;"> Operator Name </th>
+          <th style="text-align: left;"> Digital POS </th>
+          <th style="text-align: left;"> Details </th>
+          <th style="text-align: left;"> Amount </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of posData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+          <td style="text-align: left;"> {{ data.openDate | date:"d MMM y"}} </td>
+          <td style="text-align: left;"> {{ data.shift }} </td>
+          <td style="text-align: left;"> {{ data.name }} </td>
+          <td style="text-align: left;"> {{ data.pos }} </td>
+          <td style="text-align: left;"> {{ data.details }} </td>
+          <td style="text-align: left;"> {{ data.paytmTotalAmount }} </td>
+        </tr>
+
+      </tbody>
+    </table>
+    
+      <!-- begin::Pagination -->
+      <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+        style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+      </pagination-controls>
+      <!-- end::Pagination -->
+  </div>
+
+</form>

@@ -147,6 +147,7 @@ import { BaseTablesWidget9Component } from './base-tables/base-tables-widget9/ba
 import { BaseTablesWidget10Component } from './base-tables/base-tables-widget10/base-tables-widget10.component';
 import { BaseTablesWidget11Component } from './base-tables/base-tables-widget11/base-tables-widget11.component';
 import { BaseTablesWidget12Component } from './base-tables/base-tables-widget12/base-tables-widget12.component';
+import { MixedWidget15Component } from './mixed/mixed-widget15/mixed-widget15.component';
 // import { routes } from 'src/app/app-routing.module';
 @NgModule({
   declarations: [
@@ -288,7 +289,8 @@ import { BaseTablesWidget12Component } from './base-tables/base-tables-widget12/
     BaseTablesWidget9Component,
     BaseTablesWidget10Component,
     BaseTablesWidget11Component,
-    BaseTablesWidget12Component
+    BaseTablesWidget12Component,
+    MixedWidget15Component,
   ],
   imports: [
     ReactiveFormsModule,
@@ -445,7 +447,8 @@ import { BaseTablesWidget12Component } from './base-tables/base-tables-widget12/
     BaseTablesWidget9Component,
     BaseTablesWidget10Component,
     BaseTablesWidget11Component,
-    BaseTablesWidget12Component
+    BaseTablesWidget12Component,
+    MixedWidget15Component,
   ],
   providers: [NgbActiveModal, ExcelService],
 })
