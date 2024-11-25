@@ -73,6 +73,9 @@ export class BaseTablesService {
     private getCustomerDetailsByCrDaysLimitURL = this.baseURL + 'invoiceCrDaysLimit/getCustomerDetailsByCrDaysLimit';
     private getCrDaysLimitByDealerIdURL = this.baseURL + 'invoiceCrDaysLimit/getCrDaysLimitByDealerId'; 
     private addSavedInvoiceByCrDaysURL = this.baseURL + 'invoiceCrDaysLimit/addSavedInvoiceByCrDays';
+    private getStaffDetailsURL = this.baseURL + 'fuelStaff/getStaffDetails';
+    private updateMapStatusforStaffURL = this.baseURL + 'fuelStaff/updateMapStatusforStaff'; 
+    private UpdateDealerStaffDetailsURL = this.baseURL + 'fuelStaff/UpdateDealerStaffDetails';
 
 
 
@@ -537,6 +540,36 @@ export class BaseTablesService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.addSavedInvoiceByCrDaysURL, body, {
+            headers: headers
+        })
+    }
+
+    // getStaffDetailsURL
+    getStaffDetailsPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getStaffDetailsURL, body, {
+            headers: headers
+        })
+    }
+
+    // updateMapStatusforStaffURL
+    updateMapStatusforStaffPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateMapStatusforStaffURL, body, {
+            headers: headers
+        })
+    }
+
+    // UpdateDealerStaffDetailsURL
+    UpdateDealerStaffDetailsPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.UpdateDealerStaffDetailsURL, body, {
             headers: headers
         })
     }

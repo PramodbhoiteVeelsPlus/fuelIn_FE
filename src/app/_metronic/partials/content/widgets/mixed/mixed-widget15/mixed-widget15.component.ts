@@ -163,6 +163,7 @@ export class MixedWidget15Component implements OnInit {
 
                 this.posData.push(dataJSON);
                 this.spinner.hide();
+                this.cd.detectChanges()
 
               })
             } else {
@@ -172,11 +173,13 @@ export class MixedWidget15Component implements OnInit {
               this.shiftForm.controls["operatorStaffId"].setValue("")
               this.shiftForm.controls["terminalId"].setValue("")
               this.spinner.hide();
+              this.cd.detectChanges()
 
             }
 
           } else {
             this.spinner.hide();
+            this.cd.detectChanges()
 
           }
 
@@ -216,6 +219,7 @@ export class MixedWidget15Component implements OnInit {
 
                   this.posData.push(dataJSON);
                   this.spinner.hide();
+                  this.cd.detectChanges()
 
                 })
               } else {
@@ -224,11 +228,13 @@ export class MixedWidget15Component implements OnInit {
                 this.shiftForm.controls["shiftTimeId"].setValue("")
                 this.shiftForm.controls["operatorStaffId"].setValue("")
                 this.spinner.hide();
+                this.cd.detectChanges()
 
               }
 
             } else {
               this.spinner.hide();
+              this.cd.detectChanges()
             }
           });
         } else {
@@ -266,6 +272,7 @@ export class MixedWidget15Component implements OnInit {
 
                     this.posData.push(dataJSON);
                     this.spinner.hide();
+                    this.cd.detectChanges()
 
                   })
                 } else {
@@ -274,11 +281,13 @@ export class MixedWidget15Component implements OnInit {
                   this.shiftForm.controls["terminalId"].setValue("")
                   this.shiftForm.controls["shiftTimeId"].setValue("")
                   this.spinner.hide();
+                  this.cd.detectChanges()
 
                 }
 
               } else {
                 this.spinner.hide();
+                this.cd.detectChanges()
               }
             });
           } else {
@@ -316,6 +325,7 @@ export class MixedWidget15Component implements OnInit {
 
                       this.posData.push(dataJSON);
                       this.spinner.hide();
+                      this.cd.detectChanges()
 
                     })
                   } else {
@@ -324,11 +334,13 @@ export class MixedWidget15Component implements OnInit {
                     this.shiftForm.controls["terminalId"].setValue("")
                     this.shiftForm.controls["operatorStaffId"].setValue("")
                     this.spinner.hide();
+                    this.cd.detectChanges()
 
                   }
 
                 } else {
                   this.spinner.hide();
+                  this.cd.detectChanges()
                 }
               });
             } else {
@@ -365,6 +377,7 @@ export class MixedWidget15Component implements OnInit {
 
                         this.posData.push(dataJSON);
                         this.spinner.hide();
+                        this.cd.detectChanges()
 
                       })
                     } else {
@@ -372,12 +385,14 @@ export class MixedWidget15Component implements OnInit {
                       this.getPosDetails(this.fuelDealerId);
                       this.shiftForm.controls["operatorStaffId"].setValue("")
                       this.spinner.hide();
+                      this.cd.detectChanges()
 
 
                     }
 
                   } else {
                     this.spinner.hide();
+                    this.cd.detectChanges()
                   }
                 });
               } else {
@@ -414,6 +429,7 @@ export class MixedWidget15Component implements OnInit {
 
                           this.posData.push(dataJSON);
                           this.spinner.hide();
+                          this.cd.detectChanges()
 
                         })
                       } else {
@@ -421,12 +437,14 @@ export class MixedWidget15Component implements OnInit {
                         this.getPosDetails(this.fuelDealerId);
                         this.shiftForm.controls["shiftTimeId"].setValue("")
                         this.spinner.hide();
+                        this.cd.detectChanges()
 
 
                       }
 
                     } else {
                       this.spinner.hide();
+                      this.cd.detectChanges()
 
                     }
                   });
@@ -470,16 +488,19 @@ export class MixedWidget15Component implements OnInit {
                           this.getPosDetails(this.fuelDealerId);
                           this.shiftForm.controls["terminalId"].setValue("")
                           this.spinner.hide();
+                          this.cd.detectChanges()
 
                         }
 
                       } else {
                         this.spinner.hide();
+                        this.cd.detectChanges()
                       }
                     });
                   } else {
                     this.getPosDetails(this.fuelDealerId);
                     this.spinner.hide();
+                    this.cd.detectChanges()
                   }
 
                 }
@@ -491,6 +512,7 @@ export class MixedWidget15Component implements OnInit {
     } else {
       alert("Please Select Date..!")
       this.spinner.hide();
+      this.cd.detectChanges()
     }
   }
   
@@ -526,11 +548,13 @@ export class MixedWidget15Component implements OnInit {
 
           this.posData.push(dataJSON);
           this.spinner.hide();
+          this.cd.detectChanges()
 
         })
 
       } else {
         this.spinner.hide();
+        this.cd.detectChanges()
 
       }
     });
@@ -546,8 +570,10 @@ export class MixedWidget15Component implements OnInit {
         if (res.status == "OK") {
           if (res.data.length) {
             this.fuelShiftTimeDetails = res.data;
+            this.cd.detectChanges()
           } else {
             this.fuelShiftTimeDetails.length = 0;
+            this.cd.detectChanges()
           }
         }
         else {
@@ -562,6 +588,7 @@ export class MixedWidget15Component implements OnInit {
     this.post1.getAllAttendantsByDidPOST(data).subscribe((res) => {
       if (res.status == 'OK') {
         this.staffDetails = res.data;
+        this.cd.detectChanges()
       } else {
       }
     });
@@ -574,6 +601,7 @@ export class MixedWidget15Component implements OnInit {
     this.post.getPosTerminalPOST(data).subscribe((res) => {
       if (res.status == 'OK') {
         this.terminalDetails = res.data;
+        this.cd.detectChanges()
       } else {
       }
     });

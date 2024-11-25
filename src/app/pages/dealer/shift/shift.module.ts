@@ -8,11 +8,13 @@ import { ModalsModule, WidgetsModule } from 'src/app/_metronic/partials';
 import { SharedModule } from 'src/app/_metronic/shared/shared.module';
 import { AddShiftComponent } from './add-shift/add-shift.component';
 import { PosDetailsComponent } from './pos-details/pos-details.component';
+import { StaffComponent } from './staff/staff.component';
 
 @NgModule({
   declarations: [
     AddShiftComponent,
-    PosDetailsComponent
+    PosDetailsComponent, 
+    StaffComponent
   ],
   imports: [
     CommonModule,
@@ -28,6 +30,10 @@ import { PosDetailsComponent } from './pos-details/pos-details.component';
       {
         path: 'posDetails',
         component: PosDetailsComponent,
+      },
+      {
+        path: 'staff',
+        component: StaffComponent,
       },
     ]),
     WidgetsModule,

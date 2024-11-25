@@ -1,0 +1,266 @@
+<head>
+  <style>
+    .btn.btn-icon.badge.badge-light-success {
+      background-color: #DFFFEA;
+      color: #DFFFEA;
+      transition: background-color 0.3s, color 0.3s;
+      /* Smooth transition */
+    }
+
+    .btn.btn-icon.badge.badge-light-success:hover {
+      background-color: #17C653;
+      /* Change to success color */
+      color: #17C653;
+      /* Change text color if needed */
+    }
+
+    .btn.btn-icon.badge.badge-light-warning {
+      background-color: #FFF8DD;
+      color: #FFF8DD;
+      transition: background-color 0.3s, color 0.3s;
+      /* Smooth transition */
+    }
+
+    .btn.btn-icon.badge.badge-light-warning:hover {
+      background-color: #F6C000;
+      /* Change to  color */
+      color: #F6C000;
+      /* Change text color if needed */
+    }
+
+    .btn.btn-icon.badge.badge-light-danger {
+      background-color: #FFEEF3;
+      color: #FFEEF3;
+      transition: background-color 0.3s, color 0.3s;
+      /* Smooth transition */
+    }
+
+    .btn.btn-icon.badge.badge-light-danger:hover {
+      background-color: #F8285A;
+      /* Change to  color */
+      color: #F8285A;
+      /* Change text color if needed */
+    }
+
+    .switch {
+      display: inline-block;
+      height: 34px;
+      position: relative;
+      width: 60px;
+    }
+
+    .switch input {
+      display: none;
+    }
+
+    .slider {
+      background-color: #ccc;
+      bottom: 0;
+      cursor: pointer;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      transition: .4s;
+    }
+
+    .slider:before {
+      background-color: #fff;
+      bottom: 4px;
+      content: "";
+      height: 26px;
+      left: 4px;
+      position: absolute;
+      transition: .4s;
+      width: 26px;
+    }
+
+    input:checked+.slider {
+      background-color: #66bb6a;
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(26px);
+    }
+
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+  </style>
+</head>
+
+<br>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-body">
+          <div *ngIf="accessGroup == '12' || accessGroup == '14'">
+            <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
+              title="Click to add a user">
+              <a (click)="openModal()" class="btn btn-sm btn-light-primary">
+                <app-keenicon name="plus" class="fs-3"></app-keenicon>
+                New Staff
+              </a>
+              <app-modal2 #modal [modalConfig]="modalConfig">
+                Modal body html
+              </app-modal2>
+            </div>
+            <form>
+              <div class="table-responsive mb-0">
+                <table class="table table-centered table-nowrap">
+                  <thead class="table-light">
+                    <tr>
+                      <th style="text-align: left;">#</th>
+                      <th style="text-align: left;">First Name</th>
+                      <th style="text-align: left;">Last Name</th>
+                      <th style="text-align: left;">Mobile No.</th>
+                      <th style="text-align: left;">Role</th>
+                      <th style="text-align: left;">Salary</th>
+                      <th *ngIf="accessGroup != '14' " style="text-align: left;">Mapping</th>
+                      <th *ngIf="accessGroup != '14' " style="text-align: left;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let data of staffDetailsStaff; let i = index">
+                    <tr>
+                      <td style="text-align: left;"> {{i+1}} </td>
+                      <td style="text-align: left;"> {{data.firstName}} </td>
+                      <td style="text-align: left;"> {{data.lastName}} </td>
+
+                      <td style="text-align: left;"> {{data.phone1}} </td>
+                      <td style="text-align: left;">
+                        <span *ngIf="data.accessGroupId == '12'">OWNER</span>
+                        <span *ngIf="data.accessGroupId == '13'">OPERATOR</span>
+                        <span *ngIf="data.accessGroupId == '14'">MANAGER</span>
+                      </td>
+                      <td style="text-align: left;">
+                        <span *ngIf="data.accessGroupId != '12'">
+                          {{data.salary}}
+                        </span>
+                      </td>
+                      <td *ngIf="accessGroup != '14' " style="text-align:left;">
+                        <span *ngIf="data.accessGroupId == '12'">
+                          <label class="switch">
+                            <input type="checkbox" checked="checked"
+                              (change)="noUpdateMapp($event,data.fuelDealerStaffId,data.dealerMapStatus)">
+                            <span class="slider round"></span>
+                          </label>
+                        </span>
+                        <span *ngIf="data.accessGroupId != '12'">
+                          <div *ngIf="data.dealerMapStatus == 'MAPPED'">
+                            <label class="switch">
+                              <input type="checkbox" checked="checked"
+                                (change)="updateMapping($event,data.fuelDealerStaffId,data.dealerMapStatus)">
+                              <span class="slider round"></span>
+                            </label>
+                          </div>
+                          <div *ngIf="data.dealerMapStatus == 'UNMAPPED'">
+                            <label class="switch">
+                              <input type="checkbox" [checked]="false"
+                                (change)="updateMapping($event,data.fuelDealerStaffId,data.dealerMapStatus)">
+                              <span class="slider round"></span>
+                            </label>
+                          </div>
+                        </span>
+                      </td>
+
+                      <td *ngIf="accessGroup != '14' ">
+                        <div ngbDropdown placement="bottom-left">
+                          <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                            aria-expanded="true"></i>
+                          <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                            <a class="dropdown-item" href="javascript: void(0);" *ngIf="data.accessGroupId != '12'"
+                              (click)="staffEdit(updateStaff,data.fuelDealerStaffId,data.userId,data.personId,data.firstName,data.lastName,data.designation,data.salary)">
+                              <i style="color:#138496; cursor:pointer;" class="fas fa-edit"></i> Edit
+                            </a>
+                          </div>
+                        </div>
+
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </form>
+
+            <ng-template #updateStaff let-c="close" let-d="dismiss">
+              <div class="modal-header">
+                <h4 class="modal-title">
+                  <strong>
+                    &nbsp;&nbsp;&nbsp;
+                    Edit Staff </strong>
+                </h4>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-1"></div>
+                  <div class="col-md-2">
+                    <label class="labelNewMargin">Name :</label>
+                  </div>
+                  <div class="col-md-4">
+                    <input class="form-control" placeholder="first name" [(ngModel)]="firstName"
+                      [ngModelOptions]="{standalone: true}" (ngModelChange)="firstName = $event.toUpperCase()">
+                  </div>
+                  <div class="col-md-4">
+                    <input class="form-control" placeholder="last name" [(ngModel)]="lastName"
+                      [ngModelOptions]="{standalone: true}" (ngModelChange)="lastName = $event.toUpperCase()">
+                  </div>
+                </div>
+                <br>
+
+                <div class="row">
+                  <div class="col-md-1"></div>
+                  <div class="col-md-2">
+                    <label class="labelNewMargin">Designation :</label>
+                  </div>
+                  <div class="col-md-4">
+                    <select class="form-select" [(ngModel)]="designation" [ngModelOptions]="{standalone: true}">
+                      <option value="">Select Role</option>
+                      <option value="OPERATOR">OPERATOR</option>
+                      <option value="MANAGER">MANAGER</option>
+                    </select>
+
+                  </div>
+                </div>
+                <br>
+
+                <div class="row">
+                  <div class="col-md-1"></div>
+                  <div class="col-md-2">
+                    <label class="labelNewMargin">Salary :</label>
+                  </div>
+                  <div class="col-md-4">
+                    <input class="form-control" placeholder="salary" type="number" minlength="0" [(ngModel)]="salary"
+                      [ngModelOptions]="{standalone: true}">
+                  </div>
+                </div>
+                <br>
+
+
+                <div class="row">
+                  <div class="col-md-4">
+                  </div>
+                  <div class="col-md-2">
+                    <button type="submit" class="btn btn-outline-success my-2 my-sm-0"
+                      (click)="UpdateDealerStaffDetails()">Update</button>
+                  </div>
+                  &nbsp;&nbsp;
+                  <div class="col-md-2">
+                    <button type="submit" class="btn btn-danger" (click)="closeModalEditStaff()">Cancel</button>
+                  </div>
+                </div>
+
+              </div>
+            </ng-template>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
