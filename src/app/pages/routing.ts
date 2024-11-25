@@ -80,6 +80,10 @@ const Routing: Routes = [
     loadChildren: () => import('./dealer/report/report.module').then((m) => m.ReportModule),
   },
   {
+    path: 'shift',
+    loadChildren: () => import('./dealer/shift/shift.module').then((m) => m.ShiftModule),
+  },
+  {
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full',

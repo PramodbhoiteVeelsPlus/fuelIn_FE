@@ -1,1 +1,28 @@
-<p>add-lube-tax-gst-sale works!</p>
+<div class="card-header">
+    <b>Add Lube Tax GST Sale</b>
+  </div>
+  
+  <!-- <div class="row"> -->
+  <br>
+  <div>
+    <ul ngbNav #addtaxgstSales="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified" style="width: 100%;">
+      <li [ngbNavItem]="1">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">LUBRICANT-TAX-GST </span>
+        </a>
+        <ng-template ngbNavContent>
+          <app-lists-widget1 class="card card-xxl-stretch mb-5 mb-xl-8"></app-lists-widget1>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="2">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">VIEW-TAX </span>
+        </a>
+        <ng-template ngbNavContent>
+          <app-lists-widget2 class="card card-xl-stretch mb-xl-8" color="primary"></app-lists-widget2>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="addtaxgstSales"></div>
+  </div>
+  <!-- </div> -->

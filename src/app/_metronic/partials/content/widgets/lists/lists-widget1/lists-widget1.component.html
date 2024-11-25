@@ -1,123 +1,306 @@
-<!-- begin::Header -->
-<div class="card-header border-0 pt-5">
-  <h3 class="card-title align-items-start flex-column">
-    <span class="card-label fw-bolder text-gray-900">Tasks Overview</span>
-    <span class="text-muted mt-1 fw-bold fs-7">Pending 10 tasks</span>
-  </h3>
-
-  <div class="card-toolbar">
-    <!-- begin::Menu -->
-    <button
-      type="button"
-      class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
-      data-kt-menu-trigger="click"
-      data-kt-menu-placement="bottom-end"
-      data-kt-menu-flip="top-end"
-    >
-      <app-keenicon name="category" class="fs-2"></app-keenicon>
-    </button>
-    <app-dropdown-menu1></app-dropdown-menu1>
-    <!-- end::Menu -->
-  </div>
-</div>
-<!-- end::Header -->
-
 <!-- begin::Body -->
-<div class="card-body pt-5">
-  <!-- begin::Item -->
-  <div class="d-flex align-items-center mb-7">
-    <!-- begin::Symbol -->
-    <div class="symbol symbol-50px me-5">
-      <span class="symbol-label bg-light-success">
-        <app-keenicon name="abstract-26" class="fs-2x text-success"></app-keenicon>
-      </span>
+<div class="card-body" *ngIf="accessGroup != '7'">
+
+  <form [formGroup]="requestTransporterLubeTax">
+
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-1">
+        <label class="labelNewMargin"><b>Date</b>:</label>
+      </div>
+      <div class="col-md-2">
+        <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" (click)="endDate.toggle()"
+          onkeydown="return false" formControlName="estimatedRefuelDate" ngbDatepicker #endDate="ngbDatepicker">
+      </div>
+
+      <div class="col-md-4">
+        <label class="labelNewMargin"><b>Product</b>: &nbsp; Lubricants</label>
+      </div>
+
     </div>
-    <!-- end::Symbol -->
-    <!-- begin::Text -->
-    <div class="d-flex flex-column">
-      <a href="#" class="text-gray-900 text-hover-primary fs-6 fw-bolder">
-        Project Briefing
-      </a>
-      <span class="text-muted fw-bold">Project Manager</span>
+    <br>
+    <ng-template #viewFlagModel let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="text-center">
+          Show Details
+        </h4>
+        <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover table-striped">
+          <thead>
+            <tr>
+              <th align=left>Date Of Alert</th>
+              <th align=left>Petrol Pump Name</th>
+              <th align=left>City</th>
+              <th align=left>Remarks</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let charges of viewCorpFlag; let i = index;">
+            <tr>
+              <td>{{charges.corporateFlagCreatedAt| date:'d MMM, yyyy'}}</td>
+              <td><b> {{charges.companyName}}</b> <br>
+                {{charges.firstName}} {{charges.lastName}} <br>
+                {{charges.phone1}}</td>
+              <td>{{charges.city}}</td>
+
+              <td>{{charges.corporateFlagPurpose}}</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </ng-template>
+    <br>
+    <form [formGroup]="requestTransporter1">
+
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-1">
+          <label class="labelNewMargin"><b>Customer</b> </label>
+        </div>
+
+        <div class="col-md-4">
+          <input class="form-control" type="text" list="corporateList" placeholder="select customer"
+            formControlName="selectedCorp" (change)="getDetailsByfuelDealerCustomerMapIdId($event)">
+          <datalist id="corporateList">
+            <option *ngFor="let data of corporateList" [value]="data.companyName">
+          </datalist>
+        </div>
+      </div>
+      <br>
+
+      <div class="row" *ngIf="isSelected1">
+        <div class="col-lg-12">
+          <div class="table-responsive mb-0">
+            <table class="table table-centered table-nowrap">
+              <thead>
+                <tr>
+                  <th style="text-align: left;border-width: 1px; border-color: #000;">Khata Name</th>
+                  <th style="text-align: left;border-width: 1px; border-color: #000;">Key Person Name</th>
+                  <th style="text-align: left;border-width: 1px; border-color: #000;">Key Person Mobile</th>
+                  <th style="text-align: left;border-width: 1px; border-color: #000;">Bill Nos. Set</th>
+                  <th style="text-align: left;border-width: 1px; border-color: #000;">GST</th>
+                  <th style="text-align: left;border-width: 1px; border-color: #000;">Alert</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="text-align: left;border-width: 1px; border-color: #000;">{{dealerName}}</td>
+                  <td style="text-align: left;border-width: 1px; border-color: #000;">
+                    {{personName}}
+                  </td>
+                  <td style="text-align: left;border-width: 1px; border-color: #000;"> {{personPhone1}} </td>
+                  <td style="text-align: left;border-width: 1px; border-color: #000;">
+                    {{rangeFrom}} - {{rangeTo}}
+                  </td>
+                  <td style="text-align: left;border-width: 1px; border-color: #000;">
+                    <span *ngIf=" gstNumber != 'undefined'">
+                      <b *ngIf="gstNumber !='' ">{{gstNumber}}</b></span>
+                    <!-- <span *ngIf="fuelStaffAccess.outstanding == 'TRUE'">
+                      <button *ngIf="gstNumber =='' || gstNumber == 'undefined'" type="submit" class="btn btn-success"
+                        (click)="updateName(editName)">Set GST</button>
+                    </span> -->
+                  </td>
+
+                  <td style="text-align: left;border-width: 1px; border-color: #000;">
+                    <span *ngIf="viewCorpFlag.length" class="col-md-1" (click)="viewFlag(viewFlagModel)"
+                      style="color:red;cursor:pointer;font-size: x-large;">
+                      <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+                    </span>
+                    <span *ngIf="!viewCorpFlag.length" class="col-md-1">
+                      None
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+
+      <ng-template #editName let-c="close" let-d="dismiss">
+        <div class="modal-header">
+          <h4 class="modal-title">
+            <strong>
+              &nbsp;&nbsp;&nbsp;
+              Update </strong>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-3">
+              <label class="labelNewMargin">GST Number :</label>
+            </div>
+            <div class="col-md-6">
+              <input class="form-control" max="15"
+                oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                [(ngModel)]="updateGST" [ngModelOptions]="{standalone: true}">
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-2">
+              <button type="submit" class="btn btn-primary" (click)="updateNameByMapId()">Update</button>
+            </div>&nbsp;&nbsp;
+            <div class="col-md-2">
+              <button type="submit" class="btn btn-secondary" (click)="closeModalUpdate()">Close</button>
+            </div>
+          </div>
+
+        </div>
+      </ng-template>
+
+    </form>
+
+    <div class="row">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <div class="col col-xl-12 col-lg-12">
+        <div class="card-body table-responsive">
+          <table class="table table-hover table-striped">
+            <tbody *ngFor="let charges of CreditRequestDataLubeTax; let i = index;">
+              <tr>
+                <th align=left>Lubricant Name</th>
+                <th align=left>Tax</th>
+                <th align=left>taxDetails</th>
+                <th align=left>Bill / Ref Number</th>
+                <th align=left>Vehicle No./ Barrel</th>
+                <th align=left>Credit Amount</th>
+                <th align=left>Quantity In Pieces</th>
+                <th align=left>Credit Quantity</th>
+              </tr>
+              <tr>
+                <td>
+                  <select class="form-control" [(ngModel)]="charges.lubeId" [ngModelOptions]="{standalone: true}"
+                    (change)="getLubeDetails($event,i)" required>
+                    <option value="">Select Lubricant </option>
+                    <option *ngFor="let data of lubricantList" [value]="data.lubricantsId">
+                      {{data.lubricantsName}}
+                    </option>
+                  </select>
+                </td>
+
+                <td>
+                  <select class="form-control" [(ngModel)]="charges.gst" [ngModelOptions]="{standalone: true}"
+                    (blur)="gstCalculation1(i)" required>
+                    <option value="">Select Tax </option>
+                    <option *ngFor="let data of gstDetails" [value]="data.gst">
+                      GST {{data.gst}} %
+                    </option>
+                  </select>
+                </td>
+
+                <td>
+                  <select class="form-control" [(ngModel)]="charges.taxDetails" [ngModelOptions]="{standalone: true}"
+                    (blur)="gstCalculation1(i)" required>
+                    <option value="INCLUDE"> Include Tax Amt </option>
+                    <option value="EXCLUDE"> Not Include Tax Amt </option>
+                  </select>
+                </td>
+                <td>
+                  <input type="text" class="form-control" [(ngModel)]="charges.manualNumberLube"
+                    [ngModelOptions]="{standalone: true}" placeholder="Enter Bill / Ref Number"
+                    (blur)="setManualNumberLubeTax(i)" />
+                </td>
+
+                <td>
+                  <input type="text" class="form-control" [(ngModel)]="charges.vehicleNumberLube"
+                    oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                    [ngModelOptions]="{standalone: true}" placeholder="Enter vehicle no./ barrel"
+                    (blur)="setVehicleNumberLube()" />
+                </td>
+
+                <td>
+                  <input type="number" class="form-control" [(ngModel)]="charges.creditAmountLube"
+                    [ngModelOptions]="{standalone: true}" placeholder="Enter Credit Amount"
+                    (blur)="gstCalculation1(i)" />
+                </td>
+
+                <td>
+                  <input type="number" class="form-control" [(ngModel)]="charges.quantityInPieces"
+                    [ngModelOptions]="{standalone: true}" placeholder="Enter Quantity Pieces"
+                    (input)="getQuantityByPieces(i)" />
+                </td>
+                <td>
+                  <input type="number" class="form-control" [(ngModel)]="charges.creditQuantityLube"
+                    [ngModelOptions]="{standalone: true}" placeholder="Enter Credit Quantity"
+                    (blur)="setQuantityLubeTax()" />
+                </td>
+
+              </tr>
+
+              <tr>
+                <th align=left>HSN/SAC Number</th>
+                <th align=left>Tax</th>
+                <th align=left>Basic Amount</th>
+                <th align=left>Actual Amount</th>
+                <th align=left>Units</th>
+                <th align=left>Action</th>
+
+              </tr>
+              <tr>
+                <td>
+                  <input class="form-control" placeholder="HSN/SAC Number" [(ngModel)]="charges.hsnSacNumber"
+                    [ngModelOptions]="{standalone: true}" readonly>
+                </td>
+
+                <td>
+                  <input type="number" class="form-control" [(ngModel)]="charges.gstAmount"
+                    [ngModelOptions]="{standalone: true}" placeholder="Enter Tax" readonly />
+                </td>
+
+                <td>
+                  <input type="number" class="form-control" [(ngModel)]="charges.totalWOGSTAmount"
+                    [ngModelOptions]="{standalone: true}" placeholder="GST Amount" readonly />
+                </td>
+
+                <td>
+                  <input type="number" class="form-control" [(ngModel)]="charges.totalAmount"
+                    [ngModelOptions]="{standalone: true}" placeholder="GST Amount" readonly />
+                </td>
+
+                <td>
+                  <input type="text" class="form-control" [(ngModel)]="charges.unitLube"
+                    [ngModelOptions]="{standalone: true}" placeholder="Enter Credit unit" readonly />
+
+                </td>
+                <td style="text-align: center;">
+                  <button type="submit" class="btn btn-success" (click)="addFormRequestLubeTax()"> &nbsp; Add &nbsp;
+                  </button>
+
+
+                </td>
+                <td>
+                  <button *ngIf="i != 0 " type="cancel" class="btn btn-primary" (click)="removeFormRequestLubeTax(i)">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-    <!-- end::Text -->
+    <br>
+
+  </form>
+
+  <div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-1">
+      <button type="submit" class="btn btn-primary" (click)="submitByDealerForLubeTax()">Submit</button>
+    </div>&nbsp;&nbsp;
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-secondary">Cancel</button>
+    </div>
   </div>
-  <!-- end::Item -->
-  <!-- begin::Item -->
-  <div class="d-flex align-items-center mb-7">
-    <!-- begin::Symbol -->
-    <div class="symbol symbol-50px me-5">
-      <span class="symbol-label bg-light-warning">
-        <app-keenicon name="pencil" class="fs-2x text-warning"></app-keenicon>
-      </span>
-    </div>
-    <!-- end::Symbol -->
-    <!-- begin::Text -->
-    <div class="d-flex flex-column">
-      <a href="#" class="text-gray-900 text-hover-primary fs-6 fw-bolder">
-        Concept Design
-      </a>
-      <span class="text-muted fw-bold">Art Director</span>
-    </div>
-    <!-- end::Text -->
-  </div>
-  <!-- end::Item -->
-  <!-- begin::Item -->
-  <div class="d-flex align-items-center mb-7">
-    <!-- begin::Symbol -->
-    <div class="symbol symbol-50px me-5">
-      <span class="symbol-label bg-light-primary">
-        <app-keenicon name="element-plus" class="fs-2x text-primary"></app-keenicon>
-      </span>
-    </div>
-    <!-- end::Symbol -->
-    <!-- begin::Text -->
-    <div class="d-flex flex-column">
-      <a href="#" class="text-gray-900 text-hover-primary fs-6 fw-bolder">
-        Functional Logics
-      </a>
-      <span class="text-muted fw-bold">Lead Developer</span>
-    </div>
-    <!-- end::Text -->
-  </div>
-  <!-- end::Item -->
-  <!-- begin::Item -->
-  <div class="d-flex align-items-center mb-7">
-    <!-- begin::Symbol -->
-    <div class="symbol symbol-50px me-5">
-      <span class="symbol-label bg-light-danger">
-        <app-keenicon name="disconnect" class="fs-2x text-danger"></app-keenicon>
-      </span>
-    </div>
-    <!-- end::Symbol -->
-    <!-- begin::Text -->
-    <div class="d-flex flex-column">
-      <a href="#" class="text-gray-900 text-hover-primary fs-6 fw-bolder">
-        Development
-      </a>
-      <span class="text-muted fw-bold">DevOps</span>
-    </div>
-    <!-- end::Text -->
-  </div>
-  <!-- end::Item -->
-  <!-- begin::Item -->
-  <div class="d-flex align-items-center">
-    <!-- begin::Symbol -->
-    <div class="symbol symbol-50px me-5">
-      <span class="symbol-label bg-light-info">
-        <app-keenicon name="security-user" class="fs-2x text-info"></app-keenicon>
-      </span>
-    </div>
-    <!-- end::Symbol -->
-    <!-- begin::Text -->
-    <div class="d-flex flex-column">
-      <a href="#" class="text-gray-900 text-hover-primary fs-6 fw-bolder">
-        Testing
-      </a>
-      <span class="text-muted fw-bold">QA Managers</span>
-    </div>
-    <!-- end::Text -->
-  </div>
-  <!-- end::Item -->
+
 </div>
 <!-- end::Body -->

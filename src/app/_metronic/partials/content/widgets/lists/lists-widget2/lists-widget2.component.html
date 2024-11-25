@@ -1,108 +1,210 @@
-<!-- begin::Header -->
-<div class="card-header border-0">
-  <h3 class="card-title fw-bolder text-gray-900">Authors</h3>
-  <div class="card-toolbar">
-    <!-- begin::Menu -->
-    <button
-      type="button"
-      class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
-      data-kt-menu-trigger="click"
-      data-kt-menu-placement="bottom-end"
-      data-kt-menu-flip="top-end"
-    >
-      <app-keenicon name="category" class="fs-2"></app-keenicon>
-    </button>
-    <app-dropdown-menu1></app-dropdown-menu1>
-    <!-- end::Menu -->
+<form [formGroup]="filterForm">
+  <div class="row">
+    <div class="col-auto">
+      <!-- <input class="form-control mr-sm-2" type="text" placeholder="search"
+        oninput="let p=this.selectionStart;this.setSelectionRange(p, p);" [formControl]="searchCustName"
+        aria-label="Search"> -->
+    </div>
+    <div class="col-auto">
+      <label for="example-text-input" class="col-auto col-form-label">Date Range :</label>
+    </div>
+    <div class="col-auto">
+      <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" onkeydown="return false"
+        (click)="startDate.toggle()" formControlName="startDate" ngbDatepicker #startDate="ngbDatepicker">
+    </div>
+    <div class="col-auto">
+      <input class="form-control" placeholder="DD-MM-YYYY" name="endDate" onkeydown="return false"
+        (click)="endDate.toggle()" formControlName="endDate" ngbDatepicker #endDate="ngbDatepicker">
+    </div>
+
+    <div class="col-auto">
+      <button class="btn btn-primary" type="button" (click)="getLubeTaxDetailsByDealerIdPost()">
+        Submit </button>
+      &nbsp;
+      <button class="btn btn-secondary" type="button" (click)="clearForm()">
+        Cancel </button>
+    </div>
+
+    <div class="col-auto">
+      <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download CSV" (click)="excelDownload()"><i
+          class="fas fa-file-csv"></i></span> <br>
+    </div>
+
+  </div>
+</form>
+
+<div class="row">
+  <div class="col col-xl-12 col-lg-12">
+    <div class="table-responsive">
+      <table class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th></th>
+            <th style="text-align: center;">Date</th>
+            <th style="text-align: center;">Bill Number</th>
+            <th style="text-align: center;">Khata Name</th>
+            <th style="text-align: center;">Vehicle No.</th>
+            <th style="text-align: center;">Product</th>
+            <th style="text-align: center;">Quantity</th>
+            <th style="text-align: center;">Basic Amount</th>
+            <th style="text-align: center;">CGST</th>
+            <th style="text-align: center;">SGST</th>
+            <th style="text-align: center;">IGST</th>
+            <th style="text-align: center;">Total Amount</th>
+            <th style="text-align: center;">Action</th>
+          </tr>
+        </thead>
+        <tbody
+          *ngFor="let data of lubeDetailsList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+          <tr>
+            <td style="cursor: pointer;">
+              <a class="expand-row"
+                (click)="changeValue1(i, data.fuelcreditGST, data.fuelcreditGSTAmount, data.fuelcreditHsnSacNumber, data.mappingPreviousStatus, data.mappingCustomerName, data.hostName, data.hostPhone)"
+                style="font-size: 19px;">
+                +
+              </a>
+            </td>
+
+            <td style="text-align: center;"> {{data.estimatedRefuelDate| date:'d MMM, yyyy' }} </td>
+            <td style="text-align: center;"> {{data.manualCrNumber}} </td>
+            <td style="text-align: center;">
+              <span *ngIf="data.mappingPreviousStatus == 'TRUE'">
+                {{data.mappingCompanyName}}
+              </span>
+              <span *ngIf="data.mappingPreviousStatus != 'TRUE'">
+                {{data.companyName}}
+              </span>
+            </td>
+
+            <td style="text-align: center;"> {{data.vehicleNumber}} </td>
+            <td style="text-align: center;"> {{data.lubeName}} </td>
+            <td style="text-align: center;"> {{data.actualCreditQuantity}} </td>
+            <td style="text-align: center;"> {{data.fuelcreditBeforeTax | number:'1.2-2'}} </td>
+            <td style="text-align: center;">
+              <p *ngIf="data.fuelcreditCGST == '' "> - </p>
+              <p *ngIf="data.fuelcreditCGST == 'undefined' "> - </p>
+              <p *ngIf="data.fuelcreditCGST != '' && data.fuelcreditCGST != 'undefined' "> {{data.fuelcreditGSTAmount/2
+                | number:'1.2-2'}} </p>
+            </td>
+            <td style="text-align: center;">
+              <p *ngIf="data.fuelcreditSGST == '' "> - </p>
+              <p *ngIf="data.fuelcreditSGST == 'undefined' "> - </p>
+              <p *ngIf="data.fuelcreditSGST != '' && data.fuelcreditSGST != 'undefined'"> {{data.fuelcreditGSTAmount/2 |
+                number:'1.2-2'}} </p>
+            </td>
+
+            <td style="text-align: center;">
+              <p *ngIf="data.fuelcreditIGST == '' "> - </p>
+              <p *ngIf="data.fuelcreditIGST == 'undefined' "> - </p>
+              <p *ngIf="data.fuelcreditIGST != '' && data.fuelcreditIGST != 'undefined' "> {{data.fuelcreditGSTAmount |
+                number:'1.2-2'}} </p>
+            </td>
+
+            <td style="text-align: center;">
+              <p *ngIf="data.fuelcreditTaxDetails == 'INCLUDE'">
+                {{data.creditAmount | number:'1.2-2'}}
+              </p>
+              <p *ngIf="data.fuelcreditTaxDetails == 'EXCLUDE'">
+                {{data.totalAmount}}
+              </p>
+            </td>
+
+            <td style="text-align: left;cursor: pointer;">
+              <div ngbDropdown placement="bottom-left">
+                <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                  aria-expanded="true"></i>
+                <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                  <a class="dropdown-item" href="javascript: void(0);"
+                    (click)="askForPass(PasswordTemplate,data.fuelCreditId)">
+                    <i class="fas fa-ban" style="color: red;"> </i> &nbsp;&nbsp; Decline</a>
+
+                  <a class="dropdown-item" href="javascript: void(0);" (click)="viewBill(data.fuelCreditId)">
+                    &nbsp; View Bill</a>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr *ngIf="show  && i == rowNumber" class="sub-table no-bg">
+            <td> </td>
+            <td colspan="12" class="p-0">
+              <table class="table mb-0 table-striped">
+                <thead class="table-light">
+
+                </thead>
+                <tbody>
+                  <tr>
+                    <th style="text-align: center;">Tax %</th>
+                    <th style="text-align: center;">Tax Amount</th>
+                    <th style="text-align: center;">Product HSN/SAC No</th>
+                    <th style="text-align: left;">Key Person Mobile</th>
+                    <th *ngIf="accessGroup == '12' " style="text-align: center;">Created By</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                  </tr>
+                  <tr>
+                    <td style="text-align: center;"> {{data.fuelcreditGST}} % </td>
+                    <td style="text-align: center;"> {{data.fuelcreditGSTAmount | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{data.fuelcreditHsnSacNumber}}</td>
+                    <td style="text-align: left;"> {{data.hostPhone}} </td>
+                    <td *ngIf="accessGroup == '12' " style="text-align: left;">
+                      <!-- {{ firstName1 }} -->
+                    </td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <!-- begin::Pagination -->
+      <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+        style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+      </pagination-controls>
+      <!-- end::Pagination -->
+
+
+      <ng-template #PasswordTemplate let-c="close" let-d="dismiss">
+        <div class="modal-header">
+          <h4 class="modal-title">
+            <label>
+              <h4><strong>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  Please Enter Password
+                </strong></h4>
+            </label>
+          </h4>
+          <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <input class="form-control" type="password" placeholder="password" [(ngModel)]="password"
+                [ngModelOptions]="{standalone: true}">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4"> </div>
+          <div class="col-auto">
+            <button class="btn btn-outline-success my-2 my-sm-0"
+              (click)="comparePasswordForDelete(fuelCreditIdDelete)">YES</button>
+          </div>
+          <div class="col-auto">
+            <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">No</button>
+          </div>
+          <br><br>
+        </div>
+      </ng-template>
+    </div>
   </div>
 </div>
-<!-- end::Header -->
-<!-- begin::Body -->
-<div class="card-body pt-2">
-  <!-- begin::Item -->
-  <div class="d-flex align-items-center mb-7">
-    <!-- begin::Avatar -->
-    <div class="symbol symbol-50px me-5">
-      <img src="./assets/media/avatars/300-6.jpg" class="" alt="" />
-    </div>
-    <!-- end::Avatar -->
-    <!-- begin::Text -->
-    <div class="flex-grow-1">
-      <a href="#" class="text-gray-900 fw-bolder text-hover-primary fs-6">
-        Emma Smith
-      </a>
-      <span class="text-muted d-block fw-bold">Project Manager</span>
-    </div>
-    <!-- end::Text -->
-  </div>
-  <!-- end::Item -->
-  <!-- begin::Item -->
-  <div class="d-flex align-items-center mb-7">
-    <!-- begin::Avatar -->
-    <div class="symbol symbol-50px me-5">
-      <img src="./assets/media/avatars/300-5.jpg" class="" alt="" />
-    </div>
-    <!-- end::Avatar -->
-    <!-- begin::Text -->
-    <div class="flex-grow-1">
-      <a href="#" class="text-gray-900 fw-bolder text-hover-primary fs-6">
-        Sean Bean
-      </a>
-      <span class="text-muted d-block fw-bold">PHP, SQLite, Artisan CLI</span>
-    </div>
-    <!-- end::Text -->
-  </div>
-  <!-- end::Item -->
-  <!-- begin::Item -->
-  <div class="d-flex align-items-center mb-7">
-    <!-- begin::Avatar -->
-    <div class="symbol symbol-50px me-5">
-      <img src="./assets/media/avatars/300-11.jpg" class="" alt="" />
-    </div>
-    <!-- end::Avatar -->
-    <!-- begin::Text -->
-    <div class="flex-grow-1">
-      <a href="#" class="text-gray-900 fw-bolder text-hover-primary fs-6">
-        Brian Cox
-      </a>
-      <span class="text-muted d-block fw-bold">PHP, SQLite, Artisan CLI</span>
-    </div>
-    <!-- end::Text -->
-  </div>
-  <!-- end::Item -->
-  <!-- begin::Item -->
-  <div class="d-flex align-items-center mb-7">
-    <!-- begin::Avatar -->
-    <div class="symbol symbol-50px me-5">
-      <img src="./assets/media/avatars/300-9.jpg" class="" alt="" />
-    </div>
-    <!-- end::Avatar -->
-    <!-- begin::Text -->
-    <div class="flex-grow-1">
-      <a href="#" class="text-gray-900 fw-bolder text-hover-primary fs-6">
-        Francis Mitcham
-      </a>
-      <span class="text-muted d-block fw-bold">PHP, SQLite, Artisan CLI</span>
-    </div>
-    <!-- end::Text -->
-  </div>
-  <!-- end::Item -->
-  <!-- begin::Item -->
-  <div class="d-flex align-items-center">
-    <!-- begin::Avatar -->
-    <div class="symbol symbol-50px me-5">
-      <img src="./assets/media/avatars/300-23.jpg" class="" alt="" />
-    </div>
-    <!-- end::Avatar -->
-    <!-- begin::Text -->
-    <div class="flex-grow-1">
-      <a href="#" class="text-gray-900 fw-bolder text-hover-primary fs-6">
-        Dan Wilson
-      </a>
-      <span class="text-muted d-block fw-bold">PHP, SQLite, Artisan CLI</span>
-    </div>
-    <!-- end::Text -->
-  </div>
-  <!-- end::Item -->
-</div>
-<!-- end::Body -->

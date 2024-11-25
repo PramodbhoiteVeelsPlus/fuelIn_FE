@@ -1,169 +1,230 @@
-<!-- begin::Header-->
-<div class="card-header align-items-center border-0 mt-4">
-  <h3 class="card-title align-items-start flex-column">
-    <span class="fw-bolder mb-2 text-gray-900">Activities</span>
-    <span class="text-muted fw-bold fs-7">890,344 Sales</span>
-  </h3>
-  <div class="card-toolbar">
-    <!-- begin::Menu-->
-    <button
-      type="button"
-      class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
-      data-kt-menu-trigger="click"
-      data-kt-menu-placement="bottom-end"
-      data-kt-menu-flip="top-end"
-    >
-      <app-keenicon name="category" class="fs-2"></app-keenicon>
-    </button>
-    <app-dropdown-menu1></app-dropdown-menu1>
-    <!-- end::Menu-->
+<br>
+<form [formGroup]="addShiftForm">
+  <div class="row">
+    <div class="col-lg-2">
+      <label for="example-text-input">Date</label>
+    </div>
+    <div class="col-md-6">
+      <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;" name="startDate"
+        (click)="endDate.toggle()" ngbDatepicker #endDate="ngbDatepicker" formControlName="date"
+        (dateSelect)="getAllOngoingShift('dealer')">
+    </div>
+    <div class="col-lg-2" style="text-align: end;">
+      <button type="button" class="btn btn-success" (click)="addNewShiftModal(startShift)">Add New Shift</button>
+    </div>
+  </div>
+</form>
+<br>
+
+<div class="col col-xl-12 col-lg-12">
+  <div class="table-responsive mb-0">
+    <table class="table table-centered table-nowrap">
+      <thead class="table-light">
+        <tr>
+          <th style="text-align: left;">Shift </th>
+          <th style="text-align: left;">Staff Name</th>
+          <th style="text-align: left;">Status</th>
+          <th style="text-align: left;">View Details</th>
+          <th style="text-align: left;">Actions</th>
+        </tr>
+      </thead>
+      <tbody
+        *ngFor="let data of allShift | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+        <tr>
+          <td style="text-align: left;"> {{ data.fuelShiftTimeDetails }} {{data.fuelShiftTimeShiftName}} </td>
+          <td style="text-align: left;"> {{data.firstName}} {{data.lastName}}</td>
+          <td style="text-align: left;">
+            <span *ngIf="data.performStatus == 'OPEN'">
+              {{data.performStatus}}
+            </span>
+            <span *ngIf="data.performStatus == 'CLOSED'">
+              {{data.performStatus}}
+            </span>
+          </td>
+
+          <td style="text-align: left;cursor: pointer;">
+            <button type="button" class="btn btn-primary btn-sm btn-rounded"
+              (click)="getShiftDetailsByShiftIdUpdate(data.idfuelShiftDetails,'VIEW')">
+              View Details
+            </button>
+          </td>
+          <td style="text-align: left;cursor: pointer;">
+            <div ngbDropdown placement="bottom-left">
+              <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                aria-expanded="true"></i>
+              <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+
+                <a class="dropdown-item" href="javascript: void(0);"
+                  (click)="getShiftDetailsByShiftIdUpdate(data.idfuelShiftDetails,'EDIT')">
+                  <i class="fas fa-edit" style="color: #4e9b4e;">
+                  </i> &nbsp;Add/ Edit</a>
+                <a class="dropdown-item" href="javascript: void(0);"
+                  (click)="askForPass(PasswordTemplate,data.idfuelShiftDetails)">
+                  <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
+              </div>
+            </div>
+          </td>
+
+        </tr>
+
+      </tbody>
+    </table>
+
+    <!-- begin::Pagination -->
+    <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+      style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+    </pagination-controls>
+    <!-- end::Pagination -->
+
+    <ng-template #startShift let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="text-center">Add New Shift </h4>
+        <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-11">
+            <form [formGroup]="addShiftForm">
+              <div class="row" *ngIf="!isStart">
+                <div class="col-auto">
+                  <b>Select Operator</b>
+                </div>
+                <div class="col-auto">
+                  <select class="form-control" formControlName="operatorStaffId" (change)="checkOperatorShift($event)"
+                    required>
+                    <option value="">Select operator </option>
+                    <option *ngFor="let data of staffDetails" [value]="data.fuelDealerStaffId">
+                      {{data.firstName}} {{data.lastName}}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="col-auto">
+                  <b>Select Shift</b>
+                </div>
+                <div class="col-auto">
+                  <select class="form-control" formControlName="shiftTimeId" required>
+                    <option value="1">Select Shift </option>
+                    <option *ngFor="let data of fuelShiftTimeDetails" [value]="data.fuelShiftTimeId">
+                      {{data.fuelShiftTimeShiftName}} {{data.fuelShiftTimeDetails}}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="col-auto">
+                  <button type="button" class="btn btn-primary" (click)="createShiftId()">
+                    Start Shift
+                  </button>
+                </div>
+                <br><br><br><br>
+              </div>
+            </form>
+            <hr>
+          </div>
+
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template #PasswordTemplate let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">
+          <label>
+            <h4><strong>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Please Enter Password
+              </strong></h4>
+          </label>
+        </h4>
+        <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <input class="form-control" type="password" placeholder="password" [(ngModel)]="password"
+              [ngModelOptions]="{standalone: true}">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-outline-success my-2 my-sm-0"
+            (click)="comparePasswordForDelete(deleteShift)">YES</button>
+        </div>
+        <div class="col-auto">
+          <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">No</button>
+        </div>
+        <br>
+      </div>
+    </ng-template>
+
+    <ng-template #deleteShift let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">
+          <strong>
+            Do you want to Delete </strong>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4">
+          </div>
+          <div class="col-md-2">
+            <button type="submit" class="btn btn-outline-success my-2 my-sm-0" (click)="deleteShiftById()">Yes</button>
+          </div>&nbsp;&nbsp;
+          <div class="col-md-2">
+            <button type="submit" class="btn btn-danger" (click)="closeModal()">No</button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
   </div>
 </div>
-<!-- end::Header-->
-<!-- begin::Body-->
-<div class="card-body pt-5">
-  <!-- begin::Timeline-->
-  <div class="timeline-label">
-    <!-- begin::Item-->
-    <div class="timeline-item">
-      <!-- begin::Label-->
-      <div class="timeline-label fw-bolder text-gray-800 fs-6">08:42</div>
-      <!-- end::Label-->
-      <!-- begin::Badge-->
-      <div class="timeline-badge">
-        <i class="fa fa-genderless text-warning fs-1"></i>
-      </div>
-      <!-- end::Badge-->
-      <!-- begin::Text-->
-      <div class="fw-mormal timeline-content text-muted ps-3">
-        Outlines keep you honest. And keep structure
-      </div>
-      <!-- end::Text-->
-    </div>
-    <!-- end::Item-->
-    <!-- begin::Item-->
-    <div class="timeline-item">
-      <!-- begin::Label-->
-      <div class="timeline-label fw-bolder text-gray-800 fs-6">10:00</div>
-      <!-- end::Label-->
-      <!-- begin::Badge-->
-      <div class="timeline-badge">
-        <i class="fa fa-genderless text-success fs-1"></i>
-      </div>
-      <!-- end::Badge-->
-      <!-- begin::Content-->
-      <div class="timeline-content d-flex">
-        <span class="fw-bolder text-gray-800 ps-3">AEOL meeting</span>
-      </div>
-      <!-- end::Content-->
-    </div>
-    <!-- end::Item-->
-    <!-- begin::Item-->
-    <div class="timeline-item">
-      <!-- begin::Label-->
-      <div class="timeline-label fw-bolder text-gray-800 fs-6">14:37</div>
-      <!-- end::Label-->
-      <!-- begin::Badge-->
-      <div class="timeline-badge">
-        <i class="fa fa-genderless text-danger fs-1"></i>
-      </div>
-      <!-- end::Badge-->
-      <!-- begin::Desc-->
-      <div class="timeline-content fw-bolder text-gray-800 ps-3">
-        Make deposit
-        <a href="#" class="text-primary">USD 700</a>. to ESL
-      </div>
-      <!-- end::Desc-->
-    </div>
-    <!-- end::Item-->
-    <!-- begin::Item-->
-    <div class="timeline-item">
-      <!-- begin::Label-->
-      <div class="timeline-label fw-bolder text-gray-800 fs-6">16:50</div>
-      <!-- end::Label-->
-      <!-- begin::Badge-->
-      <div class="timeline-badge">
-        <i class="fa fa-genderless text-primary fs-1"></i>
-      </div>
-      <!-- end::Badge-->
-      <!-- begin::Text-->
-      <div class="timeline-content fw-mormal text-muted ps-3">
-        Indulging in poorly driving and keep structure keep great
-      </div>
-      <!-- end::Text-->
-    </div>
-    <!-- end::Item-->
-    <!-- begin::Item-->
-    <div class="timeline-item">
-      <!-- begin::Label-->
-      <div class="timeline-label fw-bolder text-gray-800 fs-6">21:03</div>
-      <!-- end::Label-->
-      <!-- begin::Badge-->
-      <div class="timeline-badge">
-        <i class="fa fa-genderless text-danger fs-1"></i>
-      </div>
-      <!-- end::Badge-->
-      <!-- begin::Desc-->
-      <div class="timeline-content fw-bold text-gray-800 ps-3">
-        New order placed
-        <a href="#" class="text-primary">#XF-2356</a>.
-      </div>
-      <!-- end::Desc-->
-    </div>
-    <!-- end::Item-->
-    <!-- begin::Item-->
-    <div class="timeline-item">
-      <!-- begin::Label-->
-      <div class="timeline-label fw-bolder text-gray-800 fs-6">16:50</div>
-      <!-- end::Label-->
-      <!-- begin::Badge-->
-      <div class="timeline-badge">
-        <i class="fa fa-genderless text-primary fs-1"></i>
-      </div>
-      <!-- end::Badge-->
-      <!-- begin::Text-->
-      <div class="timeline-content fw-mormal text-muted ps-3">
-        Indulging in poorly driving and keep structure keep great
-      </div>
-      <!-- end::Text-->
-    </div>
-    <!-- end::Item-->
-    <!-- begin::Item-->
-    <div class="timeline-item">
-      <!-- begin::Label-->
-      <div class="timeline-label fw-bolder text-gray-800 fs-6">21:03</div>
-      <!-- end::Label-->
-      <!-- begin::Badge-->
-      <div class="timeline-badge">
-        <i class="fa fa-genderless text-danger fs-1"></i>
-      </div>
-      <!-- end::Badge-->
-      <!-- begin::Desc-->
-      <div class="timeline-content fw-bold text-gray-800 ps-3">
-        New order placed
-        <a href="#" class="text-primary">#XF-2356</a>.
-      </div>
-      <!-- end::Desc-->
-    </div>
-    <!-- end::Item-->
-    <!-- begin::Item-->
-    <div class="timeline-item">
-      <!-- begin::Label-->
-      <div class="timeline-label fw-bolder text-gray-800 fs-6">10:30</div>
-      <!-- end::Label-->
-      <!-- begin::Badge-->
-      <div class="timeline-badge">
-        <i class="fa fa-genderless text-success fs-1"></i>
-      </div>
-      <!-- end::Badge-->
-      <!-- begin::Text-->
-      <div class="timeline-content fw-mormal text-muted ps-3">
-        Finance KPI Mobile app launch preparion meeting
-      </div>
-      <!-- end::Text-->
-    </div>
-    <!-- end::Item-->
+
+<!-- <div class="row"> -->
+  <br>
+  <div>
+    <ul ngbNav #addShift="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified" style="width: 100%;">
+      <li [ngbNavItem]="1">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">Shift Report </span>
+        </a>
+        <ng-template ngbNavContent>
+          <app-lists-widget6 class="card card-xxl-stretch mb-5 mb-xl-8"></app-lists-widget6>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="2">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">VEHICLE </span>
+        </a>
+        <ng-template ngbNavContent>
+          <app-lists-widget7 class="card card-xl-stretch mb-xl-8" color="primary"></app-lists-widget7>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="3">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">LUBE</span>
+        </a>
+        <ng-template ngbNavContent>
+          <app-lists-widget8 class="card card-xxl-stretch mb-5 mb-xl-8"></app-lists-widget8>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="4">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">ADVANCE</span>
+        </a>
+        <ng-template ngbNavContent>
+          <app-mixed-widget3 class="card card-xxl-stretch mb-5 mb-xl-8"></app-mixed-widget3>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="addShift"></div>
   </div>
-  <!-- end::Timeline-->
-</div>
-<!-- end: Card Body-->
+  <!-- </div> -->

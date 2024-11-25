@@ -128,6 +128,7 @@ export class BaseTablesWidget2Component implements OnInit {
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
     this.acceesGroup = element.accessGroupId;
+    this.userId = element.userId;
     if (this.acceesGroup == 12 || this.acceesGroup == 19) {
       this.dealerView = true;
       this.ownerName = element.firstName + ' ' + element.lastName

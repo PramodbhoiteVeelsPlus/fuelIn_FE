@@ -1,192 +1,607 @@
-<!-- begin::Header-->
-<div class="card-header border-0 pt-5">
-  <h3 class="card-title align-items-start flex-column">
-    <span class="card-label fw-bolder text-gray-900">Trends</span>
-    <span class="text-muted mt-1 fw-bold fs-7">Latest tech trends</span>
-  </h3>
-  <div class="card-toolbar">
-    <!-- begin::Menu-->
-    <button
-      type="button"
-      class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
-      data-kt-menu-trigger="click"
-      data-kt-menu-placement="bottom-end"
-      data-kt-menu-flip="top-end"
-    >
-      <app-keenicon name="category" class="fs-2"></app-keenicon>
-    </button>
-    <app-dropdown-menu1></app-dropdown-menu1>
-    <!-- end::Menu-->
-  </div>
-</div>
-<!-- end::Header-->
-<!-- begin::Body-->
-<div class="card-body pt-5">
-  <!-- begin::Item-->
-  <div class="d-flex align-items-sm-center mb-7">
-    <!-- begin::Symbol-->
-    <div class="symbol symbol-50px me-5">
-      <span class="symbol-label">
-        <img
-          src="./assets/media/svg/brand-logos/plurk.svg"
-          class="h-50 align-self-center"
-          alt=""
-        />
-      </span>
-    </div>
-    <!-- end::Symbol-->
-    <!-- begin::Section-->
-    <div class="d-flex align-items-center flex-row-fluid flex-wrap">
-      <div class="flex-grow-1 me-2">
-        <a href="#" class="text-gray-800 text-hover-primary fs-6 fw-bolder">
-          Top Authors
-        </a>
-        <span class="text-muted fw-bold d-block fs-7"
-          >Mark, Rowling, Esther</span
-        >
-      </div>
-      <span class="badge badge-light fw-bolder my-2">+82$</span>
-    </div>
-    <!-- end::Section-->
-  </div>
-  <!-- end::Item-->
-  <!-- begin::Item-->
-  <div class="d-flex align-items-sm-center mb-7">
-    <!-- begin::Symbol-->
-    <div class="symbol symbol-50px me-5">
-      <span class="symbol-label">
-        <img
-          src="./assets/media/svg/brand-logos/telegram.svg"
-          class="h-50 align-self-center"
-          alt=""
-        />
-      </span>
-    </div>
-    <!-- end::Symbol-->
-    <!-- begin::Section-->
-    <div class="d-flex align-items-center flex-row-fluid flex-wrap">
-      <div class="flex-grow-1 me-2">
-        <a href="#" class="text-gray-800 text-hover-primary fs-6 fw-bolder">
-          Popular Authors
-        </a>
-        <span class="text-muted fw-bold d-block fs-7">Randy, Steve, Mike</span>
-      </div>
-      <span class="badge badge-light fw-bolder my-2">+280$</span>
-    </div>
-    <!-- end::Section-->
-  </div>
-  <!-- end::Item-->
-  <!-- begin::Item-->
-  <div class="d-flex align-items-sm-center mb-7">
-    <!-- begin::Symbol-->
-    <div class="symbol symbol-50px me-5">
-      <span class="symbol-label">
-        <img
-          src="./assets/media/svg/brand-logos/vimeo.svg"
-          class="h-50 align-self-center"
-          alt=""
-        />
-      </span>
-    </div>
-    <!-- end::Symbol-->
-    <!-- begin::Section-->
-    <div class="d-flex align-items-center flex-row-fluid flex-wrap">
-      <div class="flex-grow-1 me-2">
-        <a href="#" class="text-gray-800 text-hover-primary fs-6 fw-bolder">
-          New Users
-        </a>
-        <span class="text-muted fw-bold d-block fs-7">John, Pat, Jimmy</span>
-      </div>
-      <span class="badge badge-light fw-bolder my-2">+4500$</span>
-    </div>
-    <!-- end::Section-->
-  </div>
-  <!-- end::Item-->
-  <!-- begin::Item-->
-  <div class="d-flex align-items-sm-center mb-7">
-    <!-- begin::Symbol-->
-    <div class="symbol symbol-50px me-5">
-      <span class="symbol-label">
-        <img
-          src="./assets/media/svg/brand-logos/bebo.svg"
-          class="h-50 align-self-center"
-          alt=""
-        />
-      </span>
-    </div>
-    <!-- end::Symbol-->
-    <!-- begin::Section-->
-    <div class="d-flex align-items-center flex-row-fluid flex-wrap">
-      <div class="flex-grow-1 me-2">
-        <a href="#" class="text-gray-800 text-hover-primary fs-6 fw-bolder">
-          Active Customers
-        </a>
-        <span class="text-muted fw-bold d-block fs-7"
-          >Mark, Rowling, Esther</span
-        >
-      </div>
-      <span class="badge badge-light fw-bolder my-2">+4500$</span>
-    </div>
-    <!-- end::Section-->
-  </div>
-  <!-- end::Item-->
+<style>
+  table {
+    /* //border: 1px solid black; */
+    width: 100%;
+    text-align: center;
 
-  <ng-container *ngIf="items > 4">
-    <div class="d-flex align-items-sm-center mb-7">
-      <!-- begin::Symbol-->
-      <div class="symbol symbol-50px me-5">
-        <span class="symbol-label">
-          <img
-            src="./assets/media/svg/brand-logos/kickstarter.svg"
-            class="h-50 align-self-center"
-            alt=""
-          />
-        </span>
-      </div>
-      <!-- end::Symbol-->
-      <!-- begin::Section-->
-      <div class="d-flex align-items-center flex-row-fluid flex-wrap">
-        <div class="flex-grow-1 me-2">
-          <a href="#" class="text-gray-800 text-hover-primary fs-6 fw-bolder">
-            Bestseller Theme
-          </a>
-          <span class="text-muted fw-bold d-block fs-7"
-            >Disco, Retro, Sports</span
-          >
-        </div>
-        <span class="badge badge-light fw-bolder my-2">+4500$</span>
-      </div>
-      <!-- end::Section-->
-    </div>
-  </ng-container>
+    th {
+      border: 1px solid black;
+    }
 
-  <ng-container *ngIf="items > 5">
-    <div class="d-flex align-items-sm-center">
-      <!-- begin::Symbol-->
-      <div class="symbol symbol-50px me-5">
-        <span class="symbol-label">
-          <img
-            src="./assets/media/svg/brand-logos/fox-hub.svg"
-            class="h-50 align-self-center"
-            alt=""
-          />
-        </span>
-      </div>
-      <!-- end::Symbol-->
-      <!-- begin::Section-->
-      <div class="d-flex align-items-center flex-row-fluid flex-wrap">
-        <div class="flex-grow-1 me-2">
-          <a href="#" class="text-gray-800 text-hover-primary fs-6 fw-bolder">
-            Fox Broker App
-          </a>
-          <span class="text-muted fw-bold d-block fs-7"
-            >Finance, Corporate, Apps</span
-          >
+    tr td {
+      border: 1px solid black;
+    }
+  }
+
+  th {
+    border: 1px solid black;
+  }
+
+  tr td {
+    border: 1px solid black;
+  }
+
+  #watermark {
+    position: absolute;
+    bottom: 105px;
+    opacity: 0.2;
+    font-size: 120px;
+    text-align: center;
+    color: red;
+    text-shadow: 10px 2px black;
+    -webkit-transform: rotate(-30deg);
+  }
+
+  #watermark1 {
+    position: absolute;
+    bottom: 170px;
+    opacity: 0.2;
+    font-size: 120px;
+    text-align: center;
+    color: red;
+    text-shadow: 10px 2px black;
+    -webkit-transform: rotate(-42deg);
+  }
+
+  h1,
+  .h1 {
+    font-size: 4.125rem;
+  }
+
+  .logo {
+    width: 30%;
+  }
+
+  .A4 {
+    background: white;
+    width: 23cm;
+    height: 40.7cm;
+    display: block;
+    margin: 0 auto;
+    padding: 1px 1px;
+    margin-bottom: 0.5cm;
+    box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+
+    box-sizing: border-box;
+    font-size: 12pt;
+    /* //line-height:normal; */
+  }
+
+  @media print {
+    .page-break {
+      display: block;
+      page-break-before: always;
+
+      size: A4 portrait;
+    }
+  }
+
+  @media print {
+    body {
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact;
+    }
+
+    .A4 {
+      box-shadow: none;
+      margin: 0;
+      width: auto;
+      height: auto;
+    }
+
+    .noprint {
+      display: none;
+    }
+
+    .enable-print {
+      display: block;
+    }
+  }
+</style>
+
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+
+  <title>Editable Statement</title>
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <!-- <link rel='stylesheet' type='text/css' href='../../../../../../assets/EditableInvoice/css/style.css' /> -->
+  <!--<link rel='stylesheet' type='text/css' href='../../../../../../assets/EditableInvoice/css/print1.css' media="print" />-->
+  <!-- <script type='text/javascript' src='../../../../../../assets/EditableInvoice/js/jquery-1.3.2.min1.js'></script> -->
+  <!-- <script type='text/javascript' src='../../../../../../assets/EditableInvoice/js/example1.js'></script > -->
+
+</head>
+
+<!-- <body id="contentToConvert" > -->
+
+<body id="contentToConvert" *ngIf="fuelBill">
+  <!-- <h6>fuelBill</h6> -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <br>
+            <div class="row">
+              <div class="col-md-2"></div>
+              <div class="col-md-4">
+                &nbsp;
+                <button class="noprint btn btn-primary btn-sm" style="font-size: medium;"
+                  routerLink="/credit/AddLubeTaxGstSale"> back </button>
+              </div>
+              <div class="col-md-1">
+                &nbsp; <button class="noprint" style="font-size: medium;" onclick="window.print()"> &nbsp;&nbsp;<i
+                    class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
+              </div>
+            </div>
+            <br>
+
+            <div id="sanjay">
+              <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-9" style="border: 1px solid black;padding: 7px !important;">
+                  <div id="watermark" *ngIf="deleteStatus == 'TRUE' ">
+                    <div>CANCELLED</div>
+                  </div>
+
+                  <div class="row" style="font-size: 12px;">
+                    <div class="col-md-3" style="text-align: left;">
+                      <b>GST:</b> {{gstNumber}}
+                    </div>
+                    <div class="col-md-6" style="text-align: center;">
+                      <b> {{companyName}}</b>
+                    </div>
+                  </div>
+
+                  <div class="row" style="text-align: center;align-items: center;">
+                    <!-- <div class="col-md-3" style="text-align: left;">
+                            <b> Mobile:</b> {{dealerMobile}}
+                        </div> -->
+                    <div class="col-md-12" style="text-align: center;">
+                      <b style="font-size: 12px;"> {{brandName}} petrol pump</b>
+                    </div>
+                  </div>
+
+
+                  <div class="row" style="text-align: center;align-items: center;">
+                    <!-- <div class="col-md-3"></div> -->
+                    <div class="col-md-12" style="text-align: center;" style="font-size: 12px;">
+                      {{addressLine1}} {{addressLine2}}, <br>
+                      {{city}}, {{state}}-{{pinCode}}
+                    </div>
+                  </div>
+
+                  <div class="row" style="font-size: 12px;">
+                    <div class="col-md-9" style="text-align: left;">
+                      Bill No :- VEELS{{cashBillSystemNumber}} <span *ngIf="cashBillNumber"> / {{cashBillNumber}}</span>
+                    </div>
+                    <div class="col-md-3" style="text-align: right;">
+                      Date :- {{cashBillDate | date:"d MMM, yyyy"}}
+                    </div>
+                  </div>
+
+                  <hr style="border-top: 1px solid black;">
+                  <br>
+
+                  <div class="row" style="font-size: 12px;">
+                    <div class="col-md-8" style="text-align: left;">
+                      Name :- {{cashBillCustName}} / {{cashBillCustMobile}}
+                    </div>
+                    <div class="col-md-4" style="text-align: right;">
+                      Vehicle :- {{cashBillVehicleNumber}}
+                    </div>
+                  </div>
+                  <br>
+
+                  <table style="border-bottom: white;font-size: 12px;">
+                    <tr>
+                      <th style="padding-top:10px;padding-bottom: 10px;">Particular</th>
+                      <th>Quantity</th>
+                      <th>Rate </th>
+                      <th>Amount</th>
+
+                    </tr>
+                    <tr>
+                      <td>{{cashBillProduct}}</td>
+                      <td>{{cashBillQuantity}} {{cashBillUnit}} </td>
+                      <td>₹{{cashBillRate | number:'1.2-2'}} </td>
+                      <td style="text-align: center;">₹{{cashBillAmount | number:'1.2-2'}} </td>
+                    </tr>
+                    <tr style="border: white;">
+                      <td colspan="3" style="border: white;"> </td>
+                      <td style="border: white;">
+                        <br><br>
+                        <hr style="border-top: 1px solid black;">
+                        &nbsp; Authorized Signature
+                      </td>
+                    </tr>
+                  </table>
+
+
+                  <br>
+                  <br>
+                  <br>
+
+
+
+                </div>
+
+                <div class="col-md-1"></div>
+
+              </div>
+
+            </div>
+
+          </div>
         </div>
-        <span class="badge badge-light fw-bolder my-2">+4500$</span>
       </div>
-      <!-- end::Section-->
     </div>
-  </ng-container>
-</div>
-<!-- end::Body-->
+  </div>
+
+</body>
+
+
+<body id="contentToConvert" *ngIf="lubeBill">
+  <!-- <h6>lubeBill</h6> -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <br>
+
+
+            <div class="row">
+              <div class="col-md-2"></div>
+              <div class="col-md-4">
+                &nbsp; <button class="noprint btn btn-primary btn-sm" style="font-size: medium;"
+                  routerLink="/credit/viewCashBillList"> back </button>
+              </div>
+              <!-- <div class="col-md-1">          
+                &nbsp; <button class="noprint" style="font-size: medium;" onclick="window.print()"> &nbsp;&nbsp;<i class="fa fa-print"
+                        aria-hidden="true"></i> &nbsp;</button>
+            </div> -->
+              <div class="col-md-1">
+                <!-- <button printSectionId="sanjay" ngxPrint>print</button>  -->
+                &nbsp; <button class="noprint" style="font-size: medium;" onclick="window.print()"> &nbsp;&nbsp;<i
+                    class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
+              </div>
+            </div>
+            <br>
+
+            <div id="sanjay">
+              <div class="row">
+                <div class="col-md-2"></div>
+
+                <div class="col-md-9" style="border: 1px solid black;padding: 7px !important;">
+                  <div id="watermark1" *ngIf="deleteStatus == 'TRUE' ">
+                    <div>CANCELLED</div>
+                  </div>
+
+                  <div class="row" style="font-size: 12px;">
+                    <div class="col-md-3" style="text-align: left;">
+                      <b>GST:</b> {{gstNumber}}
+                    </div>
+                    <div class="col-md-6" style="text-align: center;">
+                      <b> {{companyName}}</b>
+                    </div>
+                  </div>
+
+                  <div class="row" style="font-size: 12px;">
+                    <!-- <div class="col-md-3" style="text-align: left;">
+                                    <b> Mobile:</b> {{dealerMobile}}
+                                </div> -->
+                    <div class="col-md-12" style="text-align: center;">
+                      <b> {{brandName}} petrol pump</b>
+                    </div>
+                  </div>
+
+
+                  <div class="row" style="font-size: 12px;">
+                    <!-- <div class="col-md-3"></div> -->
+                    <div class="col-md-12" style="text-align: center;">
+                      {{addressLine1}} {{addressLine2}}, <br>
+                      {{city}}, {{state}}-{{pinCode}}
+                    </div>
+                  </div>
+
+                  <div class="row" style="font-size: 12px;">
+                    <div class="col-md-9" style="text-align: left;">
+                      Bill No :- VEELS{{cashBillSystemNumber}} <span *ngIf="cashBillNumber"> / {{cashBillNumber}}</span>
+                    </div>
+                    <div class="col-md-3" style="text-align: right;">
+                      Date :- {{cashBillDate | date:"d MMM, yyyy"}}
+                    </div>
+                  </div>
+
+                  <hr style="border-top: 1px solid black;">
+                  <br>
+
+                  <div class="row" style="font-size: 12px;">
+                    <div class="col-md-8" style="text-align: left;">
+                      Name :- {{cashBillCustName}} / {{cashBillCustMobile}}
+                    </div>
+                    <div class="col-md-4" style="text-align: right;">
+                      GST :- <span *ngIf="cashBillCustGST != 'undefined' "> {{cashBillCustGST}} </span>
+                    </div>
+                  </div>
+                  <div class="row" style="font-size: 12px;">
+                    <div class="col-md-9" style="text-align: left;">
+                      Address :- {{cashBillAddress}}
+                    </div>
+                    <div class="col-md-3" style="text-align: right;">
+                      Vehicle :- {{cashBillVehicleNumber}}
+                    </div>
+                  </div>
+                  <br>
+
+                  <table style="border-bottom: white;font-size: 12px;">
+                    <tr>
+                      <th style="padding-top:10px;padding-bottom: 10px;">Particular</th>
+                      <th>Quantity</th>
+                      <!-- <th>Rate </th> -->
+                      <th>Tax</th>
+                      <th>Amount</th>
+
+                    </tr>
+                    <tr>
+                      <td style="text-align:center">{{cashBillProduct}}</td>
+                      <td style="text-align:center">{{cashBillQuantity}} {{cashBillUnit}} </td>
+                      <!-- <td style="text-align:center">₹ {{cashBillRate | number:'1.2-2'}} </td> -->
+                      <td style="text-align:center"> GST {{cashBillGST | number:'1.2-2'}} % </td>
+                      <td style="text-align:center">₹ {{cashBillAmountWOGST | number:'1.2-2'}} </td>
+                    </tr>
+                    <tr *ngIf="cashBillSubGST == 'CGST' ">
+                      <td colspan="2" style="border-bottom: white;"></td>
+                      <td style="text-align: center; border-bottom: white;"> CGST {{cashBillCGST | number:'1.2-2'}} %
+                      </td>
+                      <td style="text-align: center; border-bottom: white;">₹ {{(cashBillGSTAmt / 2) | number:'1.2-2'}}
+                      </td>
+                    </tr>
+                    <tr *ngIf="cashBillSubGST == 'CGST' ">
+                      <td colspan="2" style="border-top: white;"></td>
+                      <td style="text-align: center; border-top: white;"> SGST {{cashBillSGST | number:'1.2-2'}} % </td>
+                      <td style="text-align: center; border-top: white;">₹ {{(cashBillGSTAmt / 2) | number:'1.2-2'}}
+                      </td>
+                    </tr>
+                    <tr *ngIf="cashBillSubGST == 'IGST' ">
+                      <td colspan="2"></td>
+                      <td style="text-align:center"> IGST {{cashBillIGST | number:'1.2-2'}} % </td>
+                      <td style="text-align:center">₹ {{(cashBillGSTAmt) | number:'1.2-2'}} </td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" style="border: white; border-bottom: black;"></td>
+                      <td style="text-align:center; border: white; border-bottom: black;"><b> Total Amount</b> </td>
+                      <td style="text-align:center; border: white; border-bottom: black;"><b>₹ {{(cashBillAmount) |
+                          number:'1.2-2'}}</b> </td>
+                    </tr>
+                    <tr style="border: white;">
+                      <td colspan="3" style="border: white;"> </td>
+                      <td style="border: white;">
+                        <br><br>
+                        <hr style="border-top: 1px solid black;">
+                        &nbsp; Authorized Signature
+                      </td>
+                    </tr>
+                  </table>
+
+
+
+                </div>
+
+                <div class="col-md-1"></div>
+
+              </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+
+<body id="contentToConvert" *ngIf="lubeTaxBill">
+  <!-- <h6>lubeTaxBill</h6> -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+
+            <!-- <div id="page-wrap"> -->
+            <br>
+            <div class="row">
+              <div class="col-md-2"></div>
+              <div class="col-md-4">
+                &nbsp; <button class="noprint btn btn-primary" style="font-size: medium;"
+                  routerLink="/admin/fastagList"> back </button>
+                <!-- &nbsp; -->
+                <!-- <button printSectionId="sanjay" ngxPrint>print</button>  -->
+
+                <!-- <br> -->
+              </div>
+              <div class="col-md-1">
+                &nbsp; <button class="noprint" style="font-size: medium;" onclick="window.print()"> &nbsp;&nbsp;<i
+                    class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
+              </div>
+              <!-- <div class="col-md-1">          
+
+            </div> -->
+            </div>
+            <br>
+
+            <div id="sanjay">
+              <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-9" style="border: 1px solid black;padding: 7px !important;">
+                  <div class="row" style="font-size: 12px;">
+                    <div class="col-md-3" style="text-align: left;">
+                      <span *ngIf="gstNumber != '' && gstNumber != 'undefined' && gstNumber != 'null'"><b>GST:</b>
+                        {{gstNumber}}</span>
+                    </div>
+                    <div class="col-md-6" style="text-align: center;">
+                      <b> {{companyName}}</b>
+                    </div>
+                  </div>
+
+                  <div class="row" style="font-size: 12px;">
+                    <div class="col-md-12" style="text-align: center;">
+                      <b> {{brandName}} petrol pump</b>
+                    </div>
+                  </div>
+
+                  <div class="row" style="font-size: 12px;">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6" style="text-align: center;">
+                      {{addressLine1}} {{addressLine2}}, <br>
+                      {{city}}, {{state}}-{{pinCode}}
+                    </div>
+                  </div>
+
+                  <div class="row" style="font-size: 12px;">
+                    <div class="col-md-9" style="text-align: left;">
+                      Bill No :- {{manualCrNumberAdd}}
+                    </div>
+                    <div class="col-md-3" style="text-align: right;">
+                      Date :- {{estimatedRefuelDateAdd | date:"d MMM, yyyy"}}
+                    </div>
+                  </div>
+
+                  <hr style="border-top: 1px solid black;">
+                  <br>
+
+                  <div class="row" style="font-size: 12px;">
+                    <div class="col-md-8" style="text-align: left;">
+                      Name :-
+                      <span *ngIf="mappingPreviousStatusAdd == 'TRUE' ">
+                        {{mappingCustomerNameAdd}}
+                      </span>
+                      <span *ngIf="mappingPreviousStatusAdd == 'FALSE' ">
+                        {{companyNameAdd}}
+                      </span>
+
+                    </div>
+                    <div class="col-md-4" style="text-align: right;">
+                      <span *ngIf="GSTNumberAdd != '' && GSTNumberAdd != 'undefined' && GSTNumberAdd != 'null'"> GST :-
+                        {{GSTNumberAdd}} </span>
+                    </div>
+                  </div>
+                  <div class="row" style="font-size: 12px;">
+                    <div class="col-md-9" style="text-align: left;">
+                      Address :- {{address1Add}} {{address2Add}}
+                    </div>
+                    <div class="col-md-3" style="text-align: right;">
+                      <span
+                        *ngIf="vehicleNumberAdd != '' && vehicleNumberAdd != 'undefined' && vehicleNumberAdd != 'null'">
+                        Vehicle :- {{vehicleNumberAdd}} </span>
+                    </div>
+                  </div>
+                  <br>
+
+                  <table style="border-bottom: white;font-size: 12px;">
+                    <tr>
+                      <th style="padding-top:10px;padding-bottom: 10px;">Particular</th>
+                      <th>Quantity</th>
+                      <th>Tax</th>
+                      <th>Amount</th>
+
+                    </tr>
+                    <tr>
+                      <td style="text-align:center">{{lubeNameAdd}}</td>
+                      <td style="text-align:center">{{actualCreditQuantityAdd}} </td>
+                      <td style="text-align:center"> GST {{fuelcreditGSTAdd | number:'1.2-2'}} % </td>
+                      <td style="text-align:center">₹ {{fuelcreditBeforeAdd | number:'1.2-2'}} </td>
+                    </tr>
+                    <tr *ngIf="fuelcreditCGSTAdd != '' && fuelcreditCGSTAdd != 'undefined'">
+                      <td colspan="2" style="border-bottom: white;"></td>
+                      <td style="text-align: center; border-bottom: white;"> CGST {{fuelcreditCGSTAdd | number:'1.2-2'}}
+                        % </td>
+                      <td style="text-align: center; border-bottom: white;">₹ {{(fuelcreditGSTAmountAdd / 2) |
+                        number:'1.2-2'}} </td>
+                    </tr>
+                    <tr *ngIf="fuelcreditSGSTAdd != '' && fuelcreditSGSTAdd != 'undefined' ">
+                      <td colspan="2" style="border-top: white;"></td>
+                      <td style="text-align: center; border-top: white;"> SGST {{fuelcreditSGSTAdd | number:'1.2-2'}} %
+                      </td>
+                      <td style="text-align: center; border-top: white;">₹ {{(fuelcreditGSTAmountAdd / 2) |
+                        number:'1.2-2'}} </td>
+                    </tr>
+                    <tr *ngIf="fuelcreditIGSTAdd != '' && fuelcreditIGSTAdd != 'undefined'">
+                      <td colspan="2"></td>
+                      <td style="text-align:center"> IGST {{fuelcreditIGSTAdd | number:'1.2-2'}} % </td>
+                      <td style="text-align:center">₹ {{(fuelcreditGSTAmountAdd) | number:'1.2-2'}} </td>
+                    </tr>
+                    <tr *ngIf="fuelcreditTaxDetailsAdd == 'INCLUDE'">
+                      <td colspan="2" style="border: white; border-bottom: black;"></td>
+                      <td style="text-align:center; border: white; border-bottom: black;"><b> Total Amount</b> </td>
+                      <td style="text-align:center; border: white; border-bottom: black;"><b>₹ {{(creditAmountAdd) |
+                          number:'1.2-2'}}</b> </td>
+                    </tr>
+                    <tr *ngIf="fuelcreditTaxDetailsAdd == 'EXCLUDE'">
+                      <td colspan="2" style="border: white; border-bottom: black;"></td>
+                      <td style="text-align:center; border: white; border-bottom: black;"><b> Total Amount</b> </td>
+                      <td style="text-align:center; border: white; border-bottom: black;"><b>₹
+                          {{totalAmountExclude}}</b> </td>
+                    </tr>
+                    <tr style="border: white;">
+                      <td colspan="3" style="border: white;">
+                        <span *ngFor="let data of bankAccList; let i = index" style="text-align: left;">
+                          <div *ngIf="data.uniqueStatus == 'TRUE' ">
+                            <b style="font-size: 17px;"> Please make a payment to</b><br><br>
+                            <p> <b>Beneficiary Name : </b> {{data.accountHolderName}} </p>
+                            <p> <b>Bank Name : </b> {{data.bankName}} , {{data.branchName}}</p>
+                            <p> <b>Account Number : </b> {{data.accountNumber}} </p>
+                            <p> <b>IFSC Code : </b> {{data.ifsc}} </p>
+                            <p> <b>UPI Id : </b> {{data.upiId}} </p>
+                          </div>
+                        </span>
+                      </td>
+                      <td style="border: white;">
+                        <br><br>
+                        <hr style="border-top: 1px solid black;">
+                        &nbsp; Authorized Signature
+                      </td>
+                    </tr>
+                  </table>
+
+
+
+                </div>
+
+
+                <div class="col-md-1"></div>
+              </div>
+            </div>
+            <!-- </div> -->
+
+          </div>
+        </div>
+      </div>
+      <!-- <div class="col-1"></div> -->
+
+    </div>
+  </div>
+</body>
+
+</html>

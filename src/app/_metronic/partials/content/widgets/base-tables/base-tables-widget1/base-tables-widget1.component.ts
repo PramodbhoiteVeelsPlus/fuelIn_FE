@@ -193,6 +193,7 @@ export class BaseTablesWidget1Component implements OnInit {
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
+    this.userId = element.userId;
     this.acceesGroup = element.accessGroupId;
     if (this.acceesGroup == 12 || this.acceesGroup == 19) {
       this.onlyDealerView = true;

@@ -24,6 +24,7 @@ import { BookLedgerComponent } from './book-ledger/book-ledger.component';
 import { SavedInvoiceComponent } from './saved-invoice/saved-invoice.component';
 import { FuelCreditInvoiceManualComponent } from './fuel-credit-invoice-manual/fuel-credit-invoice-manual.component';
 import { AddLubeTaxGstSaleComponent } from './add-lube-tax-gst-sale/add-lube-tax-gst-sale.component';
+import { CashBillInvoiceComponent } from './cash-bill-invoice/cash-bill-invoice.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { AddLubeTaxGstSaleComponent } from './add-lube-tax-gst-sale/add-lube-tax
     BookLedgerComponent,
     SavedInvoiceComponent,
     FuelCreditInvoiceManualComponent,
-    AddLubeTaxGstSaleComponent
+    AddLubeTaxGstSaleComponent,
+    CashBillInvoiceComponent
   ],
   imports: [
     CommonModule,
@@ -124,6 +126,10 @@ import { AddLubeTaxGstSaleComponent } from './add-lube-tax-gst-sale/add-lube-tax
       {
         path: 'AddLubeTaxGstSale',
         component: AddLubeTaxGstSaleComponent,
+      },
+      {
+        path: 'cashBillInvoice',
+        component: CashBillInvoiceComponent,
       },
     ]),
     WidgetsModule,
