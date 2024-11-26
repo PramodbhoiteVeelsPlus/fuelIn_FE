@@ -6,7 +6,7 @@
     </div>
     <div class="col-md-6">
       <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;" name="startDate"
-        (click)="endDate.toggle()" ngbDatepicker #endDate="ngbDatepicker" formControlName="date"
+        (click)="startDate.toggle()" ngbDatepicker #startDate="ngbDatepicker" formControlName="date"
         (dateSelect)="getAllOngoingShift('dealer')">
     </div>
     <div class="col-lg-2" style="text-align: end;">
@@ -189,42 +189,3504 @@
 </div>
 
 <!-- <div class="row"> -->
-  <br>
-  <div>
-    <ul ngbNav #addShift="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified" style="width: 100%;">
-      <li [ngbNavItem]="1">
-        <a ngbNavLink>
-          <span class="d-none d-sm-block" style="font-size: 15px;">Shift Report </span>
-        </a>
-        <ng-template ngbNavContent>
-          <app-lists-widget6 class="card card-xxl-stretch mb-5 mb-xl-8"></app-lists-widget6>
-        </ng-template>
-      </li>
-      <li [ngbNavItem]="2">
-        <a ngbNavLink>
-          <span class="d-none d-sm-block" style="font-size: 15px;">VEHICLE </span>
-        </a>
-        <ng-template ngbNavContent>
-          <app-lists-widget7 class="card card-xl-stretch mb-xl-8" color="primary"></app-lists-widget7>
-        </ng-template>
-      </li>
-      <li [ngbNavItem]="3">
-        <a ngbNavLink>
-          <span class="d-none d-sm-block" style="font-size: 15px;">LUBE</span>
-        </a>
-        <ng-template ngbNavContent>
-          <app-lists-widget8 class="card card-xxl-stretch mb-5 mb-xl-8"></app-lists-widget8>
-        </ng-template>
-      </li>
-      <li [ngbNavItem]="4">
-        <a ngbNavLink>
-          <span class="d-none d-sm-block" style="font-size: 15px;">ADVANCE</span>
-        </a>
-        <ng-template ngbNavContent>
-          <app-mixed-widget3 class="card card-xxl-stretch mb-5 mb-xl-8"></app-mixed-widget3>
-        </ng-template>
-      </li>
-    </ul>
-    <div [ngbNavOutlet]="addShift"></div>
+<br>
+<div>
+  <ul ngbNav #addShift="ngbNav" [activeId]="active" class="nav-pills nav-start" style="width: 100%;">
+    <li [ngbNavItem]="1">
+      <a ngbNavLink>
+        <span class="d-block d-sm-none"></span>
+        <span class="d-none d-sm-block">Shift Report </span>
+      </a>
+      <ng-template ngbNavContent>
+        <ng-template [ngTemplateOutlet]="ShiftReport"></ng-template>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="2">
+      <a ngbNavLink>
+        <span class="d-block d-sm-none"></span>
+        <span class="d-none d-sm-block">Add/Edit Shift</span>
+      </a>
+      <ng-template ngbNavContent>
+        <ng-template [ngTemplateOutlet]="editShift"></ng-template>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="3">
+      <a ngbNavLink>
+        <span class="d-block d-sm-none"></span>
+        <span class="d-none d-sm-block">View Shift</span>
+      </a>
+      <ng-template ngbNavContent>
+        <ng-template [ngTemplateOutlet]="viewShift"></ng-template>
+      </ng-template>
+    </li>
+
+    <li [ngbNavItem]="4">
+      <a ngbNavLink>
+        <span class="d-block d-sm-none"></span>
+        <span class="d-none d-sm-block">Shift Master</span>
+      </a>
+      <ng-template ngbNavContent>
+        <app-lists-widget6 class="card card-xxl-stretch mb-5 mb-xl-8"></app-lists-widget6>
+      </ng-template>
+    </li>
+  </ul>
+  <div [ngbNavOutlet]="addShift"></div>
+</div>
+<!-- </div> -->
+
+<ng-template #ShiftReport>
+  <div class="modal-body">
+    <div id="sanjay">
+      <div class="container">
+        <form style="background-color: white;color: black;">
+          <div class="row fontStyleCss">
+            <div class="col-md-12 outerBoxStyle">
+              <table class="table">
+                <tr>
+                  <td colspan="12">
+                    <h3>Shift Report for {{selectedDate | date:"d MMM y"}} </h3>
+                  </td>
+                </tr>
+                <br>
+                <tr>
+                  <td colspan="9">
+                    <span class="logo-lg">
+                      <img src="assets/images/fuel-in.png" alt="" height="40">
+                    </span>
+                    <span>
+                      {{companyName}},{{city}} <br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{brandName}}
+                      Pump
+                    </span>
+
+                  </td>
+                  <td colspan="3" style="text-align: right;">
+                    <div class="text-sm-end">
+                      <b> Generated on: </b> {{todayDate | date:"d MMM y"}}
+                    </div>
+                  </td>
+                </tr>
+              </table>
+              <hr style="border-top: 1px dashed rgb(52, 51, 56);margin-top: 3px;margin-bottom: 8px;">
+
+
+              <table *ngIf="meterSalesDetails.length">
+                <tr>
+                  <td colspan="12">
+                    <h5>Product-wise Summary</h5>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="6">
+                    <div class="table-responsive mb-0">
+                      <table class="table  table-centered table-nowrap">
+                        <thead class="table-light">
+                          <tr>
+                            <th style="text-align: left; border: 2px solid #272829;">Product</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Shift Sales (Rs)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Shift Sales (Qty)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Total Testing (Qty)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Total Sales (Qty)</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let data of meterSalesDetails">
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.productName}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;">
+                              <span> {{(data.meterSaleAmount) | number:'1.2-2'}} </span>
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;">
+                              <span>
+                                <span *ngIf="data.productName == 'CNG' ">
+                                  {{data.meterSaleQuantity | number:'1.2-2'}} Kg
+                                </span>
+                                <span *ngIf="data.productName != 'CNG' ">
+                                  {{data.meterSaleQuantity | number:'1.2-2'}} Ltrs
+                                </span>
+                              </span>
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;">
+                              <span *ngIf="data.totalPumpTesting">
+                                <span *ngIf="data.productName == 'CNG' ">
+                                  {{data.totalPumpTesting | number:'1.2-2'}} Kg
+                                </span>
+                                <span *ngIf="data.productName != 'CNG' ">
+                                  {{data.totalPumpTesting | number:'1.2-2'}} Ltrs
+                                </span>
+                              </span>
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;">
+                              <span>
+                                <span *ngIf="data.productName == 'CNG' ">
+                                  {{ (data.meterSaleQuantity) + (data.totalPumpTesting) | number:'1.2-2'}} Kg
+                                </span>
+                                <span *ngIf="data.productName != 'CNG' ">
+                                  {{ (data.meterSaleQuantity) + (data.totalPumpTesting) | number:'1.2-2'}} Ltrs
+                                </span>
+                              </span>
+                            </td>
+                          </tr>
+
+                          <tr *ngFor="let data of totalCashLubeDetails">
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.cashBillProduct}}(Cash)
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{(data.totalCashAmount) |
+                              number:'1.2-2'}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.totalQuantity |
+                              number:'1.2-2'}} Ltrs </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{ data.totalQuantity |
+                              number:'1.2-2'}} </td>
+
+                          </tr>
+                          <tr *ngFor="let data of totalCreditLubeDetails">
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.lubeName}}(Credit) </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{(data.totalCreditAmount) |
+                              number:'1.2-2'}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.totalQuantity |
+                              number:'1.2-2'}} Ltrs </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{ data.totalQuantity |
+                              number:'1.2-2'}} </td>
+
+                          </tr>
+
+                          <tr *ngFor="let data of totalDigitalLubeDetails">
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.paymentProduct}}(Digital)
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{(data.totalDigitalSales) |
+                              number:'1.2-2'}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.totalQuantity |
+                              number:'1.2-2'}} {{data.paymentProdUnit}}</td>
+                            <td style="text-align: left; border: 2px solid #272829;"> </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{ data.totalQuantity |
+                              number:'1.2-2'}} </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+              <br>
+              <table *ngIf="productWiseCreditData.length">
+                <tr>
+                  <td colspan="12">
+                    <h5>Product-wise Credit Summary</h5>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="12">
+                    <div class="table-responsive mb-0">
+                      <table class="table  table-centered table-nowrap">
+                        <thead class="table-light">
+                          <tr>
+                            <th style="text-align: left; border: 2px solid #272829;">Product</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Shift Sales (Rs)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Shift Sales (Qty)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Credit Sales (Rs) as per <br> Add
+                              Credit Sales</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Credit Sales (Qty) as per <br> Add
+                              Credit Sales</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Credit Sales (Rs) Share <br> as per
+                              Add Credit Sales</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Credit Sales (Qty) Share <br> as
+                              per
+                              Add Credit Sales</th>
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let data of productWiseCreditData">
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.productName}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.meterSaleAmount |
+                              number:'1.2-2'}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.meterSaleQuantity |
+                              number:'1.2-2'}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.totalCreditSales |
+                              number:'1.2-2'}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.totalCreditQuantity |
+                              number:'1.2-2'}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.creditSaleShare |
+                              number:'1.2-2'}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.creditQuantityShare |
+                              number:'1.2-2'}} </td>
+
+                          </tr>
+                          <tr *ngFor="let data of totalCreditLubeDetails">
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.lubeName}}(Credit) </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{(data.totalCreditAmount) |
+                              number:'1.2-2'}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.totalQuantity |
+                              number:'1.2-2'}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> </td>
+
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+                <br>
+              </table>
+              <br>
+              <table *ngIf="totalMeterSalesDetails || totalAmountTally">
+                <tr>
+                  <td colspan="12">
+                    <h5>Summary</h5>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="6">
+                    <div class="table-responsive mb-0">
+                      <table class="table  table-centered table-nowrap">
+                        <thead class="table-light">
+                          <tr>
+                            <th style="text-align: left; border: 2px solid #272829;">Shift Sales (Rs)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Shift Tally (Rs)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Difference (Rs)</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td style="text-align: left; border: 2px solid #272829;">
+                              <span *ngIf="totalMeterSalesDetails">
+                                {{totalMeterSalesDetails | number:'1.2-2'}}
+                              </span>
+                            </td>
+
+                            <td style="text-align: left; border: 2px solid #272829;">
+                              <span *ngIf="totalAmountTally">
+                                {{totalAmountTally | number:'1.2-2'}}
+                              </span>
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;">
+                              <span *ngIf="totalMeterSalesDetails && totalAmountTally">
+                                {{(totalAmountTally)-(totalMeterSalesDetails) | number:'1.2-2'}}
+                              </span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+                <br>
+                <tr>
+                  <td colspan="8">
+                    <div class="table-responsive mb-0">
+                      <table class="table  table-centered table-nowrap">
+                        <thead class="table-light">
+                          <tr>
+                            <th style="text-align: left; border: 2px solid #272829;">Shift Sales (Rs)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">A-Credit (Rs)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">B-Digital (Rs)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">C-Cash (Rs)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Shift Tally (A+B+C) (Rs)</th>
+                          </tr>
+                        </thead>
+                        <tbody *ngFor="let data of totalSalesDetails">
+                          <tr>
+                            <td style="text-align: left; border: 2px solid #272829;">
+                              <span *ngIf="totalMeterSalesDetails">
+                                {{totalMeterSalesDetails | number:'1.2-2'}}
+                              </span>
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.creditTally |
+                              number:'1.2-2'}}</td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{(data.paytmTotal) |
+                              number:'1.2-2'}}</td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.cashTallyAmt |
+                              number:'1.2-2'}}</td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{(data.totalAmountTally |
+                              number:'1.2-2')}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+                <br>
+                <tr>
+                  <td colspan="7">
+                    <div class="table-responsive mb-0">
+                      <table class="table  table-centered table-nowrap">
+                        <thead class="table-light">
+                          <tr>
+                            <th style="text-align: left; border: 2px solid #272829;">C-Cash (1+2+3) (Rs)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">1-Cash Handover (Rs)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">2-Cash Expenses (Rs)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">3-Cash Short/Diff (Rs)</th>
+                          </tr>
+                        </thead>
+                        <tbody *ngFor="let data of totalSalesDetails">
+                          <tr>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.cashTallyAmt |
+                              number:'1.2-2'}}</td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{cashSales | number:'1.2-2'}}
+                            </td>
+                            <!-- <td style="text-align: left; border: 2px solid #272829;"> {{cashHandover | number:'1.2-2'}}</td> -->
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.expenseAmt |
+                              number:'1.2-2'}}
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.shortAmt | number:'1.2-2'}}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+                <br>
+              </table>
+              <br>
+              <table *ngIf="shiftWiseData.length">
+                <tr>
+                  <td colspan="12">
+                    <h5>Shift-wise Summary</h5>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="8">
+                    <div class="table-responsive mb-0">
+                      <table class="table  table-centered table-nowrap">
+                        <thead class="table-light">
+                          <tr>
+                            <th style="text-align: left; border: 2px solid #272829;">Shift</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Staff Name</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Shift Sales (Rs)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Shift Tally (Rs)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Difference (Rs)</th>
+                          </tr>
+                        </thead>
+                        <tbody *ngFor="let data of shiftWiseData">
+                          <tr>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.shiftTime}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.name}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{(data.meterSaleAmount) |
+                              number:'1.2-2'}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.shiftTally |
+                              number:'1.2-2'}}
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{(data.differnece) |
+                              number:'1.2-2'}} </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+                <br>
+                <tr>
+                  <td colspan="12">
+                    <div class="table-responsive mb-0">
+                      <table class="table  table-centered table-nowrap">
+                        <thead class="table-light">
+                          <tr>
+                            <th style="text-align: left; border: 2px solid #272829;">Shift</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Staff Name</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Shift Sales (Rs)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">A-Credit (Rs)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">B-Digital (Rs)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">C-Cash (Rs)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Shift Tally (A+B+C) (Rs)</th>
+                          </tr>
+                        </thead>
+                        <tbody *ngFor="let data of shiftWiseData">
+                          <tr>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.shiftTime}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.name}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{(data.meterSaleAmount) |
+                              number:'1.2-2'}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.credit | number:'1.2-2'}}
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.digital | number:'1.2-2'}}
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.cash | number:'1.2-2'}}
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.shiftTally |
+                              number:'1.2-2'}}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+                <br>
+                <tr>
+                  <td colspan="12">
+                    <div class="table-responsive mb-0">
+                      <table class="table  table-centered table-nowrap">
+                        <thead class="table-light">
+                          <tr>
+                            <th style="text-align: left; border: 2px solid #272829;">Shift</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Staff Name</th>
+                            <th style="text-align: left; border: 2px solid #272829;">C-Cash (1+2+3) (Rs)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">1-Cash Handover (Rs)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">2-Cash Expenses (Rs)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">3-Cash Short/Diff (Rs)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Cash Expenses Details</th>
+                          </tr>
+                        </thead>
+                        <tbody *ngFor="let data of shiftWiseData">
+                          <tr>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.shiftTime}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.name}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.cash | number:'1.2-2'}}
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.cashHandOver |
+                              number:'1.2-2'}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.expenses | number:'1.2-2'}}
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.short | number:'1.2-2'}}
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.expenseAmtDetails}} </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+                <br>
+              </table>
+              <br>
+              <table style="width: 90%;" *ngIf="shiftNzDetails.length">
+                <tr>
+                  <td colspan="12">
+                    <h5>All-in-One Shift Sales Summary</h5>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="12">
+                    <div class="table-responsive mb-0">
+                      <table class="table  table-centered table-nowrap">
+                        <thead class="table-light">
+                          <tr>
+                            <th style="text-align: left; border: 2px solid #272829;">Shift</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Staff Name</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Nozzle Number</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Product</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Rate</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Opening Meter Reading</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Closing Meter Reading</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Meter Sales (Rs)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Meter Sales (Qty)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Testing (Qty)</th>
+                          </tr>
+                        </thead>
+                        <tbody *ngFor="let data of shiftNzDetails">
+                          <tr>
+                            <td style="text-align: left; border: 2px solid #272829;">
+                              <span *ngIf="data.fuelShiftTimeShiftName != ''">{{data.fuelShiftTimeShiftName}}</span>
+                              <span *ngIf="data.fuelShiftTimeShiftName == ''">{{data.fuelShiftTimeDetails}}</span>
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.firstName}}
+                              {{data.lastName}}
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.duNo}}-{{data.nozNo}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.productName}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.fuelPrice |
+                              number:'1.2-2'}}
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.openMeter |
+                              number:'1.2-2'}}
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.closingReading |
+                              number:'1.2-2'}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.meterSaleAmount |
+                              number:'1.2-2'}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.meterSaleQuantity |
+                              number:'1.2-2'}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.pumpTesting |
+                              number:'1.2-2'}} </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+                <br>
+              </table>
+              <br>
+              <table *ngIf="totalLubeCash.length" class="table  table-centered table-nowrap" style="width: 90%;">
+                <tr>
+                  <th colspan="12">
+                    <h5>All-in-One(Lube) Shift Sales Summary</h5>
+                  </th>
+                </tr>
+                <tr>
+                  <td>
+                    <thead class="table-light">
+                      <tr>
+                        <th style="text-align: left; border: 2px solid #272829;">Shift</th>
+                        <th style="text-align: left; border: 2px solid #272829;">Staff Name</th>
+                        <th style="text-align: left; border: 2px solid #272829;">Product</th>
+                        <th style="text-align: left; border: 2px solid #272829;">Amount</th>
+                        <th style="text-align: left; border: 2px solid #272829;">Quantity</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let data of totalLubeCash">
+                        <td style="text-align: left; border: 2px solid #272829;"> {{data.fuelShiftTimeShiftName}} </td>
+                        <td style="text-align: left; border: 2px solid #272829;"> {{data.firstName}} {{data.lastName}}
+                        </td>
+                        <td style="text-align: left; border: 2px solid #272829;"> {{data.cashBillProduct}}(cash) </td>
+                        <td style="text-align: left; border: 2px solid #272829;"> {{data.cashBillAmount |
+                          number:'1.2-2'}}
+                        </td>
+                        <td style="text-align: left; border: 2px solid #272829;"> {{data.cashBillQuantity}} </td>
+                      </tr>
+                      <tr *ngFor="let data of totalLubeCredit">
+                        <td style="text-align: left; border: 2px solid #272829;"> {{data.fuelShiftTimeShiftName}} </td>
+                        <td style="text-align: left; border: 2px solid #272829;"> {{data.firstName}} {{data.lastName}}
+                        </td>
+                        <td style="text-align: left; border: 2px solid #272829;"> {{data.lubeName}}(Credit) </td>
+                        <td style="text-align: left; border: 2px solid #272829;"> {{data.creditAmount | number:'1.2-2'}}
+                        </td>
+                        <td style="text-align: left; border: 2px solid #272829;"> {{data.actualCreditQuantity}} </td>
+                      </tr>
+                      <tr *ngFor="let data of totalLubeDigital">
+                        <td style="text-align: left; border: 2px solid #272829;"> {{data.fuelShiftTimeShiftName}} </td>
+                        <td style="text-align: left; border: 2px solid #272829;"> {{data.firstName}} {{data.lastName}}
+                        </td>
+                        <td style="text-align: left; border: 2px solid #272829;"> {{data.paymentProduct}}(Digital) </td>
+                        <td style="text-align: left; border: 2px solid #272829;"> {{data.totalDigitalSales |
+                          number:'1.2-2'}} </td>
+                        <td style="text-align: left; border: 2px solid #272829;"> {{data.totalQuantity}} </td>
+                      </tr>
+                    </tbody>
+
+                  </td>
+                </tr>
+              </table>
+              <br>
+              <table *ngIf="digitalDetails.length">
+                <tr>
+                  <td colspan="12">
+                    <h5>Digital Summary</h5>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="6">
+                    <div class="table-responsive mb-0">
+                      <table class="table  table-centered table-nowrap">
+                        <thead class="table-light">
+                          <tr>
+                            <th style="text-align: left; border: 2px solid #272829;">Digital POS</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Details</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Amount (Rs)</th>
+                          </tr>
+                        </thead>
+                        <tbody *ngFor="let data of digitalDetails">
+                          <tr>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.terminalName}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.transacId}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.paytmTotalAmount |
+                              number:'1.2-2'}} </td>
+                          </tr>
+                        </tbody>
+                        <tbody>
+                          <tr>
+                            <td style="text-align: left; border: 2px solid #272829;" colspan="2">
+                              <b> Total </b>
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;">
+                              <b> {{digitalTotalSales | number:'1.2-2'}} </b>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+                <br>
+              </table>
+              <br>
+              <table *ngIf="digitalLubeData.length">
+                <tr>
+                  <td colspan="12">
+                    <h5>Digital(Lube) Summary</h5>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="6">
+                    <div class="table-responsive mb-0">
+                      <table class="table  table-centered table-nowrap">
+                        <thead class="table-light">
+                          <tr>
+                            <th style="text-align: left; border: 2px solid #272829;">Sr No</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Khata Name</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Bill No.</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Product</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Vehicle No.</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Total Amount</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Total Quantity</th>
+                          </tr>
+                        </thead>
+                        <tbody *ngFor="let data of digitalLubeData; let i = index">
+                          <tr>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{i+1}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.paymentCust}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.paymentManualNumber}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.PaymentProduct}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.idfuelCreditVehicle}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.grandTotalAmount |
+                              number:'1.2-2'}}(Rs) </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.paymentQuantity |
+                              number:'1.2-2'}} {{data.paymentProdUnit}} </td>
+                          </tr>
+                        </tbody>
+                        <tbody>
+                          <tr>
+                            <td style="text-align: left; border: 2px solid #272829;" colspan="5">
+                              <b> Total </b>
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;">
+                              <b> {{digitalLubeTotalAmt | number:'1.2-2'}} </b> (Rs)
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;">
+                              <b> {{digitalLubeTotalQuantity | number:'1.2-2'}} Ltr/Kg </b>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+                <br>
+              </table>
+              <br>
+              <table *ngIf="totalMeterSalesDetails || totalCreditSales || creditSales || totalCreditPayment">
+                <tr>
+                  <td colspan="12">
+                    <h5>Credit Summary</h5>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="12">
+                    <div class="table-responsive mb-0">
+                      <table class="table  table-centered table-nowrap">
+                        <thead class="table-light">
+                          <tr>
+                            <th style="text-align: left; border: 2px solid #272829;">A-Shift Sales (Rs)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">B-Credit Sales (Rs) as per <br> Add
+                              Credit Sales</th>
+                            <th style="text-align: left; border: 2px solid #272829;">C-Credit Sales (Rs) as per <br> Add
+                              Shift</th>
+                            <th style="text-align: left; border: 2px solid #272829;">D-Credit Sales (Rs) <br> difference
+                              (C-B)</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Credit Sales (Rs) Share (C/A) <br>
+                              as
+                              per Add Shift</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Credit Payments (Rs) as per <br>
+                              Add
+                              Credit Payments</th>
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{totalMeterSalesDetails
+                              |number:'1.2-2'}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{totalCreditSales
+                              |number:'1.2-2'}}
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{creditSales |number:'1.2-2'}}
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{(creditSales) -
+                              (totalCreditSales)
+                              |number:'1.2-2'}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{(creditSales) /
+                              (totalMeterSalesDetails) |number:'1.2-2'}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{totalCreditPayment
+                              |number:'1.2-2'}} </td>
+
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+                <br>
+              </table>
+              <br>
+              <table *ngIf="creditDetails.length">
+                <tr>
+                  <td colspan="12">
+                    <h5>Credit Customers Sales Summary</h5>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="12">
+                    <div class="table-responsive mb-0">
+                      <table class="table  table-centered table-nowrap">
+                        <thead class="table-light">
+                          <tr>
+                            <th style="text-align: left; border: 2px solid #272829;">Sr No</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Khata Name</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Bill No.</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Product</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Rate</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Vehicle No.</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Total Amount</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Total Quantity</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Created By</th>
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let data of creditDetails; let i = index">
+                            <td style="text-align: left; border: 2px solid #272829;"> {{i+1}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.companyName}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.manualCrNumber}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.productName}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.productRate |
+                              number:'1.2-2'}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.vehicleNumber}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.creditAmount |
+                              number:'1.2-2'}} (Rs)</td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.actualCreditQuantity |
+                              number:'1.2-2'}}
+                              <span *ngIf="data.productName == 'CNG' ">kg</span>
+                              <span *ngIf="data.productName != 'CNG' ">Ltr</span>
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.firstName}}
+                              {{data.lastName}}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="text-align: left; border: 2px solid #272829;" colspan="6"><b>Total</b> </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> <b>{{totalCreditSalesAmount |
+                                number:'1.2-2'}}</b> (Rs)</td>
+                            <td style="text-align: left; border: 2px solid #272829;"> <span
+                                *ngIf="totalCreditWOCNGQuantity"><b>{{totalCreditWOCNGQuantity | number:'1.2-2'}}</b>
+                                (Ltr)</span> <span *ngIf="totalCreditCNGQuantity"> + <b>{{totalCreditCNGQuantity |
+                                  number:'1.2-2'}}</b> (kg)</span></td>
+                            <td style="text-align: left; border: 2px solid #272829;"> </td>
+
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+                <br>
+              </table>
+              <br>
+              <table *ngIf="creditPaymentDetails.length">
+                <tr>
+                  <td colspan="12">
+                    <h5>Credit Customers Payments Summary</h5>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="12">
+                    <div class="table-responsive mb-0">
+                      <table class="table  table-centered table-nowrap">
+                        <thead class="table-light">
+                          <tr>
+                            <th style="text-align: left; border: 2px solid #272829;">Khata Name</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Payment Mode</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Total Amount</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Account</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Payment Score</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Pending Days</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Created By</th>
+
+                          </tr>
+                        </thead>
+                        <tbody *ngFor="let data of creditPaymentDetails">
+                          <tr>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.companyName}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.paymentMethod}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.grandTotalAmount |
+                              number:'1.2-2'}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.bankName}}
+                              {{data.accountNumber}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> <svg width="25" height="25"
+                                viewBox="0 0 25 25" aria-label="clap">
+                                <g fill-rule="evenodd">
+                                  <path
+                                    d="M11.74 0l.76 2.97.76-2.97zM14.81 3.78l1.84-2.56-1.42-.47zM8.38 1.22l1.84 2.56L9.8.75zM20.38 21.62a5.11 5.11 0 0 1-3.16 1.61l.49-.45c2.88-2.89 3.45-5.98 1.69-9.21l-1.1-1.94-.96-2.02c-.31-.67-.23-1.18.25-1.55a.84.84 0 0 1 .66-.16c.34.05.66.28.88.6l2.85 5.02c1.18 1.97 1.38 5.12-1.6 8.1M7.1 21.1l-5.02-5.02a1 1 0 0 1 .7-1.7 1 1 0 0 1 .72.3l2.6 2.6a.44.44 0 0 0 .63-.62L4.1 14.04l-1.75-1.75a1 1 0 1 1 1.41-1.41l4.15 4.15a.44.44 0 0 0 .63 0 .44.44 0 0 0 0-.62L4.4 10.26 3.22 9.08a1 1 0 0 1 0-1.4 1.02 1.02 0 0 1 1.41 0l1.18 1.16L9.96 13a.44.44 0 0 0 .62 0 .44.44 0 0 0 0-.63L6.43 8.22a.99.99 0 0 1-.3-.7.99.99 0 0 1 .3-.7 1 1 0 0 1 1.41 0l7 6.98a.44.44 0 0 0 .7-.5l-1.35-2.85c-.31-.68-.23-1.19.25-1.56a.85.85 0 0 1 .66-.16c.34.06.66.28.88.6L18.63 14c1.57 2.88 1.07 5.54-1.55 8.16a5.62 5.62 0 0 1-5.06 1.65 9.35 9.35 0 0 1-4.93-2.72zM11 5.98l2.56 2.56c-.5.6-.56 1.41-.15 2.28l.26.56-4.25-4.25a.98.98 0 0 1-.12-.45 1 1 0 0 1 .29-.7 1.02 1.02 0 0 1 1.41 0zm8.89 2.06c-.38-.56-.9-.92-1.49-1.01a1.74 1.74 0 0 0-1.34.33c-.38.29-.61.65-.71 1.06a2.1 2.1 0 0 0-1.1-.56 1.78 1.78 0 0 0-.99.13l-2.64-2.64a1.88 1.88 0 0 0-2.65 0 1.86 1.86 0 0 0-.48.85 1.89 1.89 0 0 0-2.67-.01 1.87 1.87 0 0 0-.5.9c-.76-.75-2-.75-2.7-.04a1.88 1.88 0 0 0 0 2.66c-.3.12-.61.29-.87.55a1.88 1.88 0 0 0 0 2.66l.62.62a1.88 1.88 0 0 0-.9 3.16l5.01 5.02c1.6 1.6 3.52 2.64 5.4 2.96a7.16 7.16 0 0 0 1.18.1c1.03 0 2-.25 2.9-.7A5.9 5.9 0 0 0 21 22.24c3.34-3.34 3.08-6.93 1.74-9.17l-2.87-5.04z">
+                                  </path>
+                                </g>
+                              </svg>
+                              <span>{{data.avgPayment| number: '1.0-0'}}</span>
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.pendingDays}}</td>
+                            <td style="text-align: left; border: 2px solid #272829;">
+                              <span *ngIf="data.byManager == 'TRUE' ">
+                                {{data.managerName}}
+                              </span>
+                              <span *ngIf="data.byManager == 'FALSE' ">
+                                {{keyPerson}}
+                              </span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+                <br>
+              </table>
+              <br>
+              <table *ngIf="lubeCrDetails.length">
+                <tr>
+                  <td colspan="12">
+                    <h5>Lube Customers Sales Summary</h5>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="12">
+                    <div class="table-responsive mb-0">
+                      <table class="table  table-centered table-nowrap">
+                        <thead class="table-light">
+                          <tr>
+                            <th style="text-align: left; border: 2px solid #272829;">Sr No</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Khata Name</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Bill No.</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Product</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Vehicle No.</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Total Amount</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Total Quantity</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Created By</th>
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let data of lubeCrDetails; let i = index">
+                            <td style="text-align: left; border: 2px solid #272829;"> {{i+1}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.companyName}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.manualCrNumber}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.lubeName}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.vehicleNumber}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.creditAmount |
+                              number:'1.2-2'}} (Rs)</td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.actualCreditQuantity |
+                              number:'1.2-2'}} {{data.lubeUnit}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.firstName}}
+                              {{data.lastName}}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="text-align: left; border: 2px solid #272829;" colspan="5"><b>Total</b> </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> <b>{{totalLubeAmt |
+                                number:'1.2-2'}}</b> (Rs)</td>
+                            <td style="text-align: left; border: 2px solid #272829;"> <span><b>{{totalLubeLtrQuantity |
+                                  number:'1.2-2'}}</b> </span></td>
+                            <td style="text-align: left; border: 2px solid #272829;"> </td>
+
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+              <br>
+              <table *ngIf="lubeDetails.length">
+                <tr>
+                  <td colspan="12">
+                    <h5>Lube(Credit) Customers Sales Summary</h5>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="12">
+                    <div class="table-responsive mb-0">
+                      <table class="table  table-centered table-nowrap">
+                        <thead class="table-light">
+                          <tr>
+                            <th style="text-align: left; border: 2px solid #272829;">Sr No</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Khata Name</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Bill No.</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Product</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Vehicle No.</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Total Amount</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Total Quantity</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Total Quantity In Pieces</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Created By</th>
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let data of lubeDetails; let i = index">
+                            <td style="text-align: left; border: 2px solid #272829;"> {{i+1}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.companyName}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.manualCrNumber}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.lubeName}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.vehicleNumber}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.creditAmount |
+                              number:'1.2-2'}} (Rs)</td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.actualCreditQuantity |
+                              number:'1.2-2'}} {{data.lubeUnit}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.quantityInPieces |
+                              number:'1.2-2'}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.firstName}}
+                              {{data.lastName}}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="text-align: left; border: 2px solid #272829;" colspan="5"><b>Total</b> </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> <b>{{totalLubeAmt |
+                                number:'1.2-2'}}</b> (Rs)</td>
+                            <td style="text-align: left; border: 2px solid #272829;">
+                              <span *ngIf="totalLubeLtrQuantity"><b>{{totalLubeLtrQuantity | number:'1.2-2'}}</b>
+                                (Ltr)</span>
+                              <span *ngIf="totalLubeKgQuantity"> <b>{{totalLubeKgQuantity | number:'1.2-2'}}</b>
+                                (kg)</span>
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{totalLubeQuantityInPiece|
+                              number:'1.2-2'}}</td>
+                            <td style="text-align: left; border: 2px solid #272829;"> </td>
+
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+                <br>
+              </table>
+              <br>
+              <br><br>
+              <table *ngIf="lubeDetails.length">
+                <tr>
+                  <td colspan="12">
+                    <h5>Lube(Cash) Customers Sales Summary</h5>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="12">
+                    <div class="table-responsive mb-0">
+                      <table class="table  table-centered table-nowrap">
+                        <thead class="table-light">
+                          <tr>
+                            <th style="text-align: left; border: 2px solid #272829;">Sr No</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Khata Name</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Bill No.</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Product</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Vehicle No.</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Total Amount</th>
+                            <th style="text-align: left; border: 2px solid #272829;"> Quantity</th>
+                            <th style="text-align: left; border: 2px solid #272829;"> Quantity In Piece</th>
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let data of lubeCashDetails; let i = index">
+                            <td style="text-align: left; border: 2px solid #272829;"> {{i+1}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.cashBillCustName}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;">
+                              <span *ngIf="data.cashBillNumber">
+                                VEELS{{data.cashBillSystemNumber}} / {{data.cashBillNumber}}
+                              </span>
+                              <span *ngIf="!data.cashBillNumber">
+                                VEELS{{data.cashBillSystemNumber}}
+                              </span>
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.cashBillProduct}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;">
+                              <span *ngIf="data.cashBillVehicleNumber == 'null'">
+                                -
+                              </span>
+                              <span *ngIf="data.cashBillVehicleNumber != 'null'">
+                                {{data.cashBillVehicleNumber}}
+                              </span>
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.cashBillAmount |
+                              number:'1.2-2'}} (Rs)</td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.cashBillQuantity |
+                              number:'1.2-2'}} {{data.cashBillUnit}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.quantityInPiece|
+                              number:'1.2-2'}} </td>
+                          </tr>
+                          <tr>
+                            <td style="text-align: left; border: 2px solid #272829;" colspan="5"><b>Total</b> </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> <b>{{lubeCashTotalAmt |
+                                number:'1.2-2'}}</b> (Rs)</td>
+                            <td style="text-align: left; border: 2px solid #272829;">
+                              <b>{{lubeCashTotalQuan | number:'1.2-2'}}(Ltr/Kg)</b>
+                            </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> <b>{{totalLubeCashQuantityInPiece
+                                |
+                                number:'1.2-2'}}</b> </td>
+
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+                <br>
+              </table>
+              <br>
+              <table *ngIf="advAmtDetails.length">
+                <tr>
+                  <td colspan="12">
+                    <h5>Advance Amt Customers Summary</h5>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="12">
+                    <div class="table-responsive mb-0">
+                      <table class="table  table-centered table-nowrap">
+                        <thead class="table-light">
+                          <tr>
+                            <th style="text-align: left; border: 2px solid #272829;">Khata Name</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Bill No.</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Details</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Total Amount</th>
+                            <th style="text-align: left; border: 2px solid #272829;">Created By</th>
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let data of advAmtDetails">
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.companyName}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.manualCrNumber}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.advName}} </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.creditAmount |
+                              number:'1.2-2'}} (Rs)</td>
+                            <td style="text-align: left; border: 2px solid #272829;"> {{data.firstName}}
+                              {{data.lastName}}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="text-align: left; border: 2px solid #272829;" colspan="3"><b>Total</b> </td>
+                            <td style="text-align: left; border: 2px solid #272829;"> <b>{{totalAdvAmt |
+                                number:'1.2-2'}}</b> (Rs)</td>
+                            <td style="text-align: left; border: 2px solid #272829;"> </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+                <br>
+              </table>
+              <br>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row noprint">
+      <div class="col-md-10"></div>
+      <div class="col-auto">
+        <button class="btn btn-success" (click)="shiftReportPage()">print</button>
+      </div>
+
+    </div>
   </div>
-  <!-- </div> -->
+</ng-template>
+
+<ng-template #editShift>
+  <div class="row" *ngIf="isADDEDIT">
+    <br>
+    <div class="col-md-12">
+      <br>
+      <form [formGroup]="updateShiftForm">
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-auto">
+            <b> Operator</b>
+          </div>
+          <div class="col-auto">
+            {{operatorName}}
+          </div>
+          <div class="col-auto">
+            <b>Shift</b>
+          </div>
+          <div class="col-auto">
+            <select class="form-control" (change)="updateShiftTimeUpdate($event)" formControlName="shiftTimeId"
+              required>
+              <option value="1">STANDARD</option>
+              <option *ngFor="let data of fuelShiftTimeDetails" [value]="data.fuelShiftTimeId">
+                {{data.fuelShiftTimeShiftName}} {{data.fuelShiftTimeDetails}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </form>
+      <hr>
+      <div class="row">
+        <div class="col col-xl-12 col-lg-12">
+          <div class="table-responsive mb-0">
+            <table class="table table-centered table-nowrap">
+              <thead class="table-light">
+                <tr>
+                  <th style="text-align: left;"> Nozzle Number</th>
+                  <th style="text-align: left;"> Product </th>
+                  <th style="text-align: left;"> Rate </th>
+                  <th style="text-align: left;"> Opening Meter Reading </th>
+                  <th style="text-align: left;"> Closing Meter Reading</th>
+                  <th style="text-align: left;"> Pump Testing</th>
+                  <th style="text-align: left;"> Meter Sales (Rs)</th>
+                  <th style="text-align: left;"> Meter Sales (Qty)</th>
+                  <th style="text-align: left;"> Actions</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let charges of CreditRequestDataArrayUpdate; let i = index;">
+                <tr>
+                  <td style="text-align: left;">
+                    <select class="form-control" disabled [(ngModel)]="charges.pumpNzId"
+                      [ngModelOptions]="{standalone: true}" aria-readonly="true">
+                      <option *ngFor="let data of pumpNzDetails" [value]="data.fuelInfraMapId">
+                        {{data.duNo}}-{{data.nozNo}}
+                      </option>
+                    </select>
+                  </td>
+
+                  <td style="text-align: left;">
+                    <input type="text" class="form-control" [(ngModel)]="charges.productName" style="text-align: left;"
+                      [ngModelOptions]="{standalone: true}" placeholder="Product" disabled />
+                  </td>
+
+                  <td style="text-align: left;">
+                    <input type="text" class="form-control" [(ngModel)]="charges.fuelPrice" style="text-align: left;"
+                      [ngModelOptions]="{standalone: true}" placeholder="Rate" (change)="getMeterSales(i)" />
+                  </td>
+
+                  <td style="text-align: left;">
+                    <input type="number" class="form-control" [(ngModel)]="charges.openMeter"
+                      [ngModelOptions]="{standalone: true}" placeholder="Meter Reading" min="0"
+                      (change)="getMeterSalesUpdate(i)" />
+                  </td>
+
+                  <td style="text-align: left;">
+                    <input type="number" class="form-control" [(ngModel)]="charges.closingReading"
+                      [ngModelOptions]="{standalone: true}" placeholder="Meter Reading"
+                      (change)="getMeterSalesUpdate(i)" min="0" />
+                  </td>
+
+                  <td style="text-align: left;">
+                    <input type="number" class="form-control" [(ngModel)]="charges.pumpTesting"
+                      [ngModelOptions]="{standalone: true}" placeholder="Testing" (blur)="getMeterSales1Update(i)"
+                      min="0" />
+                  </td>
+                  <td style="text-align: left;">
+                    <input type="number" class="form-control" [(ngModel)]="charges.meterSaleAmount"
+                      [ngModelOptions]="{standalone: true}" placeholder="Meter Sales Rs" disabled />
+                  </td>
+
+                  <td style="text-align: left;">
+                    <input type="number" class="form-control" [(ngModel)]="charges.meterSaleQuantity"
+                      [ngModelOptions]="{standalone: true}" placeholder="Meter SalesL tr" disabled />
+                  </td>
+
+                  <td style="text-align: left;cursor: pointer;">
+                    <div ngbDropdown placement="bottom-left">
+                      <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                        aria-expanded="true"></i>
+                      <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                        <a class="dropdown-item" href="javascript: void(0);"
+                          (click)="updateInfra(charges.fuelShiftNozzeInfraId,i)">
+                          <i class="fas fa-edit" style="color: #4e9b4e;">
+                          </i> &nbsp; Update</a>
+                        <a class="dropdown-item" href="javascript: void(0);"
+                          (click)="deleteNzEntryURLUpdate(charges.fuelShiftNozzeInfraId,charges.fuelShiftDetailsId)">
+                          <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody *ngIf="!pumpInfraUpdate">
+                <tr>
+                  <td style="text-align: left;" colspan="9">
+                    <i> This Shift Don't have any Pump Nozzle Entry.. you can add nozzle entry by clicking Add Nozzle
+                      Button..</i>
+                  </td>
+                </tr>
+              </tbody>
+              <br><br><br><br>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="!isAddNozzleUpdate">
+        <div class="col-lg-2">
+          <button type="button" class="btn btn-success" (click)="addNozzleUpdate()">Add Nozzles </button>
+        </div>
+      </div>
+
+      <div *ngIf="isAddNozzleUpdate">
+        <div class="row">
+          <div class="col col-xl-12 col-lg-12">
+            <div class="table-responsive mb-0">
+              <table class="table table-centered table-nowrap">
+                <thead class="table-light">
+                  <tr>
+                    <th style="text-align: left;"> Nozzle Number</th>
+                    <th style="text-align: left;"> Product </th>
+                    <th style="text-align: left;"> Rate </th>
+                    <th style="text-align: left;"> Opening Meter Reading </th>
+                    <th style="text-align: left;"> Closing Meter Reading</th>
+                    <th style="text-align: left;"> Pump Testing</th>
+                    <th style="text-align: left;">Meter Sales (Rs)</th>
+                    <th style="text-align: left;"> Meter Sales (Qty) </th>
+                    <th style="text-align: left;"> Actions</th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let charges of CreditRequestDataArray1Update; let i = index;">
+                  <tr>
+                    <td style="text-align: left;">
+                      <select class="form-select" [(ngModel)]="charges.pumpNozzle" [ngModelOptions]="{standalone: true}"
+                        (change)="getProductByInfraMapIdUpdate($event,i,setFuelPrice)">
+                        <option value="">Select</option>
+                        <option *ngFor="let data of pumpNzDetails" [value]="data.fuelInfraMapId">
+                          {{data.duNo}}-{{data.nozNo}}
+                        </option>
+                      </select>
+                    </td>
+
+                    <td style="text-align: left;">
+                      <input type="text" class="form-control" [(ngModel)]="charges.product" style="text-align: left;"
+                        [ngModelOptions]="{standalone: true}" placeholder="Product" readonly />
+                    </td>
+
+                    <td style="text-align: left;">
+                      <select class="form-select" placeholder="select rate" style=" width: 80px;"
+                        [(ngModel)]="charges.rate" [ngModelOptions]="{standalone: true}"
+                        (change)="setRateUpdate($event,i)">
+                        <option value="">Select</option>
+                        <option *ngFor="let data of charges.rateDetails" [value]="data.productSellingPrice">
+                          {{data.productSellingPrice}}
+                        </option>
+                      </select>
+                    </td>
+
+                    <td style="text-align: left;">
+                      <input type="number" class="form-control" [(ngModel)]="charges.openingMeterReading"
+                        [ngModelOptions]="{standalone: true}" placeholder="Meter Reading" min="0" />
+                    </td>
+
+                    <td style="text-align: left;">
+                      <input type="number" class="form-control" [(ngModel)]="charges.closingMeterReading"
+                        [ngModelOptions]="{standalone: true}" placeholder="Meter Reading" (change)="getMeterSalesAdd(i)"
+                        min="0" />
+                    </td>
+
+                    <td style="text-align: left;">
+                      <input type="number" class="form-control" [(ngModel)]="charges.pumpTesting"
+                        [ngModelOptions]="{standalone: true}" placeholder="Testing" (blur)="getMeterSales1Add(i)"
+                        min="0" />
+                    </td>
+                    <td style="text-align: left;">
+                      <input type="number" class="form-control" [(ngModel)]="charges.meterSalesRs"
+                        [ngModelOptions]="{standalone: true}" placeholder="Meter Sales Rs" readonly />
+                    </td>
+
+                    <td style="text-align: left;">
+                      <input type="number" class="form-control" [(ngModel)]="charges.meterSalesLtr"
+                        [ngModelOptions]="{standalone: true}" placeholder="Meter SalesL tr" readonly />
+                    </td>
+
+
+
+                    <td>&nbsp;
+                      <button type="submit" class="btn btn-outline-success my-2 my-sm-0"
+                        (click)="addFormRequest1Update(i)">
+                        Add
+                      </button>
+                      &nbsp;&nbsp;
+                      <button *ngIf="i != 0 " type="cancel" class="btn btn-danger"
+                        (click)="removeFormRequestUpdate(i)">Delete</button>
+                    </td>
+
+                  </tr>
+                </tbody>
+
+                <ng-template #setFuelPrice let-c="close" let-d="dismiss">
+                  <div class="modal-header">
+                    <h4 class="text-center">
+                      Set Fuel Price
+                    </h4>
+                    <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form [formGroup]="unitForm">
+
+                      <div class="row">
+
+                        <div class="col-md-5">
+                          <label class="labelNewMargin"><b>Select Date</b></label>
+                        </div>
+                        <div class="col-md-6">
+                          <input class="form-control" formControlName="productPriceDate" ngbDatepicker
+                            #startDate="ngbDatepicker" readonly style="background-color: #ffffff;"
+                            (click)="startDate.toggle()">
+
+                        </div>
+
+                      </div>
+                      <br>
+                      <div class="row" *ngFor="let data of allProductPriceList">
+
+                        <div class="col-md-5">
+                          <label class="labelNewMargin"> <b>
+                              {{data.productName}}
+                            </b></label>
+                        </div>
+                        <div class="col-md-6">
+                          <input class="form-control form-control-sm mr-1 w-40" style="font-size: 0.750rem;"
+                            type="number" onkeypress="return this.value.length < 6;" [(ngModel)]="data.sellingPrice"
+                            [ngModelOptions]="{standalone: true}" placeholder="Enter Price">
+                        </div>
+                        <br><br>
+                      </div>
+
+                      <br>
+                      <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
+                          <button class="btn btn-outline-success my-2 my-sm-0" type="button"
+                            (click)="addFuelPrice()">Submit</button>
+                          &nbsp;&nbsp;
+                          <button class="btn btn-danger" type="button" (click)="d('Cross click')">Cancel</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </ng-template>
+              </table>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+              </div>
+              <div class="col-auto" *ngIf="isPumpNozzleUpdate">
+                <button type="submit" class="btn btn-success" (click)="submitShiftDetailsUpdate()">Submit</button>
+              </div>
+              <div class="col-auto">
+                <button type="submit" class="btn btn-danger" (click)="clearModalUpdate()">Cancel</button>
+              </div>
+            </div>
+            <br>
+          </div>
+        </div>
+
+      </div>
+      <br>
+
+      <div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <ul ngbNav #digitalNav="ngbNav" [activeId]="17" class="nav-tabs nav-tabs-custom nav-justified"
+                  style="width: 50%;">
+                  <li [ngbNavItem]="17">
+                    <a ngbNavLink>
+                      <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                      <span class="d-none d-sm-block" style="font-size: 13.5px;">FUEL</span>
+                    </a>
+                    <ng-template ngbNavContent>
+                      <ng-template [ngTemplateOutlet]="FUELDIGITAL1"></ng-template>
+                    </ng-template>
+                  </li>
+                  <li [ngbNavItem]="18">
+                    <a ngbNavLink>
+                      <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                      <span class="d-none d-sm-block" style="font-size: 13.5px;">LUBE</span>
+                    </a>
+                    <ng-template ngbNavContent>
+                      <ng-template [ngTemplateOutlet]="LUBEDIGITAL1"></ng-template>
+                    </ng-template>
+                  </li>
+
+                </ul>
+                <div [ngbNavOutlet]="digitalNav"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #FUELDIGITAL1>
+        <div>
+          <div class="table-responsive mb-0" *ngIf="digitalSalesDetails.length">
+            <table class="table table-centered table-nowrap">
+              <thead class="table-light">
+                <tr>
+                  <th style="text-align: center;">Digital POS</th>
+                  <th style="text-align: center;">Details</th>
+                  <th style="text-align: center;">Amount (Rs)</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let data of digitalSalesDetails; let i = index">
+                <tr>
+                  <td style="text-align: center;">
+
+                    <input type="text" class="form-control" [(ngModel)]="data.terminalName" style="text-align: left;"
+                      [ngModelOptions]="{standalone: true}" placeholder="terminalName" readonly>
+
+                  </td>
+                  <td style="text-align: center;">
+
+                    <input type="text" class="form-control" [(ngModel)]="data.transacId" style="text-align: left;"
+                      [ngModelOptions]="{standalone: true}" placeholder="transacId" />
+                  </td>
+                  <td style="text-align: center;">
+                    <input type="text" class="form-control" [(ngModel)]="data.paytmTotalAmount"
+                      style="text-align: left;" [ngModelOptions]="{standalone: true}" placeholder="paytmTotalAmount" />
+
+                  </td>
+                  <td style="text-align: left;cursor: pointer;">
+                    <div ngbDropdown placement="bottom-left">
+                      <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                        aria-expanded="true"></i>
+                      <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                        <a class="dropdown-item" href="javascript: void(0);"
+                          (click)="cancelPayment(data.accountTransacLogId)">
+                          <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
+                        <a class="dropdown-item" href="javascript: void(0);"
+                          (click)="updatePayment(data.accountTransacLogId,data.terminalName,data.transacId,data.paytmTotalAmount)">
+                          <i class="fas fa-edit" style="color: #4e9b4e;">
+                          </i> &nbsp; Update</a>
+                      </div>
+                    </div>
+                  </td>
+
+                </tr>
+              </tbody>
+              <br><br><br><br>
+            </table>
+
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-lg-2">
+              <button type="button" class="btn btn-success" (click)="addPOSUpdate()">Add Digital </button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #LUBEDIGITAL1>
+        <div>
+
+          <div class="table-responsive mb-0" *ngIf="digitalLubeDetails.length">
+            <table class="table table-centered table-nowrap">
+              <thead class="table-light">
+                <tr>
+                  <th style="text-align: center;">Khata Name</th>
+                  <th style="text-align: center;">Bill Number</th>
+                  <th style="text-align: center;">Digital POS</th>
+                  <th style="text-align: center;">Details</th>
+                  <th style="text-align: center;">Vehicle Number</th>
+                  <th style="text-align: center;">Lube</th>
+                  <th style="text-align: center;">Quantity In Piece</th>
+                  <th style="text-align: center;">Quantity</th>
+                  <th style="text-align: center;">Amount</th>
+                  <th style="text-align: center;">Action</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let data of digitalLubeDetails; let i = index">
+                <tr>
+                  <td style="text-align: center;"> {{data.paymentCust }} </td>
+                  <td style="text-align: center;"> {{data.paymentManualNumber}} </td>
+                  <td style="text-align: center;"> {{data.terminalName }} </td>
+                  <td style="text-align: center;"> {{data.transacId}} </td>
+                  <td style="text-align: center;"> {{data.idfuelCreditVehicle }} </td>
+                  <td style="text-align: center;"> {{data.PaymentProduct}} </td>
+                  <td style="text-align: center;"> {{data.paymentQuantityInPieces }} </td>
+                  <td style="text-align: center;"> {{data.paymentQuantity}} {{data.paymentProdUnit}} </td>
+                  <td style="text-align: center;"> {{data.paytmTotalAmount | number:'1.2-2'}} </td>
+                  <td style="text-align: left;cursor: pointer;">
+                    <div ngbDropdown placement="bottom-left">
+                      <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                        aria-expanded="true"></i>
+                      <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                        <a class="dropdown-item" href="javascript: void(0);"
+                          (click)="cancelPayment(data.accountTransacLogId)">
+                          <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
+                      </div>
+                    </div>
+                  </td>
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </ng-template>
+      <br>
+      <div *ngIf="isAddPOSUpdate">
+        <form [formGroup]="digitalUpdate">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-body">
+                  <ul ngbNav #customNav="ngbNav" [activeId]="15" class="nav-tabs nav-tabs-custom nav-justified"
+                    style="width: 50%;">
+                    <li [ngbNavItem]="15">
+                      <a ngbNavLink>
+                        <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                        <span class="d-none d-sm-block" style="font-size: 13.5px;">FUEL</span>
+                      </a>
+                      <ng-template ngbNavContent>
+                        <ng-template [ngTemplateOutlet]="FUELDIGITAL"></ng-template>
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="16">
+                      <a ngbNavLink>
+                        <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                        <span class="d-none d-sm-block" style="font-size: 13.5px;">LUBE</span>
+                      </a>
+                      <ng-template ngbNavContent>
+                        <ng-template [ngTemplateOutlet]="LUBEDIGITAL"></ng-template>
+                      </ng-template>
+                    </li>
+
+                  </ul>
+                  <div [ngbNavOutlet]="customNav"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ng-template #FUELDIGITAL>
+            <div class="row">
+              <div class="col-md-10">
+                <div class="table-responsive mb-0">
+                  <table class="table table-centered table-nowrap">
+                    <thead class="table-light">
+                      <tr>
+                        <th style="text-align: center;">Digital POS</th>
+                        <th style="text-align: center;">Details</th>
+                        <th style="text-align: center;">Amount (Rs)</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style="text-align: center;">
+                          <select class="form-select" formControlName="deviceName"
+                            (change)="getTerminalTypeFromTerminalIdUpdate($event)" required>
+                            <option value="">Select Device</option>
+                            <option *ngFor="let data1 of fuelTerminalDetails" [value]="data1.fuelTerminalsId">
+                              {{data1.terminalName}}
+                            </option>
+                          </select>
+
+                        </td>
+                        <td style="text-align: center;">
+                          <input class="form-control form-control" type="text" formControlName="digitalTransitionId"
+                            placeholder="Transaction ID">
+                        </td>
+                        <td style="text-align: center;">
+                          <input class="form-control form-control" type="number"
+                            formControlName="digitalTransitionAmount" placeholder="Transaction Amount">
+
+                        </td>
+                        <td style="text-align: left;cursor: pointer;">
+                          <button type="submit" class="btn btn-success"
+                            (click)="submitDigitalTotalUpdate()">Submit</button>
+                        </td>
+
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+          <hr>
+
+          <ng-template #LUBEDIGITAL>
+            <div class="row">
+              <form [formGroup]="digitalLubricantForm">
+                <div class="row">
+                  <div class="card">
+                    <div class="row">
+                      <div class="col-md-2"></div>
+                      <div class="col-md-8" style="border: 1px solid rgb(214, 212, 221);">
+                        <br><br>
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="example-text-input" class="col-auto col-form-label">Date :</label>
+                          </div>
+                          <div class="col-md-8">
+                            <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" #myinput
+                              (click)="endDate.toggle()" readonly style="background-color: #ffffff;"
+                              formControlName="priceDate" ngbDatepicker #endDate="ngbDatepicker"
+                              (dateSelect)="logValue()">
+                          </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="example-text-input" class="col-auto col-form-label">Bill Number
+                              :</label>
+                          </div>
+                          <div class="col-md-8">
+                            <input class="form-control" placeholder="enter bill number" formControlName="billNumber">
+                          </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="example-text-input" class="col-auto col-form-label">Customer Name
+                              :</label>
+                          </div>
+                          <div class="col-md-3">
+                            <input class="form-control" type="text" list="corporateList" placeholder="select customer"
+                              formControlName="customerName" (change)="getDetailsByfuelDealerCustomerMapIdId($event)">
+                            <datalist id="corporateList">
+                              <option *ngFor="let data of corporateList" [value]="data.companyName">
+                            </datalist>
+                          </div>
+                          <div class="col-md-3">
+                            <input class="form-control" maxlength="15" minlength="15" placeholder="GST Number"
+                              formControlName="gstNumber"
+                              oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                          </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="example-text-input" class="col-auto col-form-label">Address :</label>
+                          </div>
+                          <div class="col-md-8">
+                            <input class="form-control" placeholder="enter address" formControlName="address"
+                              oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                          </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="example-text-input" class="col-auto col-form-label">Customer Number
+                              :</label>
+                          </div>
+                          <div class="col-md-8">
+                            <!-- <input type="number" class="form-control" formControlName="customerNumber"
+                              [class.is-invalid]="userMobile1.invalid && userMobile1.touched"
+                              placeholder="Enter Mobile Number" onkeypress="return this.value.length < 10;"
+                              oninput="if(this.value.length=10)">
+                            <div *ngIf="(userMobile1.invalid && userMobile1.touched) || userMobile1.dirty">
+                              <small *ngIf="userMobile1.errors?.pattern" class="text-danger">
+                                Please provide a valid 10 Digit Mobile Number</small>
+                            </div> -->
+                          </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="example-text-input" class="col-auto col-form-label">vehicle number
+                              :</label>
+                          </div>
+                          <div class="col-md-8">
+                            <input class="form-control" type="text" placeholder="enter vehicle number"
+                              formControlName="vehicleNumber" maxlength="10"
+                              oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                          </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="example-text-input" class="col-auto col-form-label">Product :<span
+                                style="color: red;">*</span></label>
+                          </div>
+                          <div class="col-md-3">
+                            <select class="form-control" formControlName="lubeId" (change)="getCashLubeDetails($event)"
+                              required>
+                              <option value="">Select Lubricant </option>
+                              <option *ngFor="let data of lubricantList" [value]="data.lubricantsId">
+                                {{data.lubricantsName}}
+                              </option>
+                            </select>
+                          </div>
+                          <div class="col-md-3">
+                            <input class="form-control" placeholder="HSN/SAC Number" formControlName="hsnSacNumber"
+                              readonly>
+                          </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="example-text-input" class="col-auto col-form-label">Tax :<span
+                                style="color: red;">*</span></label>
+                          </div>
+                          <div class="col-md-3">
+                            <select class="form-control" formControlName="gst" (blur)="gstLubeCalculation()" required>
+                              <option value="">Select Tax </option>
+                              <option *ngFor="let data of gstDetails" [value]="data.gst">
+                                GST {{data.gst}} %
+                              </option>
+                            </select>
+                          </div>
+                          <div class="col-md-3">
+                            <select class="form-control" formControlName="taxDetails" (blur)="gstLubeCalculation()"
+                              required>
+                              <option value="INCLUDE"> Include Tax Amt </option>
+                              <option value="EXCLUDE"> Not Include Tax Amt </option>
+                            </select>
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="example-text-input" class="col-auto col-form-label">Digital POS :<span
+                                style="color: red;">*</span></label>
+                          </div>
+                          <div class="col-md-3">
+                            <select class="form-select" formControlName="deviceName"
+                              (change)="getTerminalTypeFromTerminalIdUpdate($event)" required>
+                              <option value="">Select Device</option>
+                              <option *ngFor="let data1 of fuelTerminalDetails" [value]="data1.fuelTerminalsId">
+                                {{data1.terminalName}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="example-text-input" class="col-auto col-form-label">Details :<span
+                                style="color: red;">*</span></label>
+                          </div>
+                          <div class="col-md-3">
+                            <input class="form-control form-control" type="text" formControlName="digitalTransitionId"
+                              placeholder="Transaction ID">
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="example-text-input" class="col-auto col-form-label">Amount :<span
+                                style="color: red;">*</span></label>
+                          </div>
+                          <div class="col-md-8">
+                            <input class="form-control" formControlName="reqCreditAmount" placeholder="Enter Amount"
+                              type="number" (blur)="gstDigitalCalculation()">
+                          </div>
+
+                          &nbsp;&nbsp;
+                          Rs
+
+                        </div>
+                        <br>
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="example-text-input" class="col-auto col-form-label">Quantity In
+                              Pieces:<span style="color: red;">*</span></label>
+                          </div>
+                          <div class="col-md-8">
+                            <input class="form-control" formControlName="quantityInPieces" placeholder="Enter Pieces"
+                              type="number" (input)="getQuantityByPiecesDigitalLube()">
+                          </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+
+                          <div class="col-md-3">
+                            <label for="example-text-input" class="col-auto col-form-label">Quantity :<span
+                                style="color: red;">*</span></label>
+                          </div>
+                          <div class="col-md-8">
+                            <input class="form-control" formControlName="reqQuantity" placeholder="Enter Quantity"
+                              type="number" (blur)="gstDigitalCalculation()">
+                          </div>
+                          &nbsp;&nbsp;
+                          {{unit}}
+
+                        </div>
+
+                        <br><br>
+                        <div class="row">
+                          <div class="col-md-12" style="align-items: center;text-align: center;">
+                            <button type="submit" class="btn btn-primary" (click)="submitLubeDigital()">Submit</button>
+                            &nbsp;&nbsp;
+                            <button type="submit" class="btn btn-secondary"
+                              (click)="closeModalLubeDigital()">Cancel</button>
+                          </div>
+                        </div>
+                        <br>
+
+                      </div>
+                      <div class="col-md-2"></div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </ng-template>
+
+        </form>
+      </div>
+
+      <div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <ul ngbNav #customNav="ngbNav" [activeId]="13" class="nav-tabs nav-tabs-custom nav-justified"
+                  style="width: 50%;">
+                  <li [ngbNavItem]="13">
+                    <a ngbNavLink>
+                      <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                      <span class="d-none d-sm-block" style="font-size: 13.5px;">FUEL</span>
+                    </a>
+                    <ng-template ngbNavContent>
+                      <ng-template [ngTemplateOutlet]="CASHFUEL"></ng-template>
+                    </ng-template>
+                  </li>
+                  <li [ngbNavItem]="14">
+                    <a ngbNavLink>
+                      <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                      <span class="d-none d-sm-block" style="font-size: 13.5px;">LUBE</span>
+                    </a>
+                    <ng-template ngbNavContent>
+                      <ng-template [ngTemplateOutlet]="CASHLUBE"></ng-template>
+                    </ng-template>
+                  </li>
+
+                </ul>
+                <div [ngbNavOutlet]="customNav"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+      </div>
+
+      <ng-template #CASHFUEL>
+        <br><br>
+        <div>
+          <div class="table-responsive mb-0" *ngIf="cashDetails.length">
+            <table class="table table-centered table-nowrap">
+              <thead class="table-light">
+                <tr>
+                  <th style="text-align: left;">Amount (Rs)</th>
+                  <th style="text-align: left;">Actions</th>
+
+                </tr>
+              </thead>
+              <tbody *ngFor="let data of cashDetails; let i = index">
+                <tr>
+                  <td style="text-align: left;">
+                    <input type="text" class="form-control" [(ngModel)]="data.grandTotalAmount"
+                      style="text-align: left;" [ngModelOptions]="{standalone: true}" placeholder="grandTotalAmount">
+                  </td>
+
+                  <td style="text-align: left;cursor: pointer;">
+                    <div ngbDropdown placement="bottom-left">
+                      <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                        aria-expanded="true"></i>
+                      <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+
+                        <a class="dropdown-item" href="javascript: void(0);"
+                          (click)="updatePaymentCashHandOver(data.accountTransacLogId,data.grandTotalAmount)">
+                          <i class="fas fa-edit" style="color: #4e9b4e;">
+                          </i> &nbsp; Update</a>
+                        <a class="dropdown-item" href="javascript: void(0);"
+                          (click)="cancelPayment(data.accountTransacLogId)">
+                          <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+              <br><br><br><br>
+            </table>
+          </div>
+          <div class="row">
+            <div class="col-lg-4">
+              <button type="button" class="btn btn-success" (click)="addCashHandoverUpdate()">Add Cash Handover
+              </button>
+            </div>
+          </div>
+          <br>
+        </div>
+      </ng-template>
+
+      <ng-template #CASHLUBE>
+        <br><br>
+        <div>
+          <div class="card-body table-responsive">
+            <table class="table table-hover b">
+              <thead>
+                <tr>
+                  <th style="text-align: center;">Khata Name</th>
+                  <th style="text-align: center;">Bill Number</th>
+                  <th style="text-align: center;">Vehicle Number</th>
+                  <th style="text-align: center;">Lube</th>
+                  <th style="text-align: center;">Quantity In Piece</th>
+                  <th style="text-align: center;">Quantity</th>
+                  <th style="text-align: center;">Amount</th>
+                  <th style="text-align: center;">Action</th>
+
+                </tr>
+              </thead>
+              <tbody *ngFor="let data of cashLubeData; let i = index">
+
+                <tr>
+                  <td style="text-align: center;"> {{data.cashBillCustName}} </td>
+
+                  <td style="text-align: center;">
+                    <span *ngIf="data.cashBillNumber">
+                      VEELS{{data.cashBillSystemNumber}} / {{data.cashBillNumber}}
+                    </span>
+                    <span *ngIf="!data.cashBillNumber">
+                      VEELS{{data.cashBillSystemNumber}}
+                    </span>
+
+                  </td>
+
+                  <td style="text-align: center;">
+                    <span *ngIf="data.cashBillVehicleNumber == 'null'">
+                      -
+                    </span>
+                    <span *ngIf="data.cashBillVehicleNumber != 'null'">
+                      {{data.cashBillVehicleNumber}}
+                    </span>
+                  </td>
+
+                  <td style="text-align: center;"> {{data.cashBillProduct}} </td>
+
+                  <td style="text-align: center;"> {{data.quantityInPiece | number:'1.2-2'}} </td>
+
+                  <td style="text-align: center;"> {{data.cashBillQuantity | number:'1.2-2'}} </td>
+
+                  <td style="text-align: center;"> {{data.cashBillAmount | number:'1.2-2'}} </td>
+
+
+                  <td style="text-align: left;cursor: pointer;">
+                    <div ngbDropdown placement="bottom-left">
+                      <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                        aria-expanded="true"></i>
+                      <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                        <a *ngIf="data.deleteStatus == 'FALSE' " class="dropdown-item" href="javascript: void(0);"
+                          (click)="deleteCashBill(data.cashBillId)">
+                          <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
+                        <a *ngIf="data.deleteStatus == 'TRUE' " class="dropdown-item" href="javascript: void(0);">
+                          &nbsp; CANCELLED</a>
+                      </div>
+                    </div>
+                  </td>
+
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+          <div class="row">
+            <div class="col-lg-4">
+              <button type="button" class="btn btn-success" (click)="addCashHandoverUpdate()">Add Cash Handover
+              </button>
+            </div>
+          </div>
+          <br>
+        </div>
+      </ng-template>
+
+      <div *ngIf="isCashHandover">
+        <form [formGroup]="cashUpdate">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-body">
+                  <ul ngbNav #customNav="ngbNav" [activeId]="13" class="nav-tabs nav-tabs-custom nav-justified"
+                    style="width: 50%;">
+                    <li [ngbNavItem]="13">
+                      <a ngbNavLink>
+                        <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                        <span class="d-none d-sm-block" style="font-size: 13.5px;">FUEL</span>
+                      </a>
+                      <ng-template ngbNavContent>
+                        <ng-template [ngTemplateOutlet]="FUEL1"></ng-template>
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="14">
+                      <a ngbNavLink>
+                        <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                        <span class="d-none d-sm-block" style="font-size: 13.5px;">LUBE</span>
+                      </a>
+                      <ng-template ngbNavContent>
+                        <ng-template [ngTemplateOutlet]="LUBE1"></ng-template>
+                      </ng-template>
+                    </li>
+
+                  </ul>
+                  <div [ngbNavOutlet]="customNav"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ng-template #FUEL1>
+            <br><br>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="table-responsive mb-0">
+                  <table class="table table-centered table-nowrap">
+                    <thead class="table-light">
+                      <tr>
+                        <th style="text-align: left;">Amount (Rs)</th>
+                        <th style="text-align: left;">Actions</th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style="text-align: left;">
+                          <input type="text" class="form-control" formControlName="totalAmount"
+                            placeholder="grandTotalAmount">
+                        </td>
+
+                        <td style="text-align: left;cursor: pointer;">
+                          <button type="submit" class="btn btn-success" (click)="submitCashHandoverUpdate()">
+                            Submit
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+
+                  </table>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+
+          <ng-template #LUBE1>
+            <br><br>
+            <div class="row">
+              <form [formGroup]="cashBillLubricantForm">
+                <div class="row">
+                  <div class="card">
+                    <div class="row">
+                      <div class="col-md-2"></div>
+                      <div class="col-md-8" style="border: 1px solid rgb(214, 212, 221);">
+                        <br><br>
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="example-text-input" class="col-auto col-form-label">Date1 :</label>
+                          </div>
+                          <div class="col-md-8">
+                            <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" #myinput
+                              (click)="endDate.toggle()" readonly style="background-color: #ffffff;"
+                              formControlName="priceDate" ngbDatepicker #endDate="ngbDatepicker"
+                              (dateSelect)="logValue()">
+                          </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="example-text-input" class="col-auto col-form-label">Bill Number :</label>
+                          </div>
+                          <div class="col-md-8">
+                            <input class="form-control" placeholder="enter bill number" formControlName="billNumber">
+                          </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="example-text-input" class="col-auto col-form-label">Customer Name :</label>
+                          </div>
+                          <div class="col-md-3">
+                            <input class="form-control" type="text" list="corporateList" placeholder="select customer"
+                              formControlName="customerName" (change)="getDetailsByfuelDealerCustomerMapIdId($event)">
+                            <datalist id="corporateList">
+                              <option *ngFor="let data of corporateList" [value]="data.companyName">
+                            </datalist>
+                          </div>
+                          <div class="col-md-3">
+                            <input class="form-control" maxlength="15" minlength="15" placeholder="GST Number"
+                              formControlName="gstNumber"
+                              oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                          </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="example-text-input" class="col-auto col-form-label">Address :</label>
+                          </div>
+                          <div class="col-md-8">
+                            <input class="form-control" placeholder="enter address" formControlName="address"
+                              oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                          </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="example-text-input" class="col-auto col-form-label">Customer Number :</label>
+                          </div>
+                          <div class="col-md-8">
+                            <!-- <input type="number" class="form-control" formControlName="customerNumber"
+                              [class.is-invalid]="userMobile1.invalid && userMobile1.touched"
+                              placeholder="Enter Mobile Number" onkeypress="return this.value.length < 10;"
+                              oninput="if(this.value.length=10)">
+                            <div *ngIf="(userMobile1.invalid && userMobile1.touched) || userMobile1.dirty">
+                              <small *ngIf="userMobile1.errors?.pattern" class="text-danger">
+                                Please provide a valid 10 Digit Mobile Number</small>
+                            </div> -->
+                          </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="example-text-input" class="col-auto col-form-label">vehicle number :</label>
+                          </div>
+                          <div class="col-md-8">
+                            <input class="form-control" type="text" placeholder="enter vehicle number"
+                              formControlName="vehicleNumber" maxlength="10"
+                              oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                          </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="example-text-input" class="col-auto col-form-label">Product :<span
+                                style="color: red;">*</span></label>
+                          </div>
+                          <div class="col-md-3">
+                            <select class="form-control" formControlName="lubeId" (change)="getCashLubeDetails($event)"
+                              required>
+                              <option value="">Select Lubricant </option>
+                              <option *ngFor="let data of lubricantList" [value]="data.lubricantsId">
+                                {{data.lubricantsName}}
+                              </option>
+                            </select>
+                          </div>
+                          <div class="col-md-3">
+                            <input class="form-control" placeholder="HSN/SAC Number" formControlName="hsnSacNumber"
+                              readonly>
+                          </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="example-text-input" class="col-auto col-form-label">Tax :<span
+                                style="color: red;">*</span></label>
+                          </div>
+                          <div class="col-md-3">
+                            <select class="form-control" formControlName="gst" (blur)="gstLubeCalculation()" required>
+                              <option value="">Select Tax </option>
+                              <option *ngFor="let data of gstDetails" [value]="data.gst">
+                                GST {{data.gst}} %
+                              </option>
+                            </select>
+                          </div>
+                          <div class="col-md-3">
+                            <select class="form-control" formControlName="taxDetails" (blur)="gstLubeCalculation()"
+                              required>
+                              <option value="INCLUDE"> Include Tax Amt </option>
+                              <option value="EXCLUDE"> Not Include Tax Amt </option>
+                            </select>
+                          </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="example-text-input" class="col-auto col-form-label">Amount :<span
+                                style="color: red;">*</span></label>
+                          </div>
+                          <div class="col-md-8">
+                            <input class="form-control" formControlName="reqCreditAmount" placeholder="Enter Amount"
+                              type="number" (blur)="gstLubeCalculation()">
+                          </div>
+
+                          &nbsp;&nbsp;
+                          Rs
+
+                        </div>
+                        <br>
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="example-text-input" class="col-auto col-form-label">Quantity In Pieces:<span
+                                style="color: red;">*</span></label>
+                          </div>
+                          <div class="col-md-8">
+                            <input class="form-control" formControlName="quantityInPieces" placeholder="Enter Pieces"
+                              type="number" (input)="getQuantityByPiecesLube()">
+                          </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+
+                          <div class="col-md-3">
+                            <label for="example-text-input" class="col-auto col-form-label">Quantity :<span
+                                style="color: red;">*</span></label>
+                          </div>
+                          <div class="col-md-8">
+                            <input class="form-control" formControlName="reqQuantity" placeholder="Enter Quantity"
+                              type="number" (blur)="gstLubeCalculation()">
+                          </div>
+                          &nbsp;&nbsp;
+                          {{unit}}
+
+                        </div>
+
+                        <br><br>
+                        <div class="row">
+                          <div class="col-md-12" style="align-items: center;text-align: center;">
+                            <button type="submit" class="btn btn-primary" (click)="submitLubeCashBill()">Submit</button>
+                            &nbsp;&nbsp;
+                            <button type="submit" class="btn btn-secondary"
+                              (click)="closeModalLubeCash()">Cancel</button>
+                          </div>
+                        </div>
+                        <br>
+
+                      </div>
+                      <div class="col-md-2"></div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </ng-template>
+
+          <br>
+          <hr>
+
+        </form>
+      </div>
+
+      <div>
+        <div class="table-responsive mb-0">
+        </div>
+        <div class="row">
+          <div class="col-lg-4">
+            <button type="button" class="btn btn-success" (click)="addCreditSales()">Add Credit Sales </button>
+          </div>
+        </div>
+        <br>
+      </div>
+      <div *ngIf="isCreditSales">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <ul ngbNav #customNav="ngbNav" [activeId]="11" class="nav-tabs nav-tabs-custom nav-justified"
+                  style="width: 50%;">
+                  <li [ngbNavItem]="11">
+                    <a ngbNavLink>
+                      <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                      <span class="d-none d-sm-block" style="font-size: 13.5px;">FUEL</span>
+                    </a>
+                    <ng-template ngbNavContent>
+                      <ng-template [ngTemplateOutlet]="FUEL"></ng-template>
+                    </ng-template>
+                  </li>
+                  <li [ngbNavItem]="12">
+                    <a ngbNavLink>
+                      <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                      <span class="d-none d-sm-block" style="font-size: 13.5px;">LUBE</span>
+                    </a>
+                    <ng-template ngbNavContent>
+                      <ng-template [ngTemplateOutlet]="LUBE"></ng-template>
+                    </ng-template>
+                  </li>
+
+                </ul>
+                <div [ngbNavOutlet]="customNav"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ng-template #FUEL>
+          <br> <br>
+          <div class="row">
+            <div class="col-lg-12">
+              <form [formGroup]="requestTransporter">
+                <div class="row">
+                  <div class="col-lg-2">
+                    <label for="example-text-input" class="col-form-label">Date</label>
+                  </div>
+                  <div class="col-lg-10">
+                    <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" #myinput
+                      (click)="endDate.toggle()" readonly style="background-color: #ffffff;" formControlName="priceDate"
+                      ngbDatepicker #endDate="ngbDatepicker" (dateSelect)="logValue()">
+                  </div>
+                </div>
+              </form>
+              <br>
+              <form [formGroup]="requestTransporter">
+                <div class="row">
+                  <div class="col-lg-2">
+                    <label for="example-text-input" class="col-form-label">Product</label>
+                  </div>
+                  <div class="col-lg-10">
+                    <select #myinput class="form-control" formControlName="productName" (change)="getPrice($event)"
+                      required>
+                      <option value="">Select Product </option>
+                      <option *ngFor="let data of productInfo" [value]="data.fuelProductsId">
+                        {{data.productName}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-lg-2">
+                    <label for="example-text-input" class="col-form-label">Rate</label>
+                  </div>
+                  <div class="col-lg-10">
+                    <select class="form-control" formControlName="productPrice" (change)="setPrice($event)" required>
+                      <option value="">Select </option>
+                      <option *ngFor="let data of productPriceDetails" [value]="data.productSellingPrice">
+                        {{data.productSellingPrice}}
+                      </option>
+                    </select>
+                  </div>
+
+                </div>
+              </form>
+              <br>
+              <form [formGroup]="requestTransporter1">
+                <div class="row">
+                  <div class="col-lg-2">
+                    <label for="example-text-input" class="col-form-label">Khata</label>
+                  </div>
+                  <div class="col-lg-10">
+                    <input class="form-control" type="text" list="corporateList" placeholder="Select Khata"
+                      formControlName="selectedCorp" (change)="getDetailsByfuelDealerCustomerMapIdId($event)">
+                    <datalist id="corporateList">
+                      <option *ngFor="let data of corporateList" [value]="data.companyName">
+                    </datalist>
+                  </div>
+                  <ng-template #viewFlagModel let-c="close" let-d="dismiss">
+                    <div class="modal-header">
+                      <h4 class="text-center">
+                        Show Details </h4>
+                      <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <table class="table table-hover table-striped">
+                        <thead>
+                          <tr>
+                            <th align=left>Date Of Alert</th>
+                            <th align=left>Petrol Pump Name</th>
+                            <th align=left>City</th>
+                            <th align=left>Remarks</th>
+                          </tr>
+                        </thead>
+                        <tbody *ngFor="let charges of viewCorpFlag; let i = index;">
+                          <tr>
+                            <td>{{charges.corporateFlagCreatedAt| date:"d MMM, yyyy"}}</td>
+                            <td><b> {{charges.companyName}}</b> <br>
+                              {{charges.firstName}} {{charges.lastName}} <br>
+                              {{charges.phone1}}</td>
+                            <td>{{charges.city}}</td>
+                            <td>{{charges.corporateFlagPurpose}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </ng-template>
+                </div>
+              </form>
+              <br>
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="table-responsive mb-0" *ngIf="isSelected1">
+                    <table class="table table-centered table-nowrap">
+                      <thead>
+                        <tr>
+                          <th style="text-align: left;border-width: 1px; border-color: #000;">Khata Name</th>
+                          <th style="text-align: left;border-width: 1px; border-color: #000;">Key Person Name</th>
+                          <th style="text-align: left;border-width: 1px; border-color: #000;">Key Person Mobile</th>
+                          <th style="text-align: left;border-width: 1px; border-color: #000;">Bill Nos. Set</th>
+                          <th style="text-align: left;border-width: 1px; border-color: #000;">Outstanding</th>
+                          <th style="text-align: left;border-width: 1px; border-color: #000;">Alert</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td style="text-align: left;border-width: 1px; border-color: #000;">{{dealerName}}</td>
+                          <td style="text-align: left;border-width: 1px; border-color: #000;">
+                            {{personName}}
+                          </td>
+                          <td style="text-align: left;border-width: 1px; border-color: #000;"> {{personPhone1}} </td>
+                          <td style="text-align: left;border-width: 1px; border-color: #000;">
+                            {{rangeFrom}} - {{rangeTo}}
+                          </td>
+                          <td style="text-align: left;border-width: 1px; border-color: #000;color: red;">
+                            <span *ngIf="calOutstanding< 0">
+                              <li class="fas fa-rupee-sign"></li> {{(calOutstanding)*(-1) | number:'1.2-2'}} CR
+                            </span>
+                            <span *ngIf="calOutstanding >= 0">
+                              <li class="fas fa-rupee-sign"></li> {{(calOutstanding) | number:'1.2-2'}}
+                            </span>
+
+                          </td>
+                          <td style="text-align: left;border-width: 1px; border-color: #000;">
+                            <span *ngIf="viewCorpFlag.length" class="col-md-1" (click)="viewFlag(viewFlagModel)"
+                              style="color:red;cursor:pointer;font-size: x-large;">
+                              <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+                            </span>
+                            <span *ngIf="!viewCorpFlag.length" class="col-md-1">
+                              None
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <form [formGroup]="requestTransporter">
+                <div class="row">
+                  <div class="col-lg-2">
+                    <label for="example-text-input" class="col-form-label">Type</label>
+                  </div>
+                  <div class="col-md-10">
+                    <input type="radio" value="showamount" checked name="requestType" formControlName="requestType"
+                      (change)="changeAmountToQuantity($event)">
+                    &nbsp; <label class="labelNewMargin">Amount</label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" value="!showamount" name="requestType" formControlName="requestType"
+                      (change)="changeQuantityToAmount($event)">
+                    &nbsp; <label class="labelNewMargin">Quantity</label>
+                  </div>
+                </div>
+              </form>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <form [formGroup]="requestTransporter">
+                    <div class="card-body table-responsive">
+                      <table class="table table-hover table-striped">
+                        <thead>
+                          <tr>
+                            <th>Bill Number</th>
+                            <th>Details (Vehicle/Barrel)</th>
+                            <th *ngIf="!showamount">Amount</th>
+                            <th *ngIf="!showamount">Quantity</th>
+                            <th *ngIf="showamount">Quantity</th>
+                            <th *ngIf="showamount">Amount</th>
+
+                          </tr>
+                        </thead>
+                        <tbody *ngFor="let charges of CreditRequestDataArraySales; let i = index;">
+                          <tr>
+                            <td>
+                              <span *ngIf="autoManualStatus == 'TRUE'"> <input type="text" class="form-control"
+                                  placeholder="Bill Number Automation Active" readonly />
+                              </span>
+                              <span *ngIf="autoManualStatus != 'TRUE'"> <input type="text" class="form-control"
+                                  [(ngModel)]="charges.manualNumber" [ngModelOptions]="{standalone: true}"
+                                  placeholder="Enter Bill / Ref Number" (blur)="setManualNumber(i)" />
+                              </span>
+                            </td>
+
+                            <td *ngIf="isFuelVehicles">
+                              <input class="form-control" type="text" list="fuelVehicles"
+                                [(ngModel)]="charges.vehicleNumber"
+                                oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                                [ngModelOptions]="{standalone: true}" placeholder="Enter vehicle no./ barrel"
+                                (blur)="setVehicleNumber(i)">
+                              <datalist id="fuelVehicles">
+                                <option *ngFor="let data of fuelVehicles" [value]="data.vehicleNumber">
+                              </datalist>
+                            </td>
+                            <td *ngIf="!isFuelVehicles">
+                              <input type="text" class="form-control" [(ngModel)]="charges.vehicleNumber"
+                                oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                                [ngModelOptions]="{standalone: true}" placeholder="Enter vehicle no./ barrel"
+                                (blur)="setVehicleNumber(i)" />
+                            </td>
+                            <td *ngIf="!showamount">
+                              <span *ngIf="!showamount">
+                                <input type="number" class="form-control" [(ngModel)]="charges.creditAmount"
+                                  [ngModelOptions]="{standalone: true}" placeholder="Enter Credit Amount"
+                                  (blur)="amountCalculateNEW(i)" />
+                              </span>
+
+                            </td>
+                            <td *ngIf="showamount">
+                              <span *ngIf="showamount">
+                                <input type="number" class="form-control" [(ngModel)]="charges.creditQuantity"
+                                  [ngModelOptions]="{standalone: true}" placeholder="Enter Credit Quantity"
+                                  (blur)="quantityCalculateNEW(i)" />
+                              </span>
+                            </td>
+
+                            <td *ngIf="!showamount">
+                              <span *ngIf="!showamount">
+                                <input type="number" class="form-control" [(ngModel)]="charges.creditQuantity"
+                                  [ngModelOptions]="{standalone: true}" placeholder="Credit Quantity" disabled />
+                              </span>
+
+                            </td>
+                            <td *ngIf="showamount">
+                              <span *ngIf="showamount">
+                                <input type="number" class="form-control" [(ngModel)]="charges.creditAmount"
+                                  [ngModelOptions]="{standalone: true}" placeholder="Enter Credit Amount"
+                                  (blur)="amountCalculateNEW(i)" readonly />
+                              </span>
+                            </td>
+                            <td>
+                              <button type="submit" class="btn btn-success my-2 my-sm-0"
+                                (click)="addFormRequestSales()">
+                                Add
+                              </button>
+
+                              &nbsp;&nbsp;
+                              <button *ngIf="i != 0 " type="cancel" class="btn btn-primary"
+                                (click)="removeFormRequestSales(i,removeTable)">Delete</button>
+                            </td>
+                          </tr>
+                        </tbody>
+                        <br>
+
+                      </table>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="row">
+
+                <div class="col-lg-12">
+                  <button type="submit" class="btn btn-primary"
+                    (click)="submitByDealerNEW1()">Submit</button>&nbsp;&nbsp;
+                  &nbsp;&nbsp;
+                  <button type="submit" class="btn btn-secondary" (click)="closeModalCr()">Cancel</button>
+                </div>
+                <ng-template #removeTable let-c="close" let-d="dismiss">
+
+                  <div class="modal-body">
+                    <h6>Are you sure you want to delete this element ?</h6>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-link" aria-label="Close" (click)="d('Cross click')">
+                      Cancel
+                    </button>
+
+                    <button type="button" class="btn btn-link" aria-label="Close" (click)="removeRequestIndex()">
+                      OK
+                    </button>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template #LUBE>
+          <br> <br>
+          <div class="row">
+            <div class="col-lg-12">
+              <form [formGroup]="requestTransporterLube">
+                <div class="row">
+                  <div class="col-lg-2">
+                    <label for="example-text-input" class="col-form-label">Date</label>
+                  </div>
+                  <div class="col-md-10">
+                    <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" (click)="endDate.toggle()"
+                      readonly style="background-color: #ffffff;" #myinput formControlName="estimatedRefuelDate"
+                      ngbDatepicker #endDate="ngbDatepicker">
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-lg-2">
+                    <label for="example-text-input" class="col-form-label">Product</label>
+                  </div>
+                  <div class="col-lg-10">
+                    <label for="example-text-input" class="col-form-label">Lubricants</label>
+                  </div>
+                </div>
+                <br>
+                <ng-template #viewFlagModel let-c="close" let-d="dismiss">
+                  <div class="modal-header">
+                    <h4 class="text-center">
+                      Show Details </h4>
+                    <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <table class="table table-hover table-striped">
+                      <thead>
+                        <tr>
+                          <th align=left>Date Of Alert</th>
+                          <th align=left>Petrol Pump Name</th>
+                          <th align=left>City</th>
+                          <th align=left>Remarks</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let charges of viewCorpFlag; let i = index;">
+                        <tr>
+                          <td>{{charges.corporateFlagCreatedAt| date:"d MMM, yyyy"}}</td>
+                          <td><b> {{charges.companyName}}</b> <br>
+                            {{charges.firstName}} {{charges.lastName}} <br>
+                            {{charges.phone1}}</td>
+                          <td>{{charges.city}}</td>
+                          <td>{{charges.corporateFlagPurpose}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </ng-template>
+                <br>
+                <form [formGroup]="requestTransporter1">
+                  <div class="row">
+                    <div class="col-lg-2">
+                      <label for="example-text-input" class="col-form-label">Khata</label>
+                    </div>
+                    <div class="col-md-10">
+                      <input class="form-control" type="text" list="corporateList" placeholder="Select Khata"
+                        formControlName="selectedCorp" (change)="getDetailsByfuelDealerCustomerMapIdId($event)">
+                      <datalist id="corporateList">
+                        <option *ngFor="let data of corporateList" [value]="data.companyName">
+                      </datalist>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="table-responsive mb-0" *ngIf="isSelected1">
+                        <table class="table table-centered table-nowrap">
+                          <thead>
+                            <tr>
+                              <th style="text-align: left;border-width: 1px; border-color: #000;">Khata Name</th>
+                              <th style="text-align: left;border-width: 1px; border-color: #000;">Key Person Name</th>
+                              <th style="text-align: left;border-width: 1px; border-color: #000;">Key Person Mobile</th>
+                              <th style="text-align: left;border-width: 1px; border-color: #000;">Bill Nos. Set</th>
+                              <th style="text-align: left;border-width: 1px; border-color: #000;">Outstanding</th>
+                              <th style="text-align: left;border-width: 1px; border-color: #000;">Alert</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td style="text-align: left;border-width: 1px; border-color: #000;">{{dealerName}}</td>
+                              <td style="text-align: left;border-width: 1px; border-color: #000;">
+                                {{personName}}
+                              </td>
+                              <td style="text-align: left;border-width: 1px; border-color: #000;"> {{personPhone1}}
+                              </td>
+                              <td style="text-align: left;border-width: 1px; border-color: #000;;">
+                                {{rangeFrom}} - {{rangeTo}}
+                              </td>
+                              <td style="text-align: left;border-width: 1px; border-color: #000;">
+                                <span *ngIf="calOutstanding< 0">
+                                  <li class="fas fa-rupee-sign"></li> {{(calOutstanding)*(-1) | number:'1.2-2'}} CR
+                                </span>
+                                <span *ngIf="calOutstanding >= 0">
+                                  <li class="fas fa-rupee-sign"></li>{{(calOutstanding) | number:'1.2-2'}}
+                                </span>
+
+                              </td>
+                              <td style="text-align: left;border-width: 1px; border-color: #000;">
+                                <span *ngIf="viewCorpFlag.length" class="col-md-1" (click)="viewFlag(viewFlagModel)"
+                                  style="color:red;cursor:pointer;font-size: x-large;">
+                                  <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+
+                                </span>
+                                <span *ngIf="!viewCorpFlag.length">
+                                  None
+                                </span>
+                              </td>
+
+                            </tr>
+
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                <div class="row">
+                  <div class="col col-xl-12 col-lg-12">
+                    <div class="card-body table-responsive">
+                      <table class="table table-hover table-striped">
+                        <tbody *ngFor="let charges of CreditRequestDataLube; let i = index;">
+                          <tr>
+                            <th align=left>Lubricant Name</th>
+                            <th align=left>Tax</th>
+                            <th align=left>taxDetails</th>
+                            <th align=left>Bill / Ref Number</th>
+                            <th align=left>Vehicle No./ Barrel</th>
+                            <th align=left>Credit Amount</th>
+                            <th align=left>Quantity In Pieces</th>
+                            <th align=left>Credit Quantity</th>
+                          </tr>
+                          <tr>
+                            <td>
+                              <select class="form-control" [(ngModel)]="charges.lubeId"
+                                [ngModelOptions]="{standalone: true}" (change)="getLubeDetails($event,i)" required>
+                                <option value="">Select Lubricant </option>
+                                <option *ngFor="let data of lubricantList" [value]="data.lubricantsId">
+                                  {{data.lubricantsName}}
+                                </option>
+                              </select>
+                            </td>
+
+                            <td>
+                              <select class="form-control" [(ngModel)]="charges.gst"
+                                [ngModelOptions]="{standalone: true}" (blur)="gstCalculation1(i)" required>
+                                <option value="">Select Tax </option>
+                                <option *ngFor="let data of gstDetails" [value]="data.gst">
+                                  GST {{data.gst}} %
+                                </option>
+                              </select>
+                            </td>
+
+                            <td>
+                              <select class="form-control" [(ngModel)]="charges.taxDetails"
+                                [ngModelOptions]="{standalone: true}" (blur)="gstCalculation1(i)" required>
+                                <option value="INCLUDE"> Include Tax Amt </option>
+                                <option value="EXCLUDE"> Not Include Tax Amt </option>
+                              </select>
+                            </td>
+                            <td>
+                              <input type="text" class="form-control" [(ngModel)]="charges.manualNumberLube"
+                                [ngModelOptions]="{standalone: true}" placeholder="Enter Bill / Ref Number" />
+                            </td>
+
+                            <td>
+                              <input type="text" class="form-control" [(ngModel)]="charges.vehicleNumberLube"
+                                oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                                [ngModelOptions]="{standalone: true}" placeholder="Enter vehicle no./ barrel"
+                                (blur)="setVehicleNumberLube()" />
+                            </td>
+
+                            <td>
+                              <input type="number" class="form-control" [(ngModel)]="charges.creditAmountLube"
+                                [ngModelOptions]="{standalone: true}" (blur)="gstCalculation1(i)"
+                                placeholder="Enter Credit Amount" />
+                            </td>
+
+                            <td>
+                              <input type="number" class="form-control" [(ngModel)]="charges.quantityInPieces"
+                                [ngModelOptions]="{standalone: true}" (input)="getQuantityByPieces(i)"
+                                placeholder="Enter Quantity Pieces" />
+                            </td>
+                            <td>
+                              <input type="number" class="form-control" [(ngModel)]="charges.creditQuantityLube"
+                                [ngModelOptions]="{standalone: true}" placeholder="Enter Credit Quantity" />
+                            </td>
+
+                          </tr>
+
+                          <tr>
+                            <th align=left>HSN/SAC Number</th>
+                            <th align=left>Tax</th>
+                            <th align=left>Basic Amount</th>
+                            <th align=left>Actual Amount</th>
+                            <th align=left>Units</th>
+                            <th align=left>Action</th>
+
+                          </tr>
+                          <tr>
+                            <td>
+                              <input class="form-control" placeholder="HSN/SAC Number"
+                                [(ngModel)]="charges.hsnSacNumber" [ngModelOptions]="{standalone: true}" readonly>
+                            </td>
+
+                            <td>
+                              <input type="number" class="form-control" [(ngModel)]="charges.gstAmount"
+                                [ngModelOptions]="{standalone: true}" placeholder="Enter Tax" readonly />
+                            </td>
+
+                            <td>
+                              <input type="number" class="form-control" [(ngModel)]="charges.totalWOGSTAmount"
+                                [ngModelOptions]="{standalone: true}" placeholder="GST Amount" readonly />
+                            </td>
+
+                            <td>
+                              <input type="number" class="form-control" [(ngModel)]="charges.totalAmount"
+                                [ngModelOptions]="{standalone: true}" placeholder="GST Amount" readonly />
+                            </td>
+
+                            <td>
+                              <input type="text" class="form-control" [(ngModel)]="charges.unitLube"
+                                [ngModelOptions]="{standalone: true}" placeholder="Enter Credit unit" readonly />
+
+                            </td>
+                            <td style="text-align: center;">
+                              <button type="submit" class="btn btn-success" (click)="addFormRequestLube()"> &nbsp; Add
+                                &nbsp;
+                              </button>
+
+
+                            </td>
+                            <td>
+                              <button *ngIf="i != 0 " type="cancel" class="btn btn-primary"
+                                (click)="removeFormRequestLube(i, removeTable)"> Delete
+                              </button>
+                            </td>
+                          </tr>
+
+
+
+
+
+                        </tbody>
+
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <br>
+              </form>
+              <div class="row">
+                <div class="col-md-4">
+                  &nbsp;
+                  <button type="submit" class="btn btn-primary" (click)="submitByDealerForLubeGst()">Submit</button>
+                  &nbsp;&nbsp;
+                  <button type="submit" class="btn btn-secondary" (click)="closeModalCrLube()">Cancel</button>
+
+                </div>
+
+              </div>
+              <ng-template #removeTable let-c="close" let-d="dismiss">
+                <div class="modal-body">
+                  <h6>Are you sure you want to delete this element ?</h6>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-link" aria-label="Close" (click)="d('Cross click')">
+                    Cancel
+                  </button>
+
+                  <button type="button" class="btn btn-link" aria-label="Close" (click)="removeLubeIndex()">
+                    OK
+                  </button>
+                </div>
+              </ng-template>
+
+            </div>
+          </div>
+        </ng-template>
+
+      </div>
+
+      <hr><br>
+
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="card mini-stats-wid">
+            <div class="card-body">
+              <div class="media">
+                <div class="media-body">
+                  <p class="text-muted fw-medium">Shift Sales</p>
+                  <!-- <h4 class="mb-0">{{meterSales}}</h4> -->
+                  <h4 class="mb-0">{{meterSalesTotal}}</h4>
+                </div>
+
+                <div class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
+                  <span class="avatar-title">
+                    <i class="bx bx bx-copy-alt font-size-24"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="card mini-stats-wid">
+            <div class="card-body">
+              <div class="media">
+                <div class="media-body">
+                  <p class="text-muted fw-medium">Shift Tally</p>
+                  <h4 class="mb-0">{{totalAmount}}</h4>
+                </div>
+
+                <div class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
+                  <span class="avatar-title">
+                    <i class="bx bx bx-archive-in font-size-24"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="card mini-stats-wid">
+            <div class="card-body">
+              <div class="media">
+                <div class="media-body">
+                  <p class="text-muted fw-medium">Difference</p>
+                  <h4 class="mb-0">{{difference}}</h4>
+                </div>
+
+                <div class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
+                  <span class="avatar-title">
+                    <i class="bx bx bx-purchase-tag-alt font-size-24"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-3">A-Credit (Rs)</div>
+        <div class="col-lg-3">B-Digital (Rs)</div>
+        <div class="col-lg-3">C-Cash (1+2+3) (Rs)</div>
+        <div class="col-lg-3">Shift Tally (A+B+C) (Rs)</div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-3">
+          <input type="number" class="form-control" [(ngModel)]="totalCreditTally" [ngModelOptions]="{standalone: true}"
+            placeholder="Credit Total" (blur)="getTotalTally()" ngbTooltip="Total Credit" min="0" />
+        </div>
+        <div class="col-lg-3">
+          <input type="number" class="form-control" [(ngModel)]="totalDigitalTally"
+            [ngModelOptions]="{standalone: true}" placeholder="Digital Total" (blur)="getTotalTally()" min="0"
+            disabled />
+
+        </div>
+        <div class="col-lg-3">
+
+          <input type="number" class="form-control" [(ngModel)]="totalCashTally" [ngModelOptions]="{standalone: true}"
+            placeholder="Cash Total" (blur)="getTotalTally()" min="0" ngbTooltip="Cash Total" />
+
+        </div>
+        <div class="col-lg-3">
+          <input type="number" class="form-control" [(ngModel)]="totalAmount" [ngModelOptions]="{standalone: true}"
+            placeholder="Shift Tally" min="0" disabled />
+
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-lg-3">
+          <input type="number" class="form-control" [(ngModel)]="toatalCreditAmountByStaff"
+            [ngModelOptions]="{standalone: true}" ngbTooltip="Credit Sales Total" readonly min="0" />
+        </div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3">
+          <input type="number" class="form-control" [(ngModel)]="totalCashHandover"
+            [ngModelOptions]="{standalone: true}" placeholder="Cash Handover" min="0" ngbTooltip="Cash Handover"
+            readonly />
+        </div>
+        <div class="col-lg-3"></div>
+      </div>
+      <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3">
+          <input type="number" class="form-control" [(ngModel)]="expenseAmount" [ngModelOptions]="{standalone: true}"
+            placeholder="Expense Total" min="0" ngbTooltip="Expense Total" (blur)="getShort()" />
+        </div>
+        <div class="col-lg-3"></div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3">
+          <input class="form-control" [(ngModel)]="expenseAmtDetails" [ngModelOptions]="{standalone: true}"
+            placeholder="Expense Details" min="0" ngbTooltip="Expense Details" />
+        </div>
+        <div class="col-lg-3"></div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3"></div>
+
+        <div class="col-lg-3">
+          <input type="number" class="form-control" [(ngModel)]="shortamount" [ngModelOptions]="{standalone: true}"
+            placeholder="Short Total" min="0" ngbTooltip="Short Total" (blur)="getExpense()" />
+        </div>
+        <div class="col-lg-3"></div>
+      </div>
+
+      <div class="row">
+        <div class="col-auto" *ngIf="!noTally">
+          <span *ngIf="performStatus == 'OPEN' ">
+            <button type="submit" class="btn btn-success" (click)="update()">Update & Stop Shift</button>
+          </span>
+          <span *ngIf="performStatus != 'OPEN' ">
+            <button type="submit" class="btn btn-success" (click)="update()">Update</button>
+          </span>
+
+        </div>
+        <div class="col-auto" *ngIf="noTally">
+          <button type="submit" class="btn btn-success" (click)="submitTallyDetailsUpdate()">Submit & Stop
+            Shift</button>
+        </div>
+
+      </div>
+      <br>
+
+      <table class="table  table-centered table-nowrap">
+        <thead class="table-light">
+          <tr>
+            <th style="text-align: left; border: 2px solid #272829;">Khata Name</th>
+            <th style="text-align: left; border: 2px solid #272829;">Bill No.</th>
+            <th style="text-align: left; border: 2px solid #272829;">Product</th>
+            <th style="text-align: left; border: 2px solid #272829;">Rate</th>
+            <th style="text-align: left; border: 2px solid #272829;">Vehicle No.</th>
+            <th style="text-align: left; border: 2px solid #272829;">Total Amount</th>
+            <th style="text-align: left; border: 2px solid #272829;">Total Quantity</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of totalCreditSalesByStaff">
+            <td style="text-align: left; border: 2px solid #272829;"> {{data.companyName}} </td>
+            <td style="text-align: left; border: 2px solid #272829;"> {{data.manualCrNumber}} </td>
+            <td style="text-align: left; border: 2px solid #272829;">
+              <span *ngIf="data.purpose == 'LUBETAX' ">
+                {{data.lubeName}}
+              </span>
+              <span *ngIf="data.purpose == 'CREDIT' ">
+                {{data.productName}}
+              </span>
+            </td>
+            <td style="text-align: left; border: 2px solid #272829;">
+              <span *ngIf="data.purpose == 'LUBE' ">
+                {{ ((data.creditAmount)/(data.actualCreditQuantity)) | number:'1.2-2'}}
+              </span>
+              <span *ngIf="data.purpose == 'CREDIT' ">
+                {{data.productRate | number:'1.2-2'}}
+              </span>
+            </td>
+            <td style="text-align: left; border: 2px solid #272829;"> {{data.vehicleNumber}} </td>
+            <td style="text-align: left; border: 2px solid #272829;"> {{data.creditAmount | number:'1.2-2'}} (Rs)</td>
+            <td style="text-align: left; border: 2px solid #272829;"> {{data.actualCreditQuantity | number:'1.2-2'}}
+              <span *ngIf="data.purpose == 'LUBETAX' ">
+                {{data.lubeUnit}}
+              </span>
+              <span *ngIf="data.purpose == 'CREDIT' ">
+                <span *ngIf="data.productName == 'CNG' ">kg</span>
+                <span *ngIf="data.productName != 'CNG' ">Ltr</span>
+              </span>
+
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  <div class="row" *ngIf="!isADDEDIT">
+    <div class="col-md-12">
+      <h4 style="text-align: center;">
+        Please Add Shift and use option Add/Edit from Above Table..
+      </h4>
+    </div>
+  </div>
+
+</ng-template>
+
+<ng-template #viewShift>
+  <br>
+  <div class="row" *ngIf="isVIEW">
+    <br>
+    <div class="col-md-12">
+      <br>
+      <form [formGroup]="updateShiftForm">
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-auto">
+            <b> Operator</b>
+          </div>
+          <div class="col-auto">
+            {{operatorName}}
+          </div>
+          <div class="col-auto">
+            <b>Shift</b>
+          </div>
+          <div class="col-auto">
+            {{shiftTimeDetail}}
+          </div>
+        </div>
+      </form>
+      <hr>
+
+      <div class="row">
+        <div class="col col-xl-12 col-lg-12">
+          <div class="table-responsive mb-0">
+            <table class="table table-centered table-nowrap">
+              <thead class="table-light">
+                <tr>
+                  <th style="text-align: left;"> Nozzle Number</th>
+                  <th style="text-align: left;"> Product </th>
+                  <th style="text-align: left;"> Rate </th>
+                  <th style="text-align: left;"> Opening Meter Reading </th>
+                  <th style="text-align: left;"> Closing Meter Reading</th>
+                  <th style="text-align: left;"> Pump Testing</th>
+                  <th style="text-align: left;"> Meter Sales (Rs)</th>
+                  <th style="text-align: left;">Meter Sales (Qty)</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let charges of CreditRequestDataArrayUpdate; let i = index;">
+                <tr>
+                  <td style="text-align: left;">
+                    {{charges.duNo}}-{{charges.nozNo}}
+
+                  </td>
+
+                  <td style="text-align: left;">
+                    {{charges.productName}}
+                  </td>
+
+                  <td style="text-align: left;">
+                    {{charges.fuelPrice}}
+                  </td>
+
+                  <td style="text-align: left;">
+                    {{charges.openMeter}}
+                  </td>
+
+                  <td style="text-align: left;">
+                    {{charges.closingReading}}
+                  </td>
+                  <td style="text-align: left;">
+                    {{charges.pumpTesting}}
+                  </td>
+                  <td style="text-align: left;">
+                    {{charges.meterSaleAmount}}
+                  </td>
+
+                  <td style="text-align: left;">
+                    {{charges.meterSaleQuantity}}
+                  </td>
+                </tr>
+              </tbody>
+              <tbody *ngIf="!pumpInfraUpdate">
+                <tr>
+                  <td style="text-align: left;" colspan="9">
+                    <i> This Shift Don't have any Pump Nozzle Entry.. </i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="table-responsive mb-0" *ngIf="digitalSalesDetails.length">
+        <table class="table table-centered table-nowrap">
+          <thead class="table-light">
+            <tr>
+              <th style="text-align: center;">Digital POS</th>
+              <th style="text-align: center;">Details</th>
+              <th style="text-align: center;">Amount (Rs)</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let data of digitalSalesDetails; let i = index">
+            <tr>
+              <td style="text-align: center;"> {{data.terminalName }} </td>
+              <td style="text-align: center;"> {{data.transacId}} </td>
+              <td style="text-align: center;"> {{data.paytmTotalAmount | number:'1.2-2'}} </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br>
+
+      <div class="table-responsive mb-0" *ngIf="digitalLubeDetails.length">
+        <table class="table table-centered table-nowrap">
+          <thead class="table-light">
+            <tr>
+              <th style="text-align: center;">Khata Name</th>
+              <th style="text-align: center;">Bill Number</th>
+              <th style="text-align: center;">Digital POS</th>
+              <th style="text-align: center;">Details</th>
+              <th style="text-align: center;">Vehicle Number</th>
+              <th style="text-align: center;">Lube</th>
+              <th style="text-align: center;">Quantity In Piece</th>
+              <th style="text-align: center;">Quantity</th>
+              <th style="text-align: center;">Amount</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let data of digitalLubeDetails; let i = index">
+            <tr>
+              <td style="text-align: center;"> {{data.paymentCust }} </td>
+              <td style="text-align: center;"> {{data.paymentManualNumber}} </td>
+              <td style="text-align: center;"> {{data.terminalName }} </td>
+              <td style="text-align: center;"> {{data.transacId}} </td>
+              <td style="text-align: center;"> {{data.idfuelCreditVehicle }} </td>
+              <td style="text-align: center;"> {{data.PaymentProduct}} </td>
+              <td style="text-align: center;"> {{data.paymentQuantityInPieces }} </td>
+              <td style="text-align: center;"> {{data.paymentQuantity}} {{data.paymentProdUnit}} </td>
+              <td style="text-align: center;"> {{data.paytmTotalAmount | number:'1.2-2'}} </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <hr>
+      <div class="table-responsive mb-0">
+        <table class="table table-centered table-nowrap">
+          <thead class="table-light">
+            <tr>
+              <th style="text-align: left;">Amount (Rs)</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let data of cashDetails; let i = index">
+            <tr>
+              <td style="text-align: left;"> {{data.grandTotalAmount | number:'1.2-2'}} </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-responsive mb-0">
+        <table class="table table-centered table-nowrap">
+          <thead class="table-light">
+            <tr>
+              <th style="text-align: left;">Khata Name</th>
+              <th style="text-align: left;">Bill Number</th>
+              <th style="text-align: left;">Vehicle Number</th>
+              <th style="text-align: left;">Lube</th>
+              <th style="text-align: left;">Quantity In Piece</th>
+              <th style="text-align: left;">Quantity</th>
+              <th style="text-align: left;">Amount</th>
+
+            </tr>
+          </thead>
+          <tbody *ngFor="let data of cashLubeData; let i = index">
+
+            <tr>
+              <td style="text-align: left;"> {{data.cashBillCustName}} </td>
+
+              <td style="text-align: left;">
+                <span *ngIf="data.cashBillNumber">
+                  VEELS{{data.cashBillSystemNumber}} / {{data.cashBillNumber}}
+                </span>
+                <span *ngIf="!data.cashBillNumber">
+                  VEELS{{data.cashBillSystemNumber}}
+                </span>
+
+              </td>
+
+              <td style="text-align: left;"> {{data.cashBillVehicleNumber}} </td>
+
+              <td style="text-align: left;"> {{data.cashBillProduct}} </td>
+
+              <td style="text-align: left;"> {{data.quantityInPiece | number:'1.2-2'}} </td>
+
+              <td style="text-align: left;"> {{data.cashBillQuantity | number:'1.2-2'}} </td>
+
+              <td style="text-align: left;"> {{data.cashBillAmount | number:'1.2-2'}} </td>
+
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="card mini-stats-wid">
+            <div class="card-body">
+              <div class="media">
+                <div class="media-body">
+                  <p class="text-muted fw-medium">Shift Sales</p>
+                  <h4 class="mb-0">{{(meterSalesTotal) }}</h4>
+                </div>
+                <div class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
+                  <span class="avatar-title">
+                    <i class="bx bx bx-copy-alt font-size-24"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="card mini-stats-wid">
+            <div class="card-body">
+              <div class="media">
+                <div class="media-body">
+                  <p class="text-muted fw-medium">Shift Tally</p>
+                  <h4 class="mb-0">{{totalAmount}}</h4>
+                </div>
+                <div class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
+                  <span class="avatar-title">
+                    <i class="bx bx bx-archive-in font-size-24"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="card mini-stats-wid">
+            <div class="card-body">
+              <div class="media">
+                <div class="media-body">
+                  <p class="text-muted fw-medium">Difference</p>
+                  <h4 class="mb-0">{{difference}}</h4>
+                </div>
+                <div class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
+                  <span class="avatar-title">
+                    <i class="bx bx bx-purchase-tag-alt font-size-24"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-3">A-Credit (Rs)</div>
+        <div class="col-lg-3">B-Digital (Rs)</div>
+        <div class="col-lg-3">C-Cash (1+2+3) (Rs)</div>
+        <div class="col-lg-3">Shift Tally (A+B+C) (Rs)</div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-3">
+          <input type="number" class="form-control" [(ngModel)]="totalCreditTally" [ngModelOptions]="{standalone: true}"
+            placeholder="Credit Total" (blur)="getTotalTally()" ngbTooltip="Total Credit" min="0" />
+        </div>
+        <div class="col-lg-3">
+          <input type="number" class="form-control" [(ngModel)]="totalDigitalTally"
+            [ngModelOptions]="{standalone: true}" placeholder="Digital Total" (blur)="getTotalTally()" min="0"
+            disabled />
+
+        </div>
+        <div class="col-lg-3">
+          <span *ngIf="totalCashTally == 0 ">
+            <input type="number" class="form-control" placeholder="Cash Total" min="0" disabled />
+          </span>
+          <span *ngIf="totalCashTally != 0 ">
+            <input type="number" class="form-control" [(ngModel)]="totalCashTally" [ngModelOptions]="{standalone: true}"
+              placeholder="Cash Total" ngbTooltip="Cash Total" (blur)="getTotalTally()" min="0" readonly />
+          </span>
+
+
+        </div>
+        <div class="col-lg-3">
+          <input type="number" class="form-control" [(ngModel)]="totalAmount" [ngModelOptions]="{standalone: true}"
+            placeholder="Shift Tally" min="0" disabled />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-3">
+          <input type="number" class="form-control" [(ngModel)]="toatalCreditAmountByStaff"
+            [ngModelOptions]="{standalone: true}" ngbTooltip="Credit Sales Total" readonly min="0" />
+        </div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3">
+          <span *ngIf="totalCashHandover == 0 ">
+            <input type="number" class="form-control" placeholder="Cash Handover" min="0" disabled />
+          </span>
+          <span *ngIf="totalCashHandover != 0 ">
+            <input type="number" class="form-control" [(ngModel)]="totalCashHandover"
+              [ngModelOptions]="{standalone: true}" placeholder="Cash Handover" ngbTooltip="Cash Handover" min="0"
+              readonly />
+          </span>
+        </div>
+        <div class="col-lg-3"></div>
+      </div>
+      <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3">
+          <span *ngIf="expenseAmount == 0 ">
+            <input type="number" class="form-control" placeholder="Expense Total" disabled />
+          </span>
+          <span *ngIf="expenseAmount != 0 ">
+            <input type="number" class="form-control" [(ngModel)]="expenseAmount" [ngModelOptions]="{standalone: true}"
+              placeholder="Expense Total" min="0" ngbTooltip="Expense Total" (blur)="getShort()" readonly />
+          </span>
+        </div>
+        <div class="col-lg-3"></div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3">
+          <input class="form-control" [(ngModel)]="expenseAmtDetails" [ngModelOptions]="{standalone: true}"
+            placeholder="Expense Details" min="0" ngbTooltip="Expense Details" readonly />
+        </div>
+        <div class="col-lg-3"></div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3">
+          <span *ngIf="shortamount == 0 ">
+            <input type="number" class="form-control" placeholder="Short Total" min="0" (blur)="getExpense()"
+              disabled />
+          </span>
+          <span *ngIf="shortamount != 0 ">
+            <input type="number" class="form-control" [(ngModel)]="shortamount" [ngModelOptions]="{standalone: true}"
+              placeholder="Short Total" min="0" ngbTooltip="Short Total" (blur)="getExpense()" readonly />
+          </span>
+        </div>
+        <div class="col-lg-3"></div>
+      </div>
+      <br>
+      <table class="table  table-centered table-nowrap">
+        <thead class="table-light">
+          <tr>
+            <th style="text-align: left; border: 2px solid #272829;">Shift</th>
+            <th style="text-align: left; border: 2px solid #272829;">Khata Name</th>
+            <th style="text-align: left; border: 2px solid #272829;">Bill No.</th>
+            <th style="text-align: left; border: 2px solid #272829;">Product</th>
+            <th style="text-align: left; border: 2px solid #272829;">Rate</th>
+            <th style="text-align: left; border: 2px solid #272829;">Vehicle No.</th>
+            <th style="text-align: left; border: 2px solid #272829;">Total Amount</th>
+            <th style="text-align: left; border: 2px solid #272829;">Total Quantity</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of totalCreditSalesByStaff">
+            <td style="text-align: left; border: 2px solid #272829;"> {{data.fuelShiftTimeShiftName}} </td>
+            <td style="text-align: left; border: 2px solid #272829;"> {{data.companyName}} </td>
+            <td style="text-align: left; border: 2px solid #272829;"> {{data.manualCrNumber}} </td>
+            <td style="text-align: left; border: 2px solid #272829;"> {{data.productName}} </td>
+            <td style="text-align: left; border: 2px solid #272829;"> {{data.productRate | number:'1.2-2'}} </td>
+            <td style="text-align: left; border: 2px solid #272829;"> {{data.vehicleNumber}} </td>
+            <td style="text-align: left; border: 2px solid #272829;"> {{data.creditAmount | number:'1.2-2'}} (Rs)</td>
+            <td style="text-align: left; border: 2px solid #272829;"> {{data.actualCreditQuantity | number:'1.2-2'}}
+              <span *ngIf="data.productName == 'CNG' ">kg</span>
+              <span *ngIf="data.productName != 'CNG' ">Ltr</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="row" *ngIf="!isVIEW">
+    <div class="col-md-12">
+      <h4 style="text-align: center;">
+        Please Add Shift and use button View Details from Above Table..
+      </h4>
+    </div>
+  </div>
+
+</ng-template>

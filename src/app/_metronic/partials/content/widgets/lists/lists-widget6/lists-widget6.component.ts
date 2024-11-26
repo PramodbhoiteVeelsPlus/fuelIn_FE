@@ -1,12 +1,13 @@
-import { ChangeDetectorRef, Component, Injectable } from '@angular/core';
+import { ChangeDetectorRef, Component, Injectable, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbDateAdapter, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateAdapter, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig, NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ExcelService } from 'src/app/pages/excel.service';
 import { MixedService } from '../../mixed/mixed.services';
 import { StatsService } from '../../stats/stats.services';
 import { ListWidgetService } from '../listWidget.services';
 import moment from 'moment';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -65,6 +66,35 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 })
 
 export class ListsWidget6Component {
+  shiftTimeForm = new FormGroup({
+    shiftTimeFrom: new FormControl(''),
+    shiftTimeTo: new FormControl(''),
+    shiftName: new FormControl(''),
+    fuelShiftTimeId: new FormControl(''),
+  });
+  
+  userForm = new FormGroup({
+    firstName: new FormControl(''),
+    phoneNumber: new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
+    city: new FormControl('CITY'),
+    role: new FormControl(''),
+    lastName: new FormControl(''),
+    email: new FormControl('', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]),
+    password: new FormControl(''),
+    state: new FormControl('STATE'),
+    branchId: new FormControl(''),
+  });
+
+  reNewStaffForm = new FormGroup({
+    mobileNumber: new FormControl(),
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
+    email: new FormControl(''),
+    role: new FormControl(''),
+    city: new FormControl('CITY'),
+    state: new FormControl('STATE'),
+  });
+
   managerName: string;
   fuelDealerId: any;
   dealerCorporateId: any;
@@ -74,57 +104,6 @@ export class ListsWidget6Component {
   userId: any;
   selectedDate: any;
   todayDate = new Date();
-  meterSalesDetails: any = [];
-  creditSalesProductwise: any = [];
-  totalMeterSalesDetails: number;
-  productWiseCreditData: any = [];
-  totalCreditSalesAmount: number;
-  totalCreditWOCNGQuantity: number;
-  totalCreditCNGQuantity: number;
-  totalCashAmount: any;
-  totalCreditAmount: any;
-  totalCashLubeDetails: any;
-  totalCreditLubeDetails: any;
-  totalDigitalLubeDetails: any;
-  totalSalesDetails: any = [];
-  tallySalesDetails: any = [];
-  cashSales: number;
-  digitalSales: number;
-  creditSales: number;
-  totalAmountTally: number;
-  shiftWiseData: any;
-  meterSalesAmount: any = [];
-  shiftDetails: any = [];
-  cashHandover: any;
-  shiftNzDetails: any = [];
-  totalNzDetails: any = [];
-  totalLubeCash: any;
-  totalLubeCredit: any;
-  totalLubeDigital: any;
-  cashHandOverAmount: number;
-  digitalTotalSales: number;
-  digitalDetails: any = [];
-  digitalLubeData: any = [];
-  digitalLubeTotalAmt: any;
-  digitalLubeTotalQuantity: any;
-  totalCreditSales: number;
-  totalCreditPayment: number;
-  creditDetails: any = [];
-  lubeDetails: any = [];
-  advAmtDetails: any = [];
-  lubeCashDetails: any = [];
-  totalLubeAmt: number;
-  totalLubeKgQuantity: number;
-  totalLubeLtrQuantity: number;
-  totalAdvAmt: number;
-  lubeCrDetails: any;
-  lubeCashTotalAmt: any;
-  lubeCashTotalQuan: any;
-  lubeCashTotalUnit: any;
-  totalLubeQuantityInPiece: number;
-  totalLubeCashQuantityInPiece: number;
-  creditPaymentDetails: any;
-  keyPerson: string;
   companyName: any;
   oilCompanyName: any;
   state: any;
@@ -132,6 +111,41 @@ export class ListsWidget6Component {
   city: any;
   phone1: any;
   brandName: any;
+  isUpdate: boolean = false;
+  modalRef: any;
+  closeResult: string;
+  fuelShiftTimeDetails: any;
+  fuelShiftTimeDetailsTime: any = [];
+  arrayLength: number;
+  shiftTimeFromHrs: any;
+  shiftTimeFromMin: any;
+  shiftTimeToHrs: any;
+  shiftTimeToMin: any;
+  rowNumber: any;
+  showBr: boolean = false;
+  createdBy: string;
+  modalReference: any;
+  isNewUser: boolean;
+  fuelDealerStaffIdForReNew: any;
+  designation: string;
+  stateCode: string;
+  monthAlpha: string;
+  dateCode: any;
+  monthCode: number;
+  yearCode: any;
+  veelsUserTypePlusId: string;
+  individualPanNumber: any;
+  individualPanName: any;
+  dealerLoginId: any;
+  staffDetailsStaff: any = [];
+  fuelDealerStaffIdUpdate: any;
+  userIdUpdate: any;
+  personIdUpdate: any;
+  firstName: any;
+  lastName: any;
+  salary: any;
+  modalReference1: any;
+  accessGroupId: string;
 
   constructor(
     private post: ListWidgetService,
@@ -158,7 +172,7 @@ export class ListsWidget6Component {
     this.managerName = element.firstName + ' ' + element.lastName;
     this.pumpCity = this.dealerData.city
     this.userId = element.userId;
-    this.keyPerson = element.firstName + ' ' + element.lastName;
+    this.dealerLoginId = element.veelsPlusCorporateID;
     this.companyName = this.dealerData.companyName
     this.oilCompanyName = this.dealerData.brandName
     this.brandName = this.dealerData.brandName
@@ -166,348 +180,741 @@ export class ListsWidget6Component {
     this.pin = this.dealerData.pin
     this.city = this.dealerData.city
     this.phone1 = this.dealerData.hostPhone
-    console.log("date", 
-      this.selectedDate, this.post.date)
-    // this.addShiftForm.controls['date'].setValue(moment(new Date()).format('DD-MM-YYYY'));
-    // this.getAllAttendantsByDid(this.fuelDealerId)
-    // this.getShiftDetails(this.fuelDealerId)
-
-    this.shiftReport()
+    this.createdBy = element.firstName + ' ' + element.lastName
+    this.getShiftDetailsTime(this.fuelDealerId)
     this.cd.detectChanges()
   }
 
-  shiftReport() {
-    // this.getAllOngoingShiftForClose(this.fuelDealerId)
-    this.getDigitalTotalByDate(this.dealerCorporateId);
-    this.getFuelCreditPaymentByDate(this.dealerCorporateId)
-    // this.getTotalMeterSalesAndTallyEntery(this.fuelDealerId);
-    this.getTallyDetails(this.fuelDealerId);
-    this.getFuelCreditByDate(this.fuelDealerId);
-    this.getSalesDetailsProductWise(this.fuelDealerId);
-    // this.getCRDetailsProductWise(this.fuelDealerId);
-    this.getShiftWiseDetails(this.fuelDealerId);
-    this.getNzWise(this.fuelDealerId);
-    this.getTotalCreditSalesPaymentByDay(this.fuelDealerId);
-  }
 
-  getSalesDetailsProductWise(fuelDealerId: any) {
-    this.spinner.show()
-    this.meterSalesDetails = [];
-    this.creditSalesProductwise = []
-    this.totalMeterSalesDetails = 0
-    this.productWiseCreditData = []
-    this.totalCreditSalesAmount = 0
-    this.totalCreditWOCNGQuantity = 0
-    this.totalCreditCNGQuantity = 0
-
-    let data = {
-      fuelDealerId: fuelDealerId,
-      date: moment(this.selectedDate, ['DD-MM-YYYY']).format('YYYY-MM-DD'),
-      corporateId: this.dealerCorporateId,
-      date1: moment(this.selectedDate, ['DD-MM-YYYY']).format('YYYY-MM-DD'),
-    };
-    this.post.getMETERSALESTotalDSRPOST(data)
-      .subscribe((res) => {
-        if (res.status == "OK") {
-          this.meterSalesDetails = res.data;
-          // this.totalMeterSalesDetails = res.data1 [0].meterSaleAmount;
-          this.totalMeterSalesDetails = res.data1[0].meterSaleAmount + res.data7[0].totalCashAmount + res.data8[0].totalCreditAmount + res.data9[0].totalDigitalSales;
-          this.creditSalesProductwise = res.data2
-          if (res.data5.length) {
-            this.totalCashAmount = res.data5[0].totalCashAmount
-          }
-          if (res.data6.length) {
-            this.totalCreditAmount = res.data6[0].totalCreditAmount
-          }
-          this.totalCashLubeDetails = res.data5
-          this.totalCreditLubeDetails = res.data6
-          this.totalDigitalLubeDetails = res.data10
-          this.totalCreditSalesAmount = Number(res.data3[0].totalCreditSales) + Number(res.data4[0].totalCreditSales)
-          this.totalCreditWOCNGQuantity = Number(res.data3[0].totalCreditQuantity)
-          this.totalCreditCNGQuantity = Number(res.data4[0].totalCreditQuantity)
-
-          this.meterSalesDetails.map((shift: { fuelProductId: string; productName: string; meterSaleAmount: number; meterSaleQuantity: number; totalPumpTesting: number; }) => {
-            const shiftDataJSON = {
-              fuelProductId: '',
-              productName: '',
-              meterSaleQuantity: 0,
-              meterSaleAmount: 0,
-              totalCreditSales: 0,
-              totalCreditQuantity: 0,
-              creditSaleShare: 0,
-              creditQuantityShare: 0,
-              totalPumpTesting: 0,
-            };
-
-            shiftDataJSON.fuelProductId = shift.fuelProductId;
-            shiftDataJSON.productName = shift.productName;
-            shiftDataJSON.meterSaleAmount = shift.meterSaleAmount;
-            shiftDataJSON.meterSaleQuantity = shift.meterSaleQuantity;
-            shiftDataJSON.totalPumpTesting = shift.totalPumpTesting;
-
-            this.creditSalesProductwise.map((credit: { fuelProdId: string; totalCreditQuantity: number; totalCreditSales: number; }) => {
-              if (credit.fuelProdId == shift.fuelProductId) {
-                shiftDataJSON.totalCreditQuantity = credit.totalCreditQuantity;
-                shiftDataJSON.totalCreditSales = credit.totalCreditSales;
-                shiftDataJSON.creditQuantityShare = Number(credit.totalCreditQuantity) / Number(shift.meterSaleQuantity);
-                shiftDataJSON.creditSaleShare = Number(credit.totalCreditSales) / Number(shift.meterSaleAmount);
-              }
-            })
-            this.productWiseCreditData.push(shiftDataJSON);
-          })
-          this.cd.detectChanges()
-          this.spinner.hide()
-        } else {
-          this.spinner.hide()
-          this.cd.detectChanges()
-        }
-      });
-  }
-
-  getTallyDetails(fuelDealerId: any) {
-    this.spinner.show()
-    this.tallySalesDetails = [];
-    this.totalSalesDetails = []
-    this.cashSales = 0
-    this.digitalSales = 0
-    this.creditSales = 0
-    this.totalAmountTally = 0
-    const data = {
-      date: moment(this.selectedDate, ['DD-MM-YYYY']).format('YYYY-MM-DD'),
-      date1: moment(this.selectedDate, ['DD-MM-YYYY']).format('YYYY-MM-DD'),
-      dealerId: fuelDealerId,
-      corporateId: this.dealerCorporateId,
-    };
-    this.post.getShiftVStallyByDatePOST(data)
-      .subscribe(res => {
-        if (res.status == 'OK') {
-
-          this.tallySalesDetails = res.data;
-          this.totalSalesDetails = res.data1;
-          this.totalAmountTally = res.data1[0].totalAmountTally;
-          this.cashSales = Number(res.data1[0].cashTallyAmt) - Number(res.data1[0].expenseAmt) - Number(res.data1[0].shortAmt)
-          this.digitalSales = res.data1[0].paytmTotal
-          this.creditSales = res.data1[0].creditTally
-
-          this.spinner.hide()
-          this.cd.detectChanges()
-        } else {
-          this.spinner.hide()
-          this.cd.detectChanges()
-        }
-      });
-  }
-
-  getShiftWiseDetails(fuelDealerId: any) {
-    this.spinner.show()
-    // this.shiftWiseData.length = 0;
-    this.meterSalesAmount = [];
-    this.shiftDetails = []
-    const data = {
-      dealerId: fuelDealerId,
-      startDate: moment(this.selectedDate, ['DD-MM-YYYY']).format('YYYY-MM-DD'), //startDate,
-      endDate: moment(this.selectedDate, ['DD-MM-YYYY']).format('YYYY-MM-DD'),
-    };
-    this.post.getShiftWiseBookDetailsPOST(data).subscribe((res) => {
-      if (res.status == 'OK') {
-        this.meterSalesAmount = res.data;
-        this.shiftDetails = res.data1;
-
-        this.shiftDetails.map((shift: { openDate: moment.MomentInput; firstName: string; lastName: string; totalCashTally: number; paytmTotalAmount: number; totalCreditTally: number; expenseAmount: number; shortamount: number; totalAmountTally: number; fuelShiftTimeShiftName: string; fuelShiftTimeDetails: string; expenseAmtDetails: string; }) => {
-          const dataPAYJson = {
-            openDate: '',
-            name: '',
-            meterSaleAmount: 0,
-            cash: 0,
-            digital: 0,
-            credit: 0,
-            expenses: 0,
-            short: 0,
-            shiftTally: 0,
-            shiftTime: '',
-            differnece: 0,
-            cashHandOver: 0,
-            expenseAmtDetails: ''
-          };
-
-          dataPAYJson.openDate = moment(shift.openDate).format("YYYY-MM-DD");
-          dataPAYJson.name = shift.firstName + ' ' + shift.lastName;
-          dataPAYJson.cash = shift.totalCashTally;
-          dataPAYJson.digital = shift.paytmTotalAmount;
-          dataPAYJson.credit = shift.totalCreditTally;
-          dataPAYJson.expenses = shift.expenseAmount;
-          dataPAYJson.short = shift.shortamount;
-          dataPAYJson.shiftTally = shift.totalAmountTally;
-          dataPAYJson.meterSaleAmount = shift.totalAmountTally;
-          dataPAYJson.differnece = dataPAYJson.shiftTally - dataPAYJson.meterSaleAmount;
-          if (shift.fuelShiftTimeShiftName != '') {
-            dataPAYJson.shiftTime = shift.fuelShiftTimeShiftName;
-          } else {
-            dataPAYJson.shiftTime = shift.fuelShiftTimeDetails;
-          }
-          dataPAYJson.cashHandOver = Number(shift.totalCashTally) - Number(shift.shortamount) - Number(shift.expenseAmount);
-          dataPAYJson.expenseAmtDetails = shift.expenseAmtDetails
-
-          //   this.meterSalesAmount.map(sales => {
-          //     if (sales.fuelShiftDetailsId == shift.idfuelShiftDetails) {
-          //         dataPAYJson.meterSaleAmount = sales.meterSaleAmount;
-          //         dataPAYJson.differnece = Number(shift.totalAmountTally);
-          //     }
-          // })
-
-          this.shiftWiseData.push(dataPAYJson);
-        })
-
-        this.cashHandover = this.shiftWiseData.cashHandOver
-        this.spinner.hide()
-        this.cd.detectChanges()
-      } else {
-        this.spinner.hide()
-        this.cd.detectChanges()
+  addNewNameModal(AddShiftName: any) {
+    this.isUpdate = false;
+    this.modalRef = this.modalService.open(AddShiftName, { size: 'md' });
+    this.modalRef.result.then(
+      (result: any) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason: any) => {
+        this.closeResult = `Dismissed`;
       }
+    );
+  }
+
+  getShiftDetailsTime(dealerId: any) {
+    this.fuelShiftTimeDetails.length = 0;
+    let data = {
+      fuelShiftTimeDealerId: dealerId
+    }
+    this.post.getFuelShiftTimeDetailsPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          if (res.data.length) {
+            this.fuelShiftTimeDetailsTime = res.data;
+            this.arrayLength = Number(res.data.length) - 1;
+          } else {
+            this.fuelShiftTimeDetailsTime.length = 0;
+            this.spinner.hide()
+          }
+        }
+        else {
+          this.spinner.hide()
+        }
+      })
+  }
+
+  getfuelShiftDetailById(fuelShiftTimeId: any, AddShiftName: any) {
+    this.spinner.show()
+    this.modalRef = this.modalService.open(AddShiftName, { size: 'md' });
+    this.modalRef.result.then(
+      (result: any) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason: any) => {
+        this.closeResult = `Dismissed`;
+      }
+    );
+    let data = {
+      fuelShiftTimeId: fuelShiftTimeId
+    }
+    this.post.getFuelShiftTimeDetailsPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          if (res.data.length) {
+            this.isUpdate = true;
+            this.shiftTimeForm.controls['fuelShiftTimeId'].setValue(res.data[0].fuelShiftTimeId);
+            this.shiftTimeFromHrs = ((res.data[0].fuelShiftTimeFrom).toString()).slice(0, 2)
+            this.shiftTimeFromMin = ((res.data[0].fuelShiftTimeFrom).toString()).slice(3, 5)
+            this.shiftTimeToHrs = ((res.data[0].fuelShiftTimeTo).toString()).slice(0, 2)
+            this.shiftTimeToMin = ((res.data[0].fuelShiftTimeTo).toString()).slice(3, 5)
+            this.shiftTimeForm.controls['shiftName'].setValue(res.data[0].fuelShiftTimeShiftName);
+            this.spinner.hide()
+          } else {
+            this.shiftTimeFromHrs = ''
+            this.shiftTimeFromMin = ''
+            this.shiftTimeToHrs = ''
+            this.shiftTimeToMin = ''
+            this.shiftTimeForm.controls['fuelShiftTimeId'].setValue('');
+            this.shiftTimeForm.controls['shiftTimeFrom'].setValue('');
+            this.shiftTimeForm.controls['shiftTimeTo'].setValue('');
+            this.shiftTimeForm.controls['shiftName'].setValue('');
+            this.isUpdate = false;
+            this.spinner.hide()
+          }
+        }
+        else {
+          this.spinner.hide()
+        }
+      })
+  }
+
+  deleteShiftTime(fuelShiftTimeId: any) {
+    this.spinner.show()
+    let data = {
+      fuelShiftTimeId: fuelShiftTimeId,
+    }
+    if (confirm("Are you sure to delete ? ")) {
+      this.post.deleteFuelShiftTimeDetailsPOST(data)
+        .subscribe(res => {
+          if (res.status == 'OK') {
+            alert("shift time deleted successfully..")
+            this.getShiftDetailsTime(this.fuelDealerId);
+            this.spinner.hide()
+          } else {
+            this.spinner.hide()
+          }
+        })
+    }
+    else {
+      this.spinner.hide()
+    }
+  }
+  
+submitShiftTime(){
+  if(this.shiftTimeFromHrs || this.shiftTimeFromHrs == 0){
+    if( this.shiftTimeToHrs){
+
+      this.shiftTimeForm.controls["shiftTimeFrom"].setValue(moment(this.shiftTimeFromHrs+'-'+this.shiftTimeFromMin,["HH:mm"]).format("HH:mm"))
+      this.shiftTimeForm.controls["shiftTimeTo"].setValue(moment(this.shiftTimeToHrs+'-'+this.shiftTimeToMin,["HH:mm"]).format("HH:mm"))
+      if(this.shiftTimeForm.value.shiftTimeFrom != 'Invalid date' && this.shiftTimeForm.value.shiftTimeTo != 'Invalid date'){
+      this.spinner.show()
+        let data = {
+          fuelShiftTimeDealerId: this.fuelDealerId,
+          fuelShiftTimeCreatedBy: this.createdBy,
+          fuelShiftTimeDetails: this.shiftTimeForm.value.shiftTimeFrom +' To '+ this.shiftTimeForm.value.shiftTimeTo ,
+          fuelShiftTimeShiftName: this.shiftTimeForm.value.shiftName,
+          fuelShiftTimeFrom: this.shiftTimeForm.value.shiftTimeFrom,
+          fuelShiftTimeTo: this.shiftTimeForm.value.shiftTimeTo ,
+          
+        }
+        this.post.addFuelShiftTimeDetailsPOST(data)
+          .subscribe(res => {
+            if (res.status == "OK") {
+              alert("Shift Time Details Added successfully..")
+              this.getShiftDetailsTime(this.fuelDealerId);     
+              this.shiftTimeForm.reset();
+              this.shiftTimeForm.controls["shiftName"].setValue("")
+              this.shiftTimeFromHrs = ''
+              this.shiftTimeFromMin = ''
+              this.shiftTimeToHrs = ''
+              this.shiftTimeToMin = ''
+              this.modalRef.close('close');
+
+        this.spinner.hide()
+            }
+            else {
+              alert("Error to Add Details..")
+        this.spinner.hide()
+            }
+          })
+      }else{
+        alert("please select or enter valid time")
+      }
+ 
+    }else{
+      alert("please enter shift time To")
+    }
+  }else{
+    alert("please select shift time From")
+  }
+  
+}
+
+
+updateShiftTime(){
+  if(this.shiftTimeFromHrs || this.shiftTimeFromHrs == 0){
+    if( this.shiftTimeToHrs){
+      this.shiftTimeForm.controls["shiftTimeFrom"].setValue(moment(this.shiftTimeFromHrs+'-'+this.shiftTimeFromMin,["HH:mm"]).format("HH:mm"))
+      this.shiftTimeForm.controls["shiftTimeTo"].setValue(moment(this.shiftTimeToHrs+'-'+this.shiftTimeToMin,["HH:mm"]).format("HH:mm"))
+      if(this.shiftTimeForm.value.shiftTimeFrom != 'Invalid date' && this.shiftTimeForm.value.shiftTimeTo != 'Invalid date'){
+
+    this.spinner.show()
+      let data = {
+        fuelShiftTimeId: this.shiftTimeForm.value.fuelShiftTimeId,
+        fuelShiftTimeDetails: this.shiftTimeForm.value.shiftTimeFrom +' To '+ this.shiftTimeForm.value.shiftTimeTo,
+        fuelShiftTimeShiftName: this.shiftTimeForm.value.shiftName,
+        fuelShiftTimeFrom: this.shiftTimeForm.value.shiftTimeFrom,
+        fuelShiftTimeTo: this.shiftTimeForm.value.shiftTimeTo ,
+      }
+      this.post.updateFuelShiftTimeDetailsPOST(data)
+        .subscribe(res => {
+          if (res.status == "OK") {
+            alert("Shift Time Details Updated successfully..")
+            this.getShiftDetailsTime(this.fuelDealerId);    
+            this.isUpdate = false; 
+            this.shiftTimeForm.reset();
+            this.shiftTimeForm.controls["shiftName"].setValue("")
+            this.shiftTimeFromHrs = ''
+            this.shiftTimeFromMin = ''
+            this.shiftTimeToHrs = ''
+            this.shiftTimeToMin = ''
+            this.modalRef.close('close');
+           this.spinner.hide()
+          }
+          else {
+            alert("Error to Update Details..")
+           this.spinner.hide()
+          }
+            })
+          }else{
+            alert("please select or enter valid time")
+          }
+      }else{
+        alert("please enter shift time To")
+      }
+    }else{
+      alert("please select shift time From")
+    }
+  }
+  
+  cancel(){
+    this.shiftTimeForm.reset()
+    this.isUpdate = false; 
+    this.shiftTimeForm.controls["shiftName"].setValue("")
+    this.shiftTimeFromHrs = ''
+    this.shiftTimeFromMin = ''
+    this.shiftTimeToHrs = ''
+    this.shiftTimeToMin = ''
+    this.modalRef.close('close');
+  }
+
+  openAddUser(addUser: any) {
+    this.modalReference = this.modalService.open(addUser)
+    this.modalReference.result.then((result: any) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason: any) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
+  
+private getDismissReason(reason: any): string {
+  if (reason === ModalDismissReasons.ESC) {
+    return 'by pressing ESC';
+  } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+    return 'by clicking on a backdrop';
+  } else {
+    return `with: ${reason}`;
+  }
+}
 
-  getNzWise(fuelDealerId: any) {
-    this.spinner.show()
-    this.shiftNzDetails = []
-    this.totalNzDetails = []
-    const data = {
-      date: moment(this.selectedDate, ['DD-MM-YYYY']).format('YYYY-MM-DD'),
-      fuelDealerId: fuelDealerId,
-      corporateId: this.dealerCorporateId,
-    };
-    this.post.getProductWiseDSRPOST(data)
-      .subscribe(res => {
-        if (res.status == 'OK') {
-          this.shiftNzDetails = res.data
-          this.totalNzDetails = res.data1
-          this.totalLubeCash = res.data3
-          this.totalLubeCredit = res.data4
-          this.totalLubeDigital = res.data5
-          this.spinner.hide()
-          this.cd.detectChanges()
-        } else {
-          this.spinner.hide()
-          this.cd.detectChanges()
-        }
-      });
+checkuserPhoneNumber() {
+  let data = {
+    phone: this.userForm.value.phoneNumber
+  }
+  this.post.findPhoneNumberPOST(data)
+    .subscribe(res => {
+      if (res.status == "OK") {
+        this.checkStaffDetails()
+      }
+      else {
+        this.isNewUser = true;
+      }
+    })
+}
+
+checkStaffDetails() {
+  this.spinner.show()
+   let data = {
+     phone: this.userForm.value.phoneNumber,
+   }
+   this.post.checkStaffDetailsPOST(data)
+     .subscribe(res => {
+       if (res.status == "OK") {
+         this.isNewUser = false;
+         this.reNewStaffForm.controls["mobileNumber"].setValue(this.userForm.value.phoneNumber);
+         this.fuelDealerStaffIdForReNew = res.data[0].fuelDealerStaffId;
+         this.reNewStaffForm.controls["firstName"].setValue(res.data[0].firstName);
+         this.reNewStaffForm.controls["lastName"].setValue(res.data[0].lastName);
+         this.reNewStaffForm.controls["email"].setValue(res.data[0].email1);
+         this.reNewStaffForm.controls["role"].setValue(res.data[0].designation);
+         this.reNewStaffForm.controls["city"].setValue(res.data[0].city);
+         this.reNewStaffForm.controls["state"].setValue(res.data[0].state);
+       this.spinner.hide();
+       }
+       else {
+         alert("This User Already Mapped with Another Dealer!");
+         this.userForm.reset({ 'phoneNumber': '' })
+       this.spinner.hide();
+       }
+     })
+ }
+ 
+ fuelStaffRegister() {
+  var payment;
+ this.spinner.show()
+  this.createCorporateId()
+  if (this.userForm.value.role == "13") {
+    this.designation = "OPERATOR",
+      payment = "unpaid"
+  }
+  if (this.userForm.value.role == "14") {
+    this.designation = "MANAGER",
+      payment = "waiveOff"
+  }
+  
+  let data = {
+    firstName: this.userForm.value.firstName,
+    lastName: this.userForm.value.lastName,
+    phone1: this.userForm.value.phoneNumber,
+    email1: this.userForm.value.email,
+    kycStatus: "Accept",
+    payUserStatus: payment,
+    veelsUserTypePlusId: this.veelsUserTypePlusId,
+    password: "1234",
+    accessGroupId: this.userForm.value.role,
+    designation: this.designation,
+    fuelDealerId: this.fuelDealerId,
+    // veelsPlusCorporateID: this.FuelVeelsVendorID,
+    state: this.userForm.value.state,
+    city: this.userForm.value.city,
+    individualPancardNumber: this.individualPanNumber,
+    individualPanName: this.individualPanName,
   }
 
-  getDigitalTotalByDate(dealerCorporateId: any) {
-    this.spinner.show()
-    // this.digitalDetails.length = 0
-    this.digitalTotalSales = 0
-    this.cashHandOverAmount = 0
-    const data = {
-      corporateId: dealerCorporateId,
-      date: moment(this.selectedDate, ['DD-MM-YYYY']).format('YYYY-MM-DD'),
-    };
-    this.post.getDigitalTotalByDatePOST(data)
+  this.post.fuelStaffRegisterPOST(data).subscribe(result => {
+    if (result.status == "OK") {
+      alert("Staff Added Successfully!")
+      if (this.userForm.value.role == "14") {
+        this.addDealerStaffAccess(result.personId)
+      }
+    this.spinner.hide();
+      this.getStaffDetails(this.fuelDealerId)
+      this.userForm.reset();
+      this.modalReference.close('close')
+      this.userForm.controls["state"].setValue(this.state);
+      this.userForm.controls["city"].setValue(this.city);
+    } else {
+      alert("Error to Add Staff!")
+   this.spinner.hide();
+      this.modalReference.close('close')
+    }
+  })
+}
+
+createCorporateId() {
+  this.createStateCode();
+  this.dateCode = new Date();
+  this.monthCode = this.dateCode.getMonth() + 1;
+
+  switch (this.monthCode) {
+    case 1:
+      this.monthAlpha = 'A'
+      break;
+    case 2:
+      this.monthAlpha = 'B'
+
+      break;
+
+    case 3:
+      this.monthAlpha = 'C'
+      break;
+
+    case 4:
+      this.monthAlpha = 'D'
+      break;
+
+    case 5:
+      this.monthAlpha = 'E'
+      break;
+    case 6:
+      this.monthAlpha = 'F'
+
+      break;
+
+    case 7:
+      this.monthAlpha = 'G'
+      break;
+
+    case 8:
+      this.monthAlpha = 'H'
+      break;
+    case 9:
+      this.monthAlpha = 'I'
+
+      break;
+
+    case 10:
+      this.monthAlpha = 'J'
+      break;
+
+    case 11:
+      this.monthAlpha = 'K'
+      break;
+
+    case 12:
+      this.monthAlpha = 'L'
+      break;
+
+
+  }
+  this.yearCode = ((this.dateCode.getYear()).toString()).slice(1, 3);
+
+  this.veelsUserTypePlusId = "VP" + this.stateCode + this.userForm.value.role + this.monthAlpha + this.yearCode;
+}
+
+createStateCode() {
+
+  switch (this.userForm.value.state) {
+   
+
+      case 'ANDHRA PRADESH':
+      this.stateCode = '01'
+      break;
+    case 'ARUNACHAL PRADESH':
+      this.stateCode = '02'
+
+      break;
+    case 'ASSAM':
+      this.stateCode = '03'
+
+      break;
+    case 'BIHAR':
+      this.stateCode = '04'
+
+      break;
+    case 'CHHATTISGARH':
+      this.stateCode = '05'
+
+      break;
+    case 'GOA':
+      this.stateCode = '06'
+
+      break;
+    case 'GUJARAT':
+      this.stateCode = '07'
+
+      break;
+
+    case 'HARYANA':
+      this.stateCode = '08'
+
+      break;
+
+    case 'HIMACHAL PRADESH':
+      this.stateCode = '09'
+
+      break;
+    case 'JHARKHAND':
+      this.stateCode = '10'
+
+      break;
+    case 'KARNATAKA':
+      this.stateCode = '11'
+      break;
+
+    case 'KERALA':
+      this.stateCode = '12'
+      break;
+
+    case 'MADHYA PRADESH':
+      this.stateCode = '13'
+      break;
+
+    case 'MAHARASHTRA':
+      this.stateCode = '14'
+      break;
+
+    case 'MANIPUR':
+      this.stateCode = '15'
+      break;
+
+    case 'MEGHALAYA':
+      this.stateCode = '16'
+      break;
+    case 'MIZORAM':
+      this.stateCode = '17'
+      break;
+    case 'NAGALAND':
+      this.stateCode = '18'
+      break;
+    case 'ODISHA':
+      this.stateCode = '19'
+      break;
+    case 'PUNJAB':
+      this.stateCode = '20'
+      break;
+    case 'RAJASTHAN':
+      this.stateCode = '21'
+      break;
+    case 'SIKKIM':
+      this.stateCode = '22'
+      break;
+    case 'TAMIL NADU':
+      this.stateCode = '23'
+      break;
+    case 'TELANGANA':
+      this.stateCode = '24'
+      break;
+    case 'TRIPURA':
+      this.stateCode = '25'
+      break;
+    case 'UTTAR PRADESH':
+      this.stateCode = '26'
+      break;
+    case 'UTTARAKHAND':
+      this.stateCode = '27'
+      break;
+    case 'WEST BENGAL':
+      this.stateCode = '28'
+      break;
+    case 'ANDAMAN AND NICOBAR ISLANDS':
+      this.stateCode = '29'
+      break;
+    case 'CHANDIGARH':
+      this.stateCode = '30'
+      break;
+    case 'DADRA AND NAGAR HAVELI AND DAMAN AND DIU':
+      this.stateCode = '31'
+      break;
+    case 'DELHI':
+      this.stateCode = '32'
+      break;
+    case 'LAKSHADWEEP':
+      this.stateCode = '33'
+      break;
+    case 'PUDUCHERRY':
+      this.stateCode = '34'
+      break;
+    case 'JAMMU AND KASHMIR':
+      this.stateCode = '35'
+      break;
+    case 'LADAKH':
+      this.stateCode = '36'
+      break;
+    default:
+        this.stateCode = '00'
+        break;
+  }
+}
+
+addDealerStaffAccess(staffPersonId: any){
+  let data = {
+    staffPersonId:staffPersonId,
+    fuelDealerId:this.fuelDealerId,
+    creditPayment:'TRUE',
+    outstanding:'TRUE',
+    fuelStatement:'TRUE',
+    fuelStaff:'TRUE',
+    fuelAddCustomer:'TRUE',
+    createdAt:new Date(),
+    createdBy:this.dealerLoginId
+  }
+  this.post.addDealerStaffAccessPOST(data)
       .subscribe(res => {
-        if (res.status == 'OK') {
-          this.digitalDetails = res.data;
-          this.digitalTotalSales = res.data1[0].digitalEntry
-          this.cashHandOverAmount = res.data2[0].totalAmount
-          this.digitalLubeData = res.data3;
-          this.digitalLubeTotalAmt = res.data4[0].totalAmount;
-          this.digitalLubeTotalQuantity = res.data4[0].totalQuantity;
-          this.spinner.hide()
-          this.cd.detectChanges()
-        } else {
-          this.spinner.hide()
-          this.cd.detectChanges()
+        if (res.status=="OK") {
+       this.spinner.hide();
         }
-      });
+
+      })
+}
+
+getStaffDetails(fuelDealerId: any) {
+  this.staffDetailsStaff = []
+  let data = {
+    fuelDealerId: fuelDealerId,
   }
 
-  getTotalCreditSalesPaymentByDay(fuelDealerId: any) {
-    this.spinner.show()
-    this.totalCreditSales = 0
-    this.totalCreditPayment = 0
-    const data = {
-      fuelDealerId: fuelDealerId,
-      corporateId: this.dealerCorporateId,
-      date: moment(this.selectedDate, ['DD-MM-YYYY']).format('YYYY-MM-DD'),
-    };
-    this.post.getTotalCreditSalesPaymentByDayPOST(data)
+  this.post.getStaffDetailsPOST(data)
+    .subscribe(res => {
+      if (res) {
+        this.staffDetailsStaff = res.data
+        this.designation = res.data[0].designation;
+    this.spinner.hide();
+      } else {
+    this.spinner.hide();
+      }
+    })
+}
+
+renewMappingStaff() {
+  this.spinner.show()
+    let data = {
+      fuelDealerStaffId: this.fuelDealerStaffIdForReNew,
+      fuelDealerId: this.fuelDealerId,
+    }
+    this.post.renewMappingStaffPOST(data)
       .subscribe(res => {
-        if (res.status == 'OK') {
-          this.totalCreditSales = res.data[0].totalCreditSales
-          this.totalCreditPayment = res.data1[0].totalCreditPayment
-          this.spinner.hide()
-          this.cd.detectChanges()
-        } else {
-          this.spinner.hide()
-          this.cd.detectChanges()
+        if (res.status == "OK") {
+       this.spinner.hide();
+          alert("Staff Added successfully!")
+          this.getStaffDetails(this.fuelDealerId);
+          this.reNewStaffForm.reset();
+          this.userForm.reset();
+          this.modalReference.close('close')
+          this.userForm.controls["state"].setValue(this.state);
+          this.userForm.controls["city"].setValue(this.city);
         }
-      });
+        else {
+      this.spinner.hide();
+          this.modalReference.close('close')
+        }
+      })
+  }
+  
+  closeReNew() {
+    this.reNewStaffForm.reset();
+    this.userForm.reset();
+    this.modalReference.close('close')
+    this.userForm.controls["state"].setValue(this.state);
+    this.userForm.controls["city"].setValue(this.city);
+  }
+  
+  noUpdateMapp(status: any, fuelDealerStaffId: any, dealerMapStatus: string) {
+    if (dealerMapStatus != "MAPPED") {
+      if (status.target.checked) {
+        // console.log(status.target.checked);
+        // console.log(fuelDealerStaffId);
+        alert("Error to Update Mapping!")
+        this.getStaffDetails(this.fuelDealerId)
+      }
+    }
+    else {
+      alert("Error to Update Mapping!")
+      this.getStaffDetails(this.fuelDealerId)
+    }
+  }
+  
+  updateMapping(status: any, fuelDealerStaffId: any, dealerMapStatus: string) { 
+    if (dealerMapStatus != "MAPPED") {
+      this.spinner.show()
+      if (status.target.checked) {
+        dealerMapStatus = "MAPPED";
+
+        let data = {
+          dealerMapStatus: dealerMapStatus,
+          fuelDealerStaffId: fuelDealerStaffId,
+        }
+
+        this.post.updateMapStatusforStaffPOST(data)
+          .subscribe(res => {
+            if (res) {
+              alert("Mapping Status Updated to MAPPED!")
+           this.spinner.hide();
+              this.getStaffDetails(this.fuelDealerId)
+            }
+            else {
+              alert("Error to Update Mapping!")
+           this.spinner.hide();
+              this.getStaffDetails(this.fuelDealerId)
+            }
+
+          })
+      }
+    } else {
+      this.spinner.show()
+      dealerMapStatus = "UNMAPPED";
+
+      let data = {
+        dealerMapStatus: dealerMapStatus,
+        fuelDealerStaffId: fuelDealerStaffId,
+        fuelDealerId: this.fuelDealerId,
+      }
+
+      this.post.updateMapStatusforStaffPOST(data)
+        .subscribe(res => {
+          if (res) {
+            alert("Mapping Status Updated to UNMAPPED!")
+            this.getStaffDetails(this.fuelDealerId)
+        this.spinner.hide();
+          } else {
+            alert("Error to Update Mapping!")
+         this.spinner.hide();
+            this.getStaffDetails(this.fuelDealerId)
+          }
+
+        })
+    }
   }
 
-  getFuelCreditByDate(fuelDealerId: any) {
-    this.spinner.hide()
-    this.creditDetails = []
-    this.lubeDetails = []
-    this.advAmtDetails = []
-    this.lubeCashDetails = []
-    this.totalLubeAmt = 0
-    this.totalLubeKgQuantity = 0
-    this.totalLubeLtrQuantity = 0
-    this.totalAdvAmt = 0
-    const data = {
-      date: moment(this.selectedDate, ['DD-MM-YYYY']).format('YYYY-MM-DD'),
-      dealerId: fuelDealerId,
-    };
-    this.post.getFuelCreditByDatePOST(data)
-      .subscribe(res => {
-        if (res.status == 'OK') {
-          this.creditDetails = res.data2;
-          this.lubeDetails = res.data3;
-          this.advAmtDetails = res.data4;
-          this.lubeCashDetails = res.data9;
-          this.lubeCrDetails = res.data11;
-          this.lubeCashTotalAmt = res.data10[0].cashBillAmount
-          this.lubeCashTotalQuan = res.data10[0].cashBillQuantity
-          this.lubeCashTotalUnit = res.data10[0].cashBillUnit
-          this.totalLubeAmt = Number(res.data5[0].totalLubeAmt) + Number(res.data7[0].totalLubeAmt);
-          this.totalLubeQuantityInPiece = Number(res.data8[0].quantityInPieces);
-          this.totalLubeKgQuantity = res.data5[0].totalQuantity
-          this.totalLubeLtrQuantity = res.data7[0].totalQuantity
-          this.totalAdvAmt = Number(res.data6[0].totalAdvAmt)
-          this.totalLubeCashQuantityInPiece = Number(res.data10[0].quantityInPiece);
-          this.spinner.hide()
-          this.cd.detectChanges()
-        } else {
-          this.spinner.hide()
-          this.cd.detectChanges()
-        }
-      });
+  staffEdit(updateStaff: any,fuelDealerStaffId: any,userId: any,personId: any,firstName: any,lastName: any,designation: string,salary: any){
+    this.fuelDealerStaffIdUpdate = fuelDealerStaffId,
+    this.userIdUpdate = userId,
+    this.personIdUpdate = personId,
+    this.firstName = firstName,
+    this.lastName = lastName,
+    this.designation = designation
+    this.salary = salary
+    this.modalReference1 = this.modalService.open(updateStaff, {size:'lg'});
+   
+    this.modalReference1.result.then((result: any) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason: any) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
   }
-
-
-  getFuelCreditPaymentByDate(dealerCorporateId: any) {
-    this.spinner.show()
-    // this.creditPaymentDetails.length = 0
-    const data = {
-      date: moment(this.selectedDate, ['DD-MM-YYYY']).format('YYYY-MM-DD'),
-      corporateId: dealerCorporateId,
-    };
-    this.post.getFuelCreditPaymentByDatePOST(data)
-      .subscribe(res => {
-        if (res.status == 'OK') {
-          this.creditPaymentDetails = res.data;
-          this.spinner.hide()
-          this.cd.detectChanges()
-        } else {
-          this.spinner.hide()
-          this.cd.detectChanges()
+  
+  UpdateDealerStaffDetails() {
+    if(this.lastName && this.firstName){
+      if(this.designation == 'OPERATOR'){
+        this.accessGroupId = '13'
         }
-      });
+        if(this.designation == 'MANAGER'){
+         this.accessGroupId = '14'
+         }
+  
+      let data = {
+        fuelDealerStaffId: this.fuelDealerStaffIdUpdate,
+        userId: this.userIdUpdate,
+        personId: this.personIdUpdate,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        designation: this.designation,
+        accessGroupId: this.accessGroupId,
+        salary: this.salary,
+      }
+      this.post.UpdateDealerStaffDetailsPOST(data)
+        .subscribe(res => {
+          if (res.status == "OK") {
+            alert("Staff details update successfully!")
+            this.modalReference1.close('close')
+            this.switchedToStaff(this.personIdUpdate,this.accessGroupId)
+            this.getStaffDetails(this.fuelDealerId);
+          }
+          else {
+            this.spinner.hide();
+            this.modalReference1.close('close')
+            alert("Error to update staff details!")
+  
+          }
+        })
+    }else{
+      alert("Please Enter Name")
+    }
+  
   }
+  
+  switchedToStaff(personId: any,accessGroupId: string){
+    let date = new Date();
+    let data = {
+      personId:personId,
+      fuelDealerId: this.fuelDealerId,
+      createdAt:moment(date).format('DD-MM-YYYY HH:mm:ss'),
+      createdBy:this.createdBy,
+      accessGroupId:accessGroupId
+    }
 
-  shiftReportPage() {
-    // this.post.setNavigate(moment(this.selectedDate, ['DD-MM-YYYY']).format('YYYY-MM-DD'), 'Book')
-    this.router.navigate(['/shift/shiftReport']);
+    this.post.switchedToStaffPOST(data)
+    .subscribe(res=>{
+
+    })
 
   }
 }
