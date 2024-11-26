@@ -26,7 +26,14 @@ import { MixedWidget10Component } from './mixed/mixed-widget10/mixed-widget10.co
 import { MixedWidget11Component } from './mixed/mixed-widget11/mixed-widget11.component';
 // Tiles
 import { TilesWidget1Component } from './tiles/tiles-widget1/tiles-widget1.component';
+import { TilesWidget2Component } from './tiles/tiles-widget2/tiles-widget2.component';
 import { TilesWidget3Component } from './tiles/tiles-widget3/tiles-widget3.component';
+import { TilesWidget4Component } from './tiles/tiles-widget4/tiles-widget4.component';
+import { TilesWidget5Component } from './tiles/tiles-widget5/tiles-widget5.component';
+import { TilesWidget6Component } from './tiles/tiles-widget6/tiles-widget6.component';
+import { TilesWidget7Component } from './tiles/tiles-widget7/tiles-widget7.component';
+import { TilesWidget8Component } from './tiles/tiles-widget8/tiles-widget8.component';
+import { TilesWidget9Component } from './tiles/tiles-widget9/tiles-widget9.component';
 import { TilesWidget10Component } from './tiles/tiles-widget10/tiles-widget10.component';
 import { TilesWidget11Component } from './tiles/tiles-widget11/tiles-widget11.component';
 import { TilesWidget12Component } from './tiles/tiles-widget12/tiles-widget12.component';
@@ -176,7 +183,14 @@ import { BaseTablesWidget13Component } from './base-tables/base-tables-widget13/
     MixedWidget11Component,
     // Tiles,
     TilesWidget1Component,
+    TilesWidget2Component,
     TilesWidget3Component,
+    TilesWidget4Component,
+    TilesWidget5Component,
+    TilesWidget6Component,
+    TilesWidget7Component,
+    TilesWidget8Component,
+    TilesWidget9Component,
     TilesWidget10Component,
     TilesWidget11Component,
     TilesWidget12Component,
@@ -335,7 +349,14 @@ import { BaseTablesWidget13Component } from './base-tables/base-tables-widget13/
     MixedWidget11Component,
     // Tiles,
     TilesWidget1Component,
+    TilesWidget2Component,
     TilesWidget3Component,
+    TilesWidget4Component,
+    TilesWidget5Component,
+    TilesWidget6Component,
+    TilesWidget7Component,
+    TilesWidget8Component,
+    TilesWidget9Component,
     TilesWidget10Component,
     TilesWidget11Component,
     TilesWidget12Component,

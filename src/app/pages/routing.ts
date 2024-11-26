@@ -76,6 +76,10 @@ const Routing: Routes = [
     loadChildren: () => import('./dealer/credit/credit.module').then((m) => m.CreditModule),
   },
   {
+    path: 'accounting',
+    loadChildren: () => import('./dealer/accounting/accounting.module').then((m) => m.AccountingModule),
+  },
+  {
     path: 'report',
     loadChildren: () => import('./dealer/report/report.module').then((m) => m.ReportModule),
   },
