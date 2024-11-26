@@ -1,0 +1,254 @@
+<div class="card">
+  <div class="">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+      </div>
+      <div class="col-sm-6">
+        <div class="text-sm-end">
+          <br>
+          <button type="button" class="btn btn-success btn-rounded mb-2 me-2" routerLink="/accounting/viewAccounting"
+            [routerLinkActive]="['router-link-active']">
+            View Accounting Entries </button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="row">
+        <div class="col col-xl-12 col-lg-12">
+          <div class="table-responsive">
+            <table class="table table-hover table-striped table-nowrap">
+              <thead class="table-light">
+                <tr>
+                  <th style="text-align: left;"> Date </th>
+                  <th style="text-align: left;"> Book </th>
+                  <th style="text-align: left;"> Transaction Type </th>
+                  <th style="text-align: left;"> Details </th>
+                  <th style="text-align: left;"> Paid From </th>
+                  <th style="text-align: left;"> Paid To </th>
+                  <th style="text-align: left;"> Amount</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let data of addAccountingArray; let i = index;">
+                <tr>
+                  <td>
+                    <input class="form-control" placeholder="DD/MM/YYYY" name="date" (click)="startDate.toggle()"
+                      readonly style="background-color: #ffffff;" [(ngModel)]="data.date"
+                      (dateSelect)="onDateSelection(i)" [ngModelOptions]="{standalone: true}" ngbDatepicker
+                      #startDate="ngbDatepicker">
+                  </td>
+                  <td>
+                    <select class="form-select" [(ngModel)]="data.book" (change)="getByBook($event,i)"
+                      [ngModelOptions]="{standalone: true}">
+                      <option value="">Select</option>
+                      <option value="Oil Company">Oil Company</option>
+                      <option value="Bank">Bank</option>
+                      <option value="Cash">Cash</option>
+                      <option value="POS">POS</option>
+                      <option value="Expense">Expense</option>
+                    </select>
+                  </td>
+                  <td>
+                    <select *ngIf="data.isDefault" class="form-select" [(ngModel)]="data.transactionType"
+                      (change)="getByTransactionType($event,i)" [ngModelOptions]="{standalone: true}">
+                      <option value="">Select</option>
+                    </select>
+                    <select *ngIf="data.isOil" class="form-select" [(ngModel)]="data.transactionType"
+                      (change)="getByTransactionType($event,i)" [ngModelOptions]="{standalone: true}">
+                      <option value="">Select</option>
+                      <option value="Paid from Bank A/c">Paid from Bank A/c</option>
+                      <option value="Charges">Charges</option>
+                      <option value="Point Contribution">Point Contribution</option>
+                      <option value="Received payment">Received payment</option>
+                      <option value="Gave payment">Gave payment</option>
+                    </select>
+                    <select *ngIf="data.isBank" class="form-select" [(ngModel)]="data.transactionType"
+                      (change)="getByTransactionType($event,i)" [ngModelOptions]="{standalone: true}">
+                      <option value="">Select</option>
+                      <option value="A/c Transfer">A/c Transfer</option>
+                      <option value="Received payment">Received payment</option>
+                      <option value="Gave payment">Gave payment</option>
+                      <option value="Charges">Charges</option>
+                      <option value="Loan – Interest">Loan – Interest</option>
+                      <option value="Loan – Repayment">Loan – Repayment</option>
+                      <option value="Loan A/c To Bank A/c">Loan A/c To Bank A/c</option>
+                      <option value="Loan A/c To Oil Co A/c">Loan A/c To Oil Co A/c</option>
+                    </select>
+                    <select *ngIf="data.isCash" class="form-select" [(ngModel)]="data.transactionType"
+                      (change)="getByTransactionType($event,i)" [ngModelOptions]="{standalone: true}">
+                      <option value="">Select</option>
+                      <option value="Cash Deposit">Cash Deposit</option>
+                      <option value="Cash Withdrawal">Cash Withdrawal</option>
+                      <option value="Received payment">Received payment</option>
+                      <option value="Gave payment">Gave payment</option>
+                    </select>
+                    <select *ngIf="data.isPOS" class="form-select" [(ngModel)]="data.transactionType"
+                      (change)="getByTransactionType($event,i)" [ngModelOptions]="{standalone: true}">
+                      <option value="">Select</option>
+                      <option value="Gross Settlement">Gross Settlement</option>
+                      <option value="Net Settlement">Net Settlement</option>
+                      <option value="Charges">Charges</option>
+                    </select>
+                    <select *ngIf="data.isExpense" class="form-select" [(ngModel)]="data.transactionType"
+                      (change)="getByTransactionType($event,i)" [ngModelOptions]="{standalone: true}">
+                      <option value="">Select</option>
+                      <option value="Operation Charges">Operation Charges</option>
+                      <option value="Food">Food</option>
+                      <option value="Health">Health</option>
+                      <option value="Insurance">Insurance</option>
+                      <option value="Maintenance">Maintenance</option>
+                      <option value="Office">Office</option>
+                      <option value="Safety">Safety</option>
+                      <option value="Sales Promotions">Sales Promotions</option>
+                      <option value="Staff">Staff</option>
+                      <option value="Stamping">Stamping</option>
+                      <option value="Tanker">Tanker</option>
+                      <option value="Travel">Travel</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="data.details" placeholder="Enter Details"
+                      (input)="checkValidation(i)" [ngModelOptions]="{standalone: true}" ngbDatepicker>
+                  </td>
+                  <td>
+                    <select *ngIf="data.isDefaultFrom" class="form-select" [(ngModel)]="data.paidFrom"
+                      (change)="checkValidation(i)" [ngModelOptions]="{standalone: true}">
+                      <option value="">Select</option>
+                    </select>
+                    <select *ngIf="data.isOilAccFrom" class="form-select" [(ngModel)]="data.paidFrom"
+                      (change)="checkValidation(i)" [ngModelOptions]="{standalone: true}">
+                      <option value="21">Oil Company A/c</option>
+                    </select>
+                    <select *ngIf="data.isBankAccFrom" class="form-select" [(ngModel)]="data.paidFrom"
+                      (change)="checkValidation(i)" [ngModelOptions]="{standalone: true}">
+                      <option value="">Select</option>
+                      <option *ngFor="let data of bankSavingAccList" [value]="data.bankDetailsId">
+                        {{data.bankName}}-{{data.accountNumber}}
+                      </option>
+                    </select>
+                    <input *ngIf="data.isInputBoxFrom" class="form-control" [(ngModel)]="data.inputFrom"
+                      placeholder="Enter Details" (input)="checkValidation(i)" [ngModelOptions]="{standalone: true}"
+                      ngbDatepicker>
+                    <select *ngIf="data.isLoanAccFrom" class="form-select" [(ngModel)]="data.paidFrom"
+                      (change)="checkValidation(i)" [ngModelOptions]="{standalone: true}">
+                      <option value="">Select</option>
+                      <option *ngFor="let data of bankLoanAccList" [value]="data.bankDetailsId">
+                        {{data.bankName}}-{{data.accountNumber}}
+                      </option>
+                    </select>
+                    <select *ngIf="data.isCashAccFrom" class="form-select" [(ngModel)]="data.paidFrom"
+                      (change)="checkValidation(i)" [ngModelOptions]="{standalone: true}">
+                      <option value="20">Cash-In-Hand</option>
+                    </select>
+                    <select *ngIf="data.isPOSAccFrom" class="form-select" [(ngModel)]="data.posFrom"
+                      (change)="getBankAccByPOS($event,i)" [ngModelOptions]="{standalone: true}">
+                      <option value="">Select</option>
+                      <option *ngFor="let data of fuelTerminalDetails" [value]="data.fuelTerminalsId">
+                        {{data.terminalName}}
+                      </option>
+                    </select>
+                    <select *ngIf="data.isCashBankFrom" class="form-select" [(ngModel)]="data.paidFrom"
+                      (change)="checkValidation(i)" [ngModelOptions]="{standalone: true}">
+                      <option value="">Select</option>
+                      <option value="20">Cash-In-Hand</option>
+                      <option *ngFor="let data of bankSavingAccList" [value]="data.bankDetailsId">
+                        {{data.bankName}}-{{data.accountNumber}}
+                      </option>
+                    </select>
+                  </td>
+                  <td>
+                    <select *ngIf="data.isDefaultTo" class="form-select" [(ngModel)]="data.paidTo"
+                      (change)="checkValidation(i)" [ngModelOptions]="{standalone: true}">
+                      <option value="">Select</option>
+                    </select>
+                    <select *ngIf="data.isOilAccTo" class="form-select" [(ngModel)]="data.paidTo"
+                      (change)="checkValidation(i)" [ngModelOptions]="{standalone: true}">
+                      <option value="21">Oil Company A/c</option>
+                    </select>
+                    <select *ngIf="data.isBankAccTo" class="form-select" [(ngModel)]="data.paidTo"
+                      (change)="checkValidation(i)" [ngModelOptions]="{standalone: true}">
+                      <option value="">Select</option>
+                      <option *ngFor="let data of bankSavingAccList" [value]="data.bankDetailsId">
+                        {{data.bankName}}-{{data.accountNumber}}
+                      </option>
+                    </select>
+                    <input *ngIf="data.isInputBoxTo" class="form-control" [(ngModel)]="data.inputTo"
+                      placeholder="Enter Details" (input)="checkValidation(i)" [ngModelOptions]="{standalone: true}"
+                      ngbDatepicker>
+                    <select *ngIf="data.isLoanAccTo" class="form-select" [(ngModel)]="data.paidTo"
+                      (change)="checkValidation(i)" [ngModelOptions]="{standalone: true}">
+                      <option value="">Select</option>
+                      <option *ngFor="let data of bankLoanAccList" [value]="data.bankDetailsId">
+                        {{data.bankName}}-{{data.accountNumber}}
+                      </option>
+                    </select>
+                    <select *ngIf="data.isCashAccTo" class="form-select" [(ngModel)]="data.paidTo"
+                      (change)="checkValidation(i)" [ngModelOptions]="{standalone: true}">
+                      <option value="20">Cash-In-Hand</option>
+                    </select>
+                    <select *ngIf="data.isPOSAccTo" class="form-select" [(ngModel)]="data.paidTo"
+                      (change)="checkValidation(i)" disabled [ngModelOptions]="{standalone: true}">
+                      <option value="">Select</option>
+                      <option value="21">Oil Company A/c</option>
+                      <option *ngFor="let data of bankSavingAccList" [value]="data.bankDetailsId">
+                        {{data.bankName}}-{{data.accountNumber}}
+                      </option>
+                    </select>
+                    <select *ngIf="data.isCashBankTo" class="form-select" [(ngModel)]="data.paidTo"
+                      (change)="checkValidation(i)" [ngModelOptions]="{standalone: true}">
+                      <option value="">Select</option>
+                      <option value="20">Cash-In-Hand</option>
+                      <option *ngFor="let data of bankSavingAccList" [value]="data.bankDetailsId">
+                        {{data.bankName}}-{{data.accountNumber}}
+                      </option>
+                    </select>
+                    <select *ngIf="data.isExpenseAccTo" class="form-select" [(ngModel)]="data.paidTo"
+                      (change)="checkValidation(i)" [ngModelOptions]="{standalone: true}">
+                      <option value="36">Expense A/c</option>
+                    </select>
+                  </td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="data.amount" type="number" placeholder="Enter Payment"
+                      (input)="checkValidation(i)" [ngModelOptions]="{standalone: true}" ngbDatepicker>
+                  </td>
+                  <td>
+                    <span *ngIf="i != 0">
+                      &nbsp;
+                      <button *ngIf="data.isAddRow" type="submit" class="btn btn-success my-2 my-sm-0"
+                        (click)="addArrayRow(i)">
+                        Add
+                      </button>
+                      &nbsp;&nbsp;
+                      <button *ngIf="data.isRemoveRow" type="cancel" class="btn btn-primary"
+                        (click)="removeArrayRow(i)">Delete
+                      </button>
+                    </span>
+                    <span *ngIf="i == 0">
+                      &nbsp;
+                      <button *ngIf="data.isAddRow" type="submit" class="btn btn-success my-2 my-sm-0"
+                        (click)="addArrayRow(i)">
+                        Add
+                      </button>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <br><br>
+      <div class="row">
+        <div class="col-auto">
+          <button *ngIf="!isSubmit" type="submit" class="btn btn-primary" disabled>Submit</button>
+          <button *ngIf="isSubmit" type="submit" class="btn btn-primary" (click)="submitArray()">Submit</button>
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-secondary" (click)="clearAll()">Cancel</button>
+        </div>
+      </div>
+      <br><br><br><br><br><br><br><br><br><br>
+    </div>
+  </div>
+</div>

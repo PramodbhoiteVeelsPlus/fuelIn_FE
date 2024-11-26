@@ -79,8 +79,8 @@
             </span>
           </span>
         </div>
-        <div *ngIf="isViewSale" class="menu-item menu-accordion" routerLinkActive="active" routerLink="/credit/viewSales"
-          data-kt-menu-trigger="click">
+        <div *ngIf="isViewSale" class="menu-item menu-accordion" routerLinkActive="active"
+          routerLink="/credit/viewSales" data-kt-menu-trigger="click">
           <span class="menu-link">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
@@ -163,8 +163,8 @@
         <span class="menu-arrow"></span>
       </span>
       <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-        <div *ngIf="isAddShift" class="menu-item menu-accordion" routerLink="/shift/addShift" routerLinkActive="here show"
-          data-kt-menu-trigger="click">
+        <div *ngIf="isAddShift" class="menu-item menu-accordion" routerLink="/shift/addShift"
+          routerLinkActive="here show" data-kt-menu-trigger="click">
           <span class="menu-link">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
@@ -194,7 +194,7 @@
           </span>
         </div>
         <div *ngIf="isPosDetails" class="menu-item menu-accordion" routerLinkActive="here show"
-          data-kt-menu-trigger="click" routerLink="/shift/posDetails" >
+          data-kt-menu-trigger="click" routerLink="/shift/posDetails">
           <span class="menu-link">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
@@ -277,7 +277,7 @@
           </span>
           <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
             <div *ngIf="isStaffAddStaff" class="menu-item menu-accordion" routerLinkActive="here show"
-              data-kt-menu-trigger="click" routerLink="/shift/staff" >
+              data-kt-menu-trigger="click" routerLink="/shift/staff">
               <span class="menu-link">
                 <span class="menu-bullet">
                   <span class="bullet bullet-dot"></span>
@@ -362,13 +362,13 @@
         <span class="menu-icon">
           <app-keenicon name="profile-circle" class="fs-2"></app-keenicon>
         </span>
-        <span class="menu-title" data-link="/crafted/account">ACCOUNTING
+        <span class="menu-title">ACCOUNTING
         </span>
         <span class="menu-arrow"></span>
       </span>
       <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
         <div *ngIf="isAddAccounting" class="menu-item menu-accordion" routerLinkActive="here show"
-          data-kt-menu-trigger="click">
+          routerLink="/accounting/addAccounting" data-kt-menu-trigger="click">
           <span class="menu-link">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
@@ -378,7 +378,7 @@
           </span>
         </div>
         <div *ngIf="isViewAccounting" class="menu-item menu-accordion" routerLinkActive="here show"
-          data-kt-menu-trigger="click">
+          routerLink="/accounting/viewAccounting" data-kt-menu-trigger="click">
           <span class="menu-link">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
@@ -388,7 +388,7 @@
           </span>
         </div>
         <div *ngIf="isAccBookLedger" class="menu-item menu-accordion" routerLinkActive="here show"
-          data-kt-menu-trigger="click">
+          routerLink="/accounting/book" data-kt-menu-trigger="click">
           <span class="menu-link">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
@@ -398,7 +398,7 @@
           </span>
         </div>
         <div *ngIf="isAddBank" class="menu-item menu-accordion" routerLinkActive="here show"
-          data-kt-menu-trigger="click">
+          routerLink="/accounting/addBank" data-kt-menu-trigger="click">
           <span class="menu-link">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
@@ -408,7 +408,7 @@
           </span>
         </div>
         <div *ngIf="isViewBank" class="menu-item menu-accordion" routerLinkActive="here show"
-          data-kt-menu-trigger="click">
+          routerLink="/accounting/viewBank" data-kt-menu-trigger="click">
           <span class="menu-link">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
@@ -417,7 +417,8 @@
             </span>
           </span>
         </div>
-        <div *ngIf="isPos" class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click">
+        <div *ngIf="isPos" class="menu-item menu-accordion" routerLinkActive="here show" routerLink="/accounting/pos"
+          data-kt-menu-trigger="click">
           <span class="menu-link">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
