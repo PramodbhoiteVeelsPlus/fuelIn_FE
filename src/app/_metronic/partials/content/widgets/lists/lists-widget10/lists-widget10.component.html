@@ -1,0 +1,253 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="row mb-2" *ngIf="!isAddSalary">
+          <div class="col-sm-12">
+            <div class="text-sm-end">
+              <button type="button" class="btn btn-success btn-rounded mb-2 me-2 mt-4" (click)="isAddSal()">
+                Add Salary </button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="row">
+            <div class="col-md-2"> </div>
+            <div class="col-md-2">
+              <b> Month: </b>
+              <select class="form-select" [(ngModel)]="month" [ngModelOptions]="{standalone: true}">
+                <option value="">Select</option>
+                <option value="01">Jan</option>
+                <option value="02">Feb</option>
+                <option value="03">Mar</option>
+                <option value="04">Apr</option>
+                <option value="05">May</option>
+                <option value="06">Jun</option>
+                <option value="07">Jul</option>
+                <option value="08">Aug</option>
+                <option value="09">Sep</option>
+                <option value="10">Oct</option>
+                <option value="11">Nov</option>
+                <option value="12">Dec</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <b>Year:</b>
+              <select class="form-select" [(ngModel)]="year" [ngModelOptions]="{standalone: true}">
+                <option value="">Select</option>
+                <option value={{currentYear}}>{{currentYear}}</option>
+                <option value={{lastYear}}>{{lastYear}}</option>
+                <option value={{last2Years}}>{{last2Years}}</option>
+              </select>
+            </div>
+            <div class="col-md-2" style="padding: 19px;">
+              <button type="button" class="btn btn-primary" (click)="getDetailsForSalary(fuelDealerId)">
+                Get </button>
+            </div>
+          </div>
+          <div class="row" *ngIf="isAddSalary">
+            <div class="col col-xl-12 col-lg-12">
+              <div class="card-body table-responsive mb-0">
+                <h5>Add Staff Salary</h5>
+                <table class="table table-centered table-nowrap">
+                  <thead class="table-light">
+                    <tr>
+                      <th style="text-align: center;"> Salary Date </th>
+                      <th style="text-align: center;"> Staff Name </th>
+                      <th style="text-align: center;"> Mobile Number </th>
+                      <th style="text-align: center;"> Role </th>
+                      <th style="text-align: center;"> Salary </th>
+                      <th style="text-align: center;"> Deduction Salary </th>
+                      <th style="text-align: center;"> Final Salary </th>
+                      <th style="text-align: center;"> Salary Details </th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let data of addStaffSalaryArray; let i = index;">
+                    <tr>
+                      <td style="text-align: center;">
+                        <input class="form-control" placeholder="DD-MM-YYYY" style="background-color: #ffffff;"
+                          [(ngModel)]="data.staffSalaryDate" type="date" [ngModelOptions]="{standalone: true}">
+                      </td>
+                      <td style="text-align: center;"> {{data.staffName}} </td>
+                      <td style="text-align: center;"> {{data.mobileNumber}} </td>
+                      <td style="text-align: center;"> {{data.role}} </td>
+                      <td style="text-align: center;">
+                        <input class="form-control" type="number" placeholder="Enter Amount"
+                          [(ngModel)]="data.staffSalaryTotalAmt" [ngModelOptions]="{standalone: true}"
+                          (input)="calculateSalary($event, i)">
+                      </td>
+                      <td style="text-align: center;">
+                        <input class="form-control" type="number" placeholder="Enter Amount"
+                          [(ngModel)]="data.staffSalaryDeductionAmt" [ngModelOptions]="{standalone: true}"
+                          (input)="calculateSalary1($event, i)">
+                      </td>
+                      <td style="text-align: center;">
+                        <input class="form-control" type="number" placeholder="Enter Amount"
+                          [(ngModel)]="data.staffSalaryPaidAmt" [ngModelOptions]="{standalone: true}">
+                      </td>
+                      <td style="text-align: center;">
+                        <input class="form-control" type="text" placeholder="Enter Details"
+                          [(ngModel)]="data.staffSalaryDetails" [ngModelOptions]="{standalone: true}">
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-auto">
+                <button class="btn btn-success" (click)="submitStaffSalary()">Submit</button>
+              </div>&nbsp;
+              <div class="col-auto">
+                <button class="btn btn-danger" (click)="clearAll()">Cancel</button>
+              </div>
+            </div>
+          </div>
+          <br><br>
+          <br>
+
+
+          <div class="row">
+            <div class="col col-xl-12 col-lg-12">
+              <div class="card-body table-responsive mb-0">
+                <table class="table table-centered table-nowrap">
+                  <thead class="table-light">
+                    <tr>
+                      <th style="text-align: left;"> Salary Date </th>
+                      <th style="text-align: left;"> Staff Name </th>
+                      <th style="text-align: left;"> Mobile Number </th>
+                      <th style="text-align: left;"> Role </th>
+                      <th style="text-align: left;"> Final Salary </th>
+                      <th style="text-align: left;"> Salary Details </th>
+                      <th style="text-align: left;"> Action </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    *ngFor="let data of staffSalaryData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }">
+                    <tr>
+                      <td> {{data.staffSalaryDate | date: "d MMM y"}} </td>
+                      <td> {{data.firstName}} {{data.lastName}} </td>
+                      <td> {{data.phone1}} </td>
+                      <td> {{data.designation}} </td>
+                      <td> {{data.staffSalaryPaidAmt}} </td>
+                      <td> {{data.staffSalaryDetails}} </td>
+                      <td style="text-align: left;cursor: pointer;">
+                        <div ngbDropdown placement="bottom-left">
+                          <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                            aria-expanded="true"></i>
+                          <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                            <a class="dropdown-item" href="javascript: void(0);"
+                              (click)="editStaffsalary(editStaffSal, data.staffSalaryId, data.firstName, data.lastName, data.phone1, data.designation, data.staffSalaryDate, data.staffSalaryTotalAmt, data.staffSalaryDeductionAmt, data.staffSalaryPaidAmt, data.staffSalaryDetails)">
+                              <i class="fas fa-edit" style="color: green;"></i>
+                              &nbsp; Edit</a>
+                            <a class="dropdown-item" href="javascript: void(0);"
+                              (click)="deleteStaffSalary(data.staffSalaryId)">
+                              <i class="fas fa-trash" style="color: red;"></i> &nbsp; Delete</a>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="text-md-right float-md-end pagination-rounded">
+
+                  <!-- begin::Pagination -->
+                  <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                    style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                  </pagination-controls>
+                  <!-- end::Pagination -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <br><br>
+          <br>
+        </div>
+        <ng-template #editStaffSal let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="modal-title">Update Staff Salary</h4>
+            <button type="button" class="close btn-danger" aria-label="Close" (click)="d('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <label class="col-md-3"><b>Staff Name:</b></label>
+              <div class="col-md-6">
+                <input class="form-control" readonly [(ngModel)]="updatedStaffName"
+                  [ngModelOptions]="{standalone: true}">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <label class="col-md-3"><b>Mobile Number:</b></label>
+              <div class="col-md-6">
+                <input class="form-control" readonly [(ngModel)]="updatedMobileNumber"
+                  [ngModelOptions]="{standalone: true}">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <label class="col-md-3"><b>Role:</b></label>
+              <div class="col-md-6">
+                <input class="form-control" readonly [(ngModel)]="updatedRole" [ngModelOptions]="{standalone: true}">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <label class="col-md-3"><b>Date:</b></label>
+              <div class="col-md-6">
+                <input class="form-control" placeholder="DD/MM/YYYY" name="date" (click)="startDate.toggle()"
+                  [(ngModel)]="updatedSalaryDate" [ngModelOptions]="{standalone: true}" ngbDatepicker
+                  #startDate="ngbDatepicker">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <label class="col-md-3"><b>Total Salary:</b></label>
+              <div class="col-md-6">
+                <input class="form-control" [(ngModel)]="updatedSalaryTotalAmt" [ngModelOptions]="{standalone: true}"
+                  placeholder="Enter Amount" (input)="calculateSal($event)">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <label class="col-md-3"><b>Deduction Salary:</b></label>
+              <div class="col-md-6">
+                <input class="form-control" [(ngModel)]="updatedSalaryDeductionAmt"
+                  [ngModelOptions]="{standalone: true}" placeholder="Enter Amount"
+                  (input)="calculateSal1($event)">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <label class="col-md-3"><b>Final Salary:</b></label>
+              <div class="col-md-6">
+                <input class="form-control" [(ngModel)]="updatedSalaryFinalAmt" [ngModelOptions]="{standalone: true}"
+                  placeholder="Enter Amount">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <label class="col-md-3"><b>Salary Details:</b></label>
+              <div class="col-md-6">
+                <input class="form-control" [(ngModel)]="updatedSalaryDetails" [ngModelOptions]="{standalone: true}"
+                  placeholder="Enter Details">
+              </div>
+            </div>
+            <br><br>
+            <br>
+            <div class="row justify-content-center">
+              <div class="col-auto">
+                <button class="btn btn-success" (click)="updateStaffSalary(staffSalaryId)">Update</button>
+              </div>&nbsp;
+              <div class="col-auto">
+                <button class="btn btn-danger" (click)="clearUpdateModel()">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

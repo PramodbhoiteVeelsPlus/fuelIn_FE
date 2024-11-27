@@ -1,130 +1,143 @@
-<!-- begin::Header -->
-<div class="card-header align-items-center border-0 mt-4">
-  <h3 class="card-title align-items-start flex-column">
-    <span class="fw-bolder text-gray-900">Latest Media</span>
-    <span class="text-muted mt-1 fw-bold fs-7">Articles and publications</span>
-  </h3>
-  <div class="card-toolbar">
-    <!-- begin::Menu -->
-    <button
-      type="button"
-      class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
-      data-kt-menu-trigger="click"
-      data-kt-menu-placement="bottom-end"
-      data-kt-menu-flip="top-end"
-    >
-      <app-keenicon name="category" class="fs-2"></app-keenicon>
-    </button>
-    <app-dropdown-menu1></app-dropdown-menu1>
-    <!-- end::Menu -->
+<div *ngIf="accessGroup !='19'" class="container-fluid">
+  <div class="row">
+    <div class="card">
+      <div class="row">
+
+        <div class="col col-xl-12 col-lg-12">
+          <div class="card-body table-responsive">
+            <table class="table table-hover b">
+              <thead class="table-light">
+                <tr>
+                  <th style="text-align: left;">Sr No</th>
+                  <th style="text-align: left;">Date</th>
+                  <th style="text-align: left;">Shift </th>
+                  <th style="text-align: left;">Operator Name</th>
+                  <th style="text-align: left;">Start Time</th>
+                  <th style="text-align: left;">End Time</th>
+                  <th style="text-align: left;">Status</th>
+                  <th style="text-align: left;">Action</th>
+                </tr>
+              </thead>
+
+              <tbody
+                *ngFor="let data of allShift | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+
+                <tr>
+                  <td style="text-align: left;"> {{i+1}} </td>
+                  <td style="text-align: left;">
+                    <span *ngIf="data.openDate == '2022-01-01' ">
+                      1 Jan, 2022
+                    </span>
+                    <span *ngIf="data.openDate != '2022-01-01' ">
+                      {{data.openDate | date:"d MMM, yyyy"}}
+                    </span>
+                  </td>
+                  <td style="text-align: left;"> {{ data.fuelShiftTimeDetails }} {{data.fuelShiftTimeShiftName}} </td>
+                  <td style="text-align: left;"> {{data.firstName}} {{data.lastName}}</td>
+                  <td style="text-align: left;"> {{data.openTime}} </td>
+                  <td style="text-align: left;"> {{data.closeTime}} </td>
+                  <td style="text-align: left;">
+                    <span *ngIf="data.performStatus == 'OPEN'">
+                      <b style="color: red;"> {{data.performStatus}} </b>
+                    </span>
+                    <span *ngIf="data.performStatus == 'CLOSED'">
+                      <b style="color: green;"> {{data.performStatus}} </b>
+                    </span>
+
+                  </td>
+                  <td style="text-align: left;">
+                    <div ngbDropdown placement="bottom-left">
+                      <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                        aria-expanded="true"></i>
+                      <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+
+                        <a class="dropdown-item" href="javascript: void(0);" (click)="routeShift(data.openDate)">
+                          <i class="fas fa-edit" style="color: #4e9b4e;"></i> &nbsp;Edit</a>
+                        <a class="dropdown-item" href="javascript: void(0);"
+                          (click)="askForPass(PasswordTemplate,data.idfuelShiftDetails)">
+                          <i style="color:red" class="fa fa-ban"></i> &nbsp; Remove</a>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+            <div class="text-md-right float-md-end pagination-rounded">
+              <!-- begin::Pagination -->
+              <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+              </pagination-controls>
+              <!-- end::Pagination -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #PasswordTemplate let-c="close" let-d="dismiss">
+
+        <div class="modal-header">
+          <h4 class="modal-title">
+            <label>
+              <h4><strong>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  Please Enter Password
+
+                </strong></h4>
+            </label>
+          </h4>
+          <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <input class="form-control" type="password" placeholder="password" [(ngModel)]="password"
+                [ngModelOptions]="{standalone: true}">
+
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-outline-success my-2 my-sm-0"
+              (click)="comparePasswordForDelete(deleteShift)">YES</button>
+          </div>
+          <div class="col-auto">
+            <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">No</button>
+          </div>
+          <br>
+        </div>
+      </ng-template>
+
+
+      <ng-template #deleteShift let-c="close" let-d="dismiss">
+        <div class="modal-header">
+          <h4 class="modal-title">
+            <strong>
+              Do you want to Delete </strong>
+          </h4>
+        </div>
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-2">
+              <button type="submit" class="btn btn-outline-success my-2 my-sm-0"
+                (click)="deleteShiftById()">Yes</button>
+            </div>&nbsp;&nbsp;
+            <div class="col-md-2">
+              <button type="submit" class="btn btn-danger" (click)="closeModal()">No</button>
+            </div>
+          </div>
+
+        </div>
+      </ng-template>
+    </div>
   </div>
 </div>
-<!-- end::Header -->
-<!-- begin::Body -->
-<div class="card-body pt-3">
-  <!-- begin::Item -->
-  <div class="d-flex align-items-sm-center mb-7">
-    <!-- begin::Symbol -->
-    <div class="symbol symbol-60px symbol-2by3 me-4">
-      <div
-        class="symbol-label"
-        [style.background-image]="
-          'url(./assets/media/stock/600x400/img-20.jpg)'
-        "
-      ></div>
-    </div>
-    <!-- end::Symbol -->
-    <!-- begin::Title -->
-    <div class="d-flex flex-row-fluid flex-wrap align-items-center">
-      <div class="flex-grow-1 me-2">
-        <a href="#" class="text-gray-800 fw-bolder text-hover-primary fs-6">
-          Cup &amp; Green
-        </a>
-        <span class="text-muted fw-bold d-block pt-1">Size: 87KB</span>
-      </div>
-      <span class="badge badge-light-success fs-8 fw-bolder my-2"
-        >Approved</span
-      >
-    </div>
-    <!-- end::Title -->
-  </div>
-  <!-- end::Item -->
-  <!-- begin::Item -->
-  <div class="d-flex align-items-sm-center mb-7">
-    <!-- begin::Symbol -->
-    <div class="symbol symbol-60px symbol-2by3 me-4">
-      <div
-        class="symbol-label"
-        [style.background-image]="
-          'url(./assets/media/stock/600x400/img-19.jpg)'
-        "
-      ></div>
-    </div>
-    <!-- end::Symbol -->
-    <!-- begin::Title -->
-    <div class="d-flex flex-row-fluid flex-wrap align-items-center">
-      <div class="flex-grow-1 me-2">
-        <a href="#" class="text-gray-800 fw-bolder text-hover-primary fs-6">
-          Yellow Background
-        </a>
-        <span class="text-muted fw-bold d-block pt-1">Size: 1.2MB</span>
-      </div>
-      <span class="badge badge-light-warning fs-8 fw-bolder my-2"
-        >In Progress</span
-      >
-    </div>
-    <!-- end::Title -->
-  </div>
-  <!-- end::Item -->
-  <!-- begin::Item -->
-  <div class="d-flex align-items-sm-center mb-7">
-    <!-- begin::Symbol -->
-    <div class="symbol symbol-60px symbol-2by3 me-4">
-      <div
-        class="symbol-label"
-        [style.background-image]="
-          'url(./assets/media/stock/600x400/img-25.jpg)'
-        "
-      ></div>
-    </div>
-    <!-- end::Symbol -->
-    <!-- begin::Title -->
-    <div class="d-flex flex-row-fluid flex-wrap align-items-center">
-      <div class="flex-grow-1 me-2">
-        <a href="#" class="text-gray-800 fw-bolder text-hover-primary fs-6">
-          Nike &amp; Blue
-        </a>
-        <span class="text-muted fw-bold d-block pt-1">Size: 87KB</span>
-      </div>
-      <span class="badge badge-light-success fs-8 fw-bolder my-2">Success</span>
-    </div>
-    <!-- end::Title -->
-  </div>
-  <!-- end::Item -->
-  <!-- begin::Item -->
-  <div class="d-flex align-items-sm-center">
-    <!-- begin::Symbol -->
-    <div class="symbol symbol-60px symbol-2by3 me-4">
-      <div
-        class="symbol-label"
-        [style.background-image]="
-          'url(./assets/media/stock/600x400/img-24.jpg)'
-        "
-      ></div>
-    </div>
-    <!-- end::Symbol -->
-    <!-- begin::Title -->
-    <div class="d-flex flex-row-fluid flex-wrap align-items-center">
-      <div class="flex-grow-1 me-2">
-        <a href="#" class="text-gray-800 fw-bolder text-hover-primary fs-6">
-          Red Boots
-        </a>
-        <span class="text-muted fw-bold d-block pt-1">Size: 345KB</span>
-      </div>
-      <span class="badge badge-light-danger fs-8 fw-bolder my-2">Rejected</span>
-    </div>
-    <!-- end::Title -->
-  </div>
-  <!-- end::Item -->
-</div>
-<!-- end::Body -->

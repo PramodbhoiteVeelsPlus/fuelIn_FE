@@ -1,0 +1,253 @@
+<div class="container-fluid" *ngIf="dealerAccess">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="row mb-2">
+          <div class="col-sm-12">
+            <div class="text-sm-end">
+              <button type="button" class="btn btn-success btn-rounded mb-2 me-2 mt-4"
+                (click)="openAddAttendance(addAtt)">
+                Add Attendance </button>
+            </div>
+          </div>
+        </div>
+        <form [formGroup]="filterForm">
+          <div class="row">
+            <div class="col-md-1"></div>
+            <label class="col-auto col-form-label">Date Range :</label>
+            <div class="col-md-2">
+              <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+                name="startDate" ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker
+                #startDate="ngbDatepicker" formControlName="startDate">
+            </div>
+            <div class="col-md-2">
+              <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+                name="endDate" ngbTooltip="End Date" (click)="endDate.toggle()" ngbDatepicker #endDate="ngbDatepicker"
+                formControlName="endDate">
+            </div>
+            <div class="col-auto">
+              <button class="btn btn-primary" type="button" (click)="view()">
+                View </button>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+          </div>
+        </form>
+        <div>
+          <div class="row">
+            <div class="col col-xl-12 col-lg-12">
+              <div class="card-body table-responsive mb-0">
+                <table class="table table-centered table-nowrap">
+                  <thead class="table-light">
+                    <tr>
+                      <th style="text-align: left;"> Date </th>
+                      <th style="text-align: left;"> Staff Name </th>
+                      <th style="text-align: left;"> Mobile Number </th>
+                      <th style="text-align: left;"> Role </th>
+                      <th style="text-align: left;"> Attendance </th>
+                      <th style="text-align: left;"> Action </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    *ngFor="let data of attendanceData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }">
+                    <tr>
+                      <td> {{data.attendanceDate | date: "d MMM y" }} </td>
+                      <td> {{data.firstName}} {{data.lastName}} </td>
+                      <td> {{data.phone1}} </td>
+                      <td> {{data.designation}} </td>
+                      <td><span *ngIf="data.attendanceStatus == 'P'" style="color: green;"> {{data.attendanceStatus}}
+                        </span>
+                        <span *ngIf="data.attendanceStatus == 'A'" style="color: red;"> {{data.attendanceStatus}}
+                        </span>
+                      </td>
+                      <td style="text-align: left;cursor: pointer;">
+                        <div ngbDropdown placement="bottom-left">
+                          <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                            aria-expanded="true"></i>
+                          <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                            <a class="dropdown-item" href="javascript: void(0);"
+                              (click)="editAttendance(editAtt, data.attendanceId, data.firstName, data.lastName, data.phone1, data.designation, data.attendanceStatus, data.attendanceDate, data.attendanceUpdatedReason)">
+                              <i class="fas fa-edit" style="color: green;"></i>
+                              &nbsp; Edit</a>
+                            <a class="dropdown-item" href="javascript: void(0);"
+                              (click)="deleteAttendance(data.attendanceId)">
+                              <i class="fas fa-trash" style="color: red;"></i> &nbsp; Delete</a>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+                <div class="text-md-right float-md-end pagination-rounded">
+
+                  <!-- begin::Pagination -->
+                  <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                    style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                  </pagination-controls>
+                  <!-- end::Pagination -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <br><br>
+          <br>
+        </div>
+
+        <ng-template #addAtt let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="modal-title">Add Attendance</h4>
+            <button type="button" class="close btn-danger" aria-label="Close" (click)="d('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <label class="col-auto"><b>Date:</b></label>
+              <div class="col-auto">
+                <input class="form-control" placeholder="DD/MM/YYYY" name="date" (click)="startDate.toggle()"
+                  [(ngModel)]="selectedDate" [ngModelOptions]="{standalone: true}" ngbDatepicker
+                  #startDate="ngbDatepicker">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col col-xl-12 col-lg-12">
+                <div class="table-responsive mb-0">
+                  <table class="table table-centered table-nowrap">
+                    <thead class="table-light">
+                      <tr>
+                        <th style="text-align: center;"> Staff Name </th>
+                        <th style="text-align: center;"> Mobile Number </th>
+                        <th style="text-align: center;"> Role </th>
+                        <th style="text-align: center;"> Action </th>
+                      </tr>
+                    </thead>
+                    <tbody *ngFor="let data of addAttendanceArray; let i = index;">
+                      <tr>
+                        <td style="text-align: center;"> {{data.staffName}} </td>
+                        <td style="text-align: center;"> {{data.mobilenumber}} </td>
+                        <td style="text-align: center;"> {{data.role}} </td>
+                        <td style="text-align: center;" *ngIf="!data.isSelected">
+                          <button class="btn btn-success" style="margin-right: 15px; background-color: #9fe0c8;"
+                            (click)="isP(i)"> P </button>
+                          <button class="btn btn-danger" (click)="isA(i)" style="background-color: #edaaaa;"> A
+                          </button>
+                        </td>
+                        <td style="text-align: center;" *ngIf="data.isSelected">
+                          <span *ngIf="data.isPresent">
+                            <button class="btn btn-success" style="margin-right: 15px;" (click)="isP(i)"> P </button>
+                            <button class="btn btn-danger" style="background-color: #edaaaa;" (click)="isA(i)"> A
+                            </button>
+                          </span>
+
+                          <span *ngIf="data.isAbsent">
+                            <button class="btn btn-success" style="margin-right: 15px; background-color: #9fe0c8;"
+                              (click)="isP(i)"> P </button>
+                            <button class="btn btn-danger" (click)="isA(i)"> A </button>
+                          </span>
+
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <br><br>
+            <br>
+            <div class="row justify-content-center">
+              <div class="col-auto">
+                <button class="btn btn-success" (click)="submitAttendance()">Submit</button>
+              </div>&nbsp;
+              <div class="col-auto">
+                <button class="btn btn-danger" (click)="clearModal()">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template #editAtt let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="modal-title">Update Attendance</h4>
+            <button type="button" class="close btn-danger" aria-label="Close" (click)="d('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <label class="col-md-3"><b>Staff Name:</b></label>
+              <div class="col-md-6">
+                <input class="form-control" [(ngModel)]="updateStaffName" [ngModelOptions]="{standalone: true}"
+                  readonly>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <label class="col-md-3"><b>Mobile Number:</b></label>
+              <div class="col-md-6">
+                <input class="form-control" [(ngModel)]="updateMobileNumber" [ngModelOptions]="{standalone: true}"
+                  readonly>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <label class="col-md-3"><b>Role:</b></label>
+              <div class="col-md-6">
+                <input class="form-control" [(ngModel)]="updateRole" [ngModelOptions]="{standalone: true}" readonly>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <label class="col-md-3"><b>Date:</b></label>
+              <div class="col-md-6">
+                <input class="form-control" placeholder="DD/MM/YYYY" name="date" (click)="startDate.toggle()"
+                  [(ngModel)]="updateAttendanceDate" [ngModelOptions]="{standalone: true}" ngbDatepicker
+                  #startDate="ngbDatepicker">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <label class="col-md-3"><b>Reason:</b></label>
+              <div class="col-md-6">
+                <input class="form-control" [(ngModel)]="updateReason" [ngModelOptions]="{standalone: true}"
+                  placeholder="Enter Reason">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <label class="col-md-3"><b>Attendance</b></label>
+              <div class="col-auto">
+                <span *ngIf="isAttendance">
+                  <button class="btn btn-success" style="margin-right: 15px; background-color: #9fe0c8;"
+                    (click)="isUpdateP()"> P </button>
+                  <button class="btn btn-danger" (click)="isUpdateA()" style="background-color: #edaaaa;"> A </button>
+                </span>
+                <span *ngIf="isUpdatePresent">
+                  <button class="btn btn-success" style="margin-right: 15px;" (click)="isUpdateP()"> P </button>
+                  <button class="btn btn-danger" style="background-color: #edaaaa;" (click)="isUpdateA()"> A </button>
+                </span>
+
+                <span *ngIf="isAbsent">
+                  <button class="btn btn-success" style="margin-right: 15px; background-color: #9fe0c8;"
+                    (click)="isUpdateP()"> P </button>
+                  <button class="btn btn-danger" (click)="isUpdateA()"> A </button>
+                </span>
+              </div>
+            </div>
+            <br><br>
+            <br>
+            <div class="row justify-content-center">
+              <div class="col-auto">
+                <button class="btn btn-success" (click)="updateAttendance(attendanceId)">Update</button>
+              </div>&nbsp;
+              <div class="col-auto">
+                <button class="btn btn-danger" (click)="clearUpdateModal()">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+
+      </div>
+    </div>
+  </div>
+</div>

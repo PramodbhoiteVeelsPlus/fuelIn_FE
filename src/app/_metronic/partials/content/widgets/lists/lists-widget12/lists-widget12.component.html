@@ -1,0 +1,2021 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form [formGroup]="shiftForm">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <label for="example-text-input" class="col-auto col-form-label">Select Month</label>
+
+                            <div class="col-md-1">
+                                <select formControlName="month" class="form-control" required>
+                                    <option value="01"> Jan </option>
+                                    <option value="02"> Feb </option>
+                                    <option value="03"> Mar </option>
+                                    <option value="04"> Apr </option>
+                                    <option value="05"> May </option>
+                                    <option value="06"> Jun </option>
+                                    <option value="07"> Jul </option>
+                                    <option value="08"> Aug </option>
+                                    <option value="09"> Sep </option>
+                                    <option value="10"> Oct </option>
+                                    <option value="11"> Nov </option>
+                                    <option value="12"> Dec </option>
+                                </select>
+                            </div>
+
+
+                            <label for="example-text-input" class="col-auto col-form-label">Select Year</label>
+
+                            <div class="col-md-1">
+                                <select formControlName="year" class="form-control" required>
+                                    <option value={{currentYear}}> {{currentYear}} </option>
+                                    <option value={{lastYear}}> {{lastYear}} </option>
+                                    <option value={{lastThirdYear}}> {{lastThirdYear}} </option>
+                                    <option value={{lastFourthYear}}> {{lastFourthYear}} </option>
+                                    <option value={{lastFifthYear}}> {{lastFifthYear}} </option>
+                                    
+                                </select>
+                            </div>
+
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-primary" (click)="filter()">
+                                    view
+                                </button>
+                            </div>
+
+
+                        </div>
+
+                    </form>
+                    <hr>
+
+                    <!-- new tab view -->
+                    <div class="row">
+
+                        <div class="col-lg-12" style="text-align: center;align-items: center;">
+                            <div class="card">
+                                <div class="card-body">
+                                    <ul ngbNav #customNav="ngbNav" [activeId]="1"
+                                        class="nav-tabs nav-tabs-custom nav-justified" style="width: 50%;">
+                                        <li [ngbNavItem]="1">
+                                            <a ngbNavLink>
+                                                <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                                <span class="d-none d-sm-block" style="font-size: 13.5px;">AMOUNT</span>
+                                            </a>
+                                            <ng-template ngbNavContent>
+                                                <ng-template [ngTemplateOutlet]="amount"></ng-template>
+                                            </ng-template>
+                                        </li>
+
+                                        <li [ngbNavItem]="2">
+                                            <a ngbNavLink>
+                                                <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                                                <span class="d-none d-sm-block"
+                                                    style="font-size: 13.5px;">QUANTITY</span>
+                                            </a>
+                                            <ng-template ngbNavContent>
+                                                <ng-template [ngTemplateOutlet]="quantity"></ng-template>
+                                            </ng-template>
+                                        </li>
+
+
+                                    </ul>
+                                    <div [ngbNavOutlet]="customNav"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- new tab view end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <ng-template #amount><br>
+        <div class="row">
+            <div class="col-md-9"></div>
+        
+            <div class="col-md-1">
+                <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF" (click)="exportToPDF31()"><i
+                        class="fas fa-file-pdf"></i></span> <br>
+            </div>
+        
+            <div class="col-md-1">
+                <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download CSV" (click)="excelDownload31()"><i
+                        class="fas fa-file-csv"></i></span> <br>
+            </div>
+        
+        </div>
+
+    <div class="table-responsive mb-0">
+        <table class="table table-centered">
+            <thead class="table-light">
+                <tr>
+                    <th style="text-align: center;">date</th>
+                    <th style="text-align: center;">meter sales</th>
+                    <th style="text-align: center;">credit (a)</th>
+                    <th style="text-align: center;">digital (b)</th>
+                    <th style="text-align: center;">cash (c)</th>
+                    <th style="text-align: center;">expenses</th>
+                    <th style="text-align: center;">short</th>
+                    <th style="text-align: center;">total tally (a+b+c)</th>
+                    
+                    <th style="text-align: center;" colspan="2">view</th>
+
+                </tr>
+            </thead>
+
+            <tbody *ngIf="is31">    
+                <tr>
+                    <td style="text-align: center;"> {{date1 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales1 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit1 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital1 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash1 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense1 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short1 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally1 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally1" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date1)">  View Shift </td>
+                    <td *ngIf = "totalAmountTally1" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date1)">  View DSR </td> 
+                    <td *ngIf = "!totalAmountTally1" style="text-align: center;"  style="color:blue ; cursor: pointer;"  >  </td>
+                    <td *ngIf = "!totalAmountTally1" style="text-align: center;"  style="color:blue ; cursor: pointer;"  >  </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date2 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales2 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit2 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital2 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash2 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense2 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short2 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally2 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date2)">  View Shift </td>
+                    <td *ngIf = "totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date2)">  View DSR </td>  
+                    <td *ngIf = "!totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;" > </td>
+                    <td *ngIf = "!totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;" > </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date3 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales3 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit3 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital3 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash3 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense3 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short3 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally3 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally3" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date3)">  View Shift </td>
+                    <td *ngIf = "totalAmountTally3" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date3)">  View DSR </td> 
+                    <td *ngIf = "!totalAmountTally3" style="text-align: center;"  style="color:blue ; cursor: pointer;" >  </td>
+                    <td *ngIf = "!totalAmountTally3" style="text-align: center;"  style="color:blue ; cursor: pointer;" >  </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date4 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales4 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit4 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital4 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash4 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense4 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short4 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally4 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date4)">  View Shift </td>
+                    <td *ngIf = "totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date4)">  View DSR </td> 
+                    <td *ngIf = "!totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;"  >  </td>
+                    <td *ngIf = "!totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;"  >  </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date5 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales5 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit5 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital5 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash5 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense5 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short5 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally5 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally5" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date5)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally5" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date5)"> View DSR </td>    
+                    <td *ngIf = "!totalAmountTally5" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally5" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date6 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales6 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit6 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital6 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash6 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense6 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short6 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally6 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally6" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date6)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally6" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date6)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally6" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally6" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date7 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales7 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit7 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital7 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash7 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense7 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short7 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally7 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally7" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date7)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally7" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date7)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally7" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally7" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td> 
+                    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date8 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales8 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit8 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital8 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash8 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense8 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short8 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally8 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally8" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date8)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally8" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date8)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally8" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally8" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td> 
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date9 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales9 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit9 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital9 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash9 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense9 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short9 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally9 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally9" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date9)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally9" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date9)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally9" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally9" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date10 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales10 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit10 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital10 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash10 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense10 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short10 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally10 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally10" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date10)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally10" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date10)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally10" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally10" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date11 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales11 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit11 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital11 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash11 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense11 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short11 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally11 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally11" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date11)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally11" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date11)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally11" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally11" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date12 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales12 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit12 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital12 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash12 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense12 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short12 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally12 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally12" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date12)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally12" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date12)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally12" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally12" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date13 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales13 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit13 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital13 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash13 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense13 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short13 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally13 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally13" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date13)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally13" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date13)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally13" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally13" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date14 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales14 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit14 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital14 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash14 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense14 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short14 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally14 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally14" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date14)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally14" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date14)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally14" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally14" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date15 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales15 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit15 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital15 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash15 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense15 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short15 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally15 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally15" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date15)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally15" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date15)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally15" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally15" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date16 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales16 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit16 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital16 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash16 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense16 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short16 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally16 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally16" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date16)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally16" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date16)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally16" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally16" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date17 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales17 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit17 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital17 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash17 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense17 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short17 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally17 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally17" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date17)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally17" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date17)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally17" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally17" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date18 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales18 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit18 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital18 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash18 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense18 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short18 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally18 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally18" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date18)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally18" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date18)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally18" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally18" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date19 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales19 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit19 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital19 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash19 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense19 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short19 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally19 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally19" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date19)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally19" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date19)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally19" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally19" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date20 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales20 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit20 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital20 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash20 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense20 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short20 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally20 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally20" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date20)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally20" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date20)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally20" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally20" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date21 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales21 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit21 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital21 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash21 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense21 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short21 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally21 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally21" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date21)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally21" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date21)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally21" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally21" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date22 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales22 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit22 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital22 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash22 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense22 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short22 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally22 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally22" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date22)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally22" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date22)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally22" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally22" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date23 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales23 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit23 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital23 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash23 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense23 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short23 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally23 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally23" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date23)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally23" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date23)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally23" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally23" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date24 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales24 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit24 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital24 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash24 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense24 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short24 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally24 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally24" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date24)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally24" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date24)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally24" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally24" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date25 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales25 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit25 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital25 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash25 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense25 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short25 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally25 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally25" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date25)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally25" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date25)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally25" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally25" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date26 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales26 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit26 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital26 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash26 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense26 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short26 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally26 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally26" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date26)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally26" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date26)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally26" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally26" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date27 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales27 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit27 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital27 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash27 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense27 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short27 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally27 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally27" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date27)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally27" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date27)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally27" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally27" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date28 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales28 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit28 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital28 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash28 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense28 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short28 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally28 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally28" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date28)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally28" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date28)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally28" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally28" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr> 
+        
+                <tr>
+                    <td style="text-align: center;"> {{date29 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales29 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit29 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital29 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash29 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense29 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short29 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally29 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally29" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date29)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally29" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date29)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally29" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally29" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>  
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date30 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales30 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit30 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital30 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash30 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense30 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short30 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally30 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally30" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date30)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally30" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date30)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally30" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally30" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr> 
+            
+                <tr>
+                    <td style="text-align: center;"> {{date31 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales31 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit31 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital31 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash31 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense31 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short31 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally31 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally31" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date31)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally31" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date31)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally31" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally31" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                
+
+            </tbody>
+
+            <tbody *ngIf="is30">    
+                
+                <tr>
+                    <td style="text-align: center;"> {{date1 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales1 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit1 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital1 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash1 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense1 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short1 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally1 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally1" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date1)">  View Shift </td>
+                    <td *ngIf = "totalAmountTally1" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date1)">  View DSR </td> 
+                    <td *ngIf = "!totalAmountTally1" style="text-align: center;"  style="color:blue ; cursor: pointer;"  >  </td>
+                    <td *ngIf = "!totalAmountTally1" style="text-align: center;"  style="color:blue ; cursor: pointer;"  >  </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date2 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales2 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit2 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital2 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash2 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense2 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short2 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally2 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date2)">  View Shift </td>
+                    <td *ngIf = "totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date2)">  View DSR </td>  
+                    <td *ngIf = "!totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;" > </td>
+                    <td *ngIf = "!totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;" > </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date3 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales3 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit3 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital3 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash3 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense3 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short3 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally3 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally3" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date3)">  View Shift </td>
+                    <td *ngIf = "totalAmountTally3" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date3)">  View DSR </td> 
+                    <td *ngIf = "!totalAmountTally3" style="text-align: center;"  style="color:blue ; cursor: pointer;" >  </td>
+                    <td *ngIf = "!totalAmountTally3" style="text-align: center;"  style="color:blue ; cursor: pointer;" >  </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date4 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales4 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit4 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital4 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash4 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense4 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short4 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally4 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date4)">  View Shift </td>
+                    <td *ngIf = "totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date4)">  View DSR </td> 
+                    <td *ngIf = "!totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;"  >  </td>
+                    <td *ngIf = "!totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;"  >  </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date5 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales5 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit5 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital5 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash5 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense5 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short5 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally5 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally5" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date5)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally5" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date5)"> View DSR </td>    
+                    <td *ngIf = "!totalAmountTally5" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally5" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date6 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales6 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit6 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital6 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash6 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense6 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short6 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally6 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally6" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date6)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally6" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date6)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally6" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally6" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date7 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales7 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit7 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital7 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash7 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense7 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short7 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally7 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally7" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date7)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally7" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date7)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally7" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally7" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td> 
+                    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date8 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales8 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit8 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital8 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash8 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense8 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short8 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally8 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally8" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date8)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally8" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date8)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally8" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally8" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td> 
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date9 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales9 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit9 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital9 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash9 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense9 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short9 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally9 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally9" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date9)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally9" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date9)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally9" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally9" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date10 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales10 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit10 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital10 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash10 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense10 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short10 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally10 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally10" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date10)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally10" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date10)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally10" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally10" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date11 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales11 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit11 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital11 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash11 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense11 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short11 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally11 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally11" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date11)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally11" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date11)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally11" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally11" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date12 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales12 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit12 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital12 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash12 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense12 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short12 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally12 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally12" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date12)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally12" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date12)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally12" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally12" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date13 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales13 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit13 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital13 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash13 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense13 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short13 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally13 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally13" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date13)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally13" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date13)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally13" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally13" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date14 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales14 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit14 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital14 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash14 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense14 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short14 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally14 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally14" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date14)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally14" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date14)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally14" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally14" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date15 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales15 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit15 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital15 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash15 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense15 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short15 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally15 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally15" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date15)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally15" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date15)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally15" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally15" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date16 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales16 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit16 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital16 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash16 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense16 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short16 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally16 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally16" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date16)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally16" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date16)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally16" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally16" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date17 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales17 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit17 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital17 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash17 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense17 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short17 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally17 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally17" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date17)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally17" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date17)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally17" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally17" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date18 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales18 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit18 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital18 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash18 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense18 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short18 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally18 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally18" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date18)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally18" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date18)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally18" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally18" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date19 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales19 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit19 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital19 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash19 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense19 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short19 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally19 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally19" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date19)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally19" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date19)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally19" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally19" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date20 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales20 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit20 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital20 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash20 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense20 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short20 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally20 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally20" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date20)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally20" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date20)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally20" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally20" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date21 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales21 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit21 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital21 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash21 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense21 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short21 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally21 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally21" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date21)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally21" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date21)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally21" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally21" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date22 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales22 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit22 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital22 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash22 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense22 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short22 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally22 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally22" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date22)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally22" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date22)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally22" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally22" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date23 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales23 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit23 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital23 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash23 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense23 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short23 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally23 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally23" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date23)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally23" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date23)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally23" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally23" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date24 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales24 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit24 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital24 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash24 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense24 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short24 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally24 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally24" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date24)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally24" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date24)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally24" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally24" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date25 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales25 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit25 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital25 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash25 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense25 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short25 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally25 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally25" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date25)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally25" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date25)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally25" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally25" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date26 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales26 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit26 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital26 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash26 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense26 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short26 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally26 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally26" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date26)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally26" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date26)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally26" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally26" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date27 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales27 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit27 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital27 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash27 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense27 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short27 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally27 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally27" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date27)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally27" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date27)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally27" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally27" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date28 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales28 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit28 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital28 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash28 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense28 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short28 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally28 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally28" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date28)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally28" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date28)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally28" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally28" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr> 
+        
+                <tr>
+                    <td style="text-align: center;"> {{date29 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales29 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit29 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital29 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash29 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense29 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short29 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally29 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally29" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date29)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally29" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date29)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally29" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally29" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>  
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date30 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales30 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit30 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital30 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash30 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense30 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short30 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally30 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally30" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date30)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally30" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date30)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally30" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally30" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+            
+
+            </tbody>
+
+            <tbody *ngIf="isLeap">    
+                
+                <tr>
+                    <td style="text-align: center;"> {{date1 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales1 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit1 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital1 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash1 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense1 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short1 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally1 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally1" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date1)">  View Shift </td>
+                    <td *ngIf = "totalAmountTally1" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date1)">  View DSR </td> 
+                    <td *ngIf = "!totalAmountTally1" style="text-align: center;"  style="color:blue ; cursor: pointer;"  >  </td>
+                    <td *ngIf = "!totalAmountTally1" style="text-align: center;"  style="color:blue ; cursor: pointer;"  >  </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date2 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales2 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit2 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital2 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash2 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense2 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short2 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally2 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date2)">  View Shift </td>
+                    <td *ngIf = "totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date2)">  View DSR </td>  
+                    <td *ngIf = "!totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;" > </td>
+                    <td *ngIf = "!totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;" > </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date3 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales3 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit3 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital3 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash3 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense3 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short3 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally3 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally3" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date3)">  View Shift </td>
+                    <td *ngIf = "totalAmountTally3" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date3)">  View DSR </td> 
+                    <td *ngIf = "!totalAmountTally3" style="text-align: center;"  style="color:blue ; cursor: pointer;" >  </td>
+                    <td *ngIf = "!totalAmountTally3" style="text-align: center;"  style="color:blue ; cursor: pointer;" >  </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date4 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales4 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit4 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital4 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash4 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense4 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short4 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally4 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date4)">  View Shift </td>
+                    <td *ngIf = "totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date4)">  View DSR </td> 
+                    <td *ngIf = "!totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;"  >  </td>
+                    <td *ngIf = "!totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;"  >  </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date5 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales5 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit5 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital5 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash5 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense5 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short5 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally5 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally5" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date5)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally5" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date5)"> View DSR </td>    
+                    <td *ngIf = "!totalAmountTally5" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally5" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date6 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales6 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit6 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital6 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash6 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense6 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short6 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally6 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally6" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date6)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally6" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date6)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally6" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally6" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date7 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales7 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit7 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital7 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash7 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense7 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short7 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally7 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally7" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date7)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally7" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date7)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally7" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally7" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td> 
+                    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date8 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales8 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit8 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital8 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash8 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense8 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short8 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally8 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally8" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date8)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally8" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date8)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally8" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally8" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td> 
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date9 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales9 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit9 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital9 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash9 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense9 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short9 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally9 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally9" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date9)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally9" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date9)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally9" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally9" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date10 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales10 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit10 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital10 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash10 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense10 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short10 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally10 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally10" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date10)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally10" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date10)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally10" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally10" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date11 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales11 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit11 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital11 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash11 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense11 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short11 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally11 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally11" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date11)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally11" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date11)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally11" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally11" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date12 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales12 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit12 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital12 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash12 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense12 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short12 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally12 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally12" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date12)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally12" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date12)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally12" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally12" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date13 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales13 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit13 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital13 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash13 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense13 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short13 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally13 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally13" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date13)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally13" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date13)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally13" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally13" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date14 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales14 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit14 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital14 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash14 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense14 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short14 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally14 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally14" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date14)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally14" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date14)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally14" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally14" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date15 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales15 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit15 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital15 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash15 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense15 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short15 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally15 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally15" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date15)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally15" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date15)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally15" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally15" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date16 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales16 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit16 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital16 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash16 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense16 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short16 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally16 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally16" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date16)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally16" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date16)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally16" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally16" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date17 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales17 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit17 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital17 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash17 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense17 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short17 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally17 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally17" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date17)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally17" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date17)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally17" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally17" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date18 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales18 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit18 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital18 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash18 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense18 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short18 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally18 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally18" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date18)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally18" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date18)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally18" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally18" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date19 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales19 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit19 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital19 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash19 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense19 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short19 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally19 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally19" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date19)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally19" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date19)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally19" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally19" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date20 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales20 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit20 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital20 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash20 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense20 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short20 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally20 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally20" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date20)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally20" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date20)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally20" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally20" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date21 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales21 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit21 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital21 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash21 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense21 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short21 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally21 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally21" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date21)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally21" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date21)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally21" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally21" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date22 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales22 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit22 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital22 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash22 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense22 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short22 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally22 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally22" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date22)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally22" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date22)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally22" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally22" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date23 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales23 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit23 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital23 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash23 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense23 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short23 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally23 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally23" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date23)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally23" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date23)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally23" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally23" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date24 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales24 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit24 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital24 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash24 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense24 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short24 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally24 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally24" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date24)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally24" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date24)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally24" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally24" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date25 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales25 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit25 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital25 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash25 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense25 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short25 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally25 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally25" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date25)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally25" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date25)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally25" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally25" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date26 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales26 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit26 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital26 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash26 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense26 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short26 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally26 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally26" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date26)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally26" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date26)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally26" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally26" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date27 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales27 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit27 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital27 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash27 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense27 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short27 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally27 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally27" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date27)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally27" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date27)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally27" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally27" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date28 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales28 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit28 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital28 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash28 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense28 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short28 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally28 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally28" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date28)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally28" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date28)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally28" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally28" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr> 
+        
+                <tr>
+                    <td style="text-align: center;"> {{date29 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales29 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit29 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital29 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash29 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense29 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short29 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally29 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally29" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date29)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally29" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date29)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally29" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally29" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+            
+
+            </tbody>
+
+            <tbody *ngIf="isFeb">    
+                <tr>
+                    <td style="text-align: center;"> {{date1 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales1 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit1 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital1 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash1 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense1 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short1 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally1 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally1" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date1)">  View Shift </td>
+                    <td *ngIf = "totalAmountTally1" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date1)">  View DSR </td> 
+                    <td *ngIf = "!totalAmountTally1" style="text-align: center;"  style="color:blue ; cursor: pointer;"  >  </td>
+                    <td *ngIf = "!totalAmountTally1" style="text-align: center;"  style="color:blue ; cursor: pointer;"  >  </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date2 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales2 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit2 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital2 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash2 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense2 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short2 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally2 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date2)">  View Shift </td>
+                    <td *ngIf = "totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date2)">  View DSR </td>  
+                    <td *ngIf = "!totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;" > </td>
+                    <td *ngIf = "!totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;" > </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date3 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales3 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit3 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital3 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash3 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense3 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short3 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally3 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally3" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date3)">  View Shift </td>
+                    <td *ngIf = "totalAmountTally3" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date3)">  View DSR </td> 
+                    <td *ngIf = "!totalAmountTally3" style="text-align: center;"  style="color:blue ; cursor: pointer;" >  </td>
+                    <td *ngIf = "!totalAmountTally3" style="text-align: center;"  style="color:blue ; cursor: pointer;" >  </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date4 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales4 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit4 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital4 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash4 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense4 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short4 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally4 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date4)">  View Shift </td>
+                    <td *ngIf = "totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date4)">  View DSR </td> 
+                    <td *ngIf = "!totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;"  >  </td>
+                    <td *ngIf = "!totalAmountTally2" style="text-align: center;"  style="color:blue ; cursor: pointer;"  >  </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date5 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales5 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit5 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital5 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash5 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense5 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short5 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally5 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally5" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date5)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally5" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date5)"> View DSR </td>    
+                    <td *ngIf = "!totalAmountTally5" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally5" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date6 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales6 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit6 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital6 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash6 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense6 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short6 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally6 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally6" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date6)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally6" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date6)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally6" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally6" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date7 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales7 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit7 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital7 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash7 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense7 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short7 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally7 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally7" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date7)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally7" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date7)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally7" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally7" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td> 
+                    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date8 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales8 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit8 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital8 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash8 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense8 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short8 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally8 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally8" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date8)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally8" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date8)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally8" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally8" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td> 
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date9 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales9 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit9 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital9 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash9 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense9 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short9 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally9 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally9" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date9)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally9" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date9)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally9" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally9" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date10 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales10 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit10 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital10 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash10 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense10 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short10 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally10 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally10" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date10)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally10" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date10)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally10" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally10" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date11 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales11 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit11 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital11 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash11 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense11 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short11 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally11 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally11" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date11)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally11" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date11)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally11" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally11" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date12 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales12 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit12 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital12 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash12 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense12 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short12 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally12 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally12" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date12)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally12" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date12)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally12" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally12" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date13 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales13 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit13 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital13 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash13 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense13 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short13 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally13 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally13" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date13)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally13" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date13)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally13" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally13" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date14 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales14 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit14 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital14 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash14 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense14 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short14 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally14 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally14" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date14)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally14" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date14)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally14" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally14" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date15 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales15 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit15 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital15 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash15 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense15 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short15 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally15 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally15" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date15)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally15" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date15)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally15" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally15" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date16 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales16 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit16 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital16 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash16 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense16 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short16 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally16 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally16" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date16)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally16" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date16)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally16" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally16" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date17 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales17 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit17 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital17 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash17 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense17 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short17 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally17 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally17" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date17)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally17" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date17)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally17" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally17" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date18 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales18 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit18 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital18 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash18 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense18 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short18 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally18 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally18" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date18)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally18" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date18)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally18" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally18" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date19 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales19 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit19 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital19 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash19 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense19 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short19 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally19 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally19" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date19)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally19" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date19)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally19" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally19" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date20 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales20 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit20 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital20 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash20 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense20 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short20 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally20 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally20" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date20)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally20" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date20)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally20" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally20" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>    
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date21 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales21 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit21 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital21 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash21 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense21 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short21 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally21 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally21" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date21)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally21" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date21)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally21" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally21" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date22 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales22 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit22 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital22 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash22 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense22 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short22 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally22 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally22" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date22)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally22" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date22)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally22" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally22" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date23 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales23 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit23 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital23 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash23 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense23 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short23 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally23 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally23" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date23)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally23" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date23)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally23" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally23" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date24 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales24 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit24 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital24 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash24 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense24 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short24 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally24 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally24" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date24)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally24" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date24)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally24" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally24" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date25 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales25 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit25 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital25 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash25 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense25 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short25 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally25 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally25" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date25)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally25" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date25)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally25" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally25" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date26 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales26 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit26 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital26 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash26 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense26 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short26 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally26 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally26" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date26)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally26" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date26)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally26" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally26" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date27 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales27 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit27 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital27 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash27 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense27 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short27 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally27 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally27" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date27)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally27" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date27)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally27" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally27" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> {{date28 | date:"d MMM, yyyy"}} </td>
+                    <td style="text-align: center;"> {{meterSales28 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{credit28 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{digital28 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{cash28 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{expense28 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{short28 | number:'1.2-2'}} </td>
+                    <td style="text-align: center;"> {{totalAmountTally28 | number:'1.2-2'}} </td>
+
+                    <td *ngIf = "totalAmountTally28" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToShift(date28)"> View Shift </td>
+                    <td *ngIf = "totalAmountTally28" style="text-align: center;"  style="color:blue ; cursor: pointer;" (click) = "goToDSR(date28)"> View DSR </td> 
+                    <td *ngIf = "!totalAmountTally28" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>
+                    <td *ngIf = "!totalAmountTally28" style="text-align: center;"  style="color:blue ; cursor: pointer;" >   </td>     
+                </tr>
+            
+
+            </tbody>
+
+
+        </table>           
+    
+    </div>
+    
+     </ng-template>
+
+
+
+
+
+     <ng-template #quantity><br>
+        <br>
+        <form [formGroup]="shiftForm">
+        <div class="row">
+        <label for="example-text-input" class="col-auto col-form-label">Select Product</label>
+
+        <div class="col-md-2">
+            <select class="form-control" 
+                formControlName="productName" (change)="getByProduct($event)"  required>
+                <option value="">Select Product </option>
+                <option *ngFor="let data of productsList" [value]="data.fuelProductsId">
+                    {{data.productName}}
+                </option> 
+            </select>
+        </div>
+        <div class="col-md-5"></div>            
+
+        
+        <div class="col-md-1">
+            <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF" (click)="exportToPDF1()"  ><i class="fas fa-file-pdf"></i></span> <br>
+        </div>            
+        <div class="col-md-1">
+            <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download CSV"  (click)="exportexcel1()"><i class="fas fa-file-csv"></i></span> <br>
+        </div>            
+
+
+
+        </div>
+        </form>
+        <div class="card-body table-responsive">
+
+            <div class="table-responsive mb-0">
+                <table class="table table-centered" id="excel-table">
+                    <thead class="table-light">
+               
+                    <tr>
+                        <th style="text-align: center;"> date </th> 
+                        <th style="text-align: center;"> product </th>
+                        <th style="text-align: center;"> credit (quantity) 
+                            <br> Ltr/kg
+                        </th>
+                        <th style="text-align: center;"> meter sales (quantity) 
+                                                        <br> Ltr/kg
+                        </th>
+                        <th style="text-align: center;"> meter sales (amount) 
+                                                        <br> Rs
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody >
+
+                    <tr *ngFor="let data of quantityDetails | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">    
+                        <td style="text-align: center;"> {{ data.openDate | date:"d MMM, yyyy"}}  </td>   
+                        <td style="text-align: center;"> {{ data.productName }} </td>
+                        <td style="text-align: center;"> {{ data.creditQuantity | number:'1.2-2'}} </td>
+                        <td style="text-align: center;"> {{ data.meterSaleQuantity | number:'1.2-2'}} </td>
+                        <td style="text-align: center;"> {{ data.meterSaleAmount | number:'1.2-2'}} </td>
+                                                                         
+                    </tr>
+
+                </tbody>
+            </table>
+            </div>
+    <div class="text-md-right float-md-end pagination-rounded">
+        <!-- begin::Pagination -->
+        <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+        style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+      </pagination-controls>
+      <!-- end::Pagination -->
+            </div>
+
+        </div>
+
+    </ng-template>

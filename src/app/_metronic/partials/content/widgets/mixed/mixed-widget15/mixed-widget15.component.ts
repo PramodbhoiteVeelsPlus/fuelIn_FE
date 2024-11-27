@@ -116,6 +116,7 @@ export class MixedWidget15Component implements OnInit {
     this.getAllAttendantsByDid(this.fuelDealerId)
     this.getShiftDetails(this.fuelDealerId)
     this.getPosTerminals(this.fuelDealerId)
+    this.getPosDetails(this.fuelDealerId)
     this.cd.detectChanges()
   }
 

@@ -1,0 +1,214 @@
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]="shiftForm">
+            <div class="row">
+              <label for="example-text-input" class="col-auto col-form-label">Select Shift</label>
+              <div class="col-md-3">
+                <select class="form-control" formControlName="shiftTimeId" required>
+                  <option value=""> Select Shift </option>
+                  <option value="1"> STANDARD </option>
+                  <option *ngFor="let data of fuelShiftTimeDetails" [value]="data.fuelShiftTimeId">
+                    {{data.fuelShiftTimeShiftName}} {{data.fuelShiftTimeDetails}}
+                  </option>
+                </select>
+              </div>
+              <label for="example-text-input" class="col-auto col-form-label">Date</label>
+
+              <div class="col-auto">
+                <input class="form-control" placeholder="DD-MM-YYYY" name="endDate" readonly
+                  style="background-color: #ffffff;" (click)="endDate.toggle()" formControlName="endDate" ngbDatepicker
+                  #endDate="ngbDatepicker">
+              </div>
+
+              <div class="col-auto">
+                <button type="button" class="btn btn-primary" (click)="getShiftWiseBookDetailsBYShift()">
+                  Submit
+                </button>
+              </div>
+            </div>
+          </form>
+          <hr>
+
+          <!-- new tab view -->
+          <div class="row">
+            <div class="col-lg-12" style="text-align: center;align-items: center;">
+              <div class="card">
+                <div class="card-body">
+                  <ul ngbNav #customNav="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified"
+                    style="width: 50%;">
+                    <li [ngbNavItem]="1">
+                      <a ngbNavLink>
+                        <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                        <span class="d-none d-sm-block" style="font-size: 13.5px;">AMOUNT</span>
+                      </a>
+                      <ng-template ngbNavContent>
+                        <ng-template [ngTemplateOutlet]="amount"></ng-template>
+                      </ng-template>
+                    </li>
+
+                    <li [ngbNavItem]="2">
+                      <a ngbNavLink>
+                        <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                        <span class="d-none d-sm-block" style="font-size: 13.5px;">QUANTITY</span>
+                      </a>
+                      <ng-template ngbNavContent>
+                        <ng-template [ngTemplateOutlet]="quantity"></ng-template>
+                      </ng-template>
+                    </li>
+
+                  </ul>
+                  <div [ngbNavOutlet]="customNav"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- new tab view end -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #amount><br>
+  <div class="row">
+    <div class="col-md-10"></div>
+
+    <div class="col-md-1">
+      <span style="font-size: 35px;cursor: pointer;" (click)="exportToPDF()" ngbTooltip="Download PDF"
+        placement="bottom"><i class="fas fa-file-pdf"></i></span><br>
+    </div>
+
+    <div class="col-md-1">
+      <span style="font-size: 35px;cursor: pointer;" (click)="exportexcel()" ngbTooltip="Download CSV"
+        placement="bottom"><i class="fas fa-file-csv"></i></span><br>
+    </div>
+
+
+  </div>
+  <div class="table-responsive mb-0">
+
+    <table class="table table-centered table-nowrap" id="excel-table">
+      <thead class="table-light">
+        <tr>
+          <th style="text-align: left;"> Shift </th>
+          <th style="text-align: left;"> Meter Sales </th>
+          <th style="text-align: left;"> Credit (a) </th>
+          <th style="text-align: left;"> Digital (b) </th>
+          <th style="text-align: left;"> Cash (c) </th>
+          <th style="text-align: left;"> Expenses </th>
+          <th style="text-align: left;"> Short </th>
+          <th style="text-align: left;"> Shift Tally (a+b+c) </th>
+          <th style="text-align: left;"> View </th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr
+          *ngFor="let data of shiftWiseData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+          <td style="text-align: left;"> {{ data.shiftTime }} </td>
+          <td style="text-align: left;"> {{ data.meterSaleAmount | number:'1.2-2'}} </td>
+          <td style="text-align: left;"> {{ data.credit | number:'1.2-2'}} </td>
+          <td style="text-align: left;"> {{ data.digital | number:'1.2-2'}} </td>
+          <td style="text-align: left;"> {{ data.cash | number:'1.2-2'}} </td>
+          <td style="text-align: left;"> {{ data.expenses | number:'1.2-2'}} </td>
+          <td style="text-align: left;"> {{ data.short | number:'1.2-2'}} </td>
+          <td style="text-align: left;"> {{ data.shiftTally | number:'1.2-2'}} </td>
+          <!-- <td style="text-align: left;" style="color:blue ; cursor: pointer;" (click)="goToDSR(data.shiftTimeId)"> View -->
+          <!-- </td> -->
+        </tr>
+
+      </tbody>
+    </table>
+    <div class="text-md-right float-md-end pagination-rounded">
+      <!-- begin::Pagination -->
+      <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+      style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+    </pagination-controls>
+    <!-- end::Pagination -->
+    </div>
+
+  </div>
+
+</ng-template>
+
+
+<ng-template #quantity><br>
+  <br>
+  <!-- <form [formGroup]="shiftForm">
+    <div class="row">
+      <label for="example-text-input" class="col-auto col-form-label">Select Product</label>
+
+      <div class="col-md-2">
+        <select class="form-control" formControlName="productName" (change)="getByProduct($event)" required>
+          <option value="">Select Product </option>
+          <option *ngFor="let data of productsList" [value]="data.fuelProductsId">
+            {{data.productName}}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-5"></div>
+
+      <div class="col-md-1">
+        <span style="font-size: 35px;cursor: pointer;" (click)="exportToPDF1()" ngbTooltip="Download PDF"
+          placement="bottom"><i class="fas fa-file-pdf"></i></span><br>
+      </div>
+
+      <div class="col-md-1">
+        <span style="font-size: 35px;cursor: pointer;" (click)="exportexcel1()" ngbTooltip="Download CSV"
+          placement="bottom"><i class="fas fa-file-csv"></i></span><br>
+      </div>
+
+    </div>
+  </form>
+  <div class="table-responsive mb-0">
+    <table class="table table-centered table-nowrap" id="excel-table">
+      <thead class="table-light">
+        <tr>
+          <th style="text-align: left;"> Date </th>
+          <th style="text-align: left;"> Shift </th>
+          <th style="text-align: left;"> Product </th>
+          <th style="text-align: left;"> Credit (Quantity)
+            Ltr/Kg
+          </th>
+          <th style="text-align: left;"> Meter Sales (Quantity)
+            Ltr/Kg
+          </th>
+          <th style="text-align: left;"> Meter Sales (Amount)
+            Rs
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr
+          *ngFor="let data of shiftWiseQuantityData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let i = index">
+          <td style="text-align: left;"> {{ data.openDate | date:"d MMM, yyyy"}} </td>
+          <td style="text-align: left;"> {{ data.fuelShiftTimeDetails }} {{data.fuelShiftTimeShiftName}} </td>
+          <td style="text-align: left;"> {{ data.productName }} </td>
+          <td style="text-align: left;"> {{ data.creditQuantity | number:'1.2-2'}} </td>
+          <td style="text-align: left;"> {{ data.meterSaleQuantity | number:'1.2-2'}} </td>
+          <td style="text-align: left;"> {{ data.meterSaleAmount | number:'1.2-2'}} </td>
+
+        </tr>
+
+      </tbody>
+    </table>
+
+    <div class="text-md-right float-md-end pagination-rounded">
+
+      <ngb-pagination [collectionSize]="shiftWiseQuantityData.length" [(page)]="page" [pageSize]="pageSize"
+        [maxSize]="5" [rotate]="true" [boundaryLinks]="true">
+      </ngb-pagination>
+    </div>
+
+  </div> -->
+
+</ng-template>

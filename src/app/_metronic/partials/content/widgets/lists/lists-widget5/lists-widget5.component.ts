@@ -534,7 +534,24 @@ export class ListsWidget5Component {
     this.city = this.dealerData.city
     this.phone1 = this.dealerData.hostPhone
     this.createdBy = element.firstName + ' ' + element.lastName
-    this.addShiftForm.controls['date'].setValue(moment(new Date()).format('DD-MM-YYYY'));
+    if(this.post.setRoute == "Book"){
+      this.addShiftForm.controls["date"].setValue(moment(this.post.setDate).format("DD-MM-YYYY"))   
+      this.requestTransporterLube.controls["estimatedRefuelDate"].setValue(moment(this.post.setDate).format("DD-MM-YYYY"));
+      this.requestTransporter.controls["estimatedRefuelDate"].setValue(moment(this.post.setDate).format("DD-MM-YYYY"));
+      this.requestTransporter.controls["priceDate"].setValue(moment(this.post.setDate).format("DD-MM-YYYY"));  
+      this.requestTransporter.controls["priceDate"].setValue(moment(this.post.setDate).format("DD-MM-YYYY"));  
+      this.cashBillLubricantForm.controls["priceDate"].setValue(moment(this.post.setDate).format("DD-MM-YYYY"));
+      this.digitalLubricantForm.controls["priceDate"].setValue(moment(this.post.setDate).format("DD-MM-YYYY"));
+    }else{  
+    this.addShiftForm.controls['date'].setValue(moment(new Date()).format('DD-MM-YYYY'));   
+    this.requestTransporter.controls["priceDate"].setValue(moment(new Date()).format('DD-MM-YYYY'));      
+    this.requestTransporterLube.controls["estimatedRefuelDate"].setValue(moment(new Date()).format('DD-MM-YYYY'));
+    this.requestTransporter.controls["estimatedRefuelDate"].setValue(moment(new Date()).format('DD-MM-YYYY'));
+    this.requestTransporter.controls["priceDate"].setValue(moment(new Date()).format("DD-MM-YYYY"));  
+    this.cashBillLubricantForm.controls["priceDate"].setValue(moment(new Date()).format("DD-MM-YYYY"));
+    this.digitalLubricantForm.controls["priceDate"].setValue(moment(new Date()).format("DD-MM-YYYY"));
+    }
+    this.getAllOngoingShift(this.fuelDealerId);
     this.getAllAttendantsByDid(this.fuelDealerId)
     this.getShiftDetails(this.fuelDealerId)
     this.getPumpNozzleByDealerId(this.fuelDealerId);
@@ -550,11 +567,11 @@ export class ListsWidget5Component {
     this.parentValue = moment(this.addShiftForm.value.date, ["DD-MM-YYYY"]).format("YYYY-MM-DD")
     this.selectedDate = moment(this.addShiftForm.value.date, ["DD-MM-YYYY"]).format("YYYY-MM-DD")
     console.log("parentValue", this.parentValue, this.selectedDate)
-    // this.requestTransporterLube.controls["estimatedRefuelDate"].setValue(this.addShiftForm.value.date);
-    // this.requestTransporter.controls["estimatedRefuelDate"].setValue(this.addShiftForm.value.date);
-    // this.requestTransporter.controls["priceDate"].setValue(this.addShiftForm.value.date);  
-    // this.cashBillLubricantForm.controls["priceDate"].setValue(this.addShiftForm.value.date); 
-    // this.digitalLubricantForm.controls["priceDate"].setValue(this.addShiftForm.value.date);  
+    this.requestTransporterLube.controls["estimatedRefuelDate"].setValue(this.addShiftForm.value.date);
+    this.requestTransporter.controls["estimatedRefuelDate"].setValue(this.addShiftForm.value.date);
+    this.requestTransporter.controls["priceDate"].setValue(this.addShiftForm.value.date);  
+    this.cashBillLubricantForm.controls["priceDate"].setValue(this.addShiftForm.value.date); 
+    this.digitalLubricantForm.controls["priceDate"].setValue(this.addShiftForm.value.date);  
 
     const data = {
       dealerId: this.fuelDealerId,

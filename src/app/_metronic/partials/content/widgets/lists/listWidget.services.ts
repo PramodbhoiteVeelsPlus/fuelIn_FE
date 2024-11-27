@@ -13,6 +13,7 @@ export class ListWidgetService {
     date: any;
     setDate: string;
     setRoute: string;
+    address: string;
 
     addCreditLubeReqByDealerForTaxPost(data: { lubeAllData: any; lubricantsFuelDealerCustomerMapId: any; reqQuantity: any; reqCreditAmount: any; estimatedRefuelDate: string; fuelDealerId: any; lubricantsFuelCorporateId: any; creditSource: string; PANno: any; lubricantsTransDateTime: string; lubricantsTransactionTime: string; creditAmount: any; transactionStatus: string; fuelDealerStaffId: any; actualCreditQuantity: any; createdAt: string; productRate: string | null | undefined; vehicleNumber: any; manualCrNumber: any; personId: any; managerVPPersonId: any; managerPersonId: any; managerName: any; }) {
         throw new Error('Method not implemented.');
@@ -105,7 +106,30 @@ export class ListWidgetService {
   private renewMappingStaffURL = this.baseURL + 'fuelStaff/renewMappingStaff'; 
   private updateMapStatusforStaffURL = this.baseURL + 'fuelStaff/updateMapStatusforStaff'; 
   private UpdateDealerStaffDetailsURL = this.baseURL + 'fuelStaff/UpdateDealerStaffDetails'; 
-  private switchedToStaffURL = this.baseURL + 'userAccess/switchedToStaff'
+  private switchedToStaffURL = this.baseURL + 'userAccess/switchedToStaff';
+  private transporterStaffRegisterURL = this.baseURL + 'fuelVendor/transporterStaffRegister';
+  private getStaffDetailsForTransporterURL = this.baseURL + 'fuelStaff/getStaffDetailsForTransporter';
+  private updateStafForTransporterURL = this.baseURL + 'fuelVendor/updateStafForTransporter';
+  private updateMappingStatusForTransporterURL = this.baseURL + 'fuelVendor/updateMappingStatusForTransporter';
+  private getAttendanceListURL = this.baseURL + 'attendance/getAttendanceList';
+  private getAttendanceURL = this.baseURL + 'attendance/getAttendance';
+  private deleteAttendanceURL = this.baseURL + 'attendance/deleteAttendance'; 
+  private getStaffDetailsDataURL = this.baseURL + 'attendance/getStaffDetails';
+  private addAttendanceURL = this.baseURL + 'attendance/addAttendance'; 
+  private updateAttendanceURL = this.baseURL + 'attendance/updateAttendance';
+  private getStaffDetailsForSalaryURL = this.baseURL + 'staffSalary/getStaffDetailsForSalary';
+  private getStaffSalaryURL = this.baseURL + 'staffSalary/getStaffSalary';
+  private addStaffSalaryURL = this.baseURL + 'staffSalary/addStaffSalary'; 
+  private deleteStaffSalaryURL = this.baseURL + 'staffSalary/deleteStaffSalary'; 
+  private updateStaffSalaryURL = this.baseURL + 'staffSalary/updateStaffSalary';
+  private getShiftWiseBookQuantityDetailsURL = this.baseURL + 'shiftBook/getShiftWiseBookQuantityDetails';
+  private getFuelProductIdByDealerIdURL = this.baseURL + 'fuelPrice/getFuelProductIdByDealerId';
+  private getDayWiseQuantityShiftBookURL = this.baseURL + 'shiftList/getDayWiseQuantityShiftBook'; 
+  private getDayWiseShiftBookURL = this.baseURL + 'shiftList/getDayWiseShiftBook';
+  private getDayWiseShiftBookMIDURL = this.baseURL + 'shiftList/getDayWiseShiftBookMID'; 
+  private getDayWiseShiftBookLASTURL = this.baseURL + 'shiftList/getDayWiseShiftBookLAST';
+  private getShiftTimeWiseBookDetailsURL = this.baseURL + 'shiftBook/getShiftTimeWiseBookDetails';
+  private getShiftTimeWiseBookQuantityDetailsURL = this.baseURL + 'shiftBook/getShiftTimeWiseBookQuantityDetails'; 
 
 
 
@@ -199,6 +223,12 @@ export class ListWidgetService {
     setNavigate(date: string, Book: string) {
         this.setDate = date;
         this.setRoute = Book
+    }
+    
+    setRoutingWithDate(date: any,address: string){
+    this.date = date;
+    this.address = address;
+    console.log("date", this.date, this.address)
     }
 
     // getCashBillURL
@@ -861,4 +891,233 @@ export class ListWidgetService {
         })
     }
 
+    // transporterStaffRegisterURL
+    transporterStaffRegisterPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.transporterStaffRegisterURL, body, {
+            headers: headers
+        })
+    }
+
+    // getStaffDetailsForTransporterURL
+    getStaffDetailsForTransporterPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getStaffDetailsForTransporterURL, body, {
+            headers: headers
+        })
+    }
+
+    // updateStafForTransporterURL
+    updateStafForTransporterPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateStafForTransporterURL, body, {
+            headers: headers
+        })
+    }
+
+    // updateMappingStatusForTransporterURL
+    updateMappingStatusForTransporterPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateMappingStatusForTransporterURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAttendanceListURL
+    getAttendanceListPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAttendanceListURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAttendanceURL
+    getAttendancePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAttendanceURL, body, {
+            headers: headers
+        })
+    }
+
+    // deleteAttendanceURL
+    deleteAttendancePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.deleteAttendanceURL, body, {
+            headers: headers
+        })
+    }
+
+    // getStaffDetailsDataURL
+    getStaffDetailsDataPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getStaffDetailsDataURL, body, {
+            headers: headers
+        })
+    }
+
+    // addAttendanceURL
+    addAttendancePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addAttendanceURL, body, {
+            headers: headers
+        })
+    }
+
+    // updateAttendanceURL
+    updateAttendancePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateAttendanceURL, body, {
+            headers: headers
+        })
+    }
+
+    // getStaffDetailsForSalaryURL
+    getStaffDetailsForSalaryPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getStaffDetailsForSalaryURL, body, {
+            headers: headers
+        })
+    }
+
+    // getStaffSalaryURL
+    getStaffSalaryPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getStaffSalaryURL, body, {
+            headers: headers
+        })
+    }
+
+    // addStaffSalaryURL
+    addStaffSalaryPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addStaffSalaryURL, body, {
+            headers: headers
+        })
+    }
+
+    // deleteStaffSalaryURL
+    deleteStaffSalaryPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.deleteStaffSalaryURL, body, {
+            headers: headers
+        })
+    }
+
+    // updateStaffSalaryURL
+    updateStaffSalaryPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateStaffSalaryURL, body, {
+            headers: headers
+        })
+    }
+
+    // getShiftWiseBookQuantityDetailsURL
+    getShiftWiseBookQuantityDetailsPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getShiftWiseBookQuantityDetailsURL, body, {
+            headers: headers
+        })
+    }
+
+    // getFuelProductIdByDealerIdURL
+    getFuelProductIdByDealerIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFuelProductIdByDealerIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getDayWiseQuantityShiftBookURL
+    getDayWiseQuantityShiftBookPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getDayWiseQuantityShiftBookURL, body, {
+            headers: headers
+        })
+    }
+
+    // getDayWiseShiftBookURL
+    getDayWiseShiftBookPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getDayWiseShiftBookURL, body, {
+            headers: headers
+        })
+    }
+
+    // getDayWiseShiftBookMIDURL
+    getDayWiseShiftBookMIDPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getDayWiseShiftBookMIDURL, body, {
+            headers: headers
+        })
+    }
+
+    // getDayWiseShiftBookLASTURL
+    getDayWiseShiftBookLASTPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getDayWiseShiftBookLASTURL, body, {
+            headers: headers
+        })
+    }
+
+    // getShiftTimeWiseBookDetailsURL
+    getShiftTimeWiseBookDetailsPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getShiftTimeWiseBookDetailsURL, body, {
+            headers: headers
+        })
+    }
+
+    // getShiftTimeWiseBookQuantityDetailsURL
+    getShiftTimeWiseBookQuantityDetailsPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getShiftTimeWiseBookQuantityDetailsURL, body, {
+            headers: headers
+        })
+    }
 }

@@ -1,182 +1,212 @@
-<!-- begin::Header -->
-<div class="card-header align-items-center border-0 mt-4">
-  <h3 class="card-title align-items-start flex-column">
-    <span class="fw-bolder text-gray-900">Latest Products</span>
-    <span class="text-muted mt-1 fw-bold fs-7">Gifts and more</span>
-  </h3>
-  <div class="card-toolbar">
-    <!-- begin::Menu -->
-    <button
-      type="button"
-      class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
-      data-kt-menu-trigger="click"
-      data-kt-menu-placement="bottom-end"
-      data-kt-menu-flip="top-end"
-    >
-      <app-keenicon name="category" class="fs-2"></app-keenicon>
-    </button>
-    <app-dropdown-menu1></app-dropdown-menu1>
-    <!-- end::Menu -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row mb-2">
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-8">
+              <div class="text-sm-end">
+                <button type="button" class="btn btn-success btn-rounded" (click)="addNewNameModal(AddShiftName)">
+                  Add Shift
+                </button>
+              </div>
+
+              <ng-template #AddShiftName let-c="close" let-d="dismiss">
+                <div class="modal-header">
+                  <h4 class="text-center">Add Shift </h4>
+                  <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form [formGroup]="shiftTimeForm">
+                    <div class="row">
+                      <div class="col-lg-4">
+                        <b>Shift Name</b>
+                      </div>
+                      <div class="col-lg-8">
+                        <input class="form-control" formControlName="shiftName"
+                          oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                          placeholder="entr shift name" />
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="col-lg-4">
+                        <b>Shift Time From</b>
+                      </div>
+                      <div class="col-lg-8">
+                        <div class="row">
+                          &nbsp;&nbsp;&nbsp;<input class="col-md-3 col-form-control" type="number" min="0" max="23"
+                            placeholder="hrs" [(ngModel)]="shiftTimeFromHrs" [ngModelOptions]="{standalone: true}"
+                            onkeypress="return this.value.length < 2;" style="width: 50;">&nbsp;&nbsp; : &nbsp;&nbsp;
+                          <input class="col-md-3 col-form-control" type="number" min="0" max="59" placeholder="min"
+                            [(ngModel)]="shiftTimeFromMin" [ngModelOptions]="{standalone: true}"
+                            onkeypress="return this.value.length < 2;" style="width: 50;">
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="col-lg-4">
+                        <b>Shift Time To</b>
+                      </div>
+                      <div class="col-lg-8">
+                        <div class="row">
+                          &nbsp;&nbsp;&nbsp;<input class="col-md-3 col-form-control" type="number" min="00" max="23"
+                            placeholder="hrs" [(ngModel)]="shiftTimeToHrs" [ngModelOptions]="{standalone: true}"
+                            onkeypress="return this.value.length < 2;" style="width: 50;">&nbsp;&nbsp; : &nbsp;&nbsp;
+                          <input class="col-md-3 col-form-control" type="number" min="00" max="59" placeholder="min"
+                            [(ngModel)]="shiftTimeToMin" [ngModelOptions]="{standalone: true}"
+                            onkeypress="return this.value.length < 2;" style="width: 50;">
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                    <br><br>
+                    <div class="row">
+                      <div class="col-lg-4"></div>
+                      <div class="col-auto">
+                        <button *ngIf="!isUpdate" type="submit" class="btn btn-success" (click)="submitShiftTime()">
+                          Submit</button>
+                        <button *ngIf="isUpdate" type="submit" class="btn btn-warning" (click)="updateShiftTime()">
+                          Update</button>
+                      </div>
+                      <div class="col-auto">
+                        <button type="button" class="btn btn-danger" aria-label="Close" (click)="cancel()">Cancel
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </ng-template>
+
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <br><br>
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="table-responsive mb-0">
+                    <table class="table table-centered table-nowrap">
+                      <thead class="table-light">
+                        <tr>
+                          <th style="text-align: left;">#</th>
+                          <th style="text-align: left;"> Shift Name </th>
+                          <th style="text-align: left;"> Start Time</th>
+                          <th style="text-align: left;"> End Time </th>
+                          <th style="text-align: left;"> Created At</th>
+                          <th style="text-align: left;"> Action </th>
+
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let data of fuelShiftTimeDetailsTime; let i = index;">
+                        <tr>
+                          <td style="text-align: left;"> {{i + 1}} </td>
+                          <td style="text-align: left;"> {{data.fuelShiftTimeShiftName}} </td>
+                          <td style="text-align: left;"> {{data.fuelShiftTimeFrom}} </td>
+                          <td style="text-align: left;"> {{data.fuelShiftTimeTo}} </td>
+                          <td style="text-align: left;"> {{data.fuelShiftTimeCreatedBy}} </td>
+                          <td style="text-align: left;">
+                            <div ngbDropdown placement="bottom-left">
+                              <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                                aria-expanded="true"></i>
+                              <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                                <a class="dropdown-item" href="javascript: void(0);"
+                                  (click)="getfuelShiftDetailById(data.fuelShiftTimeId,AddShiftName)">
+                                  <i class="fas fa-edit">
+                                  </i> &nbsp; Update</a>
+                                <a class="dropdown-item" href="javascript: void(0);"
+                                  (click)="deleteShiftTime(data.fuelShiftTimeId)">
+                                  <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <ng-template #AddShiftName let-c="close" let-d="dismiss">
+                <div class="modal-header">
+                  <h4 class="text-center">Add Shift </h4>
+                  <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form [formGroup]="shiftTimeForm">
+                    <div class="row">
+                      <div class="col-lg-4">
+                        <b>Shift Name</b>
+                      </div>
+                      <div class="col-lg-8">
+                        <input class="form-control" formControlName="shiftNameUpdate"
+                          oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                          placeholder="entr shift name" />
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="col-lg-4">
+                        <b>Shift Time From</b>
+                      </div>
+                      <div class="col-lg-8">
+                        <div class="row">
+                          &nbsp;&nbsp;&nbsp;<input class="col-md-3 col-form-control" type="number" min="0" max="23"
+                            placeholder="hrs" [(ngModel)]="shiftTimeFromHrs" [ngModelOptions]="{standalone: true}"
+                            onkeypress="return this.value.length < 2;" style="width: 50;">&nbsp;&nbsp; : &nbsp;&nbsp;
+                          <input class="col-md-3 col-form-control" type="number" min="0" max="59" placeholder="min"
+                            [(ngModel)]="shiftTimeFromMin" [ngModelOptions]="{standalone: true}"
+                            onkeypress="return this.value.length < 2;" style="width: 50;">
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="col-lg-4">
+                        <b>Shift Time To</b>
+                      </div>
+                      <div class="col-lg-8">
+                        <div class="row">
+                          &nbsp;&nbsp;&nbsp;<input class="col-md-3 col-form-control" type="number" min="00" max="23"
+                            placeholder="hrs" [(ngModel)]="shiftTimeToHrs" [ngModelOptions]="{standalone: true}"
+                            onkeypress="return this.value.length < 2;" style="width: 50;">&nbsp;&nbsp; : &nbsp;&nbsp;
+                          <input class="col-md-3 col-form-control" type="number" min="00" max="59" placeholder="min"
+                            [(ngModel)]="shiftTimeToMin" [ngModelOptions]="{standalone: true}"
+                            onkeypress="return this.value.length < 2;" style="width: 50;">
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                    <br><br>
+                    <div class="row">
+                      <div class="col-lg-4"></div>
+                      <div class="col-auto">
+                        <button *ngIf="!isUpdate" type="submit" class="btn btn-success" (click)="submitShiftTime()">
+                          Submit</button>
+                        <button *ngIf="isUpdate" type="submit" class="btn btn-warning" (click)="updateShiftTime()">
+                          Update</button>
+                      </div>
+                      <div class="col-auto">
+                        <button type="button" class="btn btn-danger" aria-label="Close" (click)="cancel()">Cancel
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </ng-template>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-<!-- end::Header -->
-<!-- begin::Body -->
-<div class="card-body pt-3">
-  <!-- begin::Item -->
-  <div class="d-flex align-items-sm-center mb-7">
-    <!-- begin::Symbol -->
-    <div class="symbol symbol-60px symbol-2by3 me-4">
-      <div
-        class="symbol-label"
-        [style.background-image]="
-          'url(./assets/media/stock/600x400/img-17.jpg)'
-        "
-      ></div>
-    </div>
-    <!-- end::Symbol -->
-    <!-- begin::Content -->
-    <div
-      class="d-flex flex-row-fluid align-items-center flex-wrap my-lg-0 me-2"
-    >
-      <!-- begin::Title -->
-      <div class="flex-grow-1 my-lg-0 my-2 me-2">
-        <a href="#" class="text-gray-800 fw-bolder text-hover-primary fs-6">
-          Cup &amp; Green
-        </a>
-        <span class="text-muted fw-bold d-block pt-1">Visually stunning</span>
-      </div>
-      <!-- end::Title -->
-      <!-- begin::Section -->
-      <div class="d-flex align-items-center">
-        <div class="me-6">
-          <i class="fa fa-star-half-alt me-1 text-warning fs-5"></i>
-          <span class="text-gray-800 fw-bolder">4.2</span>
-        </div>
-        <a href="#" class="btn btn-icon btn-light btn-sm border-0">
-          <app-keenicon name="arrow-right" class="fs-2 text-primary"></app-keenicon>
-        </a>
-      </div>
-      <!-- end::Section -->
-    </div>
-    <!-- end::Content -->
-  </div>
-  <!-- end::Item -->
-  <!-- begin::Item -->
-  <div class="d-flex align-items-sm-center mb-7">
-    <!-- begin::Symbol -->
-    <div class="symbol symbol-60px symbol-2by3 me-4">
-      <div
-        class="symbol-label"
-        [style.background-image]="
-          'url(./assets/media/stock/600x400/img-10.jpg)'
-        "
-      ></div>
-    </div>
-    <!-- end::Symbol -->
-    <!-- begin::Content -->
-    <div
-      class="d-flex flex-row-fluid align-items-center flex-wrap my-lg-0 me-2"
-    >
-      <!-- begin::Title -->
-      <div class="flex-grow-1 my-lg-0 my-2 me-2">
-        <a href="#" class="text-gray-800 fw-bolder text-hover-primary fs-6">
-          Pink Patterns
-        </a>
-        <span class="text-muted fw-bold d-block pt-1">Feminine all around</span>
-      </div>
-      <!-- end::Title -->
-      <!-- begin::Section -->
-      <div class="d-flex align-items-center">
-        <div class="me-6">
-          <i class="fa fa-star-half-alt me-1 text-warning fs-5"></i>
-          <span class="text-gray-800 fw-bolder">5.0</span>
-        </div>
-        <a href="#" class="btn btn-icon btn-light btn-sm border-0">
-          <app-keenicon name="arrow-right" class="fs-2 text-primary"></app-keenicon>
-        </a>
-      </div>
-      <!-- end::Section -->
-    </div>
-    <!-- end::Content -->
-  </div>
-  <!-- end::Item -->
-  <!-- begin::Item -->
-  <div class="d-flex align-items-sm-center mb-7">
-    <!-- begin::Symbol -->
-    <div class="symbol symbol-60px symbol-2by3 me-4">
-      <div
-        class="symbol-label"
-        [style.background-image]="'url(./assets/media/stock/600x400/img-1.jpg)'"
-      ></div>
-    </div>
-    <!-- end::Symbol -->
-    <!-- begin::Content -->
-    <div
-      class="d-flex flex-row-fluid align-items-center flex-wrap my-lg-0 me-2"
-    >
-      <!-- begin::Title -->
-      <div class="flex-grow-1 my-lg-0 my-2 me-2">
-        <a href="#" class="text-gray-800 fw-bolder text-hover-primary fs-6">
-          Abstract Art
-        </a>
-        <span class="text-muted fw-bold d-block pt-1"
-          >The will to capture readers</span
-        >
-      </div>
-      <!-- end::Title -->
-      <!-- begin::Section -->
-      <div class="d-flex align-items-center">
-        <div class="me-6">
-          <i class="fa fa-star-half-alt me-1 text-warning fs-5"></i>
-          <span class="text-gray-800 fw-bolder">5.7</span>
-        </div>
-        <a href="#" class="btn btn-icon btn-light btn-sm border-0">
-          <app-keenicon name="arrow-right" class="fs-2 text-primary"></app-keenicon>
-        </a>
-      </div>
-      <!-- end::Section -->
-    </div>
-    <!-- end::Content -->
-  </div>
-  <!-- end::Item -->
-  <!-- begin::Item -->
-  <div class="d-flex align-items-sm-center">
-    <!-- begin::Symbol -->
-    <div class="symbol symbol-60px symbol-2by3 me-4">
-      <div
-        class="symbol-label"
-        [style.background-image]="'url(./assets/media/stock/600x400/img-9.jpg)'"
-      ></div>
-    </div>
-    <!-- end::Symbol -->
-    <!-- begin::Content -->
-    <div
-      class="d-flex flex-row-fluid align-items-center flex-wrap my-lg-0 me-2"
-    >
-      <!-- begin::Title -->
-      <div class="flex-grow-1 my-lg-0 my-2 me-2">
-        <a href="#" class="text-gray-800 fw-bolder text-hover-primary fs-6">
-          Desserts platter
-        </a>
-        <span class="text-muted fw-bold d-block pt-1">
-          Food trends &amp; inspirations
-        </span>
-      </div>
-      <!-- end::Title -->
-      <!-- begin::Section -->
-      <div class="d-flex align-items-center">
-        <div class="me-6">
-          <i class="fa fa-star-half-alt me-1 text-warning fs-5"></i>
-          <span class="text-gray-800 fw-bolder">3.7</span>
-        </div>
-        <a href="#" class="btn btn-icon btn-light btn-sm border-0">
-          <app-keenicon name="arrow-right" class="fs-2 text-primary"></app-keenicon>
-        </a>
-      </div>
-      <!-- end::Section -->
-    </div>
-    <!-- end::Content -->
-  </div>
-  <!-- end::Item -->
-</div>
-<!-- end::Body -->

@@ -1,3 +1,54 @@
+<style>
+  .switch {
+    display: inline-block;
+    height: 34px;
+    position: relative;
+    width: 60px;
+  }
+
+  .switch input {
+    display: none;
+  }
+
+  .slider {
+    background-color: #ccc;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+  }
+
+  .slider:before {
+    background-color: #fff;
+    bottom: 4px;
+    content: "";
+    height: 26px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 26px;
+  }
+
+  input:checked+.slider {
+    background-color: #66bb6a;
+  }
+
+  input:checked+.slider:before {
+    transform: translateX(26px);
+  }
+
+  .slider.round {
+    border-radius: 34px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
+  }
+</style>
+
 <div class="modal-body">
   <div id="sanjay">
     <div class="container">
@@ -489,7 +540,7 @@
               </div>
               &nbsp;&nbsp;
               <div class="col-md-2">
-                <!-- <button type="submit" class="btn btn-danger" (click)="closeModalEditStaff()">Cancel</button> -->
+                <button type="submit" class="btn btn-danger" (click)="closeModalEditStaff()">Cancel</button>
               </div>
             </div>
 
@@ -503,13 +554,12 @@
           <div class="row">
             <div class="col-lg-10"></div>
             <div class="col-lg-2">
-              <!-- <button type="submit" class="btn btn-success" (click)="openAddUserForTransporter(addTransUser)">
-                add Staff</button> -->
+              <button type="submit" class="btn btn-success" (click)="openAddUserForTransporter(addTransUser)">
+                add Staff</button>
             </div>
 
           </div>
-          <!-- <ng-template #addTransUser let-c="close" let-d="dismiss">
-
+          <ng-template #addTransUser let-c="close" let-d="dismiss">
             <div class="modal-header">
               <h4 class="modal-title">Add Staff</h4>
               <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
@@ -523,15 +573,15 @@
                     <label for="numberOfEmployee">Mobile Number
                       <span class="red" style="color: red;">*</span>:</label>
                     <input type="number" class="form-control" formControlName="phoneNumber"
-                      [class.is-invalid]="userMobile.invalid && userMobile.touched" placeholder="Enter Mobile Number"
+                       placeholder="Enter Mobile Number"
                       (blur)="checkuserPhoneNumber()" onkeypress="return this.value.length < 10;"
                       oninput="if(this.value.length=10)">
-                    <div *ngIf="(userMobile.invalid && userMobile.touched) || userMobile.dirty">
+                    <!-- <div *ngIf="(userMobile.invalid && userMobile.touched) || userMobile.dirty">
                       <small *ngIf="userMobile.errors?.required" class="text-danger">Mobile Number is
                         required</small>
                       <small *ngIf="userMobile.errors?.pattern" class="text-danger">Please
                         provide a valid 10 Digit Mobile Number</small>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
                 <br>
@@ -579,15 +629,15 @@
                     <label for="numberOfEmployee">Mobile Number
                       <span class="red" style="color: red;">*</span>:</label>
                     <input type="number" class="form-control" formControlName="mobileNumber"
-                      [class.is-invalid]="userMobile.invalid && userMobile.touched" placeholder="Enter Mobile Number"
+                       placeholder="Enter Mobile Number"
                       onkeypress="return this.value.length < 10;" oninput="if(this.value.length=10)">
-                    <div *ngIf="(userMobile.invalid && userMobile.touched) || userMobile.dirty">
+                    <!-- <div *ngIf="(userMobile.invalid && userMobile.touched) || userMobile.dirty">
                       <small *ngIf="userMobile.errors?.required" class="text-danger">Mobile Number is
                         required</small>
 
                       <small *ngIf="userMobile.errors?.pattern" class="text-danger">Please
                         provide a valid 10 Digit Mobile Number</small>
-                    </div>
+                    </div> -->
                   </div>
 
                   <div class="col-md-6">
@@ -649,15 +699,15 @@
                     <label for="numberOfEmployee">Mobile Number
                       <span class="red" style="color: red;">*</span>:</label>
                     <input type="number" class="form-control" formControlName="mobileNumber"
-                      [class.is-invalid]="userMobile.invalid && userMobile.touched" placeholder="Enter Mobile Number"
+                       placeholder="Enter Mobile Number"
                       (blur)="checkStaffDetails()" onkeypress="return this.value.length < 10;"
                       oninput="if(this.value.length=10)">
-                    <div *ngIf="(userMobile.invalid && userMobile.touched) || userMobile.dirty">
+                    <!-- <div *ngIf="(userMobile.invalid && userMobile.touched) || userMobile.dirty">
                       <small *ngIf="userMobile.errors?.required" class="text-danger">Mobile Number is
                         required</small>
                       <small *ngIf="userMobile.errors?.pattern" class="text-danger">Please
                         provide a valid 10 Digit Mobile Number</small>
-                    </div>
+                    </div> -->
                   </div>
                   <div class="col-md-6">
                   </div>
@@ -686,12 +736,12 @@
                   <div class="col-md-6">
                     <label for="hostPhone">Email Address :</label>
                     <input type="email" class="form-control" readonly
-                      [class.is-invalid]="primEmailUser.invalid && primEmailUser.touched" formControlName="email"
+                       formControlName="email"
                       placeholder="Enter Email Address">
-                    <div *ngIf="(primEmailUser.invalid && primEmailUser.touched) || primEmailUser.dirty">
+                    <!-- <div *ngIf="(primEmailUser.invalid && primEmailUser.touched) || primEmailUser.dirty">
                       <small *ngIf="primEmailUser.errors?.pattern" class="text-danger">Please
                         provide a valid email address</small>
-                    </div>
+                    </div> -->
                   </div>
                   <div class="col-md-6">
                     <label for="state">Role :
@@ -764,11 +814,11 @@
               </tr>
 
             </tbody>
-          </table> -->
+          </table>
 
         </form>
 
-        <!-- <ng-template #updateStaff let-c="close" let-d="dismiss">
+        <ng-template #updateStaff let-c="close" let-d="dismiss">
           <div class="modal-header">
             <h4 class="modal-title">
               <strong>
@@ -822,7 +872,6 @@
             </div>
             <br>
 
-
             <div class="row">
               <div class="col-md-4">
               </div>
@@ -835,7 +884,6 @@
                 <button type="submit" class="btn btn-danger" (click)="closeModalEditStaff()">Cancel</button>
               </div>
             </div>
-
           </div>
         </ng-template>
 
@@ -893,7 +941,7 @@
               </div>
             </div>
           </div>
-        </ng-template> -->
+        </ng-template>
       </div>
     </div>
   </div>

@@ -1,0 +1,259 @@
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-12">
+          <div class="card">
+              <div class="card-body">
+
+                  <form [formGroup]="shiftForm">
+                      <div class="row">
+                          <div class="col-md-1"></div>
+                          <div class="col-auto">
+                              <label><b>Select Shift :</b></label>
+                              <select class="form-control" formControlName="shiftTimeId" required>
+                                  <option value=""> Select Shift </option>
+                                  <option value="1"> STANDARD </option>
+                                  <option *ngFor="let data of fuelShiftTimeDetails" [value]="data.fuelShiftTimeId">
+                                      {{data.fuelShiftTimeShiftName}} {{data.fuelShiftTimeDetails}}
+                                  </option>
+                              </select>
+                          </div>
+                          <div class="col-auto">
+                              <label><b>Select Operator :</b></label>
+                              <select class="form-control" (change)="getShiftWiseBookDetailsBYOperator()"
+                                  formControlName="operatorStaffId" required>
+                                  <option value="">All operators </option>
+                                  <option *ngFor="let data of staffDetails" [value]="data.fuelDealerStaffId">
+                                      {{data.firstName}} {{data.lastName}}
+                                  </option>
+                              </select>
+                          </div>
+                          <div class="col-auto">
+                              <label> <b> Start Date </b> </label>
+
+                              <input class="form-control" placeholder="DD-MM-YYYY" name="startDate"
+                                   readonly style="background-color: #ffffff;" (click)="startDate.toggle()" formControlName="startDate"
+                                  ngbDatepicker #startDate="ngbDatepicker">
+                          </div>
+                          <div class="col-auto">
+                              <label><b> End Date </b></label>
+
+                              <input class="form-control" placeholder="DD-MM-YYYY" name="endDate"
+                                   readonly style="background-color: #ffffff;" (click)="endDate.toggle()" formControlName="endDate"
+                                  ngbDatepicker #endDate="ngbDatepicker">
+                          </div>
+
+                          <div class="col-auto">
+                              <br>
+                              <button type="button" class="btn btn-primary"
+                                  (click)="getShiftWiseBookDetailsBYOperator()">
+                                  Submit
+                              </button>
+                          </div>
+
+                      </div>
+                      <br>
+                      <div class="row">
+                          <div class="col-md-8"></div>
+                      </div>
+                  </form>
+                  <hr>
+
+
+                  <!-- new tab view -->
+                  <div class="row">
+
+                      <div class="col-lg-12" style="text-align: center;align-items: center;">
+                          <div class="card">
+                              <div class="card-body">
+                                  <ul ngbNav #customNav="ngbNav" [activeId]="1"
+                                      class="nav-tabs nav-tabs-custom nav-justified" style="width: 50%;">
+                                      <li [ngbNavItem]="1">
+                                          <a ngbNavLink>
+                                              <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                              <span class="d-none d-sm-block" style="font-size: 13.5px;">AMOUNT</span>
+                                          </a>
+                                          <ng-template ngbNavContent>
+                                              <ng-template [ngTemplateOutlet]="amount"></ng-template>
+                                          </ng-template>
+                                      </li>
+
+                                      <li [ngbNavItem]="2">
+                                          <a ngbNavLink>
+                                              <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                                              <span class="d-none d-sm-block"
+                                                  style="font-size: 13.5px;">QUANTITY</span>
+                                          </a>
+                                          <ng-template ngbNavContent>
+                                              <ng-template [ngTemplateOutlet]="quantity"></ng-template>
+                                          </ng-template>
+                                      </li>
+
+
+                                  </ul>
+                                  <div [ngbNavOutlet]="customNav"></div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- new tab view end -->
+
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<ng-template #amount><br>
+  <div class="row">
+      <div class="col-md-9"></div>
+
+          <div class="col-md-1">
+              <span style="font-size: 35px;cursor: pointer;" (click)="exportPDFamount()"
+                  ngbTooltip="Download PDF" placement="bottom"><i
+                      class="fas fa-file-pdf"></i></span><br>
+          </div>
+
+          <div class="col-md-1">
+              <span style="font-size: 35px;cursor: pointer;" (click)="exportExcelamount()"
+                  ngbTooltip="Download CSV" placement="bottom"><i
+                      class="fas fa-file-csv"></i></span><br>
+          </div>
+
+
+  </div>
+  <br>
+
+  <div class="table-responsive mb-0">
+
+      <table class="table table-centered table-nowrap" id="excel-table">
+          <thead class="table-light">
+              <tr>
+                  <th style="text-align: left;"> date </th>
+                  <th style="text-align: left;"> shift </th>
+                  <th style="text-align: left;"> operator name </th>
+                  <th style="text-align: left;"> meter sales </th>
+                  <th style="text-align: left;"> credit (a) </th>
+                  <th style="text-align: left;"> digital (b) </th>
+                  <th style="text-align: left;"> cash (c) </th>
+                  <th style="text-align: left;"> expenses </th>
+                  <th style="text-align: left;"> short </th>
+                  <th style="text-align: left;"> shift tally (a+b+c) </th>
+              </tr>
+          </thead>
+
+          <tbody>
+
+              <tr
+                  *ngFor="let data of shiftWiseData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                  <td style="text-align: left;"> {{ data.openDate | date:"d MMM, yyyy"}} </td>
+                  <td style="text-align: left;"> {{ data.shiftTime }} </td>
+                  <td style="text-align: left;"> {{ data.name }} </td>
+                  <td style="text-align: left;"> {{ data.meterSaleAmount | number:'1.2-2'}} </td>
+                  <td style="text-align: left;"> {{ data.credit | number:'1.2-2'}} </td>
+                  <td style="text-align: left;"> {{ data.digital | number:'1.2-2'}} </td>
+                  <td style="text-align: left;"> {{ data.cash | number:'1.2-2'}} </td>
+                  <td style="text-align: left;"> {{ data.expenses | number:'1.2-2'}} </td>
+                  <td style="text-align: left;"> {{ data.short | number:'1.2-2'}} </td>
+                  <td style="text-align: left;"> {{ data.shiftTally | number:'1.2-2'}} </td>
+
+              </tr>
+
+          </tbody>
+      </table>
+      <div class="text-md-right float-md-end pagination-rounded">
+
+            <!-- begin::Pagination -->
+            <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+            style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+          </pagination-controls>
+          <!-- end::Pagination -->
+      </div>
+
+  </div>
+
+</ng-template>
+
+
+
+<ng-template #quantity><br>
+  <form [formGroup]="shiftForm">
+
+      <div class="row">
+          <label for="example-text-input" class="col-auto col-form-label">Select Product</label>
+
+          <div class="col-md-2">
+              <select class="form-control" formControlName="productName" (change)="getByProduct($event)" required>
+                  <option value="">Select Product </option>
+                  <option *ngFor="let data of productsList" [value]="data.fuelProductsId">
+                      {{data.productName}}
+                  </option>
+              </select>
+          </div>
+
+
+              <div class="col-md-6"></div>
+      
+                  <div class="col-md-1">
+                      <span style="font-size: 35px;cursor: pointer;" (click)="exportPDFQuantity()"
+                          ngbTooltip="Download PDF" placement="bottom"><i
+                              class="fas fa-file-pdf"></i></span><br>
+                  </div>
+      
+                  <div class="col-md-1">
+                      <span style="font-size: 35px;cursor: pointer;" (click)="exportExcelQuantity()"
+                          ngbTooltip="Download CSV" placement="bottom"><i
+                              class="fas fa-file-csv"></i></span><br>
+                  </div>
+              
+      </div>
+      <br>
+
+      <div class="table-responsive mb-0">
+          <table class="table table-centered table-nowrap" id="excel-table">
+              <thead class="table-light">
+                  <tr>
+                      <th style="text-align: left;"> Date </th>
+                      <th style="text-align: left;"> Shift </th>
+                      <th style="text-align: left;"> Operator Name </th>
+                      <th style="text-align: left;"> Product </th>
+                      <th style="text-align: left;"> Credit (Quantity)
+                          <br> Ltr/Kg
+                      </th>
+                      <th style="text-align: left;"> Meter Sales (Quantity)
+                          <br> Ltr/Kg
+                      </th>
+                      <th style="text-align: left;"> Meter Sales (Amount)
+                          <br> Rs
+                      </th>
+                  </tr>
+              </thead>
+
+              <tbody>
+
+                  <tr
+                      *ngFor="let data of shiftWiseQuantityData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                      <td style="text-align: left;"> {{ data.openDate | date:"d MMM, yyyy"}} </td>
+                      <td style="text-align: left;"> {{ data.fuelShiftTimeDetails }} {{data.fuelShiftTimeShiftName}}
+                      </td>
+                      <td style="text-align: left;"> {{ data.firstName }} {{data.lastName}} </td>
+                      <td style="text-align: left;"> {{ data.productName }} </td>
+                      <td style="text-align: left;"> {{ data.creditQuantity | number:'1.2-2'}} </td>
+                      <td style="text-align: left;"> {{ data.meterSaleQuantity | number:'1.2-2'}} </td>
+                      <td style="text-align: left;"> {{ data.meterSaleAmount | number:'1.2-2'}} </td>
+
+                  </tr>
+
+              </tbody>
+          </table>
+          <div class="text-md-right float-md-end pagination-rounded">
+           
+            <!-- begin::Pagination -->
+            <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+            style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+          </pagination-controls>
+          <!-- end::Pagination -->
+          </div>
+
+      </div>
+  </form>
+</ng-template>
