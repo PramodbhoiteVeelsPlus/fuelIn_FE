@@ -84,6 +84,10 @@ const Routing: Routes = [
     loadChildren: () => import('./dealer/report/report.module').then((m) => m.ReportModule),
   },
   {
+    path: 'dsr',
+    loadChildren: () => import('./dealer/DSR/dsr.module').then((m) => m.DSRModule),
+  },
+  {
     path: 'shift',
     loadChildren: () => import('./dealer/shift/shift.module').then((m) => m.ShiftModule),
   },

@@ -1,27 +1,234 @@
-<!--begin::Mixed Widget 10-->
-<div
-  class="card card-custom"
-  [ngClass]="cssClass"
-  [ngStyle]="{ height: widgetHeight }"
->
-  <!--begin::Body-->
-  <div
-    class="
-      card-body
-      d-flex
-      align-items-center
-      justify-content-between
-      flex-wrap
-    "
-  >
-    <div class="mr-2">
-      <h3 class="font-weight-bolder">Create CRM Reports</h3>
-      <div class="text-gray-900-50 font-size-lg mt-2">
-        Generate the latest CRM Report
+<head>
+  <style>
+    .switch {
+      display: inline-block;
+      height: 34px;
+      position: relative;
+      width: 60px;
+    }
+
+    .switch input {
+      display: none;
+    }
+
+    .slider {
+      background-color: #ccc;
+      bottom: 0;
+      cursor: pointer;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      transition: .4s;
+    }
+
+    .slider:before {
+      background-color: #fff;
+      bottom: 4px;
+      content: "";
+      height: 26px;
+      left: 4px;
+      position: absolute;
+      transition: .4s;
+      width: 26px;
+    }
+
+    input:checked+.slider {
+      background-color: #66bb6a;
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(26px);
+    }
+
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<div class="card">
+  <div class="card-body">
+    <div class="row mb-2">
+      <div class="col-sm-4">
+      </div>
+      <div class="col-sm-8">
+        <div class="text-sm-end">
+          <button type="button" class="btn btn-success btn-rounded mb-2 me-2" routerLink="/accounting/addBank"
+            [routerLinkActive]="['router-link-active']">
+            + Add Bank Account
+          </button>
+        </div>
       </div>
     </div>
-    <a href="#" class="btn btn-primary font-weight-bold py-3 px-6">Start Now</a>
+    <div class="modal-body">
+      <h6 style="text-align: center;">
+        <b> Default Account is Visible to Customers.. </b>
+      </h6>
+      <div class="table-responsive mb-0">
+        <table class="table table-centered table-nowrap">
+          <thead class="table-light">
+            <tr>
+              <th style="text-align: left;">Sr. No.</th>
+              <th style="text-align: left;">Account Number</th>
+              <th style="text-align: left;">Mobile Number</th>
+              <th style="text-align: left;">IFSC</th>
+              <th style="text-align: left;">Account Type</th>
+              <th style="text-align: left;">Bank Name</th>
+              <th style="text-align: left;">UPI Id</th>
+              <th style="text-align: left;">Default Account</th>
+              <th style="text-align: left;">Action</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let data of bankAccList; let i = index">
+            <tr>
+              <td style="text-align: center;"> {{i+1}} </td>
+              <td style="text-align: center;"> {{data.accountNumber}} </td>
+              <td style="text-align: center;"> {{data.phone}} </td>
+              <td style="text-align: center;"> {{data.ifsc}} </td>
+              <td style="text-align: center;"> {{data.type}} </td>
+              <td style="text-align: center;"> {{data.bankName}} </td>
+              <td style="text-align: center;"> {{data.upiId}} </td>
+              <td style="text-align: center;">
+                <div *ngIf="data.uniqueStatus == 'TRUE'">
+                  <label class="switch">
+                    <input type="checkbox" checked="checked"
+                      (change)="statusBankEnable($event,data.bankDetailsId,data.dealerId)">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+                <div *ngIf="data.uniqueStatus =='FALSE'">
+                  <label class="switch">
+                    <input type="checkbox" [checked]="off"
+                      (change)="statusBankEnable($event,data.bankDetailsId,data.dealerId)">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+              </td>
+              <td style="text-align: left;cursor: pointer;">
+                <div ngbDropdown placement="bottom-left">
+                  <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                    aria-expanded="true"></i>
+                  <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                    <a class="dropdown-item" href="javascript: void(0);" (click)="deletBankAcc(data.bankDetailsId)">
+                      <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
+                    <a class="dropdown-item" href="javascript: void(0);"
+                      (click)="updateBank(editBank,data.bankDetailsId,data.bankName,data.accountHolderName,data.accountNumber,data.phone,data.upiId,data.ifsc,data.branchName)">
+                      <i class="fas fa-edit" style="color: #4e9b4e;">
+                      </i> &nbsp; Edit</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+
+            <ng-template #editBank let-c="close" let-d="dismiss">
+              <div class="modal-header">
+                <h4 class="modal-title">
+                  <label>
+                    <h4>
+                      <strong>
+                        Update Account <br></strong>
+                    </h4>
+                  </label>
+                </h4>
+                <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="updateBankDetailsForm">
+                  <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                      <label class="labelNewMargin">Account Number <span style="color: red;">*</span></label>
+                    </div>
+                    <div class="col-md-3">
+                      <input class="form-control form-control-sm mr-1 w-40" type="number"
+                        formControlName="accountNumber" placeholder="Account Number">
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                      <label class="labelNewMargin">Bank Name</label>
+                    </div>
+                    <div class="col-md-3">
+                      <input class="form-control form-control-sm mr-1 w-40"
+                        oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                        type="text" formControlName="bankName" placeholder="Bank Name">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                      <label class="labelNewMargin">Mobile Number<span style="color: red;">*</span></label>
+                    </div>
+                    <div class="col-md-3">
+                      <input class="form-control form-control-sm mr-1 w-40" type="number" formControlName="phone"
+                        onkeypress="return this.value.length < 10;" oninput="if(this.value.length=10)"
+                        placeholder="Mobile Number">
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                      <label class="labelNewMargin">Account Holder</label>
+                    </div>
+                    <div class="col-md-3">
+                      <input class="form-control form-control-sm mr-1 w-40"
+                        oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);" type="text"
+                        formControlName="accountHolderName" placeholder="Acc Holder Name">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                      <label class="labelNewMargin">IFSC <span style="color: red;">*</span></label>
+                    </div>
+                    <div class="col-md-3">
+                      <input class="form-control form-control-sm mr-1 w-40" formControlName="ifsc"
+                        oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                        placeholder="enter IFSC">
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                      <label class="labelNewMargin"> Branch Name</label>
+                    </div>
+                    <div class="col-md-3">
+                      <input class="form-control form-control-sm mr-1 w-40"
+                        oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);" type="text"
+                        formControlName="branchName" placeholder="Branch Name">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                      <label class="labelNewMargin">UPI</label>
+                    </div>
+                    <div class="col-md-3">
+                      <input class="form-control form-control-sm mr-1 w-40" type="text" formControlName="upiId"
+                        placeholder="UPI">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-2">
+                      <button type="submit" class="btn btn-success" [disabled]="!updateBankDetailsForm.valid"
+                        (click)="updateBankAcc()">Update</button>
+                    </div>&nbsp;&nbsp;
+                    <div class="col-md-2">
+                      <button type="submit" class="btn btn-secondary" (click)="clearModal()">Cancel</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </ng-template>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
-  <!--end::Body-->
 </div>
-<!--end::Mixed Widget 10-->
