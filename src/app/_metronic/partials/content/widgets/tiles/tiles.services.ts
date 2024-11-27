@@ -37,7 +37,18 @@ export class TilesService {
     private getOpeningDBCRBalanceCASHURL = this.baseURL + 'fuelExpense/getOpeningDBCRBalanceCASH';
     private getOpeningDBCRBalanceOILCOMURL = this.baseURL + 'fuelExpense/getOpeningDBCRBalanceOILCOM';
     private getOILCOMPANYDataInFuelExpenseURL = this.baseURL + 'fuelExpense/getOILCOMPANYDataInFuelExpense';
-    
+    private submitTerminalURL = this.baseURL + 'fuelTerminals/addFuelTerminal';
+    private getFuelTerminalURL = this.baseURL + 'fuelTerminals/getFuelTerminal';
+    private updateFuelTerminalPOSNameURL = this.baseURL + 'fuelTerminals/updateFuelTerminalPOSName';
+    private updateFuelTerminalPOSStatusURL = this.baseURL + 'fuelTerminals/updateFuelTerminalPOSStatus';
+    private deleteFuelTerminalURL = this.baseURL + 'fuelTerminals/deleteFuelTerminal';
+    private getBankAccByBankIdURL = this.baseURL + 'bankDetails/getBankAccByBankId';
+    private getPOSByBankIdURL = this.baseURL + 'fuelTerminals/getPOSByBankId';
+    private addBankDetailsURL = this.baseURL + 'bankDetails/addBankDetails';
+    private deleteBankAccByDealerIdURL = this.baseURL + 'bankDetails/deleteBankAccByDealerId';
+    private updateAccountDetailsbyUniqueStatusURL = this.baseURL + 'bankDetails/updateAccountDetailsbyUniqueStatus';
+    private updateBankAccountDetailsURL = this.baseURL + 'bankDetails/updateBankAccountDetails';
+
 
 
 
@@ -216,6 +227,116 @@ export class TilesService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.getOILCOMPANYDataInFuelExpenseURL, body, {
+            headers: headers
+        })
+    }
+
+    // submitTerminalURL
+    submitTerminalPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.submitTerminalURL, body, {
+            headers: headers
+        })
+    }
+
+    // getFuelTerminalURL
+    getFuelTerminalPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFuelTerminalURL, body, {
+            headers: headers
+        })
+    }
+
+    // updateFuelTerminalPOSNameURL
+    updateFuelTerminalPOSNamePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateFuelTerminalPOSNameURL, body, {
+            headers: headers
+        })
+    }
+
+    // updateFuelTerminalPOSStatusURL
+    updateFuelTerminalPOSStatusPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateFuelTerminalPOSStatusURL, body, {
+            headers: headers
+        })
+    }
+
+    // deleteFuelTerminalURL
+    deleteFuelTerminalPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.deleteFuelTerminalURL, body, {
+            headers: headers
+        })
+    }
+
+    // getBankAccByBankIdURL
+    getBankAccByBankIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getBankAccByBankIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getPOSByBankIdURL
+    getPOSByBankIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getPOSByBankIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // addBankDetailsURL
+    addBankDetailsPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addBankDetailsURL, body, {
+            headers: headers
+        })
+    }
+
+    // deleteBankAccByDealerIdURL
+    deleteBankAccByDealerIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.deleteBankAccByDealerIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // updateAccountDetailsbyUniqueStatusURL
+    updateAccountDetailsbyUniqueStatusPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateAccountDetailsbyUniqueStatusURL, body, {
+            headers: headers
+        })
+    }
+
+    // updateBankAccountDetailsURL
+    updateBankAccountDetailsPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateBankAccountDetailsURL, body, {
             headers: headers
         })
     }
