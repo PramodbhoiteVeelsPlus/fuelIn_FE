@@ -476,22 +476,22 @@
       </span>
       <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
         <div *ngIf="isDsr" class="menu-item">
-          <a class="menu-link without-sub" routerLinkActive="active">
+          <div class="menu-link without-sub" routerLink="/dsr/dsrDetails" routerLinkActive="active">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
             <span class="menu-title">DSR
             </span>
-          </a>
+          </div>
         </div>
         <div *ngIf="isTankDsr" class="menu-item">
-          <a class="menu-link without-sub" routerLinkActive="active">
+          <div class="menu-link without-sub" routerLink="/dsr/tkDSRDetails" routerLinkActive="active">
             <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
             <span class="menu-title">Tank DSR
             </span>
-          </a>
+          </div>
         </div>
       </div>
     </div>
