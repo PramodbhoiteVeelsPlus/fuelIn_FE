@@ -1,55 +1,139 @@
-<div class="card-header border-0 pt-5">
-  <h3 class="card-title align-items-start flex-column">
-    <span class="card-label fw-bolder fs-3 mb-1">Recent Customers</span>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <br>
+          <form [formGroup]="filterForm">
+            <div class="row">
+              <div class="col-md-2"></div>
+              <label for="example-text-input" class="col-auto col-form-label">Month</label>
+              <div class="col-md-1">
+                <select class="form-select" formControlName="month" required>
+                  <option value="Jan"> Jan </option>
+                  <option value="Feb"> Feb </option>
+                  <option value="Mar"> Mar </option>
+                  <option value="Apr"> Apr </option>
+                  <option value="May"> May </option>
+                  <option value="Jun"> Jun </option>
+                  <option value="Jul"> Jul </option>
+                  <option value="Aug"> Aug </option>
+                  <option value="Sep"> Sep </option>
+                  <option value="Oct"> Oct </option>
+                  <option value="Nov"> Nov </option>
+                  <option value="Dec"> Dec </option>
+                </select>
+              </div>
 
-    <span class="text-muted fw-bold fs-7">More than 500 new customers</span>
-  </h3>
+              <label for="example-text-input" class="col-auto col-form-label">Year</label>
+              <div class="col-md-1">
+                <select class="form-select" formControlName="year" required>
+                  <option value={{currentYear}}> {{currentYear}} </option>
+                  <option value={{lastYear}}> {{lastYear}} </option>
+                  <option value={{last2Year}}> {{last2Year}} </option>
+                  <option value={{lastFourthYear}}> {{lastFourthYear}} </option>
+                  <option value={{lastFifthYear}}> {{lastFifthYear}} </option>
+                </select>
+              </div>
+              <div class="col-md-1"></div>
+              <div class="col-auto">
+                <button type="button" class="btn btn-md btn-primary" (click)="getFuelExpense()">
+                  View
+                </button>
+              </div>
+              <div class="col-md-2"></div>
 
-  <div class="card-toolbar" data-kt-buttons="true">
-    <a
-      class="
-        btn btn-sm btn-color-muted btn-active btn-active-primary
-        active
-        px-4
-        me-1
-      "
-      id="kt_charts_widget_4_year_btn"
-    >
-      Year
-    </a>
+            </div>
+          </form>
+          <br><br>
+          <div class="row">
+            <div *ngIf="isPurchase && !isVarUpdate" class="table-responsive mb-0">
+              <table class="table table-centered table-nowrap">
+                <thead class="table-light">
+                  <tr>
+                    <th style="text-align: center"> Sr.No </th>
+                    <th style="text-align: center"> Product </th>
+                    <th style="text-align: center"> Quantity </th>
+                    <th style="text-align: center"> Amount </th>
+                    <th style="text-align: center"> Variation Percentage </th>
+                    <th> </th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let data of purchaseData; let i = index">
+                  <tr>
+                    <td> {{i+1}} </td>
+                    <td>
+                      <input class="form-control" [(ngModel)]="data.productName" [ngModelOptions]="{standalone: true}"
+                        disabled>
+                    </td>
+                    <td>
+                      <input class="form-control" [(ngModel)]="data.totalQuantity" [ngModelOptions]="{standalone: true}"
+                        disabled>
+                    </td>
+                    <td>
+                      <input class="form-control" [(ngModel)]="data.totalAmount" [ngModelOptions]="{standalone: true}"
+                        disabled>
+                    </td>
+                    <td>
+                      <input class="form-control" [(ngModel)]="data.monthlyVariation"
+                        [ngModelOptions]="{standalone: true}">
+                    </td>
+                    <td *ngIf="!isVarUpdate">
+                      <button class="btn btn-success" (click)="addMonthlyVariation(i)"> Add </button>
+                    </td>
+                    <!-- <td *ngIf="isVarUpdate">  
+                                      <button class="btn btn-success" (click)="updateVariation(i)"> Update </button>
+                                  </td> -->
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-    <a
-      class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1"
-      id="kt_charts_widget_4_month_btn"
-    >
-      Month
-    </a>
 
-    <a
-      class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4"
-      id="kt_charts_widget_4_week_btn"
-    >
-      Week
-    </a>
+            <div *ngIf="isVarUpdate && isPurchase" class="table-responsive mb-0">
+              <table class="table table-centered table-nowrap">
+                <thead class="table-light">
+                  <tr>
+                    <th style="text-align: center"> Sr.No </th>
+                    <th style="text-align: center"> Product </th>
+                    <th style="text-align: center"> Quantity </th>
+                    <th style="text-align: center"> Amount </th>
+                    <th style="text-align: center"> Variation Percentage </th>
+                    <th> </th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let data of purchaseData; let i = index">
+                  <tr>
+                    <td> {{i+1}} </td>
+                    <td>
+                      <input class="form-control" [(ngModel)]="data.productName" [ngModelOptions]="{standalone: true}"
+                        disabled>
+                    </td>
+                    <td>
+                      <input class="form-control" [(ngModel)]="data.totalQuantity" [ngModelOptions]="{standalone: true}"
+                        disabled>
+                    </td>
+                    <td>
+                      <input class="form-control" [(ngModel)]="data.totalAmount" [ngModelOptions]="{standalone: true}"
+                        disabled>
+                    </td>
+                    <td>
+                      <input class="form-control" [(ngModel)]="data.monthlyVariation"
+                        [ngModelOptions]="{standalone: true}">
+                    </td>
+                    <!-- <td *ngIf="!isVarUpdate">  
+                                      <button class="btn btn-success" (click)="addMonthlyVariation(i)"> Add </button>
+                                  </td> -->
+                    <td *ngIf="isVarUpdate">
+                      <button class="btn btn-success" (click)="updateVariation(i)"> Update </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-
-<div class="card-body">
-  <div #chartRef id="kt_charts_widget_4_chart" [style.height]="'350px'">
-    <apx-chart
-      [series]="chartOptions.series"
-      [chart]="chartOptions.chart"
-      [xaxis]="chartOptions.xaxis"
-      [yaxis]="chartOptions.yaxis"
-      [dataLabels]="chartOptions.dataLabels"
-      [stroke]="chartOptions.stroke"
-      [legend]="chartOptions.legend"
-      [fill]="chartOptions.fill"
-      [states]="chartOptions.states"
-      [tooltip]="chartOptions.tooltip"
-      [colors]="chartOptions.colors"
-      [markers]="chartOptions.markers"
-      [plotOptions]="chartOptions.plotOptions"
-    ></apx-chart>
-  </div>
-</div>

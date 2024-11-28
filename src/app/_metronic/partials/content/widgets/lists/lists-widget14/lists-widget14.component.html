@@ -141,7 +141,7 @@
 
 <ng-template #quantity><br>
   <br>
-  <!-- <form [formGroup]="shiftForm">
+  <form [formGroup]="shiftForm">
     <div class="row">
       <label for="example-text-input" class="col-auto col-form-label">Select Product</label>
 
@@ -189,7 +189,7 @@
       <tbody>
 
         <tr
-          *ngFor="let data of shiftWiseQuantityData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let i = index">
+          *ngFor="let data of shiftWiseQuantityData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
           <td style="text-align: left;"> {{ data.openDate | date:"d MMM, yyyy"}} </td>
           <td style="text-align: left;"> {{ data.fuelShiftTimeDetails }} {{data.fuelShiftTimeShiftName}} </td>
           <td style="text-align: left;"> {{ data.productName }} </td>
@@ -203,12 +203,13 @@
     </table>
 
     <div class="text-md-right float-md-end pagination-rounded">
-
-      <ngb-pagination [collectionSize]="shiftWiseQuantityData.length" [(page)]="page" [pageSize]="pageSize"
-        [maxSize]="5" [rotate]="true" [boundaryLinks]="true">
-      </ngb-pagination>
+      <!-- begin::Pagination -->
+      <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+      style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+    </pagination-controls>
+    <!-- end::Pagination -->
     </div>
 
-  </div> -->
+  </div>
 
 </ng-template>

@@ -25,6 +25,14 @@ export class ChartsService {
     ///// API path
     
   private getLastSixMonthsCrURL = this.baseURL + 'crCustomers/getLastSixMonthsCrDetails';
+  private getTankByDealerProductIdURL = this.baseURL + 'fuelExpense/getTankByDealerProductId';
+  private addOILCOMPANYDataInFuelExpenseURL = this.baseURL + 'fuelExpense/addOILCOMPANYDataInFuelExpense';
+  private getOILCOMPANYDataInFuelExpenseURL = this.baseURL + 'fuelExpense/getOILCOMPANYDataInFuelExpense'; 
+  private updateOilCompanyURL = this.baseURL + 'fuelExpense/updateOilCompany'; 
+  private deleteExpenseURL = this.baseURL + 'fuelExpense/deleteExpense';
+  private getFuelExpenseByMonthYearURL = this.baseURL + 'fuelExpense/getFuelExpenseByMonthYear';
+  private addMonthlyVariationURL = this.baseURL + 'fuelExpense/addMonthlyVariation'; 
+  private updateMonthlyVariationURL = this.baseURL + 'fuelExpense/updateMonthlyVariation';
 
 
 
@@ -46,6 +54,86 @@ export class ChartsService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.getLastSixMonthsCrURL, body, {
+            headers: headers
+        })
+    }
+    
+    // getTankByDealerProductIdURL
+    getTankByDealerProductIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getTankByDealerProductIdURL, body, {
+            headers: headers
+        })
+    }
+    
+    // addOILCOMPANYDataInFuelExpenseURL
+    addOILCOMPANYDataInFuelExpensePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addOILCOMPANYDataInFuelExpenseURL, body, {
+            headers: headers
+        })
+    }
+    
+    // getOILCOMPANYDataInFuelExpenseURL
+    getOILCOMPANYDataInFuelExpensePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getOILCOMPANYDataInFuelExpenseURL, body, {
+            headers: headers
+        })
+    }
+    
+    // updateOilCompanyURL
+    updateOilCompanyPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateOilCompanyURL, body, {
+            headers: headers
+        })
+    }
+    
+    // deleteExpenseURL
+    deleteExpensePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.deleteExpenseURL, body, {
+            headers: headers
+        })
+    }
+    
+    // getFuelExpenseByMonthYearURL
+    getFuelExpenseByMonthYearPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFuelExpenseByMonthYearURL, body, {
+            headers: headers
+        })
+    }
+    
+    // addMonthlyVariationURL
+    addMonthlyVariationPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addMonthlyVariationURL, body, {
+            headers: headers
+        })
+    }
+    
+    // updateMonthlyVariationURL
+    updateMonthlyVariationPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateMonthlyVariationURL, body, {
             headers: headers
         })
     }

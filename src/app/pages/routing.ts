@@ -92,6 +92,10 @@ const Routing: Routes = [
     loadChildren: () => import('./dealer/shift/shift.module').then((m) => m.ShiftModule),
   },
   {
+    path: 'inventory',
+    loadChildren: () => import('./dealer/inventory/inventory.module').then((m) => m.InventoryModule),
+  },
+  {
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full',

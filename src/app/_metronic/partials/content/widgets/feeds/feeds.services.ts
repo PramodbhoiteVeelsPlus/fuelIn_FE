@@ -73,6 +73,11 @@ export class FeedsService {
     private checkReportByDateURL = this.baseURL + 'dailyProfitReport/checkReportByDate';
     private updateDailyProfitReportURL = this.baseURL + 'dailyProfitReport/updateDailyProfitReport';
     private deleteProfitReportURL = this.baseURL + 'profitReport/deleteProfitReport';
+    private getShiftVStallyByDateURL = this.baseURL + 'shiftList/getShiftVStallyByDate';
+    private getFuelCreditPaymentDetailsForPreviousURL = this.baseURL + 'overallReport/getFuelCreditPaymentDetailsForPrevious';
+    private getShiftVStallyDigitalTotalForPreviousURL = this.baseURL + 'overallReport/getShiftVStallyDigitalTotalForPrevious'; 
+    private getExpenseAmtDetailsForPreviousURL = this.baseURL + 'overallReport/getExpenseAmtDetailsForPrevious';
+    private getMonthWiseMeterSalesURL = this.baseURL + 'dsrDetails/getMonthWiseMeterSales';
     
 
 
@@ -505,6 +510,55 @@ export class FeedsService {
         })
     }
 
+    // getShiftVStallyByDateURL
+    getShiftVStallyByDatePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getShiftVStallyByDateURL, body, {
+            headers: headers
+        })
+    }
+
+    // getFuelCreditPaymentDetailsForPreviousURL
+    getFuelCreditPaymentDetailsForPreviousPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFuelCreditPaymentDetailsForPreviousURL, body, {
+            headers: headers
+        })
+    }
+
+    // getShiftVStallyDigitalTotalForPreviousURL
+    getShiftVStallyDigitalTotalForPreviousPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getShiftVStallyDigitalTotalForPreviousURL, body, {
+            headers: headers
+        })
+    }
+
+    // getExpenseAmtDetailsForPreviousURL
+    getExpenseAmtDetailsForPreviousPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getExpenseAmtDetailsForPreviousURL, body, {
+            headers: headers
+        })
+    }
+
+    // getMonthWiseMeterSalesURL
+    getMonthWiseMeterSalesPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getMonthWiseMeterSalesURL, body, {
+            headers: headers
+        })
+    }
 
 
 

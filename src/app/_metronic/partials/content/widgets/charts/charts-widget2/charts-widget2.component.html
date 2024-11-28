@@ -1,62 +1,215 @@
-<div class="card-header border-0 pt-5">
-  <h3 class="card-title align-items-start flex-column">
-    <span class="card-label fw-bolder fs-3 mb-1">Recent Orders</span>
 
-    <span class="text-muted fw-bold fs-7">More than 500 new orders</span>
-  </h3>
+<div class="container-fluid">               
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+      <span *ngIf = "dealerAccess">    
+          <div class="row mb-2"> 
+              <div class="col-sm-4">  
+              </div>
+              <div class="col-sm-8">
+                <div class="text-sm-end">
+                  <button type="button" class="btn btn-success btn-rounded mb-2 me-2"
+                  routerLink="/inventory/viewOilCompanyPurchase" [routerLinkActive]="['router-link-active']">
+                  
+                  View Oil Company Purchase</button>
+                </div>
+              </div>
+            </div>
+          <div class="modal-body">
 
-  <!-- begin::Toolbar -->
-  <div class="card-toolbar" data-kt-buttons="true">
-    <a
-      class="
-        btn btn-sm btn-color-muted btn-active btn-active-primary
-        active
-        px-4
-        me-1
-      "
-      id="kt_charts_widget_2_year_btn"
-    >
-      Year
-    </a>
+              <form [formGroup]="addOilCompanyForm">
+                  <div class="form-body">
+                      <br>
+                    
+                      <div class="row">
+                          <div class="col-lg-2">
+                              <label for="example-text-input" class="col-form-label">Invoice Date :</label>
+                          </div>
+                          <div class="col-lg-8">
+                              <input class="form-control" placeholder="DD-MM-YYYY" name="invoiceDate"
+                                  (click)="invoiceDate.toggle()"  readonly style="background-color: #ffffff;"
+                                  formControlName="invoiceDate" ngbDatepicker #invoiceDate="ngbDatepicker">
+                          </div>  
+                      </div>
+                      
+                      <br>
+                      <div class="row">
+                          <div class="col-lg-2">
+                              <label for="example-text-input" class="col-form-label">Received Date : </label>
+                          </div>
+                          <div class="col-lg-8">
+                              <input class="form-control" placeholder="DD-MM-YYYY" name="receivedDate"
+                                  (click)="receivedDate.toggle()"  readonly style="background-color: #ffffff;"
+                                  formControlName="receivedDate" ngbDatepicker #receivedDate="ngbDatepicker">
+                          </div>  
+                      </div>
 
-    <a
-      class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1"
-      id="kt_charts_widget_2_month_btn"
-    >
-      Month
-    </a>
+                      <br>
+                      <div class="row">
+                          <div class="col-lg-2">
+                              <label for="example-text-input" class="col-form-label">Vehicle Number : </label>
+                          </div>
+                          <div class="col-lg-8">
+                              <input class="form-control" placeholder="Enter Vehicle Number" name="vehicleNumber"
+                              oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                              formControlName="vehicleNumber">
+                          </div>  
+                      </div>
 
-    <a
-      class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4"
-      id="kt_charts_widget_2_week_btn"
-    >
-      Week
-    </a>
+                      <br>
+                      <div class="row">
+                          <div class="col-lg-2">
+                              <label for="example-text-input" class="col-form-label">Invoice Number :</label>
+                          </div>
+                          <div class="col-lg-8">
+                              <input class="form-control" placeholder="Enter Invoice Number" name="invoiceNumber"
+                              formControlName="invoiceNumber">
+                          </div>  
+                      </div>
+
+                      <br>
+
+                      <br>
+                      
+                  </div>
+              </form>
+
+
+              <!-- New table Design -->
+
+              <div class="table-responsive mb-0">
+                  <table class="table table-centered table-nowrap">
+                    <thead class="table-light">
+                    </thead>
+                    <tbody *ngFor="let charges of CreditRequestDataArrayOilCompany; let i = index;">
+                      <tr>
+                          <th style="text-align: center;"> Product </th>
+                          <th style="text-align: center;"> Quantity</th>
+                          <th style="text-align: center;"> Basic Amount </th>
+                          <th style="text-align: center;"> VAT Amount</th>
+                          <th style="text-align: center;"> Cess Amount </th>
+                          <th style="text-align: center;"> Other Components</th>
+                      </tr>
+                      <tr>
+                          <td style="text-align: center;">
+                              <select class="form-control" [(ngModel)]="charges.product"
+                                  (blur)="checkValidationOilCompany(i)"
+                                  [ngModelOptions]="{standalone: true}"
+                                  (change)="getTankByDealerProductId($event,i)">
+                                  <option *ngFor="let data of productsList"
+                                      [value]="data.fuelProductsId">
+                                      {{data.productName}}
+                                  </option>
+                              </select>
+                          </td>
+
+                          <td style="text-align: center;">
+                              <input type="number" class="form-control" [(ngModel)]="charges.quantity"
+                                  style="text-align: center;" [ngModelOptions]="{standalone: true}"
+                                  placeholder="Quantity (ltrs)" />
+                          </td>
+
+                          <td style="text-align: center;">
+                              <input type="number" class="form-control"
+                                  [(ngModel)]="charges.basicAmount" style="text-align: center;"
+                                  [ngModelOptions]="{standalone: true}" placeholder="Basic Amount"
+                                  (blur)="calculateOilCoTotalAmount(i)" />
+                          </td>
+
+                          <td style="text-align: center;">
+                              <input type="number" class="form-control"
+                                  [(ngModel)]="charges.vatAmount" style="text-align: center;"
+                                  [ngModelOptions]="{standalone: true}" placeholder="VAT Amount"
+                                  (change)="calculateVATPercent(i)" />
+                          </td>
+
+
+                          <td style="text-align: center;">
+                              <input type="number" class="form-control"
+                                  [(ngModel)]="charges.cessAmount" style="text-align: center;"
+                                  [ngModelOptions]="{standalone: true}" placeholder="Cess Amount"
+                                  (blur)="calculateOilCoTotalAmount(i)" />
+                          </td>
+
+
+                          <td style="text-align: center;">
+                              <input type="number" class="form-control"
+                                  [(ngModel)]="charges.otherComponents" style="text-align: center;"
+                                  [ngModelOptions]="{standalone: true}" placeholder="Other Components"
+                                  (blur)="calculateOilCoTotalAmount(i)" />
+                          </td>
+
+
+                      </tr>
+
+                      <tr>
+                          <th style="text-align: center;"> VAT % </th>
+                          <th style="text-align: center;"> Total Tax </th>
+                          <th style="text-align: center;"> Total Amount</th>
+
+                      </tr>
+
+                      <tr>
+                          
+                          <td style="text-align: center;">
+                              <input type="number" class="form-control"
+                                  [(ngModel)]="charges.vatInPercent" style="text-align: center;"
+                                  [ngModelOptions]="{standalone: true}" placeholder="VAT %"
+                                  readonly />
+                          </td>
+
+                          <td style="text-align: center;">
+                              <input type="number" class="form-control" [(ngModel)]="charges.totalTax"
+                                  style="text-align: center;" [ngModelOptions]="{standalone: true}"
+                                  placeholder="Total Tax" readonly />
+                          </td>
+
+                          <td style="text-align: center;">
+                              <input type="number" class="form-control"
+                                  [(ngModel)]="charges.totalAmount" style="text-align: center;"
+                                  [ngModelOptions]="{standalone: true}" placeholder="Total Amount"
+                                  readonly />
+                          </td>
+
+                          <td>&nbsp;
+                              <button type="submit" class="btn btn-success"
+                                  (click)="addFormRequestOilCompany1(i)">
+                                 Add
+                              </button>
+                              &nbsp;&nbsp;
+                              <button *ngIf="i != 0 " type="cancel" class="btn btn-primary"
+                                  (click)="removeFormRequestOilCompany(i)">Delete</button>
+                          </td>
+
+                      </tr>
+
+                  </tbody>
+                    
+                  </table>
+               
+              </div>
+              <br>
+
+              <div class="row">
+                  <div class="col-auto">
+                      <button *ngIf="isShowOilCompanySubmit" type="submit"
+                          class="btn btn-primary"
+                          (click)="submitOilCompanyData()">Submit</button>
+                      <button *ngIf="!isShowOilCompanySubmit" type="submit"
+                          class="btn btn-primary " disabled>Submit</button>
+                  </div>
+                  <div class="col-auto">
+                      <button type="submit" class="btn btn-secondary" (click)="oilCompanyClear()">Cancel</button>
+                  </div>
+              </div>  
+
+          </div>
+
+      </span>
+       </div>
+     </div>
+   </div>
   </div>
-  <!-- end::Toolbar -->
 </div>
-<!-- end::Header -->
-
-<!-- begin::Body -->
-<div class="card-body">
-  <!-- begin::Chart -->
-  <div #chartRef id="kt_charts_widget_2_chart" [style.height]="'350px'">
-    <apx-chart
-      [series]="chartOptions.series"
-      [chart]="chartOptions.chart"
-      [xaxis]="chartOptions.xaxis"
-      [yaxis]="chartOptions.yaxis"
-      [dataLabels]="chartOptions.dataLabels"
-      [stroke]="chartOptions.stroke"
-      [legend]="chartOptions.legend"
-      [fill]="chartOptions.fill"
-      [states]="chartOptions.states"
-      [tooltip]="chartOptions.tooltip"
-      [colors]="chartOptions.colors"
-      [markers]="chartOptions.markers"
-      [plotOptions]="chartOptions.plotOptions"
-    ></apx-chart>
-  </div>
-  <!-- end::Chart -->
-</div>
-<!-- end::Body -->

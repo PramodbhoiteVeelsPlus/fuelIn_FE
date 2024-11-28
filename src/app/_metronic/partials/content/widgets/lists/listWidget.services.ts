@@ -130,6 +130,8 @@ export class ListWidgetService {
   private getDayWiseShiftBookLASTURL = this.baseURL + 'shiftList/getDayWiseShiftBookLAST';
   private getShiftTimeWiseBookDetailsURL = this.baseURL + 'shiftBook/getShiftTimeWiseBookDetails';
   private getShiftTimeWiseBookQuantityDetailsURL = this.baseURL + 'shiftBook/getShiftTimeWiseBookQuantityDetails'; 
+  private getOperatorWiseDetailsURL = this.baseURL + 'shiftBook/getOperatorWiseDetails';
+  private getOperatorWiseQuantityDetailsURL = this.baseURL + 'shiftBook/getOperatorWiseQuantityDetails';
 
 
 
@@ -1117,6 +1119,26 @@ export class ListWidgetService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.getShiftTimeWiseBookQuantityDetailsURL, body, {
+            headers: headers
+        })
+    }
+
+    // getOperatorWiseDetailsURL
+    getOperatorWiseDetailsPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getOperatorWiseDetailsURL, body, {
+            headers: headers
+        })
+    }
+
+    // getOperatorWiseQuantityDetailsURL
+    getOperatorWiseQuantityDetailsPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getOperatorWiseQuantityDetailsURL, body, {
             headers: headers
         })
     }

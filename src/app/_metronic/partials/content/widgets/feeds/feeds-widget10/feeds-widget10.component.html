@@ -1,0 +1,727 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//Dth XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/Dth/xhtml1-transitional.dth">
+<html xmlns="https://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <script type='text/javascript' src='../../../../../../assets/EditableInvoice/js/jquery-1.3.2.min1.js'></script>
+  <script type='text/javascript' src='../../../../../../assets/EditableInvoice/js/example1.js'></script>
+
+</head>
+
+<body id="contentToConvert">
+  <div class="container-fluid">
+    <div class="row noprint">
+      <div class="col-md-1"></div>
+      <div class="col-md-1"><b>Select Date:</b></div>
+      <div class="col-md-2">
+        <input class="form-control" placeholder="DD/MM/YYYY" name="date" (click)="startDate.toggle()"
+          style="background-color: #ffffff;" [(ngModel)]="selectedDate" (dateSelect)="onDateSelection()"
+          [ngModelOptions]="{standalone: true}" ngbDatepicker #startDate="ngbDatepicker">
+      </div>
+      <div class="col-md-4"></div>
+      <div class="col-auto">
+        <button class="btn btn-success" printSectionId="sanjay" ngxPrint>print </button>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-primary" (click)="downloadReport()">download </button>
+      </div>
+    </div>
+
+    <!-- New Code Starts -->
+    <div class="card">
+      <div class="cardbody">
+        <div class="row" id="sanjay">
+          <div class="col-md-1"></div>
+          <div class="col-md-10">
+            <table class="table">
+              <thead style="text-align: center;">
+                <tr>
+                  <th style="text-align: center;">
+                    <h3>{{dealerCompanyName}}</h3>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th colspan="3"
+                        style="border: 1px solid #272829; text-align: center; background-color: rgb(178, 217, 233); border-bottom: 2px solid #272829;">
+                        <b> Op Bal: </b> Rs {{ openingBlc | number:'1.2-2'}}
+                      </th>
+                      <th colspan="6"
+                        style="border: 1px solid #272829; text-align: center; border-bottom: 2px solid #272829;"> </th>
+                      <th colspan="3"
+                        style="border: 1px solid #272829; text-align: center; background-color: rgb(178, 217, 233); border-bottom: 2px solid #272829;">
+                        <b> Date: </b> {{reportDate | date:"d MMM y"}}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tr style="color: white;">
+                    <th style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">No
+                    </th>
+                    <th style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">Shift
+                    </th>
+                    <th colspan="2"
+                      style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">Staff
+                      Name</th>
+                    <th colspan="2"
+                      style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">Nozzle
+                      Number</th>
+                    <th style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                      Product</th>
+                    <th style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                      Opening Meter Reading</th>
+                    <th style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                      Closing Meter Reading</th>
+                    <th style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">Meter
+                      Sales (Rs)</th>
+                    <th style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">Meter
+                      Sales (Qty)</th>
+                    <th style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                      Testing (Qty)</th>
+                  </tr>
+                  <tbody>
+                    <tr *ngFor="let data of shiftNzDetails; let i = index">
+                      <td style="text-align: center; border: 1px solid #272829;"> {{i+1}} </td>
+                      <td style="text-align: center; border: 1px solid #272829;"> {{data.fuelShiftTimeShiftName}} </td>
+                      <td colspan="2" style="text-align: center; border: 1px solid #272829;"> {{data.firstName}}
+                        {{data.lastName}} </td>
+                      <td colspan="2" style="text-align: center; border: 1px solid #272829;">
+                        {{data.duNo}}-{{data.nozNo}} </td>
+                      <td style="text-align: center; border: 1px solid #272829;"> {{data.productName}} </td>
+                      <td style="text-align: center; border: 1px solid #272829;"> {{data.openMeter | number:'1.2-2'}}
+                      </td>
+                      <td style="text-align: center; border: 1px solid #272829;"> {{data.closingReading |
+                        number:'1.2-2'}} </td>
+                      <td style="text-align: center; border: 1px solid #272829;"> {{data.meterSaleAmount |
+                        number:'1.2-2'}} </td>
+                      <td style="text-align: center; border: 1px solid #272829;"> {{data.meterSaleQuantity |
+                        number:'1.2-2'}} </td>
+                      <td style="text-align: center; border: 1px solid #272829;">
+                        <span *ngIf="data.pumpTesting != 'null'">
+                          {{data.pumpTesting | number:'1.2-2'}}
+                        </span>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td colspan="6">
+                        <thead>
+                          <tr>
+                            <th colspan="12"
+                              style="text-align: center; border: 1px solid #272829; border-top: 2px solid #272829; background-color: rgb(178, 217, 233);">
+                              <h6><b>Total Product</b></h6>
+                            </th>
+                          </tr>
+                          <tr style="color: white;">
+                            <th colspan="2"
+                              style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                              No</th>
+                            <th colspan="2"
+                              style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                              Product</th>
+                            <th colspan="3"
+                              style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                              Shift Sales (Rs)</th>
+                            <th colspan="3"
+                              style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                              Shift Sales (Qty)</th>
+                            <th colspan="2"
+                              style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                              Total Testing (Qty)</th>
+
+                          </tr>
+                        </thead>
+                  <tbody>
+                    <tr *ngFor="let data of meterSalesDetails; let i = index">
+                      <td colspan="2" style="text-align: center; border: 1px solid #272829;"> {{i+1}} </td>
+                      <td colspan="2" style="text-align: center; border: 1px solid #272829;"> {{data.productName}} </td>
+                      <td *ngIf="data.meterSaleAmount != 'null'" colspan="3"
+                        style="text-align: center; border: 1px solid #272829;">
+                        <span *ngIf="data.meterSaleQuantity"> {{data.meterSaleAmount | number:'1.2-2'}} </span>
+                      </td>
+                      <td colspan="3" style="text-align: center; border: 1px solid #272829;">
+                        <span *ngIf="data.meterSaleQuantity">
+                          <span *ngIf="data.productName == 'CNG' ">
+                            {{data.meterSaleQuantity | number:'1.2-2'}} Kg
+                          </span>
+                          <span *ngIf="data.productName != 'CNG' ">
+                            {{data.meterSaleQuantity | number:'1.2-2'}} Ltrs
+                          </span>
+                        </span>
+                      </td>
+                      <td colspan="2" style="text-align: center; border: 1px solid #272829;">
+                        <span *ngIf="data.totalPumpTesting">
+                          <span *ngIf="data.productName == 'CNG' ">
+                            {{data.totalPumpTesting | number:'1.2-2'}} Kg
+                          </span>
+                          <span *ngIf="data.productName != 'CNG' ">
+                            {{data.totalPumpTesting | number:'1.2-2'}} Ltrs
+                          </span>
+                        </span>
+                      </td>
+                    </tr>
+                    <tr *ngFor="let data of cashLubeDetails; let i = index">
+                      <td colspan="2" style="text-align: center; border: 1px solid #272829;">
+                        {{meterSalesDetails.length+1}} </td>
+                      <td colspan="2" style="text-align: center; border: 1px solid #272829;">
+                        {{data.cashBillProduct}}(CASH) </td>
+                      <td colspan="3" style="text-align: center; border: 1px solid #272829;">
+                        {{data.totalCashAmount | number:'1.2-2'}}
+                      </td>
+                      <td colspan="3" style="text-align: center; border: 1px solid #272829;">
+                        {{data.totalQuantityInPieces | number:'1.2-2'}} Pieces
+                      </td>
+                      <td colspan="3" style="text-align: center; border: 1px solid #272829;">
+
+                      </td>
+                    </tr>
+                    <tr *ngFor="let data of crLubeDetails; let i = index">
+                      <td colspan="2" style="text-align: center; border: 1px solid #272829;"> {{i +1}}
+                      </td>
+                      <td colspan="2" style="text-align: center; border: 1px solid #272829;"> {{data.lubeName}}(CREDIT)
+                      </td>
+                      <td colspan="3" style="text-align: center; border: 1px solid #272829;">
+                        {{data.totalCreditAmount | number:'1.2-2'}}
+                      </td>
+                      <td colspan="3" style="text-align: center; border: 1px solid #272829;">
+                        {{data.totalQuantityInPieces | number:'1.2-2'}} Pieces
+                      </td>
+                      <td colspan="3" style="text-align: center; border: 1px solid #272829;">
+
+                      </td>
+                    </tr>
+
+                  </tbody>
+                  </td>
+                  <td colspan="6">
+                    <thead>
+                      <tr>
+                        <th colspan="12"
+                          style="text-align: center; border: 1px solid #272829; background-color: rgb(178, 217, 233); border-top: 2px solid #272829;">
+                          <h6><b>Credit Customer</b></h6>
+                        </th>
+                      </tr>
+                      <tr style="color: white;">
+                        <th colspan="2"
+                          style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">No
+                        </th>
+                        <th colspan="4"
+                          style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                          Khata Name</th>
+                        <th colspan="2"
+                          style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                          Product</th>
+                        <th colspan="2"
+                          style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                          Total Quantity (Qty)</th>
+                        <th colspan="2"
+                          style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                          Total Amount (Rs)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let data of creditDetails; let i = index">
+                        <td colspan="2" style="text-align: center; border: 1px solid #272829;"> {{i+1}} </td>
+                        <td colspan="4" style="text-align: center; border: 1px solid #272829;"> {{data.companyName}}
+                        </td>
+                        <td colspan="2" style="text-align: center; border: 1px solid #272829;"> {{data.productName}}
+                        </td>
+                        <td colspan="2" style="text-align: center; border: 1px solid #272829;">
+                          {{data.actualCreditQuantity | number:'1.2-2'}} </td>
+                        <td colspan="2" style="text-align: center; border: 1px solid #272829;"> {{data.creditAmount |
+                          number:'1.2-2'}} </td>
+                      </tr>
+                      <tr *ngFor="let data of creditLubeDetails; let i = index">
+                        <td colspan="2" style="text-align: center; border: 1px solid #272829;"> {{ i + 1}} </td>
+                        <td colspan="4" style="text-align: center; border: 1px solid #272829;"> {{data.companyName}}
+                        </td>
+                        <td colspan="2" style="text-align: center; border: 1px solid #272829;"> {{data.lubeName}} </td>
+                        <td colspan="2" style="text-align: center; border: 1px solid #272829;"> {{data.quantityInPieces
+                          | number:'1.2-2'}} Pieces</td>
+                        <td colspan="2" style="text-align: center; border: 1px solid #272829;"> {{data.creditAmount |
+                          number:'1.2-2'}} </td>
+                      </tr>
+                    </tbody>
+                    <tbody>
+                      <tr>
+                        <td colspan="8" style="text-align: center; border: 1px solid #272829;"> <b>Total</b> </td>
+                        <td colspan="2" style="text-align: center; border: 1px solid #272829;"> <b>{{totalCrCustQty |
+                            number:'1.2-2'}}</b> </td>
+                        <td colspan="2" style="text-align: center; border: 1px solid #272829;"> <b>{{totalCrCustAmt |
+                            number:'1.2-2'}}</b> </td>
+                      </tr>
+                    </tbody>
+                  </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="6">
+                      <thead>
+                        <tr>
+                          <th colspan="12"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(178, 217, 233); border-top: 2px solid #272829;">
+                            <h6><b>Collection Summary</b></h6>
+                          </th>
+                        </tr>
+                        <tr style="color: white;">
+                          <th colspan="2"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                            Shift Sales (Rs)</th>
+                          <th colspan="2"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                            A-Credit (Rs)</th>
+                          <th colspan="2"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                            B-Digital (Rs)</th>
+                          <th colspan="2"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                            C-Cash (Rs)</th>
+                          <th colspan="4"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                            Shift Tally (A+B+C) (Rs)</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="totalSalesDetails.length">
+                        <tr *ngFor="let data of totalSalesDetails; let i = index">
+                          <td colspan="2" style="text-align: center; border: 1px solid #272829;">
+                            {{(totalMeterSalesDetails) + (cashLubeAmt) + (crLubeAmt) | number:'1.2-2'}} </td>
+                          <td colspan="2" style="text-align: center; border: 1px solid #272829;"> {{data.creditTally |
+                            number:'1.2-2'}} </td>
+                          <td colspan="2" style="text-align: center; border: 1px solid #272829;"> {{(data.paytmTotal) |
+                            number:'1.2-2'}} </td>
+                          <td colspan="2" style="text-align: center; border: 1px solid #272829;"> {{data.cashTallyAmt |
+                            number:'1.2-2'}} </td>
+                          <td colspan="4" style="text-align: center; border: 1px solid #272829;">
+                            {{(data.totalAmountTally | number:'1.2-2')}} </td>
+                        </tr>
+                      </tbody>
+                    </td>
+                    <td colspan="6">
+                      <thead>
+                        <tr>
+                          <th colspan="12"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(178, 217, 233); border-top: 2px solid #272829;">
+                            <h6><b>Digital Summary</b></h6>
+                          </th>
+                        </tr>
+                        <tr style="color: white;">
+                          <th colspan="4"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                            Digital POS</th>
+                          <th colspan="4"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                            Details</th>
+                          <th colspan="4"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                            Amount (Rs)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let data of digitalDetails; let i = index">
+                          <td colspan="4" style="text-align: center; border: 1px solid #272829;"> {{data.terminalName}}
+                          </td>
+                          <td colspan="4" style="text-align: center; border: 1px solid #272829;"> {{data.transacId}}
+                          </td>
+                          <td colspan="4" style="text-align: center; border: 1px solid #272829;">
+                            {{data.paytmTotalAmount | number:'1.2-2'}} </td>
+                        </tr>
+                        <tr>
+                          <td colspan="8" style="text-align: center; border: 1px solid #272829;"><b>Total</b></td>
+                          <td colspan="4" style="text-align: center; border: 1px solid #272829;"><b>{{digitalTotalSales
+                              | number:'1.2-2'}}</b></td>
+                        </tr>
+                      </tbody>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="6">
+                      <thead>
+                        <tr>
+                          <th colspan="12"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(178, 217, 233); border-top: 2px solid #272829;">
+                            <h6><b>Credit Payment</b></h6>
+                          </th>
+                        </tr>
+                        <tr style="color: white;">
+                          <th colspan="3"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                            Khata Name</th>
+                          <th colspan="3"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                            Payment Mode</th>
+                          <th colspan="3"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                            Total Amount</th>
+                          <th colspan="3"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                            Account</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let data of creditPaymentDetails">
+                        <tr>
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{data.companyName}}
+                          </td>
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{data.paymentMethod}}
+                          </td>
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;">
+                            {{data.grandTotalAmount | number:'1.2-2'}} </td>
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{data.bankName}}
+                            {{data.accountNumber}} </td>
+                        </tr>
+                      </tbody>
+                    </td>
+                    <td colspan="6">
+                      <thead>
+                        <tr>
+                          <th colspan="12"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(178, 217, 233); border-top: 2px solid #272829;">
+                            <h6><b>Lubricant Summary Credit</b></h6>
+                          </th>
+                        </tr>
+                        <tr style="color: white;">
+                          <th colspan="4"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                            Lube Name</th>
+                          <th colspan="4"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                            Sales (Rs)</th>
+                          <th colspan="4"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                            Sales (Pieces)</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let data of lubeWiseDetails">
+                        <tr>
+                          <td colspan="4" style="text-align: center; border: 1px solid #272829;"> {{data.lubeName}}
+                          </td>
+                          <td colspan="4" style="text-align: center; border: 1px solid #272829;">
+                            {{data.totalLubeCrAmount | number:'1.2-2'}} </td>
+                          <td colspan="4" style="text-align: center; border: 1px solid #272829;">
+                            {{data.totalQuantityInPieces | number:'1.2-2'}} Pieces </td>
+                        </tr>
+                      </tbody>
+
+                      <thead>
+                        <tr>
+                          <th colspan="12"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(178, 217, 233);">
+                            <h6><b>Lubricant Summary Cash</b></h6>
+                          </th>
+                        </tr>
+                        <tr style="color: white;">
+                          <th colspan="4"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                            Lube Name</th>
+                          <th colspan="4"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                            Sales (Rs)</th>
+                          <th colspan="4"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                            Sales (Pieces)</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let data of lubeWiseCashDetails">
+                        <tr>
+                          <td colspan="4" style="text-align: center; border: 1px solid #272829;">
+                            {{data.cashBillProduct}} </td>
+                          <td colspan="4" style="text-align: center; border: 1px solid #272829;">
+                            {{data.totalLubeCashAmount | number:'1.2-2'}} </td>
+                          <td colspan="4" style="text-align: center; border: 1px solid #272829;">
+                            {{data.totalLubeCashQuantity | number:'1.2-2'}} {{data.cashBillUnit}} </td>
+                        </tr>
+                      </tbody>
+
+                      <thead>
+                        <tr style="color: white;">
+                          <th colspan="4"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                            Credit Sales (Rs)</th>
+                          <th colspan="4"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                            Cash Sales (Rs)</th>
+                          <th colspan="4"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(187, 52, 52);">
+                            Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td colspan="4" style="text-align: center; border: 1px solid #272829;"> {{totalLubeCrAmt |
+                            number:'1.2-2'}} </td>
+                          <td colspan="4" style="text-align: center; border: 1px solid #272829;"> {{totalLubeCashAmt |
+                            number:'1.2-2'}} </td>
+                          <td colspan="4" style="text-align: center; border: 1px solid #272829;"> {{(totalLubeCashAmt) +
+                            (totalLubeCrAmt) | number:'1.2-2'}} </td>
+                        </tr>
+                      </tbody>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="6">
+                      <thead>
+                        <tr>
+                          <th colspan="12"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(178, 217, 233); border-top: 2px solid #272829;">
+                            <h6><b>Bank Account Entries</b></h6>
+                          </th>
+                        </tr>
+                        <tr style="color: white;">
+                          <th colspan="2"
+                            style="text-align: center;border: solid 2px #272829; background-color: rgb(187, 52, 52);">
+                            Date</th>
+                          <th style="text-align: center;border: solid 2px #272829; background-color: rgb(187, 52, 52);">
+                            Book</th>
+                          <th colspan="3"
+                            style="text-align: center;border: solid 2px #272829; background-color: rgb(187, 52, 52);">
+                            Transaction Type</th>
+                          <th style="text-align: center;border: solid 2px #272829; background-color: rgb(187, 52, 52);">
+                            Details</th>
+                          <th colspan="2"
+                            style="text-align: center;border: solid 2px #272829; background-color: rgb(187, 52, 52);">
+                            Paid From</th>
+                          <th colspan="2"
+                            style="text-align: center;border: solid 2px #272829; background-color: rgb(187, 52, 52);">
+                            Paid To</th>
+                          <th style="text-align: center;border: solid 2px #272829; background-color: rgb(187, 52, 52);">
+                            Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let data of bankoverallReportData; let i = index">
+                        <tr>
+                          <td colspan="2" style="text-align: center; border: 1px solid #272829;">
+                            <span *ngIf="data.overallReportDataDate == '2022-01-01' ">
+                              1 Jan, 2022
+                            </span>
+                            <span *ngIf="data.overallReportDataDate != '2022-01-01' ">
+                              {{data.overallReportDataDate | date:"d MMM, yyyy"}}
+                            </span>
+                          </td>
+                          <td style="text-align: center; border: 1px solid #272829;"> {{data.overallReportDataBook}}
+                          </td>
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;">
+                            {{data.overallReportDataTransactionType}} </td>
+                          <td style="text-align: center; border: 1px solid #272829;"> {{data.overallReportDataDetails}}
+                          </td>
+                          <td colspan="2" style="text-align: center; border: 1px solid #272829;">
+                            {{data.paidFromAccountNumber}} {{data.paidFromBankName}}
+                            <i>{{data.overallReportDataInputFrom}} </i> </td>
+                          <td colspan="2" style="text-align: center; border: 1px solid #272829;">
+                            {{data.paidToAccountNumber}} {{data.paidToBankName}} <i>{{data.overallReportDataInputTo}}
+                            </i> </td>
+                          <td style="text-align: center; border: 1px solid #272829;"> {{data.overallReportDataAmount |
+                            number:"1.2-2" }} </td>
+                        </tr>
+                      </tbody>
+                    </td>
+                    <td colspan="6">
+                      <thead>
+                        <tr>
+                          <th colspan="12"
+                            style="text-align: center; border: 1px solid #272829; background-color: rgb(178, 217, 233); border-top: 2px solid #272829;">
+                            <h6><b>Expense</b></h6>
+                          </th>
+                        </tr>
+                        <tr style="color: white;">
+                          <th colspan="2"
+                            style="text-align: center;border: solid 2px #272829; background-color: rgb(187, 52, 52);">
+                            Date</th>
+                          <th style="text-align: center;border: solid 2px #272829; background-color: rgb(187, 52, 52);">
+                            Book</th>
+                          <th colspan="3"
+                            style="text-align: center;border: solid 2px #272829; background-color: rgb(187, 52, 52);">
+                            Transaction Type</th>
+                          <th style="text-align: center;border: solid 2px #272829; background-color: rgb(187, 52, 52);">
+                            Details</th>
+                          <th colspan="2"
+                            style="text-align: center;border: solid 2px #272829; background-color: rgb(187, 52, 52);">
+                            Paid From</th>
+                          <th colspan="2"
+                            style="text-align: center;border: solid 2px #272829; background-color: rgb(187, 52, 52);">
+                            Paid To</th>
+                          <th style="text-align: center;border: solid 2px #272829; background-color: rgb(187, 52, 52);">
+                            Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let data of overallReportDataData; let i = index">
+                        <tr>
+                          <td colspan="2" style="text-align: center; border: 1px solid #272829;">
+                            <span *ngIf="data.overallReportDataDate == '2022-01-01' ">
+                              1 Jan, 2022
+                            </span>
+                            <span *ngIf="data.overallReportDataDate != '2022-01-01' ">
+                              {{data.overallReportDataDate | date:"d MMM, yyyy"}}
+                            </span>
+                          </td>
+                          <td style="text-align: center; border: 1px solid #272829;"> {{data.overallReportDataBook}}
+                          </td>
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;">
+                            {{data.overallReportDataTransactionType}} </td>
+                          <td style="text-align: center; border: 1px solid #272829;"> {{data.overallReportDataDetails}}
+                          </td>
+                          <td colspan="2" style="text-align: center; border: 1px solid #272829;">
+                            {{data.paidFromAccountNumber}} {{data.paidFromBankName}}
+                            <i>{{data.overallReportDataInputFrom}} </i> </td>
+                          <td colspan="2" style="text-align: center; border: 1px solid #272829;">
+                            {{data.paidToAccountNumber}} {{data.paidToBankName}} <i>{{data.overallReportDataInputTo}}
+                            </i> </td>
+                          <td style="text-align: center; border: 1px solid #272829;"> {{data.overallReportDataAmount |
+                            number:"1.2-2" }} </td>
+                        </tr>
+                      </tbody>
+                    </td>
+                  </tr>
+                  <tr>
+
+                    <td colspan="6" *ngIf="variationData.length">
+                      <thead>
+                        <tr>
+                          <th colspan="9"
+                            style="text-align: center; border: 1px solid #272829; border-top: 2px solid #272829; border-bottom: 1px solid #272829;  background-color: rgb(178, 217, 233);">
+                            <h6><b>Variation</b></h6>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th colspan="3" style="text-align: center; border: 1px solid #272829;"> Product </th>
+                          <th colspan="3" style="text-align: center; border: 1px solid #272829;"> Quantity </th>
+                          <th colspan="3" style="text-align: center; border: 1px solid #272829;"> Amount </th>
+                        </tr>
+                        <tr *ngFor="let data of variationData">
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{data.productName}}
+                          </td>
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{data.variation |
+                            number: '1.2-2'}} </td>
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{data.variationAmt |
+                            number: '1.2-2'}} </td>
+                        </tr>
+                      </tbody>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="6">
+                      <thead>
+                        <tr>
+                          <th colspan="6"
+                            style="text-align: center; border: 1px solid #272829; border-top: 2px solid #272829; border-bottom: 1px solid #272829;  background-color: rgb(178, 217, 233);">
+                            <h6><b>Overall Transactions</b></h6>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr style="text-align: right;">
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"><b> Opening Balance
+                            </b></td>
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"><b> {{ openingBlc |
+                              number:'1.2-2'}} </b></td>
+                        </tr>
+                        <tr style="text-align: right;">
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Sale (cash)
+                          </td>
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;">
+                            {{(cashSales)+(totalLubeCashAmount) | number:'1.2-2'}} </td>
+                        </tr>
+                        <tr style="text-align: right;">
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Sale(Digital)
+                          </td>
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{ digitalSales |
+                            number:'1.2-2'}} </td>
+                        </tr>
+                        <tr style="text-align: right;">
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Sale(Credit)
+                          </td>
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{(creditSales) +
+                            (totalLubeCrAmount) | number:'1.2-2'}} </td>
+                        </tr>
+                        <tr style="text-align: right;">
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Payment
+                            received from customer (Cash) </td>
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{totalCrAmtCash |
+                            number:'1.2-2'}} </td>
+                        </tr>
+                        <tr style="text-align: right;">
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Payment
+                            received from customer (Other) </td>
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{totalCrAmtOther |
+                            number:'1.2-2'}} </td>
+                        </tr>
+                        <tr style="text-align: right;">
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Bank AC
+                            (Credit) </td>
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{totalCrBank |
+                            number:'1.2-2'}} </td>
+                        </tr>
+                        <tr style="text-align: right;">
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Misc Exp </td>
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{totalExpenseOtherAmt
+                            | number:'1.2-2'}} </td>
+                        </tr>
+                        <tr style="text-align: right;">
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Other Cash Expenses
+                          </td>
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;">
+                            {{(totalExpenseCASHAmt) + (shiftExpenseAmt) | number:'1.2-2'}} </td>
+                        </tr>
+                        <tr style="text-align: right;">
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Short Amount
+                          </td>
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{(shortAmtTotal) |
+                            number:'1.2-2'}} </td>
+                        </tr>
+                        <tr style="text-align: right;">
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Variation Amt
+                          </td>
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{(totalVariationAmt)
+                            | number:'1.2-2'}} </td>
+                        </tr>
+                        <tr style="text-align: right;">
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Net Total </td>
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{netTotal |
+                            number:'1.2-2'}} </td>
+                        </tr>
+                        <tr style="text-align: right;">
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Closing </td>
+                          <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{closingBlc |
+                            number:'1.2-2'}} </td>
+                        </tr>
+                      </tbody>
+                    </td>
+                  </tr>
+
+              </tbody>
+            </table>
+
+            </tbody>
+            <br><br><br><br><br><br><br><br><br><br>
+            </table>
+          </div>
+          <div class="col-md-1"></div>
+
+        </div>
+      </div>
+    </div>
+    <!-- New Code Ends -->
+
+    <div class="row noprint">
+      <div class="col-md-8"></div>
+      <div class="col-auto">
+        <button class="btn btn-success" printSectionId="sanjay" ngxPrint>print </button>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-primary" (click)="downloadReport()">download </button>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html>

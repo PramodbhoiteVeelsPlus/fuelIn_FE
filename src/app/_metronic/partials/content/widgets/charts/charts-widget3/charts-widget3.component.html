@@ -1,63 +1,304 @@
-<!-- begin::Header -->
-<div class="card-header border-0 pt-5">
-  <h3 class="card-title align-items-start flex-column">
-    <span class="card-label fw-bolder fs-3 mb-1">Recent Transactions</span>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <span *ngIf="dealerAccess">
+            <div class="row mb-2">
+              <div class="col-sm-4">
+              </div>
+              <div class="col-sm-8">
+                <div class="text-sm-end">
+                  <button type="button" class="btn btn-success btn-rounded mb-2 me-2"
+                    routerLink="/inventory/oilCompanyPurchase" [routerLinkActive]="['router-link-active']">
 
-    <span class="text-muted fw-bold fs-7">More than 1000 new records</span>
-  </h3>
+                    + Add Oil Company Purchase</button>
+                </div>
+              </div>
+            </div>
+            <div class="modal-body">
 
-  <!-- begin::Toolbar -->
-  <div class="card-toolbar" data-kt-buttons="true">
-    <a
-      class="
-        btn btn-sm btn-color-muted btn-active btn-active-primary
-        active
-        px-4
-        me-1
-      "
-      id="kt_charts_widget_3_year_btn"
-    >
-      Year
-    </a>
+              <form [formGroup]="viewOilCompanyForm">
+                <div class="form-body">
 
-    <a
-      class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1"
-      id="kt_charts_widget_3_month_btn"
-    >
-      Month
-    </a>
+                  <div class="row">
 
-    <a
-      class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4"
-      id="kt_charts_widget_3_week_btn"
-    >
-      Week
-    </a>
+                    <label for="example-text-input" class="col-auto col-form-label">Date Range</label>
+
+
+                    <div class="col-md-2">
+                      <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+                        name="startDate" ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker
+                        #startDate="ngbDatepicker" formControlName="startDate">
+                    </div>
+                    <div class="col-md-2">
+                      <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+                        name="endDate" ngbTooltip="End Date" (click)="endDate.toggle()" ngbDatepicker
+                        #endDate="ngbDatepicker" formControlName="endDate">
+                    </div>
+
+                    <div class="col-auto">&nbsp;&nbsp;&nbsp;
+                      <button type="button" class="btn btn-primary" (click)="getOILCOMPANYDataInFuelExpenseFilter()"
+                        aria-label="Close">
+                        Submit</button>
+                    </div>
+
+                    <div class="col-auto">&nbsp;&nbsp;&nbsp;
+                      <button type="button" class="btn btn-secondary" (click)="clearForm()" aria-label="Close">
+                        Cancel</button>
+                    </div>
+
+                    <div class="col-lg-2"></div>
+
+
+                    <div class="col-lg-1">
+                      <span style="font-size: 35px;cursor: pointer;" (click)="exportToPDF()" ngbTooltip="Download PDF"
+                        placement="bottom"><i class="fas fa-file-pdf"></i></span><br>
+                    </div>
+                    <div class="col-lg-1">
+                      <span style="font-size: 35px;cursor: pointer;" (click)="oilCompanyExcelDownload()"
+                        ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv"></i></span><br>
+                    </div>
+
+
+                  </div>
+                </div>
+
+                <br>
+
+              </form>
+
+
+              <div class="row" *ngIf="showPriceTable">
+                <div class="col-md-6">
+                  <div class="table-responsive mb-0">
+                    <table class="table table-centered table-nowrap">
+                      <thead class="table-light">
+                        <tr>
+                          <th style="text-align: center;border-width: 1px; border-color: #000;"> Product</th>
+                          <th style="text-align: center;border-width: 1px; border-color: #000;"> Quantity</th>
+                          <th style="text-align: center;border-width: 1px; border-color: #000;"> Amount </th>
+
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let data of oilCompanyTotalQuantity ;  let i = index;">
+                          <td style="border-width: 1px; border-color: #000;"> {{data.productName}} </td>
+                          <td style="border-width: 1px; border-color: #000;"> {{data.totalQuantity | number:'1.2-2'}}
+                          </td>
+                          <td style="border-width: 1px; border-color: #000;"> {{data.totalAmount | number:'1.2-2'}}
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td colspan="2" style="border-width: 1px; border-color: #000;">Total </td>
+                          <td style="border-width: 1px; border-color: #000;">{{allAmtTotal | number:'1.2-2'}}</td>
+
+                        </tr>
+
+                      </tbody>
+
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Second table -new table -->
+
+              <div *ngIf="isOilCompanyDetails" class="table-responsive mb-0">
+                <table class="table table-centered table-nowrap">
+                  <thead class="table-light">
+                    <tr>
+                      <th></th>
+
+                      <th style="text-align: center;"> Received Date</th>
+                      <th style="text-align: center;"> Invoice Number </th>
+                      <th style="text-align: center;"> Vehicle Number </th>
+                      <th style="text-align: center;"> Product</th>
+                      <th style="text-align: center;"> Quantity</th>
+                      <th style="text-align: center;"> Total Amount </th>
+
+                    </tr>
+                  </thead>
+                  <tbody
+                    *ngFor="let data of oilCompanyDetails | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total };  let i = index;">
+
+                    <tr>
+
+                      <td style="cursor: pointer;">
+                        <a class="expand-row"
+                          (click)="changeValue(i,data.invoiceDate,data.vehicleNumber,data.invoiceNumber,data.receivedDate,data.productName,data.quantity,data.basicAmt,data.vatAmt,data.vatPercent,data.cessAmt,data.totalTax,data.components,data.totalAmount,data.createdBy)"
+                          style="font-size: 19px;">
+                          +
+                        </a>
+                      </td>
+
+                      <!-- receivedDate -->
+                      <td style="text-align: center;">
+                        <span *ngIf="data.receivedDate == '2022-01-01' ">
+                          1 Jan, 2022
+                        </span>
+                        <span *ngIf="data.receivedDate != '2022-01-01' ">
+                          {{data.receivedDate | date:"d MMM, yyyy" }}
+                        </span>
+
+                      </td>
+
+                      <!-- invoiceNumber -->
+                      <td style="text-align: center;">
+                        <input type="text" class="form-control" [(ngModel)]="data.invoiceNumber"
+                          style="text-align: center;" [ngModelOptions]="{standalone: true}" placeholder="invoice Number"
+                          disabled />
+                      </td>
+
+                      <!-- vehicleNumber -->
+                      <td style="text-align: center;">
+                        <input type="text" class="form-control" [(ngModel)]="data.vehicleNumber"
+                          style="text-align: center;" [ngModelOptions]="{standalone: true}" placeholder="vehicle Number"
+                          disabled />
+                      </td>
+
+                      <!-- product -->
+                      <td style="text-align: center;">
+                        <input type="text" class="form-control" [(ngModel)]="data.productName"
+                          style="text-align: center;" [ngModelOptions]="{standalone: true}" disabled />
+                      </td>
+
+                      <!-- quantity -->
+                      <td style="text-align: center;">
+                        <input type="text" class="form-control" [(ngModel)]="data.quantity" style="text-align: center;"
+                          [ngModelOptions]="{standalone: true}" placeholder="Quantity" disabled />
+                      </td>
+
+                      <!-- totalAmount -->
+                      <td style="text-align: center;">
+                        <input type="text" class="form-control" [(ngModel)]="data.totalAmount"
+                          style="text-align: center;" [ngModelOptions]="{standalone: true}" placeholder="Total Amount"
+                          disabled />
+                      </td>
+
+                    </tr>
+
+                    <tr *ngIf="show  && i == rowNumber" class="sub-table no-bg">
+                      <td align="center"> </td>
+                      <td colspan="12" class="p-0">
+                        <table class="table mb-0 table-striped">
+                          <thead class="table-light">
+                            <tr>
+                              <th></th>
+                              <th style="text-align: center;"> Invoice Date</th>
+                              <th style="text-align: center;"> Basic Amount</th>
+                              <th style="text-align: center;"> Vat Amount</th>
+                              <th style="text-align: center;"> Vat %</th>
+                              <th style="text-align: center;"> Cess Amount</th>
+                              <th style="text-align: center;"> Total Tax</th>
+                              <th style="text-align: center;"> Other Components </th>
+                              <th style="text-align: center;"> Action </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td></td>
+
+                              <!-- invoiceDate -->
+                              <td style="text-align: center;">
+                                <span *ngIf="data.invoiceDate == '2022-01-01' ">
+                                  1 Jan, 2022
+                                </span>
+                                <span *ngIf="data.invoiceDate != '2022-01-01' ">
+                                  {{data.invoiceDate | date:"d MMM, yyyy" }}
+                                </span>
+                              </td>
+
+                              <!-- basicAmount -->
+                              <td style="text-align: center;">
+                                <input type="text" class="form-control" [(ngModel)]="data.basicAmt"
+                                  style="text-align: center;" [ngModelOptions]="{standalone: true}"
+                                  placeholder="Basic Amount" (blur)="calculateOilCoTotalAmountUpdate(i)" />
+                              </td>
+
+                              <!-- vatAmount -->
+                              <td style="text-align: center;">
+                                <input type="text" class="form-control" [(ngModel)]="data.vatAmt"
+                                  style="text-align: center;" [ngModelOptions]="{standalone: true}"
+                                  placeholder="VAT Amount" (change)="calculateVATPercentUpdate(i)" />
+                              </td>
+
+                              <!-- vat % -->
+                              <td style="text-align: center;">
+                                <input type="text" class="form-control" [(ngModel)]="data.vatPercent"
+                                  style="text-align: center;" [ngModelOptions]="{standalone: true}" placeholder="VAT %"
+                                  disabled />
+                              </td>
+
+                              <!-- cessAmount -->
+                              <td style="text-align: center;">
+                                <input type="text" class="form-control" [(ngModel)]="data.cessAmt"
+                                  style="text-align: center;" [ngModelOptions]="{standalone: true}"
+                                  placeholder="Cess Amount" (blur)="calculateOilCoTotalAmountUpdate(i)" />
+                              </td>
+
+                              <!-- totalTax -->
+                              <td style="text-align: center;">
+                                <input type="text" class="form-control" [(ngModel)]="data.totalTax"
+                                  style="text-align: center;" [ngModelOptions]="{standalone: true}"
+                                  placeholder="Total Tax" disabled />
+                              </td>
+
+                              <!-- other components -->
+                              <td style="text-align: center;">
+                                <input type="text" class="form-control" [(ngModel)]="data.components"
+                                  style="text-align: center;" [ngModelOptions]="{standalone: true}"
+                                  placeholder="Other Components" (blur)="calculateOilCoTotalAmountUpdate(i)" />
+                              </td>
+
+
+                              <td style="text-align: left;cursor: pointer;">
+                                <div ngbDropdown placement="bottom-left">
+                                  <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                                    aria-expanded="true"></i>
+                                  <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+
+                                    <a class="dropdown-item" href="javascript: void(0);"
+                                      (click)="oilCompanyUpdate(data.fuelExpenseId,i)">
+                                      <i class="fas fa-edit" style="color: #4e9b4e;">
+                                      </i> &nbsp; Update</a>
+
+                                    <a class="dropdown-item" href="javascript: void(0);"
+                                      (click)="deleteOilCompanyPurchase(data.fuelExpenseId)">
+                                      <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
+                                  </div>
+                                </div>
+                              </td>
+
+                            </tr>
+
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+
+                </table>
+                <div class="text-md-right float-md-end pagination-rounded">
+                  <!-- begin::Pagination -->
+                  <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                    style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                  </pagination-controls>
+                  <!-- end::Pagination -->
+                </div>
+              </div>
+
+              <div *ngIf="!isOilCompanyDetails" class="table-responsive mb-0">
+                <h4 style="text-align: center; color: red;">
+                  You Don't have Data for Salected Date Range..!
+                </h4>
+                <br><br><br><br><br><br><br><br><br><br>
+              </div>
+            </div>
+
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
-  <!-- end::Toolbar -->
 </div>
-<!-- end::Header -->
-
-<!-- begin::Body -->
-<div class="card-body">
-  <!-- begin::Chart -->
-  <div #chartRef id="kt_charts_widget_3_chart" [style.height]="'350px'">
-    <apx-chart
-      [series]="chartOptions.series"
-      [chart]="chartOptions.chart"
-      [xaxis]="chartOptions.xaxis"
-      [yaxis]="chartOptions.yaxis"
-      [dataLabels]="chartOptions.dataLabels"
-      [stroke]="chartOptions.stroke"
-      [legend]="chartOptions.legend"
-      [fill]="chartOptions.fill"
-      [states]="chartOptions.states"
-      [tooltip]="chartOptions.tooltip"
-      [colors]="chartOptions.colors"
-      [markers]="chartOptions.markers"
-      [plotOptions]="chartOptions.plotOptions"
-    ></apx-chart>
-  </div>
-  <!-- end::Chart -->
-</div>
-<!-- end::Body -->
