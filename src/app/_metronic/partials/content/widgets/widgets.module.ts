@@ -162,6 +162,7 @@ import { ListsWidget11Component } from './lists/lists-widget11/lists-widget11.co
 import { ListsWidget12Component } from './lists/lists-widget12/lists-widget12.component';
 import { ListsWidget13Component } from './lists/lists-widget13/lists-widget13.component';
 import { ListsWidget14Component } from './lists/lists-widget14/lists-widget14.component';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { ListsWidget15Component } from './lists/lists-widget15/lists-widget15.component';
 import { FeedsWidget10Component } from './feeds/feeds-widget10/feeds-widget10.component';
 import { FeedsWidget11Component } from './feeds/feeds-widget11/feeds-widget11.component';
@@ -344,7 +345,8 @@ import { FeedsWidget13Component } from './feeds/feeds-widget13/feeds-widget13.co
     NgbPaginationModule,
     NgxPaginationModule,
     RouterModule,
-    NgbNavModule
+    NgbNavModule,
+    NgxSliderModule
   ],
   exports: [
     // Advanced Tables
