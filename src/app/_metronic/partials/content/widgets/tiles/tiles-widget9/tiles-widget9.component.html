@@ -1,0 +1,922 @@
+<div class="card">
+    <div class="card-body">
+        <form [formGroup]="filterForm">
+            <div class="mb-3 row">
+                <label for="example-text-input" class="col-md-2 col-form-label">Year</label>
+                <div class="col-md-10">
+                    <select formControlName="year" class="form-select" required (change)="selectYear($event)">
+                        <option value={{currentYear}}> {{currentYear}} </option>
+                        <option value={{lastYear}}> {{lastYear}} </option>
+                        <option value={{last2Year}}> {{last2Year}} </option>
+                        <option value={{lastFourthYear}}> {{lastFourthYear}} </option>
+                        <option value={{lastFifthYear}}> {{lastFifthYear}} </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <br><br>
+                    <label> Month </label>
+                </div>
+                <div class="col-md-10">
+                    <div class="p-3">
+                        <ngx-slider (click)="setMonth(tickValue)" [(value)]="tickValue"
+                            [options]="tickValueoptions"></ngx-slider>
+                    </div>
+                </div>
+            </div>
+            <br> <br>
+
+            <div class="mb-3 row">
+                <label for="example-text-input" class="col-md-2 col-form-label">Product</label>
+                <div class="col-md-10">
+                    <select formControlName="product" class="form-select" (change)="getRateByProduct($event)" required>
+                        <option value=""> Select Product </option>
+                        <option *ngFor="let data of productsList" [value]="data.fuelProductsId">
+                            {{data.productName}} </option>
+                    </select>
+                </div>
+            </div>
+            <br> <br>
+            <div *ngIf="productWiseMeterSales.length" class="mb-3 row">
+                <div class="col-md-12">
+                    <div class="my-2 mx-4 table-responsive">
+                        <table class="table table-hover table-striped" style="border: 1px solid #272829; ">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: left;border: 1px solid #272829; ">
+                                        Product
+                                    </th>
+                                    <th style="text-align: left;border: 1px solid #272829; ">
+                                        Meter Sales (Qty)
+                                    </th>
+                                    <th style="text-align: left;border: 1px solid #272829; ">
+                                        Meter Sales (Rs)
+                                    </th>
+                                    <th style="text-align: left;border: 1px solid #272829; ">
+                                        Total Stock (Qty)
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of productWiseMeterSales">
+                                    <td style="text-align: left;border: 1px solid #272829;">
+                                        {{data.productName}}
+                                    </td>
+                                    <td style="text-align: left;border: 1px solid #272829;">
+                                        {{data.totalMeterSalesQty | number:'1.2-2'}}
+                                    </td>
+                                    <td style="text-align: left;border: 1px solid #272829;">
+                                        Rs {{data.totalMeterSalesAmt | number:'1.2-2'}}
+                                    </td>
+                                    <td style="text-align: left;border: 1px solid #272829;">
+                                        {{data.totalStock | number:'1.2-2'}}
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- </form> -->
+            <hr>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <ul ngbNav #customNav="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified"
+                                style="width: 50%;">
+                                <li [ngbNavItem]="1">
+                                    <a ngbNavLink>
+                                        <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                        <span class="d-none d-sm-block" style="font-size: 13.5px;">DSR-METER</span>
+                                    </a>
+                                    <ng-template ngbNavContent>
+                                        <ng-template [ngTemplateOutlet]="DSRMeter"></ng-template>
+                                    </ng-template>
+                                </li>
+                                <li [ngbNavItem]="2">
+                                    <a ngbNavLink>
+                                        <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                                        <span class="d-none d-sm-block" style="font-size: 13.5px;">DSR-TANK</span>
+                                    </a>
+                                    <ng-template ngbNavContent>
+                                        <ng-template [ngTemplateOutlet]="DSRTank"></ng-template>
+                                    </ng-template>
+                                </li>
+                                <li [ngbNavItem]="3">
+                                    <a ngbNavLink>
+                                        <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                                        <span class="d-none d-sm-block" style="font-size: 13.5px;">DSR</span>
+                                    </a>
+                                    <ng-template ngbNavContent>
+                                        <ng-template [ngTemplateOutlet]="DSR"></ng-template>
+                                    </ng-template>
+                                </li>
+                            </ul>
+                            <div [ngbNavOutlet]="customNav"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ng-template #DSRMeter>
+                <br><br>
+                <div class="row" *ngIf="isAdd">
+                    <div class="col col-xl-12 col-lg-12">
+                        <div class="table-responsive mb-0">
+                            <table class="table table-centered">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: left;"> Date </th>
+                                        <th style="text-align: left;"> Rate </th>
+
+                                        <th *ngFor="let data of readingData" style="text-align: left;">
+                                            {{data.duNo}}{{data.nozNo}}
+                                        </th>
+                                        <th style="text-align: left;"> Action </th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="!dateNotRate">
+                                    <tr *ngFor="let data of addDSRArray">
+                                        <td>
+                                            <br>
+                                            <input class="form-control" placeholder="DD-MM-YYYY"
+                                                style="background-color: #ffffff;" name="startDate"
+                                                ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker
+                                                #startDate="ngbDatepicker" formControlName="startDate"
+                                                (dateSelect)="getRateReadingByDate()">
+                                        </td>
+                                        <td *ngIf="rateSelect" style="text-align: left; width: 75px">
+                                            <br>
+                                            <select class="form-select" aria-placeholder="select rate"
+                                                [(ngModel)]="data.rateId" style="width: 75px"
+                                                (dateSelect)="getRateReadingByDate()"
+                                                [ngModelOptions]="{standalone: true}">
+                                                <option *ngFor="let rateData of data.rateDetails"
+                                                    [value]="rateData.fuelPriceTableId">
+                                                    {{rateData.productSellingPrice}}
+                                                </option>
+                                            </select>
+                                        </td>
+                                        <td *ngIf="!rateSelect" style="text-align: left;">
+                                            <br>
+                                            <input type="number" class="form-control" [(ngModel)]="data.rate"
+                                                style="text-align: left;" [ngModelOptions]="{standalone: true}"
+                                                placeholder="rate" readonly />
+                                        </td>
+                                        <td *ngFor="let data of readingData" style="text-align: left;">
+                                            <br>
+                                            <span *ngIf="data.status == 'MAPPED' ">
+                                                <input type="number" class="form-control"
+                                                    [(ngModel)]="data.meterReading" style="text-align: left;"
+                                                    [ngModelOptions]="{standalone: true}" placeholder="reading" />
+                                                &nbsp;
+                                                <input type="number" class="form-control" [(ngModel)]="data.pumpTesting"
+                                                    style="text-align: left;" [ngModelOptions]="{standalone: true}"
+                                                    placeholder="testing" />
+                                                &nbsp;
+                                            </span>
+                                            <span *ngIf="data.status != 'MAPPED' ">
+                                                <input type="number" class="form-control"
+                                                    [(ngModel)]="data.meterReading" style="text-align: left;"
+                                                    [ngModelOptions]="{standalone: true}"
+                                                    placeholder="opening meter reading" disabled />
+                                                &nbsp;
+                                                <input type="number" class="form-control" [(ngModel)]="data.pumpTesting"
+                                                    style="text-align: left;" [ngModelOptions]="{standalone: true}"
+                                                    placeholder="pump testing" disabled />
+                                                &nbsp;
+                                            </span>
+                                        </td>
+                                        <td style="text-align: left;">
+                                            <br>
+                                            <button type="submit" class="btn btn-outline-success"
+                                                style="margin-top: 28px;" (click)="submitDSRDetails()">
+                                                submit
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="dateNotRate">
+                                    <tr *ngFor="let data of addDSRArray">
+                                        <td>
+                                            <br>
+                                            <input class="form-control" placeholder="DD-MM-YYYY"
+                                                style="background-color: #ffffff;" name="startDate"
+                                                ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker
+                                                #startDate="ngbDatepicker" formControlName="startDate"
+                                                (dateSelect)="getRateReadingByDate()">
+                                        </td>
+                                        <td style="text-align: left;">
+                                            <br>
+                                            <input type="number" class="form-control" [(ngModel)]="data.rate"
+                                                style="text-align: left;" [ngModelOptions]="{standalone: true}"
+                                                placeholder="rate" readonly />
+                                        </td>
+                                        <td *ngFor="let data of readingData" style="text-align: left;">
+                                            <br>
+                                            <span *ngIf="data.status == 'MAPPED' ">
+                                                <input type="number" class="form-control"
+                                                    [(ngModel)]="data.meterReading" style="text-align: left;"
+                                                    [ngModelOptions]="{standalone: true}" placeholder="reading"
+                                                    disabled />
+                                                &nbsp;
+                                                <input type="number" class="form-control" [(ngModel)]="data.pumpTesting"
+                                                    style="text-align: left;" [ngModelOptions]="{standalone: true}"
+                                                    placeholder="testing" disabled />
+                                                &nbsp;
+                                            </span>
+                                            <span *ngIf="data.status != 'MAPPED' ">
+                                                <input type="number" class="form-control"
+                                                    [(ngModel)]="data.meterReading" style="text-align: left;"
+                                                    [ngModelOptions]="{standalone: true}"
+                                                    placeholder="opening meter reading" disabled />
+                                                &nbsp;
+                                                <input type="number" class="form-control" [(ngModel)]="data.pumpTesting"
+                                                    style="text-align: left;" [ngModelOptions]="{standalone: true}"
+                                                    placeholder="pump testing" disabled />
+                                                &nbsp;
+                                            </span>
+                                        </td>
+                                        <td style="text-align: left;">
+                                            <br>
+                                            <button type="submit" class="btn btn-outline-success"
+                                                style="margin-top: 28px;" (click)="submitDSRDetails()">
+                                                submit
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <ng-template #setFuelPrice></ng-template>
+                            </table>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-2" *ngIf="!isAdd">
+                        <i *ngIf="showViewTableMETER" style="color:#138496;cursor:pointer;" class="fas fa-edit"
+                            ngbTooltip="Update / Remove" placement="bottom" (click)="updateCol()">
+                        </i>
+                    </div>
+                    <div class="col-sm-6">
+                    </div>
+                    <div *ngIf="!isAdd" class="col-sm-1">
+                        <div *ngIf="showViewTableMETER" class="text-sm-end">
+                            <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF" placement="bottom"
+                                (click)="exportToPDF()"><i class="fas fa-file-pdf"></i></span>
+
+                        </div>
+                    </div>
+                    <div *ngIf="!isAdd" class="col-sm-1">
+                        <div *ngIf="showViewTableMETER" class="text-sm-end">
+                            <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download CSV" placement="bottom"
+                                (click)="exportexcel()"><i class="fas fa-file-csv"></i></span>
+                        </div>
+                    </div>
+                    <div *ngIf="!isAdd" class="col-sm-2">
+                        <div class="text-sm-end">
+                            <button type="button" class="btn btn-success btn-rounded mb-2 me-2"
+                                (click)="showAddTable()">
+                                <i class="mdi mdi-plus mr-1"></i>
+                                + Add DSR-Meter </button>
+                        </div>
+                    </div>
+                    <div *ngIf="isAdd" class="col-sm-4">
+                        <div class="text-sm-end">
+                            <button type="button" class="btn btn-success btn-rounded mb-2 me-2"
+                                (click)="showAddTable()">
+                                View DSR-Meter </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="showViewTableMETER">
+                    <div *ngIf="!isAdd" class="col col-xl-12 col-lg-12">
+                        <div class="table-responsive mb-0">
+                            <table *ngIf="isUpdateCol" class="table table-centered table-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: left;"> Date </th>
+                                        <th style="text-align: left;"> Rate </th>
+                                        <th style="text-align: left;"> Meter sales (Qty) </th>
+                                        <th style="text-align: left;"> Meter sales (Rs) </th>
+                                        <th style="text-align: left;"> Actions </th>
+                                        <th *ngFor="let data of nzData" style="text-align: left;">
+                                            {{data.duNz}}
+                                            <br>
+                                            MR | <span style="color: red;">PT</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let data of DsrDetails; let i = index;">
+                                    <tr>
+                                        <td style="text-align: left;">
+                                            <span *ngIf="data.dsrDetailsEntryDate == '2022-01-01' ">
+                                                1 Jan, 2022
+                                            </span>
+                                            <span *ngIf="data.dsrDetailsEntryDate != '2022-01-01' ">
+                                                {{data.dsrDetailsEntryDate | date:"d MMM, yyyy" }}
+                                            </span>
+                                        </td>
+                                        <td style="text-align: left;">
+                                            {{data.rate | number:'1.2-2'}}
+                                        </td>
+                                        <td style="text-align: left;">
+                                            <span *ngIf="(data.meterSalesQuantity) >= 0 ">
+                                                {{data.meterSalesQuantity | number:'1.2-2'}}
+                                            </span>
+                                            <span *ngIf="(data.meterSalesQuantity) < 0 " style="color: red;">
+                                                {{data.meterSalesQuantity | number:'1.2-2'}}
+                                            </span>
+                                        </td>
+                                        <td style="text-align: left;">
+                                            <span *ngIf="(data.meterSalesRs) >= 0 ">
+                                                {{(data.meterSalesRs) | number:'1.2-2'}}
+                                            </span>
+                                            <span *ngIf="(data.meterSalesRs) < 0 " style="color: red;">
+                                                {{(data.meterSalesRs) | number:'1.2-2'}}
+                                            </span>
+                                        </td>
+                                        <td style="text-align: left;cursor: pointer;">
+                                            <div ngbDropdown placement="bottom-left">
+                                                <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle
+                                                    data-toggle="dropdown" aria-expanded="true"></i>
+                                                <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                                                    <a class="dropdown-item" href="javascript: void(0);"
+                                                        (click)="openUpdateModal(updateModal,data.nzDSRData)">
+                                                        <i style="color:#138496;cursor:pointer;" class="fas fa-edit">
+                                                        </i> Edit </a>
+
+                                                    <a class="dropdown-item" href="javascript: void(0);"
+                                                        (click)=deleteEntry(data.dsrDetailsId)>
+                                                        <i style="color:red" class="fa fa-ban">
+                                                        </i> Remove
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td *ngFor="let dataNz of data.nzDSRData" style="text-align: left;">
+                                            {{(dataNz.nzDetailsDSRMeterReading) | number:'1.2-2'}} | <span
+                                                style="color: red;"> {{(dataNz.nzDetailsDSRPumpTesting) |
+                                                number:'1.2-2'}} </span>
+                                            <br>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                                <ng-template #updateModal let-c="close" let-d="dismiss">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">
+                                            <label>
+                                                <h4>
+                                                    <strong>
+                                                        Update Readings <br></strong>
+                                                </h4>
+                                            </label>
+                                        </h4>
+                                        <button type="button" class="btn btn-danger" aria-label="Close"
+                                            (click)="d('Cross click')">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table table-centered table-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th style="text-align: left;"> Pump Nozzle </th>
+                                                    <th style="text-align: left;"> Opening Meter Reading </th>
+                                                    <th style="text-align: left;"> Pump Testing </th>
+                                                    <th style="text-align: left;"> Action </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let data of nzDSRDataUpdate; let i = index;">
+                                                    <td style="text-align: left;">
+                                                        <br>
+                                                        <b> {{data.duNz}} </b>
+                                                    </td>
+
+                                                    <td style="text-align: left;">
+                                                        <br>
+                                                        <input type="number" class="form-control"
+                                                            [(ngModel)]="data.nzDetailsDSRMeterReading"
+                                                            style="text-align: left;"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            placeholder="opening meter reading" />
+                                                    </td>
+
+                                                    <td style="text-align: left;">
+                                                        <br>
+                                                        <input type="number" class="form-control"
+                                                            [(ngModel)]="data.nzDetailsDSRPumpTesting"
+                                                            style="text-align: left;"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            placeholder="pump testing" />
+                                                    </td>
+
+                                                    <td style="text-align: left;">
+                                                        <br>
+                                                        <button type="submit"
+                                                            class="btn btn-outline-success my-2 my-sm-0"
+                                                            (click)="updateDSRDetails(data.nzDetailsDSRId,i)">
+                                                            Update
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </ng-template>
+
+                            </table>
+                            <table id="excel-table" *ngIf="!isUpdateCol" class="table table-centered table-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: left;"> Date </th>
+                                        <th style="text-align: left;"> Rate </th>
+                                        <th style="text-align: left;"> Meter sales (Qty) </th>
+                                        <th style="text-align: left;"> Meter sales (Rs) </th>
+
+                                        <th *ngFor="let data of nzData" style="text-align: left;">
+                                            {{data.duNz}}<br>
+                                            MR | <span style="color: red;">PT</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let data of DsrDetails; let i = index;">
+                                    <tr>
+                                        <td style="text-align: left;">
+                                            <span *ngIf="data.dsrDetailsEntryDate == '2022-01-01' ">
+                                                1 Jan, 2022
+                                            </span>
+                                            <span *ngIf="data.dsrDetailsEntryDate != '2022-01-01' ">
+                                                {{data.dsrDetailsEntryDate | date:"d MMM, yyyy" }}
+                                            </span>
+                                        </td>
+                                        <td style="text-align: left;">
+                                            {{data.rate | number:'1.2-2'}}
+                                        </td>
+                                        <td style="text-align: left;">
+                                            <span *ngIf="(data.meterSalesQuantity) >= 0 ">
+                                                {{data.meterSalesQuantity | number:'1.2-2'}}
+                                            </span>
+                                            <span *ngIf="(data.meterSalesQuantity) < 0 " style="color: red;">
+                                                {{data.meterSalesQuantity | number:'1.2-2'}}
+                                            </span>
+                                        </td>
+                                        <td style="text-align: left;">
+                                            <span *ngIf="(data.meterSalesQuantity) >= 0 ">
+                                                {{(data.meterSalesQuantity) * (data.rate) | number:'1.2-2'}}
+                                            </span>
+                                            <span *ngIf="(data.meterSalesQuantity) < 0 " style="color: red;">
+                                                {{(data.meterSalesQuantity) * (data.rate) | number:'1.2-2'}}
+                                            </span>
+                                        </td>
+                                        <td *ngFor="let dataNz of data.nzDSRData" style="text-align: left;">
+                                            {{(dataNz.nzDetailsDSRMeterReading) | number:'1.2-2'}} | <span
+                                                style="color: red;"> {{(dataNz.nzDetailsDSRPumpTesting) |
+                                                number:'1.2-2'}} </span>
+                                            <br>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="!showViewTableMETER">
+                    <h5 *ngIf="!isAdd"> Don't have data </h5>
+                </div>
+            </ng-template>
+
+            <ng-template #DSRTank>
+                <br>
+                <div class="row" *ngIf="isAdd1">
+                    <div class="col col-xl-12 col-lg-12">
+                        <div class="table-responsive mb-0">
+                            <table class="table table-centered table-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: left;"> Date </th>
+                                        <th style="text-align: left;"> Rate </th>
+                                        <th *ngFor="let data of tkDetails" style="text-align: left;">
+                                            {{data.tankNo}}
+                                        </th>
+                                        <th style="text-align: left;"> Action </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of addDSRArray1">
+                                        <td style="text-align: left;">
+                                            <br>
+                                            <input class="form-control" placeholder="DD-MM-YYYY" name="date"
+                                                (click)="startDate.toggle()" readonly formControlName="startDate1"
+                                                style="background-color: #ffffff;" ngbDatepicker
+                                                #startDate="ngbDatepicker" (dateSelect)="getRateByDate()">
+                                        </td>
+
+                                        <td *ngIf="rateSelect1" style="text-align: left;">
+                                            <br>
+                                            <select class="form-select" aria-placeholder="select rate"
+                                                [(ngModel)]="data.rateId" (dateSelect)="getRateByDate()"
+                                                [ngModelOptions]="{standalone: true}">
+                                                <option *ngFor="let rateData of data.rateDetails"
+                                                    [value]="rateData.fuelPriceTableId">
+                                                    {{rateData.productSellingPrice}}
+                                                </option>
+                                            </select>
+
+                                        </td>
+                                        <td *ngIf="!rateSelect1" style="text-align: left;">
+                                            <br>
+                                            <input type="number" class="form-control" [(ngModel)]="data.rate"
+                                                style="text-align: left;" [ngModelOptions]="{standalone: true}"
+                                                placeholder="rate" readonly />
+                                        </td>
+
+                                        <td *ngFor="let data1 of tkDetails" style="text-align: left;">
+                                            <br>
+                                            <input type="number" class="form-control" [(ngModel)]="data1.stockReading"
+                                                style="text-align: left;" [ngModelOptions]="{standalone: true}"
+                                                placeholder="open stock" />
+                                        </td>
+
+                                        <td style="text-align: left;">
+                                            <br>
+                                            <button type="submit" class="btn btn-outline-success my-2 my-sm-0"
+                                                (click)="submitTKDSRDetails()">
+                                                Submit
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div *ngIf="!isAdd1" class="col-sm-2">
+                        <i *ngIf="showViewTableSTOCK" style="color:#138496;cursor:pointer;" class="fas fa-edit"
+                            ngbTooltip="Update / Remove" placement="bottom" (click)="updateCol1()">
+                        </i>
+                    </div>
+                    <div class="col-sm-6">
+                    </div>
+                    <div *ngIf="!isAdd1" class="col-sm-1">
+                        <div *ngIf="showViewTableSTOCK" class="text-sm-end">
+                            <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF" placement="bottom"
+                                (click)="exportToPDF1()"><i class="fas fa-file-pdf"></i></span>
+
+                        </div>
+                    </div>
+                    <div *ngIf="!isAdd1" class="col-sm-1">
+                        <div *ngIf="showViewTableSTOCK" class="text-sm-end">
+                            <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download CSV" placement="bottom"
+                                (click)="exportexcel1()"><i class="fas fa-file-csv"></i></span>
+
+                        </div>
+                    </div>
+                    <div *ngIf="!isAdd1" class="col-sm-2">
+                        <div class="text-sm-end">
+                            <button type="button" class="btn btn-success btn-rounded mb-2 me-2"
+                                (click)="showAddTable1()">
+                                <i class="mdi mdi-plus mr-1"></i>
+                                + Add DSR-Stock </button>
+                        </div>
+                    </div>
+                    <div *ngIf="isAdd1" class="col-sm-4">
+                        <div class="text-sm-end">
+                            <button type="button" class="btn btn-success btn-rounded mb-2 me-2"
+                                (click)="showAddTable1()">
+                                View DSR-Stock </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="showViewTableSTOCK">
+                    <div *ngIf="!isAdd1" class="col col-xl-12 col-lg-12">
+                        <div class="table-responsive mb-0">
+                            <table *ngIf="isUpdateCol1" class="table table-centered table-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: left;"> Date </th>
+                                        <th style="text-align: left;"> Rate </th>
+                                        <th style="text-align: left;"> Dip Sales (Qty) </th>
+                                        <th style="text-align: left;"> Dip Sales (Rs) </th>
+                                        <th style="text-align: left;"> Total Stock (Qty) </th>
+                                        <th style="text-align: left;"> Total Stock (Rs) </th>
+
+                                        <th style="text-align: left;"> Receipts (Qty)</th>
+                                        <th style="text-align: left;"> Actions </th>
+
+                                        <th *ngFor="let data of tkDSRData" style="text-align: left;">
+                                            {{data.tank}} <br>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of tkDSRDetails; let i = index;">
+                                        <td style="text-align: left;" ngbTooltip="Date" container="body">
+                                            <span *ngIf="data.tankDSRDetailsDate == '2022-01-01' ">
+                                                1 Jan, 2022
+                                            </span>
+                                            <span *ngIf="data.tankDSRDetailsDate != '2022-01-01' ">
+                                                {{data.tankDSRDetailsDate | date:"d MMM, yyyy" }}
+                                            </span>
+                                        </td>
+                                        <td style="text-align: left;" container="body" ngbTooltip="Rate">
+                                            {{data.rate | number:'1.2-2'}}
+                                        </td>
+                                        <td style="text-align: left;" container="body" ngbTooltip="Dip Sales (Qty)">
+                                            <span *ngIf="data.stockQuantity == '0' ">
+                                                {{(data.stockQuantity)| number:'1.2-2'}}
+                                            </span>
+                                            <span *ngIf="data.stockQuantity != '0' ">
+                                                {{(data.stockQuantity)| number:'1.2-2'}}
+                                            </span>
+                                        </td>
+                                        <td style="text-align: left;" container="body" ngbTooltip="Dip Sales (Rs)">
+                                            <span *ngIf="data.stockQuantityAmt == '0' ">
+                                                {{(data.stockQuantityAmt) | number:'1.2-2'}}
+                                            </span>
+                                            <span *ngIf="data.stockQuantityAmt != '0' ">
+                                                {{data.stockQuantityAmt | number:'1.2-2'}}
+                                            </span>
+                                        </td>
+                                        <td style="text-align: left;" container="body" ngbTooltip="Total Stock (Qty)">
+                                            {{ (data.totalStockQuantity + data.productPurchase) | number:'1.2-2'}}
+                                        </td>
+                                        <td style="text-align: left;" container="body" ngbTooltip="Total Stock (Rs)">
+                                            {{ (data.totalStockQuantity + data.productPurchase) * data.rate |
+                                            number:'1.2-2'}}
+                                        </td>
+
+                                        <td style="text-align: left;" container="body" ngbTooltip="Receipts (Qty)">
+                                            {{data.productPurchase | number:'1.2-2'}}
+                                        </td>
+                                        <td>
+                                            <div ngbDropdown placement="bottom-left">
+                                                <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle
+                                                    data-toggle="dropdown" aria-expanded="true"></i>
+                                                <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                                                    <a class="dropdown-item" href="javascript: void(0);"
+                                                        (click)="openUpdateModal1(updateModal1,data.tkDSRData)">
+                                                        <i style="color:#138496;cursor:pointer;" class="fas fa-edit">
+                                                        </i> Edit </a>
+                                                    <a class="dropdown-item" href="javascript: void(0);"
+                                                        (click)=deleteEntry1(data.tankDSRDetailsId)>
+                                                        <i style="color:red" class="fa fa-ban">
+                                                        </i> Remove
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td *ngFor="let dataTk of data.tkDSRData; let z = index;"
+                                            style="text-align: left;">
+                                            {{dataTk.tankStockDetailsDSRStock | number:'1.2-2'}}
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+
+                                <ng-template #updateModal1 let-c="close" let-d="dismiss">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">
+                                            <label>
+                                                <h4>
+                                                    <strong>
+                                                        Update Stock <br></strong>
+                                                </h4>
+                                            </label>
+                                        </h4>
+                                        <button type="button" class="btn btn-danger" aria-label="Close"
+                                            (click)="d('Cross click')">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table table-centered table-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th style="text-align: left;"> Tank </th>
+                                                    <th style="text-align: left;"> Stock </th>
+                                                    <th style="text-align: left;"> Action </th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let data of tkDSRDataUpdate; let i = index;">
+                                                    <td style="text-align: left;">
+                                                        <br>
+                                                        <b> {{data.tank}} </b>
+                                                    </td>
+
+                                                    <td style="text-align: left;">
+                                                        <br>
+                                                        <input type="number" class="form-control"
+                                                            [(ngModel)]="data.tankStockDetailsDSRStock"
+                                                            style="text-align: left;"
+                                                            [ngModelOptions]="{standalone: true}" placeholder="stock" />
+                                                    </td>
+
+                                                    <td style="text-align: left;">
+                                                        <br>
+                                                        <button type="submit"
+                                                            class="btn btn-outline-success my-2 my-sm-0"
+                                                            (click)="updateDSRDetails1(data.tankStockDetailsDSRId,i)">
+                                                            update
+                                                        </button>
+
+                                                    </td>
+
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </ng-template>
+                            </table>
+                            <table id="excel-table" *ngIf="!isUpdateCol1" class="table table-centered table-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: left;"> Date </th>
+                                        <th style="text-align: left;"> Rate </th>
+                                        <th style="text-align: left;"> Dip Sales (Qty) </th>
+                                        <th style="text-align: left;"> Dip Sales (Rs) </th>
+                                        <th style="text-align: left;"> Total Stock (Qty) </th>
+                                        <th style="text-align: left;"> Total Stock (Rs) </th>
+                                        <th style="text-align: left;"> Receipts (Qty)</th>
+
+                                        <th *ngFor="let data of tkDSRData" style="text-align: left;">
+                                            {{data.tank}} <br>
+
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let data of tkDSRDetails; let i = index;">
+                                    <tr>
+                                        <td style="text-align: left;" container="body" ngbTooltip="Date">
+                                            <span *ngIf="data.tankDSRDetailsDate == '2022-01-01' ">
+                                                1 Jan, 2022
+                                            </span>
+                                            <span *ngIf="data.tankDSRDetailsDate != '2022-01-01' ">
+                                                {{data.tankDSRDetailsDate | date:"d MMM, yyyy" }}
+                                            </span>
+                                        </td>
+                                        <td style="text-align: left;" container="body" ngbTooltip="Rate">
+                                            {{data.rate | number:'1.2-2'}}
+                                        </td>
+                                        <td style="text-align: left;" container="body" ngbTooltip="Dip Sales (Qty)">
+                                            <span *ngIf="data.stockQuantity == '0' ">
+                                                {{(data.stockQuantity)| number:'1.2-2'}}
+                                            </span>
+                                            <span *ngIf="data.stockQuantity != '0' ">
+                                                {{(data.stockQuantity)| number:'1.2-2'}}
+                                            </span>
+
+                                        </td>
+                                        <td style="text-align: left;" container="body" ngbTooltip="Dip Sales (Rs)">
+                                            <span *ngIf="data.stockQuantity == '0' ">
+                                                {{(data.stockQuantity) * (data.rate) | number:'1.2-2'}}
+                                            </span>
+                                            <span *ngIf="data.stockQuantity != '0' ">
+                                                {{(data.stockQuantity + data.productPurchase) * (data.rate) |
+                                                number:'1.2-2'}}
+                                            </span>
+
+                                        </td>
+                                        <td style="text-align: left;" container="body" ngbTooltip="Total Stock (Qty)">
+                                            {{(data.totalStockQuantity + data.productPurchase) | number:'1.2-2'}}
+                                        </td>
+                                        <td style="text-align: left;" container="body" ngbTooltip="Total Stock (Rs)">
+                                            {{(data.totalStockQuantity + data.productPurchase) * data.rate |
+                                            number:'1.2-2'}}
+                                        </td>
+
+                                        <td style="text-align: left;" container="body" ngbTooltip="Receipts (Qty)">
+                                            {{data.productPurchase | number:'1.2-2'}}
+                                        </td>
+                                        <td *ngFor="let dataTk of data.tkDSRData; let z = index;"
+                                            style="text-align: left;">
+                                            {{dataTk.tankStockDetailsDSRStock | number:'1.2-2'}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="!showViewTableSTOCK">
+                    <h5 *ngIf="!isAdd1"> Don't have data </h5>
+                </div>
+            </ng-template>
+
+            <ng-template #DSR>
+                <br>
+                <div class="row mb-2">
+                    <div class="col-sm-10">
+                    </div>
+                    <div class="col-sm-1">
+                        <div *ngIf="dsrBookDetails.length" class="text-sm-end">
+                            <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF" placement="bottom"
+                                (click)="exportToPDF2()"><i class="fas fa-file-pdf"></i></span>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <div *ngIf="dsrBookDetails.length" class="text-sm-end">
+                            <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download CSV" placement="bottom"
+                                (click)="exportexcel2()"><i class="fas fa-file-csv"></i></span>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div *ngIf="showViewTable" class="col col-xl-12 col-lg-12">
+                        <div class="table-responsive mb-0">
+                            <table id="excel-table" class="table table-centered table-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: left;"> Date </th>
+                                        <th style="text-align: left;"> Rate </th>
+                                        <th style="text-align: left;"> Opening Stock </th>
+                                        <th style="text-align: left;"> Receipts</th>
+                                        <th style="text-align: left;"> Total stock </th>
+                                        <th style="text-align: left;"> Meter Sales </th>
+                                        <th style="text-align: left;"> Pump Testing </th>
+                                        <th style="text-align: left;"> Net Meter Sales </th>
+                                        <th style="text-align: left;"> Net Dip Sales </th>
+                                        <th style="text-align: left;"> Variation </th>
+                                        <th style="text-align: left;"> MTD Meter Sales </th>
+                                        <th style="text-align: left;"> MTD Dip Sales </th>
+                                        <th style="text-align: left;"> MTD Variation </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let data of dsrBookDetails; let i = index;">
+                                    <tr>
+                                        <td style="text-align: left;" container="body" ngbTooltip="Date">
+                                            <span *ngIf="data.date == '2022-01-01' ">
+                                                1 Jan, 2022
+                                            </span>
+                                            <span *ngIf="data.date != '2022-01-01' ">
+                                                {{data.date | date:"d MMM, yyyy" }}
+                                            </span>
+                                        </td>
+                                        <td style="text-align: left;" container="body" ngbTooltip="Rate">
+                                            {{data.rate | number:'1.2-2'}}
+                                        </td>
+                                        <td style="text-align: left;" container="body" ngbTooltip="Opening Stock">
+                                            {{data.openingStock | number:'1.2-2'}}
+                                        </td>
+                                        <td style="text-align: left;" container="body" ngbTooltip="Receipts">
+                                            {{data.productPurchase | number:'1.2-2'}}
+                                        </td>
+                                        <td style="text-align: left;" container="body" ngbTooltip="Total stock">
+                                            {{(data.openingStock) + (data.productPurchase) | number:'1.2-2'}}
+                                        </td>
+                                        <td style="text-align: left;" container="body" ngbTooltip="Meter Sales">
+                                            {{(data.totalMeterSales) | number:'1.2-2'}}
+                                        </td>
+                                        <td style="text-align: left;" container="body" ngbTooltip="Pump Testing">
+                                            {{(data.pumpTesting) | number:'1.2-2'}}
+                                        </td>
+                                        <td style="text-align: left;" container="body" ngbTooltip="Net Meter Sales">
+                                            {{(data.meterSales) | number:'1.2-2'}}
+                                        </td>
+                                        <td style="text-align: left;" container="body" ngbTooltip="Net Dip Sales">
+                                            {{(data.dipSales) | number:'1.2-2'}}
+                                        </td>
+                                        <td style="text-align: left;" container="body" ngbTooltip="Variation">
+                                            {{(data.dailyVariation) | number:'1.2-2'}}
+                                        </td>
+                                        <td style="text-align: left;" container="body" ngbTooltip="MTD Meter Sales">
+                                            {{(data.cummMeterSales) | number:'1.2-2'}}
+                                        </td>
+                                        <td style="text-align: left;" container="body" ngbTooltip="MTD Dip Sales">
+                                            {{(data.cummDipSales) | number:'1.2-2'}}
+                                        </td>
+                                        <td style="text-align: left;" container="body" ngbTooltip="MTD Variation">
+                                            {{(data.cummVariation) | number:'1.2-2'}}
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </form>
+    </div>
+</div>

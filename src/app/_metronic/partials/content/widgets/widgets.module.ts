@@ -162,6 +162,7 @@ import { ListsWidget11Component } from './lists/lists-widget11/lists-widget11.co
 import { ListsWidget12Component } from './lists/lists-widget12/lists-widget12.component';
 import { ListsWidget13Component } from './lists/lists-widget13/lists-widget13.component';
 import { ListsWidget14Component } from './lists/lists-widget14/lists-widget14.component';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 // import { routes } from 'src/app/app-routing.module';
 @NgModule({
   declarations: [
@@ -334,7 +335,8 @@ import { ListsWidget14Component } from './lists/lists-widget14/lists-widget14.co
     NgbPaginationModule,
     NgxPaginationModule,
     RouterModule,
-    NgbNavModule
+    NgbNavModule,
+    NgxSliderModule
   ],
   exports: [
     // Advanced Tables
