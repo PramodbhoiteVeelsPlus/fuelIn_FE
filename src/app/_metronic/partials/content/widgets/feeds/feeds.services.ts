@@ -78,6 +78,7 @@ export class FeedsService {
     private getShiftVStallyDigitalTotalForPreviousURL = this.baseURL + 'overallReport/getShiftVStallyDigitalTotalForPrevious'; 
     private getExpenseAmtDetailsForPreviousURL = this.baseURL + 'overallReport/getExpenseAmtDetailsForPrevious';
     private getMonthWiseMeterSalesURL = this.baseURL + 'dsrDetails/getMonthWiseMeterSales';
+    private addAccountingURL = this.baseURL + 'accounting/addAccounting' 
     
 
 
@@ -556,6 +557,16 @@ export class FeedsService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.getMonthWiseMeterSalesURL, body, {
+            headers: headers
+        })
+    }
+
+    // addAccountingURL
+    addAccountingPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addAccountingURL, body, {
             headers: headers
         })
     }

@@ -1,384 +1,254 @@
-
-<br> 
-<form [formGroup]="filterForm1"> 
-
-    <div class="row" *ngIf = "!isPrint">  
-        
-        <div class="col-md-1"></div>              
-        <div class="col-auto">
-            <br>
-            <label><b>Select Month :</b></label>
-        </div>
-        <div class="col-auto"> 
-            <br>  
-            <select formControlName="month" class="form-control" 
-            (change) = "getDates()"  required>
-                <option value=""> Select Month </option>
-                <option value="Jan"> Jan </option>
-                <option value="Feb"> Feb </option>
-                <option value="Mar"> Mar </option>
-                <option value="Apr"> Apr </option>
-                <option value="May"> May </option>
-                <option value="Jun"> Jun </option>
-                <option value="Jul"> Jul </option>
-                <option value="Aug"> Aug </option>
-                <option value="Sep"> Sep </option>
-                <option value="Oct"> Oct </option>
-                <option value="Nov"> Nov </option>
-                <option value="Dec"> Dec </option>
-            </select>
-        </div>
-        <div class="col-auto">
-            <br>
-            <label><b>Select Year :</b></label>
-        </div>
-        <div class="col-auto">   
-            <br>
-            <select formControlName="year" class="form-control"
-            (change) = "getDates()" required>
-                <option value={{currentYear}}> {{currentYear}} </option>
-                <option value={{lastYear}}> {{lastYear}} </option>
-                <option value={{lastThirdYear}}> {{lastThirdYear}} </option>
-                <option value={{lastFourthYear}}> {{lastFourthYear}} </option>
-                <option value={{lastFifthYear}}> {{lastFifthYear}} </option>
-            </select>                            
-        </div>
-        <div class="col-auto">
-            <br>
-            <button class="btn btn-primary my-2 my-sm-0" type="button" (click)="view()">
-                view
-            </button>
-        </div>
-    </div>  
-    <br>
-
-    <hr>
-
-
+<div *ngIf="accessGroup !='19'" class="container-fluid">
     <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card">
 
-        <div class="col-lg-12">
-        <div class="card">
-            <div class="card-body">
-            <ul ngbNav #customNav1="ngbNav" [activeId]="3" class="nav-tabs nav-tabs-custom nav-justified" style="width: 50%;">
-                <li [ngbNavItem]="3">
-                <a ngbNavLink>
-                    <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-                    <span class="d-none d-sm-block" style="font-size: 13.5px;">MONTH-WISE</span>
-                </a>
-                <ng-template ngbNavContent>
-                    <ng-template [ngTemplateOutlet]="DSRMeter1"></ng-template>
-                </ng-template>
-                </li>
-                <li [ngbNavItem]="4">
-                <a ngbNavLink>
-                    <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
-                    <span class="d-none d-sm-block"  style="font-size: 13.5px;">PURCHASE</span>
-                </a>
-                <ng-template ngbNavContent>
-                    <ng-template [ngTemplateOutlet]="DSRTank1"></ng-template>
-                </ng-template>
-                </li> 
-            </ul>
-            <div [ngbNavOutlet]="customNav1"></div>
-            </div>
-        </div>
-        </div>
-    </div> 
-
-
-       <!-- MONTH -->
-        <ng-template #DSRMeter1> 
-            <br> 
-            <div class="row" *ngIf = "!isPrint">
-                <div class="col col-xl-1 col-lg-1" ></div>
-                <div class="col col-xl-10 col-lg-10"  *ngIf = "isMonthTab">
-                    <div class="row">
-                        <div class="col-md-8"></div>
-                        <div class="col-md-2">
-                            <button class="btn btn-outline-secondary my-2 my-sm-0" type="button" (click)="viewPDF()">
-                                view PDF
-                            </button>
+                    <div class="row mb-2" *ngIf="!isAddExpense">
+                        <div class="col-sm-12">
+                            <div class="text-sm-end">
+                                <button type="button" class="btn btn-success btn-rounded mb-2 me-2 mt-4"
+                                    (click)="isAddExp()">
+                                    Add Expense Accounting </button>
+                            </div>
                         </div>
                     </div>
-                    <div class="row" *ngIf = "isMonthTab">
-                        <div class="col-md-12">
-                        <div class="card-body table-responsive">
-                            <table class="table table-hover b">
-                                <tr style="background-color: aquamarine;"> 
-                                    <th style="border: 2px solid #272829;text-align: center;" colspan="12"> 
-                                    <b>PURCHASE</b> 
-                                    </th> 
-                                </tr>
-            
-                                <tr>
-                                    <th style="border: 2px solid #272829;" colspan="2">
-                                        Product
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2"> 
-                                        Basic Amount
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="1"> 
-                                        VAT %
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2"> 
-                                        VAT Amount
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="1"> 
-                                        Cess Amount
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2"> 
-                                        Other Components
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2">
-                                        Total Amount
-                                    </th>
-                                </tr>
-            
-                                <tr *ngFor="let data of productPurchaseDetails; let i = index;">
-                                    <td style="border: 2px solid #272829;" colspan="2">
-                                        {{data.productName}}
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2"> 
-                                        {{data.basicAmt | number:'1.2-2'}}
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="1"> 
-                                    {{data.vatPercent | number:'1.2-2'}} %
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2"> 
-                                        {{data.vatAmt | number:'1.2-2'}}
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="1"> 
-                                        {{data.cessAmt | number:'1.2-2'}}
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2"> 
-                                        {{data.components | number:'1.2-2'}}
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2">
-                                        {{data.totalAmount | number:'1.2-2'}}
-                                    </td>
-                                </tr>
-            
-                            
-            
-                                <tr>
-                                    <td style="border: 2px solid #272829;" colspan="2">
-                                    <b> PURCHASE TOTAL </b>
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2"> 
-                                        
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="1"> 
-                                        
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2"> 
-                                        <b>{{purchaseTotal | number:'1.2-2'}}</b> 
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="1"> 
-                                        
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2"> 
-                                        
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2">
-                                        
-                                    </td>
-                                </tr>
-            
-                                <tr style="background-color: aquamarine;"> 
-                                    <th style="border: 2px solid #272829;text-align: center;" colspan="12"> 
-                                        <b>SALE</b> 
-                                    </th> 
-                                </tr>
-            
-                                <tr>
-                                    <th style="border: 2px solid #272829;" colspan="2">
-                                        Product
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2"> 
-                                        Basic Amount
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="1"> 
-                                        VAT %
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2"> 
-                                        VAT Amount
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="1"> 
-                                        
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2"> 
-                                        
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2">
-                                        Total Amount
-                                    </th>
-                                </tr>
-            
-                                <tr *ngFor="let data of vatSalesDetails; let i = index;">
-                                    <td style="border: 2px solid #272829;" colspan="2">
-                                        {{data.productName}}
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2"> 
-                                        {{data.basicAmount | number:'1.2-2'}}
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="1"> 
-                                    {{data.vat | number:'1.2-2'}} %
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2"> 
-                                        {{data.vatAmount | number:'1.2-2'}}
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="1"> 
-                                        
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2"> 
-                                        
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2">
-                                        {{data.totalAmount | number:'1.2-2'}}
-                                    </td>
-                                </tr>
-            
-                            
-            
-                                <tr>
-                                    <td style="border: 2px solid #272829;" colspan="2">
-                                    <b> SALE TOTAL </b>
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2"> 
-                                        
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="1"> 
-                                        
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2"> 
-                                        <b>{{salesTotal | number:'1.2-2'}}</b> 
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="1"> 
-                                        
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2"> 
-                                        
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2">
-                                        
-                                    </td>
-                                </tr>
+                    <div>
+                        <div class="row" *ngIf="isAddExpense">
+                            <div class="col col-xl-12 col-lg-12" style="margin-top: 20px">
+                                <div class=" card-body table-responsive">
+                                    <table class="table table-hover table-striped table-nowrap">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th style="text-align: left;"> Date </th>
+                                                <th style="text-align: left;"> Transaction Type </th>
+                                                <th style="text-align: left;"> Details </th>
+                                                <th style="text-align: left;"> Paid From </th>
+                                                <th style="text-align: left;"> Paid To </th>
+                                                <th style="text-align: left;"> Amount</th>
+                                                <th> </th>
 
-                                <tr>
-                                    <th style="border: 2px solid #272829;" colspan="2">
-                                        <br>
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2"> 
-                                        <br>
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="1"> 
-                                        <br>
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2"> 
-                                        <br>   
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="1"> 
-                                        <br>
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2"> 
-                                        <br>
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2">
-                                        <br>
-                                    </th>
-                                </tr>
-            
-                                <tr>
-                                    <th style="border: 2px solid #272829;" colspan="5">
-                                        <b>VAT PAYABLE</b>
-                                    </th> 
-                                    <th style="border: 2px solid #272829;" colspan="2"> 
-                                        <b>{{(salesTotal) - (purchaseTotal) | number:'1.2-2'}} </b> 
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="1"> 
-                                        
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2"> 
-                                        
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2">
-                                        
-                                    </th>
-                                </tr>
-            
-                            </table>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngFor="let data of addAccountingArray; let i = index;">
+                                            <tr>
+
+                                                <td>
+                                                    <input class="form-control" placeholder="DD/MM/YYYY" name="date"
+                                                        (click)="startDate.toggle()" style="background-color: #ffffff;"
+                                                        [(ngModel)]="data.date" [ngModelOptions]="{standalone: true}"
+                                                        ngbDatepicker #startDate="ngbDatepicker">
+                                                </td>
+
+                                                <td>
+
+                                                    <select class="form-select" [(ngModel)]="data.transactionType"
+                                                        (change)="getByTransactionType($event,i)"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                        <option value="">Select</option>
+                                                        <option value="Operation Charges">Operation Charges</option>
+                                                        <option value="Food">Food</option>
+                                                        <option value="Health">Health</option>
+                                                        <option value="Insurance">Insurance</option>
+                                                        <option value="Maintenance">Maintenance</option>
+                                                        <option value="Office">Office</option>
+                                                        <option value="Safety">Safety</option>
+                                                        <option value="Sales Promotions">Sales Promotions</option>
+                                                        <option value="Staff">Staff</option>
+                                                        <option value="Stamping">Stamping</option>
+                                                        <option value="Tanker">Tanker</option>
+                                                        <option value="Travel">Travel</option>
+                                                        <option value="Other">Other</option>
+                                                    </select>
+                                                </td>
+
+                                                <td>
+                                                    <input class="form-control" [(ngModel)]="data.details"
+                                                        placeholder="Enter Details" (input)="checkValidation(i)"
+                                                        [ngModelOptions]="{standalone: true}" ngbDatepicker>
+                                                </td>
+
+                                                <td>
+                                                    <select *ngIf="data.isDefaultFrom" class="form-select"
+                                                        [(ngModel)]="data.paidFrom" (change)="checkValidation(i)"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                        <option value="">Select</option>
+                                                    </select>
+
+                                                    <input *ngIf="data.isInputBoxFrom" class="form-control"
+                                                        [(ngModel)]="data.inputFrom" placeholder="Enter Details"
+                                                        (input)="checkValidation(i)"
+                                                        [ngModelOptions]="{standalone: true}" ngbDatepicker>
+
+                                                    <select *ngIf="data.isCashBankFrom" class="form-select"
+                                                        [(ngModel)]="data.paidFrom" (change)="checkValidation(i)"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                        <option value="">Select</option>
+                                                        <option value="20">Cash-In-Hand</option>
+                                                        <option *ngFor="let data of bankSavingAccList"
+                                                            [value]="data.bankDetailsId">
+                                                            {{data.bankName}}-{{data.accountNumber}}
+                                                        </option>
+                                                    </select>
+                                                </td>
+
+                                                <td>
+                                                    <select *ngIf="data.isDefaultTo" class="form-select"
+                                                        [(ngModel)]="data.paidTo" (change)="checkValidation(i)"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                        <option value="">Select</option>
+                                                    </select>
+
+                                                    <select *ngIf="data.isExpenseAccTo" class="form-select"
+                                                        [(ngModel)]="data.paidTo" (change)="checkValidation(i)"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                        <option value="36">Expense A/c</option>
+                                                    </select>
+                                                </td>
+
+                                                <td>
+                                                    <input class="form-control" [(ngModel)]="data.amount" type="number"
+                                                        placeholder="Enter Payment" (input)="checkValidation(i)"
+                                                        [ngModelOptions]="{standalone: true}" ngbDatepicker>
+                                                </td>
+
+
+                                                <td>
+                                                    <span *ngIf="i != 0">
+                                                        &nbsp;
+                                                        <button *ngIf="data.isAddRow" type="submit"
+                                                            class="btn btn-success my-2 my-sm-0"
+                                                            (click)="addArrayRow(i)">
+                                                            Add
+                                                        </button>
+
+                                                        &nbsp;&nbsp;
+                                                        <button *ngIf="data.isRemoveRow" type="cancel"
+                                                            class="btn btn-primary" (click)="removeArrayRow(i)">Delete
+                                                        </button>
+                                                    </span>
+                                                    <span *ngIf="i == 0">
+                                                        &nbsp;
+
+                                                        <button *ngIf="data.isAddRow" type="submit"
+                                                            class="btn btn-success my-2 my-sm-0"
+                                                            (click)="addArrayRow(i)">
+                                                            Add
+                                                        </button>
+
+                                                    </span>
+
+                                                </td>
+
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- <br><br>
+                            <div class="row" style="margin: 10px">
+                                <div class="col-auto">
+                                    <button *ngIf="!isSubmit" type="submit" class="btn btn-primary"
+                                        disabled>Submit</button>
+                                    <button *ngIf="isSubmit" type="submit" class="btn btn-primary"
+                                        (click)="submitArray()">Submit</button>
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-secondary" (click)="clearAll()">Cancel</button>
+                                </div>
+                            </div> -->
                         </div>
-                        </div>
+                        <br>
                     </div>
-                
+
+                    <!-- <div class="mb-3 row">
+                        <form [formGroup]="filterForm">
+                            <div class="mb-3 row" style="margin: 10px">
+
+                                <label for="example-text-input" class="col-auto col-form-label"><b>Date Range
+                                        :</b></label>
+
+                                <div class="col-auto">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" readonly
+                                        style="background-color: #ffffff;" (click)="startDate.toggle()"
+                                        formControlName="startDate" ngbDatepicker #startDate="ngbDatepicker">
+                                </div>
+                                <div class="col-auto">
+                                    <input class="form-control" placeholder="DD-MM-YYYY" readonly
+                                        style="background-color: #ffffff;" name="endDate" ngbTooltip="End Date"
+                                        (click)="endDate.toggle()" ngbDatepicker #endDate="ngbDatepicker"
+                                        formControlName="endDate">
+                                </div>
+
+
+                                <div class="col-auto">
+                                    <button type="button" class="btn btn-md btn-primary" (click)="filter()">
+                                        Submit
+                                    </button>
+                                </div>
+                                <div class="col-auto">
+                                    <button type="button" class="btn btn-md btn-secondary" (click)="cancel()">
+                                        Cancel
+                                    </button>
+                                </div>
+
+                            </div>
+                        </form>
+                        <div class="mb-2 row">
+                            <div class="card-body table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: left;"> Date </th>
+                                            <th style="text-align: left;"> Transaction Type </th>
+                                            <th style="text-align: left;"> Details </th>
+                                            <th style="text-align: left;"> Paid From </th>
+                                            <th style="text-align: left;"> Paid To </th>
+                                            <th style="text-align: left;"> Amount</th>
+                                            <th style="text-align: left;"> action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngFor="let data of accountingData;">
+                                        <tr>
+                                            <td style="text-align: left;">
+                                                <span *ngIf="data.accountingDate == '2022-01-01' ">
+                                                    1 Jan, 2022
+                                                </span>
+                                                <span *ngIf="data.accountingDate != '2022-01-01' ">
+                                                    {{data.accountingDate | date:"d MMM, yyyy"}}
+                                                </span>
+                                            </td>
+                                            <td style="text-align: left;"> {{data.accountingTransactionType}} </td>
+                                            <td style="text-align: left;"> {{data.accountingDetails}} </td>
+                                            <td style="text-align: left;"> {{data.paidFromAccountNumber}}
+                                                {{data.paidFromBankName}} <i>{{data.accountingFromInput}} </i> </td>
+                                            <td style="text-align: left;"> {{data.paidToAccountNumber}}
+                                                {{data.paidToBankName}} <i>{{data.accountingToInput}} </i> </td>
+                                            <td style="text-align: left;">
+                                                ₹ &nbsp; {{data.accountingAmout | number:"1.2-2" }} </td>
+
+                                            <td style="text-align: left;cursor: pointer;">
+                                                <div ngbDropdown placement="bottom-left">
+                                                    <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle
+                                                        data-toggle="dropdown" aria-expanded="true"></i>
+                                                    <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                                                        <a class="dropdown-item" href="javascript: void(0);"
+                                                            (click)="deleteAccounting(data.accountingId)">
+                                                            <i class="fas fa-ban" style="color: red;"></i> &nbsp;
+                                                            Remove</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div> -->
                 </div>
             </div>
-        </ng-template>
-
-        <!-- YEAR -->
-        <ng-template #DSRTank1> 
-            <br>  
-            <div class="row" *ngIf = "isViewPDF">
-                <div class="col-md-12">
-                <div class="card-body table-responsive">
-                    <table class="table table-hover table-striped">
-                        <thead style=" background-color: aquamarine;">
-                            <tr>
-                                <th style="text-align: center;"> invoice date</th>
-                                <th style="text-align: center;"> vehicle number </th>
-                                <th style="text-align: center;"> invoice number </th>
-                                <th style="text-align: center;"> received date</th>
-                                <th style="text-align: center;"> product</th> 
-                                <th style="text-align: center;"> quantity</th>
-                                <th style="text-align: center;"> basic amount</th>
-                                <th style="text-align: center;"> vat amount</th>
-                                <th style="text-align: center;"> vat %</th>
-                                <th style="text-align: center;"> cess amount</th>
-                                <th style="text-align: center;"> totaltax</th>
-                                <th style="text-align: center;"> other components </th>
-                                <th style="text-align: center;"> totalamount </th> 
-
-                            </tr>
-                        </thead>
-                        <tbody
-                            *ngFor="let data of oilCompanyDetails;  let i = index;">
-                            <tr>
-                                <td style="text-align: center;"> {{data.invoiceDate |
-                                    date:"mediumDate"}}</td>
-                                <td style="text-align: center;"> {{data.vehicleNumber}} </td>
-                                <td style="text-align: center;"> {{data.invoiceNumber}} </td>
-                                <td style="text-align: center;"> {{data.receivedDate | date:"mediumDate"}}</td>
-                                <td style="text-align: center;"> {{data.productName}} </td> 
-                                <td style="text-align: center;">
-                                    <span *ngIf="data.productName == 'CNG'">
-                                        {{data.quantity}} kg
-                                    </span>
-                                    <span *ngIf="data.productName != 'CNG'">
-                                        {{data.quantity}} ltr
-                                    </span>
-                                </td>
-
-                                <td style="text-align: center;"> {{data.basicAmt | number:'1.2-2'}}
-                                </td>
-                                <td style="text-align: center;"> {{data.vatAmt | number:'1.2-2'}} </td>
-                                <td style="text-align: center;"> {{data.vatPercent}} </td>
-                                <td style="text-align: center;"> {{data.cessAmt | number:'1.2-2'}} </td>
-                                <td style="text-align: center;"> {{data.totalTax | number:'1.2-2'}}
-                                </td>
-                                <td style="text-align: center;"> {{data.components}} </td>
-                                <td style="text-align: center;">
-                                    {{data.totalAmount | number:'1.2-2'}}
-                                </td> 
-
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-                </div>
-            </div>    
-        </ng-template>
-
-   
-</form>
+        </div>
+    </div>
+</div>
