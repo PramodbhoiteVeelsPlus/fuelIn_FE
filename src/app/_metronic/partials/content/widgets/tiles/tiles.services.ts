@@ -63,6 +63,18 @@ export class TilesService {
     private getRateByDateURL = this.baseURL + 'dsr/getRateByDate';
     private addTankDSRDetailsURL = this.baseURL + 'dsrDetails/addTankDSRDetails';
     private updateDSRDetailsByBookURL = this.baseURL + 'dsrDetails/updateDSRDetailsByBook';
+    private getAllTankByDealerIdURL = this.baseURL + 'tankDSR/getAllTankByDealerId';
+    private getNZByTankNoURL = this.baseURL + 'tankDSR/getNZByTankNo';
+    private getProductPurchaseURL = this.baseURL + 'dsrDetails/getProductPurchase';
+    private getPriceByProductIdDateURL = this.baseURL + 'dsrDetails/getPriceByDealerProductIdByDate';
+    private getTankDSRURL = this.baseURL + 'tankDSR/getTankDSR';
+    private addTankDSRURL = this.baseURL + 'tankDSR/addTankDSR';
+    private deleteTankDSRURL = this.baseURL + 'tankDSR/deleteTankDSR';
+    private updateTankDSRURL = this.baseURL + 'tankDSR/updateTankDSR';
+    private updateStockPurchaseURL = this.baseURL + 'tankDSR/updateStockPurchase';
+    private getTankDetailsByIdURL = this.baseURL + 'tankDSR/getTankDetailsById';
+    private getTankDSRBookURL = this.baseURL + 'tankDSR/getTankDSRBook';
+
 
 
 
@@ -502,6 +514,117 @@ export class TilesService {
             headers: headers
         })
     }
+
+    // getAllTankByDealerIdURL
+    getAllTankByDealerIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAllTankByDealerIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getNZByTankNoURL
+    getNZByTankNoPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getNZByTankNoURL, body, {
+            headers: headers
+        })
+    }
+
+    // getProductPurchaseURL
+    getProductPurchasePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getProductPurchaseURL, body, {
+            headers: headers
+        })
+    }
+
+    // getPriceByProductIdDateURL
+    getPriceByProductIdDatePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getPriceByProductIdDateURL, body, {
+            headers: headers
+        })
+    }
+
+    // getTankDSRURL
+    getTankDSRPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getTankDSRURL, body, {
+            headers: headers
+        })
+    }
+
+    // addTankDSRURL
+    addTankDSRPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addTankDSRURL, body, {
+            headers: headers
+        })
+    }
+
+    // deleteTankDSRURL
+    deleteTankDSRPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.deleteTankDSRURL, body, {
+            headers: headers
+        })
+    }
+
+    // updateTankDSRURL
+    updateTankDSRPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateTankDSRURL, body, {
+            headers: headers
+        })
+    }
+
+    // updateStockPurchaseURL
+    updateStockPurchasePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateStockPurchaseURL, body, {
+            headers: headers
+        })
+    }
+
+    // getTankDetailsByIdURL
+    getTankDetailsByIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getTankDetailsByIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getTankDSRBookURL
+    getTankDSRBookPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getTankDSRBookURL, body, {
+            headers: headers
+        })
+    }
+
 
 
 
