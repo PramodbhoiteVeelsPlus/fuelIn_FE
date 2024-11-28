@@ -2,7 +2,7 @@ import { data } from 'jquery';
 import { Component, Injectable, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalDismissReasons, NgbDateAdapter, NgbDateParserFormatter, NgbDateStruct, NgbDatepickerConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import * as moment from 'moment';
+import moment from 'moment';
 import { Options } from '@angular-slider/ngx-slider';
 import { NgxSpinnerService } from 'ngx-spinner';
 import jsPDF from 'jspdf';
