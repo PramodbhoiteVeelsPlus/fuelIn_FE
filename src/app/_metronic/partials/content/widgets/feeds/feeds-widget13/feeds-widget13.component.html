@@ -32,7 +32,6 @@
                                         </thead>
                                         <tbody *ngFor="let data of addAccountingArray; let i = index;">
                                             <tr>
-
                                                 <td>
                                                     <input class="form-control" placeholder="DD/MM/YYYY" name="date"
                                                         (click)="startDate.toggle()" style="background-color: #ffffff;"
@@ -41,7 +40,6 @@
                                                 </td>
 
                                                 <td>
-
                                                     <select class="form-select" [(ngModel)]="data.transactionType"
                                                         (change)="getByTransactionType($event,i)"
                                                         [ngModelOptions]="{standalone: true}">
@@ -147,7 +145,7 @@
                                 </div>
                             </div>
 
-                            <!-- <br><br>
+                            <br><br>
                             <div class="row" style="margin: 10px">
                                 <div class="col-auto">
                                     <button *ngIf="!isSubmit" type="submit" class="btn btn-primary"
@@ -158,12 +156,12 @@
                                 <div class="col-auto">
                                     <button type="submit" class="btn btn-secondary" (click)="clearAll()">Cancel</button>
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
                         <br>
                     </div>
 
-                    <!-- <div class="mb-3 row">
+                    <div class="mb-3 row">
                         <form [formGroup]="filterForm">
                             <div class="mb-3 row" style="margin: 10px">
 
@@ -246,7 +244,7 @@
                                 </table>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>

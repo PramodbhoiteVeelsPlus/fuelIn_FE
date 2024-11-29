@@ -1,0 +1,36 @@
+<div class="card-header">
+    <b> SALES</b>
+  </div>
+  
+  <!-- <div class="row"> -->
+  <br>
+  <div>
+    <ul ngbNav #sales="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified" style="width: 100%;">
+      <li [ngbNavItem]="1">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">TRANSACTION </span>
+        </a>
+        <ng-template ngbNavContent>
+          <app-charts-widget5 class="card card-xxl-stretch mb-5 mb-xl-8"></app-charts-widget5>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="2">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">DAY </span>
+        </a>
+        <ng-template ngbNavContent>
+          <app-charts-widget7 class="card card-xl-stretch mb-xl-8" color="primary"></app-charts-widget7>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="3">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">MONTH</span>
+        </a>
+        <ng-template ngbNavContent>
+          <app-charts-widget8 class="card card-xxl-stretch mb-5 mb-xl-8"></app-charts-widget8>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="sales"></div>
+  </div>
+  <!-- </div> -->

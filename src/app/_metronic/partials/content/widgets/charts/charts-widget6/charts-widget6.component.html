@@ -1,54 +1,408 @@
-<div class="card-header border-0 pt-5">
-  <h3 class="card-title align-items-start flex-column">
-    <span class="card-label fw-bolder fs-3 mb-1">Recent Orders</span>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- statement 2 start -->
+<html xmlns="https://www.w3.org/1999/xhtml">
 
-    <span class="text-muted fw-bold fs-7">More than 500+ new orders</span>
-  </h3>
+<head>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+  <title>Editable Statement</title>
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <script type='text/javascript' src='../../../../../../assets/EditableInvoice/js/jquery-1.3.2.min1.js'></script>
+  <script type='text/javascript' src='../../../../../../assets/EditableInvoice/js/example1.js'></script>
+</head>
 
-  <!-- begin::Toolbar -->
-  <div class="card-toolbar" data-kt-buttons="true">
-    <a
-      class="
-        btn btn-sm btn-color-muted btn-active btn-active-primary
-        active
-        px-4
-        me-1
-      "
-      id="kt_charts_widget_6_sales_btn"
-    >
-      Sales
-    </a>
+<body *ngIf="crPurchaseReportTx" id="contentToConvert">
+  <div id="page-wrap">
+    <div class="row noprint">
+      <div class="col-auto">
+        &nbsp; <button class="noprint" style="font-size: medium;" onclick="window.print()"> &nbsp;&nbsp;<i
+            class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
+      </div>
+      <!-- <div class="col-md-1">
+            <button class="btn btn-success" type="button" (click)="downloadExcel()">
+            Excel
+            </button>
+        </div> -->
+      <div class="col-auto">
+        <button type="button" class="btn btn-primary" routerLink="/ledger/creditSales">
+          Back </button>
+      </div>
+    </div>
+    <div id="sanjay">
+      <div class="container" style="font-size: 15px;">
+        <div class="col-12 mr-2 px-1 py-1 container border-black" id="htmlData">
+          <div>
+            <div class="row px-3 py-3">
+              <div class="col-9">
+                <h3><b>{{companyName}}</b></h3>
+                <h5><b>{{oilCompanyName}}</b> </h5>
+                <!-- <h6> <b>{{address1}} {{address2}} {{city}}</b> <br><b>{{state}} {{pin}} <br>
+                    GST</b> : {{GSTNumber}} -->
+                <b> Phone </b>: {{mobile}}
+                <!-- </h6> -->
+                <h6><b>From : {{crPurchaseStartDate}} To :
+                    {{crPurchaseEndDate}}</b> </h6>
+                <h6><b>Invoice No. : <span>{{sysGeneInvoiceNumber}}</span></b></h6>
+                <h6> <b>statement generated on: </b>{{statementCreatedAt | date:"dd/MM/yyyy"}} </h6>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div *ngIf="manualNo!=''" class="container text-center" style="font-size: 15px;">
+            <p>
+              <span *ngIf="manualNo!=undefined">
+                <span *ngIf="manualNo!=''">
+                  statement: {{manualNo}}
+                </span>
+              </span>
+            </p>
+          </div>
+          <br>
+          <table id="excel-table" class="table main-table" style="font-size: small;">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th style="text-align: left;">Khata Name</th>
+                  <th style="text-align: left;">Date</th>
+                  <th style="text-align: left;">Vehicle</th>
+                  <th style="text-align: left;">Product</th>
+                  <th style="text-align: left;">Amount</th>
+                  <th style="text-align: left;">Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of crPurchaseData">
+                  <td style="text-align: left;"> <b>{{data.companyName}}</b></td>
+                  <td style="text-align: left;">{{data.estimatedRefuelDate | date:"d MMM, yyyy"}}</td>
+                  <td style="text-align: left;">{{data.vehicleNumber}}</td>
+                  <td style="text-align: left;">{{data.productName}}</td>
+                  <td style="text-align: left;">{{data.totalPurchase | number:'1.2-2'}}</td>
+                  <td style="text-align: left;">{{data.totalQuantity | number:'1.2-2'}}
+                    <span *ngIf="data.productName == 'CNG'">
+                      Kg
+                    </span>
+                    <span *ngIf="data.productName != 'CNG'">
+                      Ltr
+                    </span>
+                  </td>
+                </tr>
+                <!-- <tr>
+                                    <td></td>
+                                    <td colspan="3">
+                                        <b>Total Sales Amount </b>
+                                    </td>
+                                    <td>
+                                        <b>{{ totalCrPurchaseTx | number:'1.2-2' }}</b>
+                                    </td>
+                                    <td></td>
+                                </tr> -->
+              </tbody>
+            </table>
 
-    <a
-      class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1"
-      id="kt_charts_widget_6_expenses_btn"
-    >
-      Expenses
-    </a>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th style="text-align: center;">Product</th>
+                  <th style="text-align: center;">Total Amount</th>
+                  <th style="text-align: center;">Total Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of totalPurchaseData">
+                  <td style="text-align: center;">{{data.productName}}</td>
+                  <td style="text-align: center;">{{data.totalPurchase | number:'1.2-2'}}</td>
+                  <td style="text-align: center;">{{data.totalQuantity | number:'1.2-2'}}
+                    <span *ngIf="data.productName == 'CNG'">
+                      Kg
+                    </span>
+                    <span *ngIf="data.productName != 'CNG'">
+                      Ltr
+                    </span>
+                  </td>
+                </tr>
+                <hr>
+              </tbody>
+            </table>
+
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
-  <!-- end::Toolbar -->
-</div>
-<!-- end::Header -->
+</body>
 
-<!-- begin::Body -->
-<div class="card-body">
-  <!-- begin::Chart -->
-  <div #chartRef id="kt_charts_widget_6_chart" [style.height]="'350px'">
-    <apx-chart
-      [series]="chartOptions.series"
-      [chart]="chartOptions.chart"
-      [xaxis]="chartOptions.xaxis"
-      [yaxis]="chartOptions.yaxis"
-      [dataLabels]="chartOptions.dataLabels"
-      [stroke]="chartOptions.stroke"
-      [legend]="chartOptions.legend"
-      [fill]="chartOptions.fill"
-      [states]="chartOptions.states"
-      [tooltip]="chartOptions.tooltip"
-      [colors]="chartOptions.colors"
-      [markers]="chartOptions.markers"
-      [plotOptions]="chartOptions.plotOptions"
-    ></apx-chart>
+<body *ngIf="crPurchaseReportDay" id="contentToConvert">
+  <div id="page-wrap">
+    <div class="row noprint">
+      <div class="col-auto noprint">
+        &nbsp; <button class="noprint" style="font-size: medium;" onclick="window.print()"> &nbsp;&nbsp;<i
+            class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
+      </div>
+      <!-- <div class="col-md-1">
+            <button class="btn btn-success" type="button" (click)="downloadExcel()">
+            Excel
+            </button>
+        </div> -->
+      <div class="col-auto">
+        <button type="button" class="btn btn-primary" routerLink="/credit/crPurchaseBook">
+          Back </button>
+      </div>
+    </div>
+    <div id="sanjay">
+      <div class="container" style="font-size: 15px;">
+        <div class="col-12 mr-2 px-1 py-1 container border-black" id="htmlData">
+          <div>
+            <div class="row px-4 py-4" style="font-size: 15px;">
+              <div class="col-1">
+              </div>
+              <div class="col-9">
+                <h3><b>{{companyName}}</b></h3>
+                <h5><b>{{oilCompanyName}}</b> </h5>
+                <!-- <h6> <b>{{address1}} {{address2}} {{city}}</b> <br><b>{{state}} {{pin}} <br>
+                    GST</b> : {{GSTNumber}} -->
+                <b> Phone </b>: {{mobile}}
+                <!-- </h6> -->
+                <h6><b>Date : {{crPurchaseDate}} </b> </h6>
+                <h6><b>Invoice No. : <span>{{sysGeneInvoiceNumber}}</span></b></h6>
+                <h6> <b>statement generated on: </b>{{statementCreatedAt | date:"dd/MM/yyyy"}} </h6>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div *ngIf="manualNo!=''" class="container text-center" style="font-size: 15px;">
+            <p>
+              <span *ngIf="manualNo!=undefined">
+                <span *ngIf="manualNo!=''">
+                  statement: {{manualNo}}
+                </span>
+              </span>
+            </p>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-12">
+              <table id="excel-table" class="table main-table" style="font-size: small;">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th style="text-align: center; padding:5px" class="p-0" [style.min-width]="'0px'">Khata Name</th>
+                      <th style="text-align: center; padding:5px" class="p-0" [style.min-width]="'0px'">Product</th>
+                      <th style="text-align: center; padding:5px" class="p-0" [style.min-width]="'0px'">Amount</th>
+                      <th style="text-align: center; padding:5px" class="p-0" [style.min-width]="'0px'">Quantity</th>
+                    </tr>
+                  </thead>
+                  &nbsp;
+                  <tbody style="text-align: center; ">
+                    <tr *ngFor="let data of crPurchaseDataDay" class="spaceUnder">
+                      <td style="text-align: center; " class="p-0" [style.min-width]="'190px'" class="spaceUnder">
+                        <b>{{data.companyName}}</b>
+                      </td>
+                      <td style="text-align: center; " colspan="3" class="p-0" [style.min-width]="'165px'"
+                        class="spaceUnder">
+                    <tr *ngFor="let dataCr of data.productData">
+                      <td style="text-align: center; " class="p-0" [style.min-width]="'155px'">{{dataCr.productName}}
+                      </td>
+                      <td style="text-align: center; " class="p-0" [style.min-width]="'155px'">
+                        {{dataCr.totalPurchase | number:'1.2-2'}}
+                      </td>
+                      <td style="text-align: center;" class="p-0" [style.min-width]="'155px'">
+                        &nbsp;&nbsp;
+                        {{dataCr.totalQuantity | number:'1.2-2'}}
+                        <span *ngIf="dataCr.productName == 'CNG'">
+                          Kg
+                        </span>
+                        <span *ngIf="dataCr.productName != 'CNG'">
+                          Ltr
+                        </span>
+                      </td> <br>
+                    </tr>
+                    </td>
+                    </tr>
+                    <!-- <hr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <b>Total Purchase Amount </b>
+                                            </td>
+                                            <td>
+                                                <b>{{ totalCrPurchaseDay | number:'1.2-2' }}</b>
+                                            </td>
+                                            <td></td>
+                                        </tr> -->
+
+                  </tbody>
+                </table>
+                <br>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th style="text-align: center;">Product</th>
+                      <th style="text-align: center;">Total Amount</th>
+                      <th style="text-align: center;">Total Quantity</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of totalPurchaseDataDay">
+                      <td style="text-align: center;">{{data.productName}}</td>
+                      <td style="text-align: center;">{{data.totalPurchase | number:'1.2-2'}}</td>
+                      <td style="text-align: center;">{{data.totalQuantity | number:'1.2-2'}}
+                        <span *ngIf="data.productName == 'CNG'">
+                          Kg
+                        </span>
+                        <span *ngIf="data.productName != 'CNG'">
+                          Ltr
+                        </span>
+                      </td>
+                    </tr>
+                    <hr>
+                  </tbody>
+                </table>
+
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <!-- end::Chart -->
-</div>
+</body>
+
+<body *ngIf="crPurchaseReportMonth" id="contentToConvert">
+  <div id="page-wrap">
+    <div class="row noprint">
+      <div class="col-auto noprint">
+        &nbsp; <button class="noprint" style="font-size: medium;" onclick="window.print()"> &nbsp;&nbsp;<i
+            class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
+      </div>
+      <!-- <div class="col-md-1">
+            <button class="btn btn-success" type="button" (click)="downloadExcel1()">
+            Excel
+            </button>
+        </div> -->
+      <div class="col-auto">
+        <button type="button" class="btn btn-primary" routerLink="/credit/crPurchaseBook">
+          Back </button>
+      </div>
+    </div>
+    <div id="sanjay">
+      <div class="container" style=" font-size: 15px;">
+        <div class="col-12 mr-2 px-1 py-1 container border-black" id="htmlData">
+          <div>
+            <div class="row px-4 py-4" style="font-size: 15px;">
+              <div class="col-9">
+                <h3><b>{{companyName}}</b></h3>
+                <h5><b>{{oilCompanyName}}</b> </h5>
+                <!-- <h6> <b>{{address1}} {{address2}} {{city}}</b> <br><b>{{state}} {{pin}} <br>
+                    GST</b> : {{GSTNumber}} -->
+                <b> Phone </b>: {{mobile}}
+                <!-- </h6> -->
+                <h6><b>Month : {{month}} </b> </h6>
+                <h6><b>Invoice No. : <span>{{sysGeneInvoiceNumber}}</span></b></h6>
+                <h6> <b>statement generated on: </b>{{statementCreatedAt | date:"dd/MM/yyyy"}} </h6>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div *ngIf="manualNo!=''" class="container text-center" style="border: 1px solid black; font-size: 15px;">
+            <p>
+              <span *ngIf="manualNo!=undefined">
+                <span *ngIf="manualNo!=''">
+                  statement: {{manualNo}}
+                </span>
+              </span>
+            </p>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-12">
+              <table id="excel-table1" class="table main-table" style="font-size: small;">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th style="text-align: center; padding:5px" class="p-0" [style.min-width]="'50px'">Sr No</th>
+                      <th style="text-align: center; padding:5px" class="p-0" [style.min-width]="'100px'">Khata Name
+                      </th>
+                      <th style="text-align: center; padding:5px" class="p-0" [style.min-width]="'90px'">Product</th>
+                      <th style="text-align: center; padding:5px" class="p-0" [style.min-width]="'90px'">Amount</th>
+                      <th style="text-align: center; padding:5px" class="p-0" [style.min-width]="'90px'">Quantity</th>
+                    </tr>
+                  </thead>
+                  &nbsp;
+                  <tbody style="text-align: center;">
+                    <tr *ngFor="let data of crPurchaseDataMonth; let i = index" class="spaceUnder">
+                      <td style="text-align: center; " class="p-0" [style.min-width]="'50px'" class="spaceUnder">
+                        <b>{{i+1}}</b>
+                      </td>
+                      <td style="text-align: center; " class="p-0" [style.min-width]="'190px'" class="spaceUnder">
+                        <b>{{data.companyName}}</b>
+                      </td>
+                      <td style="text-align: center; " colspan="3" class="p-0" [style.min-width]="'165px'"
+                        class="spaceUnder">
+                    <tr *ngFor="let dataCr of data.productData">
+                      <td style="text-align: center; " class="p-0" [style.min-width]="'155px'">{{dataCr.productName}}
+                      </td>
+                      <td style="text-align: center; " class="p-0" [style.min-width]="'155px'">
+                        {{dataCr.totalPurchase | number:'1.2-2'}}
+                      </td>
+                      <td style="text-align: center;" class="p-0" [style.min-width]="'155px'">
+                        &nbsp;&nbsp;
+                        {{dataCr.totalQuantity | number:'1.2-2'}}
+                        <span *ngIf="dataCr.productName == 'CNG'">
+                          Kg
+                        </span>
+                        <span *ngIf="dataCr.productName != 'CNG'">
+                          Ltr
+                        </span>
+                      </td> <br>
+                    </tr>
+                    </td>
+                    </tr>
+                    <!-- <hr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <b>Total Purchase Amount </b>
+                                            </td>
+                                            <td>
+                                                <b>{{ totalCrPurchaseMonth | number:'1.2-2' }}</b>
+                                            </td>
+                                            <td></td>
+                                        </tr> -->
+
+                  </tbody>
+                </table>
+                <br><br>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th style="text-align: center; ">Product</th>
+                      <th style="text-align: center; ">Total Amount</th>
+                      <th style="text-align: center; ">Total Quantity</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of totalPurchaseMonthData">
+                      <td style="text-align: center; padding:5px">{{data.productName}}</td>
+                      <td style="text-align: center; padding:5px">{{data.totalPurchase | number:'1.2-2'}}</td>
+                      <td style="text-align: center; padding:5px">{{data.totalQuantity | number:'1.2-2'}}
+                        <span *ngIf="data.productName == 'CNG'">
+                          Kg
+                        </span>
+                        <span *ngIf="data.productName != 'CNG'">
+                          Ltr
+                        </span>
+                      </td>
+                    </tr>
+                    <hr>
+                  </tbody>
+                </table>
+              </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

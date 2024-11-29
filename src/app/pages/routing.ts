@@ -100,6 +100,14 @@ const Routing: Routes = [
     loadChildren: () => import('./dealer/expense/expense.module').then((m) => m.ExpenseModule),
   },
   {
+    path: 'ledger',
+    loadChildren: () => import('./dealer/ledger/ledger.module').then((m) => m.LedgerModule),
+  },
+  {
+    path: 'pump',
+    loadChildren: () => import('./dealer/pump/pump.module').then((m) => m.PumpModule),
+  },
+  {
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full',

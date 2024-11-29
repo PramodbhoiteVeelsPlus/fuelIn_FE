@@ -1,0 +1,36 @@
+<div class="card-header">
+    <b> Setup Infra</b>
+  </div>
+  
+  <!-- <div class="row"> -->
+  <br>
+  <div>
+    <ul ngbNav #infra="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified" style="width: 100%;">
+      <li [ngbNavItem]="1">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">SETUP TANK </span>
+        </a>
+        <ng-template ngbNavContent>
+          <app-charts-widget9 class="card card-xxl-stretch mb-5 mb-xl-8"></app-charts-widget9>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="2">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">SETUP NOZZLES </span>
+        </a>
+        <ng-template ngbNavContent>
+          <app-charts-widget10 class="card card-xl-stretch mb-xl-8" color="primary"></app-charts-widget10>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="3">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">VIEW SETUP INFRA</span>
+        </a>
+        <ng-template ngbNavContent>
+          <app-charts-widget11 class="card card-xxl-stretch mb-5 mb-xl-8"></app-charts-widget11>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="infra"></div>
+  </div>
+  <!-- </div> -->

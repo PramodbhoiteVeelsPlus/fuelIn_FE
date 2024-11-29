@@ -57,6 +57,11 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   ]
 })
 export class FeedsWidget13Component implements OnInit {
+  filterForm = new FormGroup({ 
+    startDate: new FormControl(""),
+    endDate: new FormControl(""),
+  });
+
   dealerLoginVPId: any;
   accessGroupId: any;
   loginSQLCorporateId: any;
@@ -71,13 +76,16 @@ export class FeedsWidget13Component implements OnInit {
   dealerCorporateId: any;
   accessGroup: any;
   isAddExpense: boolean = false;
-  countAddArray: number = 1;
+  countAddArray: any = 1;
   addAccountingArray: any = [];
   addAccountingArrayData = new addAccountingArray();
   isSubmit: boolean = false
   bankAllAccList: any = [];
   bankSavingAccList: any = [];
   bankLoanAccList: any = [];
+  accountingData: any = [];
+  accountingSearchData: any = [];
+  selected: string;
 
   constructor(private post: FeedsService,
     private spinner: NgxSpinnerService,
@@ -85,7 +93,6 @@ export class FeedsWidget13Component implements OnInit {
     private cd: ChangeDetectorRef,) { }
 
   ngOnInit(): void {
-    this.spinner.show();
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = localStorage.getItem('dealerId');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
@@ -96,6 +103,7 @@ export class FeedsWidget13Component implements OnInit {
     this.month = moment(new Date()).format("MMM");
     this.year = moment(new Date()).format("YYYY");
     this.getBankDetailsByDealerId(this.fuelDealerId)
+    this.addFormRequestBanking();
     this.cd.detectChanges();
   }
 
@@ -380,25 +388,88 @@ submitArray(){
   })
 }
 
-// getAccounting(fuelDealerId){ 
-//   this.spinner.show();
-//   this.accountingData = []
-//   this.accountingSearchData = [];
-//   let data = { 
-//     accountingFuelDealerId: fuelDealerId, 
-//     startDate: moment(this.filterForm.value.startDate,["DD-MM-YYYY"]).format("YYYY-MM-DD"),
-//     endDate: moment(this.filterForm.value.endDate,["DD-MM-YYYY"]).format("YYYY-MM-DD"),
-//     accountingBook: 'Expense', 
-//   }  
-//   this.post.getAccountingPOST(data)
-//   .subscribe(res => {
-//       if (res.data.length) {  
-//         this.accountingData = res.data;
-//         this.accountingSearchData = res.data;
-//         this.spinner.hide();
-//       } else { 
-//         this.spinner.hide();
-//       }
-//   })
-// }
+clearAll(){
+  this.isAddExpense = false;
+  this.addAccountingArray = [];
+  this.isSubmit = false;
+  this.countAddArray = 1;
+  this.addFormRequestBanking();
+}
+
+filter(){ 
+    this.spinner.show()
+    this.accountingData = []
+    this.accountingSearchData = [];
+    let data = { 
+      accountingFuelDealerId: this.fuelDealerId, 
+      startDate: moment(this.filterForm.value.startDate,["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+      endDate: moment(this.filterForm.value.endDate,["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+      accountingBook: 'Expense', 
+    }  
+    this.post.getAccountingPOST(data)
+    .subscribe(res => {
+        if (res.data.length) {  
+          this.accountingData = res.data;
+          this.accountingSearchData = res.data;
+          this.spinner.hide()
+          this.cd.detectChanges();
+        } else { 
+          this.spinner.hide()
+          this.cd.detectChanges();
+        }
+    })
+}
+
+getAccounting(fuelDealerId: any){ 
+  this.spinner.show();
+  this.accountingData = []
+  this.accountingSearchData = [];
+  let data = { 
+    accountingFuelDealerId: fuelDealerId, 
+    startDate: moment(this.filterForm.value.startDate,["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+    endDate: moment(this.filterForm.value.endDate,["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+    accountingBook: 'Expense', 
+  }  
+  this.post.getAccountingPOST(data)
+  .subscribe(res => {
+      if (res.data.length) {  
+        this.accountingData = res.data;
+        this.accountingSearchData = res.data;
+        this.spinner.hide();
+        this.cd.detectChanges()
+      } else { 
+        this.spinner.hide();
+        this.cd.detectChanges()
+      }
+  })
+}
+
+cancel(){
+  this.filterForm.controls["startDate"].setValue( "01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear() )
+  this.filterForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
+  this.selected =  ( "01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear() )+ ' - ' + (moment(new Date()).format("DD-MM-YYYY"))
+  // this.filterForm.controls["formRadios"].setValue("")
+  this.getAccounting(this.fuelDealerId)
+}
+
+deleteAccounting(accountingId: any){ 
+  this.spinner.show();
+  let data = {
+    accountingId:accountingId
+  }
+  if(confirm("Are you sure to delete ? ")) {
+  this.post.deleteAccountingDataPOST(data)
+    .subscribe(res => {
+      if (res.status == 'OK') {
+        alert("details deleted successfully..!")
+        this.filter(); 
+        this.spinner.hide();
+      }else{ 
+        this.spinner.hide();
+      }
+    })
+  }
+  else{ 
+  }
+}
 }

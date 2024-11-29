@@ -1,0 +1,209 @@
+<!-- <div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row mb-2">
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-8">
+              <div class="text-sm-end">
+                <button type="button" class="btn btn-success btn-rounded mb-2 me-2"
+                  (click)="opensetFuelPrice(setFuelPrice)">
+                  + Set Fuel Price </button>
+              </div>
+            </div>
+          </div>
+          <div class="modal-body">
+
+            <p>Select date for downloading fuel prices</p>
+
+            <form [formGroup]="filterForm">
+
+              <div class="row">
+                <label for="example-text-input" class="col-auto col-form-label">Date Range</label>
+
+                <div class="col-md-4">
+
+                  <ng-template #t let-date let-focused="focused">
+                    <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+                      [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+                      (mouseleave)="hoveredDate = null">
+                      {{ date.day }}
+                    </span>
+                  </ng-template>
+
+                  <input type="text" class="form-control date" (click)="hidden=!hidden" name="daterange"
+                    autocomplete="off" [(ngModel)]="selected" [ngModelOptions]="{standalone: true}" />
+
+                  <ngb-datepicker #dp (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
+                    outsideDays="hidden" [hidden]="hidden">
+                  </ngb-datepicker>
+                </div>
+
+                <div class="col-md-5"></div>
+
+
+                <div class="col-lg-1">
+                  <span style="font-size: 35px;cursor: pointer;" (click)="downloadFuelPrice()" ngbTooltip="Download CSV"
+                    placement="bottom"><i class="fas fa-file-csv"></i></span><br>
+                </div>
+
+              </div>
+
+            </form>
+
+            <br>
+
+
+            <ng-template #setFuelPrice let-c="close" let-d="dismiss">
+              <div class="modal-header">
+                <h4 class="text-center">
+                  Set Fuel Price
+                </h4>
+                <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="unitForm">
+                  <div class="row">
+                    <div class="col-md-5">
+                      <label class="labelNewMargin"><b>Select Date</b></label>
+                    </div>
+                    <div class="col-md-6">
+                      <input class="form-control" formControlName="productPriceDate" ngbDatepicker
+                        #startDate="ngbDatepicker" readonly style="background-color: #ffffff;"
+                        (click)="startDate.toggle()">
+                    </div>
+                  </div>
+
+                  <br>
+                  <div class="mb-3 row" *ngFor="let data of allProductPriceList">
+                    <label for="example-text-input" class="col-md-5 col-form-label">{{data.productName}} </label>
+                    <div class="col-md-6">
+                      <input class="form-control" type="number" [(ngModel)]="data.sellingPrice"
+                        onkeypress="return this.value.length < 6;" [ngModelOptions]="{standalone: true}"
+                        placeholder="Enter Price" (change)="checkAmount($event)">
+                    </div>
+                    <br><br>
+                  </div>
+
+                  <br>
+                  <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                      <button class="btn btn-success" type="button" (click)="addFuelPrice()">Submit</button>
+                      &nbsp;&nbsp;
+                      <button class="btn btn-secondary" type="button" (click)="d('Cross click')">Cancel</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </ng-template>
+
+
+
+
+            <div class="table-responsive mb-0">
+              <table class="table table-centered table-nowrap">
+                <thead class="table-light">
+                  <tr>
+                    <th style="text-align: left;"> Sr. No. </th>
+                    <th style="text-align: left;"> Date Time </th>
+                    <th style="text-align: left;"> Rate (Rs/Ltr) </th>
+                    <th style="text-align: left;"> Product </th>
+                    <th style="text-align: left;"> Selling Price </th>
+                    <th style="text-align: left;"> Action </th>
+                  </tr>
+                </thead>
+
+                <tbody
+                  *ngFor="let data of getFuelPriceData   | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let i = index">
+
+                  <tr>
+                    <td style="text-align: left;">{{i+1}} </td>
+                    <td style="text-align: left;">{{data.productPriceDate | date:"mediumDate"}}
+                      {{data.productPriceTime}} </td>
+                    <td style="text-align: left;"> Rate {{data.rateCount}} </td>
+                    <td style="text-align: left;">{{data.productName}} </td>
+                    <td style="text-align: left;">{{data.productSellingPrice}} </td>
+
+                    <td style="text-align: left;cursor: pointer;">
+                      <div ngbDropdown placement="bottom-left">
+                        <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                          aria-expanded="true"></i>
+                        <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+
+                          <a class="dropdown-item" href="javascript: void(0);"
+                            (click)="updatePrice(editPrice,data.fuelPriceTableId,data.productSellingPrice)">
+                            <i class="fas fa-edit" style="color: #4e9b4e;">
+                            </i> &nbsp; Edit</a>
+                        </div>
+                      </div>
+                    </td>
+
+                  </tr>
+
+                </tbody>
+                <ng-template #editPrice let-c="close" let-d="dismiss">
+
+                  <div class="modal-header">
+                    <h4 class="modal-title">
+                      <label>
+                        <h4>
+                          <strong>
+                            Update Price <br></strong>
+                        </h4>
+                      </label>
+                    </h4>
+                    <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form [formGroup]="updateFuelPrice">
+
+                      <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-5">
+                          <label class="labelNewMargin">Price:</label>
+                        </div>
+                        <div class="col-md-6">
+                          <input class="form-control form-control-sm mr-1 w-40" style="font-size: 0.750rem;"
+                            type="number" formControlName="priceUpdated" placeholder="Enter New Price">
+                        </div>
+                      </div>
+                      <br>
+                      <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-2">
+                          <button type="submit" class="btn btn-success" (click)="editFuelPrice()">Update</button>
+                        </div>&nbsp;&nbsp;
+                        <div class="col-md-2">
+                          <button type="submit" class="btn btn-secondary" (click)="d('Cross click')">Cancel</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </ng-template>
+              </table>
+
+              <div class="text-md-right float-md-end pagination-rounded">
+
+                <ngb-pagination [collectionSize]="getFuelPriceData.length" [(page)]="page" [pageSize]="pageSize"
+                  [maxSize]="5" [rotate]="true" [boundaryLinks]="true">
+                </ngb-pagination>
+              </div>
+
+            </div>
+
+
+            <br><br><br><br>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

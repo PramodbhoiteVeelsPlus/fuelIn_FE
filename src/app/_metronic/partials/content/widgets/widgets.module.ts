@@ -168,6 +168,11 @@ import { FeedsWidget10Component } from './feeds/feeds-widget10/feeds-widget10.co
 import { FeedsWidget11Component } from './feeds/feeds-widget11/feeds-widget11.component';
 import { FeedsWidget12Component } from './feeds/feeds-widget12/feeds-widget12.component';
 import { FeedsWidget13Component } from './feeds/feeds-widget13/feeds-widget13.component';
+import { FeedsWidget14Component } from './feeds/feeds-widget14/feeds-widget14.component';
+import { ChartsWidget9Component } from './charts/charts-widget9/charts-widget9.component';
+import { ChartsWidget10Component } from './charts/charts-widget10/charts-widget10.component';
+import { ChartsWidget11Component } from './charts/charts-widget11/charts-widget11.component';
+import { ChartsWidget12Component } from './charts/charts-widget12/charts-widget12.component';
 // import { routes } from 'src/app/app-routing.module';
 @NgModule({
   declarations: [
@@ -329,7 +334,12 @@ import { FeedsWidget13Component } from './feeds/feeds-widget13/feeds-widget13.co
     FeedsWidget10Component,
     FeedsWidget11Component, 
     FeedsWidget12Component,
-    FeedsWidget13Component
+    FeedsWidget13Component,
+    FeedsWidget14Component,
+    ChartsWidget9Component,
+    ChartsWidget10Component,
+    ChartsWidget11Component,
+    ChartsWidget12Component
   ],
   imports: [
     ReactiveFormsModule,
@@ -507,7 +517,12 @@ import { FeedsWidget13Component } from './feeds/feeds-widget13/feeds-widget13.co
     FeedsWidget10Component,
     FeedsWidget11Component,
     FeedsWidget12Component,
-    FeedsWidget13Component
+    FeedsWidget13Component,
+    FeedsWidget14Component,
+    ChartsWidget9Component,
+    ChartsWidget10Component,
+    ChartsWidget11Component,
+    ChartsWidget12Component
   ],
   providers: [NgbActiveModal, ExcelService],
 })

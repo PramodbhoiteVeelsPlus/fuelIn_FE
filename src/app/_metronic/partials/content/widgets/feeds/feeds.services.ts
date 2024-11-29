@@ -78,7 +78,9 @@ export class FeedsService {
     private getShiftVStallyDigitalTotalForPreviousURL = this.baseURL + 'overallReport/getShiftVStallyDigitalTotalForPrevious'; 
     private getExpenseAmtDetailsForPreviousURL = this.baseURL + 'overallReport/getExpenseAmtDetailsForPrevious';
     private getMonthWiseMeterSalesURL = this.baseURL + 'dsrDetails/getMonthWiseMeterSales';
-    private addAccountingURL = this.baseURL + 'accounting/addAccounting' 
+    private addAccountingURL = this.baseURL + 'accounting/addAccounting';
+    private getAccountingURL = this.baseURL + 'accounting/getAccounting';
+  private deleteAccountingDataURL = this.baseURL + 'accounting/deleteAccountingData'
     
 
 
@@ -567,6 +569,26 @@ export class FeedsService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.addAccountingURL, body, {
+            headers: headers
+        })
+    }
+
+    // getAccountingURL
+    getAccountingPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getAccountingURL, body, {
+            headers: headers
+        })
+    }
+
+    // deleteAccountingDataURL
+    deleteAccountingDataPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.deleteAccountingDataURL, body, {
             headers: headers
         })
     }

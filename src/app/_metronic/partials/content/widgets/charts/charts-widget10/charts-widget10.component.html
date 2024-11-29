@@ -1,0 +1,187 @@
+<div class="row mb-2" *ngIf="viewsetupNozzles">
+  <div class="col-sm-4">
+  </div>
+  <div class="col-sm-8">
+    <div class="text-sm-end">
+      <button type="button" class="btn btn-success btn-rounded mb-2 me-2" (click)="setupNozzlesTable()">
+        + Nozzle
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-2" *ngIf="!viewsetupNozzles">
+  <div class="col-sm-4">
+  </div>
+  <div class="col-sm-8">
+    <div class="text-sm-end">
+      <button type="button" class="btn btn-success btn-rounded mb-2 me-2" (click)="setupNozzlesTable()">
+        view Nozzle
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<div class="row" *ngIf="!viewsetupNozzles">
+  <div class="col-sm-12">
+    <div class="table-responsive mb-0">
+      <table class="table table-centered table-nowrap">
+        <thead>
+          <tr>
+            <th align=left>Sr. No.</th>
+            <th align=left>Tank</th>
+            <th align=left>Product</th>
+            <th align=left>Volume</th>
+            <th align=left>Pump</th>
+            <th align=left>Nozzle</th>
+            <th align=left>Action</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let nozzle of SetNozzelData; let i = index;">
+          <tr>
+            <td>{{i+1}}</td>
+            <td>
+
+              <select class="form-control" style="color: #9EA79E;" [(ngModel)]="nozzle.tank"
+                [ngModelOptions]="{standalone: true}" (blur)="setNozzelForTankNo(i)">
+                <option value="">Select Tank</option>
+                <option *ngFor="let tankNumber of allTankDetails.data; let i = index" value="{{tankNumber.tankNo}}">
+                  {{tankNumber.tankNo}}
+                </option>
+
+              </select>
+
+            </td>
+
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="nozzle.product"
+                oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                [ngModelOptions]="{standalone: true}" placeholder="Enter Product" readonly />
+            </td>
+
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="nozzle.tankVolume"
+                [ngModelOptions]="{standalone: true}" placeholder="Enter volume" readonly />
+            </td>
+
+            <td>
+
+              <select class="form-control" style="color: #9EA79E;" [(ngModel)]="nozzle.pump"
+                [ngModelOptions]="{standalone: true}" (blur)="setDuNo()">
+                <option value="">Select Pump</option>
+                <option value="pump1">pump01</option>
+                <option value="pump2">pump02</option>
+                <option value="pump3">pump03</option>
+                <option value="pump4">pump04</option>
+                <option value="pump5">pump05</option>
+                <option value="pump6">pump06</option>
+                <option value="pump7">pump07</option>
+                <option value="pump8">pump08</option>
+                <option value="pump9">pump09</option>
+                <option value="pump10">pump10</option>
+                <option value="pump11">pump11</option>
+                <option value="pump12">pump12</option>
+                <option value="pump13">pump13</option>
+                <option value="pump14">pump14</option>
+                <option value="pump15">pump15</option>
+                <option value="pump16">pump16</option>
+                <option value="pump17">pump17</option>
+                <option value="pump18">pump18</option>
+                <option value="pump19">pump19</option>
+                <option value="pump20">pump20</option>
+              </select>
+
+
+            </td>
+            <td>
+              <select class="form-control" style="color: #9EA79E;" [(ngModel)]="nozzle.nozzel"
+                [ngModelOptions]="{standalone: true}" (blur)="setNozzel()">
+                <option value="">select nozzle</option>
+                <option value="nozzle1">Nozzle01</option>
+                <option value="nozzle2">Nozzle02</option>
+                <option value="nozzle3">Nozzle03</option>
+                <option value="nozzle4">Nozzle04</option>
+                <option value="nozzle5">Nozzle05</option>
+                <option value="nozzle6">Nozzle06</option>
+                <option value="nozzle7">Nozzle07</option>
+                <option value="nozzle8">Nozzle08</option>
+                <option value="nozzle9">Nozzle09</option>
+                <option value="nozzle10">Nozzle10</option>
+                <option value="nozzle11">Nozzle11</option>
+                <option value="nozzle12">Nozzle12</option>
+                <option value="nozzle13">Nozzle13</option>
+                <option value="nozzle14">Nozzle14</option>
+                <option value="nozzle15">Nozzle15</option>
+                <option value="nozzle16">Nozzle16</option>
+                <option value="nozzle17">Nozzle17</option>
+                <option value="nozzle18">Nozzle18</option>
+                <option value="nozzle19">Nozzle19</option>
+                <option value="nozzle20">Nozzle20</option>
+              </select>
+
+            </td>
+
+
+            <td>&nbsp;
+
+              <button type="submit" class="btn btn-success" (click)="validateSetupNozzlesForm(i)">
+                Add
+              </button>
+              &nbsp;&nbsp;
+              <button *ngIf="i != 0 " type="cancel" class="btn btn-primary" (click)="removeSetNozzel(i)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+
+
+    <div class="col col-xl-12 col-lg-12">
+      <button type="submit" class="btn btn-primary" (click)="submitNozzelDetailForAll()">Submit
+      </button>
+      &nbsp; &nbsp;&nbsp;
+      <button type="submit" class="btn btn-secondary" (click)="cancelNozzelDetailForAll()">Cancel
+      </button>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="row" *ngIf="viewsetupNozzles">
+  <div class="col-sm-12">
+    <div class="table-responsive mb-0">
+      <table class="table table-centered table-nowrap">
+        <thead>
+          <tr>
+            <th style="text-align: left;">Sr. No.</th>
+            <th style="text-align: left;">Tank</th>
+            <th style="text-align: left;">Pump</th>
+            <th style="text-align: left;">Nozzle</th>
+            <th style="text-align: left;">Volume</th>
+            <th style="text-align: left;">Product</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let data of pumpInfraDetails.data  ; let i = index">
+
+          <tr>
+            <td style="text-align: left;"> {{i+1}} </td>
+            <td style="text-align: left;"> {{data.tankNo | titlecase }} </td>
+            <td style="text-align: left;"> {{data.duNo | titlecase }} </td>
+            <td style="text-align: left;"> {{data.nozNo | titlecase }} </td>
+            <td style="text-align: left;"> {{data.tankVolume}} </td>
+            <td style="text-align: left;"> {{data.productName }}</td>
+
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+
+
+  </div>
+</div>

@@ -1,36 +1,117 @@
-<div class="card-header border-0 pt-5">
-  <h3 class="card-title align-items-start flex-column">
-    <span class="card-label fw-bolder fs-3 mb-1">Recent Customers</span>
-
-    <span class="text-muted fw-bold fs-7">More than 500 new customers</span>
-  </h3>
-
-  <div class="card-toolbar" data-kt-buttons="true">
-    <a class="
-        btn btn-sm btn-color-muted btn-active btn-active-primary
-        active
-        px-4
-        me-1
-      " id="kt_charts_widget_5_year_btn">
-      Year
-    </a>
-
-    <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="kt_charts_widget_5_month_btn">
-      Month
-    </a>
-
-    <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4" id="kt_charts_widget_5_week_btn">
-      Week
-    </a>
+<br>
+<form [formGroup]="filterForm">
+  <div class="row">
+    <label for="example-text-input" class="col-auto col-form-label">Date Range </label>
+    <div class="col-md-2">
+      <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;" name="startDate"
+        ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker #startDate="ngbDatepicker"
+        formControlName="startDate">
+    </div>
+    <div class="col-md-2">
+      <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;" name="endDate"
+        ngbTooltip="End Date" (click)="endDate.toggle()" ngbDatepicker #endDate="ngbDatepicker"
+        formControlName="endDate">
+    </div>
+    <div class="col-md-6">
+      <button type="button" class="btn btn-success btn-rounded mb-2 me-2" name="button"
+        (click)="toggleDropdown()">Select Product</button>
+      <div *ngIf="showDropdown" class="dropdown">
+        <label *ngFor="let product of productsData" style="padding: 5px; font-weight: bold;">
+          <input type="checkbox" [value]="product" (change)="toggleSelectionTx(product)">
+          {{ product.productName }}
+        </label>
+        <label *ngFor="let product of products" style="padding: 5px; font-weight: bold;">
+          <input type="checkbox" [value]="product" (change)="toggleSelectionTx(product)">
+          {{ product.productName }}
+        </label>
+      </div>
+    </div>
   </div>
-</div>
-
-<div class="card-body">
-  <div #chartRef id="kt_charts_widget_5_chart" [style.height]="'350px'">
-    <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [xaxis]="chartOptions.xaxis"
-      [yaxis]="chartOptions.yaxis" [dataLabels]="chartOptions.dataLabels" [stroke]="chartOptions.stroke"
-      [legend]="chartOptions.legend" [fill]="chartOptions.fill" [states]="chartOptions.states"
-      [tooltip]="chartOptions.tooltip" [colors]="chartOptions.colors" [markers]="chartOptions.markers"
-      [plotOptions]="chartOptions.plotOptions"></apx-chart>
+  <br>
+  <div class="row">
+    <label for="example-text-input" class="col-lg-1 col-form-label">Khata</label>
+    <div class="col-lg-6">
+      <input #myinput class="form-control" type="text" list="mappingAccData" placeholder="Select"
+        formControlName="selectedCorp" (change)="getDetailsByfuelDealerCustomerMapIdId($event)">
+      <datalist id="mappingAccData">
+        <option *ngFor="let data of mappingAccData" [value]="data.companyName">
+      </datalist>
+    </div>
+    <div class="col-lg-1">
+      <button type="button" class="btn btn-primary" name="button" (click)="getPurchaseDetailsTx()">
+        Submit
+      </button>
+    </div>
+    <div class="col-lg-1">
+      <button type="submit" class="btn btn-secondary" name="button" (click)="clearFilterForm()">
+        Cancel
+      </button>
+    </div>
+    <div class="col-lg-2"></div>
+    <div class="col-md-1">
+      <button class="btn btn-success" type="button" (click)=" printPdfTx()">
+        Print
+      </button>
+    </div>
   </div>
+  <br>
+  <div class="row">
+    <div class="col-md-4">
+      <label>Add Statement Number</label>
+      <input type="text" class="form-control" formControlName="manualNo" placeholder="Enter Statement Number" />
+    </div>
+  </div>
+</form>
+<hr>
+<div class="row">
+  <div class="col-lg-1"></div>
+  <div *ngIf="crPurchaseData.length" class="col-lg-10">
+    <div class="table-responsive mb-0">
+      <table class="table table-centered table-nowrap">
+        <thead class="table-light">
+          <tr>
+            <th style="text-align: left;">Khata Name</th>
+            <th style="text-align: left;">Date</th>
+            <th style="text-align: left;">Vehicle</th>
+            <th style="text-align: left;">Product</th>
+            <th style="text-align: left;">Amount</th>
+            <th style="text-align: left;">Quantity</th>
+          </tr>
+        </thead>
+        <tbody
+          *ngFor="let data of crPurchaseData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+          <tr>
+            <td> <b>{{data.companyName}}</b> <br> {{data.hostName}} </td>
+            <td>{{data.estimatedRefuelDate | date:"d MMM, yyyy"}}</td>
+            <td>{{data.vehicleNumber}}</td>
+            <td>{{data.productName}}</td>
+            <td>₹ {{data.totalPurchase | number:'1.2-2'}}</td>
+            <td>{{data.totalQuantity | number:'1.2-2'}}
+              <span *ngIf="data.productName == 'CNG'">
+                Kg
+              </span>
+              <span *ngIf="data.productName != 'CNG'">
+                Ltr
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="text-md-right float-md-end pagination-rounded">
+      <!-- begin::Pagination -->
+      <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+        style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+      </pagination-controls>
+      <!-- end::Pagination -->
+    </div>
+  </div>
+
+  <div *ngIf="!crPurchaseData.length" class="col-lg-10">
+    <div>
+      <h3> Data Not Found...! </h3>
+    </div>
+  </div>
+
 </div>
