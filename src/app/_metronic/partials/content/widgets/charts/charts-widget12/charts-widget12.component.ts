@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, Component, Injectable, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Injectable, Input, OnInit, Output } from '@angular/core';
 import { getCSSVariableValue } from '../../../../../kt/_utils';
-import { NgbDateAdapter, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig, NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateAdapter, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig, NgbModal, ModalDismissReasons, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ExcelService } from 'src/app/pages/excel.service';
@@ -61,6 +61,62 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   templateUrl: './charts-widget12.component.html',
 })
 export class ChartsWidget12Component implements OnInit {
+  filterForm = new FormGroup({
+   startDate:new FormControl(''),
+   endDate: new FormControl(''),
+   });
+   
+   unitForm = new FormGroup({
+    buyPricePerUnit:new FormControl(''),
+    product: new FormControl('', [Validators.required]),    
+    productPriceDate: new FormControl(''),
+  });
+
+  
+  updateFuelPrice = new FormGroup({
+    priceUpdated:new FormControl(''),
+    });
+
+   @Input() fromDate: Date;
+   @Input() toDate: Date;
+   @Output() dateRangeSelected: EventEmitter<{}> = new EventEmitter();
+   hoveredDate: NgbDate;
+   fromNGDate: NgbDate;
+   toNGDate: NgbDate;
+   selected: any;
+   hidden: boolean = true;
+  getFuelPriceDetailsList: any = [];
+  getFuelPriceDetailsListDetails: any = [];
+  productsData: any = [];
+  productsList: any = [];
+  allProductPriceList: any = [];
+  managerVPPersonId: any;
+  managerPersonId: any;
+  productPriceDate= new Date();
+  getFuelPriceData: any;
+  fuelPriceID: any;
+   
+    /**
+ * @param date date obj
+ */
+isInside(date: NgbDate) {
+  return date.after(this.fromNGDate) && date.before(this.toNGDate);
+}
+
+   /**
+ * @param date date obj
+ */
+isRange(date: NgbDate) {
+  return date.equals(this.fromNGDate) || date.equals(this.toNGDate) || this.isInside(date) || this.isHovered(date);
+}
+
+/**
+ * Is hovered over date
+ * @param date date obj
+ */
+isHovered(date: NgbDate) {
+  return this.fromNGDate && !this.toNGDate && this.hoveredDate && date.after(this.fromNGDate) && date.before(this.hoveredDate);
+}
 
   fuelDealerId: any;
   dealerCorporateId: any;
@@ -81,6 +137,9 @@ export class ChartsWidget12Component implements OnInit {
   p: number = 1;
   p1: number = 1;
   total: number = 0;
+  modalRef: any;
+  closeResult: string;
+  todayDate = new Date();
 
   constructor(
     private post: ChartsService,
@@ -103,6 +162,9 @@ export class ChartsWidget12Component implements OnInit {
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.accessGroup = element.accessGroupId;
+    this.managerVPPersonId = element.veelsPlusId
+    this.managerPersonId = element.personId
+    this.managerName = element.firstName + ' '+ element.lastName
     if (element.accessGroupId == 12 || element.accessGroupId == 14) {
       this.managerName = element.firstName + ' ' + element.lastName;
       this.pumpCity = dealerData.city
@@ -131,4 +193,249 @@ export class ChartsWidget12Component implements OnInit {
     // this.getPumpInfra();
   }
 
+  opensetFuelPrice(setFuelPrice: any) {
+    this.modalRef = this.modalService.open(setFuelPrice, { size: 'sm' });
+    this.modalRef.result.then(
+      (result: any) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason: any) => {
+        this.closeResult = `Dismissed`;
+      }
+    );
+  }
+
+  onDateSelection(date: NgbDate) {
+    if (!this.fromDate && !this.toDate) {
+      this.fromNGDate = date;
+      this.fromDate = new Date(date.year, date.month - 1, date.day);
+      this.selected = '';
+      // console.log('11111111');
+      // console.log(this.selected);
+      
+    } else if (this.fromDate && !this.toDate && date.after(this.fromNGDate)) {
+      this.toNGDate = date;
+      this.toDate = new Date(date.year, date.month - 1, date.day);
+      this.hidden = true;
+     // this.selected = this.fromDate.toLocaleDateString() + '-' + this.toDate.toLocaleDateString();
+
+     this.selected =  moment(this.fromDate.toLocaleDateString()).format("DD-MM-YYYY")+ ' - ' + moment(this.toDate.toLocaleDateString()).format("DD-MM-YYYY")
+     this.filterForm.controls["startDate"].setValue( moment(this.fromDate.toLocaleDateString()).format("DD-MM-YYYY"));
+     this.filterForm.controls["endDate"].setValue(moment(this.toDate.toLocaleDateString()).format("DD-MM-YYYY"));
+
+
+      this.dateRangeSelected.emit({ fromDate: this.fromDate, toDate: this.toDate });
+      // console.log('2222222222');
+      // console.log(this.selected);
+
+      // this.fromDate = null;
+      // this.toDate = null;
+      // this.fromNGDate = null;
+      // this.toNGDate = null;
+
+    } else {
+      this.fromNGDate = date;
+      this.fromDate = new Date(date.year, date.month - 1, date.day);
+      this.selected = '';
+
+      // console.log('33333333');
+      // console.log(this.selected);
+
+    }
+  }
+  
+  downloadFuelPrice() {
+    if(this.filterForm.value.startDate && this.filterForm.value.endDate){
+      let data = {
+        dealerId : this.fuelDealerId,
+        startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD") ,
+        endDate:  moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD") ,
+      }
+      this.post.getFuelPriceDetailsForExcelPOST(data)
+      .subscribe(res=>{
+        if(res){
+          this.getFuelPriceDetailsList = res.data;
+          this.getFuelPriceDetailsListExcel();
+        }
+    });
+    
+    }
+    else{
+      alert("Please Select Date!")
+    }
+    
+    }
+    
+  getFuelPriceDetailsListExcel() {
+  
+    this.getFuelPriceDetailsListDetails.length = 0
+  
+    this.getFuelPriceDetailsList.map((result: { productCategory: string; productName: string; productSellingPrice: string; rateCount: string; productPriceDate: moment.MomentInput; productPriceTime: string; }) => {
+        var json = {
+          Product: result.productCategory+'-'+result.productName,
+          Rate:result.productSellingPrice+' '+'('+'Rate'+result.rateCount+')',
+          DateTime:moment(result.productPriceDate).format("DD-MM-YYYY")+' '+result.productPriceTime,
+           
+        };
+  
+        this.getFuelPriceDetailsListDetails.push(json);
+    });
+  
+    this.excelService.exportAsExcelFile(
+        this.getFuelPriceDetailsListDetails,
+        "FuelPriceList"
+    );
+  }
+  
+  getProductsByDealerId(fuelDealerId: any) {
+    let data = {
+      fuelDealerId:fuelDealerId
+    }
+    this.post1.getFuelProductIdByDealerIdPOST(data).subscribe(res=>
+      {
+        if (res)
+        {
+          this.productsData = res;
+          this.productsList = res.data;
+          this.allProductPriceList = res.data;
+          this.getProductDetails(res.data);
+        }
+    })
+  }
+  
+  getProductDetails(data: any[]){
+    data.forEach(element => {
+  
+      let json ={
+        fuelProductId:"",
+        productSellingPrice:"",
+  
+      };
+      json.fuelProductId = element.fuelProductsId;
+      json.productSellingPrice = "";
+      
+      // console.log("ArrayProductList 1:",this.allProductPriceList)
+    });
+  }
+  
+  checkAmount(id: any) {
+    if(id.target.value < 0){
+   alert("Please enter valid fuel price")
+   id.target.value = '';
+    }
+  }
+  
+  addFuelPrice() {
+    if(this.accessGroup == 12 || this.accessGroup == 19){
+      this.spinner.show()
+      // console.log("ArrayProductList 2:",this.allProductPriceList)
+      let data ={
+        allProductPriceList:this.allProductPriceList,
+        sellingSetBy : this.fuelDealerId,
+        productPriceTime : moment(this.todayDate).format("hh:mm:ss"),
+        productPriceDate : moment(this.unitForm.value.productPriceDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+      }
+      this.post.addFuelPriceByDealerIdPOST(data)
+      .subscribe(res=>{
+        if(res.status == 'OK'){
+          alert("Fuel Price Set Successfully!");
+          this.getProductsByDealerId(this.fuelDealerId);
+          this.getFuelPriceByDealer(this.fuelDealerId);      
+          this.modalRef.close('close');
+          this.allProductPriceList.length = 0;
+          this.spinner.hide();
+          this.unitForm.controls['productPriceDate'].setValue(moment(this.productPriceDate).format('DD-MM-YYYY'));
+        }else{
+          alert(res.msg);
+          this.spinner.hide();
+        }
+        
+      })
+    }else{
+      if(this.accessGroup == 14 || this.accessGroup == 21){
+        this.spinner.show()
+        // console.log("ArrayProductList 2:",this.allProductPriceList)
+        let data ={
+          allProductPriceList:this.allProductPriceList,
+          sellingSetBy : this.fuelDealerId,
+          productPriceTime : moment(this.todayDate).format("hh:mm:ss"),
+          productPriceDate : moment(this.unitForm.value.productPriceDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+          managerVPPersonId:this.managerVPPersonId,
+          managerPersonId:this.managerPersonId,
+          managerName:this.managerName,
+        }
+        this.post.addFuelPriceByDealerIdPOST(data)
+        .subscribe(res=>{
+          if(res.status == 'OK'){
+            alert("Fuel Price Set Successfully!");
+            this.getProductsByDealerId(this.fuelDealerId);
+            this.getFuelPriceByDealer(this.fuelDealerId);      
+            this.modalRef.close('close');
+            this.allProductPriceList.length = 0;
+            this.spinner.hide();
+            this.unitForm.controls['productPriceDate'].setValue(moment(this.productPriceDate).format('DD-MM-YYYY'));
+          }else{
+            alert(res.msg);
+            this.spinner.hide();
+          }
+          
+        })
+      }else{
+        
+      }
+    }
+  
+  }
+  
+  getFuelPriceByDealer(fuelDealerId: any) {
+    let data ={
+      dealerId : fuelDealerId,
+    }
+    this.post.getPriceByDealerIdPOST(data)
+    .subscribe(res=>{
+      if(res.data.length){
+        this.getFuelPriceData = res.data;
+      }
+      else{
+  
+      }
+      
+    })
+  }
+  
+  updatePrice(editPrice: any,FuelPriceID: any,productSellingPrice: any){
+    this.modalRef = this.modalService.open(editPrice);
+    this.fuelPriceID = FuelPriceID;
+    this.updateFuelPrice.controls["priceUpdated"].setValue(productSellingPrice);
+    this.modalRef.result.then(
+        (result: any) => {
+            this.closeResult = `Closed with: ${result}`;
+        },
+        (reason: any) => {
+            this.closeResult = `Dismissed`;
+        }
+    );
+  }
+  
+  editFuelPrice() {
+    if(this.updateFuelPrice.value.priceUpdated){
+      this.spinner.show()
+      let data = {
+        fuelPriceID:this.fuelPriceID,
+        productSellingPrice:this.updateFuelPrice.value.priceUpdated,
+      }
+      this.post.editFuelPricePOST(data)
+      .subscribe(res=>{
+        alert("Price Updated Successfully!");
+        this.spinner.hide();
+        this.modalRef.close('close');
+        this.updateFuelPrice.reset();
+        this.getFuelPriceByDealer(this.fuelDealerId);
+      })
+    }
+    else
+    {
+      alert("Please Enter Price..!")
+    }
+  }
 }

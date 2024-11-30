@@ -67,6 +67,10 @@ export class ChartsService {
   private addStampingURL = this.baseURL + 'fuelinframapping/addStamping';
   private deleteStampingURL = this.baseURL + 'fuelinframapping/deleteStamping';
   private updateMapPumpInfraURL = this.baseURL + 'fuelinframapping/updateMapPumpInfra';
+  private getFuelPriceDetailsForExcelURL = this.baseURL + 'fuelPrice/getFuelPriceDetailsForExcel';
+  private addFuelPriceByDealerIdURL = this.baseURL + 'fuelPrice/addFuelPriceByDealerId'; 
+  private getPriceByDealerIdURL = this.baseURL + 'fuelPrice/getPriceByDealerId';
+  private editFuelPriceURL = this.baseURL + 'fuelPrice/editFuelPrice'; 
 
 
 
@@ -378,6 +382,46 @@ export class ChartsService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.updateMapPumpInfraURL, body, {
+            headers: headers
+        })
+    }
+  
+    // getFuelPriceDetailsForExcelURL
+    getFuelPriceDetailsForExcelPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFuelPriceDetailsForExcelURL, body, {
+            headers: headers
+        })
+    }
+  
+    // addFuelPriceByDealerIdURL
+    addFuelPriceByDealerIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addFuelPriceByDealerIdURL, body, {
+            headers: headers
+        })
+    }
+  
+    // getPriceByDealerIdURL
+    getPriceByDealerIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getPriceByDealerIdURL, body, {
+            headers: headers
+        })
+    }
+  
+    // editFuelPriceURL
+    editFuelPricePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.editFuelPriceURL, body, {
             headers: headers
         })
     }
