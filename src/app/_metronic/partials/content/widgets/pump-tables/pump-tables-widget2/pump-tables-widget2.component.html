@@ -1,0 +1,175 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row mb-2">
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-8">
+              <div class="text-sm-end">
+                <button type="button" class="btn btn-success btn-rounded mb-2 me-2"
+                  routerLink="/pump/addLubricantPurchase">
+                  <i class="mdi mdi-plus mr-1"></i>
+                  + Add Lubricant Purchase </button>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-3" style="text-align: right;"><b>Remaining Stock</b></div>
+            <div class="col-md-6">
+              <div class="table-responsive mb-0">
+                <table class="table table-centered table-nowrap">
+                  <thead class="table-light">
+                    <tr>
+                      <th style="text-align: left;">Product</th>
+                      <th style="text-align: left;">Quantity</th>
+                      <th style="text-align: left;">Quantity In Pieces</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let data of lubeStockDetails; let i = index">
+                    <tr>
+                      <td style="text-align: left;"> {{data.lubricantStockLubricantName}} </td>
+                      <td style="text-align: left;"> {{data.lubricantStockQuantity}} </td>
+                      <td style="text-align: left;"> {{data.lubricantStockQuantityInPieces}} </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <br><br>
+          <form [formGroup]="filterForm">
+            <div class="mb-3 row">
+              <label for="example-text-input" class="col-auto col-form-label">Date Range</label>
+              <div class="col-md-2">
+                <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+                  name="startDate" ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker
+                  #startDate="ngbDatepicker" formControlName="startDate">
+              </div>
+              <div class="col-md-2">
+                <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+                  name="endDate" ngbTooltip="End Date" (click)="endDate.toggle()" ngbDatepicker #endDate="ngbDatepicker"
+                  formControlName="endDate">
+              </div>
+              <div class="col-md-2">
+                <button type="button" class="btn btn-primary" name="button" (click)="getDetailsByFilter()">
+                  submit
+                </button>
+              </div>
+              <div class="col-md-2"></div>
+              <div class="col-md-1">
+                <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF" placement="bottom"
+                  (click)="exportToPDF()"><i class="fas fa-file-pdf"></i></span> <br>
+              </div>
+              <div class="col-md-1">
+                <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download CSV" placement="bottom"
+                  (click)="excelDownload()"><i class="fas fa-file-csv"></i></span> <br>
+              </div>
+            </div>
+          </form>
+          <div class="row mb-2">
+            <div class="col-sm-4">
+              <div class="search-box me-2 mb-2 d-inline-block">
+                <div class="position-relative">
+                  <input class="form-control mr-md-4" type="text" placeholder="search"
+                    oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                    [(ngModel)]="searchData" [ngModelOptions]="{standalone: true}" (input)="onSearch()">
+                  <i class="bx bx-search-alt search-icon"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="table-responsive mb-0">
+            <table class="table table-centered table-nowrap">
+              <thead class="table-light">
+                <tr>
+                  <th></th>
+                  <th style="text-align: left;">Invoice Date</th>
+                  <th style="text-align: left;">Company Name</th>
+                  <th style="text-align: left;">Product</th>
+                  <th style="text-align: left;">Quantity</th>
+                  <th style="text-align: left;">Quantity In Pieces</th>
+                  <th style="text-align: left;">Taxable Amount</th>
+                  <th style="text-align: left;">Tax %</th>
+                  <th style="text-align: left;">Total Amount</th>
+                  <th style="text-align: left;">Action</th>
+                </tr>
+              </thead>
+              <tbody
+                *ngFor="let data of lubePurchaseDetails | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                <tr>
+                  <td align="left">
+                    <a class="expand-row"
+                      (click)="changeValue(i,data.lubricantStockLubricantHsnSac,data.lubricantStockCGST,data.lubricantStockSGST,data.lubricantStockIGST,data.createdBy)">
+                      +
+                    </a>
+                  </td>
+                  <td style="text-align: left;">
+                    {{data.lubricantStockInvDate | date:"d MMM, yyyy" }}
+                  </td>
+                  <td style="text-align: left;"> {{data.lubricantStockCompanyName}} </td>
+                  <td style="text-align: left;"> {{data.lubricantStockLubricantName}} </td>
+                  <td style="text-align: left;"> {{data.lubricantStockQuantity}} </td>
+                  <td style="text-align: left;"> {{data.lubricantStockQuantityInPieces}} </td>
+                  <td style="text-align: left;"> {{data.lubricantStockTaxableAmt | number:'1.2-2'}} </td>
+                  <td style="text-align: left;"> {{data.lubricantStockTaxInPercentage | number:'1.2-2'}} </td>
+                  <td style="text-align: left;"> {{data.lubricantStockTotalAmt | number:'1.2-2'}} </td>
+                  <td style="text-align: left;cursor: pointer;">
+                    <div ngbDropdown placement="bottom-left">
+                      <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                        aria-expanded="true"></i>
+                      <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                        <a class="dropdown-item" href="javascript: void(0);"
+                          (click)="deleteLubricantPurchase(data.lubricantStockId)">
+                          <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
+                      </div>
+                    </div>
+                  </td>
+
+                </tr>
+                <tr *ngIf="show  && i == rowNumber" class="sub-table no-bg">
+                  <td align="left"> </td>
+                  <td colspan="12" class="p-0">
+                    <table class="table mb-0 table-striped">
+                      <thead class="table-light">
+                        <tr>
+                          <th></th>
+                          <th style="text-align: left;">HSN/SAC Number</th>
+                          <th style="text-align: left;">CGST</th>
+                          <th style="text-align: left;">SGST</th>
+                          <th style="text-align: left;">IGST</th>
+                          <th style="text-align: left;">Created By</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td></td>
+                          <td style="text-align: left;"> {{lubricantStockLubricantHsnSac}} </td>
+                          <td style="text-align: left;"> {{lubricantStockCGST}} </td>
+                          <td style="text-align: left;"> {{lubricantStockSGST}} </td>
+                          <td style="text-align: left;"> {{lubricantStockIGST}} </td>
+                          <td style="text-align: left;"> {{createdBy}} </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="text-md-right float-md-end pagination-rounded">
+              <!-- begin::Pagination -->
+              <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+              </pagination-controls>
+              <!-- end::Pagination -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,103 @@
+
+<br>
+<div class="modal-body">
+    <div class="row">
+        <div class="col col-xl-2 col-lg-2"></div>
+        <div class="col col-xl-8 col-lg-8">
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th style="text-align: center;"> Sr No </th>
+                    <th style="text-align: center;"> Lubricant Name </th>
+                    <th style="text-align: center;"> Unit </th>
+                    <th style="text-align: center;"> HSN/SAC </th> 
+                    <th style="text-align: center;"> Created By </th> 
+                    <th style="text-align: center;"> Action </th>                               
+                </tr>
+            </thead>
+            <tbody *ngFor="let data of lubricantList; let i = index;"> 
+                <tr>
+                    <td style="text-align: center;"> {{i + 1}} </td>
+                    <td style="text-align: center;"> {{data.lubricantsName}} </td>
+                    <td style="text-align: center;"> {{data.lubricantsUnit}} </td>
+                    <td style="text-align: center;"> {{data.lubricantsHsnSacNumber}} </td>
+                    <td style="text-align: center;"> {{data.lubricantsCreatedBy}} </td> 
+
+
+                    <td style="text-align: left;cursor: pointer;" >
+                        <div ngbDropdown placement="bottom-left">
+                            <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                              aria-expanded="true"></i>
+                            <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+
+                              <a class="dropdown-item" href="javascript: void(0);"  (click) = "deleteLube(data.lubricantsId)" >
+                                  <i class="fas fa-ban" style="color: red;" > </i> &nbsp;&nbsp; Delete</a>
+                              
+                                  <a class="dropdown-item" href="javascript: void(0);"
+                                  (click) = "editLube(data.lubricantsId,editLubeModal)">
+                                      <i class="fas fa-edit" style="color: #4e9b4e;">
+                                      </i> &nbsp; Edit</a>
+
+                                  
+                            </div>
+                          </div>
+                    </td>
+
+                </tr> 
+                <ng-template #editLubeModal let-c="close" let-d="dismiss"> 
+                    <div class="modal-header">
+                        <h4 class="modal-title">Update Lubricant </h4>
+                        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form [formGroup]="lubeForm">
+                        <div class="modal-body"> 
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-6">
+                                    <label >lubricant name :</label>
+                                    <input class="form-control" formControlName="lubricantsName" 
+                                        required>
+            
+                                </div> 
+                            </div>
+                            <br> 
+                            <div class="row">                         
+                                <div class="col-md-2"></div>
+                                <div class="col-md-6">
+                                    <label > unit :</label>
+                                    <select class="form-control" formControlName="lubricantsUnit" >
+                                        <option value="Ltr">Ltr </option>
+                                        <option value="Kg">Kg</option> 
+                                    </select>
+                                </div>
+                            </div>
+                            <br> 
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-6">
+                                    <label >HSN/SAC :</label>
+                                    <input class="form-control" formControlName="lubricantsHsnSacNumber" 
+                                        required>
+            
+                                </div> 
+                            </div>
+                            <br> 
+                        </div>
+                        <div class="col-md-12" style="text-align: center;">
+                            <button type="submit" class="btn btn-primary"
+                                (click)="updateLubricants()">Update</button>
+                                &nbsp; &nbsp;
+                            <button type="cancel" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+                        </div>
+                        <br>
+                    </form> 
+                </ng-template>
+            </tbody>
+
+           
+        </table>
+        </div>
+    </div>
+</div>

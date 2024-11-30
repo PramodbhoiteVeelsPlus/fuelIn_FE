@@ -1,0 +1,78 @@
+<br>
+<div class="modal-body">
+
+    <div class="row">
+        <div class="col col-xl-2 col-lg-2"></div>
+        <div class="col col-xl-8 col-lg-8">
+            <div class="card-body table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center;"> Lubricant Name </th>
+                            <th style="text-align: center;"> Unit </th>
+                            <th style="text-align: center;"> HSN/SAC </th>
+                            <th style="text-align: center;"> Action </th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let lube of addArrayLube; let i = index;">
+                        <tr>
+                            <td style="text-align: center;">
+                                <input type="text" class="form-control" [(ngModel)]="lube.lubricantsName"
+                                    style="text-align: center;" [ngModelOptions]="{standalone: true}"
+                                    placeholder="Lubricant Name" />
+                            </td>
+
+                            <td style="text-align: center;">
+                                <select class="form-control" [(ngModel)]="lube.lubricantsUnit"
+                                    [ngModelOptions]="{standalone: true}">
+                                    <option value="">Select Unit</option>
+                                    <option value="Ltr">Ltr </option>
+                                    <option value="Kg">Kg</option>
+                                </select>
+                            </td>
+
+                            <td style="text-align: center;">
+                                <input type="number" class="form-control" [(ngModel)]="lube.lubricantsHsnSacNumber"
+                                    style="text-align: center;" [ngModelOptions]="{standalone: true}"
+                                    placeholder="Enter HSN/SAC" (blur)="checkValidationLubricant(i)" />
+                            </td>
+
+                            <td style="text-align: center;">
+                                <button type="submit" class="btn btn-success" (click)="addFormRequestLube1(i)">
+                                    Add
+                                </button>
+                                &nbsp;&nbsp;
+                                <button *ngIf="i != 0 " type="cancel" class="btn btn-primary"
+                                    (click)="removeFormRequestLube(i)">Delete</button>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col col-xl-12 col-lg-12">
+            <div class="row">
+                <div class="col-md-5">
+                </div>
+                <div class="col-auto">
+                    <button *ngIf="isShowLubeSubmit" type="submit" class="btn btn-primary"
+                        (click)=addLubricants()>Submit</button>
+                    <button *ngIf="!isShowLubeSubmit" type="submit" class="btn btn-primary" disabled>Submit</button>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-secondary" (click)=lubeClear()>Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br><br><br><br>
+
+    <hr>
+
+</div>

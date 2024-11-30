@@ -1,1 +1,49 @@
-<p>cash-bill works!</p>
+<div class="card-header">
+    <b>Cash Bill</b>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col-sm-4">
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="text-sm-end">
+
+                            <button type="button" class="btn btn-success btn-rounded mb-2 me-2"
+                                routerLink="/pump/createCashBill"><i class="mdi mdi-plus mr-1"></i>
+                                Create Cash Bill</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  
+  <!-- <div class="row"> -->
+    <br>
+    <div>
+      <ul ngbNav #cashBill="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified" style="width: 100%;">
+        <li [ngbNavItem]="1">
+          <a ngbNavLink>
+            <span class="d-none d-sm-block" style="font-size: 15px;">FUEL LIST </span>
+          </a>
+          <ng-template ngbNavContent>
+            <app-charts-widget13 class="card card-xxl-stretch mb-5 mb-xl-8"></app-charts-widget13>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+          <a ngbNavLink>
+            <span class="d-none d-sm-block" style="font-size: 15px;">LUBE LIST </span>
+          </a>
+          <ng-template ngbNavContent>
+            <app-charts-widget14 class="card card-xl-stretch mb-xl-8" color="primary"></app-charts-widget14>
+          </ng-template>
+        </li>
+      </ul>
+      <div [ngbNavOutlet]="cashBill"></div>
+    </div>
+    <!-- </div> -->

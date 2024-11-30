@@ -1,0 +1,126 @@
+<br>
+<form [formGroup]="filterForm">
+  <div class="row">
+    <label for="example-text-input" class="col-auto col-form-label">Select Bill :</label>
+
+    <div class="col-md-2">
+      <select class="form-control" formControlName="purpose" required>
+        <option value="">All Bills</option>
+        <option value="CANCEL">Cancelled Bills</option>
+      </select>
+    </div>
+
+    <label for="example-text-input" class="col-auto col-form-label">Date Range :</label>
+
+    <div class="col-md-2">
+      <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;" name="startDate"
+        ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker #startDate="ngbDatepicker"
+        formControlName="startDate">
+    </div>
+    <div class="col-md-2">
+      <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;" name="endDate"
+        ngbTooltip="End Date" (click)="endDate.toggle()" ngbDatepicker #endDate="ngbDatepicker"
+        formControlName="endDate">
+    </div>
+
+    <div class="col-auto">
+      <button class="btn btn-primary" type="button" (click)="view()">
+        Submit </button>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <button class="btn btn-secondary" type="button" (click)="clearFilterForm()">
+        Cancel </button>
+    </div>
+
+    <div class="col-auto">
+
+
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <span style="font-size: 30px;cursor: pointer;" (click)="exportToPDF()" ngbTooltip="Download PDF"
+        placement="bottom"><i class="fas fa-file-pdf"></i></span>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <span style="font-size: 30px;cursor: pointer;" (click)="excelDownload()" ngbTooltip="Download CSV"
+        placement="bottom"><i class="fas fa-file-csv"></i></span>
+
+    </div>
+
+
+  </div>
+</form>
+
+<hr>
+
+<div class="card-body table-responsive">
+  <table class="table table-hover b">
+    <thead>
+      <tr>
+        <th style="text-align: left;">Date</th>
+        <th style="text-align: left;">Bill Number</th>
+        <th style="text-align: left;">Customer Details</th>
+        <th style="text-align: left;">Vehicle Number</th>
+        <th style="text-align: left;">Product</th>
+        <th style="text-align: left;">Rate</th>
+        <th style="text-align: left;">Quantity</th>
+        <th style="text-align: left;">Total Amount</th>
+        <th *ngIf="accessGroup == '12' " style="text-align: left;">Created By</th>
+        <th style="text-align: left;">Action</th>
+      </tr>
+    </thead>
+    <tbody
+      *ngFor="let data of fuelCashBillList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+
+      <tr>
+        <td style="text-align: left;"> {{data.cashBillDate | date:"d MMM, yyyy"}} </td>
+        <td style="text-align: left;">
+          <span *ngIf="data.cashBillNumber">
+            VEELS{{data.cashBillSystemNumber}} / {{data.cashBillNumber}}
+          </span>
+          <span *ngIf="!data.cashBillNumber">
+            VEELS{{data.cashBillSystemNumber}}
+          </span>
+
+        </td>
+        <td style="text-align: left;"> {{data.cashBillCustName}} <br>
+          {{data.cashBillCustMobile}} </td>
+        <td style="text-align: left;"> {{data.cashBillVehicleNumber}} </td>
+        <td style="text-align: left;"> {{data.cashBillProduct}} </td>
+        <td style="text-align: left;"> {{data.cashBillRate | number:'1.2-2'}} </td>
+        <td style="text-align: left;"> {{data.cashBillQuantity | number:'1.2-2'}} </td>
+        <td style="text-align: left;"> {{data.cashBillAmount | number:'1.2-2'}} </td>
+        <td *ngIf="accessGroup == '12' " style="text-align: left;">
+          {{data.cashBillCreatedBy}}
+        </td>
+
+
+        <td style="text-align: left;cursor: pointer;">
+          <div ngbDropdown placement="bottom-left">
+            <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown" aria-expanded="true"></i>
+            <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+
+              <span *ngIf="data.deleteStatus == 'FALSE' ">
+                <a class="dropdown-item" href="javascript: void(0);" (click)="deleteCashBill(data.cashBillId)">
+                  <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
+              </span>
+              <span *ngIf="data.deleteStatus == 'TRUE' ">
+                CANCELLED
+              </span>
+
+              <a class="dropdown-item" href="javascript: void(0);" (click)="goToFuelBillStatement(data.cashBillId)">
+                <i class="fas fa-ban" style="color: blue;"></i> &nbsp; View</a>
+
+            </div>
+          </div>
+        </td>
+
+      </tr>
+
+    </tbody>
+  </table>
+
+  <div class="text-md-right float-md-end pagination-rounded">
+    <!-- begin::Pagination -->
+    <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+        style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+    </pagination-controls>
+    <!-- end::Pagination -->
+  </div>
+</div>

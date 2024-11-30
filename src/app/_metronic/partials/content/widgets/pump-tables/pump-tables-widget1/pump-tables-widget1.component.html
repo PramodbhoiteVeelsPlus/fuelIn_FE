@@ -1,0 +1,196 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row mb-2">
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-8">
+              <div class="text-sm-end">
+                <button type="button" class="btn btn-success btn-rounded mb-2 me-2"
+                  routerLink="/pump/viewLubricantPurchase">
+                  View Lubricant Purchase </button>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-12">
+              <form [formGroup]="lubricantForm">
+                <div class="row">
+                  <div class="col-md-2">
+                    <label class="labelNewMargin"><b>Company Name</b>:</label>
+                  </div>
+                  <div class="col-md-4">
+                    <input class="form-control" placeholder="Enter Company Name" formControlName="companyName"
+                      oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                      (blur)="checkalidation2()">
+                  </div>
+                </div> <br>
+                <div class="row">
+                  <div class="col-md-2">
+                    <label class="labelNewMargin"><b>Invoice Date</b>:</label>
+                  </div>
+                  <div class="col-md-4">
+                    <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" (click)="endDate.toggle()"
+                      onkeydown="return false" (blur)="checkalidation2()" formControlName="invoiceDate" ngbDatepicker
+                      #endDate="ngbDatepicker">
+                  </div>
+                </div> <br>
+                <div class="row">
+                  <div class="col-md-2">
+                    <label class="labelNewMargin"><b>Invoice Number</b>:</label>
+                  </div>
+                  <div class="col-md-4">
+                    <input class="form-control" placeholder="Enter Invoice Number" formControlName="invoiceNumber">
+                  </div>
+                </div> <br>
+                <div class="row">
+                  <div class="col-md-2">
+                    <label class="labelNewMargin"><b>Vehicle Number</b>:</label>
+                  </div>
+                  <div class="col-md-4">
+                    <input class="form-control" placeholder="Enter Vehicle Number" formControlName="vehicleNumber"
+                      oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
+                  </div>
+                </div> <br>
+                <div class="row">
+                  <div class="col-md-2">
+                    <label class="labelNewMargin"><b>Company GST</b>:</label>
+                  </div>
+                  <div class="col-md-4">
+                    <input class="form-control" placeholder="Enter Company GST" formControlName="companyGST"
+                      maxlength="15"
+                      oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                      (blur)="checkGST()">
+                  </div>
+                </div>
+                <br>
+                <br>
+
+                <div class="row">
+                  <div class="col col-xl-12 col-lg-12">
+                    <div class="card-body table-responsive">
+                      <table class="table table-hover table-striped">
+                        <tbody *ngFor="let data of addLubePurchaseArray; let i = index;">
+                          <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Unit</th>
+                            <th>Quantity In Pieces</th>
+                            <th>Taxable Amount</th>
+                            <th>Tax %</th>
+                            <th>GST Amount</th>
+                          </tr>
+                          <tr>
+                            <td>
+                              <select class="form-select" [(ngModel)]="data.lubricantId"
+                                [ngModelOptions]="{standalone: true}" (change)="getLubeDetails($event,i)" required>
+                                <option value="">Select Product </option>
+                                <option *ngFor="let data of lubricantList" [value]="data.lubricantsId">
+                                  {{data.lubricantsName}}
+                                </option>
+                              </select>
+                            </td>
+                            <td>
+                              <input type="number" class="form-control" [(ngModel)]="data.quantity"
+                                [ngModelOptions]="{standalone: true}" placeholder="Enter Quantity"
+                                (blur)="checkalidation(i)" />
+                            </td>
+                            <td style="text-align: center;">
+                              <select class="form-select" [(ngModel)]="data.lubricantsUnit"
+                                [ngModelOptions]="{standalone: true}" disabled>
+                                <option value="">Select Unit</option>
+                                <option value="Ltr">Ltr </option>
+                                <option value="Kg">Kg</option>
+                              </select>
+                            </td>
+                            <td>
+                              <input type="number" class="form-control" [(ngModel)]="data.quantityInPieces"
+                                [ngModelOptions]="{standalone: true}" placeholder="Enter Quantity In Pieces" />
+                            </td>
+                            <td>
+                              <input type="number" class="form-control" [(ngModel)]="data.taxableAmt"
+                                [ngModelOptions]="{standalone: true}" placeholder="Enter Taxable Amount"
+                                (blur)="gstCalculation(i)" />
+                            </td>
+                            <td>
+                              <select class="form-select" [(ngModel)]="data.taxPercentage"
+                                [ngModelOptions]="{standalone: true}" (blur)="gstCalculation1(i)" required>
+                                <option value="">Select </option>
+                                <option *ngFor="let data of gstDetails" [value]="data.gst">
+                                  GST {{data.gst}} %
+                                </option>
+                              </select>
+                            </td>
+                            <td>
+                              <input type="number" class="form-control" [(ngModel)]="data.gstAmount"
+                                [ngModelOptions]="{standalone: true}" placeholder="GST Amount" disabled />
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>HSN/SAC Number</th>
+                            <th>CGST</th>
+                            <th>SGST</th>
+                            <th>IGST</th>
+                            <th>Total Amount</th>
+                            <th colspan="2" style="text-align: center;">Action</th>
+                          </tr>
+                          <tr>
+                            <td>
+                              <input type="text" class="form-control" [(ngModel)]="data.lubricantsHsnSacNumber"
+                                [ngModelOptions]="{standalone: true}" placeholder="HSN/SAC Number" disabled />
+                            </td>
+                            <td>
+                              <input type="number" class="form-control" [(ngModel)]="data.cGST"
+                                [ngModelOptions]="{standalone: true}" placeholder="CGST" disabled />
+                            </td>
+                            <td>
+                              <input type="number" class="form-control" [(ngModel)]="data.sGST"
+                                [ngModelOptions]="{standalone: true}" placeholder="SGST" disabled />
+                            </td>
+                            <td>
+                              <input type="number" class="form-control" [(ngModel)]="data.iGST"
+                                [ngModelOptions]="{standalone: true}" placeholder="IGST" disabled />
+                            </td>
+                            <td>
+                              <input type="number" class="form-control" [(ngModel)]="data.totalAmt"
+                                [ngModelOptions]="{standalone: true}" placeholder="Total Amount" disabled />
+                            </td>
+                            <td style="text-align: right;">
+                              <button type="submit" class="btn btn-success" (click)="addLubePurchaseRows(i)"> &nbsp; Add
+                                &nbsp;
+                              </button>
+                            </td>
+                            <td style="text-align: center;">
+                              <button *ngIf="i != 0 " type="cancel" class="btn btn-danger"
+                                (click)="removeLubePurchaseRow(i)"> Delete
+                              </button>
+                            </td>
+                          </tr>
+                          <br>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <br>
+              <div class="row">
+                <div class="col-md-1">
+                  <button *ngIf="isValid" type="submit" class="btn btn-primary"
+                    (click)="submitLubePurchase()">Submit</button>
+                  <button *ngIf="!isValid" type="submit" class="btn btn-primary" disabled>Submit</button>
+                </div>
+                <div class="col-md-1">
+                  <button type="submit" class="btn btn-secondary" (click)="clearLubePurchase()">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

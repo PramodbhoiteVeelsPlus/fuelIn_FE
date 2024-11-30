@@ -1,0 +1,121 @@
+
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-12">
+          <div class="card">
+              <div class="card-body" *ngIf="bothFT">
+                  <div class="container p-2 mt-2 ">
+                      <h4 class="" style="text-align: left; background-color: rgb(254,226,156);">
+                          YES BANK
+                          <br>
+                          <div class="row">
+                              <div class="col-md-1"></div>
+                              <div class="col-md-5">
+                                  <b> FASTag id - {{fastagId}} </b> <br>
+                                  available balance - <b>₹ {{avlBalance}}</b> <br>
+                                  threshold limit - <b>₹ {{thrLimit}} </b>
+                              </div>
+                              <div class="col-md-6">
+                                  to recharge your account <br>
+                                  FASTag account number: <b>YAPTAGYES{{fastagId}}</b> <br>
+                                  IFSC code: <b>YESB0CMSNOC</b> (Fifth letter is zero) <br>
+                                  UPI ID: <b>YAPTAGYES{{fastagId}}{{yesbankltd}}</b> <br>
+                              </div>
+                          </div>
+                          <br>
+                      </h4>
+                  </div>
+                  <hr>
+                  <div class="container p-2 mt-2 ">
+                      <h4 class="" style="text-align: left; background-color: rgb(254,226,156);">
+                          LIVQUIK
+                          <br>
+                          <div class="row">
+                              <div class="col-md-1"></div>
+                              <div class="col-md-5">
+                                  <b> FASTag id - {{fastagLQId}} </b> <br>
+                                  available balance - <b>₹ {{balanceLQ}}</b> <br>
+                                  threshold limit - <b>₹ {{thrLimitLQ}} </b>
+                              </div>
+                              <div class="col-md-6">
+                                  to recharge your account <br>
+                                  FASTag account number: <b>QWALLETAG{{fastagLQId}}</b> <br>
+                                  IFSC code: <b>YESB0CMSNOC</b> (Fifth letter is zero) <br>
+                                  UPI ID: <b>QWALLETAG{{fastagLQId}}{{yesbankltd}}</b> <br>
+                              </div>
+                          </div>
+                          <br>
+                          <div class="row" *ngIf="corpWalletLQId">
+                              <div class="col-md-6"></div>
+                              <div class="col-md-6">
+                                  Corporate Wallet Details <br>
+                                  FASTag account number: <b> {{corpWalletAccNo}} </b> <br>
+                                  IFSC code: <b> {{corpWalletIFSC}} </b> (Fifth letter is zero) <br>
+                                  UPI ID: <b> {{corpWalletUPI}} </b> <br>
+                              </div>
+                          </div>
+                          <br>
+                      </h4>
+                  </div>
+                  <hr>
+              </div>
+              <div class="card-body" *ngIf="LQFT">
+                  <div class="container p-2 mt-2 ">
+                      <h4 class="" style="text-align: left; background-color: rgb(254,226,156);">
+                          <br>
+                          <div class="row">
+                              <div class="col-md-1"></div>
+                              <div class="col-md-5">
+                                  <b> FASTag id - {{fastagLQId}} </b> <br>
+                                  available balance - <b>₹ {{balanceLQ}}</b> <br>
+                                  threshold limit - <b>₹ {{thrLimitLQ}} </b>
+                              </div>
+                              <div class="col-md-6">
+                                  to recharge your account <br>
+                                  FASTag account number: <b>QWALLETAG{{fastagLQId}}</b> <br>
+                                  IFSC code: <b>YESB0CMSNOC</b> (Fifth letter is zero) <br>
+                                  UPI ID: <b>QWALLETAG{{fastagLQId}}{{yesbankltd}}</b> <br>
+                              </div>
+                          </div>
+                          <br>
+                          <div class="row" *ngIf="corpWalletLQId">
+                              <div class="col-md-6"></div>
+                              <div class="col-md-6">
+                                  Corporate Wallet Details <br>
+                                  FASTag account number: <b> {{corpWalletAccNo}} </b> <br>
+                                  IFSC code: <b> {{corpWalletIFSC}} </b> (Fifth letter is zero) <br>
+                                  UPI ID: <b> {{corpWalletUPI}} </b> <br>
+                              </div>
+                          </div>
+                          <br>
+                      </h4>
+                  </div>
+                  <hr>
+              </div>
+              <div class="card-body" *ngIf="FT">
+                  <div class="container p-2 mt-2 ">
+                      <h4 class="" style="text-align: left; background-color: rgb(254,226,156);">
+                          <br>
+                          <div class="row">
+                              <div class="col-md-1"></div>
+                              <div class="col-md-5">
+                                  <b> FASTag id - {{fastagId}} </b> <br>
+                                  available balance - <b>₹ {{avlBalance}}</b> <br>
+                                  threshold limit - <b>₹ {{thrLimit}} </b>
+                              </div>
+                              <div class="col-md-6">
+                                  to recharge your account <br>
+                                  FASTag account number: <b>YAPTAGYES{{fastagId}}</b> <br>
+                                  IFSC code: <b>YESB0CMSNOC</b> (Fifth letter is zero) <br>
+                                  UPI ID: <b>YAPTAGYES{{fastagId}}{{yesbankltd}}</b> <br>
+                              </div>
+                          </div>
+                          <br>
+                      </h4>
+                  </div>
+                  <hr>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

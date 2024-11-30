@@ -1,0 +1,230 @@
+<br>
+<form [formGroup]="filterForm">
+  <div class="row">
+    <label for="example-text-input" class="col-auto col-form-label">Select Bill :</label>
+
+    <div class="col-md-2">
+      <select class="form-control" formControlName="purpose" required>
+        <option value="">All Bills</option>
+        <option value="CANCEL">Cancelled Bills</option>
+      </select>
+    </div>
+    <label for="example-text-input" class="col-auto col-form-label">Date Range :</label>
+    <div class="col-md-2">
+      <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" onkeydown="return false"
+        (click)="startDate.toggle()" formControlName="startDate" ngbDatepicker #startDate="ngbDatepicker">
+    </div>
+    <div class="col-md-2">
+      <input class="form-control" placeholder="DD-MM-YYYY" name="endDate" onkeydown="return false"
+        (click)="endDate.toggle()" formControlName="endDate" ngbDatepicker #endDate="ngbDatepicker">
+    </div>
+
+
+    <div class="col-auto">
+      <button class="btn btn-primary" type="button" (click)="view()"> Submit </button>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+      <button class="btn btn-secondary" type="button" (click)="clearLubeForm()">Cancel</button>
+    </div>
+    <div class="col-auto">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <span style="font-size: 30px;cursor: pointer;" ngbTooltip="Download CSV" (click)="excelDownloadLube()"><i
+          class="fas fa-file-csv"></i></span>
+
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <span style="font-size: 30px;cursor: pointer;" ngbTooltip="Download PDF" (click)="exportToPDFLube()"><i
+          class="fas fa-file-pdf"></i></span>
+    </div>
+
+
+  </div>
+</form>
+<div class="row">
+
+</div>
+
+<hr>
+
+<div class="card-body table-responsive">
+  <table class="table table-hover b">
+    <thead>
+      <tr>
+        <th></th>
+        <th style="text-align: center;">Date</th>
+        <th style="text-align: center;">Bill Number</th>
+        <th style="text-align: center;">Khata Name</th>
+        <th style="text-align: center;">Vehicle Number</th>
+
+        <th style="text-align: center;">Product</th>
+        <th style="text-align: center;">Quantity</th>
+
+        <th style="text-align: center;">Basic Amount</th>
+        <th style="text-align: center;">CGST</th>
+        <th style="text-align: center;">SGST</th>
+        <th style="text-align: center;">IGST</th>
+        <th style="text-align: center;">Total Amount</th>
+        <th style="text-align: center;">Action</th>
+
+      </tr>
+    </thead>
+    <tbody
+      *ngFor="let data of lubeCashBillList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+
+      <tr>
+        <td style="cursor: pointer;">
+          <a class="expand-row"
+            (click)="changeValue(i, data.cashBillDate, data.cashBillNumber, data.cashBillSystemNumber, data.cashBillCustName, data.cashBillCustMobile, data.cashBillVehicleNumber, data.cashBillProduct, data.cashBillQuantity, data.cashBillGST, data.cashBillAmountWOGST, data.cashBillGSTAmt, data.cashBillSubGST, data.cashBillAmount, data.cashBillCreatedBy)"
+            style="font-size: 19px;">
+            +
+          </a>
+        </td>
+
+        <td style="text-align: center;"> {{data.cashBillDate | date:"d MMM, yyyy"}} </td>
+
+        <td style="text-align: center;">
+          <span *ngIf="data.cashBillNumber">
+            VEELS{{data.cashBillSystemNumber}} / {{data.cashBillNumber}}
+          </span>
+          <span *ngIf="!data.cashBillNumber">
+            VEELS{{data.cashBillSystemNumber}}
+          </span>
+
+        </td>
+
+        <td style="text-align: center;"> {{data.cashBillCustName}} </td>
+
+        <!-- Vehicle Number -->
+        <td style="text-align: center;"> {{data.cashBillVehicleNumber}} </td>
+
+        <!-- Product -->
+        <td style="text-align: center;"> {{data.cashBillProduct}} </td>
+
+        <!-- Quantity -->
+        <td style="text-align: center;"> {{data.cashBillQuantity | number:'1.2-2'}} </td>
+
+
+        <!-- Basic Amount -->
+        <td style="text-align: center;"> {{data.cashBillAmountWOGST | number:'1.2-2'}} </td>
+
+        <!-- CGST -->
+        <td style="text-align: center;">
+          <span *ngIf="data.cashBillSubGST == 'IGST' ">
+            -
+          </span>
+          <span *ngIf="data.cashBillSubGST == 'CGST' ">
+            {{(data.cashBillGSTAmt) / 2 | number:'1.2-2'}}
+          </span>
+        </td>
+
+        <!-- SGST -->
+        <td style="text-align: center;">
+          <span *ngIf="data.cashBillSubGST == 'IGST' ">
+            -
+          </span>
+          <span *ngIf="data.cashBillSubGST == 'CGST' ">
+            {{(data.cashBillGSTAmt) / 2 | number:'1.2-2'}}
+          </span>
+        </td>
+
+        <!-- IGST -->
+        <td style="text-align: center;">
+          <span *ngIf="data.cashBillSubGST == 'IGST' ">
+            {{(data.cashBillGSTAmt) | number:'1.2-2'}}
+          </span>
+          <span *ngIf="data.cashBillSubGST == 'CGST' ">
+            -
+          </span>
+        </td>
+
+        <!-- Total Amount -->
+        <td style="text-align: center;"> {{data.cashBillAmount | number:'1.2-2'}} </td>
+
+
+
+        <td style="text-align: left;cursor: pointer;">
+          <div ngbDropdown placement="bottom-left">
+            <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown" aria-expanded="true"></i>
+            <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+              <a *ngIf="data.deleteStatus == 'FALSE' && data.cashBillShiftId != '' " class="dropdown-item"
+                href="javascript: void(0);" (click)="dontDelete(data.cashBillId)">
+                <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
+              <a *ngIf="data.deleteStatus == 'FALSE' && data.cashBillShiftId == '' " class="dropdown-item"
+                href="javascript: void(0);" (click)="deleteCashBill(data.cashBillId)">
+                <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
+              <a *ngIf="data.deleteStatus == 'TRUE' " class="dropdown-item" href="javascript: void(0);">
+                &nbsp; CANCELLED</a>
+
+              <span>
+                <a class="dropdown-item" href="javascript: void(0);" (click)="goToLubeBillStatement(data.cashBillId)">
+                  &nbsp; View Bill</a>
+              </span>
+            </div>
+          </div>
+        </td>
+
+      </tr>
+
+      <tr *ngIf="show  && i == rowNumber" class="sub-table no-bg">
+        <td> </td>
+        <td colspan="12" class="p-0">
+          <table class="table mb-0 table-striped">
+            <thead class="table-light">
+
+            </thead>
+            <tbody>
+
+              <tr>
+                <th style="text-align: center;">Tax %</th>
+                <th style="text-align: center;">Tax Amount</th>
+                <th style="text-align: left;">Key Person Mobile</th>
+                <th *ngIf="accessGroup == '12' " style="text-align: center;">Created By</th>
+
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+
+              </tr>
+
+              <tr>
+                <!-- Tax % -->
+                <td style="text-align: center;"> {{data.cashBillGST | number:'1.2-2'}} % </td>
+
+                <!-- Tax Amount -->
+                <td style="text-align: center;">
+                  <span *ngIf="data.cashBillSubGST == 'IGST' ">
+                    {{data.cashBillGSTAmt | number:'1.2-2'}}
+                  </span>
+                  <span *ngIf="data.cashBillSubGST == 'CGST' ">
+                    {{(data.cashBillGSTAmt) | number:'1.2-2'}}
+                  </span>
+                </td>
+
+                <td style="text-align: left;"> {{data.cashBillCustMobile}} </td>
+
+                <!-- Created By -->
+                <td *ngIf="accessGroup == '12' " style="text-align: center;">
+                  {{data.cashBillCreatedBy}}
+                </td>
+
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+
+              </tr>
+
+            </tbody>
+          </table>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+  <div class="text-md-right float-md-end pagination-rounded">
+    <!-- begin::Pagination -->
+    <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+        style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+    </pagination-controls>
+    <!-- end::Pagination -->
+  </div>
+
+</div>

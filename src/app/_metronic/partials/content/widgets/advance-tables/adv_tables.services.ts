@@ -84,6 +84,11 @@ export class Adv_TablesService {
     private uprepFastagURL = this.baseURL + 'fastag/uprepFastag';
     private updatekitBarCodeMapURL = this.baseURL + 'kitbarcodemap/updatekitBarCodeMap'
     private updateTagURL = this.baseURL + 'fastag/updateTag';
+    private addLubricantURL = this.baseURL + 'lubricants/addLubricant';
+    private getLubricantsURL = this.baseURL + 'lubricants/getLubricants';
+    private deleteLubricantsURL = this.baseURL + 'lubricants/deleteLubricants';
+    private getLubricantByIdURL = this.baseURL + 'lubricants/getLubricantById';
+    private updateLubricantsURL = this.baseURL + 'lubricants/updateLubricants'
 
 
 
@@ -93,7 +98,7 @@ export class Adv_TablesService {
 
     setHeader() {
         this.token = JSON.parse(localStorage.getItem('authenticationToken') || '{}');
-        
+
     }
 
 
@@ -726,6 +731,56 @@ export class Adv_TablesService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.updateTagURL, body, {
+            headers: headers
+        })
+    }
+
+    // addLubricantURL
+    addLubricantPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addLubricantURL, body, {
+            headers: headers
+        })
+    }
+
+    // getLubricantsURL
+    getLubricantsPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getLubricantsURL, body, {
+            headers: headers
+        })
+    }
+
+    // deleteLubricantsURL
+    deleteLubricantsPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.deleteLubricantsURL, body, {
+            headers: headers
+        })
+    }
+
+    // getLubricantByIdURL
+    getLubricantByIdPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getLubricantByIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // updateLubricantsURL
+    updateLubricantsPOST(body: object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateLubricantsURL, body, {
             headers: headers
         })
     }

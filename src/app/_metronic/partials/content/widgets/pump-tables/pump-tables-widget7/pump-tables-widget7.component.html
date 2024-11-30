@@ -1,0 +1,167 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+
+<title>Editable Statement</title>
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+   <!-- <link rel='stylesheet' type='text/css' href='../../../../../../assets/EditableInvoice/css/style.css' /> -->
+
+<script type='text/javascript' src='../../../../../assets/EditableInvoice/js/jquery-1.3.2.min1.js'></script>
+<script type='text/javascript' src='../../../../../assets/EditableInvoice/js/example1.js'></script>
+
+</head>
+
+<body id="contentToConvert">
+
+<div id="page-wrap">
+
+
+    <div class="row">
+    <div class="col-md-1"></div>
+
+    <div class="col-md-10">
+       
+        &nbsp; <button style="font-size: medium;" onclick="window.print()"> &nbsp;&nbsp;<i class="fa fa-print"
+                aria-hidden="true"></i> &nbsp;</button>
+    </div>
+
+    </div>
+
+    <div id="sanjay">
+        <div class="container">
+
+
+            <div class="col-12 mr-2 px-1 py-1 container border border-success" id="htmlData">
+               
+                <!-- <div class="border border-success alert alert-secondary"> -->
+                    <div>
+                    <div class="row px-4 py-4">
+                            <div class="col-8">
+                                <h3> <b style="font-size: 141%;">FASTag summary</b> <br>
+                                </h3>
+                            </div>
+                            <div class="col-4">
+                                <p style="text-align: right;"><img src="../../../../assets/images/vplogo.png"
+                                    alt="logo" style="height: 52%;width: 75%;"></p>
+                            </div>
+                            <!-- <div class="col-2">
+                                <p style="text-align: right;"><img src="../../../../../../assets/images/vplogo.png"
+                                    alt="logo" width="80" height="40"></p>
+                            </div> -->
+                            <!-- <br> -->
+
+                       
+                    </div>
+                    <div class="row px-4 py-4">
+
+                    <!-- <div class="col-12">
+                        <h4><b>Customer Name: {{companyName}}</b></h4>
+                        <h4><b>Customer Mobile Number: {{hostPhone}}</b></h4>
+                        <h4><b>FASTag id: {{entityIdForCorp}}</b></h4>
+                        <h4><b>Statement: {{startDate | date:'mediumDate'}} - {{endDate | date:'mediumDate'}}</b></h4>
+                    </div> -->
+
+                    <div class="col-12">
+                        <div class="col-12">
+                           <h4><b>Customer Name: {{companyName}}</b></h4>
+                        </div>
+                       
+                    </div>
+                    
+                   
+                        <div style="font-size: 126%;width: 60%;">
+                            <b>Customer Mobile Number: {{hostPhone}}</b><br>
+                            <span *ngIf="!bothFT"> <b *ngIf="FT">FASTag id: {{entityIdForCorp}}</b></span>
+                            <span> <b *ngIf="LQ || LQFT">FASTag id: {{entityIdForCorpLQ}}</b></span>
+                            <span *ngIf="bothFT"> <b *ngIf="LQFT && !FT">FASTag id: {{entityIdForCorpLQ}}</b></span>
+                            <br>
+                            <b *ngIf = "showDateRange">Statement: {{startDate | date:'mediumDate'}} - {{endDate | date:'mediumDate'}}</b><br>
+                            
+                        </div>
+                     
+                        <table style="width: 40%;">
+                        
+
+                      
+
+                        <tbody style="border: 1px solid black;">
+                            <tr style="text-align: center;height: 51%;">
+                                <td style="width: 40%;border: 1px solid black;"><b>debit</b></td>
+                                <td style="width: 40%;border: 1px solid black;"><b>credit</b></td>
+                            </tr>
+                            <tr style="text-align: center;">
+                                <td style="width: 40%;border: 1px solid black;">
+                                    <b> {{debitSumLQ}} </b>
+                                </td>
+                                <td style="width: 40%;border: 1px solid black;">
+                                    <b> {{creditSumLQ}} </b>
+                                </td>
+
+                            </tr>
+                        </tbody>
+
+
+
+                        </table>
+                   
+
+
+                </div>
+                </div>
+
+                <div class="row p-1">
+                    <div class="col col-xl-12 col-lg-12">
+                        <div class="card-body table-responsive">
+                            <table class="table table-hover table-striped p-1" style="border: 2px solid #272829;font-size: smaller; ">
+                                <thead style="background-color: #fcba03;">
+                                    <tr>
+                                        
+                                        <th style="text-align: center;border: 2px solid #272829; ">  Date </th>
+                                        <th style="text-align: center;border: 2px solid #272829; "> Time  </th>
+                                        <th style="text-align: center;border: 2px solid #272829; "> Vehicle No </th>
+                                        <th style="text-align: center;border: 2px solid #272829; ">  Tag Id </th>
+                                        <th style="text-align: center;border: 2px solid #272829; "> Toll Plaza/Name  </th>
+                                        <th style="text-align: center;border: 2px solid #272829; "> Txn Type  </th>
+                                        <th style="text-align: center;border: 2px solid #272829; "> Amount  </th>
+                                       
+                                    </tr>
+                                </thead>
+                                <tbody  *ngFor="let data of activeVehicleLQArray; let i = index">
+
+                                    <!-- <td style="text-align: left;"> {{i+1}} </td> -->
+                                    <td style="text-align: left;"> {{data.fastagTransactionTime  | date:'mediumDate'}}</td>
+                                    <td style="text-align: left;"> {{data.fastagTransactionTime  | date:'HH:mm:ss'}}</td>
+                                    <td style="text-align: left;"> {{data.fastagTransactionBusinessId}} </td>
+                                    <td style="text-align: left;"> {{data.fastagTransactionKitNo}} </td>
+                                    <td style="text-align: left;"> {{data.fastagBeneficiaryName}} </td>
+                                    <!-- <td style="text-align: left;"> {{data.fastagTransactionType}} </td> -->
+                                    <td style="text-align: left;"> {{data.fastagType}} </td>
+                                    <td style="text-align: left;"> {{data.fastagTransactionAmount | number:'1.2-2'}} </td>
+                                 
+                                  
+                                </tbody>
+                                
+                            </table>
+
+
+                        </div>
+                    </div>
+
+                </div>
+              
+
+              
+
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,479 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <!-- new tab view -->
+                    <!-- <div class="row"> -->
+                    <div class="row" *ngIf="bothFT || FT">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <ul ngbNav #customNav="ngbNav" [activeId]="1"
+                                        class="nav-tabs nav-tabs-custom nav-justified" style="width: 50%;">
+                                        <li [ngbNavItem]="1" *ngIf="bothFT || FT">
+                                            <a ngbNavLink>
+                                                <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                                <span class="d-none d-sm-block" style="font-size: 13.5px;">YES
+                                                    BANK</span>
+                                            </a>
+                                            <ng-template ngbNavContent>
+                                                <ng-template [ngTemplateOutlet]="YesBankFT"></ng-template>
+                                            </ng-template>
+                                        </li>
+                                        <li [ngbNavItem]="2" *ngIf="LQFT">
+                                            <a ngbNavLink>
+                                                <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                                                <span class="d-none d-sm-block"
+                                                    style="font-size: 13.5px;">LIVQUIK</span>
+                                            </a>
+                                            <ng-template ngbNavContent>11
+                                                <ng-template [ngTemplateOutlet]="livquik"></ng-template>
+                                            </ng-template>
+                                        </li>
+
+                                    </ul>
+                                    <div [ngbNavOutlet]="customNav"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="LQ">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <ul ngbNav #customNav="ngbNav" [activeId]="2"
+                                        class="nav-tabs nav-tabs-custom nav-justified" style="width: 50%;">
+                                        <li [ngbNavItem]="2">
+                                            <a ngbNavLink>
+                                                <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                                                <span class="d-none d-sm-block"
+                                                    style="font-size: 13.5px;">LIVQUIK</span>
+                                            </a>
+                                            <ng-template ngbNavContent>
+                                                <ng-template [ngTemplateOutlet]="livquik"></ng-template>
+                                            </ng-template>
+                                        </li>
+
+                                    </ul>
+                                    <div [ngbNavOutlet]="customNav"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- </div> -->
+                    <!-- new tab view end -->
+
+                    <ng-template #YesBankFT>
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <div class="row" *ngIf="FT">
+                                        <!-- <h4 class="card-title">Custom Tabs</h4> -->
+                                        <ul ngbNav #customNav="ngbNav" [activeId]="active"
+                                            class="nav-tabs nav-tabs-custom nav-justified" style="width: 50%;">
+                                            <li [ngbNavItem]="1" (click)="changeActiveTabNo()">
+                                                <a ngbNavLink>
+                                                    <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                                    <span class="d-none d-sm-block" style="font-size: 13.5px;">Active
+                                                        Vehicles</span>
+                                                </a>
+                                                <ng-template ngbNavContent>
+                                                    <ng-template [ngTemplateOutlet]="ActiveVehicles"></ng-template>
+                                                </ng-template>
+                                            </li>
+                                            <li [ngbNavItem]="2">
+                                                <a ngbNavLink>
+                                                    <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                                    <span class="d-none d-sm-block" style="font-size: 13.5px;">Vehicle
+                                                        Transaction details</span>
+                                                </a>
+                                                <ng-template ngbNavContent>
+                                                    <ng-template
+                                                        [ngTemplateOutlet]="VehicleTransactiondetails"></ng-template>
+                                                </ng-template>
+                                            </li>
+
+
+
+                                        </ul>
+                                        <div [ngbNavOutlet]="customNav"></div>
+
+                                        <ng-template #ActiveVehicles>
+                                            <br>
+                                            <div class="row">
+
+                                                <div class="table-responsive mb-0">
+                                                    <table class="table table-centered">
+
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th style="text-align: left;">Sr No</th>
+                                                                <th style="text-align: left;">Vehicle No</th>
+                                                                <th style="text-align: left;">{{PreviousShow}}</th>
+                                                                <th style="text-align: left;"> {{CurrentShow}}</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody
+                                                            *ngFor="let data of combineVehicleData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+
+                                                            <tr>
+                                                                <td style="text-align: left;"> {{i+1}} </td>
+                                                                <td style="text-align: left;"
+                                                                    (click)="changeTab(data.fastagTransactionBusinessId)"
+                                                                    style="color: blue;cursor: pointer;">
+                                                                    {{data.fastagTransactionBusinessId}}
+
+                                                                </td>
+
+                                                                <td style="text-align: left;">
+                                                                    {{data.transactionAmountPrevious}}</td>
+                                                                <td style="text-align: left;">
+                                                                    {{data.transactionAmountCurrent}}</td>
+                                                            </tr>
+
+                                                        </tbody>
+
+                                                    </table>
+
+                                                    <!-- begin::Pagination -->
+                                                    <pagination-controls (pageChange)="pageChangeEvent($event)"
+                                                        previousLabel="" nextLabel=""
+                                                        style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                                                    </pagination-controls>
+                                                    <!-- end::Pagination -->
+                                                </div>
+                                            </div>
+                                        </ng-template>
+
+
+                                        <ng-template #VehicleTransactiondetails>
+                                            <br>
+                                            <form [formGroup]="filterForm">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+
+                                                    <label for="example-text-input"
+                                                        class="col-auto col-form-label">Vehicle Number</label>
+
+                                                    <div class="col-md-2">
+
+                                                        <select class="form-control" [(ngModel)]="dropVehicleNumber"
+                                                            [ngModelOptions]="{standalone: true}">
+                                                            <option *ngFor="let data of vehicleList"
+                                                                [value]="data.registrationNumber">
+                                                                {{data.registrationNumber}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <label for="example-text-input"
+                                                        class="col-auto col-form-label">Start Date</label>
+
+                                                    <div class="col-auto">
+                                                        <input class="form-control" placeholder="YYYY-MM-DD"
+                                                            name="startDate" readonly style="background-color: #ffffff;"
+                                                            (click)="startDate.toggle()" formControlName="startDate"
+                                                            ngbDatepicker #startDate="ngbDatepicker">
+                                                    </div>
+                                                    <label for="example-text-input" class="col-auto col-form-label">End
+                                                        Date</label>
+
+                                                    <div class="col-auto">
+                                                        <input class="form-control" placeholder="YYYY-MM-DD"
+                                                            name="endDate" readonly style="background-color: #ffffff;"
+                                                            (click)="endDate.toggle()" formControlName="endDate"
+                                                            ngbDatepicker #endDate="ngbDatepicker">
+                                                    </div>
+
+                                                    <div class="col-auto">
+                                                        <button type="submit" class="btn btn-primary"
+                                                            (click)="submitVehicleTransactionData()">View</button>
+                                                    </div>
+
+                                                    <div class="col-auto">
+                                                        <button type="submit"
+                                                            class="btn btn-outline-warning my-2 my-sm-0"
+                                                            (click)="goToPDF()">PDF View</button>
+                                                    </div>
+
+                                                </div>
+                                            </form>
+
+                                            <br>
+
+                                            <div class="row">
+                                                <div class="table-responsive mb-0">
+                                                    <table class="table table-centered">
+
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th style="text-align: left;">Sr No</th>
+                                                                <th style="text-align: left;">Date</th>
+                                                                <th style="text-align: left;">Time</th>
+                                                                <th style="text-align: left;">Vehicle No</th>
+                                                                <th style="text-align: left;">Tag Id</th>
+                                                                <th style="text-align: left;">Toll Plaza/Name</th>
+                                                                <th style="text-align: left;">Transaction Type</th>
+                                                                <th style="text-align: left;">Debit/Credit</th>
+                                                                <th style="text-align: left;">Amount</th>
+                                                                <!-- <th style="text-align: left;">Balance</th> -->
+
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody
+                                                            *ngFor="let data of fastagData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+
+                                                            <tr>
+                                                                <td style="text-align: left;"> {{i+1}} </td>
+                                                                <td style="text-align: left;">
+                                                                    {{data.manualDate | date:'mediumDate'}}
+                                                                </td>
+                                                                <td style="text-align: left;">
+                                                                    {{data.manualDate | date:'HH:mm:ss'}}
+                                                                </td>
+                                                                <td style="text-align: left;">
+                                                                    {{data.fastagTransactionBusinessId}} </td>
+                                                                <td style="text-align: left;">
+                                                                    {{data.fastagTransactionKitNo}} </td>
+                                                                <td style="text-align: left;">
+                                                                    {{data.fastagBeneficiaryName}} </td>
+                                                                <td style="text-align: left;">
+                                                                    {{data.fastagTransactionType}} </td>
+                                                                <td style="text-align: left;"> {{data.fastagType}} </td>
+                                                                <td style="text-align: left;">
+                                                                    {{data.fastagTransactionAmount | number:'1.2-2'}}
+                                                                </td>
+                                                                <!-- <td style="text-align: left;"> {{data.fastagTransactionBalance | number:'1.2-2' }} </td> -->
+                                                            </tr>
+
+                                                        </tbody>
+
+                                                    </table>
+
+                                                    <!-- begin::Pagination -->
+                                                    <pagination-controls (pageChange)="pageChangeEvent($event)"
+                                                        previousLabel="" nextLabel=""
+                                                        style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                                                    </pagination-controls>
+                                                    <!-- end::Pagination -->
+                                                </div>
+                                            </div>
+
+                                        </ng-template>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                    </ng-template>
+
+                    <ng-template #livquik>
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row" *ngIf="LQFT">
+                                        <ul ngbNav #customNav="ngbNav" [activeId]="active"
+                                            class="nav-tabs nav-tabs-custom nav-justified" style="width: 50%;">
+                                            <li [ngbNavItem]="1" (click)="changeActiveTabNoLQ()">
+                                                <a ngbNavLink>
+                                                    <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                                    <span class="d-none d-sm-block" style="font-size: 13.5px;">Active
+                                                        Vehicles</span>
+                                                </a>
+                                                <ng-template ngbNavContent>
+                                                    <ng-template [ngTemplateOutlet]="activeVehicles"></ng-template>
+                                                </ng-template>
+                                            </li>
+                                            <li [ngbNavItem]="2">
+                                                <a ngbNavLink>
+                                                    <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                                    <span class="d-none d-sm-block" style="font-size: 13.5px;">Vehicle
+                                                        Transaction details</span>
+                                                </a>
+                                                <ng-template ngbNavContent>
+                                                    <ng-template
+                                                        [ngTemplateOutlet]="vehicleTransactiondetails"></ng-template>
+                                                </ng-template>
+                                            </li>
+
+
+
+                                        </ul>
+                                        <div [ngbNavOutlet]="customNav"></div>
+
+                                        <ng-template #activeVehicles>
+                                            <br>
+                                            <div class="row">
+
+                                                <div class="table-responsive mb-0">
+                                                    <table class="table table-centered">
+
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th style="text-align: left;">Sr No</th>
+                                                                <th style="text-align: left;">Vehicle No</th>
+                                                                <th style="text-align: left;">{{PreviousShow}}</th>
+                                                                <th style="text-align: left;"> {{CurrentShow}}</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody
+                                                            *ngFor="let data of combineVehicleLQData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+
+                                                            <tr>
+                                                                <td style="text-align: left;"> {{i+1}} </td>
+                                                                <td style="text-align: left;"
+                                                                    (click)="changeTabLQ(data.fastagTransactionBusinessId)"
+                                                                    style="color: blue;cursor: pointer;">
+                                                                    {{data.fastagTransactionBusinessId}}
+
+                                                                </td>
+
+                                                                <td style="text-align: left;">
+                                                                    {{data.transactionAmountPrevious}}</td>
+                                                                <td style="text-align: left;">
+                                                                    {{data.transactionAmountCurrent}}</td>
+                                                            </tr>
+
+                                                        </tbody>
+
+                                                    </table>
+                                                    <!-- begin::Pagination -->
+                                                    <pagination-controls (pageChange)="pageChangeEvent($event)"
+                                                        previousLabel="" nextLabel=""
+                                                        style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                                                    </pagination-controls>
+                                                    <!-- end::Pagination -->
+                                                </div>
+                                            </div>
+                                        </ng-template>
+
+                                        <ng-template #vehicleTransactiondetails>
+                                            <br>
+                                            <form [formGroup]="filterFormLQ">
+                                                <div class="row">
+                                                    <label for="example-text-input"
+                                                        class="col-auto col-form-label">Vehicle Number</label>
+
+                                                    <div class="col-md-2">
+
+                                                        <select class="form-control" [(ngModel)]="dropVehicleNumber"
+                                                            [ngModelOptions]="{standalone: true}">
+                                                            <option
+                                                                *ngFor="let data of fastagMonthWiseDatavehicleLQData"
+                                                                [value]="data.fastagTransactionBusinessId">
+                                                                {{data.fastagTransactionBusinessId}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <label for="example-text-input"
+                                                        class="col-auto col-form-label">Start Date</label>
+
+                                                    <div class="col-auto">
+                                                        <input class="form-control" placeholder="YYYY-MM-DD"
+                                                            name="startDate" readonly style="background-color: #ffffff;"
+                                                            (click)="startDate.toggle()" formControlName="startDate"
+                                                            ngbDatepicker #startDate="ngbDatepicker">
+                                                    </div>
+                                                    <label for="example-text-input" class="col-auto col-form-label">End
+                                                        Date</label>
+
+                                                    <div class="col-auto">
+                                                        <input class="form-control" placeholder="YYYY-MM-DD"
+                                                            name="endDate" readonly style="background-color: #ffffff;"
+                                                            (click)="endDate.toggle()" formControlName="endDate"
+                                                            ngbDatepicker #endDate="ngbDatepicker">
+                                                    </div>
+
+                                                    <div class="col-auto">
+                                                        <button type="submit" class="btn btn-primary"
+                                                            (click)="submitVehicleTransactionLQData()">View</button>
+                                                    </div>
+
+                                                    <div class="col-auto">
+                                                        <button type="submit"
+                                                            class="btn btn-outline-warning my-2 my-sm-0"
+                                                            (click)="goToPDFLQ()">PDF
+                                                            View</button>
+                                                    </div>
+
+                                                </div>
+                                            </form>
+                                            <br>
+
+                                            <div class="row">
+                                                <div class="table-responsive mb-0">
+                                                    <table class="table table-centered">
+
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th style="text-align: left;">Sr No</th>
+                                                                <th style="text-align: left;">Date</th>
+                                                                <th style="text-align: left;">Time</th>
+                                                                <th style="text-align: left;">Vehicle No</th>
+                                                                <th style="text-align: left;">Tag Id</th>
+                                                                <th style="text-align: left;">Toll Plaza/Name</th>
+                                                                <th style="text-align: left;">Transaction Type</th>
+                                                                <th style="text-align: left;">Debit/Credit</th>
+                                                                <th style="text-align: left;">Amount</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody
+                                                            *ngFor="let data of fastagLQData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+
+                                                            <tr>
+                                                                <td style="text-align: left;"> {{i+1}} </td>
+                                                                <td style="text-align: left;">
+                                                                    {{data.manualDate | date:'mediumDate'}}
+                                                                </td>
+                                                                <td style="text-align: left;">
+                                                                    {{data.manualDate | date:'HH:mm:ss'}}
+                                                                </td>
+                                                                <td style="text-align: left;">
+                                                                    {{data.fastagTransactionBusinessId}} </td>
+                                                                <td style="text-align: left;">
+                                                                    {{data.fastagTransactionKitNo}} </td>
+                                                                <td style="text-align: left;">
+                                                                    {{data.fastagBeneficiaryName}} </td>
+                                                                <td style="text-align: left;">
+                                                                    {{data.fastagTransactionType}} </td>
+                                                                <td style="text-align: left;"> {{data.fastagType}} </td>
+                                                                <td style="text-align: left;">
+                                                                    {{data.fastagTransactionAmount | number:'1.2-2'}}
+                                                                </td>
+                                                            </tr>
+
+                                                        </tbody>
+
+                                                    </table>
+                                                    <!-- begin::Pagination -->
+                                                    <pagination-controls (pageChange)="pageChangeEvent($event)"
+                                                        previousLabel="" nextLabel=""
+                                                        style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                                                    </pagination-controls>
+                                                    <!-- end::Pagination -->
+                                                </div>
+                                            </div>
+
+                                        </ng-template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

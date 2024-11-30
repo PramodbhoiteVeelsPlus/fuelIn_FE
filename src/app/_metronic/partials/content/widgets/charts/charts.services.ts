@@ -24,6 +24,8 @@ export class ChartsService {
     monthDay: any;
     productIdArrayMonth: any;
     fuelDealerCorpMapId: any;
+    type1: string;
+    cashBillId: any;
     
     constructor(private http: HttpClient,
         private router: Router
@@ -71,6 +73,9 @@ export class ChartsService {
   private addFuelPriceByDealerIdURL = this.baseURL + 'fuelPrice/addFuelPriceByDealerId'; 
   private getPriceByDealerIdURL = this.baseURL + 'fuelPrice/getPriceByDealerId';
   private editFuelPriceURL = this.baseURL + 'fuelPrice/editFuelPrice'; 
+  private addCashBillURL = this.baseURL + 'cashBillInvoice/addCashBill';
+  private getLubricantsURL = this.baseURL + 'lubricants/getLubricants';
+  private getGSTDataURL = this.baseURL + 'activityCount/getGSTData'
 
 
 
@@ -225,7 +230,6 @@ export class ChartsService {
     this.manualNo = manualNo;
   }
   
-    
     // getTotalPurchaseDetailsTxURL
     getTotalPurchaseDetailsTxPOST(body: Object): Observable<any> {
         this.setHeader();
@@ -422,6 +426,36 @@ export class ChartsService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.editFuelPriceURL, body, {
+            headers: headers
+        })
+    }
+  
+    // addCashBillURL
+    addCashBillPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addCashBillURL, body, {
+            headers: headers
+        })
+    }
+  
+    // getLubricantsURL
+    getLubricantsPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getLubricantsURL, body, {
+            headers: headers
+        })
+    }
+  
+    // getGSTDataURL
+    getGSTDataPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getGSTDataURL, body, {
             headers: headers
         })
     }

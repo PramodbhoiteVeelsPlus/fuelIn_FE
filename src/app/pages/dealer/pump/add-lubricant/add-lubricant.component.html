@@ -1,1 +1,24 @@
-<p>add-lubricant works!</p>
+<div class="card-header">
+    <b>Lubricants </b>
+</div>
+<div>
+  <ul ngbNav #cashBill="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified" style="width: 100%;">
+    <li [ngbNavItem]="1">
+      <a ngbNavLink>
+        <span class="d-none d-sm-block" style="font-size: 15px;">ADD </span>
+      </a>
+      <ng-template ngbNavContent>
+        <app-advance-tables-widget14></app-advance-tables-widget14>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="2">
+      <a ngbNavLink>
+        <span class="d-none d-sm-block" style="font-size: 15px;">VIEW </span>
+      </a>
+      <ng-template ngbNavContent>
+        <app-advance-tables-widget15></app-advance-tables-widget15>
+      </ng-template>
+    </li>
+  </ul>
+  <div [ngbNavOutlet]="cashBill"></div>
+</div>

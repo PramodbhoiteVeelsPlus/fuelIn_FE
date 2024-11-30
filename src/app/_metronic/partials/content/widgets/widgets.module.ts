@@ -173,6 +173,19 @@ import { ChartsWidget9Component } from './charts/charts-widget9/charts-widget9.c
 import { ChartsWidget10Component } from './charts/charts-widget10/charts-widget10.component';
 import { ChartsWidget11Component } from './charts/charts-widget11/charts-widget11.component';
 import { ChartsWidget12Component } from './charts/charts-widget12/charts-widget12.component';
+import { ChartsWidget13Component } from './charts/charts-widget13/charts-widget13.component';
+import { ChartsWidget14Component } from './charts/charts-widget14/charts-widget14.component';
+import { ChartsWidget15Component } from './charts/charts-widget15/charts-widget15.component';
+import { AdvanceTablesWidget14Component } from './advance-tables/advance-tables-widget14/advance-tables-widget14.component';
+import { AdvanceTablesWidget15Component } from './advance-tables/advance-tables-widget15/advance-tables-widget15.component';
+import { PumpTablesWidget1Component } from './pump-tables/pump-tables-widget1/pump-tables-widget1.component';
+import { PumpTablesWidget2Component } from './pump-tables/pump-tables-widget2/pump-tables-widget2.component';
+import { PumpTablesWidget3Component } from './pump-tables/pump-tables-widget3/pump-tables-widget3.component';
+import { PumpTablesWidget4Component } from './pump-tables/pump-tables-widget4/pump-tables-widget4.component';
+import { PumpTablesWidget5Component } from './pump-tables/pump-tables-widget5/pump-tables-widget5.component';
+import { PumpTablesWidget6Component } from './pump-tables/pump-tables-widget6/pump-tables-widget6.component';
+import { PumpTablesWidget7Component } from './pump-tables/pump-tables-widget7/pump-tables-widget7.component';
+import { PumpTablesWidget8Component } from './pump-tables/pump-tables-widget8/pump-tables-widget8.component';
 // import { routes } from 'src/app/app-routing.module';
 @NgModule({
   declarations: [
@@ -339,7 +352,20 @@ import { ChartsWidget12Component } from './charts/charts-widget12/charts-widget1
     ChartsWidget9Component,
     ChartsWidget10Component,
     ChartsWidget11Component,
-    ChartsWidget12Component
+    ChartsWidget12Component,
+    ChartsWidget13Component,
+    ChartsWidget14Component,
+    ChartsWidget15Component,
+    AdvanceTablesWidget14Component,
+    AdvanceTablesWidget15Component,
+    PumpTablesWidget1Component,
+    PumpTablesWidget2Component,
+    PumpTablesWidget3Component,
+    PumpTablesWidget4Component,
+    PumpTablesWidget5Component,
+    PumpTablesWidget6Component,
+    PumpTablesWidget7Component,
+    PumpTablesWidget8Component
   ],
   imports: [
     ReactiveFormsModule,
@@ -522,7 +548,20 @@ import { ChartsWidget12Component } from './charts/charts-widget12/charts-widget1
     ChartsWidget9Component,
     ChartsWidget10Component,
     ChartsWidget11Component,
-    ChartsWidget12Component
+    ChartsWidget12Component,
+    ChartsWidget13Component,
+    ChartsWidget14Component,
+    ChartsWidget15Component,
+    AdvanceTablesWidget14Component,
+    AdvanceTablesWidget15Component,
+    PumpTablesWidget1Component,
+    PumpTablesWidget2Component,
+    PumpTablesWidget3Component,
+    PumpTablesWidget4Component,
+    PumpTablesWidget5Component,
+    PumpTablesWidget6Component,
+    PumpTablesWidget7Component,
+    PumpTablesWidget8Component
   ],
   providers: [NgbActiveModal, ExcelService],
 })
