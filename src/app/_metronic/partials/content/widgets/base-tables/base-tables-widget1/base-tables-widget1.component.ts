@@ -207,6 +207,7 @@ export class BaseTablesWidget1Component implements OnInit {
     this.acceesGroup = element.accessGroupId;
     this.getFuelCreditRequestCorporateByfuelDealerId(this.fuelDealerId)
     this.getFuelCreditRequestByCorporateId(this.dealerCorporateId)
+    this.getFuelCreditRequestByfuelDealerId(this.fuelDealerId);
     this.cd.detectChanges()
   }
 
@@ -220,8 +221,10 @@ export class BaseTablesWidget1Component implements OnInit {
           this.allCorporateList = res.data;
           // this.allCorporateListData = res;
           this.spinner.hide()
+            this.cd.detectChanges()
         } else {
           this.spinner.hide()
+          this.cd.detectChanges()
         }
       });
   }

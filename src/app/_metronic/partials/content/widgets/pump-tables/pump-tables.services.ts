@@ -17,6 +17,8 @@ export class PumpTablesService {
     date11: string;
     date22: string;
     activeVehicleLQArray: any;
+    dataFTArray: any;
+    totalFT: any;
     
     constructor(private http: HttpClient,
         private router: Router
@@ -54,6 +56,12 @@ export class PumpTablesService {
     private getTransactionFastagByTollNameDatewiseURL = this.baseURL + 'fastag/getTransactionFastagByTollNameDatewise';
     private getFastagTollMonthWiseLQURL = this.baseURL + 'fastag/getFastagTollMonthWiseLQ';
     private geTransactionFastagByTollNameLQURL = this.baseURL + 'fastag/geTransactionFastagByTollNameLQ'; 
+    private getRechargeFastagByDateURL = this.baseURL + 'fastag/getRechargeFastagByDate';
+    private getRechargeFastagByDateLQURL = this.baseURL + 'fastag/getRechargeFastagByDateLQ';
+    private getFTVehicleListURL = this.baseURL + 'fastag/getFTVehicleList';  
+    private getFTVehicleListLQURL = this.baseURL + 'fastag/getFTVehicleListLQ'; 
+    private getVehicleWiseFtTransactionsURL = this.baseURL + 'fastag/getVehicleWiseFtTransactions'; 
+    private getVehicleWiseFtTransactionsLQURL = this.baseURL + 'fastag/getVehicleWiseFtTransactionsLQ';
 
     
 
@@ -274,6 +282,14 @@ export class PumpTablesService {
     this.date22 = date22;
   }
       
+  setRoutingWithVehicle(dataArray: any, dataFTArray: any, totalFT: any, date1: string, date2: string, FT: string) {
+    this.dataArray = dataArray;
+    this.dataFTArray = dataFTArray;
+    this.totalFT = totalFT;
+    this.date1 = date1;
+    this.date2 = date2;
+    this.FT = FT;
+  }
     // getFastagTollMonthWiseURL
     getFastagTollMonthWisePOST(body: Object): Observable<any> {
         this.setHeader();
@@ -330,6 +346,66 @@ export class PumpTablesService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.geTransactionFastagByTollNameLQURL, body, {
+            headers: headers
+        })
+    }
+    
+    // getRechargeFastagByDateURL
+    getRechargeFastagByDatePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getRechargeFastagByDateURL, body, {
+            headers: headers
+        })
+    }
+    
+    // getRechargeFastagByDateLQURL
+    getRechargeFastagByDateLQPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getRechargeFastagByDateLQURL, body, {
+            headers: headers
+        })
+    }
+    
+    // getFTVehicleListURL
+    getFTVehicleListPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFTVehicleListURL, body, {
+            headers: headers
+        })
+    }
+    
+    // getFTVehicleListLQURL
+    getFTVehicleListLQPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFTVehicleListLQURL, body, {
+            headers: headers
+        })
+    }
+    
+    // getVehicleWiseFtTransactionsURL
+    getVehicleWiseFtTransactionsPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getVehicleWiseFtTransactionsURL, body, {
+            headers: headers
+        })
+    }
+    
+    // getVehicleWiseFtTransactionsLQURL
+    getVehicleWiseFtTransactionsLQPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getVehicleWiseFtTransactionsLQURL, body, {
             headers: headers
         })
     }

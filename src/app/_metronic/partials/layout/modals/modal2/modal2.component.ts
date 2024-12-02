@@ -113,6 +113,7 @@ export class Modal2Component {
   city: any;
   state: any;
   mobileNumber: any;
+  dealerCorporateId: any;
 
   constructor(
     private post: ModalsService,
@@ -127,12 +128,16 @@ export class Modal2Component {
 
   ngOnInit() {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+    this.fuelDealerId = dealerData.fuelDealerId;
+    this.dealerCorporateId = dealerData.corporateId;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     this.accessGroupId = element.accessGroupId;
     this.managerVPPersonId = element.veelsPlusId;
     this.managerPersonId = element.personId;
     this.managerName = element.firstName + " " + element.lastName;
-    this.getCorporateById(this.dealerLoginVPId);
+    // this.getCorporateById(this.dealerLoginVPId);
+    this.getfuelDealerIdByCorporateId(this.dealerCorporateId)
     this.cd.detectChanges()
   }
 
@@ -159,9 +164,9 @@ export class Modal2Component {
   }
 
   // getfuelDealerIdByDealerCorporateId
-  getfuelDealerIdByCorporateId(loginSQLCorporateId: any) {
+  getfuelDealerIdByCorporateId(dealerCorporateId: any) {
     let data = {
-      corporateId: loginSQLCorporateId
+      corporateId: dealerCorporateId
     }
     this.post.getfuelDealerIdByCorporateIdPOST(data)
       .subscribe(res => {

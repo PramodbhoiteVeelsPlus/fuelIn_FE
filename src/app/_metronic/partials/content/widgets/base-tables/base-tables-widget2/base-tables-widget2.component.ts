@@ -140,6 +140,7 @@ export class BaseTablesWidget2Component implements OnInit {
     this.managerName = element.firstName + ' ' + element.lastName
     this.acceesGroup = element.accessGroupId;
     this.getCRPayment(this.dealerCorporateId);
+    this.getFilterCRPaymentFORDealer()
     this.getFuelCreditRequestCorporateByfuelDealerId(this.fuelDealerId)
     this.cd.detectChanges()
   }

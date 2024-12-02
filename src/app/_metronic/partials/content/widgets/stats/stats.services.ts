@@ -142,6 +142,19 @@ export class StatsService {
     private VehicleByRegistrationNumberURL = this.baseURL + 'vehicle/searchVehicleByRegistrationNumber';
     private getFuelStaffIdByfuelDealerIdURL = this.baseURL + 'fuelStaff/getFuelStaffIdByfuelDealerId'; 
     private addCreditReqByDealerForAllURL = this.baseURL + 'fuelDealerCustMap/addCreditReqByDealerForAll';
+    private sendReqForNewCustomerURL = this.baseURL + 'fuelDealerCustMap/sendReqForNewCustomer';
+    private checkCustomerPreviousOutstandingIsAddedOrNotURL = this.baseURL + "fuelCreditInvoice/checkCustomerPreviousOutstandingIsAddedOrNot";
+    private updatePreviousOutstandingURL = this.baseURL + 'fuelDealerCustMap/updatePreviousOutstanding';
+    private checkVehicleByfuelDealerIdURL = this.baseURL + 'fuelVehicleDetails/checkVehicleByfuelDealerId';
+    private addFuelVehicleDetailsURL = this.baseURL + 'fuelVehicleDetails/addFuelVehicleDetails';
+    private userRegisterURL = this.baseURL + 'register/userRegister';
+    private postAddressUrl = this.baseURL + 'address/addAddress';
+    private PostCustomer = this.baseURL + 'customer/addCustomer';
+    private addkycURL = this.baseURL + 'kyc/addKYC';
+    private addCorporateUrl = this.baseURL + 'corporate/addCorporate';
+    private getCorporateByIdUrl = this.baseURL + 'corporate/getCorporateById';
+    private updateVeelsPlusCorporateIdwithPermURL = this.baseURL + 'register/updateVeelsPlusCorporateIdwithPerm';
+    private addNewCustDealerReqURL = this.baseURL + 'fuelDealerCustMap/addNewCustDealerReq';
 
 
 
@@ -1218,7 +1231,135 @@ export class StatsService {
         })
     }
 
+    // sendReqForNewCustomerURL
+    sendReqForNewCustomerPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.sendReqForNewCustomerURL, body, {
+            headers: headers
+        })
+    }
 
+    // checkCustomerPreviousOutstandingIsAddedOrNotURL
+    checkCustomerPreviousOutstandingIsAddedOrNotPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.checkCustomerPreviousOutstandingIsAddedOrNotURL, body, {
+            headers: headers
+        })
+    }
+
+    // updatePreviousOutstandingURL
+    updatePreviousOutstandingPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updatePreviousOutstandingURL, body, {
+            headers: headers
+        })
+    }
+
+    // checkVehicleByfuelDealerIdURL
+    checkVehicleByfuelDealerIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.checkVehicleByfuelDealerIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // addFuelVehicleDetailsURL
+    addFuelVehicleDetailsPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addFuelVehicleDetailsURL, body, {
+            headers: headers
+        })
+    }
+
+    // userRegisterURL
+    userRegisterPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.userRegisterURL, body, {
+            headers: headers
+        })
+    }
+
+    // postAddressUrl
+    addAddressPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.postAddressUrl, body, {
+            headers: headers
+        })
+    }
+
+    // PostCustomer
+    addCustomerPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.PostCustomer, body, {
+            headers: headers
+        })
+    }
+
+    // addkycURL
+    addkycPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addkycURL, body, {
+            headers: headers
+        })
+    }
+
+    // addCorporateUrl
+    addCorporatePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addCorporateUrl, body, {
+            headers: headers
+        })
+    }
+
+    // getCorporateByIdUrl
+    getCorporateByIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getCorporateByIdUrl, body, {
+            headers: headers
+        })
+    }
+
+    // updateVeelsPlusCorporateIdwithPermURL
+    updateVeelsPlusCorporateIdwithPermPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateVeelsPlusCorporateIdwithPermURL, body, {
+            headers: headers
+        })
+    }
+
+    // addNewCustDealerReqURL
+    addNewCustDealerReqPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addNewCustDealerReqURL, body, {
+            headers: headers
+        })
+    }
 
 
 }

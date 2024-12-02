@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { StatsService } from '../../stats/stats.services';
 import { MixedService } from '../mixed.services';
 import { CreditRequestAdvance } from 'src/app/pages/dealer/credit/creditRequestAdvance.modal';
+import moment from 'moment';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -126,6 +127,7 @@ export class MixedWidget3Component implements OnInit {
   isVehSelectLube: boolean = false;
   combineManualNumber: string;
   indexFuelAdvance: number;
+  todayDate = moment(new Date()).format("DD-MM-YYYY");
 
   constructor(
     private post: MixedService,
@@ -155,6 +157,8 @@ export class MixedWidget3Component implements OnInit {
         this.liteAccess = true
       }
     }
+
+    this.requestTransporterAdvance.controls["estimatedRefuelDate"].setValue(this.todayDate);
     this.getCorporateMappedListByDealerId(this.fuelDealerId);
     this.addFormRequestAdvance();
     this.cd.detectChanges()

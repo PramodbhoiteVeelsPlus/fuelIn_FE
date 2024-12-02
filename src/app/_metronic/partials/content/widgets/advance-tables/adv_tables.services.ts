@@ -9,6 +9,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
     providedIn: 'root',
 })
 export class Adv_TablesService {
+    getVehicleWiseFtTransactionsLQPOST(data: { startDate: string; endDate: string; entityId: any; }) {
+      throw new Error('Method not implemented.');
+    }
 
     constructor(private http: HttpClient,
         private router: Router

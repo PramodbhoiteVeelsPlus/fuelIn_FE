@@ -48,6 +48,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     NgbModule,
     SweetAlert2Module.forRoot(),
     NgxSpinnerModule,NgbPaginationModule,
+    
   ],
   // providers: [
   //   {

@@ -114,6 +114,7 @@ export class TablesWidget1Component {
   product6Rate2: any;
   dealerAccess: boolean = false;
   liteAccess: boolean = false;
+  dealerCorporateId: any;
 
   constructor(
     private post: WidgetService,
@@ -128,6 +129,9 @@ export class TablesWidget1Component {
 
   ngOnInit() {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+    this.fuelDealerId = dealerData.fuelDealerId;
+    this.dealerCorporateId = dealerData.corporateId;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     if (element.accessGroupId == 12 || element.accessGroupId == 14 || element.accessGroupId == 19 || element.accessGroupId == 21) {
       this.dealerAccess = true
@@ -135,7 +139,8 @@ export class TablesWidget1Component {
         this.liteAccess = true
       }
     }
-    this.getCorporateById(this.dealerLoginVPId);
+    // this.getCorporateById(this.dealerLoginVPId);
+    this.getfuelDealerIdByCorporateId(this.dealerCorporateId);
     this.cd.detectChanges()
   }
 
@@ -169,9 +174,9 @@ export class TablesWidget1Component {
   }
 
   // getfuelDealerIdByDealerCorporateId
-  getfuelDealerIdByCorporateId(loginSQLCorporateId: any) {
+  getfuelDealerIdByCorporateId(dealerCorporateId: any) {
     let data = {
-      corporateId: loginSQLCorporateId
+      corporateId: dealerCorporateId
     }
     this.post.getfuelDealerIdByCorporateIdPOST(data)
       .subscribe(res => {

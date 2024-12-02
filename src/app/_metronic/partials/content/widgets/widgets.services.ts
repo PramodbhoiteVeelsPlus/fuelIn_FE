@@ -140,7 +140,9 @@ export class WidgetService {
   private allCrAndPaymentForIntervalURL = this.baseURL + 'fuelCreditInvoice/allCrAndPaymentForInterval';
   private getAccountTransactionLogBYfuelDealerCustomMapIdByDateRangeURL = this.baseURL + 'accounttransaclog/getAccountTransactionLogBYfuelDealerCustomMapIdByDateRange';
   private getFuelCorpIdByMapIdURL = this.baseURL + 'fuelDealerCustMap/getFuelCorpIdByMapId';
-  private getAccessByPersonIdURL = this.baseURL + 'userAccess/getAccessByPersonId'
+  private getAccessByPersonIdURL = this.baseURL + 'userAccess/getAccessByPersonId';
+  private checkVehicleByfuelDealerIdURL = this.baseURL + 'fuelVehicleDetails/checkVehicleByfuelDealerId';
+  private addFuelVehicleDetailsURL = this.baseURL + 'fuelVehicleDetails/addFuelVehicleDetails';
 
 
   setHeader() {
@@ -1262,6 +1264,26 @@ export class WidgetService {
     let headers = new HttpHeaders();
     headers = headers.set('authenticationToken', this.token);
     return this.http.post(this.getAccessByPersonIdURL, body, {
+      headers: headers
+    })
+  }
+
+  // checkVehicleByfuelDealerIdURL
+  checkVehicleByfuelDealerIdPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.checkVehicleByfuelDealerIdURL, body, {
+      headers: headers
+    })
+  }
+
+  // addFuelVehicleDetailsURL
+  addFuelVehicleDetailsPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.addFuelVehicleDetailsURL, body, {
       headers: headers
     })
   }

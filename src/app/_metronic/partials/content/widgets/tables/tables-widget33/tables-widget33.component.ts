@@ -111,6 +111,8 @@ export class TablesWidget33Component {
   acceesGroup: number;
   dealerManager: boolean = false;
   isFuelStatement: boolean = false;
+  dealerCorporateId: any;
+  headerName1: any;
 
   constructor(
     private post: WidgetService,
@@ -128,6 +130,11 @@ export class TablesWidget33Component {
 
   ngOnInit() {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+    this.fuelDealerId = dealerData.fuelDealerId;
+    this.dealerCorporateId = dealerData.corporateId;
+    this.customerId = dealerData.customerId;
+    this.headerName1 = dealerData.companyName;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
 
     if (this.acceesGroup == 12 || this.acceesGroup == 14 || this.acceesGroup == 19 || this.acceesGroup == 21) {
@@ -137,7 +144,8 @@ export class TablesWidget33Component {
         this.getAccessByPersonId(element.personId)
       }
     }
-    this.getCorporateById(this.dealerLoginVPId);
+    this.getfuelDealerIdByCorporateId(this.dealerCorporateId);
+    // this.getCorporateById(this.dealerLoginVPId);
     this.cd.detectChanges()
   }
 
@@ -185,9 +193,9 @@ export class TablesWidget33Component {
   }
 
   // getfuelDealerIdByDealerCorporateId
-  getfuelDealerIdByCorporateId(loginSQLCorporateId: any) {
+  getfuelDealerIdByCorporateId(dealerCorporateId: any) {
     let data = {
-      corporateId: loginSQLCorporateId
+      corporateId: dealerCorporateId
     }
     this.post.getfuelDealerIdByCorporateIdPOST(data)
       .subscribe(res => {
@@ -262,9 +270,11 @@ export class TablesWidget33Component {
           if (res.status == "OK") {
             this.mapAccData = res.data;
             this.spinner.hide();
+            this.cd.detectChanges()
           } else {
             this.mapAccData = [];
             this.spinner.hide();
+            this.cd.detectChanges()
           }
         })
 
@@ -293,9 +303,11 @@ export class TablesWidget33Component {
           this.totalCr = res.data1[0].creditQuantityTotal;
           // this.calpayment(res.data)
           this.totalPendingoutstanding()
+          this.cd.detectChanges()
 
         } else {
           this.spinner.hide();
+          this.cd.detectChanges()
         }
       });
   }

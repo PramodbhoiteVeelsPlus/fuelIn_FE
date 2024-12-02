@@ -160,6 +160,9 @@ export class MixedWidget1Component {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+    this.fuelDealerId = dealerData.fuelDealerId;
+    this.dealerCorporateId = dealerData.corporateId;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     this.acceesGroup = element.accessGroupId;
     this.managerVPPersonId = element.veelsPlusId
@@ -172,6 +175,9 @@ export class MixedWidget1Component {
       }
     }
     this.requestVehicle.controls["requestType"].setValue("showamount");
+    this.requestVehicle.controls["requestType"].setValue("showamount");
+    this.requestVehicle.controls["estimatedRefuelDate"].setValue(this.todayDate);
+    this.requestVehicle.controls["priceDate"].setValue(this.todayDate);
     this.addFormVehicleRequest();
     this.getProductsByDealerId(this.fuelDealerId)
     this.getAllVehicle()

@@ -173,6 +173,7 @@ export class MixedWidget2Component implements OnInit {
         this.liteAccess = true
       }
     }
+    this.requestTransporterLube.controls["estimatedRefuelDate"].setValue(this.todayDate);
     this.getCorporateMappedListByDealerId(this.fuelDealerId);
     this.getFlagStatusByCorpId(this.dealerCorporateId)
     this.getLubricants(this.fuelDealerId)

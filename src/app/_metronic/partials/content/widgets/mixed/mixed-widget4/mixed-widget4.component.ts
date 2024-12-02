@@ -181,6 +181,7 @@ export class MixedWidget4Component {
         this.getAccessByPersonId(element.personId)
       }
     }
+    this.addPaymentForm.controls["paymentDate"].setValue(moment(new Date()).format('DD-MM-YYYY'));
     this.getCorporateMappedListByDealerId(this.fuelDealerId)
     this.getFuelTerminal(this.fuelDealerId)
     this.getBankDetailsByDealerId(this.fuelDealerId)

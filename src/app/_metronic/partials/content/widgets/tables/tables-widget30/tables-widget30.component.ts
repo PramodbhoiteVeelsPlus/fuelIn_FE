@@ -7,6 +7,8 @@ import moment from 'moment';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { ExcelService } from 'src/app/pages/excel.service';
+import { addVehicle } from '../../stats/stats-widget17/addVehicle.model';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -70,6 +72,14 @@ export class TablesWidget30Component {
     closeButtonLabel: 'Cancel'
   };
   @ViewChild('modal') private modalComponent: ModalComponent;
+  
+  addVehicleForm = new FormGroup({
+    selectedCorp: new FormControl(''),
+    addVehicleDate: new FormControl('', Validators.required),
+    vehicleNumber: new FormControl('', Validators.required),
+    phoneNumber: new FormControl('', Validators.required)
+  });
+
   dealerLoginVPId: any;
   loginSQLCorporateId: any;
   fuelDealerId: any;
@@ -127,10 +137,18 @@ export class TablesWidget30Component {
   corporateInDetails: any = [];
   corporateInDetailsLength: any = [];
   isDisableEmail: any;
-corporateFlagPurpose: any;
+  corporateFlagPurpose: any;
   flagStatus: string;
   corporateReviewFlagUpdate: string;
   corporateFlagPurposeUpdate: string;
+  dealerCorporateId: any;
+  companyNameAddVehicle: any;
+  fuelDealerCorpMapIdNew: any;
+  customerCorporateId: any;
+  countAdvance: any = 1;
+  addVehicleData: any = [];
+  count: number = 1;
+  addVehicle = new addVehicle();
 
   constructor(
     private post: WidgetService,
@@ -147,6 +165,10 @@ corporateFlagPurpose: any;
 
   ngOnInit() {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+    this.fuelDealerId = dealerData.fuelDealerId;
+    this.dealerCorporateId = dealerData.corporateId;
+    this.headerName1 = dealerData.companyName;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     if (element.accessGroupId == 12 || element.accessGroupId == 14 || element.accessGroupId == 19 || element.accessGroupId == 21) {
       this.dealerAccess = true
@@ -154,7 +176,9 @@ corporateFlagPurpose: any;
         this.liteAccess = true
       }
     }
-    this.getCorporateById(this.dealerLoginVPId);
+    // this.getCorporateById(this.dealerLoginVPId);
+    // this.addVehicleForCr()
+    this.getfuelDealerIdByCorporateId(this.dealerCorporateId)
     this.cd.detectChanges()
   }
 
@@ -187,9 +211,9 @@ corporateFlagPurpose: any;
   }
 
   // getfuelDealerIdByDealerCorporateId
-  getfuelDealerIdByCorporateId(loginSQLCorporateId: any) {
+  getfuelDealerIdByCorporateId(dealerCorporateId: any) {
     let data = {
-      corporateId: loginSQLCorporateId
+      corporateId: dealerCorporateId
     }
     this.post.getfuelDealerIdByCorporateIdPOST(data)
       .subscribe(res => {
@@ -761,90 +785,181 @@ corporateFlagPurpose: any;
         }
       });
   }
-  
-checkManualNumRange(){
-  if(this.manualNumberStart < this.manualNumberEnd){
-    let data = {
-      fuelDealerId:this.fuelDealerId,
-      manualNumberStart:this.manualNumberStart,
-      manualNumberEnd:this.manualNumberEnd
-    }
-    this.post.checkManualNumRangePOST(data)
-    .subscribe(res=>{
-      if(res.data.length){
-        alert("This range is alrady in used.. please change the range..") 
-      }else{
-        this.updateManualNumber()
+
+  checkManualNumRange() {
+    if (this.manualNumberStart < this.manualNumberEnd) {
+      let data = {
+        fuelDealerId: this.fuelDealerId,
+        manualNumberStart: this.manualNumberStart,
+        manualNumberEnd: this.manualNumberEnd
       }
-    })
-  }else{
-    alert("please enter valid range")
+      this.post.checkManualNumRangePOST(data)
+        .subscribe(res => {
+          if (res.data.length) {
+            alert("This range is alrady in used.. please change the range..")
+          } else {
+            this.updateManualNumber()
+          }
+        })
+    } else {
+      alert("please enter valid range")
+    }
   }
+
+  updateManualNumber() {
+    let data = {
+      fuelDealerCustomerMapId: this.fuelDealerCustomerMapId,
+      manualNumberStart: this.manualNumberStart,
+      manualNumberEnd: this.manualNumberEnd
+    }
+    this.post.updateManualNumberPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          alert(res.msg)
+          this.getMappingAccount(this.fuelDealerId);
+          this.modalRef2.close('close')
+        }
+      })
+  }
+  addFlagForCorp() {
+    if (this.corporateFlagPurpose) {
+      let data = {
+        corporateFlagDealerId: this.fuelDealerId,
+        corporateReviewFlag: "TRUE",
+        corporateFlagPurpose: this.corporateFlagPurpose,
+        corporateIdForFlag: this.flagCorporateId
+      }
+      this.post.addFlagForCorpPOST(data)
+        .subscribe(res => {
+          if (res.status == 'OK') {
+            alert(res.msg)
+            this.getMappingAccount(this.fuelDealerId);
+            this.modalUpdateName.close('close')
+            this.flagStatus = ''
+            this.corporateFlagPurpose = ''
+          }
+          else {
+            alert("Error to Update !")
+          }
+
+        })
+    } else {
+      alert("Please Enter Status OR Reason")
+    }
+  }
+  updateFlagForCorp() {
+    if (this.idcorporateFlag) {
+      let data = {
+        idcorporateFlag: this.idcorporateFlag,
+      }
+      this.post.updateFlagForCorpPOST(data)
+        .subscribe(res => {
+          if (res.status == 'OK') {
+            alert(res.msg)
+            this.getMappingAccount(this.fuelDealerId);
+            this.modalUpdateName.close('close')
+            this.corporateReviewFlagUpdate = ''
+            this.corporateFlagPurposeUpdate = ''
+
+          }
+          else {
+            alert("Error to Update !")
+          }
+
+        })
+    } else {
+      alert("Please Enter Status OR Reason")
+    }
+  }
+  
+openVehicle(addVehicle: any,fuelDealerCustomerMapId: any,fuelCorporateId: any,companyName: any){
+  this.companyNameAddVehicle = companyName
+  this.fuelDealerCorpMapIdNew = fuelDealerCustomerMapId;
+  this.customerCorporateId = fuelCorporateId
+  this.modalRef2 = this.modalService.open(addVehicle);
+  this.addVehicleForCr()
+  this.cd.detectChanges()
+  this.modalRef2.result.then(
+    (result: any) => {
+      this.closeResult = `Closed with: ${result}`;
+    },
+    (reason: any) => {
+      this.closeResult = `Dismissed`;
+    });
 }
 
-updateManualNumber(){
-  let data = {
-    fuelDealerCustomerMapId:this.fuelDealerCustomerMapId,
-    manualNumberStart:this.manualNumberStart,
-    manualNumberEnd:this.manualNumberEnd
+addVehicleForCr() {
+  this.countAdvance = this.countAdvance + 1;
+  if (this.countAdvance < 12) {
+    this.addVehicle = new addVehicle();
+    this.addVehicleData.push(this.addVehicle);
+    this.cd.detectChanges()
   }
-  this.post.updateManualNumberPOST(data)
+  else {
+    this.count = 11;
+    alert("Please save 10 credit entries")
+    this.cd.detectChanges()
+  }
+
+}
+
+setVehicleNumber() {
+    this.addVehicleForm.controls["vehicleNumber"].setValue(this.addVehicle.vehicleNumber)
+    this.checkFuelCreditVehicle();
+  }
+
+  checkFuelCreditVehicle(){
+    let data ={
+      fuelDealerCustomerMapId:this.fuelDealerCorpMapIdNew,
+      dealerId:this.fuelDealerId,
+      vehicleNumber:this.addVehicleForm.value.vehicleNumber
+    }
+  
+  this.post.checkVehicleByfuelDealerIdPOST(data)
   .subscribe(res=>{
     if(res.status =="OK"){
-      alert(res.msg)
-      this.getMappingAccount(this.fuelDealerId); 
-      this.modalRef2.close('close')
-    }
-  })
-}
-addFlagForCorp(){
-  if(this.corporateFlagPurpose){
-    let data = {
-      corporateFlagDealerId:this.fuelDealerId,
-      corporateReviewFlag:"TRUE",
-      corporateFlagPurpose:this.corporateFlagPurpose,
-      corporateIdForFlag:this.flagCorporateId
-    }
-    this.post.addFlagForCorpPOST(data)
-    .subscribe(res => {
-      if (res.status == 'OK') {
-        alert(res.msg)
-        this.getMappingAccount(this.fuelDealerId);
-        this.modalUpdateName.close('close')          
-        this.flagStatus = ''
-        this.corporateFlagPurpose = ''         
-      }
-      else {
-        alert("Error to Update !")
-      }
+      if (res.data.length) {
+         alert(res.msg)
+        }
 
-    })
-  }else{
-    alert("Please Enter Status OR Reason")
-  }
-}
-updateFlagForCorp(){
-  if(this.idcorporateFlag){
-    let data = {
-      idcorporateFlag: this.idcorporateFlag,
-    }
-    this.post.updateFlagForCorpPOST(data)
-    .subscribe(res => {
-      if (res.status == 'OK') {
-        alert(res.msg)
-        this.getMappingAccount(this.fuelDealerId);
-        this.modalUpdateName.close('close')          
-        this.corporateReviewFlagUpdate = ''
-        this.corporateFlagPurposeUpdate = '' 
-       
       }
-      else {
-        alert("Error to Update !")
-      }
-
-    })
-  }else{
-    alert("Please Enter Status OR Reason")
+     })
   }
-}
+  
+  removeVehicle(i: number) {
+    this.addVehicleData.splice(i, 1);
+    this.count = this.count - 1;
+  }
+  
+  addFuelCreditVehicle(){
+    if(this.fuelDealerCorpMapIdNew){
+    let createdDate = new Date
+          let data ={
+            addVehicleData: this.addVehicleData,
+            fuelDealerCustomerMapId:this.fuelDealerCorpMapIdNew,
+            dealerId:this.fuelDealerId,
+            dealerCorporateId:this.dealerCorporateId,
+            customerCorporateId:this.customerCorporateId,
+            createdAt:createdDate,
+            createdBy:this.fuelDealerId,
+          }
+    
+        
+        this.post.addFuelVehicleDetailsPOST(data)
+        .subscribe(res=>{
+         
+          alert(res.msg)
+          this.addVehicleData = [];
+          this.countAdvance = 1;
+          this.addVehicleForCr();
+          this.getMappingAccount(this.fuelDealerId);
+          this.modalRef2.close('close')
+    
+    
+        })}
+        else{
+          alert("Please Select Customer..")
+        }
+    
+      }
 }

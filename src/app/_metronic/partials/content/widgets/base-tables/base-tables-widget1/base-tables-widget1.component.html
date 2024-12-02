@@ -76,7 +76,7 @@
       <div class="col-lg-4">
         <div class="search-box">
           <div class="position-relative">
-            <input class="form-control mr-md-4" type="text" placeholder="search"
+            <input class="form-control " type="text" placeholder="search"
               oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
               [(ngModel)]="searchData" [ngModelOptions]="{standalone: true}" (input)="onSearch()">
             <i class="bx bx-search-alt search-icon"></i>

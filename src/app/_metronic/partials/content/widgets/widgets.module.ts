@@ -186,6 +186,10 @@ import { PumpTablesWidget5Component } from './pump-tables/pump-tables-widget5/pu
 import { PumpTablesWidget6Component } from './pump-tables/pump-tables-widget6/pump-tables-widget6.component';
 import { PumpTablesWidget7Component } from './pump-tables/pump-tables-widget7/pump-tables-widget7.component';
 import { PumpTablesWidget8Component } from './pump-tables/pump-tables-widget8/pump-tables-widget8.component';
+import { PumpTablesWidget9Component } from './pump-tables/pump-tables-widget9/pump-tables-widget9.component';
+import { PumpTablesWidget10Component } from './pump-tables/pump-tables-widget10/pump-tables-widget10.component';
+import { ArchwizardModule } from 'angular-archwizard';
+import { PumpTablesWidget11Component } from './pump-tables/pump-tables-widget11/pump-tables-widget11.component';
 // import { routes } from 'src/app/app-routing.module';
 @NgModule({
   declarations: [
@@ -365,7 +369,10 @@ import { PumpTablesWidget8Component } from './pump-tables/pump-tables-widget8/pu
     PumpTablesWidget5Component,
     PumpTablesWidget6Component,
     PumpTablesWidget7Component,
-    PumpTablesWidget8Component
+    PumpTablesWidget8Component,
+    PumpTablesWidget9Component,
+    PumpTablesWidget10Component,
+    PumpTablesWidget11Component
   ],
   imports: [
     ReactiveFormsModule,
@@ -382,7 +389,9 @@ import { PumpTablesWidget8Component } from './pump-tables/pump-tables-widget8/pu
     NgxPaginationModule,
     RouterModule,
     NgbNavModule,
-    NgxSliderModule
+    NgxSliderModule,
+    // MatStepperModule
+    // ArchwizardModule,
   ],
   exports: [
     // Advanced Tables
@@ -561,7 +570,10 @@ import { PumpTablesWidget8Component } from './pump-tables/pump-tables-widget8/pu
     PumpTablesWidget5Component,
     PumpTablesWidget6Component,
     PumpTablesWidget7Component,
-    PumpTablesWidget8Component
+    PumpTablesWidget8Component,
+    PumpTablesWidget9Component,
+    PumpTablesWidget10Component,
+    PumpTablesWidget11Component
   ],
   providers: [NgbActiveModal, ExcelService],
 })

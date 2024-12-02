@@ -102,6 +102,7 @@ export class TablesWidget31Component {
   allCreditAccByDealerListDetails: any = [];
   mappingAccExcelData: any = [];
   netOS: any;
+  dealerCorporateId: any;
 
   constructor(
     private post: WidgetService,
@@ -119,6 +120,11 @@ export class TablesWidget31Component {
 
   ngOnInit() {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+    this.fuelDealerId = dealerData.fuelDealerId;
+    this.dealerCorporateId = dealerData.corporateId;
+    this.customerId = dealerData.customerId;
+    this.headerName1 = dealerData.companyName;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     if (element.accessGroupId == 12 || element.accessGroupId == 14 || element.accessGroupId == 19 || element.accessGroupId == 21) {
       this.dealerAccess = true
@@ -126,7 +132,10 @@ export class TablesWidget31Component {
         this.liteAccess = true
       }
     }
-    this.getCorporateById(this.dealerLoginVPId);
+    this.getfuelDealerIdByCorporateId(this.dealerCorporateId)
+    this.searchDealerBycustomerId(this.customerId)
+    this.getMappingAccount(this.fuelDealerId);
+    // this.getCorporateById(this.dealerLoginVPId);
     this.cd.detectChanges()
   }
 
@@ -161,9 +170,9 @@ export class TablesWidget31Component {
   }
 
   // getfuelDealerIdByDealerCorporateId
-  getfuelDealerIdByCorporateId(loginSQLCorporateId: any) {
+  getfuelDealerIdByCorporateId(dealerCorporateId: any) {
     let data = {
-      corporateId: loginSQLCorporateId
+      corporateId: dealerCorporateId
     }
     this.post.getfuelDealerIdByCorporateIdPOST(data)
       .subscribe(res => {
@@ -181,7 +190,7 @@ export class TablesWidget31Component {
 
   pageChangeEvent(event: number) {
     this.p = event;
-    // this.getMappingAccount(this.fuelDealerId);
+    this.getMappingAccount(this.fuelDealerId);
   }
   
   searchDealerBycustomerId(customerId: any) {    
@@ -223,9 +232,11 @@ export class TablesWidget31Component {
             }
           })
           this.spinner.hide();
+          this.cd.detectChanges()
         } else {
           this.mappingAccData2 = [];
           this.spinner.hide();
+          this.cd.detectChanges()
         }
       })
   }
@@ -269,7 +280,7 @@ export class TablesWidget31Component {
   clearFilterForm() {
     this.filterForm.controls["startDate"].setValue("");
     this.filterForm.controls["endDate"].setValue("");
-    // this.getMappingAccount(this.fuelDealerId)
+    this.getMappingAccount(this.fuelDealerId)
   }
 
   sendSms(fuelDealerCustomerMapId: any, numbers: any, amount: any,isMappingSMS: any,isMappingEmail: any) {
@@ -499,4 +510,5 @@ printPdf(){
   this.post.setRouteForActiveCustomer('activeCustomer', this.mappingAccData2,this.filterForm.value.startDate, this.filterForm.value.endDate, this.netOS, this.crOutstanding2)
   this.router.navigate(['/credit/viewAccountDetails']);
 }
+
 }

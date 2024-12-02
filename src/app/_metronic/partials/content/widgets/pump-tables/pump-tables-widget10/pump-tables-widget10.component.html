@@ -1,0 +1,354 @@
+<div class="container-fluid">
+    <!-- new tab view -->
+    <div class="row" *ngIf="bothFT || FT">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <ul ngbNav #customNav="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified"
+                        style="width: 50%;">
+                        <li [ngbNavItem]="1" *ngIf="bothFT || FT">
+                            <a ngbNavLink>
+                                <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                <span class="d-none d-sm-block" style="font-size: 13.5px;">YES BANK</span>
+                            </a>
+                            <ng-template ngbNavContent>
+                                <ng-template [ngTemplateOutlet]="YesBankFT"></ng-template>
+                            </ng-template>
+                        </li>
+                        <li [ngbNavItem]="2" *ngIf="LQFT">
+                            <a ngbNavLink>
+                                <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                                <span class="d-none d-sm-block" style="font-size: 13.5px;">LIVQUIK</span>
+                            </a>
+                            <ng-template ngbNavContent>
+                                <ng-template [ngTemplateOutlet]="livquik"></ng-template>
+                            </ng-template>
+                        </li>
+
+                    </ul>
+                    <div [ngbNavOutlet]="customNav"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="LQ">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <ul ngbNav #customNav="ngbNav" [activeId]="2" class="nav-tabs nav-tabs-custom nav-justified"
+                        style="width: 50%;">
+                        <li [ngbNavItem]="2">
+                            <a ngbNavLink>
+                                <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                                <span class="d-none d-sm-block" style="font-size: 13.5px;">LIVQUIK</span>
+                            </a>
+                            <ng-template ngbNavContent>
+                                <ng-template [ngTemplateOutlet]="livquik"></ng-template>
+                            </ng-template>
+                        </li>
+
+                    </ul>
+                    <div [ngbNavOutlet]="customNav"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- new tab view end -->
+
+    <ng-template #YesBankFT>
+        <br><br>
+        <div class="row">
+
+            <form [formGroup]="filterForm">
+                <div class="row">
+                    <label for="example-text-input" class="col-auto col-form-label">Search Vehicle</label>&nbsp;
+
+                    <div class="col-auto">
+                        <!-- <input class="form-control mr-sm-2" type="text" placeholder="Search vehicle "
+                            aria-label="Search" formControlName="businessId"
+                            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"> -->
+
+                        <select formControlName="businessId" class="form-control" required>
+                            <option value="">Select Vehicle</option>
+                            <option *ngFor="let data of vehicleList" value={{data.fastagTransactionBusinessId}}>
+                                {{data.fastagTransactionBusinessId}} </option>
+                        </select>
+                    </div>
+
+                    <label for="example-text-input" class="col-auto col-form-label">Start Date</label>&nbsp;
+
+                    <div class="col-auto">
+                        <input class="form-control" placeholder="YYYY-MM-DD" name="startDate" readonly
+                            style="background-color: #ffffff;" (click)="startDate.toggle()" formControlName="startDate"
+                            ngbDatepicker #startDate="ngbDatepicker">
+                    </div>
+                    <label for="example-text-input" class="col-auto col-form-label">End Date</label>&nbsp;
+
+                    <div class="col-auto">
+                        <input class="form-control" placeholder="YYYY-MM-DD" name="endDate" readonly
+                            style="background-color: #ffffff;" (click)="endDate.toggle()" formControlName="endDate"
+                            ngbDatepicker #endDate="ngbDatepicker">
+                    </div>
+
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary" (click)="getVehicleWiseFT()">View</button>
+                    </div>
+
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-outline-warning my-2 my-sm-0" (click)="goToPDF()">PDF
+                            View</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="table-responsive mb-0">
+                <table class="table table-centered">
+                    <thead class="table-light">
+                        <tr>
+                            <h6> Vehicle Summary </h6>
+                        </tr>
+                        <tr>
+                            <th style="text-align: left;"> Sr No </th>
+                            <th style="text-align: left;"> Veels Id </th>
+                            <th style="text-align: left;"> Vehicle Number </th>
+                            <th style="text-align: left;"> Trip Count </th>
+                            <th style="text-align: left;"> Total Amount </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let data of FTData; let i = index">
+                            <td style="text-align: left;"> {{i+1}} </td>
+                            <td style="text-align: left;"> {{data.fastagTransactionEntityId}} </td>
+                            <td style="text-align: left;"> {{data.fastagTransactionBusinessId}} </td>
+                            <td style="text-align: left;"> {{data.count}} </td>
+                            <td style="text-align: left;"> {{data.totalAmount | number:'1.2-2'}} </td>
+                        </tr>
+                        <tr *ngFor="let data of totalFT;">
+                            <td style="text-align: left;"> </td>
+                            <td style="text-align: left;"> </td>
+                            <td style="text-align: left;"> Total </td>
+                            <td style="text-align: left;"> {{data.count}} </td>
+                            <td style="text-align: left;"> {{data.totalAmount | number:'1.2-2'}} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="table-responsive mb-0">
+                <table class="table table-centered">
+                    <thead class="table-light">
+                        <tr>
+                            <h6> Transaction Details </h6>
+                        </tr>
+                        <tr>
+                            <th style="text-align: center;border: 2px solid #272829; ">
+                                Date
+                            </th>
+                            <th style="text-align: center;border: 2px solid #272829; ">
+                                Vehicle Number
+                            </th>
+                            <th style="text-align: center;border: 2px solid #272829; ">
+                                Transaction Ref
+                            </th>
+                            <th style="text-align: center;border: 2px solid #272829; ">
+                                Transaction Type
+                            </th>
+                            <th style="text-align: center;border: 2px solid #272829; ">
+                                Toll Plaza
+                            </th>
+                            <th style="text-align: center;border: 2px solid #272829; ">
+                                Amount
+                            </th>
+                            <th style="text-align: center;border: 2px solid #272829; ">
+                                Closing Bal
+                            </th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+                        <tr
+                            *ngFor="let data of FTDetails | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                            <td style="text-align: center;"> {{data.manualDate | date:'mediumDate'}} {{data.manualDate |
+                                date:'HH:mm:ss'}}
+                            </td>
+                            <td style="text-align: center;"> {{data.fastagTransactionBusinessId}}
+                            </td>
+                            <td style="text-align: center;"> {{data.fastagtxRef}} </td>
+                            <td style="text-align: center;"> {{data.fastagType}} </td>
+                            <td style="text-align: center;"> {{data.fastagBeneficiaryName}} </td>
+                            <td style="text-align: center;"> {{data.fastagTransactionAmount |
+                                number:'1.2-2'}}
+                            </td>
+                            <td style="text-align: center;"> {{data.fastagTransactionBalance |
+                                number:'1.2-2'
+                                }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- begin::Pagination -->
+                <pagination-controls (pageChange)="pageChangeEvent($event)"
+                    previousLabel="" nextLabel=""
+                    style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                </pagination-controls>
+                <!-- end::Pagination -->
+            </div>
+        </div>
+    </ng-template>
+
+
+    <ng-template #livquik>
+        <br><br>
+        <div class="row">
+
+            <form [formGroup]="filterFormLQ">
+                <div class="row">
+                    <label for="example-text-input" class="col-auto col-form-label"> Vehicle</label>&nbsp;
+
+                    <div class="col-auto">
+                        <!-- <input class="form-control mr-sm-2" type="text" placeholder=" vehicle "
+                            aria-label="Search" formControlName="businessId"
+                            oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"> -->
+                        <select formControlName="businessId" class="form-control" required>
+                            <option value="">Select Vehicle</option>
+                            <option *ngFor="let data of vehicleLQList" value={{data.fastagTransactionBusinessId}}>
+                                {{data.fastagTransactionBusinessId}} </option>
+                        </select>
+                    </div>
+                    <label for="example-text-input" class="col-auto col-form-label">Start Date</label>&nbsp;
+
+                    <div class="col-auto">
+                        <input class="form-control" placeholder="YYYY-MM-DD" name="startDate" readonly
+                            style="background-color: #ffffff;" (click)="startDate.toggle()" formControlName="startDate"
+                            ngbDatepicker #startDate="ngbDatepicker">
+                    </div>
+                    <label for="example-text-input" class="col-auto col-form-label">End Date</label>&nbsp;
+
+                    <div class="col-auto">
+                        <input class="form-control" placeholder="YYYY-MM-DD" name="endDate" readonly
+                            style="background-color: #ffffff;" (click)="endDate.toggle()" formControlName="endDate"
+                            ngbDatepicker #endDate="ngbDatepicker">
+                    </div>
+
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary" (click)="getVehicleWiseFTLQ()">View</button>
+                    </div>
+
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-outline-warning my-2 my-sm-0" (click)="goToPDFLQ()">PDF
+                            View</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="table-responsive mb-0">
+                <table class="table table-centered">
+                    <thead class="table-light">
+                        <tr>
+                            <h6> Vehicle Summary </h6>
+                        </tr>
+                        <tr>
+                            <th style="text-align: left;border: 2px solid #272829;"> Sr No </th>
+                            <th style="text-align: left;border: 2px solid #272829;"> Veels Id </th>
+                            <th style="text-align: left;border: 2px solid #272829;"> Vehicle Number </th>
+                            <th style="text-align: left;border: 2px solid #272829;"> Trip Count </th>
+                            <th style="text-align: left;border: 2px solid #272829;"> Total Amount </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let data of FTLQData; let i = index">
+                            <td style="text-align: left;border: 2px solid #272829;"> {{i+1}} </td>
+                            <td style="text-align: left;border: 2px solid #272829;"> {{data.fastagTransactionEntityId}} </td>
+                            <td style="text-align: left;border: 2px solid #272829;"> {{data.fastagTransactionBusinessId}} </td>
+                            <td style="text-align: left;border: 2px solid #272829;"> {{data.count}} </td>
+                            <td style="text-align: left;border: 2px solid #272829;"> {{data.totalAmount | number:'1.2-2'}} </td>
+                        </tr>
+                        <tr *ngFor="let data of totalFTLQ;">
+                            <td style="text-align: left;border: 2px solid #272829;"> </td>
+                            <td style="text-align: left;border: 2px solid #272829;"> </td>
+                            <td style="text-align: left;border: 2px solid #272829;"> <b> Total </b></td>
+                            <td style="text-align: left;border: 2px solid #272829;"> <b> {{data.count}} </b> </td>
+                            <td style="text-align: left;border: 2px solid #272829;"> <b> {{data.totalAmount | number:'1.2-2'}} </b></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="table-responsive mb-0">
+                <table class="table table-centered">
+                    <thead class="table-light">
+                        <tr>
+                            <h6> Transaction Details </h6>
+                        </tr>
+                        <tr>
+                            <th style="text-align: center;border: 2px solid #272829; ">
+                                Date
+                            </th>
+                            <th style="text-align: center;border: 2px solid #272829; ">
+                                Vehicle Number
+                            </th>
+                            <th style="text-align: center;border: 2px solid #272829; ">
+                                Transaction Ref
+                            </th>
+                            <th style="text-align: center;border: 2px solid #272829; ">
+                                Transaction Type
+                            </th>
+                            <th style="text-align: center;border: 2px solid #272829; ">
+                                Toll Plaza
+                            </th>
+                            <th style="text-align: center;border: 2px solid #272829; ">
+                                Amount
+                            </th>
+                            <th style="text-align: center;border: 2px solid #272829; ">
+                                Closing Bal
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr
+                            *ngFor="let data of FTLQDetails | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                            <td style="text-align: center;border: 2px solid #272829;"> {{data.manualDate | date:'mediumDate'}} {{data.manualDate |
+                                date:'HH:mm:ss'}}
+                            </td>
+                            <td style="text-align: center;border: 2px solid #272829;"> {{data.fastagTransactionBusinessId}}
+                            </td>
+                            <td style="text-align: center;border: 2px solid #272829;"> {{data.fastagtxRef}} </td>
+                            <td style="text-align: center;border: 2px solid #272829;"> {{data.fastagType}} </td>
+                            <td style="text-align: center;border: 2px solid #272829;"> {{data.fastagBeneficiaryName}} </td>
+                            <td style="text-align: center;border: 2px solid #272829;"> {{data.fastagTransactionAmount |
+                                number:'1.2-2'}}
+                            </td>
+                            <td style="text-align: center;border: 2px solid #272829;"> {{data.fastagTransactionBalance |
+                                number:'1.2-2'
+                                }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- begin::Pagination -->
+                <pagination-controls (pageChange)="pageChangeEvent($event)"
+                    previousLabel="" nextLabel=""
+                    style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                </pagination-controls>
+                <!-- end::Pagination -->
+            </div>
+        </div>
+    </ng-template>
+</div>

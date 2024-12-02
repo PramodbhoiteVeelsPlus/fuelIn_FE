@@ -304,10 +304,10 @@
                                     <span *ngIf="data.smsStatus == 'TRUE'">
                                         O/s SMS Already Send
                                     </span>
-                                    <!-- <span *ngIf="data.smsStatus == 'FALSE'"
-                                  (click)="sendSms(data.fuelDealerCustomerMapId,data.hostPhone,data.totalOutstanding,data.isMappingSMS,data.isMappingEmail)">
-                                  Send O/s SMS
-                              </span> -->
+                                    <span *ngIf="data.smsStatus == 'FALSE'"
+                                        (click)="sendSms(data.fuelDealerCustomerMapId,data.hostPhone,data.totalOutstanding,data.isMappingSMS,data.isMappingEmail)">
+                                        Send O/s SMS
+                                    </span>
                                 </a>
                             </div>
                         </div>

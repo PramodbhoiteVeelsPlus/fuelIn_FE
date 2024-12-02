@@ -82,35 +82,35 @@
       -webkit-transition: .4s;
       transition: .4s;
     }
-  
-  input:checked + .slider {
-    background-color: green;
-  }
-  
-  input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
-  }
-  
-  input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-  }
-  
-  /* Rounded sliders */
-  .slider.round {
-    border-radius: 34px;
-  }
-  
-  .slider.round:before {
-    border-radius: 50%;
-  }
 
-  label {
-    display: inline-block;
-    padding: 20px;
-    font-size: medium;
-  }
+    input:checked+.slider {
+      background-color: green;
+    }
+
+    input:focus+.slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked+.slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+
+    label {
+      display: inline-block;
+      padding: 20px;
+      font-size: medium;
+    }
   </style>
 </head>
 
@@ -131,11 +131,11 @@
       </div>
 
       <div class="col-lg-1">
-        <span style="font-size: 25px;cursor: pointer;" (click)="allCustomerPDFDownload()" ngbTooltip="Download PDF"
+        <span style="font-size: 45px;cursor: pointer;" (click)="allCustomerPDFDownload()" ngbTooltip="Download PDF"
           placement="bottom"><i class="fas fa-file-pdf"></i></span>
       </div>
       <div class="col-lg-1">
-        <span style="font-size: 25px;cursor: pointer;" (click)="allCustomerExcelDownload()" ngbTooltip="Download CSV"
+        <span style="font-size: 45px;cursor: pointer;" (click)="allCustomerExcelDownload()" ngbTooltip="Download CSV"
           placement="bottom"><i class="fas fa-file-csv"></i></span>
       </div>
     </div>
@@ -219,9 +219,9 @@
                 <a class="dropdown-item" href="javascript: void(0);"
                   (click)="openManualNo(manualNo, data.fuelDealerCustomerMapId, data.manualNumberStart, data.manualNumberEnd, data.companyName)">
                   &nbsp; Add Bill Nos.</a>
-                <!-- <a class="dropdown-item" href="javascript: void(0);"
+                <a class="dropdown-item" href="javascript: void(0);"
                   (click)="openVehicle(addVehicle, data.fuelDealerCustomerMapId, data.fuelCorporateId, data.companyName)">
-                  &nbsp; Add Vehicle</a> -->
+                  &nbsp; Add Vehicle</a>
                 <a *ngIf="data.corporateFlagDealerId != fuelDealerId " class="dropdown-item" href="javascript: void(0);"
                   (click)="updateCorporateReview(updateFlag,data.fuelCorporateId,data.companyName)">
                   &nbsp; Add Alert</a>
@@ -296,9 +296,9 @@
                 <a class="dropdown-item" href="javascript: void(0);"
                   (click)="openManualNo(manualNo, data.fuelDealerCustomerMapId, data.manualNumberStart, data.manualNumberEnd, data.companyName)">
                   &nbsp; Add Bill Nos.</a>
-                <!-- <a class="dropdown-item" href="javascript: void(0);"
+                <a class="dropdown-item" href="javascript: void(0);"
                   (click)="openVehicle(addVehicle, data.fuelDealerCustomerMapId, data.fuelCorporateId, data.companyName)">
-                  &nbsp; Add Vehicle</a> -->
+                  &nbsp; Add Vehicle</a>
                 <a *ngIf="data.corporateFlagDealerId != fuelDealerId " class="dropdown-item" href="javascript: void(0);"
                   (click)="updateCorporateReview(updateFlag,data.fuelCorporateId,data.companyName)">
                   &nbsp; Add Alert</a>
@@ -409,7 +409,7 @@
     </pagination-controls>
     <!-- end::Pagination -->
   </div>
-  
+
   <ng-template #viewVehicle let-c="close" let-d="dismiss">
     <div class="modal-header">
       <h6 class="modal-title">
@@ -474,7 +474,7 @@
     <div class="modal-body">
 
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-6">
           <label class="labelNewMargin">Khata :</label>
         </div>
         <div class="col-md-6">
@@ -486,7 +486,7 @@
       <br>
 
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-6">
           <label class="labelNewMargin">Person Name :</label>
         </div>
         <div class="col-md-6">
@@ -498,7 +498,7 @@
       <br>
 
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-6">
           <label class="labelNewMargin">Email Id :</label>
         </div>
         <div class="col-md-6">
@@ -508,7 +508,7 @@
       <br>
 
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-6">
           <label class="labelNewMargin">GST Number :</label>
         </div>
         <div class="col-md-6">
@@ -520,7 +520,7 @@
       <br>
 
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-6">
           <label class="labelNewMargin">Cr Amount Limit :</label>
         </div>
         <div class="col-md-6">
@@ -531,17 +531,16 @@
       <br>
 
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-6">
           <label class="labelNewMargin">Cr Days Limit :</label>
         </div>
         <div class="col-md-6">
-          <input class="form-control" type="number" [(ngModel)]="creditDayLimit"
-            [ngModelOptions]="{standalone: true}">
+          <input class="form-control" type="number" [(ngModel)]="creditDayLimit" [ngModelOptions]="{standalone: true}">
         </div>
       </div>
       <br>
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-6">
           <label class="labelNewMargin">Address Line1 :</label>
         </div>
         <div class="col-md-6">
@@ -553,7 +552,7 @@
       <br>
 
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-6">
           <label class="labelNewMargin">Address Line2 :</label>
         </div>
         <div class="col-md-6">
@@ -565,7 +564,7 @@
       <br>
 
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-6">
           <label class="labelNewMargin">City :</label>
         </div>
         <div class="col-md-6">
@@ -580,7 +579,7 @@
         </div>
         <div class="col-md-2">
           <button type="submit" class="btn btn-primary" (click)="updateNameByMapId()">Update</button>
-        </div>&nbsp;&nbsp;
+        </div>&nbsp;&nbsp;&nbsp;&nbsp;
         <div class="col-md-2">
           <button type="submit" class="btn btn-secondary" (click)="closeModalUpdate()">Close</button>
         </div>
@@ -615,10 +614,9 @@
             <button type="button" class="btn btn-primary" aria-label="Close"
               (click)="addOutstandAmount()">Update</button>
           </div>
-          &nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <div class="col-md-3">
-            <button type="button" class="btn btn-secondary" aria-label="Close"
-              (click)="d('Cross click')">Close</button>
+            <button type="button" class="btn btn-secondary" aria-label="Close" (click)="d('Cross click')">Close</button>
           </div>
         </div>
       </form>
@@ -645,8 +643,8 @@
               [(ngModel)]="manualNumberStart" [ngModelOptions]="{standalone: true}" placeholder="manual number start">
           </div>
           <div class="col-md-6">
-            <input class="form-control" type="number" style="font-size: 0.750rem;" min="0"
-              [(ngModel)]="manualNumberEnd" [ngModelOptions]="{standalone: true}" placeholder="manual number end">
+            <input class="form-control" type="number" style="font-size: 0.750rem;" min="0" [(ngModel)]="manualNumberEnd"
+              [ngModelOptions]="{standalone: true}" placeholder="manual number end">
           </div>
 
         </div>
@@ -658,8 +656,7 @@
               (click)="checkManualNumRange()">Update</button>
           </div>
           <div class="col-md-3">
-            <button type="button" class="btn btn-secondary" aria-label="Close"
-              (click)="d('Cross click')">Close</button>
+            <button type="button" class="btn btn-secondary" aria-label="Close" (click)="d('Cross click')">Close</button>
           </div>
         </div>
       </form>
@@ -734,5 +731,69 @@
     </div>
   </ng-template>
 
+  <ng-template #addVehicle let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h6 class="modal-title">
+        <strong>
+          Add Vehicle for {{companyNameAddVehicle}}
+        </strong>
+      </h6>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="addVehicleForm">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="table-responsive mb-0">
+              <table class="table table-centered table-nowrap">
+                <thead class="table-light">
+                  <tr>
+                    <th>Sr No</th>
+                    <th>Vehicle Number</th>
+                    <th>Action</th>
+
+                  </tr>
+                </thead>
+                <tbody *ngFor="let charges of addVehicleData; let i = index;">
+                  <tr>
+                    <td>
+                      {{i+1}}
+                    </td>
+
+                    <td>
+                      <input type="text" class="form-control" [(ngModel)]="charges.vehicleNumber"
+                        [ngModelOptions]="{standalone: true}" placeholder="Enter Vehicle no."
+                        oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                        (blur)="setVehicleNumber()" />
+                    </td>
+
+                    <td>
+                      <button type="submit" class="btn btn-success btn-sm" (click)="addVehicleForCr()">
+                        +
+                      </button>
+
+                      &nbsp;&nbsp;
+                      <button *ngIf="i != 0" type="cancel" class="close btn-danger" aria-label="Close"
+                        (click)="removeVehicle(i)"><span aria-hidden="true">&times;</span></button>
+                    </td>
+
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="row justify-content-center">
+
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary" (click)="addFuelCreditVehicle()">Submit</button>
+        </div>&nbsp;&nbsp;
+        <div class="col-md-3">
+          <button type="button" class="btn btn-secondary" aria-label="Close" (click)="d('Cross click')">Close</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
   <!-- end::Table container -->
 </div>

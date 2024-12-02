@@ -96,6 +96,7 @@ export class Modal3Component {
   FuelVeelsVendorID: any;
   fuelDealerId: any;
   personId: any;
+  dealerCorporateId: any;
 
   constructor(
     private post: ModalsService,
@@ -110,13 +111,17 @@ export class Modal3Component {
 
   ngOnInit() {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+    this.fuelDealerId = dealerData.fuelDealerId;
+    this.dealerCorporateId = dealerData.corporateId;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     this.accessGroupId = element.accessGroupId;
     this.managerVPPersonId = element.veelsPlusId;
     this.managerPersonId = element.personId;
     this.managerName = element.firstName + " " + element.lastName;
     this.personId = element.personId
-    this.getCorporateById(this.dealerLoginVPId);
+    // this.getCorporateById(this.dealerLoginVPId);
+    this.getfuelDealerIdByCorporateId(this.dealerCorporateId)
     this.cd.detectChanges()
   }
 
@@ -143,9 +148,9 @@ export class Modal3Component {
   }
 
   // getfuelDealerIdByDealerCorporateId
-  getfuelDealerIdByCorporateId(loginSQLCorporateId: any) {
+  getfuelDealerIdByCorporateId(dealerCorporateId: any) {
     let data = {
-      corporateId: loginSQLCorporateId
+      corporateId: dealerCorporateId
     }
     this.post.getfuelDealerIdByCorporateIdPOST(data)
       .subscribe(res => {

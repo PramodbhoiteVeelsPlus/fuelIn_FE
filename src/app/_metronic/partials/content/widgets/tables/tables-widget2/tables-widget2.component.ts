@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, Injectable } from '@angular/core';
 import { NgbDateAdapter, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { WidgetService } from '../../widgets.services';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -66,10 +67,12 @@ export class TablesWidget2Component {
   loginSQLCorporateId: any;
   fuelDealerId: any;
   infraDetails: any = [];
+  dealerCorporateId: any;
 
   constructor(
     private post: WidgetService,
     private spinner: NgxSpinnerService,
+    private router: Router,
     config: NgbDatepickerConfig,
     public cd: ChangeDetectorRef,) {
     const currentDate = new Date();
@@ -80,6 +83,9 @@ export class TablesWidget2Component {
 
   ngOnInit() {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+    this.fuelDealerId = dealerData.fuelDealerId;
+    this.dealerCorporateId = dealerData.corporateId;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     if (element.accessGroupId == 12 || element.accessGroupId == 14 || element.accessGroupId == 19 || element.accessGroupId == 21) {
       this.dealerAccess = true
@@ -87,12 +93,14 @@ export class TablesWidget2Component {
         this.liteAccess = true
       }
     }
-    this.getCorporateById(this.dealerLoginVPId);
+    // this.getCorporateById(this.dealerLoginVPId);
+    this.getfuelDealerIdByCorporateId(this.dealerCorporateId)
     this.cd.detectChanges()
   }
 
   addInfra() {
-    alert("View Infra Page")
+    this.router.navigate(['/pump/infra']);
+    this.cd.detectChanges()
   }
 
   // get Corporate DetailsBy VP-Id
@@ -117,9 +125,9 @@ export class TablesWidget2Component {
   }
 
   // getfuelDealerIdByDealerCorporateId
-  getfuelDealerIdByCorporateId(loginSQLCorporateId: any) {
+  getfuelDealerIdByCorporateId(dealerCorporateId: any) {
     let data = {
-      corporateId: loginSQLCorporateId
+      corporateId: dealerCorporateId
     }
     this.post.getfuelDealerIdByCorporateIdPOST(data)
       .subscribe(res => {

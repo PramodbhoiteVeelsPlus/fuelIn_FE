@@ -96,6 +96,7 @@ export class TablesWidget5Component implements OnInit {
   });
   bankAccList: any = [];
   bankAccList1: any = [];
+  dealerCorporateId: any;
 
   constructor(
     private post: WidgetService,
@@ -111,9 +112,13 @@ export class TablesWidget5Component implements OnInit {
 
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+    this.fuelDealerId = dealerData.fuelDealerId;
+    this.dealerCorporateId = dealerData.corporateId;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     this.vpPersonId = element.veelsPlusId
-    this.getCorporateById(this.dealerLoginVPId);
+    // this.getCorporateById(this.dealerLoginVPId);
+    this.getfuelDealerIdByCorporateId(this.dealerCorporateId)
     this.cd.detectChanges()
   }
 
@@ -138,9 +143,9 @@ export class TablesWidget5Component implements OnInit {
   }
 
   // getfuelDealerIdByDealerCorporateId
-  getfuelDealerIdByCorporateId(loginSQLCorporateId: any) {
+  getfuelDealerIdByCorporateId(dealerCorporateId: any) {
     let data = {
-      corporateId: loginSQLCorporateId
+      corporateId: dealerCorporateId
     }
     this.post.getfuelDealerIdByCorporateIdPOST(data)
       .subscribe(res => {

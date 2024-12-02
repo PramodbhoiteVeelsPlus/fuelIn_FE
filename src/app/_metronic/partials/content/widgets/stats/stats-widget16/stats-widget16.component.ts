@@ -158,6 +158,7 @@ export class StatsWidget16Component {
   isCRQUANTITY: boolean;
   isQUANTITY: boolean;
   fleetStatus: any;
+  dealerCorporateId: any;
 
   constructor(
     private modalService: NgbModal,
@@ -171,6 +172,9 @@ export class StatsWidget16Component {
 
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem("element") || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+    this.fuelDealerId = dealerData.fuelDealerId;
+    this.dealerCorporateId = dealerData.corporateId;
     this.dealerMobile = element.phone1;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     this.managerVPPersonId = element.veelsPlusId
@@ -178,41 +182,45 @@ export class StatsWidget16Component {
     this.managerName = element.firstName + ' ' + element.lastName
     this.acceesGroup = element.accessGroupId;
     this.requestTransporter.controls["requestType"].setValue("showamount");
-    this.getCorporateById(this.dealerLoginVPId);
+    this.requestTransporter.controls["requestType"].setValue("showamount"); 
+    this.requestTransporter.controls["estimatedRefuelDate"].setValue(this.todayDate);
+    this.requestTransporter.controls["priceDate"].setValue(this.todayDate);
+    this.getfuelDealerIdByCorporateId(this.dealerCorporateId);
+    // this.getCorporateById(this.dealerLoginVPId);
     this.cd.detectChanges()
   }
 
 
   // get Corporate DetailsBy VP-Id
-  getCorporateById(dealerLoginVPId: any) {
-    let data = {
-      veelsplusCorporateId: dealerLoginVPId
-    }
-    this.post.getBranchVeelsplusId(data)
-      .subscribe(res => {
-        if (res.status == "OK") {
-          if (res.data.length) {
-            this.customerId = res.data[0].customerId;
-            // this.headerName1 = res.data[0].companyName;
-            // this.headerName2 = res.data[0].address1 + ', ' + res.data[0].address2 + ', ' + res.data[0].city;
-            // this.headerName3 = res.data[0].state + '-' + res.data[0].pin + '  ' + "GST: " + res.data[0].GSTNumber;
-            this.loginSQLCorporateId = res.data[0].corporateId;
-            this.getfuelDealerIdByCorporateId(this.loginSQLCorporateId);
-            // this.searchDealerBycustomerId(this.customerId)
-            this.cd.detectChanges()
-          }
-          else {
-            alert("Getting Error..! Please Logout & Login again..!")
-            this.cd.detectChanges()
-          }
-        }
-      })
-  }
+  // getCorporateById(dealerLoginVPId: any) {
+  //   let data = {
+  //     veelsplusCorporateId: dealerLoginVPId
+  //   }
+  //   this.post.getBranchVeelsplusId(data)
+  //     .subscribe(res => {
+  //       if (res.status == "OK") {
+  //         if (res.data.length) {
+  //           this.customerId = res.data[0].customerId;
+  //           // this.headerName1 = res.data[0].companyName;
+  //           // this.headerName2 = res.data[0].address1 + ', ' + res.data[0].address2 + ', ' + res.data[0].city;
+  //           // this.headerName3 = res.data[0].state + '-' + res.data[0].pin + '  ' + "GST: " + res.data[0].GSTNumber;
+  //           this.loginSQLCorporateId = res.data[0].corporateId;
+  //           this.getfuelDealerIdByCorporateId(this.loginSQLCorporateId);
+  //           // this.searchDealerBycustomerId(this.customerId)
+  //           this.cd.detectChanges()
+  //         }
+  //         else {
+  //           alert("Getting Error..! Please Logout & Login again..!")
+  //           this.cd.detectChanges()
+  //         }
+  //       }
+  //     })
+  // }
 
   // getfuelDealerIdByDealerCorporateId
-  getfuelDealerIdByCorporateId(loginSQLCorporateId: any) {
+  getfuelDealerIdByCorporateId(dealerCorporateId: any) {
     let data = {
-      corporateId: loginSQLCorporateId
+      corporateId: dealerCorporateId
     }
     this.post.getfuelDealerIdByCorporateIdPOST(data)
       .subscribe(res => {
