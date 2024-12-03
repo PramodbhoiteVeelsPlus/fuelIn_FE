@@ -62,6 +62,9 @@ export class PumpTablesService {
     private getFTVehicleListLQURL = this.baseURL + 'fastag/getFTVehicleListLQ'; 
     private getVehicleWiseFtTransactionsURL = this.baseURL + 'fastag/getVehicleWiseFtTransactions'; 
     private getVehicleWiseFtTransactionsLQURL = this.baseURL + 'fastag/getVehicleWiseFtTransactionsLQ';
+    private getShiftOngoingOPENDetailsByDealerIdURL = this.baseURL + 'shiftList/getShiftOngoingOPENDetailsByDealerId';
+    private getTotalMeterSalesAndTallyEnteryURL = this.baseURL + 'shiftList/getTotalMeterSalesAndTallyEntery';
+    private getCRSALESProductWiseDSRURL = this.baseURL + 'shiftList/getCRSALESProductWiseDSR';
 
     
 
@@ -406,6 +409,36 @@ export class PumpTablesService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.getVehicleWiseFtTransactionsLQURL, body, {
+            headers: headers
+        })
+    }
+    
+    // getShiftOngoingOPENDetailsByDealerIdURL
+    getShiftOngoingOPENDetailsByDealerIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getShiftOngoingOPENDetailsByDealerIdURL, body, {
+            headers: headers
+        })
+    }
+    
+    // getTotalMeterSalesAndTallyEnteryURL
+    getTotalMeterSalesAndTallyEnteryPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getTotalMeterSalesAndTallyEnteryURL, body, {
+            headers: headers
+        })
+    }
+    
+    // getCRSALESProductWiseDSRURL
+    getCRSALESProductWiseDSRPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getCRSALESProductWiseDSRURL, body, {
             headers: headers
         })
     }
