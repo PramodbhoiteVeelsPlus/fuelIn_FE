@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Injectable, Input, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Injectable, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { ModalConfig } from '../modal.config';
 import { NgbDateAdapter, NgbDateParserFormatter, NgbDatepickerConfig, NgbDateStruct, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -62,6 +62,7 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   ],
 })
 export class Modal2Component {
+  @Output() closed = new EventEmitter<any>();
   @Input() public modalConfig: ModalConfig;
   @ViewChild('modal') private modalContent: TemplateRef<Modal2Component>;
   private modalRef: NgbModalRef;
@@ -483,26 +484,27 @@ export class Modal2Component {
       state: this.userForm.value.state,
       city: this.userForm.value.city,
     }
-console.log(data)
-    // this.post.fuelStaffRegisterPOST(data).subscribe(result => {
-    //   if (result.status == "OK") {
-    //     alert("Staff Added Successfully!")
-    //     if (this.userForm.value.role == "14" || this.userForm.value.role == "21") {
-    //       this.addDealerStaffAccess(result.personId)
-    //     }
-    //     this.spinner.hide();
-    //     // this.getStaffDetails(this.fuelDealerId)
-    //     this.userForm.reset();
-    //     this.modalReference.close('close')
-    //     this.userForm.controls["state"].setValue(this.state);
-    //     this.userForm.controls["city"].setValue(this.city);
-    //     this.router.navigate(['/pumpDashboard'])
-    //   } else {
-    //     alert("Error to Add Staff!")
-    //     this.spinner.hide();
-    //     this.modalReference.close('close')
-    //   }
-    // })
+    console.log(data)
+    this.post.fuelStaffRegisterPOST(data).subscribe(result => {
+      if (result.status == "OK") {
+        alert("Staff Added Successfully!")
+        this.closed.emit();
+        if (this.userForm.value.role == "14" || this.userForm.value.role == "21") {
+          this.addDealerStaffAccess(result.personId)
+        }
+        this.spinner.hide();
+        // this.getStaffDetails(this.fuelDealerId)
+        this.userForm.reset();
+        this.modalReference.close('close')
+        this.userForm.controls["state"].setValue(this.state);
+        this.userForm.controls["city"].setValue(this.city);
+        this.router.navigate(['/pumpDashboard'])
+      } else {
+        alert("Error to Add Staff!")
+        this.spinner.hide();
+        this.modalReference.close('close')
+      }
+    })
   }
 
   addDealerStaffAccess(staffPersonId: any) {

@@ -132,7 +132,7 @@
       <app-keenicon name="plus" class="fs-3"></app-keenicon>
       New POS
     </a>
-    <app-modal4 #modal [modalConfig]="modalConfig">
+    <app-modal4 #modal [modalConfig]="modalConfig" (closed)="refreshData()">
       Modal body html
     </app-modal4>
   </div>

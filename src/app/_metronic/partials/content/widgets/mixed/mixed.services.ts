@@ -62,6 +62,10 @@ export class MixedService {
     private getPosDetailsURL = this.baseURL + 'posDetails/getPosDetails';
     private getShiftTimeDetailURL = this.baseURL + 'posDetails/getFuelShiftTimeDetails'; 
     private getPosTerminalURL = this.baseURL + 'posDetails/getPosTerminals'; 
+    private getFuelStaffIdByfuelDealerIdURL = this.baseURL + 'fuelStaff/getFuelStaffIdByfuelDealerId';
+    private addCreditAdvanceReqByDealerForAllURL = this.baseURL + 'fuelLube/addCreditAdvanceReqByDealerForAll';
+    private updateLastCRDateByMapIdURL = this.baseURL + 'fuelVendor/updateLastCRDateByMapId'; 
+    private updateLastCRDateMapIdWiseURL = this.baseURL + 'fuelVendor/updateLastCRDateMapIdWise';
 
 
     setHeader() {
@@ -399,4 +403,45 @@ export class MixedService {
     lrOldInvoice5(oldInvoice5: any) {
         this.oldInvoice5 = oldInvoice5
     }
+
+    // getFuelStaffIdByfuelDealerIdURL
+    getFuelStaffIdByfuelDealerIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFuelStaffIdByfuelDealerIdURL, body, {
+            headers: headers
+        })
+    }
+    
+    // addCreditAdvanceReqByDealerForAllURL
+    addCreditAdvanceReqByDealerForAllPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addCreditAdvanceReqByDealerForAllURL, body, {
+            headers: headers
+        })
+    }
+    
+    // updateLastCRDateByMapIdURL
+    updateLastCRDateByMapIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateLastCRDateByMapIdURL, body, {
+            headers: headers
+        })
+    }
+    
+    // updateLastCRDateMapIdWiseURL
+    updateLastCRDateMapIdWisePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateLastCRDateMapIdWiseURL, body, {
+            headers: headers
+        })
+    }
+
 }

@@ -80,6 +80,14 @@ export class TablesWidget30Component {
     phoneNumber: new FormControl('', Validators.required)
   });
 
+  billingForm = new FormGroup({
+    fuelDealerCustomerMapIdForBilling: new FormControl('', Validators.required),
+    billingStartDate: new FormControl('', Validators.required),
+    billingEndDate: new FormControl('', Validators.required),
+    personName: new FormControl('', Validators.required),
+    personMobile: new FormControl('', Validators.required),
+  });
+  
   dealerLoginVPId: any;
   loginSQLCorporateId: any;
   fuelDealerId: any;
@@ -123,7 +131,6 @@ export class TablesWidget30Component {
   previousOutstandForModal: any;
   pendingOutstanding: any;
   companyNameOust: any;
-  billingForm: any;
   fuelDealerCustomerMapId: any;
   manualNumberStart: any;
   manualNumberEnd: any;

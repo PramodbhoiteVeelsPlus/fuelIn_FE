@@ -5,8 +5,140 @@
 <span class="h-25px app-sidebar-logo-default" style="font-size: 20px;padding-top: 26px;">
   
 {{city}}</span>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button *ngIf="accessGroup=='12' || accessGroup=='14'" class="btn btn-danger blinking-btn" style="height: 40px"
+ngbTooltip="Reffer & Earn" placement="bottom" (click)="openRefferalModal(refer)">
+ Refer & Earn
+</button>
+
 </div>
 
+<ng-template #refer let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">
+      <label>
+        <h5><b> Refer other Dealers and get ₹ 3000.00 *</b> </h5> <br>
+        <h6> *Ask your friends to signup and make an initial payment. Once done,
+              you earn ₹ 3000.00 for 1 refer, for 2 refers earn ₹ 8000.00  and 
+              for 3 refers earn ₹ 15000.00. <br>
+          <i>T&C apply*</i>
+        </h6>
+      </label>
+    </h4>
+    <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="referForm">
+      <div class="row">
+        <div class="col-md-3">
+          <label class="labelNewMargin"><b>Dealer Name</b><span style="color: red;">*</span></label>
+        </div>
+        <div class="col-md-9">
+          <input type="text" class="form-control" placeholder="Enter Dealer Name" formControlName="dealerName">
+        </div>
+      </div><br>
+      <div class="row">
+        <div class="col-md-3">
+          <label class="labelNewMargin"><b>Dealer Petrol Pump</b><span style="color: red;">*</span></label>
+        </div>
+        <div class="col-md-9">
+          <input type="text" class="form-control" placeholder="Enter Petrol Pump" formControlName="petrolPump">
+        </div>
+      </div><br>
+      <div class="row">
+        <div class="col-md-3">
+          <label class="labelNewMargin"><b>Dealer Mobile</b><span style="color: red;">*</span></label>
+        </div>
+        <div class="col-md-9">
+          <input type="number" class="form-control" formControlName="dealerMobile" minlength="10"
+            onkeypress="return this.value.length < 10;"
+            oninput="if(this.value.length=10)" placeholder="Enter 10 Digits Mobile Number" (blur)="checkPhone()"
+            required>
+          <!-- <div *ngIf="(userMobile.invalid && userMobile.touched) || userMobile.dirty">
+            <small *ngIf="userMobile.errors?.required" class="text-danger">Mobile Number is required</small>
+
+            <small *ngIf="userMobile.errors?.pattern" class="text-danger">
+              Please provide a valid 10 Digit Mobile Number</small>
+          </div> -->
+        </div>
+      </div><br>
+      <div class="row">
+        <div class="col-md-3">
+          <label class="labelNewMargin"><b>Dealer City</b></label>
+        </div>
+        <div class="col-md-9">
+          <input type="text" class="form-control" placeholder="Enter Dealer City" formControlName="dealerCity">
+        </div>
+      </div><br>
+      <div class="row">
+        <div class="col-md-3">
+          <label class="labelNewMargin"><b>Dealer State</b></label>
+        </div>
+        <div class="col-md-9">
+          <select class="form-control" formControlName="dealerState" required placeholder="Select State">
+            <option value="">Select State</option>
+            <option value="ANDHRA PRADESH">Andhra Pradesh</option>
+            <option value="ARUNACHAL PRADESH">Arunachal Pradesh</option>
+            <option value="ASSAM">Assam</option>
+            <option value="BIHAR">Bihar</option>
+            <option value="CHHATTISGARH">Chhattisgarh</option>
+            <option value="GOA">Goa</option>
+            <option value="GUJARAT">Gujarat</option>
+            <option value="HARYANA">Haryana</option>
+            <option value="HIMACHAL PRADESH">Himachal Pradesh</option>
+            <option value="JHARKHAND">Jharkhand</option>
+            <option value="KARNATAKA">Karnataka</option>
+            <option value="KERALA">Kerala</option>
+            <option value="MADHYA PRADESH">Madhya Pradesh</option>
+            <option value="MAHARASHTRA">Maharashtra</option>
+            <option value="MANIPUR">Manipur</option>
+            <option value="MEGHALAYA">Meghalaya</option>
+            <option value="MIZORAM">Mizoram</option>
+            <option value="NAGALAND">Nagaland</option>
+            <option value="ODISHA">Odisha</option>
+            <option value="PUNJAB">Punjab</option>
+            <option value="RAJASTHAN">Rajasthan</option>
+            <option value="SIKKIM">Sikkim</option>
+            <option value="TAMIL NADU">Tamil Nadu</option>
+            <option value="TELANGANA">Telangana</option>
+            <option value="TRIPURA">Tripura</option>
+            <option value="UTTAR PRADESH">Uttar Pradesh</option>
+            <option value="UTTARAKHAND">Uttarakhand</option>
+            <option value="WEST BENGAL">West Bengal</option>
+            <option value="ANDAMAN AND NICOBAR ISLANDS">Andaman and Nicobar Islands</option>
+            <option value="CHANDIGARH">Chandigarh</option>
+            <option value="DADRA AND NAGAR HAVELI AND DAMAN AND DIU">Dadra and Nagar Haveli
+              and Daman and Diu</option>
+            <option value="DELHI">Delhi</option>
+            <option value="LAKSHADWEEP">Lakshadweep</option>
+            <option value="PUDUCHERRY">Puducherry (Pondicherry)</option>
+            <option value="JAMMU AND KASHMIR">Jammu and Kashmir</option>
+            <option value="LADAKH">Ladakh</option>
+          </select>
+        </div>
+      </div><br>
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-2">
+          <button class="btn btn-success" type="submit" (click)="submitRefferal()">
+            Submit
+          </button>
+        </div>
+        &nbsp;&nbsp;&nbsp;
+        <div class="col-md-4">
+          <button class="btn btn-danger" type="submit" (click)="closeRefModal()">
+            Cancel
+          </button>
+        </div>
+      </div><br>
+
+    </form>
+  </div>
+</ng-template>
 <!-- <div *ngIf="isAdmin">
   <span class="h-25px app-sidebar-logo-default" style="font-size: 30px;padding:12px 20px;">
     VEELSPLUS CORE 

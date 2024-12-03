@@ -155,6 +155,7 @@ export class StatsService {
     private getCorporateByIdUrl = this.baseURL + 'corporate/getCorporateById';
     private updateVeelsPlusCorporateIdwithPermURL = this.baseURL + 'register/updateVeelsPlusCorporateIdwithPerm';
     private addNewCustDealerReqURL = this.baseURL + 'fuelDealerCustMap/addNewCustDealerReq';
+    private addReferralURL = this.baseURL + 'referral/addReferral'; 
 
 
 
@@ -1357,6 +1358,16 @@ export class StatsService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.addNewCustDealerReqURL, body, {
+            headers: headers
+        })
+    }
+
+    // addReferralURL
+    addReferralPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addReferralURL, body, {
             headers: headers
         })
     }

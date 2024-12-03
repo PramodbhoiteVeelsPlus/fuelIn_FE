@@ -162,8 +162,7 @@ export class ViewAccountComponent {
     .subscribe(res => {
       if(res.status == "OK"){
         res.data.map((res: { netOS: any; })=>{      
-            this.crOutstanding2 = this.crOutstanding2 + (Number(res.netOS))     
-            console.log("this.crOutstanding2", this.crOutstanding2)
+            this.crOutstanding2 = this.crOutstanding2 + (Number(res.netOS))  
           if((Number(res.netOS)) < 0){ 
             this.advanceAmt = this.advanceAmt + (Number(res.netOS)) 
           } 

@@ -101,7 +101,7 @@
               </div>
             </div>
 
-            <button class="btn btn-primary" (click)="nextStep()" awNextStep>Next</button>
+            <button class="btn btn-primary" style="margin-left: 90%" (click)="nextStep()" awNextStep>Next</button>
           </form>
           <!-- </aw-wizard-step> -->
 
@@ -262,12 +262,20 @@
               </div>
             </div>
 
-            <button class="btn btn-primary" (click)="prevStep()">Previous</button>
-            <div *ngIf="isCarrierFound" class="col-md-3">
-              <button class="btn btn-primary" (click)="submitNewCorp()">Next</button>
-            </div>
-            <div *ngIf="!isCarrierFound" class="col-md-3">
-              <button class="btn btn-primary" (click)="submit()">Next</button>
+            <div class="row mb-3">
+              <div class="col-md-3">
+                <button class="btn btn-primary" (click)="prevStep()">Previous</button>
+              </div>
+              <div style="margin-left: 90%" class="col-md-3">
+                <span *ngIf="isCarrierFound">
+                  <button class="btn btn-primary" (click)="submitNewCorp()">Next</button>
+                </span>
+                <!-- </div> -->
+                <!-- <div *ngIf="!isCarrierFound" style="margin-left: 90%" class="col-md-3"> -->
+                <span *ngIf="!isCarrierFound">
+                  <button class="btn btn-primary" (click)="submit()">Next</button>
+                </span>
+              </div>
             </div>
           </form>
           <!-- <ul class="list-inline wizard mb-0">

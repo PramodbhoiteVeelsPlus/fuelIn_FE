@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Injectable, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Injectable, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgbDateAdapter, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -64,6 +64,7 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 })
 
 export class MixedWidget3Component implements OnInit {
+  @ViewChild("myinput") myInputField: ElementRef;
   requestTransporterAdvance = new FormGroup({
     advanceManualCrAmount: new FormControl(),
     advanceName: new FormControl(),
@@ -128,6 +129,16 @@ export class MixedWidget3Component implements OnInit {
   combineManualNumber: string;
   indexFuelAdvance: number;
   todayDate = moment(new Date()).format("DD-MM-YYYY");
+  closeRequestDate = moment(new Date()).format("DD-MM-YYYY");
+  fuelDealerStaffId: any;
+  isBalance1: boolean = false;
+  isCRQUANTITY: boolean = false;
+  isQUANTITY: boolean = false;
+  autoManualNumber: any;
+  isTable: boolean;
+  isTable2: boolean;
+  isTable1: boolean;
+  isVehicleViewed: boolean;
 
   constructor(
     private post: MixedService,
@@ -417,5 +428,320 @@ removeFormRequestAdvance(i: number,removeTable: any) {
 removeAdvanceIndex() {
   this.CreditRequestDataAdvance.splice(this.indexFuelAdvance, 1);
   this.countAdvance = this.countAdvance - 1;
+}
+
+getFuelStaffIdByfuelDealerId(fuelDealerId: any) {
+  let data = {
+    fuelDealerId: fuelDealerId,
+  }
+  this.post.getFuelStaffIdByfuelDealerIdPOST(data)
+    .subscribe(res => {
+      if (res) {
+        this.fuelDealerStaffId = res.data[0].fuelDealerStaffId;
+      }
+      else {
+
+      }
+    })
+
+}
+
+submitByDealerForAdvance() {
+  if (this.acceesGroup == 12 || this.acceesGroup == 19) {
+    this.spinner.show()
+
+    if (this.requestTransporterAdvance.value.estimatedRefuelDate) {
+      if (this.requestTransporterAdvance.value.advanceName) {
+
+        if (this.fuelDealerCorpMapIdNew) {
+          if (this.requestTransporterAdvance.value.advanceManualCrAmount) {
+            if (this.requestTransporterAdvance.value.advanceAmount) {
+              let data = {
+                advanceAllData:this.CreditRequestDataAdvance,
+                advanceFuelDealerCustomerMapId: this.fuelDealerCorpMapIdNew,
+                estimatedRefuelDate: moment(this.requestTransporterAdvance.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+                fuelDealerId: this.fuelDealerSQLId,
+                transDateTime: moment(this.closeRequestDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+                advanceCreatedAt: moment(this.todayDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+                personId: this.personId,
+                fuelDealerStaffId: this.fuelDealerStaffId,
+                autoManualStatus:this.autoManualStatus
+              }
+              this.post.addCreditAdvanceReqByDealerForAllPOST(data)
+                .subscribe(res => {
+                  if (res.status == "OK") {
+                    alert("Credit Added Sccessfully!");
+                    this.isBalance1 = false;
+                    this.spinner.hide();
+                    this.myInputField.nativeElement.focus();
+                    this.checkDates(this.fuelDealerCorpMapIdNew,moment(this.requestTransporterAdvance.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
+                    this.isCRQUANTITY = false;
+                    this.isQUANTITY = false;
+                    this.CreditRequestDataAdvance = [];
+                    this.countAdvance = 1;
+                    if(this.autoManualStatus == 'TRUE'){
+
+                      this.updateAssignedAutoManualNumber('ADVANCE',res.count)
+                      }else{
+                        this.addFormRequestAdvance()
+                      }
+                    this.requestTransporterAdvance.controls["advanceManualCrAmount"].setValue("");
+                    this.requestTransporterAdvance.controls["advanceName"].setValue("");
+                    this.requestTransporterAdvance.controls["advanceMobile"].setValue("");
+                    this.requestTransporterAdvance.controls["advanceAmount"].setValue("");
+                  } else {
+                    alert("Error to Created Request!")
+                    this.isBalance1 = false;
+                    this.spinner.hide();
+                  }
+                });
+            } else {
+              alert("Please Enter Amount!")
+              this.spinner.hide();
+            }
+
+          } else {
+            alert("Please Enter Bill / Ref Number!")
+            this.spinner.hide();
+          }
+        }
+        else {
+          alert("Please Select customer!")
+          this.spinner.hide();
+        }
+
+      } else {
+        alert("Please Enter Details!")
+        this.spinner.hide();
+      }
+
+    }
+    else {
+      alert("Please Select Date!")
+      this.spinner.hide();
+    }
+  } else {
+    if (this.acceesGroup == 14 || this.acceesGroup == 21) {
+      this.spinner.show()
+
+      if (this.requestTransporterAdvance.value.estimatedRefuelDate) {
+        if (this.requestTransporterAdvance.value.advanceName) {
+
+          if (this.fuelDealerCorpMapIdNew) {
+            if (this.requestTransporterAdvance.value.advanceManualCrAmount) {
+              if (this.requestTransporterAdvance.value.advanceAmount) {
+                let data = {
+                  advanceAllData: this.CreditRequestDataAdvance,
+                  advanceFuelDealerCustomerMapId: this.fuelDealerCorpMapIdNew,
+                  estimatedRefuelDate: moment(this.requestTransporterAdvance.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+                  fuelDealerId: this.fuelDealerSQLId,
+                  transDateTime: moment(this.closeRequestDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+                  advanceCreatedAt: moment(this.todayDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+                  personId: this.personId,
+                  managerVPPersonId: this.managerVPPersonId,
+                  managerPersonId: this.managerPersonId,
+                  managerName:this.managerName,
+                  fuelDealerStaffId: this.fuelDealerStaffId,
+                  autoManualStatus:this.autoManualStatus
+                }
+                this.post.addCreditAdvanceReqByDealerForAllPOST(data)
+                  .subscribe(res => {
+                    if (res.status == "OK") {
+                      alert("Credit Added Sccessfully!");
+                      this.isBalance1 = false;
+                      this.spinner.hide();
+                      this.myInputField.nativeElement.focus();
+                      this.checkDates(this.fuelDealerCorpMapIdNew,moment(this.requestTransporterAdvance.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
+                      this.isCRQUANTITY = false;
+                      this.isQUANTITY = false;
+                      this.CreditRequestDataAdvance = [];
+                      this.countAdvance = 1;
+                      if(this.autoManualStatus == 'TRUE'){
+
+                        this.updateAssignedAutoManualNumber('ADVANCE',res.count)
+                        }else{
+                          this.addFormRequestAdvance()
+                        }
+                      this.requestTransporterAdvance.controls["advanceManualCrAmount"].setValue("");
+                      this.requestTransporterAdvance.controls["advanceName"].setValue("");
+                      this.requestTransporterAdvance.controls["advanceMobile"].setValue("");
+                      this.requestTransporterAdvance.controls["advanceAmount"].setValue("");
+                    } else {
+                      alert("Error to Created Request!")
+                      this.isBalance1 = false;
+                      this.spinner.hide();
+                    }
+                  });
+              } else {
+                alert("Please Enter Amount!")
+                this.spinner.hide();
+              }
+
+            } else {
+              alert("Please Enter Bill / Ref Number!")
+              this.spinner.hide();
+            }
+          }
+          else {
+            alert("Please Select customer!")
+            this.spinner.hide();
+          }
+
+        } else {
+          alert("Please Enter Details!")
+          this.spinner.hide();
+        }
+
+      }
+      else {
+        alert("Please Select Date!")
+        this.spinner.hide();
+      }
+    } else {
+
+    }
+
+  }
+
+}
+
+updateAssignedAutoManualNumber(status: string,count: any){
+   if (status =="ADVANCE") {
+    let data = {
+      fuelDealerId:this.fuelDealerId,
+      assignedAutoManualNumber:Number(this.autoManualNumberAdvance) + Number(count),
+      status:status
+    }
+    this.post.updateAssignedAutoManualNumberPOST(data)
+    .subscribe(res=>{
+    // this.getfuelDealerIdByCorporateIdForCalling(status)
+  
+    })
+    
+  }
+  else {
+    
+  }
+  
+    }
+
+
+checkDates(mapId: any,date: any){ 
+  if(this.islastCRDate = true){       
+ this.spinner.show();
+  var g1 = new Date(date);
+ var g2 = new Date(this.lastCRDate);
+ if (g1.getTime() >= g2.getTime()){
+     const oneDay = 24 * 60 * 60 * 1000
+     const diffDays = Math.round(Math.abs((g1.getTime() - g2.getTime()) / oneDay))
+     this.spinner.hide();
+     this.fuelDealerCorpMapIdNew = ''
+     this.isSelected1 = false
+     this.requestTransporter1.controls["selectedCorp"].setValue('');
+     this.isTable = false
+     this.isTable1 = false
+     this.isTable2 = false
+     this.lastCRDate = ''
+     this.isVehicleViewed = false
+   }
+ else {        
+     let data={
+       mapId:mapId,
+       date:date
+     }
+     this.post.updateLastCRDateByMapIdPOST(data)
+     .subscribe(res => {
+         if (res.status == 'OK') {
+           this.spinner.hide();
+           this.updateDateByMapId(mapId)
+           this.isSelected1 = false
+           this.requestTransporter1.controls["selectedCorp"].setValue('');
+           this.isTable = false
+           this.isTable1 = false
+           this.isTable2 = false
+           this.lastCRDate = ''
+           this.isVehicleViewed = false
+         } else {
+           this.spinner.hide();
+           this.updateDateByMapId(mapId)
+           this.isSelected1 = false
+           this.requestTransporter1.controls["selectedCorp"].setValue('');
+           this.isTable = false
+           this.isTable1 = false
+           this.isTable2 = false
+           this.lastCRDate = ''
+           this.isVehicleViewed = false
+         }
+       });
+  } 
+ }else{
+   this.spinner.show();
+   let data={
+     mapId:mapId,
+     date:date
+   }
+   this.post.updateLastCRDateByMapIdPOST(data)
+   .subscribe(res => {
+       if (res.status == 'OK') {
+         this.updateDateByMapId(mapId)
+         this.spinner.hide();           
+           this.isSelected1 = false
+           this.requestTransporter1.controls["selectedCorp"].setValue('');
+           this.isTable = false
+           this.isTable1 = false
+           this.isTable2 = false
+           this.lastCRDate = ''
+           this.isVehicleViewed = false
+       } else {
+         this.spinner.hide();
+         this.updateDateByMapId(mapId)
+           this.isSelected1 = false
+           this.requestTransporter1.controls["selectedCorp"].setValue('');
+           this.isTable = false
+           this.isTable1 = false
+           this.isTable2 = false
+           this.lastCRDate = ''
+           this.isVehicleViewed = false
+       }
+     });
+ }
+
+}
+
+
+updateDateByMapId(fuelDealerCustomMapId: any){
+  let data1 = {
+    mapId:fuelDealerCustomMapId
+  }
+  this.post.updateLastCRDateMapIdWisePOST(data1)
+  .subscribe((res) => {
+    if (res.status == 'OK') {
+      this.fuelDealerCorpMapIdNew = ''
+    }else{
+      this.fuelDealerCorpMapIdNew = ''
+    }
+  })
+}
+
+closeModal() {
+  this.personPhone1 = '';
+  this.personName = '';
+  this.dealerLocation = '';
+  this.dealerName = '';
+  this.requestTransporter1.controls["selectedCorp"].setValue('');
+  this.CreditRequestDataAdvance.length = 0;
+
+  this.count = 1;
+  this.isSelected1 = false;
+  this.addFormRequestAdvance();
+  this.isTable = false;
+  this.isTable1 = false;
+  this.isTable2 = false;
+  this.CreditRequestAdvance.advanceAmount = '';
+  this.CreditRequestAdvance.advanceManualCrAmount = '';
+  this.CreditRequestAdvance.advanceMobile = '';
+  this.CreditRequestAdvance.advanceName = '';
+  this.isVehicleViewed = false
+
 }
 }

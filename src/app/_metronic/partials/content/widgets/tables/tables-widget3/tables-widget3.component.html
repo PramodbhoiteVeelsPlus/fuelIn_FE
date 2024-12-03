@@ -110,7 +110,7 @@
       <app-keenicon name="plus" class="fs-3"></app-keenicon>
       New Staff
     </a>
-    <app-modal2 #modal [modalConfig]="modalConfig">
+    <app-modal2 #modal [modalConfig]="modalConfig" (closed)="refreshData()">
       Modal body html
     </app-modal2>
   </div>

@@ -119,6 +119,10 @@ export class TablesWidget3Component implements OnInit {
     return await this.modal2Component.open();
   }
 
+  refreshData() {
+    this.getStaffDetails(this.fuelDealerId);
+  }
+
   // get Corporate DetailsBy VP-Id
   getCorporateById(dealerLoginVPId: any) {
     let data = {

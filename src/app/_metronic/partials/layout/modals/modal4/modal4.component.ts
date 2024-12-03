@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { ModalConfig } from '../modal.config';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -10,6 +10,7 @@ import { ModalsService } from '../modals.services';
   templateUrl: './modal4.component.html',
 })
 export class Modal4Component {
+  @Output() closed = new EventEmitter<any>();
   @Input() public modalConfig: ModalConfig;
   @ViewChild('modal') private modalContent: TemplateRef<Modal4Component>;
 
@@ -184,6 +185,7 @@ export class Modal4Component {
           this.post.submitTerminalPOST(data).subscribe((result: { status: string; }) => {
             if (result.status == "OK") {
               alert("Terminal Added Successfully")
+              this.closed.emit();
               this.terminal.reset();
               this.terminal.controls['accountDetails'].setValue("")
               this.terminal.controls['terminalType'].setValue("")

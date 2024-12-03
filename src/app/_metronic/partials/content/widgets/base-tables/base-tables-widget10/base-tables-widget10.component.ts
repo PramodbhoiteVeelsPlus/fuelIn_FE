@@ -222,7 +222,28 @@ export class BaseTablesWidget10Component implements OnInit {
     // this.headerName2 = res.data[0].address1+', '+res.data[0].address2+', '+res.data[0].city;
     this.headerName3 = this.state + '-' + this.pin + '  ' + "GST: " + this.GSTNumber;
     this.getFCInvoiceList()
+    this.getFuelCreditRequestCorporateByfuelDealerId(this.fuelDealerId)
     this.cd.detectChanges()
+  }
+
+  getFuelCreditRequestCorporateByfuelDealerId(fuelDealerId: any) {
+    const data = {
+      fuelDealerId: fuelDealerId,
+    };
+    this.post.getFuelCreditRequestCorporateByfuelDealerIdPOST(data)
+      .subscribe((res) => {
+        if (res) {
+          this.allCorporateList = res.data;
+        } else {
+        }
+      });
+    this.post.getFuelCreditRequestPersonListByfuelDealerIdPOST(data)
+      .subscribe((res) => {
+        if (res) {
+          this.personList = res.data;
+        } else {
+        }
+      });
   }
 
   getFCInvoiceList() {

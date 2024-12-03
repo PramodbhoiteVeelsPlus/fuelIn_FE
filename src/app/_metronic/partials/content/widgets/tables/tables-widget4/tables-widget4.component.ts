@@ -131,6 +131,10 @@ export class TablesWidget4Component {
     return await this.modal3Component.open();
   }
 
+  refreshData() {
+    this.getBankDetailsByDealerId(this.fuelDealerId);
+  }
+
   getCorporateById(dealerLoginVPId: any) {
     let data = {
       veelsplusCorporateId: dealerLoginVPId

@@ -4,6 +4,8 @@ import { LayoutType } from '../../../core/configs/config';
 import { LayoutInitService } from '../../../core/layout-init.service';
 import { LayoutService } from '../../../core/layout.service';
 import { StatsService } from 'src/app/_metronic/partials/content/widgets/stats/stats.services';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-header-menu',
@@ -11,6 +13,15 @@ import { StatsService } from 'src/app/_metronic/partials/content/widgets/stats/s
   styleUrls: ['./header-menu.component.scss'],
 })
 export class HeaderMenuComponent implements OnInit {
+
+  referForm = new FormGroup({
+    dealerName:new FormControl(''),
+    petrolPump:new FormControl(''),
+    dealerMobile:new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
+    dealerCity:new FormControl(''),
+    dealerState: new FormControl('', [Validators.required]),   
+  });
+  
   isDealer: boolean = false;
   isTransporter: boolean = false;
   isAdmin: boolean = false;
@@ -19,14 +30,21 @@ export class HeaderMenuComponent implements OnInit {
   phone1: any;
   companyName: any;
   city: any;
+  accessGroup: any;
+  modalRefCancel: any;
+  closeResult: string;
+  spinner: any;
+  fuelDealerId: any;
   constructor(private router: Router, private layout: LayoutService, private layoutInit: LayoutInitService, 
     private post: StatsService,
-    public cd: ChangeDetectorRef,) {}
+    public cd: ChangeDetectorRef,private modalService: NgbModal,) {}
 
   ngOnInit(): void {
     if (JSON.parse(localStorage.getItem('isLoggedin') || '{}') == true) {
       var element = JSON.parse(localStorage.getItem("element") || '{}');
+      this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
       this.veelsplusCorporate = element.veelsPlusCorporateID;
+      this.accessGroup = element.accessGroupId;
       this.getCorporateById(this.veelsplusCorporate)
       if (element.accessGroupId == '7') {
         this.isAdmin = true;
@@ -53,6 +71,69 @@ export class HeaderMenuComponent implements OnInit {
     }
   }
 
+
+  openRefferalModal(refer: any) {
+    this.modalRefCancel = this.modalService.open(refer)
+    this.modalRefCancel.result.then((result: any) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason: any) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });    
+  }
+  
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+  
+  checkPhone() {
+    let data = {
+      phone: this.referForm.value.dealerMobile
+    }
+    this.post.findPhoneNumberPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          alert(res.msg)
+         
+        }
+      })
+  }
+
+  submitRefferal() {
+    this.spinner.show()
+    let data = {
+      dealerId: this.fuelDealerId,
+      companyName: this.referForm.value.petrolPump,
+      ownerName: this.referForm.value.dealerName,
+      mobileNumber: this.referForm.value.dealerMobile,
+      city: this.referForm.value.dealerCity,
+      state: this.referForm.value.dealerState,
+      referralEntryFrom: 'PORTAL'
+    }
+
+    console.log("data", data)
+    this.post.addReferralPOST(data).subscribe(res => {
+      if (res.status == "OK") {
+        alert(res.msg)
+        this.closeRefModal()
+        this.spinner.hide()
+      } else {
+        alert(res.msg)
+        this.spinner.hide()
+      }
+    })
+  }
+
+  closeRefModal(){
+    this.referForm.reset();
+    this.modalRefCancel.close('close')
+  }
+  
   calculateMenuItemCssClass(url: string): string {
     return checkIsActive(this.router.url, url) ? 'active' : '';
   }

@@ -122,6 +122,10 @@ export class TablesWidget5Component implements OnInit {
     this.cd.detectChanges()
   }
 
+  refreshData() {
+    this.getFuelTerminal(this.fuelDealerId);
+  }
+
   getCorporateById(dealerLoginVPId: any) {
     let data = {
       veelsplusCorporateId: dealerLoginVPId

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Injectable, Input, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Injectable, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { ModalConfig } from '../modal.config';
 import { NgbDateAdapter, NgbDateParserFormatter, NgbDatepickerConfig, NgbDateStruct, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
@@ -63,6 +63,7 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 })
 
 export class Modal3Component {
+  @Output() closed = new EventEmitter<any>();
   @Input() public modalConfig: ModalConfig;
   @ViewChild('modal') private modalContent: TemplateRef<Modal3Component>;
 
@@ -222,6 +223,7 @@ export class Modal3Component {
         .subscribe(res=>{
           if (res.status == "OK"){
             alert(res.msg)
+            this.closed.emit();
             this.spinner.hide();
             // this.getBankDetailsByDealerId(this.fuelDealerId)
             this.close();          
