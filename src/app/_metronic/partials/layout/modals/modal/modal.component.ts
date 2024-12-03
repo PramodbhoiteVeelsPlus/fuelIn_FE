@@ -1,10 +1,9 @@
-import { ChangeDetectorRef, Component, Input, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { ModalConfig } from '../modal.config';
 import { NgbDateAdapter, NgbDateParserFormatter, NgbDatepickerConfig, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CustomAdapter, CustomDateParserFormatter } from 'src/app/app-date';
 import moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { WidgetService } from '../../../content/widgets/widgets.services';
 import { ModalsService } from '../modals.services';
 
 @Component({
@@ -16,6 +15,7 @@ import { ModalsService } from '../modals.services';
   ],
 })
 export class ModalComponent {
+  @Output() closed = new EventEmitter<any>();
   @Input() public modalConfig: ModalConfig;
   @ViewChild('modal') private modalContent: TemplateRef<ModalComponent>;
   private modalRef: NgbModalRef;
@@ -55,8 +55,7 @@ export class ModalComponent {
     this.managerVPPersonId = element.veelsPlusId;
     this.managerPersonId = element.personId;
     this.managerName = element.firstName + " " + element.lastName;
-    // this.getCorporateById(this.dealerLoginVPId);
-    this.getfuelDealerIdByCorporateId(this.dealerCorporateId)
+    this.getProductsByDealerId(this.fuelDealerId);
     this.cd.detectChanges()
   }
 
@@ -94,46 +93,6 @@ export class ModalComponent {
     }
   }
 
-
-  // get Corporate DetailsBy VP-Id
-  getCorporateById(dealerLoginVPId: any) {
-    let data = {
-      veelsplusCorporateId: dealerLoginVPId
-    }
-    this.post.getBranchByVeelsplusIdPOST(data)
-      .subscribe(res => {
-        if (res.status == "OK") {
-          if (res.data.length) {
-            this.loginSQLCorporateId = res.data[0].corporateId;
-            this.getfuelDealerIdByCorporateId(this.loginSQLCorporateId);
-            this.cd.detectChanges()
-          }
-          else {
-            alert("Getting Error..! Please Logout & Login again..!")
-            this.cd.detectChanges()
-          }
-        }
-      })
-  }
-
-  // getfuelDealerIdByDealerCorporateId
-  getfuelDealerIdByCorporateId(dealerCorporateId: any) {
-    let data = {
-      corporateId: dealerCorporateId
-    }
-    this.post.getfuelDealerIdByCorporateIdPOST(data)
-      .subscribe(res => {
-        if (res.status == "OK") {
-          this.fuelDealerId = res.data[0].fuelDealerId;
-          this.getProductsByDealerId(this.fuelDealerId);
-          this.cd.detectChanges()
-        }
-        else {
-          this.cd.detectChanges()
-        }
-      })
-  }
-
   getProductsByDealerId(fuelDealerId: any) {
     let data = {
       fuelDealerId: fuelDealerId,
@@ -141,7 +100,6 @@ export class ModalComponent {
     this.post.getFuelProductIdByDealerIdPOST(data).subscribe((res) => {
       if (res.data.length) {
         this.allProductPriceList = res.data;
-        // this.getProductDetails(res.data);
         this.cd.detectChanges()
       }
     });
@@ -168,13 +126,15 @@ export class ModalComponent {
       this.post.addFuelPriceByDealerIdPOST(data).subscribe((res) => {
         if (res.status == "OK") {
           alert("Fuel Price Set Successfully!");
+          this.closed.emit();
           this.modalRef.close("close");
           this.allProductPriceList.length = 0;
           this.spinner.hide();
-
+          this.getProductsByDealerId(this.fuelDealerId);
         } else {
           alert(res.msg);
           this.spinner.hide();
+          this.getProductsByDealerId(this.fuelDealerId);
         }
       });
     } else {
@@ -193,16 +153,19 @@ export class ModalComponent {
         this.post.addFuelPriceByDealerIdPOST(data).subscribe((res) => {
           if (res.status == "OK") {
             alert("Fuel Price Set Successfully!");
+            this.closed.emit();
             this.modalRef.close("close");
             this.allProductPriceList.length = 0;
             this.spinner.hide();
-
+            this.getProductsByDealerId(this.fuelDealerId);
           } else {
             alert(res.msg);
             this.spinner.hide();
+            this.getProductsByDealerId(this.fuelDealerId);
           }
         });
       } else {
+        this.getProductsByDealerId(this.fuelDealerId);
       }
     }
   }

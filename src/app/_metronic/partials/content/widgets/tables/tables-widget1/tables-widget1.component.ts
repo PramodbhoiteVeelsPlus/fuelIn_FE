@@ -139,8 +139,8 @@ export class TablesWidget1Component {
         this.liteAccess = true
       }
     }
-    // this.getCorporateById(this.dealerLoginVPId);
-    this.getfuelDealerIdByCorporateId(this.dealerCorporateId);
+    this.getProductsByDealerId(this.fuelDealerId);
+    this.getFuelPriceByProductDateDealer(this.fuelDealerId);
     this.cd.detectChanges()
   }
 
@@ -148,53 +148,9 @@ export class TablesWidget1Component {
     return await this.modalComponent.open();
   }
 
-  // get Corporate DetailsBy VP-Id
-  getCorporateById(dealerLoginVPId: any) {
-    let data = {
-      veelsplusCorporateId: dealerLoginVPId
-    }
-    this.post.getBranchByVeelsplusIdPOST(data)
-      .subscribe(res => {
-        if (res.status == "OK") {
-          if (res.data.length) {
-            this.loginSQLCorporateId = res.data[0].corporateId;
-            // this.petrolPumpName = res.data[0].companyName;
-            // this.hostName = res.data[0].hostName;
-            // this.FuelVeelsVendorID = res.data[0].veelsPlusBranchID;
-            this.getfuelDealerIdByCorporateId(this.loginSQLCorporateId);
-            this.cd.detectChanges()
-            // this.getDetailsForFuelDealer(this.loginSQLCorporateId);
-          }
-          else {
-            alert("Getting Error..! Please Logout & Login again..!")
-            this.cd.detectChanges()
-          }
-        }
-      })
-  }
-
-  // getfuelDealerIdByDealerCorporateId
-  getfuelDealerIdByCorporateId(dealerCorporateId: any) {
-    let data = {
-      corporateId: dealerCorporateId
-    }
-    this.post.getfuelDealerIdByCorporateIdPOST(data)
-      .subscribe(res => {
-        if (res.status == "OK") {
-          this.fuelDealerId = res.data[0].fuelDealerId;
-          this.getProductsByDealerId(this.fuelDealerId);
-          this.getFuelPriceByProductDateDealer(this.fuelDealerId);
-          this.cd.detectChanges()
-          // this.getTotalTANKDUByDealerId(this.fuelDealerId);
-          // this.getStaffCount(this.fuelDealerId);
-          // this.getStaffDetails(this.fuelDealerId);
-          // this.getBankDetailsByDealerId(this.fuelDealerId);
-          // this.getFuelTerminal(this.fuelDealerId);
-        }
-        else {
-          this.cd.detectChanges()
-        }
-      })
+  refreshData() {
+    this.getProductsByDealerId(this.fuelDealerId);
+    this.getFuelPriceByProductDateDealer(this.fuelDealerId);    
   }
 
   getProductsByDealerId(fuelDealerId: any) {

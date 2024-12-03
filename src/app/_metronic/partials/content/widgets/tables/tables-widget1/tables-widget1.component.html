@@ -9,7 +9,7 @@
       <app-keenicon name="plus" class="fs-3"></app-keenicon>
       Add Rate
     </a>
-    <app-modal #modal [modalConfig]="modalConfig">
+    <app-modal #modal [modalConfig]="modalConfig" (closed)="refreshData()">
       Modal body html
     </app-modal>
   </div>
