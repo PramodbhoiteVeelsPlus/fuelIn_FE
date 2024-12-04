@@ -735,6 +735,7 @@ export class MixedWidget2Component implements OnInit {
   removeLubeIndex() {
     this.CreditRequestDataLube.splice(this.indexFuelLube, 1);
     this.countLube = this.countLube - 1;
+    this.modalRef.close()
     console.log("COUNT:", this.countLube)
   }
 }

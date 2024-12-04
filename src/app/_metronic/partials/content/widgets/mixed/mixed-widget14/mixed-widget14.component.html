@@ -24,11 +24,11 @@
               <div class="col-8">
                 <h3><b>{{companyName}}</b></h3>
                 <h5> {{oilCompanyName}} petrol pump </h5>
-                <!-- <h6> {{fromAddress}} </h6> -->
+                <h6> {{fromAddress}} </h6>
               </div>
 
               <div class="col-4">
-                <!-- <h6>GST : {{GSTNumber}}</h6> -->
+                <h6>GST : {{GSTNumber}}</h6>
                 <h6 *ngIf="hsnCode">HSN Code : {{hsnCode}}</h6>
 
                 <!-- <h6><b>Invoice No. : <span> VPFCINV{{invoiceCode}} </span></b></h6> -->
@@ -233,15 +233,15 @@
           </div>
         </div>
         <span *ngIf="(netOS) > 0">
-          <!-- <div class="container border border-success px-2 py-2 alert alert-success">
+          <div class="container border border-success px-2 py-2 alert alert-success">
             <p> Please pay <span class="" *ngIf="(netOS) >= 0">
                 <i class="fas fa-rupee-sign"></i>
                 {{(netOS) |
                 number:'1.0-0'}}
               </span> <span *ngIf="isDueDate == 'TRUE' "> before Due Date {{dueDate}} </span> <br>
              </p>
-            <p class=""> <i class="fas fa-rupee-sign"></i> {{amountInWord}}</p>
-          </div> -->
+            <p class=""> <i class="fas fa-rupee-sign"></i> {{amountInWords}}</p>
+          </div>
         </span>
 
         <span *ngFor="let data of bankAccList; let i = index">

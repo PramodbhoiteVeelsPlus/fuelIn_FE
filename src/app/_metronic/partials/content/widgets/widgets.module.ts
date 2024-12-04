@@ -190,6 +190,7 @@ import { PumpTablesWidget9Component } from './pump-tables/pump-tables-widget9/pu
 import { PumpTablesWidget10Component } from './pump-tables/pump-tables-widget10/pump-tables-widget10.component';
 import { ArchwizardModule } from 'angular-archwizard';
 import { PumpTablesWidget11Component } from './pump-tables/pump-tables-widget11/pump-tables-widget11.component';
+import { NgxPrintModule } from 'ngx-print';
 // import { routes } from 'src/app/app-routing.module';
 @NgModule({
   declarations: [
@@ -390,8 +391,7 @@ import { PumpTablesWidget11Component } from './pump-tables/pump-tables-widget11/
     RouterModule,
     NgbNavModule,
     NgxSliderModule,
-    // MatStepperModule
-    // ArchwizardModule,
+    NgxPrintModule
   ],
   exports: [
     // Advanced Tables

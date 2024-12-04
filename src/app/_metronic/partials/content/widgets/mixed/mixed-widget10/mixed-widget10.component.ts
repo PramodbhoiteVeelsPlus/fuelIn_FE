@@ -69,7 +69,6 @@ export class MixedWidget10Component implements OnInit {
   @Input() chartHeight: string;
   chartOptions: any = {};
   dealerCorporateId: any;
-  dealerData: any;
   fuelDealerId: any;
   accessGroup: any;
   oldInvoice: any;
@@ -113,6 +112,7 @@ export class MixedWidget10Component implements OnInit {
   rupeesWrd: any;
   paisaWrd: any;
   amountInWords: string;
+  GSTNumber: any;
 
   constructor(
     private post: MixedService,
@@ -130,17 +130,20 @@ export class MixedWidget10Component implements OnInit {
 
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
-    this.dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
     this.accessGroup = element.accessGroupId;
     this.oldInvoice = this.post.oldInvoice3
-    this.companyName = this.dealerData.companyName
-    this.oilCompanyName = this.dealerData.brandName
-    this.state = this.dealerData.state
-    this.pin = this.dealerData.pin
-    this.city = this.dealerData.city
-    this.phone1 = this.dealerData.hostPhone
+    this.companyName = dealerData.companyName
+    this.oilCompanyName = dealerData.brandName
+    this.state = dealerData.state
+    this.pin = dealerData.pin
+    this.city = dealerData.city
+    this.phone1 = dealerData.hostPhone
+    this.GSTNumber = dealerData.GSTNumber
+    this.address1 = dealerData.address1
+    this.address2 = dealerData.address2
     if (localStorage.getItem('manualSno') != "undefined") {
       this.manualNumber = localStorage.getItem('manualSno');
     }

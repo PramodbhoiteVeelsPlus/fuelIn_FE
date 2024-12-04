@@ -1,8 +1,43 @@
+<style>
+
+  @media print {
+    .page-break {
+      display: block;
+      page-break-before: always;
+
+      size: A4 portrait;
+    }
+  }
+
+  @media print {
+    body {
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact;
+    }
+
+    .A4 {
+      box-shadow: none;
+      margin: 0;
+      width: auto;
+      height: auto;
+    }
+
+    .noprint {
+      display: none;
+    }
+
+    .print {
+      display: block;
+    }
+  }
+</style>
+
 <div class="card card-custom">
   <!-- Header -->
   <div class="card-header border-0 pt-5">
     <form [formGroup]="selectCorporate">
-      <div class="mb-3 row">
+      <div class="row">
         <label for="example-text-input" class="col-auto col-form-label">Khata</label>
         <div class="col-md-3">
           <input class="form-control" type="text" list="allCorporateList" placeholder="All Khata"
@@ -29,11 +64,11 @@
         </div>
         <div class="col-auto">
           <span style="font-size: 35px;cursor: pointer;" (click)="exportToPDF1()" ngbTooltip="Download PDF"
-            placement="bottom"><i class="fas fa-file-pdf"></i></span><br>
+            placement="bottom"><i class="fas fa-file-pdf" style="font-size: 30px;"></i></span><br>
         </div>
         <div class="col-auto">
           <span style="font-size: 35px;cursor: pointer;" (click)="downloadExcelForDealer()" ngbTooltip="Download CSV"
-            placement="bottom"><i class="fas fa-file-csv"></i></span><br>
+            placement="bottom"><i class="fas fa-file-csv" style="font-size: 30px;"></i></span><br>
         </div>
       </div>
     </form>
@@ -73,7 +108,7 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-4">
+      <div class="col-md-6">
         <div class="search-box">
           <div class="position-relative">
             <input class="form-control " type="text" placeholder="search"
@@ -679,8 +714,7 @@
                 <div class="row noprint">
                   <div class="col-md-8"></div>
                   <div class="col-md-2">
-                    <button class="btn btn-success" printSectionId="sanjay" ngxPrint>print</button>
-
+                    <button class="btn btn-success" onclick="window.print()">print</button>
                   </div>
                 </div>
                 <div id="sanjay">

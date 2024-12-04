@@ -9,6 +9,8 @@ import autoTable from 'jspdf-autotable';
 import { ExcelService } from 'src/app/pages/excel.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ListWidgetService } from '../../lists/listWidget.services';
+import { MixedService } from '../../mixed/mixed.services';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -113,9 +115,13 @@ export class TablesWidget33Component {
   isFuelStatement: boolean = false;
   dealerCorporateId: any;
   headerName1: any;
+  finalTotalAmt: number;
+  termsAndConditions: any;
 
   constructor(
     private post: WidgetService,
+    private post1: ListWidgetService,
+    private post2: MixedService,
     private spinner: NgxSpinnerService,
     config: NgbDatepickerConfig,
     public cd: ChangeDetectorRef,
@@ -322,6 +328,7 @@ export class TablesWidget33Component {
         this.creditDayLimit = res.data[0].creditDayLimit
         // this.getOutStandingNewFlow()
         this.allCrAndPaymentForInterval();
+        this.cd.detectChanges()
 
       }
     });
@@ -341,11 +348,13 @@ export class TablesWidget33Component {
           this.furlPaymentInterval = res.furlPaymentInterval;
 
           this.getCombineCreditPayment(this.allCrForInterval, this.furlPaymentInterval)
+          this.cd.detectChanges()
         }
       });
     } else {
       this.fuelPaymentIntervalAll = []
       alert('Credit Day Limit Should Be Greater Than Zero')
+      this.cd.detectChanges()
     }
   }
 
@@ -372,11 +381,13 @@ export class TablesWidget33Component {
           combineJson.creditAmountInterval = res.fuelCRData.creditAmountInterval
           combineJson.grandTotalAmountInterval = res1.fuelpaymentData.grandTotalAmountInterval
           this.fuelPaymentIntervalAll.push(combineJson)
+          this.cd.detectChanges()
 
         }
       })
     })
     this.spinner.hide();
+    this.cd.detectChanges()
   }
 
   clearDaysLimit() {
@@ -390,4 +401,50 @@ export class TablesWidget33Component {
     this.getMapAccounts();
   }
 
+  finalAmt() {
+    const data = {
+      fuelDealerCustomerMapId: this.searchDiscountForm.value.selectCorporateMapId,
+    };
+    this.post1.calOutstandingAmountforAllPOST(data)
+      .subscribe(result => {
+        if (result.status == 'OK') {
+          this.finalTotalAmt = ((Number(result.outstandData[0].totalCRAmt) + Number(result.previousOutstandData[0].previousOutstand)) ) - Number(result.paymentData[0].totalPaymentAmt);
+          this.updateTotalInvCreditAmt(this.finalTotalAmt);
+        }
+      });
+  }
+
+  updateTotalInvCreditAmt(finalTotalAmt: number) {
+    const data = {
+      fuelDealerCustomerMapId: this.searchDiscountForm.value.selectCorporateMapId,
+      totalAmount: finalTotalAmt
+    };
+    this.post.updateTotalInvCreditAmtPOST(data)
+      .subscribe(result => {
+        if (result.status == 'OK') {
+          this.spinner.hide();
+        }else{
+          this.spinner.hide();
+        }
+      });
+  }
+
+  updateTotalInvCreditAmtForInterval(startDate: moment.MomentInput,endDate: moment.MomentInput) {
+    this.post.inilizeForInvoice();
+    const data = {
+      fuelDealerCustomerMapId: this.searchDiscountForm.value.selectCorporateMapId,
+      totalAmount: this.finalTotalAmt
+    };
+    this.post.updateTotalInvCreditAmtPOST(data)
+      .subscribe(result => {
+        if (result.status == 'OK') {
+  
+          this.post2.lrForInvoice(this.searchDiscountForm.value.selectCorporateMapId, moment(startDate, ["YYYY-MM-DD"]).format('DD-MM-YYYY'), moment(endDate, ["YYYY-MM-DD"]).format('DD-MM-YYYY'), this.termsAndConditions);
+  
+          this.router.navigate(['/credit/fuelCreditInvoiceDoc/' + '0'], { queryParams: { s: '0' } });
+        }
+      });
+  
+  }
+  
 }

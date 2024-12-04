@@ -153,6 +153,7 @@ export class MixedWidget5Component {
       .subscribe(res => {
         if (res) {
           this.allCorporateList = res.data;
+          this.cd.detectChanges()
         } else {
         }
       }

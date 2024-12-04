@@ -125,6 +125,8 @@ export class TablesWidget31Component {
     this.dealerCorporateId = dealerData.corporateId;
     this.customerId = dealerData.customerId;
     this.headerName1 = dealerData.companyName;
+    this.headerName2 = dealerData.address1 + ', ' + dealerData.address2 + ', ' + dealerData.city;
+    this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     if (element.accessGroupId == 12 || element.accessGroupId == 14 || element.accessGroupId == 19 || element.accessGroupId == 21) {
       this.dealerAccess = true
@@ -142,33 +144,7 @@ export class TablesWidget31Component {
   async openModal() {
     return await this.modalComponent.open();
   }
-
-  // get Corporate DetailsBy VP-Id
-  getCorporateById(dealerLoginVPId: any) {
-    let data = {
-      veelsplusCorporateId: dealerLoginVPId
-    }
-    this.post.getBranchByVeelsplusIdPOST(data)
-      .subscribe(res => {
-        if (res.status == "OK") {
-          if (res.data.length) {
-            this.customerId = res.data[0].customerId;
-            this.headerName1 = res.data[0].companyName;
-            this.headerName2 = res.data[0].address1+', '+res.data[0].address2+', '+res.data[0].city;
-            this.headerName3 = res.data[0].state+'-'+res.data[0].pin+'  '+"GST: "+res.data[0].GSTNumber;
-            this.loginSQLCorporateId = res.data[0].corporateId;
-            this.getfuelDealerIdByCorporateId(this.loginSQLCorporateId);
-            this.searchDealerBycustomerId(this.customerId)
-            this.cd.detectChanges()
-          }
-          else {
-            alert("Getting Error..! Please Logout & Login again..!")
-            this.cd.detectChanges()
-          }
-        }
-      })
-  }
-
+  
   // getfuelDealerIdByDealerCorporateId
   getfuelDealerIdByCorporateId(dealerCorporateId: any) {
     let data = {

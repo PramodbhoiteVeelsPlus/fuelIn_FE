@@ -255,15 +255,15 @@
             </thead>
             <tbody>
               <tr>
-                <td style="text-align: left;border-width: 1px; border-color: #000;">{{dealerName}}</td>
-                <td style="text-align: left;border-width: 1px; border-color: #000;">
+                <td style="text-align: left;border: 1px solid black;">{{dealerName}}</td>
+                <td style="text-align: left;border: solid 1px black;border-bottom: solid 1px black;">
                   {{personName}}
                 </td>
-                <td style="text-align: left;border-width: 1px; border-color: #000;"> {{personPhone1}} </td>
-                <td style="text-align: left;border-width: 1px; border-color: #000;">
+                <td style="text-align: left;border: solid 1px black;border-bottom: solid 1px black;"> {{personPhone1}} </td>
+                <td style="text-align: left;border-width: 1px; border-color: #000;border-bottom: solid 1px black;">
                   {{rangeFrom}} - {{rangeTo}}
                 </td>
-                <td style="text-align: left;border-width: 1px; border-color: #000;color: red;">
+                <td style="text-align: left;border: solid 1px black;color: red;border-bottom: solid 1px black;">
                   <span *ngIf="calOutstanding< 0">
                     <li class="fas fa-rupee-sign"></li> {{(calOutstanding)*(-1) | number:'1.2-2'}} CR
                   </span>
@@ -272,7 +272,7 @@
                   </span>
 
                 </td>
-                <td style="text-align: left;border-width: 1px; border-color: #000; cursor:pointer;"
+                <td style="text-align: left;border: solid 1px black; cursor:pointer;border-bottom: solid 1px black;"
                   (click)="viewFlag(viewFlagModel)">
                   <span *ngIf="viewCorpFlag.length" class="col-md-1" style="color:rgb(255, 0, 0);cursor:pointer;">
                     <i class="fa fa-exclamation-triangle fa-fw fa-3x"></i>

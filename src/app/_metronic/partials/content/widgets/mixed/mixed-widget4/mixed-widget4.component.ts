@@ -84,7 +84,7 @@ export class MixedWidget4Component {
   isSelected1: boolean = false;
   isCalculate: boolean = false;
   customerName: string;
-  calOutstanding: number;
+  calOutstanding: any;
   fuelDealerCorpMapIdNew: string;
   crPaymentDetails: any = [];
   customerIdSQL: any;
@@ -153,6 +153,10 @@ export class MixedWidget4Component {
   rupeesWrd: any;
   paisaWrd: any;
   amountInWords: string;
+  fueldealerMailSend: any;
+  fueldealerSmsSend: any;
+  overAllPaidAmount: any;
+  managerName: string;
 
   constructor(
     private post: MixedService,
@@ -169,12 +173,16 @@ export class MixedWidget4Component {
 
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
     // this.dealerLoginVPId = element.veelsPlusCorporateID;
     this.accessGroup = element.accessGroupId;
+    this.managerName = element.firstName + ' ' + element.lastName
     this.managerVPPersonId = element.veelsPlusId
     this.managerPersonId = element.personId
+    this.fueldealerSmsSend = dealerData.fueldealerSmsSend
+    this.fueldealerMailSend = dealerData.fueldealerMailSend
     if (element.accessGroupId == 12 || element.accessGroupId == 14 || element.accessGroupId == 19 || element.accessGroupId == 21) {
       this.dealerAccess = true
       if (element.accessGroupId == 14 || element.accessGroupId == 21) {
@@ -185,7 +193,6 @@ export class MixedWidget4Component {
     this.getCorporateMappedListByDealerId(this.fuelDealerId)
     this.getFuelTerminal(this.fuelDealerId)
     this.getBankDetailsByDealerId(this.fuelDealerId)
-    this.getFlagStatusByCorpId(this.dealerCorporateId)
     this.cd.detectChanges()
   }
 
@@ -230,7 +237,7 @@ export class MixedWidget4Component {
           this.customerName = res.data[0].companyName;
           this.customerIdSQL = res.data[0].customerId
           this.corporateIdSQL = res.data[0].corporateId
-          // this.getFlagStatusByCorpId(this.corporateIdSQL)
+          this.getFlagStatusByCorpId(this.corporateIdSQL)
           if (res.data[0].mappingPreviousStatus == "FALSE") {
             this.dealerName = res.data[0].companyName;
             this.personName = res.data[0].firstName + ' ' + res.data[0].lastName;
@@ -251,7 +258,7 @@ export class MixedWidget4Component {
           this.personPhone1 = res.data[0].phone1;
           this.fuelDealerCorpMapIdNew = res.data[0].fuelDealerCustomerMapId;
           // this.calOutstandingAmountforAll(res.data[0].fuelDealerCustomerMapId)
-          // this.getOutstandingBuCustMapId(res.data[0].fuelDealerCustomerMapId)
+          this.getOutstandingBuCustMapId(res.data[0].fuelDealerCustomerMapId)
           this.lastCRDate = res.data[0].lastCRDate;
           if (res.data[0].lastCRDate) {
             this.islastCRDate = true
@@ -268,6 +275,7 @@ export class MixedWidget4Component {
 
   }
 
+  
   getCorporateMappedListByDealerId(fuelDealerId: any) {
     let data = {
       fuelDealerId: fuelDealerId
@@ -276,6 +284,7 @@ export class MixedWidget4Component {
       .subscribe(res => {
         if (res) {
           this.corporateList = res.data;
+          this.cd.detectChanges()
         } else {
         }
       }
@@ -407,11 +416,11 @@ export class MixedWidget4Component {
     }
   }
 
-  onSearchChange(searchValue: any): void {
-    if (searchValue) {
+  onSearchChange(id: any): void {
+    if (id.target.value) {
       // this.transform(searchValue);
           var osForWrd = ''
-          osForWrd = (searchValue).toFixed(2)
+          osForWrd = (id.target.value)
           var osForWrd1 = osForWrd.split(".")
           this.rupeesWrd = osForWrd1[0]
           this.paisaWrd = osForWrd1[1]
@@ -426,9 +435,10 @@ export class MixedWidget4Component {
           }
       this.checkSubmit()
       this.isCalculate = true;
-      this.outstandingAmt = (Number(this.calOutstanding) - (searchValue))
-      // console.log(Number(this.calOutstanding) - (searchValue));
+      this.outstandingAmt = (Number(this.calOutstanding) - (id.target.value))
+      console.log("amt", (id.target.value));
     } else {
+      console.log("amt2", (id.target.value));
       this.isCalculate = false;
       this.isSubmit = false;
     }
@@ -485,8 +495,8 @@ export class MixedWidget4Component {
                         totalAmount: this.addPaymentForm.value.paymentAmount,
                         isMappingEmail: this.isMappingEmail,
                         isMappingSMS: this.isMappingSMS,
-                        // fueldealerSmsSend: this.fueldealerSmsSend,
-                        // fueldealerMailSend: this.fueldealerMailSend,
+                        fueldealerSmsSend: this.fueldealerSmsSend,
+                        fueldealerMailSend: this.fueldealerMailSend,
                         avgPayment: this.paidAvg,
                         accountId: this.addPaymentForm.value.accountDetailsId,
                         pendingDays: this.pendingDays,
@@ -496,7 +506,8 @@ export class MixedWidget4Component {
                       this.post.addAccTransactionLogPayDetailPOST(data)
                         .subscribe(res => {
                           if (res) {
-                            // this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
+                            alert("Payment to Update PAYMENT Details!")
+                            this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
                             let dateCoin = moment(this.addPaymentForm.value.paymentDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD') + ' ' + moment(new Date()).format('HH:mm:ss')
                             // this.addCoindetails(res.data.insertId, dateCoin)
                           } else {
@@ -522,8 +533,8 @@ export class MixedWidget4Component {
                         totalAmount: this.addPaymentForm.value.paymentAmount,
                         isMappingEmail: this.isMappingEmail,
                         isMappingSMS: this.isMappingSMS,
-                        // fueldealerSmsSend: this.fueldealerSmsSend,
-                        // fueldealerMailSend: this.fueldealerMailSend,
+                        fueldealerSmsSend: this.fueldealerSmsSend,
+                        fueldealerMailSend: this.fueldealerMailSend,
                         avgPayment: this.paidAvg,
                         accountId: this.addPaymentForm.value.accountDetailsId,
                         pendingDays: this.pendingDays,
@@ -533,7 +544,7 @@ export class MixedWidget4Component {
                       this.post.addAccTransactionLogPayDetailPOST(data)
                         .subscribe(res => {
                           if (res) {
-                            // this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
+                            this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
                             let dateCoin = moment(this.addPaymentForm.value.paymentDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD') + ' ' + moment(new Date()).format('HH:mm:ss')
                             // this.addCoindetails(res.data.insertId, dateCoin)
                           } else {
@@ -560,8 +571,8 @@ export class MixedWidget4Component {
                       totalAmount: this.addPaymentForm.value.paymentAmount,
                       isMappingEmail: this.isMappingEmail,
                       isMappingSMS: this.isMappingSMS,
-                      // fueldealerSmsSend: this.fueldealerSmsSend,
-                      // fueldealerMailSend: this.fueldealerMailSend,
+                      fueldealerSmsSend: this.fueldealerSmsSend,
+                      fueldealerMailSend: this.fueldealerMailSend,
                       avgPayment: this.paidAvg,
                       accountId: this.addPaymentForm.value.accountDetailsId,
                       pendingDays: this.pendingDays,
@@ -571,7 +582,7 @@ export class MixedWidget4Component {
                     this.post.addAccTransactionLogPayDetailPOST(data)
                       .subscribe(res => {
                         if (res) {
-                          // this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
+                          this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
                           let dateCoin = moment(this.addPaymentForm.value.paymentDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD') + ' ' + moment(new Date()).format('HH:mm:ss')
                           // this.addCoindetails(res.data.insertId, dateCoin)
                         } else {
@@ -661,11 +672,11 @@ export class MixedWidget4Component {
                           totalAmount: this.addPaymentForm.value.paymentAmount,
                           managerVPPersonId: this.managerVPPersonId,
                           managerPersonId: this.managerPersonId,
-                          // managerName: this.managerName,
+                          managerName: this.managerName,
                           isMappingEmail: this.isMappingEmail,
                           isMappingSMS: this.isMappingSMS,
-                          // fueldealerSmsSend: this.fueldealerSmsSend,
-                          // fueldealerMailSend: this.fueldealerMailSend,
+                          fueldealerSmsSend: this.fueldealerSmsSend,
+                          fueldealerMailSend: this.fueldealerMailSend,
                           avgPayment: this.paidAvg,
                           accountId: this.addPaymentForm.value.accountDetailsId,
                           pendingDays: this.pendingDays,
@@ -675,7 +686,7 @@ export class MixedWidget4Component {
                         this.post.addAccTransactionLogPayDetailPOST(data)
                           .subscribe(res => {
                             if (res) {
-                              // this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
+                              this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
                               let dateCoin = moment(this.addPaymentForm.value.paymentDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD') + ' ' + moment(new Date()).format('HH:mm:ss')
                               // this.addCoindetails(res.data.insertId, dateCoin)
                             } else {
@@ -701,11 +712,11 @@ export class MixedWidget4Component {
                           totalAmount: this.addPaymentForm.value.paymentAmount,
                           managerVPPersonId: this.managerVPPersonId,
                           managerPersonId: this.managerPersonId,
-                          // managerName: this.managerName,
+                          managerName: this.managerName,
                           isMappingEmail: this.isMappingEmail,
                           isMappingSMS: this.isMappingSMS,
-                          // fueldealerSmsSend: this.fueldealerSmsSend,
-                          // fueldealerMailSend: this.fueldealerMailSend,
+                          fueldealerSmsSend: this.fueldealerSmsSend,
+                          fueldealerMailSend: this.fueldealerMailSend,
                           avgPayment: this.paidAvg,
                           accountId: this.addPaymentForm.value.accountDetailsId,
                           pendingDays: this.pendingDays,
@@ -715,7 +726,7 @@ export class MixedWidget4Component {
                         this.post.addAccTransactionLogPayDetailPOST(data)
                           .subscribe(res => {
                             if (res) {
-                              // this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
+                              this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
                               let dateCoin = moment(this.addPaymentForm.value.paymentDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD') + ' ' + moment(new Date()).format('HH:mm:ss')
                               // this.addCoindetails(res.data.insertId, dateCoin)
                             } else {
@@ -742,11 +753,11 @@ export class MixedWidget4Component {
                         totalAmount: this.addPaymentForm.value.paymentAmount,
                         managerVPPersonId: this.managerVPPersonId,
                         managerPersonId: this.managerPersonId,
-                        // managerName: this.managerName,
+                        managerName: this.managerName,
                         isMappingEmail: this.isMappingEmail,
                         isMappingSMS: this.isMappingSMS,
-                        // fueldealerSmsSend: this.fueldealerSmsSend,
-                        // fueldealerMailSend: this.fueldealerMailSend,
+                        fueldealerSmsSend: this.fueldealerSmsSend,
+                        fueldealerMailSend: this.fueldealerMailSend,
                         avgPayment: this.paidAvg,
                         accountId: this.addPaymentForm.value.accountDetailsId,
                         pendingDays: this.pendingDays,
@@ -756,7 +767,7 @@ export class MixedWidget4Component {
                       this.post.addAccTransactionLogPayDetailPOST(data)
                         .subscribe(res => {
                           if (res) {
-                            // this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
+                            this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
                             let dateCoin = moment(this.addPaymentForm.value.paymentDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD') + ' ' + moment(new Date()).format('HH:mm:ss')
                             // this.addCoindetails(res.data.insertId, dateCoin)
                           } else {
@@ -810,5 +821,107 @@ export class MixedWidget4Component {
     this.isCalculate = false;
     this.outstandingAmt = 0
     this.addPaymentForm.controls["accountDetailsId"].setValue("");
+  }
+  
+  getOutstandingBuCustMapId(fuelDealerCustomerMapId: any) {
+
+    let data = {
+      custMapId: fuelDealerCustomerMapId
+    }
+    this.post1.getOutstandingByCustMapIdPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          this.calOutstanding = Number(res.data[0].netOS)
+          if (this.outstandingAmt) {
+            this.isCalculate = true;
+            this.outstandingAmt = (Number(this.calOutstanding) - Number(this.addPaymentForm.value.paymentAmount))
+          }
+          this.cd.detectChanges()
+        }
+
+      })
+  }
+ 
+  getDetailsByMapId1(fuelDealerCustomMapId: any) {
+    let data = {
+      fuelDealerCustomMapId: fuelDealerCustomMapId
+    }
+    this.post.getDetailsByMapIdPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          if (res.data.length) {
+            this.overAllPaidAmount = res.data[0].totalInvPaidAmt;
+            this.totalInvoiceAfterPayment = res.data[0].totalInvCreditAmt;
+            // this.updatePaymentInFuelDealerCustomerMapAfterRemove(fuelDealerCustomMapId);
+          }
+          else {
+
+          }
+        }
+      })
+  }
+  
+  updatePaymentInFuelDealerCustomerMap(fuelDealerCustomMapId: any) {
+
+    let data = {
+      fuelDealerCustomerMapId: fuelDealerCustomMapId,
+      totalPaidAmount: Number(this.addPaymentForm.value.paymentAmount) + Number(this.overAllPaidAmount),
+      invoiceOutstand: Number(this.totalInvoiceAfterPayment) - (Number(this.addPaymentForm.value.paymentAmount)),
+    }
+    this.post.updateTotalInvPaidAmtPOST(data)
+      .subscribe((res) => {
+        if (res.status == 'OK') {
+          this.updatelastDateCR(fuelDealerCustomMapId)
+          this.spinner.hide();
+        } else {
+          alert("ERROR to Update PAYMENT Details!")
+          this.spinner.hide();
+
+          // this.getDetailsByMapId(this.fuelDealerCorpMapIdNew);
+        }
+      });
+
+  } 
+  
+  updatelastDateCR(fuelDealerCustomMapId: any) {
+
+    let data1 = {
+      mapId: fuelDealerCustomMapId
+    }
+    this.post.updateLastCRDateMapIdWisePOST(data1)
+      .subscribe((res) => {
+        if (res.status == 'OK') {
+          // console.log("Date updated successfully..")
+          alert("PAYMENT Details Updated Successfully!")
+          this.spinner.hide();
+          this.addPaymentForm.controls["paymentMethod"].setValue("");
+          this.addPaymentForm.controls["paymentAmount"].setValue("");
+          this.addPaymentForm.controls["paymentTransactionNo"].setValue("");
+          this.addPaymentForm.controls["selectedCorp"].setValue("");
+          this.addPaymentForm.controls["accountDetailsId"].setValue("");
+          this.isCash = false;
+          this.isSelected1 = false;
+          this.isSelected = false;
+          this.isPos = false
+          this.posEntry = 'FALSE'
+          this.isCash = false;
+          this.resetPaymentForm();
+        } else {
+          // console.log("Error to update Date..")
+          alert("ERROR to Update PAYMENT Details!")
+          this.spinner.hide();
+        }
+      });
+  }
+  
+  resetPaymentForm() {
+    this.addPaymentForm.controls["selectedCorp"].setValue("");
+    this.addPaymentForm.controls["paymentAmount"].setValue("");
+    this.addPaymentForm.controls["paymentTransactionNo"].setValue("");
+    this.addPaymentForm.controls["paymentMethod"].setValue("");
+    this.addPaymentForm.controls["accountDetailsId"].setValue("");
+    this.addPaymentForm.controls["pos"].setValue("");
+    this.isSelected1 = false;
+
   }
 }

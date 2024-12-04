@@ -15,6 +15,11 @@ export class WidgetService {
   totalOutstanding: number;
   crOutstanding2: number;
   setRouteForActiveArray: any = [];
+  creditValueforInvoice: any = [];
+  routerVar: any;
+  custMappingID: any;
+  startDate: any;
+  endDate: any;
  
 
   constructor(private http: HttpClient,
@@ -143,6 +148,7 @@ export class WidgetService {
   private getAccessByPersonIdURL = this.baseURL + 'userAccess/getAccessByPersonId';
   private checkVehicleByfuelDealerIdURL = this.baseURL + 'fuelVehicleDetails/checkVehicleByfuelDealerId';
   private addFuelVehicleDetailsURL = this.baseURL + 'fuelVehicleDetails/addFuelVehicleDetails';
+  private updateTotalInvCreditAmtURL = this.baseURL + 'fuelCreditInvoice/updateTotalCreditAmt'; 
 
 
   setHeader() {
@@ -1288,7 +1294,26 @@ export class WidgetService {
     })
   }
 
+  // updateTotalInvCreditAmtURL
+  updateTotalInvCreditAmtPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateTotalInvCreditAmtURL, body, {
+      headers: headers
+    })
+  }
 
+  inilizeForInvoice() {
+    this.creditValueforInvoice = []
+  }
+
+  lrForInvoice(customerMapID: any, startDate: any, endDate: any, routeVar: any) {
+    this.routerVar = routeVar
+    this.custMappingID = customerMapID;
+    this.startDate = startDate;
+    this.endDate = endDate;
+  }
 
 
 

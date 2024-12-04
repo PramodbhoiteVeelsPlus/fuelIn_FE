@@ -136,6 +136,10 @@
                                 <span *ngIf="!data.grandTotalAmountInterval"> ₹ &nbsp;0.00</span>
 
                             </td>
+                            <td style="color: blue;cursor: pointer;"
+                                (click)="updateTotalInvCreditAmtForInterval(data.startDate,data.endDate)">View
+                                Statement
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -275,9 +279,9 @@
                                 <span *ngIf="!data.grandTotalAmountInterval"> ₹ &nbsp;0.00</span>
 
                             </td>
-                            <!-- <td style="color: blue;cursor: pointer;"
+                            <td style="color: blue;cursor: pointer;"
                                 (click)="updateTotalInvCreditAmtForInterval(data.startDate,data.endDate)">View
-                                Statement</td> -->
+                                Statement</td>
                         </tr>
                     </tbody>
                 </table>

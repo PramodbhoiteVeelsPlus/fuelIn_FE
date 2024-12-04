@@ -347,6 +347,7 @@ export class StatsWidget16Component {
       if (res) {
         this.productInfo = res.data;
         this.allProductPriceList = res.data;
+        this.cd.detectChanges()
       }
     })
   }
@@ -449,6 +450,7 @@ export class StatsWidget16Component {
     if (id.target.value) {
       this.fuelDealerCustomerMapId = id.target.value;
       this.getCorporateInfoByfuelDealerCustomerMapId(this.fuelDealerCustomerMapId);
+      this.cd.detectChanges()
     }
     else {
       alert("Please select customer")
@@ -504,17 +506,57 @@ export class StatsWidget16Component {
           this.fuelDealerCorpMapIdNew = res.data[0].fuelDealerCustomerMapId;
           this.rangeFrom = res.data[0].manualNumberStart;
           this.rangeTo = res.data[0].manualNumberEnd;
+          this.getFlagStatusByCorpId(res.data[0].corporateId)
           this.getOutstandingBuCustMapId(this.fuelDealerCorpMapIdNew);
+          this.getFuelVehicleByMapId(this.fuelDealerCorpMapIdNew);
           this.requestTransporter1.controls["dealerName"].setValue(res.data[0].companyName);
           this.requestTransporter1.controls["dealerLocation"].setValue(res.data[0].cityArea + ',' + res.data[0].city);
           this.requestTransporter1.controls["personName"].setValue(res.data[0].firstName + ' ' + res.data[0].lastName);
           this.requestTransporter1.controls["personPhone1"].setValue(res.data[0].phone1);
           this.personId = res.data[0].personId;
+          this.cd.detectChanges()
         } else {
+          this.cd.detectChanges()
         }
       });
   }
 
+  getFlagStatusByCorpId(corporateIdForFlag: any) {
+    let data={
+      corporateIdForFlag:corporateIdForFlag
+    }
+    this.post.getFlagStatusByCorpIdPOST(data)
+    .subscribe(res => {
+        if (res.data.length) {
+          this.viewCorpFlag = res.data
+          this.isAlert = true;
+          this.openModal();
+          setTimeout(() => {
+            this.isAlert = false;;
+          }, 2000);
+          setTimeout(() => {
+            this.isAlert = true;;
+          }, 4000);
+          setTimeout(() => {
+            this.isAlert = false;;
+          }, 6000);
+        } else {
+        }
+      });
+  }
+  
+  openModal() {
+    this.modalRef = this.modalService.open(this.content, { centered: true });
+    this.modalRef.result.then(
+      (result: any) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason: any) => {
+        this.closeResult = `Dismissed`;
+      }
+    );
+  }
+  
   getCorporateMappedListByDealerId(fuelDealerId: any) {
     let data = {
       fuelDealerId: fuelDealerId
@@ -538,6 +580,7 @@ export class StatsWidget16Component {
       .subscribe(res => {
         if (res.status == "OK") {
           this.calOutstanding = Number(res.data[0].netOS)
+          this.cd.detectChanges()
         }
       })
   }
@@ -656,9 +699,11 @@ export class StatsWidget16Component {
           this.fuelVehicles = res.data
           this.isFuelVehicles = true;
           this.spinner.hide();
+          this.cd.detectChanges()
         } else {
           this.isFuelVehicles = false;
           this.spinner.hide();
+          this.cd.detectChanges()
         }
       });
   }
@@ -1075,5 +1120,6 @@ export class StatsWidget16Component {
   removeRequestIndex() {
     this.CreditRequestDataArray.splice(this.indexFuelCr, 1);
     this.count = this.count - 1;
+    this.modalRef.close()
   }
 }

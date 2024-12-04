@@ -110,11 +110,12 @@ export class MixedWidget11Component implements OnInit {
 
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
-    this.dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
     this.accessGroup = element.accessGroupId;
     this.getFuelCreditRequestCorporateByfuelDealerId(this.fuelDealerId)
+    this.cd.detectChanges()
   }
 
   getDetailsByCustomerName(id: any) {

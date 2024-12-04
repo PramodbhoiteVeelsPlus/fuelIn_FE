@@ -9,6 +9,7 @@ import { BaseTablesService } from '../base-tables.services';
 import moment from 'moment';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable'
+import * as htmlToImage from 'html-to-image';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<any> {
@@ -93,6 +94,24 @@ export class BaseTablesWidget1Component implements OnInit {
     transactionType: new FormControl('', [Validators.required]),
   });
 
+  requestEditCr = new FormGroup({
+    productName: new FormControl('', [Validators.required]),
+    reqQuantity: new FormControl(),
+    reqCreditAmount: new FormControl(),
+    estimatedRefuelDate: new FormControl(),
+    actualCreditAmount: new FormControl(),
+    actualCreditQuantity: new FormControl(),
+    requestType: new FormControl(),
+    requestTypeCR: new FormControl(),
+    mobile: new FormControl(),
+    vehicleNumber: new FormControl(),
+    productPrice: new FormControl('', [Validators.required]),
+    priceDate: new FormControl(),
+    productCategory: new FormControl(),
+    productRate: new FormControl(),
+    estimatedRefuelDateForEdit: new FormControl(),
+  });
+
   allCorporateList: any;
   fuelDealerId: any;
   isTableLoad: boolean = false;
@@ -164,7 +183,6 @@ export class BaseTablesWidget1Component implements OnInit {
   fuelProdIdForEdit: any;
   manualCrNumber: any;
   fuelDealerCustomerMapIdEdit: any;
-  requestEditCr: any;
   password: any;
   userId: any;
   modalRefCancel: any;
@@ -193,6 +211,7 @@ export class BaseTablesWidget1Component implements OnInit {
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.userId = element.userId;
     this.acceesGroup = element.accessGroupId;
     if (this.acceesGroup == 12 || this.acceesGroup == 19) {
@@ -205,6 +224,9 @@ export class BaseTablesWidget1Component implements OnInit {
     this.managerPersonId = element.personId
     this.managerName = element.firstName + ' ' + element.lastName
     this.acceesGroup = element.accessGroupId;
+    this.headerName1 = dealerData.companyName;
+    this.headerName2 = dealerData.address1 + ', ' + dealerData.address2 + ', ' + dealerData.city;
+    this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
     this.getFuelCreditRequestCorporateByfuelDealerId(this.fuelDealerId)
     this.getFuelCreditRequestByCorporateId(this.dealerCorporateId)
     this.getFuelCreditRequestByfuelDealerId(this.fuelDealerId);
@@ -986,11 +1008,11 @@ export class BaseTablesWidget1Component implements OnInit {
           this.closeResult
           this.modalRefpass.close('close')
           this.password = "";
-          this.updateCr(updateFuelCr, this.fuelCreditIdForEditReq, this.personIdForEdit, this.requestEditCr.value.phone1,
+          this.updateCr(updateFuelCr, this.fuelCreditIdForEditReq, this.personIdForEdit, this.requestEditCr.value.mobile,
             this.fuelProdIdForEdit, this.requestEditCr.value.productCategory, this.requestEditCr.value.productRate,
             this.requestEditCr.value.vehicleNumber, this.requestEditCr.value.reqQuantity,
             this.requestEditCr.value.reqCreditAmount, this.requestEditCr.value.actualCreditQuantity,
-            this.requestEditCr.value.creditAmount, this.requestEditCr.value.estimatedRefuelDate, this.vehicleIdForEdit,
+            this.requestEditCr.value.reqCreditAmount, this.requestEditCr.value.estimatedRefuelDate, this.vehicleIdForEdit,
             this.vpStatusForEdit, this.fuelDealerCustomerMapIdEdit, this.manualCrNumber)
         } else {
           alert(result.msg)
@@ -1163,12 +1185,15 @@ export class BaseTablesWidget1Component implements OnInit {
   }
 
   downloadBillRedFlag() {
-    // htmlToImage.toJpeg(document.getElementById('sanjay'), { quality: 0.95 })
-    // .then(function (dataUrl) {
-    //   var link = document.createElement('a');
-    //   link.download = 'bill.png';
-    //   link.href = dataUrl;
-    //   link.click();
-    // });
+    const element = document.getElementById('sanjay')
+    if (element) {
+      htmlToImage.toJpeg(element, { backgroundColor: 'white' })
+        .then(function (dataUrl: string) {
+          var link = document.createElement('a');
+          link.download = 'report.png';
+          link.href = dataUrl;
+          link.click();
+        });
+    }
   }
 }

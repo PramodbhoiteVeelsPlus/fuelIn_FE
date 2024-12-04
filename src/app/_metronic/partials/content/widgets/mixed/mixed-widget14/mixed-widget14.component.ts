@@ -69,7 +69,6 @@ export class MixedWidget14Component implements OnInit {
   accessGroup: any;
   fuelDealerId: any;
   dealerCorporateId: any;
-  dealerData: any;
   customerName: any;
   companyName: any;
   oilCompanyName: any;
@@ -105,6 +104,10 @@ export class MixedWidget14Component implements OnInit {
   rupeesWrd: any;
   amountInWords: string;
   oldInvoice5: any;
+  GSTNumber: any;
+  fromAddress: string;
+  isDueDate: string | null;
+  dueDate: string;
 
   constructor(
     private post: MixedService,
@@ -122,7 +125,7 @@ export class MixedWidget14Component implements OnInit {
 
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
-    this.dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
     if (localStorage.getItem('hsnCode') != "undefined") {
@@ -130,12 +133,16 @@ export class MixedWidget14Component implements OnInit {
     }
     this.oldInvoice5 = this.post.oldInvoice5
     this.accessGroup = element.accessGroupId;
-    this.companyName = this.dealerData.companyName
-    this.oilCompanyName = this.dealerData.brandName
-    this.state = this.dealerData.state
-    this.pin = this.dealerData.pin
-    this.city = this.dealerData.city
-    this.phone1 = this.dealerData.hostPhone
+    this.companyName = dealerData.companyName
+    this.oilCompanyName = dealerData.brandName
+    this.state = dealerData.state
+    this.pin = dealerData.pin
+    this.city = dealerData.city
+    this.phone1 = dealerData.hostPhone
+    this.GSTNumber = dealerData.GSTNumber
+    this.fromAddress = dealerData.address1 + ',' + dealerData.address2
+    this.isDueDate = localStorage.getItem('isDueDate');
+    this.dueDate = moment(localStorage.getItem('dueDate'),["DD-MM-YYYY"]).format("D MMM y");
     if (localStorage.getItem('manualSno') != "undefined") {
       this.manualNumber = localStorage.getItem('manualSno');
     }

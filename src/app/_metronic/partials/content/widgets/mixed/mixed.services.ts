@@ -66,6 +66,8 @@ export class MixedService {
     private addCreditAdvanceReqByDealerForAllURL = this.baseURL + 'fuelLube/addCreditAdvanceReqByDealerForAll';
     private updateLastCRDateByMapIdURL = this.baseURL + 'fuelVendor/updateLastCRDateByMapId'; 
     private updateLastCRDateMapIdWiseURL = this.baseURL + 'fuelVendor/updateLastCRDateMapIdWise';
+    private updateTotalInvPaidAmtURL = this.baseURL + 'fuelCreditInvoice/updateTotalInvPaidAmt';
+    private getDetailsByMapIdURL = this.baseURL + 'fuelDealerCustMap/getDetailsByMapId'; 
 
 
     setHeader() {
@@ -444,4 +446,23 @@ export class MixedService {
         })
     }
 
+    // updateTotalInvPaidAmtURL
+    updateTotalInvPaidAmtPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateTotalInvPaidAmtURL, body, {
+            headers: headers
+        })
+    }
+
+    // getDetailsByMapIdURL
+    getDetailsByMapIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getDetailsByMapIdURL, body, {
+            headers: headers
+        })
+    }
 }

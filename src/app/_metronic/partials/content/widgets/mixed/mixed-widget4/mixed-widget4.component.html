@@ -7,21 +7,6 @@
         <div class="row mb-2">
           <div class="col-sm-4">
           </div>
-          <div class="col-sm-8">
-            <div class="text-sm-end" *ngIf="accessGroup == '14' ">
-              <!-- <button *ngIf="isCreditPayment" type="button" class="btn btn-success btn-rounded mb-2 me-2"
-                routerLink="/credit/viewCrPayment" [routerLinkActive]="['router-link-active']">
-
-                View Credit Payments </button> -->
-            </div>
-            <div class="text-sm-end" *ngIf="accessGroup != '14' ">
-              <!-- <button type="button" class="btn btn-success btn-rounded mb-2 me-2" routerLink="/credit/viewCrPayment"
-                [routerLinkActive]="['router-link-active']">
-
-                View Credit Payments </button> -->
-            </div>
-          </div>
-
           <div class="modal-body">
             <form [formGroup]="addPaymentForm">
               <div class="row">
@@ -76,7 +61,7 @@
                               <td style="border-width: 1px; border-color: #000;">
                                 <div *ngIf="isFlag" class="col-md-1" (click)="viewFlag(viewFlagModel)"
                                   style="color:red;cursor:pointer;font-size: x-large;">
-                                  <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+                                  <i class="fas fa-exclamation-triangle" style="color: red;" aria-hidden="true"></i>
                                 </div>
                                 <div *ngIf="!isFlag" class="col-md-1">
                                   None
@@ -211,7 +196,7 @@
                   <div class="mb-3 row">
                     <label for="example-text-input" class="col-md-2 col-form-label">Amount</label>
                     <div class="col-sm-10">
-                      <input type="number"  class="form-control"
+                      <input type="number"  class="form-control" (input)="onSearchChange($event)"
                         formControlName="paymentAmount" placeholder="Enter Amount">
                     </div>
                   </div>

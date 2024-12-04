@@ -111,12 +111,12 @@
                   <div class="col-8">
                     <h3><b>{{companyName}}</b></h3>
                     <h5> {{oilCompanyName}} petrol pump</h5>
-                    <!-- <h6> {{address1}} {{address2}} {{city}} <br>{{state}} {{pin}}</h6> -->
+                    <h6> {{address1}} {{address2}} {{city}} <br>{{state}} {{pin}}</h6>
                   </div>
 
                   <div class="col-4">
                     <h4>&nbsp;</h4>
-                    <!-- <h6>GST : {{GSTNumber}}</h6> -->
+                    <h6>GST : {{GSTNumber}}</h6>
                     <h6 *ngIf="hsnCode">HSN Code : {{hsnCode}}</h6>
                     <h6>Phone : <span *ngIf="mobileStatus">
                         {{managerMobile}}
@@ -379,9 +379,9 @@
               <td colspan="5">
                 {{companyName}}<br>
                 {{oilCompanyName}} petrol pump <br>
-                <!-- {{address1}} {{address2}} {{city}} <br> -->
+                {{address1}} {{address2}} {{city}} <br>
                 {{state}} {{pin}} <br>
-                <!-- GST : {{GSTNumber}}<br> -->
+                GST : {{GSTNumber}}<br>
                 <span *ngIf="hsnCode">HSN Code : {{hsnCode}}<br></span>
                 Phone : <span *ngIf="mobileStatus">
                   {{managerMobile}}

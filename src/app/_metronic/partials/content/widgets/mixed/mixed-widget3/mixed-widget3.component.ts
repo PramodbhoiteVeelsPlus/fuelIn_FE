@@ -428,6 +428,7 @@ removeFormRequestAdvance(i: number,removeTable: any) {
 removeAdvanceIndex() {
   this.CreditRequestDataAdvance.splice(this.indexFuelAdvance, 1);
   this.countAdvance = this.countAdvance - 1;
+  this.modalRef.close()
 }
 
 getFuelStaffIdByfuelDealerId(fuelDealerId: any) {

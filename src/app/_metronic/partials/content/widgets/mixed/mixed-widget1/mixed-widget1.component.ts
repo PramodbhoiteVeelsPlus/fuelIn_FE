@@ -797,6 +797,7 @@ export class MixedWidget1Component {
   removeVehicleIndex() {
     this.CreditVehicleRequestDataArray.splice(this.indexFuelVehicle, 1);
     this.countVehicle = this.countVehicle - 1;
+    this.modalRef.close()
 
   }
 }

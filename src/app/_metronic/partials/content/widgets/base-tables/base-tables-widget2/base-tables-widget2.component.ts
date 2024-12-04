@@ -4,7 +4,7 @@ import { NgbDateAdapter, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerCon
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ExcelService } from 'src/app/pages/excel.service';
 import { BaseTablesService } from '../base-tables.services';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import moment from 'moment';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable'
@@ -85,6 +85,17 @@ export class BaseTablesWidget2Component implements OnInit {
     endDate: new FormControl(''),
     selectCorporateName: new FormControl(''),
   });
+  
+  editPaymentForm = new FormGroup({
+    editpaymentMethod: new FormControl('', Validators.required),
+    editpaymentTransactionNo: new FormControl('', Validators.required),
+    editpaymentDate: new FormControl('', Validators.required),
+    editpaymentAmount: new FormControl('', Validators.required),
+    editpaymentType: new FormControl('', Validators.required),
+    accountTransacLogId: new FormControl('', Validators.required),
+    mapID: new FormControl('', Validators.required),
+  });
+
   fuelDealerCorpMapIdNew: any;
   crPaymentDetails: any = [];
   crPaymentDetailsData: any = [];
@@ -104,13 +115,15 @@ export class BaseTablesWidget2Component implements OnInit {
   chequeNO: string;
   rowNumber: any;
   show: boolean = false;
-  editPaymentForm: any;
   modalRefpass: any;
   closeResult: string;
   password: any;
   userId: any;
   modalRefCancel: any;
   allCorporateList: any = [];
+  headerName1: any;
+  headerName2: string;
+  headerName3: string;
 
   constructor(
     private modalService: NgbModal,
@@ -127,6 +140,7 @@ export class BaseTablesWidget2Component implements OnInit {
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.acceesGroup = element.accessGroupId;
     this.userId = element.userId;
     if (this.acceesGroup == 12 || this.acceesGroup == 19) {
@@ -139,6 +153,9 @@ export class BaseTablesWidget2Component implements OnInit {
     this.managerPersonId = element.personId
     this.managerName = element.firstName + ' ' + element.lastName
     this.acceesGroup = element.accessGroupId;
+    this.headerName1 = dealerData.companyName;
+    this.headerName2 = dealerData.address1 + ', ' + dealerData.address2 + ', ' + dealerData.city;
+    this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
     this.getCRPayment(this.dealerCorporateId);
     this.getFilterCRPaymentFORDealer()
     this.getFuelCreditRequestCorporateByfuelDealerId(this.fuelDealerId)
@@ -409,10 +426,10 @@ export class BaseTablesWidget2Component implements OnInit {
       var doc = new jsPDF('l', 'pt');
 
       doc.setFontSize(12);
-      // doc.text(this.headerName1, 40, 25);
+      doc.text(this.headerName1, 40, 25);
       doc.setFontSize(8);
-      // doc.text(this.headerName2, 40, 40);
-      // doc.text(this.headerName3, 40, 55);
+      doc.text(this.headerName2, 40, 40);
+      doc.text(this.headerName3, 40, 55);
       if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
         doc.text("DATE : " + moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("DD MMM YYYY") + ' To ' + moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("DD MMM YYYY"), 40, 70);
       }
@@ -624,7 +641,7 @@ export class BaseTablesWidget2Component implements OnInit {
           this.closeResult
           this.modalRefpass.close('close')
           this.password = "";
-          // this.cancelRequest(cancelReq)
+          this.cancelRequest(cancelReq)
         } else {
           alert(result.msg)
           this.password = "";
