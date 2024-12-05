@@ -270,7 +270,7 @@
               <hr style="border-top: 1px dashed rgb(52, 51, 56);margin-top: 3px;margin-bottom: 8px;">
 
 
-              <table *ngIf="meterSalesDetails.length">
+              <table *ngIf="meterSalesDetails">
                 <tr>
                   <td colspan="12">
                     <h5>Product-wise Summary</h5>
@@ -369,7 +369,7 @@
                 </tr>
               </table>
               <br>
-              <table *ngIf="productWiseCreditData.length">
+              <table *ngIf="productWiseCreditData">
                 <tr>
                   <td colspan="12">
                     <h5>Product-wise Credit Summary</h5>
@@ -543,7 +543,7 @@
                 <br>
               </table>
               <br>
-              <table *ngIf="shiftWiseData.length">
+              <table *ngIf="shiftWiseData">
                 <tr>
                   <td colspan="12">
                     <h5>Shift-wise Summary</h5>
@@ -654,7 +654,7 @@
                 <br>
               </table>
               <br>
-              <table style="width: 90%;" *ngIf="shiftNzDetails.length">
+              <table style="width: 90%;" *ngIf="shiftNzDetails">
                 <tr>
                   <td colspan="12">
                     <h5>All-in-One Shift Sales Summary</h5>
@@ -712,7 +712,7 @@
                 <br>
               </table>
               <br>
-              <table *ngIf="totalLubeCash.length" class="table  table-centered table-nowrap" style="width: 90%;">
+              <table *ngIf="totalLubeCash" class="table  table-centered table-nowrap" style="width: 90%;">
                 <tr>
                   <th colspan="12">
                     <h5>All-in-One(Lube) Shift Sales Summary</h5>
@@ -764,7 +764,7 @@
                 </tr>
               </table>
               <br>
-              <table *ngIf="digitalDetails.length">
+              <table *ngIf="digitalDetails">
                 <tr>
                   <td colspan="12">
                     <h5>Digital Summary</h5>
@@ -806,7 +806,7 @@
                 <br>
               </table>
               <br>
-              <table *ngIf="digitalLubeData.length">
+              <table *ngIf="digitalLubeData">
                 <tr>
                   <td colspan="12">
                     <h5>Digital(Lube) Summary</h5>
@@ -914,7 +914,7 @@
                 <br>
               </table>
               <br>
-              <table *ngIf="creditDetails.length">
+              <table *ngIf="creditDetails">
                 <tr>
                   <td colspan="12">
                     <h5>Credit Customers Sales Summary</h5>
@@ -977,7 +977,7 @@
                 <br>
               </table>
               <br>
-              <table *ngIf="creditPaymentDetails.length">
+              <table *ngIf="creditPaymentDetails">
                 <tr>
                   <td colspan="12">
                     <h5>Credit Customers Payments Summary</h5>
@@ -1035,7 +1035,7 @@
                 <br>
               </table>
               <br>
-              <table *ngIf="lubeCrDetails.length">
+              <table *ngIf="lubeCrDetails">
                 <tr>
                   <td colspan="12">
                     <h5>Lube Customers Sales Summary</h5>
@@ -1089,7 +1089,7 @@
                 </tr>
               </table>
               <br>
-              <table *ngIf="lubeDetails.length">
+              <table *ngIf="lubeDetails">
                 <tr>
                   <td colspan="12">
                     <h5>Lube(Credit) Customers Sales Summary</h5>
@@ -1154,7 +1154,7 @@
               </table>
               <br>
               <br><br>
-              <table *ngIf="lubeDetails.length">
+              <table *ngIf="lubeDetails">
                 <tr>
                   <td colspan="12">
                     <h5>Lube(Cash) Customers Sales Summary</h5>
@@ -1225,7 +1225,7 @@
                 <br>
               </table>
               <br>
-              <table *ngIf="advAmtDetails.length">
+              <table *ngIf="advAmtDetails">
                 <tr>
                   <td colspan="12">
                     <h5>Advance Amt Customers Summary</h5>
@@ -1538,7 +1538,7 @@
                         </div>
                         <div class="col-md-6">
                           <input class="form-control form-control-sm mr-1 w-40" style="font-size: 0.750rem;"
-                            type="number" onkeypress="return this.value.length < 6;" [(ngModel)]="data.sellingPrice"
+                            type="number" onkeypress="return this.value < 6;" [(ngModel)]="data.sellingPrice"
                             [ngModelOptions]="{standalone: true}" placeholder="Enter Price">
                         </div>
                         <br><br>
@@ -1612,7 +1612,7 @@
 
       <ng-template #FUELDIGITAL1>
         <div>
-          <div class="table-responsive mb-0" *ngIf="digitalSalesDetails.length">
+          <div class="table-responsive mb-0" *ngIf="digitalSalesDetails">
             <table class="table table-centered table-nowrap">
               <thead class="table-light">
                 <tr>
@@ -1674,7 +1674,7 @@
       <ng-template #LUBEDIGITAL1>
         <div>
 
-          <div class="table-responsive mb-0" *ngIf="digitalLubeDetails.length">
+          <div class="table-responsive mb-0" *ngIf="digitalLubeDetails">
             <table class="table table-centered table-nowrap">
               <thead class="table-light">
                 <tr>
@@ -1874,8 +1874,8 @@
                           <div class="col-md-8">
                             <!-- <input type="number" class="form-control" formControlName="customerNumber"
                               [class.is-invalid]="userMobile1.invalid && userMobile1.touched"
-                              placeholder="Enter Mobile Number" onkeypress="return this.value.length < 10;"
-                              oninput="if(this.value.length=10)">
+                              placeholder="Enter Mobile Number" onkeypress="return this.value < 10;"
+                              oninput="if(this.value=10)">
                             <div *ngIf="(userMobile1.invalid && userMobile1.touched) || userMobile1.dirty">
                               <small *ngIf="userMobile1.errors?.pattern" class="text-danger">
                                 Please provide a valid 10 Digit Mobile Number</small>
@@ -2071,7 +2071,7 @@
       <ng-template #CASHFUEL>
         <br><br>
         <div>
-          <div class="table-responsive mb-0" *ngIf="cashDetails.length">
+          <div class="table-responsive mb-0" *ngIf="cashDetails">
             <table class="table table-centered table-nowrap">
               <thead class="table-light">
                 <tr>
@@ -2336,8 +2336,8 @@
                           <div class="col-md-8">
                             <!-- <input type="number" class="form-control" formControlName="customerNumber"
                               [class.is-invalid]="userMobile1.invalid && userMobile1.touched"
-                              placeholder="Enter Mobile Number" onkeypress="return this.value.length < 10;"
-                              oninput="if(this.value.length=10)">
+                              placeholder="Enter Mobile Number" onkeypress="return this.value < 10;"
+                              oninput="if(this.value=10)">
                             <div *ngIf="(userMobile1.invalid && userMobile1.touched) || userMobile1.dirty">
                               <small *ngIf="userMobile1.errors?.pattern" class="text-danger">
                                 Please provide a valid 10 Digit Mobile Number</small>
@@ -2642,11 +2642,11 @@
 
                           </td>
                           <td style="text-align: left;border-width: 1px; border-color: #000;">
-                            <span *ngIf="viewCorpFlag.length" class="col-md-1" (click)="viewFlag(viewFlagModel)"
+                            <span *ngIf="viewCorpFlag" class="col-md-1" (click)="viewFlag(viewFlagModel)"
                               style="color:red;cursor:pointer;font-size: x-large;">
                               <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
                             </span>
-                            <span *ngIf="!viewCorpFlag.length" class="col-md-1">
+                            <span *ngIf="!viewCorpFlag" class="col-md-1">
                               None
                             </span>
                           </td>
@@ -2901,12 +2901,12 @@
 
                               </td>
                               <td style="text-align: left;border-width: 1px; border-color: #000;">
-                                <span *ngIf="viewCorpFlag.length" class="col-md-1" (click)="viewFlag(viewFlagModel)"
+                                <span *ngIf="viewCorpFlag" class="col-md-1" (click)="viewFlag(viewFlagModel)"
                                   style="color:red;cursor:pointer;font-size: x-large;">
                                   <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
 
                                 </span>
-                                <span *ngIf="!viewCorpFlag.length">
+                                <span *ngIf="!viewCorpFlag">
                                   None
                                 </span>
                               </td>
@@ -3386,7 +3386,7 @@
         </div>
       </div>
       <br>
-      <div class="table-responsive mb-0" *ngIf="digitalSalesDetails.length">
+      <div class="table-responsive mb-0" *ngIf="digitalSalesDetails">
         <table class="table table-centered table-nowrap">
           <thead class="table-light">
             <tr>
@@ -3407,7 +3407,7 @@
       </div>
       <br>
 
-      <div class="table-responsive mb-0" *ngIf="digitalLubeDetails.length">
+      <div class="table-responsive mb-0" *ngIf="digitalLubeDetails">
         <table class="table table-centered table-nowrap">
           <thead class="table-light">
             <tr>

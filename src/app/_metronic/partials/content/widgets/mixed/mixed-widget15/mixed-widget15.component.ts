@@ -113,6 +113,8 @@ export class MixedWidget15Component implements OnInit {
     this.dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
+    this.shiftForm.controls["startDate"].setValue("01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear())
+    this.shiftForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
     this.getAllAttendantsByDid(this.fuelDealerId)
     this.getShiftDetails(this.fuelDealerId)
     this.getPosTerminals(this.fuelDealerId)
@@ -123,7 +125,7 @@ export class MixedWidget15Component implements OnInit {
   
   pageChangeEvent(event: number) {
     this.p = event;
-    this.getPosDetailsByOperatorTerminal();
+    this.getPosDetails(this.fuelDealerId);
   }
 
   getPosDetailsByOperatorTerminal() {

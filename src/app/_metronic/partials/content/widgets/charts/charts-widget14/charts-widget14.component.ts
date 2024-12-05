@@ -127,6 +127,7 @@ export class ChartsWidget14Component implements OnInit {
   cashBillCreatedBy1: string;
   rowNumber: any;
   show: boolean = false;
+  headerName2: any
 
   constructor(
     private post: ChartsService,
@@ -171,12 +172,12 @@ export class ChartsWidget14Component implements OnInit {
       if (element.accessGroupId == 12 || element.accessGroupId == 14) {
         this.dealerAccess = true
       }
-      this.headerName1 = this.companyName;
-      // this.headerName2 = res.data[0].address1+', '+res.data[0].address2+', '+res.data[0].city;
-      this.headerName3 = this.state + '-' + this.pin + '  ' + "GST: " + this.GSTNumber;
+      this.headerName1 = dealerData.companyName;
+      this.headerName2 = dealerData.address1+', '+dealerData.address2+', '+dealerData.city;
+      this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
 
     }
-    // this.getPumpInfra();
+    this.getCashBillDetails();
     this.cd.detectChanges()
   }
 

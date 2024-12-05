@@ -183,15 +183,17 @@ isHovered(date: NgbDate) {
       }
 
     }
-    // this.getPumpInfra();
+    this.unitForm.controls['productPriceDate'].setValue(moment(this.productPriceDate).format('DD-MM-YYYY'))
+    this.getFuelPriceByDealer(this.fuelDealerId);  
+    this.getProductsByDealerId(this.fuelDealerId);    
     this.cd.detectChanges()
   }
 
 
   pageChangeEvent(event: number) {
     this.p = event;
-    // this.getPumpInfra();
-  }
+    this.getFuelPriceByDealer(this.fuelDealerId);       
+   }
 
   opensetFuelPrice(setFuelPrice: any) {
     this.modalRef = this.modalService.open(setFuelPrice, { size: 'sm' });
@@ -299,6 +301,7 @@ isHovered(date: NgbDate) {
           this.productsList = res.data;
           this.allProductPriceList = res.data;
           this.getProductDetails(res.data);
+          this.cd.detectChanges()
         }
     })
   }
@@ -395,6 +398,7 @@ isHovered(date: NgbDate) {
     .subscribe(res=>{
       if(res.data.length){
         this.getFuelPriceData = res.data;
+        this.cd.detectChanges()
       }
       else{
   

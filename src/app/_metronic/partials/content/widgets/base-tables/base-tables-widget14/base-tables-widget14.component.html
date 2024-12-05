@@ -1,0 +1,552 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!-- statement 2 start -->
+<html xmlns="https://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+
+  <title>Editable Statement</title>
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <!-- <link rel='stylesheet' type='text/css' href='../../../assets/EditableInvoice/css/style.css' />  -->
+  <script type='text/javascript' src='../../../../../../assets/EditableInvoice/js/jquery-1.3.2.min1.js'></script>
+  <script type='text/javascript' src='../../../../../../assets/EditableInvoice/js/example1.js'></script>
+
+</head>
+
+<body *ngIf="statementInvoice" id="contentToConvert">
+
+  <div id="page-wrap">
+
+    <div class="col-md-12 noprint">
+
+      <!-- <span class="noprint">
+                <button *ngIf="isSetPath == 'Individual'" class="btn btn-outline-success my-2 my-sm-0 btn-sm "(click) = "goToBack()">Back</button>
+                </span> -->
+
+      &nbsp; <button class="noprint" style="font-size: medium;" onclick="window.print()"> &nbsp;&nbsp;<i
+          class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
+    </div>
+
+
+    <div id="sanjay">
+      <div class="container">
+
+        <div class="col-12 mr-2 px-1 py-1 container border-black" id="htmlData" *ngIf="isCustomer == 'TRUE' ">
+          <div>
+            <div>
+              <div class="row px-4 py-4">
+                <div class="col-1">
+                  <!-- <img [src]="logo" style="width: 50%;"> -->
+                </div>
+                <div class="col-9">
+                  <h3><b>{{companyName}}</b></h3>
+                  <h5><b>{{oilCompanyName}}</b> </h5>
+                  <h6> <b>{{address1}} {{address2}} {{city}}</b> <br><b>{{state}} {{pin}} <br>
+                      GST</b> : {{GSTNumber}}
+                    <b> Phone </b>: {{mobile}}
+                  </h6>
+                  <h6 *ngIf="statementStartDate"><b>From : {{statementStartDate}} To : {{statementEndDate}}</b> </h6>
+                  <h5> <b>Customer Name</b>: {{customerName}} </h5>
+
+                </div>
+              </div>
+            </div>
+
+            <table class="table main-table" style="font-size: small;">
+              <div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th style="text-align: left">Inv No.</th>
+                      <th style="text-align: left;">
+                        Gen Date
+                      </th>
+                      <!-- <th style="text-align: left">Build To </th> -->
+                      <th style="text-align: left;">
+                        Date Range
+                      </th>
+                      <th style="text-align: left;">Type</th>
+                      <th style="text-align: left">Opening</th>
+                      <th style="text-align: left">Purchase Amount</th>
+                      <th style="text-align: left">Payment Amount</th>
+                      <th style="text-align: left">Payable Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of FCInvoiceListDetails;let i = index">
+                      <td style="text-align: left">
+                        <span>
+                          VPFCINV{{ data.invoiceCode }}
+                        </span>
+                      </td>
+                      <td style="text-align: left">
+                        {{ data.invoiceDate | date: "dd-MM-yyyy" }}
+                      </td>
+                      <!-- <td style="text-align: left">
+                                    {{ data.toName }}
+                                </td> -->
+
+                      <td style="text-align: left">
+                        {{data.periodStartDate | date: "dd-MM-yyyy"}}-{{data.periodEndDate | date: "dd-MM-yyyy" }}
+                      </td>
+                      <td style="text-align: left;">
+                        <span *ngIf="data.invoiceOf == 'CREDIT LUBETAX' ">
+                          ALL
+                        </span>
+                        <span *ngIf="data.invoiceOf != 'CREDIT LUBETAX' ">
+                          {{data.invoiceOf}}
+                        </span>
+                      </td>
+
+                      <td style="text-align: left">
+                        <span *ngIf="data.invoiceOf == 'LUBE TAX' ">
+                          -
+                        </span>
+                        <span *ngIf="data.invoiceOf != 'LUBE TAX' ">
+                          <span *ngIf="data.fuelInvoicePreviousStatement">
+                            <span *ngIf="data.fuelInvoicePreviousStatement >= 0">
+                              {{ data.fuelInvoicePreviousStatement | number: "1.2-2" }}
+                            </span>
+                            <span *ngIf="data.fuelInvoicePreviousStatement < 0">
+                              {{ (data.fuelInvoicePreviousStatement) * (-1) | number: "1.2-2" }} CR
+                            </span>
+                          </span>
+                          <span *ngIf="!data.fuelInvoicePreviousStatement">
+                            0
+                          </span>
+                        </span>
+
+                      </td>
+
+                      <!-- <td style="text-align: left;"> {{data.totalAmount}} </td> -->
+                      <td style="text-align: left">
+                        <span *ngIf="data.totalAmount">
+                          {{ data.totalAmount | number: "1.2-2" }}
+                        </span>
+                        <span *ngIf="!data.totalAmount"> 0 </span>
+                      </td>
+
+                      <!-- <td style="text-align: left;"> {{data.fuelInvoicTotalPaymentAmount | number:'1.2-2'}}</td> -->
+                      <td style="text-align: left">
+                        <span *ngIf="data.fuelInvoicTotalPaymentAmount">
+                          <span *ngIf="data.invoiceOf == 'LUBE TAX'">
+                            -
+                          </span>
+                          <span *ngIf="data.invoiceOf != 'LUBE TAX'">
+                            {{data.fuelInvoicTotalPaymentAmount | number: "1.2-2" }}
+                          </span>
+                        </span>
+                        <span *ngIf="!data.fuelInvoicTotalPaymentAmount">
+                          0
+                        </span>
+                      </td>
+
+                      <td style="text-align: left"
+                        *ngIf="data.totalAmount - data.fuelInvoicTotalPaymentAmount ++ data.fuelInvoicePreviousStatement >= 0">
+                        <span *ngIf="data.invoiceOf == 'LUBE TAX'"> ₹
+                          {{(data.totalAmount) | number: "1.2-2"}}
+                        </span>
+                        <span *ngIf="data.invoiceOf != 'LUBE TAX'"> ₹
+                          {{(data.totalAmount - data.fuelInvoicTotalPaymentAmount ++data.fuelInvoicePreviousStatement) |
+                          number: "1.2-2"}}
+                        </span>
+                      </td>
+                      <td style="text-align: left"
+                        *ngIf="data.totalAmount - data.fuelInvoicTotalPaymentAmount ++ data.fuelInvoicePreviousStatement <0">
+                        <span *ngIf="data.invoiceOf == 'LUBE TAX'">₹
+                          {{(data.totalAmount) | number: "1.2-2"}}
+                        </span>
+                        <span *ngIf="data.invoiceOf != 'LUBE TAX'">₹
+                          {{(data.totalAmount - data.fuelInvoicTotalPaymentAmount ++data.fuelInvoicePreviousStatement) *
+                          -1 | number: "1.2-2"}} CR
+                        </span>
+                      </td>
+
+                      <!-- <td style="text-align: left;">
+                                    <span *ngIf = "data.fuelInvoicTotalPaymentAmount != ''">
+
+                                    </span>
+
+                                </td> -->
+
+                      <!-- ₹ &nbsp; {{((corporate.totalCRAmt - corporate.totalDiscount -
+                                    corporate.totalInvPaidAmt) ++ (corporate.previousOutstand)) *(-1) |
+                                    number:'1.2-2'}}
+                                    CR -->
+
+                      <!-- <td>  -->
+                      <!-- <a  href="javascript: void(0);"
+                                    (click) = "deleteInvoiceByInvoiceId(data.fuelInvoiceId)">
+                                    <i class="fas fa-ban" style="color: red;"></i> </a> -->
+
+                      <!-- <a class="dropdown-item" href="javascript: void(0);"
+                                        (click)="askForPass(PasswordTemplate,data.fuelInvoiceId)">
+                                        <i class="fas fa-ban" style="color: red;"></i>  </a> -->
+
+                      <!-- </td> -->
+                    </tr>
+                    <tr>
+                      <td colspan="5" style="text-align: right;"><b>Total</b></td>
+                      <td style="text-align: left;"><b> {{ totalAmount | number: "1.2-2"}} </b></td>
+                      <td style="text-align: left;"><b> {{ fuelInvoicTotalPaymentAmount | number: "1.2-2"}} </b></td>
+                      <td style="text-align: left;"><b>
+                          <span *ngIf="payableAmount < 0 "> {{ (payableAmount) * (-1) | number: "1.2-2"}} CR </span>
+                          <span *ngIf="payableAmount >= 0 "> {{ (payableAmount) | number: "1.2-2"}} </span>
+                        </b></td>
+
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </table>
+          </div>
+        </div>
+
+        <div class="col-12 mr-2 px-1 py-1 container border-black" id="htmlData" *ngIf="isCustomer == 'FALSE' ">
+          <div>
+            <div>
+              <div class="row px-4 py-4">
+                <div class="col-1">
+                  <!-- <img [src]="logo" style="width: 50%;"> -->
+                </div>
+                <div class="col-9">
+                  <h3><b>{{companyName}}</b></h3>
+                  <h5><b>{{oilCompanyName}}</b> </h5>
+                  <h6> <b>{{address1}} {{address2}} {{city}}</b> <br><b>{{state}} {{pin}} <br>
+                      GST</b> : {{GSTNumber}}
+                    <b> Phone </b>: {{mobile}}
+                  </h6>
+                  <h6 *ngIf="statementStartDate"><b>From : {{statementStartDate}} To : {{statementEndDate}}</b> </h6>
+
+
+                </div>
+              </div>
+            </div>
+
+            <table class="table main-table" style="font-size: small;">
+              <div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th style="text-align: left">Inv No.</th>
+                      <!-- <th style="text-align: left;">
+                                Gen Date
+                            </th> -->
+                      <th style="text-align: left">Build To </th>
+                      <th style="text-align: left;">
+                        Date Range
+                      </th>
+                      <th style="text-align: left;">Type</th>
+                      <th style="text-align: left">Opening</th>
+                      <th style="text-align: left">Purchase Amount</th>
+                      <th style="text-align: left">Payment Amount</th>
+                      <th style="text-align: left">Payable Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of FCInvoiceListDetails;let i = index">
+                      <td style="text-align: left">
+                        <span>
+                          VPFCINV{{ data.invoiceCode }}
+                        </span>
+                      </td>
+                      <!-- <td style="text-align: left">
+                                {{ data.invoiceDate | date: "dd-MM-yyyy" }}
+                            </td> -->
+                      <td style="text-align: left">
+                        {{ data.toName }}
+                      </td>
+
+                      <td style="text-align: left">
+                        {{data.periodStartDate | date: "dd-MM-yyyy"}}-{{data.periodEndDate | date: "dd-MM-yyyy" }}
+                      </td>
+                      <td style="text-align: left;">
+                        <span *ngIf="data.invoiceOf == 'CREDIT LUBETAX' ">
+                          ALL
+                        </span>
+                        <span *ngIf="data.invoiceOf != 'CREDIT LUBETAX' ">
+                          {{data.invoiceOf}}
+                        </span>
+                      </td>
+
+                      <td style="text-align: left">
+                        <span *ngIf="data.invoiceOf == 'LUBE TAX' ">
+                          -
+                        </span>
+                        <span *ngIf="data.invoiceOf != 'LUBE TAX' ">
+                          <span *ngIf="data.fuelInvoicePreviousStatement">
+                            <span *ngIf="data.fuelInvoicePreviousStatement >= 0">
+                              {{ data.fuelInvoicePreviousStatement | number: "1.2-2" }}
+                            </span>
+                            <span *ngIf="data.fuelInvoicePreviousStatement < 0">
+                              {{ (data.fuelInvoicePreviousStatement) * (-1) | number: "1.2-2" }} CR
+                            </span>
+                          </span>
+                          <span *ngIf="!data.fuelInvoicePreviousStatement">
+                            0
+                          </span>
+                        </span>
+
+                      </td>
+
+                      <!-- <td style="text-align: left;"> {{data.totalAmount}} </td> -->
+                      <td style="text-align: left">
+                        <span *ngIf="data.totalAmount">
+                          {{ data.totalAmount | number: "1.2-2" }}
+                        </span>
+                        <span *ngIf="!data.totalAmount"> 0 </span>
+                      </td>
+
+                      <!-- <td style="text-align: left;"> {{data.fuelInvoicTotalPaymentAmount | number:'1.2-2'}}</td> -->
+                      <td style="text-align: left">
+                        <span *ngIf="data.fuelInvoicTotalPaymentAmount">
+                          <span *ngIf="data.invoiceOf == 'LUBE TAX'">
+                            -
+                          </span>
+                          <span *ngIf="data.invoiceOf != 'LUBE TAX'">
+                            {{data.fuelInvoicTotalPaymentAmount | number: "1.2-2" }}
+                          </span>
+                        </span>
+                        <span *ngIf="!data.fuelInvoicTotalPaymentAmount">
+                          0
+                        </span>
+                      </td>
+
+                      <td style="text-align: left"
+                        *ngIf="data.totalAmount - data.fuelInvoicTotalPaymentAmount ++ data.fuelInvoicePreviousStatement >= 0">
+                        <span *ngIf="data.invoiceOf == 'LUBE TAX'"> ₹
+                          {{(data.totalAmount) | number: "1.2-2"}}
+                        </span>
+                        <span *ngIf="data.invoiceOf != 'LUBE TAX'"> ₹
+                          {{(data.totalAmount - data.fuelInvoicTotalPaymentAmount ++data.fuelInvoicePreviousStatement) |
+                          number: "1.2-2"}}
+                        </span>
+                      </td>
+                      <td style="text-align: left"
+                        *ngIf="data.totalAmount - data.fuelInvoicTotalPaymentAmount ++ data.fuelInvoicePreviousStatement <0">
+                        <span *ngIf="data.invoiceOf == 'LUBE TAX'">₹
+                          {{(data.totalAmount) | number: "1.2-2"}}
+                        </span>
+                        <span *ngIf="data.invoiceOf != 'LUBE TAX'">₹
+                          {{(data.totalAmount - data.fuelInvoicTotalPaymentAmount ++data.fuelInvoicePreviousStatement) *
+                          -1 | number: "1.2-2"}} CR
+                        </span>
+                      </td>
+
+                      <!-- <td style="text-align: left;">
+                                <span *ngIf = "data.fuelInvoicTotalPaymentAmount != ''">
+
+                                </span>
+
+                            </td> -->
+
+                      <!-- ₹ &nbsp; {{((corporate.totalCRAmt - corporate.totalDiscount -
+                                corporate.totalInvPaidAmt) ++ (corporate.previousOutstand)) *(-1) |
+                                number:'1.2-2'}}
+                                CR -->
+
+                      <!-- <td>  -->
+                      <!-- <a  href="javascript: void(0);"
+                                (click) = "deleteInvoiceByInvoiceId(data.fuelInvoiceId)">
+                                <i class="fas fa-ban" style="color: red;"></i> </a> -->
+
+                      <!-- <a class="dropdown-item" href="javascript: void(0);"
+                                    (click)="askForPass(PasswordTemplate,data.fuelInvoiceId)">
+                                    <i class="fas fa-ban" style="color: red;"></i>  </a> -->
+
+                      <!-- </td> -->
+                    </tr>
+                    <tr>
+                      <td colspan="5" style="text-align: right;"><b>Total</b></td>
+                      <td style="text-align: left;"><b> {{ totalAmount | number: "1.2-2"}} </b></td>
+                      <td style="text-align: left;"><b> {{ fuelInvoicTotalPaymentAmount | number: "1.2-2"}} </b></td>
+                      <td style="text-align: left;"><b> {{ payableAmount | number: "1.2-2"}} </b></td>
+
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+
+
+<!-- View Cr Khata Print -->
+
+<body *ngIf="!statementInvoice" id="contentToConvert">
+
+  <div id="page-wrap">
+
+    <div class="col-md-12 noprint">
+
+      <!-- <span class="noprint">
+                    <button *ngIf="isSetPath == 'Individual'" class="btn btn-outline-success my-2 my-sm-0 btn-sm "(click) = "goToBack()">Back</button>
+                    </span> -->
+
+      &nbsp; <button class="noprint" style="font-size: medium;" onclick="window.print()"> &nbsp;&nbsp;<i
+          class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
+    </div>
+
+
+    <div id="sanjay">
+      <div class="container">
+
+        <div class="col-12 mr-2 px-1 py-1 container border-black" id="htmlData">
+          <div>
+            <div>
+              <div class="row px-4 py-4">
+                <div class="col-1">
+                  <!-- <img [src]="logo" style="width: 50%;"> -->
+                </div>
+                <div class="col-9">
+                  <h3><b>{{companyName}}</b></h3>
+                  <h5><b>{{oilCompanyName}}</b> </h5>
+                  <h6> <b>{{address1}} {{address2}} {{city}}</b> <br><b>{{state}} {{pin}} <br> GST : {{GSTNumber}}
+                      Phone :
+
+                      {{mobile}}
+                    </b></h6>
+                  <h6 *ngIf="isActiveCustomer"><b>From : {{startDate}}</b><b> To : {{endDate}}</b> </h6>
+                  <!-- </div> -->
+
+                  <!-- <div class="col-4"> -->
+
+                </div>
+              </div>
+            </div>
+
+
+
+            <table class="table main-table">
+              <div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th style="text-align: left;">SrNo</th>
+                      <!-- <th >Date</th> -->
+                      <th style="text-align: left;">Customer Name</th>
+                      <th style="text-align: left;">Opening Outstanding</th>
+                      <!-- <th >Credit limit</th> -->
+                      <th style="text-align: left;">Total purchase</th>
+                      <th style="text-align: left;">Total payment</th>
+                      <th style="text-align: left;">Net OS</th>
+
+                    </tr>
+                  </thead>
+
+                  <tbody *ngIf="isActiveCustomer" class="table-row">
+                    <tr *ngFor="let data of allActiveCreditAccByDealer; let i = index">
+                      <td class="border-gray"> {{i+1}} </td>
+                      <td class="border-gray" style="text-align: left;">
+                        <b> {{data.companyName}} </b>
+                      </td>
+                      <td class="border-gray" style="text-align: left;">
+                        <span *ngIf="data.mappingStatus == 'ACTIVE'">
+                          <span *ngIf="(data.openningOS) < 0">
+                            {{(data.openningOS) *(-1) | number:'1.2-2'}} CR
+                          </span>
+                          <span *ngIf="(data.openningOS) >= 0">
+                            {{(data.openningOS) | number:'1.2-2'}}
+                          </span>
+                        </span>
+                        <span *ngIf="data.mappingStatus != 'ACTIVE'">
+                          -
+                        </span>
+                      </td>
+
+                      <td class="border-gray" style="text-align: left;">
+                        <span>
+                          {{data.totalPurchaseAmt | number:'1.2-2'}}
+                        </span>
+                      </td>
+                      <td class="border-gray" style="text-align: left;">
+                        <span *ngIf="data.mappingStatus == 'ACTIVE'">
+                          {{data.totalPaymentAmt | number:'1.2-2'}}
+                        </span>
+                        <span *ngIf="data.mappingStatus != 'ACTIVE'">
+                          -
+                        </span>
+                      </td>
+                      <td class="border-gray" style="text-align: left;">
+                        <span *ngIf="data.mappingStatus == 'ACTIVE'">
+                          <span *ngIf="(data.netOS) < 0">
+                            {{(data.netOS) *(-1) | number:'1.2-2'}} CR
+                          </span>
+                          <span *ngIf="(data.netOS) >= 0">
+                            <span *ngIf="((data.maxCreditAmount * 90)/100) <= (data.netOS)" style="color: red;">
+                              {{(data.netOS) | number:'1.2-2'}}
+                            </span>
+                            <span *ngIf="((data.maxCreditAmount * 90)/100) > (data.netOS)">
+                              {{(data.netOS) | number:'1.2-2'}}
+                            </span>
+                          </span>
+                        </span>
+                        <span *ngIf="data.mappingStatus != 'ACTIVE'">
+                          -
+                        </span>
+                      </td>
+
+                    </tr>
+                    <br>
+                    <tr>
+                      <td style="text-align: left;"></td>
+                      <td style="text-align: left;"></td>
+                      <td style="text-align: left;"><b>TOTAL</b></td>
+                      <td style="text-align: left;"><b>{{totalpurchase | number:'1.2-2'}}</b></td>
+                      <td style="text-align: left;"><b>{{totalpayment | number:'1.2-2'}}</b></td>
+                      <td style="text-align: left;"><b>{{netTotal | number:'1.2-2'}}</b></td>
+                    </tr>
+                    <tr>
+                      <td style="text-align: left;"></td>
+                      <td style="text-align: left;"></td>
+                      <td style="text-align: left;"><b>Advance</b></td>
+                      <td style="text-align: left;"></td>
+                      <td style="text-align: left;"></td>
+                      <td style="text-align: left;"><b>{{advance *(-1) | number:'1.2-2'}} </b></td>
+                    </tr>
+                    <tr>
+                      <td style="text-align: left;"></td>
+                      <td style="text-align: left;"></td>
+                      <td style="text-align: left;"><b>TOTAL</b></td>
+                      <td style="text-align: left;"> </td>
+                      <td style="text-align: left;"> </td>
+                      <td style="text-align: left;"><b>{{finalTotal | number:'1.2-2'}}</b></td>
+                    </tr>
+
+                  </tbody>
+
+                </table>
+
+              </div>
+              <div>
+
+
+
+
+
+
+              </div>
+              <tr>
+
+              </tr>
+              <br>
+
+
+
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

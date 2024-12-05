@@ -177,12 +177,13 @@ export class ListsWidget10Component {
     this.currentYear = moment(new Date()).format("YYYY")
     this.lastYear = Number(moment(new Date()).format("YYYY")) - 1;
     this.last2Years = Number(moment(new Date()).format("YYYY")) - 2;
-    // this.getStaffDetails(this.fuelDealerId)
+    this.getDetailsForSalary(this.fuelDealerId)
     this.cd.detectChanges()
   }
 
   isAddSal() {
     this.isAddSalary = true;
+    this.cd.detectChanges()
   }
 
   private getDismissReason(reason: any): string {
@@ -272,10 +273,12 @@ export class ListsWidget10Component {
         if (res.status == "OK") {
           this.staffSalaryData = res.data;
           this.spinner.hide();
+          this.cd.detectChanges()
         }
         else {
           this.staffSalaryData = [];
           this.spinner.hide();
+          this.cd.detectChanges()
         }
       })
   }

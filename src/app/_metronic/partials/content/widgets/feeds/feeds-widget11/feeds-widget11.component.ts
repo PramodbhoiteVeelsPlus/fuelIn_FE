@@ -148,7 +148,6 @@ export class FeedsWidget11Component implements OnInit {
     private cd: ChangeDetectorRef,) { }
 
   ngOnInit(): void {
-    this.spinner.show();
     this.fuelDealerId = localStorage.getItem('dealerId');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');

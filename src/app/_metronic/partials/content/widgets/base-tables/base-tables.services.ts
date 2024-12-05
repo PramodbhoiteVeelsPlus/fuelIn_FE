@@ -10,7 +10,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class BaseTablesService {
     creditValueforInvoice: any = [];
     creditValueforInvoicePayment: any = [];
-    setRouteForActiveArray: any;
+    setRouteForActiveArray: any = [];
     FCInvoiceListDetails: any = [];
     activeStartDate: any;
     activeEndDate: any;

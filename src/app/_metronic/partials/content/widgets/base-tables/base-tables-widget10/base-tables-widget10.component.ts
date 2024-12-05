@@ -423,10 +423,10 @@ export class BaseTablesWidget10Component implements OnInit {
   printPdf() {
     if (this.statementListForm.value.selectCorporateMapId) {
       this.post.setRouteForSavedInvoice(this.FCInvoiceListDetails, this.statementListForm.value.startDate, this.statementListForm.value.endDate, "TRUE")
-      this.router.navigate(['/credit/ListBankComponent/1']);
+      this.router.navigate(['/credit/listBank/1']);
     } else {
       this.post.setRouteForSavedInvoice(this.FCInvoiceListDetails, this.statementListForm.value.startDate, this.statementListForm.value.endDate, "FALSE")
-      this.router.navigate(['/credit/ListBankComponent/1']);
+      this.router.navigate(['/credit/listBank/1']);
     }
 
   }

@@ -1289,7 +1289,8 @@ export class ListsWidget12Component {
     localStorage.setItem('reportDate', JSON.stringify(date));
     localStorage.setItem('address', JSON.stringify("ViewSummary"));
 
-    this.router.navigate([]).then(result => { window.open('./#/shift/shiftReport', '_blank'); });
+    // this.router.navigate([]).then(result => { window.open('./#/shift/shiftReport', '_blank'); });
+    this.router.navigate(['/shift/shiftReport']);
   }
   
   getByProduct(id:any){

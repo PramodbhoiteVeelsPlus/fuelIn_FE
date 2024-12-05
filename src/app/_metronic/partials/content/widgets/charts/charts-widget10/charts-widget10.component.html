@@ -57,12 +57,12 @@
             <td>
               <input type="text" class="form-control" [(ngModel)]="nozzle.product"
                 oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
-                [ngModelOptions]="{standalone: true}" placeholder="Enter Product" readonly />
+                [ngModelOptions]="{standalone: true}" placeholder="Enter Product" disabled />
             </td>
 
             <td>
               <input type="text" class="form-control" [(ngModel)]="nozzle.tankVolume"
-                [ngModelOptions]="{standalone: true}" placeholder="Enter volume" readonly />
+                [ngModelOptions]="{standalone: true}" placeholder="Enter volume" disabled />
             </td>
 
             <td>

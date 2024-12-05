@@ -154,7 +154,7 @@ export class ListsWidget9Component {
     this.city = dealerData.city
     this.phone1 = dealerData.hostPhone
     this.userName = element.firstName + ' ' + element.lastName
-    this.getStaffDetails(this.fuelDealerId)
+    this.getAttendance(this.fuelDealerId)
     this.cd.detectChanges()
   }
 
@@ -191,12 +191,14 @@ export class ListsWidget9Component {
           if (res.status == 'OK' && res.data.length) {
             this.attendanceData = res.data;
             this.spinner.hide();
+            this.cd.detectChanges()
           }
           else {
             alert("Data Not Found");
             this.filterForm.reset();
             this.getAttendance(this.fuelDealerId);
             this.spinner.hide();
+            this.cd.detectChanges()
           }
         })
     }
@@ -213,10 +215,12 @@ export class ListsWidget9Component {
         if (res.status == "OK") {
           this.attendanceData = res.data;
           this.spinner.hide();
+          this.cd.detectChanges()
         }
         else {
           this.attendanceData = [];
           this.spinner.hide();
+          this.cd.detectChanges()
         }
       })
   }

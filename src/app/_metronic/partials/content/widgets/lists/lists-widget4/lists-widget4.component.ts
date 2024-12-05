@@ -94,7 +94,6 @@ export class ListsWidget4Component {
   cashBillGSTAmt: number;
   cashBillAddress: any;
   cashBillAmountWOGST: any;
-  dealerData: any = [];
   companyName: any;
   dealerMobile: any;
   dealerEmail: any;
@@ -154,9 +153,9 @@ export class ListsWidget4Component {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
-    this.dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.accessGroup = element.accessGroupId;
-    // this.brandName = this.dealerData[0].brandName;
+    this.brandName = dealerData.brandName;
     // this.getLubeTaxDetailsByDealerIdPost()
     this.routeView = this.post.type1;
     this.cashBillId = this.post.cashBillId;
@@ -173,7 +172,7 @@ export class ListsWidget4Component {
       this.getLubeTaxDetailsPost(this.cashBillId)
       this.lubeTaxBill = true;
     }
-    this.getCustomerAllDataById(this.dealerData[0].customerId)
+    this.getCustomerAllDataById(dealerData.customerId)
     this.cd.detectChanges()
   }
   

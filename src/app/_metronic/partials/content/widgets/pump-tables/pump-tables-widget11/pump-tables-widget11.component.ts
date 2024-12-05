@@ -145,6 +145,8 @@ export class PumpTablesWidget11Component implements OnInit {
   totalLubeDigital: any = [];
   totalCreditSales: number;
   totalCreditPayment: number;
+  routeView: string;
+  dateView: any;
 
   constructor(
     private modalService: NgbModal,
@@ -160,6 +162,8 @@ export class PumpTablesWidget11Component implements OnInit {
   }
 
   ngOnInit(): void {
+    this.routeView =  JSON.parse(localStorage.getItem('address') || '{}');
+    this.dateView =  JSON.parse(localStorage.getItem('reportDate') || '{}');
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     var dealerData = JSON.parse(localStorage.getItem("dealerData") || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
@@ -172,7 +176,18 @@ export class PumpTablesWidget11Component implements OnInit {
     this.managerPersonId = element.personId
     this.userName = element.firstName + ' ' + element.lastName;
     this.acceesGroup = element.accessGroupId;
-    this.getAllOngoingShift(this.fuelDealerId);
+    if(this.post2.setRoute == "Book"){
+      this.addShiftForm.controls["date"].setValue(moment(this.post2.setDate).format("DD-MM-YYYY"))
+      this.getAllOngoingShift(this.fuelDealerId);
+    }else{  
+      if (this.routeView == "ViewSummary") {
+        this.addShiftForm.controls["date"].setValue(moment(this.dateView).format("DD-MM-YYYY"))    
+        this.getAllOngoingShift(this.fuelDealerId);
+      } else {
+        this.addShiftForm.controls['date'].setValue(moment(new Date()).format('DD-MM-YYYY'));  
+        this.getAllOngoingShift(this.fuelDealerId);
+      } 
+    }
     this.cd.detectChanges()
   }
 
@@ -195,7 +210,9 @@ getAllOngoingShift(fuelDealerId: any) {
       .subscribe(res => {
         if (res.status == 'OK') {
           this.allShift = res.data;
+          this.cd.detectChanges()
         } else {
+          this.cd.detectChanges()
   
         }
       });
@@ -234,8 +251,10 @@ getAllOngoingShiftForClose(fuelDealerId: any) {
         }else{
           this.isOngoingShiftList = false;
         }
+        this.cd.detectChanges()
       } else {
         this.isOngoingShiftList = false;
+        this.cd.detectChanges()
       }
     });
   }
@@ -257,7 +276,9 @@ getDigitalTotalByDate(dealerCorporateId: any) {
         this.digitalLubeData = res.data3;
         this.digitalLubeTotalAmt = res.data4[0].totalAmount;
         this.digitalLubeTotalQuantity = res.data4[0].totalQuantity;
+        this.cd.detectChanges()
       } else {
+        this.cd.detectChanges()
   
       }
     });
@@ -272,9 +293,11 @@ getFuelCreditPaymentByDate(dealerCorporateId: any) {
   this.post2.getFuelCreditPaymentByDatePOST(data)
     .subscribe(res => {
       if (res.status == 'OK') {
-        this.creditPaymentDetails = res.data;          
+        this.creditPaymentDetails = res.data;  
+        this.cd.detectChanges()        
         
       } else {
+        this.cd.detectChanges()
   
       }
     });
@@ -294,10 +317,12 @@ getTotalMeterSalesAndTallyEntery(fuelDealerId: any) {
         this.meterSalesSum = res.data[0].meterSaleAmount;
         this.tallySalesSum = res.data1[0].tallySaleAmount;
         this.meterSalesQuantitySum = res.data[0].meterSaleQuantity;
+        this.cd.detectChanges()
   
   
       } else {
   
+        this.cd.detectChanges()
       }
     });
   }
@@ -323,7 +348,9 @@ getTallyDetails(fuelDealerId: any) {
         this.digitalSales = res.data1[0].paytmTotal
         this.creditSales = res.data1[0].creditTally
         this.totalAmountTally = res.data1[0].totalAmountTally;
+        this.cd.detectChanges()
       } else {
+        this.cd.detectChanges()
   
       }
     });
@@ -360,8 +387,10 @@ getFuelCreditByDate(fuelDealerId: any) {
         this.totalAdvAmt = Number(res.data6[0].totalAdvAmt)
         this.totalLubeQuantityInPiece = Number(res.data8[0].quantityInPieces);
         this.spinner.hide()
+        this.cd.detectChanges()
       } else { 
         this.spinner.hide()
+        this.cd.detectChanges()
       }
     });
 }
@@ -421,6 +450,7 @@ getSalesDetailsProductWise(fuelDealerId: any) {
               }
             })
             this.productWiseCreditData.push(shiftDataJSON);
+            this.cd.detectChanges()
           })
       }
   });
@@ -441,6 +471,7 @@ getCRDetailsProductWise(fuelDealerId: any) {
           this.crSalesDetails = res.data;
           this.totalcrSalesDetails = res.data1[0].creditAmountTotal;
           this.totalcrPaymentDetails = res.data2[0].totalcrPayment;
+          this.cd.detectChanges()
       }
   });
   }
@@ -502,6 +533,7 @@ getShiftWiseDetails(fuelDealerId: any) {
             // })
   
               this.shiftWiseData.push(dataPAYJson);
+              this.cd.detectChanges()
           })
   
           
@@ -529,7 +561,9 @@ getNzWise(fuelDealerId: any) {
         this.totalLubeCash = res.data3 
         this.totalLubeCredit = res.data4
         this.totalLubeDigital = res.data5
+        this.cd.detectChanges()
       } else {
+        this.cd.detectChanges()
   
       }
     });
@@ -548,7 +582,9 @@ getTotalCreditSalesPaymentByDay(fuelDealerId: any) {
       if (res.status == 'OK') { 
         this.totalCreditSales = res.data[0].totalCreditSales
         this.totalCreditPayment = res.data1[0].totalCreditPayment
+        this.cd.detectChanges()
       } else {
+        this.cd.detectChanges()
   
       }
     });

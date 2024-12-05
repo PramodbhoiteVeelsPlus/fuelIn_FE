@@ -65,6 +65,10 @@ export class PumpTablesService {
     private getShiftOngoingOPENDetailsByDealerIdURL = this.baseURL + 'shiftList/getShiftOngoingOPENDetailsByDealerId';
     private getTotalMeterSalesAndTallyEnteryURL = this.baseURL + 'shiftList/getTotalMeterSalesAndTallyEntery';
     private getCRSALESProductWiseDSRURL = this.baseURL + 'shiftList/getCRSALESProductWiseDSR';
+    private getfuelDealerIdByCorporateIdURL = this.baseURL + 'fuelDealerCustMap/getFuelDealerIdfromCorporateId';
+    private getShiftDetailsByDealerIdURL = this.baseURL + 'shiftList/getShiftDetailsByDealerId';
+    private getDUNZDetailsByShiftIdURL = this.baseURL + 'shiftList/getDUNZDetailsByShiftId';
+    private updateTallySalesForPortalURL = this.baseURL + 'shiftList/updateTallySalesForPortal';
 
     
 
@@ -439,6 +443,46 @@ export class PumpTablesService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.getCRSALESProductWiseDSRURL, body, {
+            headers: headers
+        })
+    }
+    
+    // getfuelDealerIdByCorporateIdURL
+    getfuelDealerIdByCorporateIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getfuelDealerIdByCorporateIdURL, body, {
+            headers: headers
+        })
+    }
+    
+    // getShiftDetailsByDealerIdURL
+    getShiftDetailsByDealerIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getShiftDetailsByDealerIdURL, body, {
+            headers: headers
+        })
+    }
+    
+    // getDUNZDetailsByShiftIdURL
+    getDUNZDetailsByShiftIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getDUNZDetailsByShiftIdURL, body, {
+            headers: headers
+        })
+    }
+    
+    // updateTallySalesForPortalURL
+    updateTallySalesForPortalPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateTallySalesForPortalURL, body, {
             headers: headers
         })
     }

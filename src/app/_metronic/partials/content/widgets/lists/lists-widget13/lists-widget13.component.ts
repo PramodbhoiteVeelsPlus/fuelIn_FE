@@ -9,6 +9,7 @@ import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable'
 import { ExcelService } from 'src/app/pages/excel.service';
 import * as XLSX from 'xlsx';
+import { Options } from '@angular-slider/ngx-slider';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<any > {
@@ -91,7 +92,7 @@ export class ListsWidget13Component {
   p: number = 1;
   p1: number = 1;
   total: number = 0;
-  currentYear: number;
+  currentYear: any;
   lastYear: number;
   lastThirdYear: number;
   lastFourthYear: number;
@@ -138,6 +139,7 @@ export class ListsWidget13Component {
     this.lastThirdYear = Number(this.currentYear) - 2;
     this.lastFourthYear = Number(this.currentYear) - 3;
       this.lastFifthYear = Number(this.currentYear) - 4;
+      this.filterForm.controls['year'].setValue(this.currentYear);
 
       // this.getProductsByDealerId(this.fuelDealerId)
       // this.isMonth()
@@ -145,6 +147,34 @@ export class ListsWidget13Component {
     }
 
   }
+
+  tickvalue = 10;
+  tickhighValue = 90;
+  tickoptions: Options = {
+    floor: 0,
+    ceil: 100,
+    step: 10,
+    showTicks: true
+  };
+
+  tickValue = Number(moment(new Date()).format("MM"));
+  tickValueoptions: Options = {
+    showTicksValues: true,
+    stepsArray: [
+      { value: 1, legend: 'JAN' },
+      { value: 2, legend: 'FEB' },
+      { value: 3, legend: 'MAR' },
+      { value: 4, legend: 'APR' },
+      { value: 5, legend: 'MAY' },
+      { value: 6, legend: 'JUN' },
+      { value: 7, legend: 'JUL' },
+      { value: 8, legend: 'AUG' },
+      { value: 9, legend: 'SEP' },
+      { value: 10, legend: 'OCT' },
+      { value: 11, legend: 'NOV' },
+      { value: 12, legend: 'DEC' }
+    ]
+  };
 
   pageChangeEvent(event: number) {
     this.p = event;
@@ -198,6 +228,7 @@ export class ListsWidget13Component {
                 })
   
                   this.shiftWiseData.push(dataPAYJson);
+                  this.cd.detectChanges()
               })
   
         } else {
@@ -239,13 +270,16 @@ export class ListsWidget13Component {
               })
                
               this.shiftWiseQuantityData.push(dataJson); 
+              this.cd.detectChanges()
              
               })
           }else{
             this.shiftWiseQuantityData = res.data;
+            this.cd.detectChanges()
           }
         }else{
           this.shiftWiseQuantityData = []
+          this.cd.detectChanges()
         }
       }
     })

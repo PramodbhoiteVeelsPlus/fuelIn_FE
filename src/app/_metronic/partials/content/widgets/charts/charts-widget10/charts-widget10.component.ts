@@ -60,6 +60,10 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 @Component({
   selector: 'app-charts-widget10',
   templateUrl: './charts-widget10.component.html',
+  providers: [
+    { provide: NgbDateAdapter, useClass: CustomAdapter },
+    { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }
+  ]
 })
 
 export class ChartsWidget10Component implements OnInit {
@@ -199,6 +203,7 @@ export class ChartsWidget10Component implements OnInit {
         this.SetNozzelData[i].product =  result.data[0].productName
         this.SetNozzelData[i].productId = result.data[0].fuelProductId
         this.SetNozzelData[i].tankVolume = result.data[0].tankVolume
+        this.cd.detectChanges()
   
       }
     })

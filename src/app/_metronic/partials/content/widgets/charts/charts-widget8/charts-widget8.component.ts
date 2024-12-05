@@ -59,6 +59,10 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 @Component({
   selector: 'app-charts-widget8',
   templateUrl: './charts-widget8.component.html',
+  providers: [
+    { provide: NgbDateAdapter, useClass: CustomAdapter },
+    { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }
+  ]
 })
 export class ChartsWidget8Component implements OnInit {
 
@@ -486,7 +490,7 @@ export class ChartsWidget8Component implements OnInit {
 
   printPdfMonth() {
     this.post.setRouteForCrPurchaseMonthReport('CrPurchaseReportMonth', this.crPurchaseDataMonth, this.filterForm.value.monthDAY, this.productIdArrayMonth, this.fuelDealerCorpMapId, this.fuelDealerId, this.filterForm.value.manualNo)
-    this.router.navigate(['/credit/crPurchaseReport']);
+    this.router.navigate(['/ledger/crPurchaseReport']);
   }
 
   pageChangeEvent(event: number) {

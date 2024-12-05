@@ -19,6 +19,7 @@ import { MonthWiseComponent } from './month-wise/month-wise.component';
 import { ShiftTimeWiseComponent } from './shift-time-wise/shift-time-wise.component';
 import { OperatorWiseComponent } from './operator-wise/operator-wise.component';
 import { ShiftReportComponent } from './shift-report/shift-report.component';
+import { ShiftListComponent } from './shift-list/shift-list.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ShiftReportComponent } from './shift-report/shift-report.component';
     MonthWiseComponent,
     ShiftTimeWiseComponent,
     OperatorWiseComponent,
-    ShiftReportComponent
+    ShiftReportComponent,
+    ShiftListComponent
   ],
   imports: [
     CommonModule,
@@ -94,6 +96,10 @@ import { ShiftReportComponent } from './shift-report/shift-report.component';
       {
         path: 'shiftReport',
         component: ShiftReportComponent,
+      },
+      {
+        path: 'shiftList',
+        component: ShiftListComponent,
       },
     ]),
     WidgetsModule,

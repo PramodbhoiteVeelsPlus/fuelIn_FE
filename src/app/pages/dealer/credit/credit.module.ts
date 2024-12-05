@@ -25,6 +25,7 @@ import { SavedInvoiceComponent } from './saved-invoice/saved-invoice.component';
 import { FuelCreditInvoiceManualComponent } from './fuel-credit-invoice-manual/fuel-credit-invoice-manual.component';
 import { AddLubeTaxGstSaleComponent } from './add-lube-tax-gst-sale/add-lube-tax-gst-sale.component';
 import { CashBillInvoiceComponent } from './cash-bill-invoice/cash-bill-invoice.component';
+import { ListBankComponent } from './list-bank/list-bank.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { CashBillInvoiceComponent } from './cash-bill-invoice/cash-bill-invoice.
     SavedInvoiceComponent,
     FuelCreditInvoiceManualComponent,
     AddLubeTaxGstSaleComponent,
-    CashBillInvoiceComponent
+    CashBillInvoiceComponent,
+    ListBankComponent
   ],
   imports: [
     CommonModule,
@@ -130,6 +132,10 @@ import { CashBillInvoiceComponent } from './cash-bill-invoice/cash-bill-invoice.
       {
         path: 'cashBillInvoice',
         component: CashBillInvoiceComponent,
+      },
+      {
+        path: 'listBank/:id',
+        component: ListBankComponent,
       },
     ]),
     WidgetsModule,

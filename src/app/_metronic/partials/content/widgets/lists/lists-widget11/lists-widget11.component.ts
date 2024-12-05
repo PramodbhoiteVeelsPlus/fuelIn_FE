@@ -135,6 +135,8 @@ export class ListsWidget11Component {
     this.pin = dealerData.pin
     this.city = dealerData.city
     this.phone1 = dealerData.hostPhone
+    this.shiftForm.controls["startDate"].setValue( "01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear() )
+    this.shiftForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
     this.getShiftDetails(this.fuelDealerId)
     this.getAllAttendantsByDid(this.fuelDealerId)
     this.getProductsByDealerId(this.fuelDealerId)

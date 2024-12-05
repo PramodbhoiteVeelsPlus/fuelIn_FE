@@ -1,0 +1,605 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <form [formGroup]="filterForm">
+                        <div class="row">
+                            <!-- <div class="col-md-2"></div> -->
+                            <!-- <div class="col-auto">
+                                        <b>Select </b>
+                                    </div> -->
+                            <label for="example-text-input" class="col-auto col-form-label">Select Date</label>
+
+                            <div class="col-auto">
+                                <input class="form-control" placeholder="DD-MM-YYYY" name="startDate"
+                                    (click)="endDate.toggle()" readonly style="background-color: #ffffff;"
+                                    formControlName="date" ngbDatepicker #endDate="ngbDatepicker">
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-primary" (click)="getfuelDealerIdByCorporateId()">
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+
+
+                    <!-- new tab view -->
+                    <div class="row">
+
+                        <div class="col-lg-12" style="text-align: center;align-items: center;">
+                            <div class="card">
+                                <div class="card-body">
+                                    <!-- <h4 class="card-title">Custom Tabs</h4> -->
+                                    <ul ngbNav #customNav="ngbNav" [activeId]="1"
+                                        class="nav-tabs nav-tabs-custom nav-justified" style="width: 50%;">
+                                        <li [ngbNavItem]="1">
+                                            <a ngbNavLink>
+                                                <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                                <span class="d-none d-sm-block" style="font-size: 13.5px;">SHIFTS</span>
+                                            </a>
+                                            <ng-template ngbNavContent>
+                                                <ng-template [ngTemplateOutlet]="shifts"></ng-template>
+                                            </ng-template>
+                                        </li>
+
+                                        <li [ngbNavItem]="2">
+                                            <a ngbNavLink>
+                                                <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                                                <span class="d-none d-sm-block"
+                                                    style="font-size: 13.5px;">SHIFT-NOZZLE</span>
+                                            </a>
+                                            <ng-template ngbNavContent>
+                                                <ng-template [ngTemplateOutlet]="shiftNozzle"></ng-template>
+                                            </ng-template>
+                                        </li>
+
+                                        <li [ngbNavItem]="3">
+                                            <a ngbNavLink>
+                                                <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                                                <span class="d-none d-sm-block"
+                                                    style="font-size: 13.5px;">SHIFT-TALLY</span>
+                                            </a>
+                                            <ng-template ngbNavContent>
+                                                <ng-template [ngTemplateOutlet]="shiftTally"></ng-template>
+                                            </ng-template>
+                                        </li>
+
+                                    </ul>
+                                    <div [ngbNavOutlet]="customNav"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- new tab view end -->
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<ng-template #shifts><br>
+    <div class="row">
+        <div class="col col-xl-6 col-lg-6">
+            <div class="table-responsive mb-0">
+                <table class="table table-centered">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="text-align: left;"></th>
+                            <th style="text-align: left;">Meter Sales</th>
+                            <th style="text-align: left;">Tally Entry</th>
+                            <th style="text-align: left;"> View DSR </th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td style="text-align: left;"> Total</td>
+                            <td style="text-align: left;">{{meterSalesSum | number:'1.2-2'}} </td>
+                            <td style="text-align: left;">{{tallySalesSum | number:'1.2-2'}} </td>
+                            <td style="text-align: left;">
+                                <span *ngIf="meterSalesSum" style="text-align: center; color:blue ; cursor: pointer;"
+                                    (click)="goToDSR(date1)">
+                                    Click Here
+                                </span>
+
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+
+        <div class="col col-xl-12 col-lg-12">
+            <div class="table-responsive mb-0">
+                <table class="table table-centered">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="text-align: left;">Sr No</th>
+                            <th style="text-align: left;">Shift</th>
+                            <th style="text-align: left;">Operator Name</th>
+                            <!-- <th style="text-align: left;">Start location</th> -->
+                            <th style="text-align: left;">Start Time</th>
+                            <th style="text-align: left;">End Time</th>
+                            <th style="text-align: left;">Meter Sales</th>
+                            <th style="text-align: left;">Tally Entry</th>
+
+
+                        </tr>
+                    </thead>
+
+                    <tbody
+                        *ngFor="let data of allShift | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+
+                        <tr>
+                            <td style="text-align: left;"> {{i+1}} </td>
+                            <td style="text-align: left;"> {{data.fuelShiftTimeDetails}} {{data.fuelShiftTimeShiftName}}
+                            </td>
+                            <td style="text-align: left;"> {{data.firstName}} {{data.lastName}}</td>
+                            <!-- <td style="text-align: left;"> {{data.locatinAddress}}</td> -->
+                            <td style="text-align: left;"> {{data.openTime}} </td>
+                            <td style="text-align: left;"> {{data.closeTime}} </td>
+                            <td style="text-align: left;"> {{data.meterSaleAmount | number:'1.2-2'}} </td>
+                            <td style="text-align: left;"> {{data.totalAmountTally | number:'1.2-2'}} </td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+
+                <div class="text-md-right float-md-end pagination-rounded">
+                    <!-- begin::Pagination -->
+                    <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                        style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                    </pagination-controls>
+                    <!-- end::Pagination -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
+
+
+<ng-template #shiftNozzle><br>
+    <div class="row">
+        <div class="col col-xl-6 col-lg-6">
+            <div class="card-body table-responsive">
+                <!-- <table class="table table-hover b">
+                                <thead>
+                                    <tr>           
+                                        <th style="text-align: center;"></th>             
+                                        <th style="text-align: center;">Meter sales</th>
+                                        <th style="text-align: center;">Meter Ltr/Kg</th>
+                
+                
+                                    </tr>
+                                </thead>
+                
+                                <tbody>
+                
+                                    <tr>
+                                        <td style="text-align: center;"> Total</td>
+                                        <td style="text-align: center;">{{meterSalesSum | number:'1.2-2'}} </td>
+                                        <td style="text-align: center;">{{meterSalesQuantitySum | number:'1.2-2'}} </td>
+                
+                                    </tr>
+                
+                                </tbody>
+                            </table> -->
+                <div class="table-responsive mb-0">
+                    <table class="table table-centered">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="text-align: left; ">
+                                    Product
+                                </th>
+                                <th style="text-align: left; ">
+                                    Meter Sales Quantity
+                                </th>
+                                <th style="text-align: left; ">
+                                    Meter Sales Amount
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of meterSalesDetails">
+                                <td style="text-align: left;">
+                                    <b> {{data.productName}} </b>
+                                </td>
+                                <td style="text-align: left;">
+                                    <span *ngIf="data.meterSaleQuantity">
+                                        <span *ngIf="data.productName == 'CNG' ">
+                                            {{data.meterSaleQuantity | number:'1.2-2'}} Kg
+                                        </span>
+                                        <span *ngIf="data.productName != 'CNG' ">
+                                            {{data.meterSaleQuantity | number:'1.2-2'}} Ltrs
+                                        </span>
+                                    </span>
+                                </td>
+                                <td style="text-align: left;">
+                                    <span *ngIf="data.meterSaleAmount">
+                                        ₹ {{data.meterSaleAmount | number:'1.2-2'}}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;">
+                                    <b> TOTAL </b>
+                                </td>
+                                <td style="text-align: left;">
+                                    -
+                                </td>
+                                <td style="text-align: left;">
+                                    <span *ngIf="totalMeterSalesDetails">
+                                        ₹ {{totalMeterSalesDetails | number:'1.2-2'}}
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col col-xl-12 col-lg-12">
+            <div class="table-responsive mb-0">
+                <table class="table table-centered">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="text-align: left;">Sr No</th>
+                            <th style="text-align: left;">Shift</th>
+                            <th style="text-align: left;">Operator Name</th>
+                            <th style="text-align: left;">Start Time</th>
+                            <th style="text-align: left;">End Time</th>
+                            <th style="text-align: left;">Pump Nozzle</th>
+                            <th style="text-align: left;">Product</th>
+                            <th style="text-align: left;">Rate</th>
+                            <th style="text-align: left;">Opening Meter Reading</th>
+                            <th style="text-align: left;">Closing Meter Reading</th>
+                            <th style="text-align: left;">Pump Testing</th>
+                            <th style="text-align: left;">Meter Sales Ltrs</th>
+                            <th style="text-align: left;">Meter Sales Rs.</th>
+                            <th style="text-align: left;">Action</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody
+                        *ngFor="let data of duNzDetails | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+
+                        <tr>
+                            <td style="text-align: left;"> {{i+1}} </td>
+                            <td style="text-align: left;"> {{data.fuelShiftTimeDetails}} {{data.fuelShiftTimeShiftName}}
+                            </td>
+                            <td style="text-align: left;"> {{data.firstName}} {{data.lastName}} </td>
+                            <td style="text-align: left;"> {{data.startTime}} </td>
+                            <td style="text-align: left;"> {{data.closeTime}} </td>
+                            <td style="text-align: left;"> {{data.duNo}}{{data.nozNo}} </td>
+                            <td style="text-align: left;"> {{data.productName}} </td>
+                            <td style="text-align: left;"> {{data.fuelPrice | number:'1.2-2'}} </td>
+                            <td style="text-align: left;"> {{data.openMeter}} </td>
+                            <td style="text-align: left;"> {{data.closingReading}} </td>
+                            <td style="text-align: left;"> {{data.pumpTesting}} </td>
+                            <td style="text-align: left;"> {{data.meterSaleQuantity | number:'1.2-2'}} </td>
+                            <td style="text-align: left;"> {{data.meterSaleAmount | number:'1.2-2'}} </td>
+                            <td style="text-align: left;color: blue;cursor: pointer;"
+                                (click)="nozzleEdit(updateNozzle,data.fuelShiftNozzeInfraId,data.openMeter,data.closingReading,data.meterSaleAmount,data.meterSaleQuantity,data.duNo,data.nozNo,data.fuelPrice,data.productName,data.pumpTesting)">
+                                Edit</td>
+
+
+                        </tr>
+
+                        <ng-template #updateNozzle let-c="close" let-d="dismiss">
+                            <div class="modal-header">
+                                <h4 class="modal-title">
+                                    <strong>
+                                        &nbsp;&nbsp;&nbsp;
+                                        Edit Nozzle Entry </strong>
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="labelNewMargin">Pump-Nozle </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input class="form-control" placeholder="Pump Nz" [(ngModel)]="pumpNz"
+                                            [ngModelOptions]="{standalone: true}" readonly>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="labelNewMargin">Product-Rate </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input class="form-control" placeholder="Product-Rate" [(ngModel)]="productRate"
+                                            [ngModelOptions]="{standalone: true}" readonly>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="labelNewMargin">Opening Reading </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input class="form-control" placeholder="Opening" [(ngModel)]="openingReading"
+                                            [ngModelOptions]="{standalone: true}" (blur)="getMeterSales()">
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="labelNewMargin">Closing Reading </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input class="form-control" placeholder="Closing" [(ngModel)]="closingReading"
+                                            [ngModelOptions]="{standalone: true}" (blur)="getMeterSales()">
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="labelNewMargin">Pump Testing </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input class="form-control" placeholder="Total Testing"
+                                            [(ngModel)]="pumpTesting" [ngModelOptions]="{standalone: true}"
+                                            (blur)="getMeterSales()">
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="labelNewMargin">Meter Sales Amount </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input class="form-control" placeholder="Total Sales"
+                                            [(ngModel)]="meterSalesAmount" [ngModelOptions]="{standalone: true}"
+                                            readonly>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="labelNewMargin">Meter Sales Quantity </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input class="form-control" placeholder="Total Sales"
+                                            [(ngModel)]="meterSalesQuantity" [ngModelOptions]="{standalone: true}"
+                                            readonly>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="submit" class="btn btn-primary"
+                                            (click)="updateNozzleEntry()">Update</button>
+                                    </div>&nbsp;&nbsp;
+                                    <div class="col-md-2">
+                                        <button type="submit" class="btn btn-secondary"
+                                            (click)="closeModalUpdateCr()">Cancel</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </ng-template>
+
+                    </tbody>
+                </table>
+                <div class="text-md-right float-md-end pagination-rounded">
+                    <!-- begin::Pagination -->
+                    <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                        style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                    </pagination-controls>
+                    <!-- end::Pagination -->
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
+<ng-template #shiftTally><br>
+    <div class="row">
+        <div class="col col-xl-8 col-lg-8">
+            <div class="table-responsive mb-0">
+                <table class="table table-centered">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="text-align: left;"></th>
+                            <th style="text-align: left;">Meter Sales</th>
+                            <th style="text-align: left;">Credit (a) </th>
+                            <th style="text-align: left;">Digital (b) </th>
+                            <th style="text-align: left;">Cash (c) </th>
+                            <th style="text-align: left;">Expenses</th>
+                            <th style="text-align: left;">Short</th>
+                            <th style="text-align: left;">Shift Tally (a+b+c) </th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody
+                        *ngFor="let data of totalSalesDetails | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+
+                        <tr>
+                            <td style="text-align: left;"> Total</td>
+                            <td style="text-align: left;"> {{meterSalesSum | number:'1.2-2'}} </td>
+                            <td style="text-align: left;"> {{data.creditTally | number:'1.2-2'}}</td>
+                            <td style="text-align: left;"> {{(data.paytmTotal + data.cardTotal) | number:'1.2-2'}}</td>
+                            <td style="text-align: left;"> {{data.cashTallyAmt | number:'1.2-2'}}</td>
+                            <td style="text-align: left;"> {{data.expenseAmt | number:'1.2-2'}}</td>
+                            <td style="text-align: left;"> {{data.shortAmt | number:'1.2-2'}}</td>
+                            <td style="text-align: left;"> {{(data.totalAmountTally | number:'1.2-2')}}</td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col col-xl-12 col-lg-12">
+            <div class="table-responsive mb-0">
+                <table class="table table-centered">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="text-align: left;">Sr No</th>
+                            <th style="text-align: left;">Shift</th>
+                            <th style="text-align: left;">Operator Name</th>
+                            <th style="text-align: left;">Start Time</th>
+                            <th style="text-align: left;">End Time</th>
+                            <th style="text-align: left;">Nozzle Count</th>
+                            <th style="text-align: left;">Meter Sales Rs</th>
+                            <th style="text-align: left;">Credit (a)</th>
+                            <th style="text-align: left;">Digital (b)</th>
+                            <th style="text-align: left;">Cash (c)</th>
+                            <th style="text-align: left;">Expenses</th>
+                            <th style="text-align: left;">Short</th>
+                            <th style="text-align: left;">Total Tally (a+b+c)</th>
+                            <th style="text-align: left;">Action</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody
+                        *ngFor="let data of tallySalesDetails | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+
+                        <tr>
+                            <td style="text-align: left;"> {{i+1}} </td>
+                            <td style="text-align: left;"> {{data.fuelShiftTimeDetails}} {{data.fuelShiftTimeShiftName}}
+                            </td>
+                            <td style="text-align: left;"> {{data.firstName}} {{data.lastName}} </td>
+                            <td style="text-align: left;"> {{data.openTime}} </td>
+                            <td style="text-align: left;"> {{data.closeTime}} </td>
+                            <td style="text-align: left;"> {{data.nozzelCount}} </td>
+                            <td style="text-align: left;"> {{data.totalMeterSales | number:'1.2-2'}} </td>
+                            <td style="text-align: left;"> {{data.totalCreditTally | number:'1.2-2'}} </td>
+                            <td style="text-align: left;"> {{data.paytmTotalAmount | number:'1.2-2'}} </td>
+                            <td style="text-align: left;"> {{data.totalCashTally | number:'1.2-2'}} </td>
+                            <td style="text-align: left;"> {{data.expenseAmount | number:'1.2-2'}} </td>
+                            <td style="text-align: left;"> {{data.shortamount | number:'1.2-2'}} </td>
+                            <td style="text-align: left;">{{data.totalAmountTally | number:'1.2-2'}} </td>
+                            <td style="text-align: left;color: blue;cursor: pointer;"
+                                (click)="shiftTallyEdit(updateShiftTally,data.fuelShiftTallySalesId,data.totalAmountTally,data.totalCashTally,data.paytmTotalAmount,data.totalCreditTally,data.expenseAmount,data.shortamount)">
+                                Edit</td>
+
+
+
+
+
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div class="text-md-right float-md-end pagination-rounded">
+                    <!-- begin::Pagination -->
+                    <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                      style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                    </pagination-controls>
+                    <!-- end::Pagination -->
+
+                </div>
+
+            </div>
+
+
+            <ng-template #updateShiftTally let-c="close" let-d="dismiss">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <strong>
+                            &nbsp;&nbsp;&nbsp;
+                            Edit Tally </strong>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="requestEditTally">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="labelNewMargin">Credit :</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input class="form-control" placeholder="Total Credit"
+                                    formControlName="totalCreditTally">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="labelNewMargin">Digital :</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input class="form-control" placeholder="Total Digital"
+                                    formControlName="paytmTotalAmount">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="labelNewMargin">Cash :</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input class="form-control" placeholder="Total Cash" formControlName="totalCashTally">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="labelNewMargin">Expense :</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input class="form-control" placeholder="Total expenseAmount"
+                                    formControlName="expenseAmount">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="labelNewMargin">Short :</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input class="form-control" placeholder="Total shortamount"
+                                    formControlName="shortamount">
+                            </div>
+                        </div>
+                        <hr>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4">
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary"
+                                    (click)="updateShiftTallyEDIT()">Update</button>
+                            </div>&nbsp;&nbsp;
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-secondary"
+                                    (click)="closeModalUpdateCr()">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </ng-template>
+        </div>
+    </div>
+</ng-template>

@@ -191,6 +191,8 @@ import { PumpTablesWidget10Component } from './pump-tables/pump-tables-widget10/
 import { ArchwizardModule } from 'angular-archwizard';
 import { PumpTablesWidget11Component } from './pump-tables/pump-tables-widget11/pump-tables-widget11.component';
 import { NgxPrintModule } from 'ngx-print';
+import { BaseTablesWidget14Component } from './base-tables/base-tables-widget14/base-tables-widget14.component';
+import { PumpTablesWidget12Component } from './pump-tables/pump-tables-widget12/pump-tables-widget12.component';
 // import { routes } from 'src/app/app-routing.module';
 @NgModule({
   declarations: [
@@ -373,7 +375,9 @@ import { NgxPrintModule } from 'ngx-print';
     PumpTablesWidget8Component,
     PumpTablesWidget9Component,
     PumpTablesWidget10Component,
-    PumpTablesWidget11Component
+    PumpTablesWidget11Component,
+    BaseTablesWidget14Component,
+    PumpTablesWidget12Component
   ],
   imports: [
     ReactiveFormsModule,
@@ -573,7 +577,9 @@ import { NgxPrintModule } from 'ngx-print';
     PumpTablesWidget8Component,
     PumpTablesWidget9Component,
     PumpTablesWidget10Component,
-    PumpTablesWidget11Component
+    PumpTablesWidget11Component,
+    BaseTablesWidget14Component,
+    PumpTablesWidget12Component
   ],
   providers: [NgbActiveModal, ExcelService],
 })

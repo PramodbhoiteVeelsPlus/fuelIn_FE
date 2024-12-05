@@ -33,7 +33,6 @@ export class HeaderMenuComponent implements OnInit {
   accessGroup: any;
   modalRefCancel: any;
   closeResult: string;
-  spinner: any;
   fuelDealerId: any;
   constructor(private router: Router, private layout: LayoutService, private layoutInit: LayoutInitService, 
     private post: StatsService,
@@ -105,7 +104,6 @@ export class HeaderMenuComponent implements OnInit {
   }
 
   submitRefferal() {
-    this.spinner.show()
     let data = {
       dealerId: this.fuelDealerId,
       companyName: this.referForm.value.petrolPump,
@@ -121,10 +119,8 @@ export class HeaderMenuComponent implements OnInit {
       if (res.status == "OK") {
         alert(res.msg)
         this.closeRefModal()
-        this.spinner.hide()
       } else {
         alert(res.msg)
-        this.spinner.hide()
       }
     })
   }
