@@ -268,11 +268,11 @@ export class ListsWidget5Component {
   totalAmountUpdate: string;
   totalCreditTally: any;
   totalCreditTally1: any;
-  totalCashTally: any;
-  totalDigitalTally: any;
+  totalCashTally: any = 0;
+  totalDigitalTally: any = 0;
   expenseAmount: any;
   shortamount: any;
-  totalAmount: string;
+  totalAmount: any = 0;
   expenseAmtDetails: any;
   meterSalesUpdate: string;
   meterSales: string;
@@ -311,7 +311,7 @@ export class ListsWidget5Component {
   meterSaleAmount4: string;
   isStart: boolean;
   nozzleDetails: any;
-  difference: any;
+  difference: any = 0;
   isPumpNozzle: boolean = false;
   staffDetails: any = [];
   fuelShiftTimeDetails: any = [];
@@ -401,11 +401,11 @@ export class ListsWidget5Component {
   totalCreditSalesByStaff: any = [];
   toatalCreditAmountByStaff: number;
   totalDigitalLubeAmt: any;
-  meterSalesTotal: string;
+  meterSalesTotal: any = 0;
   totalLubeCrAmt: any;
   cashDetails: any = [];
   totalCASHSales: number;
-  totalCashHandover: any;
+  totalCashHandover: any = 0;
   cashLubeData: any = [];
   totalCashLubeAmt: any;
   digitalLubeDetails: any = [];
@@ -426,8 +426,8 @@ export class ListsWidget5Component {
   dealerLocation: string;
   lastCRDate: any;
   islastCRDate: boolean = false;
-  address1: string;
-  address2: string;
+  address1: any;
+  address2: any;
   fuelDealerSQLId: any;
   PANno: any;
   smsMappingStatus: any;
@@ -1896,8 +1896,10 @@ export class ListsWidget5Component {
     if ((Number(this.totalCashTally) - Number(this.totalCashHandover) - Number(this.expenseAmount)) > 0) {
       this.expenseAmount = Number(Number(this.totalCashTally) - Number(this.totalCashHandover) - Number(this.shortamount)).toFixed(2);
       this.getShort1()
+      this.cd.detectChanges()
     } else {
       this.expenseAmount = 0
+      this.cd.detectChanges()
     }
 
   }
@@ -1906,8 +1908,10 @@ export class ListsWidget5Component {
     if ((Number(this.totalCashTally) - Number(this.totalCashHandover) - Number(this.expenseAmount)) > 0) {
       this.shortamount = Number(Number(this.totalCashTally) - Number(this.totalCashHandover) - Number(this.expenseAmount)).toFixed(2);
       this.getExpense1()
+      this.cd.detectChanges()
     } else {
       this.shortamount = 0
+      this.cd.detectChanges()
     }
   }
 
@@ -1916,8 +1920,10 @@ export class ListsWidget5Component {
     if ((Number(this.totalCashTally) - Number(this.totalCashHandover) - Number(this.expenseAmount)) > 0) {
       this.shortamount = Number(Number(this.totalCashTally) - Number(this.totalCashHandover) - Number(this.expenseAmount)).toFixed(2);
 
+      this.cd.detectChanges()
     } else {
       this.shortamount = 0
+      this.cd.detectChanges()
     }
   }
 
@@ -1925,8 +1931,10 @@ export class ListsWidget5Component {
     if ((Number(this.totalCashTally) - Number(this.totalCashHandover) - Number(this.expenseAmount)) > 0) {
       this.expenseAmount = Number(Number(this.totalCashTally) - Number(this.totalCashHandover) - Number(this.shortamount)).toFixed(2);
 
+      this.cd.detectChanges()
     } else {
       this.expenseAmount = 0
+      this.cd.detectChanges()
     }
 
   }
@@ -2497,7 +2505,10 @@ export class ListsWidget5Component {
   }
 
   submitLubeDigital() {
-    // this.spinner.show()
+    if(this.digitalLubricantForm.value.productName && this.digitalLubricantForm.value.gst && this.digitalLubricantForm.value.deviceName && 
+      this.digitalLubricantForm.value.totalAmount && this.digitalLubricantForm.value.reqQuantity && this.digitalLubricantForm.value.quantityInPieces
+    ) {
+    this.spinner.show()
     let data = {
       corporateId: this.dealerCorporateId,
       transacDate: moment(this.digitalLubricantForm.value.priceDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
@@ -2545,7 +2556,9 @@ export class ListsWidget5Component {
           this.spinner.hide()
         }
       })
-
+    } else {
+      alert("Please Enter required details...!")
+    }
   }
 
   closeModalLubeDigital() {

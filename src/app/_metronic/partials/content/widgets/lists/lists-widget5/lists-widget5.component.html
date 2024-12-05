@@ -1627,7 +1627,7 @@
                   <td style="text-align: center;">
 
                     <input type="text" class="form-control" [(ngModel)]="data.terminalName" style="text-align: left;"
-                      [ngModelOptions]="{standalone: true}" placeholder="terminalName" readonly>
+                      [ngModelOptions]="{standalone: true}" placeholder="terminalName" disabled>
 
                   </td>
                   <td style="text-align: center;">
@@ -1872,14 +1872,9 @@
                               :</label>
                           </div>
                           <div class="col-md-8">
-                            <!-- <input type="number" class="form-control" formControlName="customerNumber"
-                              [class.is-invalid]="userMobile1.invalid && userMobile1.touched"
+                            <input type="number" class="form-control" formControlName="customerNumber"
                               placeholder="Enter Mobile Number" onkeypress="return this.value < 10;"
                               oninput="if(this.value=10)">
-                            <div *ngIf="(userMobile1.invalid && userMobile1.touched) || userMobile1.dirty">
-                              <small *ngIf="userMobile1.errors?.pattern" class="text-danger">
-                                Please provide a valid 10 Digit Mobile Number</small>
-                            </div> -->
                           </div>
                         </div>
                         <br>
