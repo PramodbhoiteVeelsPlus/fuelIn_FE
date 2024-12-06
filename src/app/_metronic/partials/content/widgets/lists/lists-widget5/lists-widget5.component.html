@@ -2273,7 +2273,7 @@
                         <br><br>
                         <div class="row">
                           <div class="col-md-3">
-                            <label for="example-text-input" class="col-auto col-form-label">Date1 :</label>
+                            <label for="example-text-input" class="col-auto col-form-label">Date :</label>
                           </div>
                           <div class="col-md-8">
                             <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" #myinput
@@ -2329,14 +2329,9 @@
                             <label for="example-text-input" class="col-auto col-form-label">Customer Number :</label>
                           </div>
                           <div class="col-md-8">
-                            <!-- <input type="number" class="form-control" formControlName="customerNumber"
-                              [class.is-invalid]="userMobile1.invalid && userMobile1.touched"
+                            <input type="number" class="form-control" formControlName="customerNumber"
                               placeholder="Enter Mobile Number" onkeypress="return this.value < 10;"
                               oninput="if(this.value=10)">
-                            <div *ngIf="(userMobile1.invalid && userMobile1.touched) || userMobile1.dirty">
-                              <small *ngIf="userMobile1.errors?.pattern" class="text-danger">
-                                Please provide a valid 10 Digit Mobile Number</small>
-                            </div> -->
                           </div>
                         </div>
                         <br>
@@ -2637,11 +2632,11 @@
 
                           </td>
                           <td style="text-align: left;border-width: 1px; border-color: #000;">
-                            <span *ngIf="viewCorpFlag" class="col-md-1" (click)="viewFlag(viewFlagModel)"
+                            <span *ngIf="viewCorpFlag.length" class="col-md-1" (click)="viewFlag(viewFlagModel)"
                               style="color:red;cursor:pointer;font-size: x-large;">
                               <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
                             </span>
-                            <span *ngIf="!viewCorpFlag" class="col-md-1">
+                            <span *ngIf="!viewCorpFlag.length" class="col-md-1">
                               None
                             </span>
                           </td>
@@ -2896,12 +2891,12 @@
 
                               </td>
                               <td style="text-align: left;border-width: 1px; border-color: #000;">
-                                <span *ngIf="viewCorpFlag" class="col-md-1" (click)="viewFlag(viewFlagModel)"
+                                <span *ngIf="viewCorpFlag.length" class="col-md-1" (click)="viewFlag(viewFlagModel)"
                                   style="color:red;cursor:pointer;font-size: x-large;">
                                   <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
 
                                 </span>
-                                <span *ngIf="!viewCorpFlag">
+                                <span *ngIf="!viewCorpFlag.length">
                                   None
                                 </span>
                               </td>
@@ -2999,34 +2994,33 @@
                           <tr>
                             <td>
                               <input class="form-control" placeholder="HSN/SAC Number"
-                                [(ngModel)]="charges.hsnSacNumber" [ngModelOptions]="{standalone: true}" readonly>
+                                [(ngModel)]="charges.hsnSacNumber" [ngModelOptions]="{standalone: true}" disabled>
                             </td>
 
                             <td>
                               <input type="number" class="form-control" [(ngModel)]="charges.gstAmount"
-                                [ngModelOptions]="{standalone: true}" placeholder="Enter Tax" readonly />
+                                [ngModelOptions]="{standalone: true}" placeholder="Enter Tax" disabled />
                             </td>
 
                             <td>
                               <input type="number" class="form-control" [(ngModel)]="charges.totalWOGSTAmount"
-                                [ngModelOptions]="{standalone: true}" placeholder="GST Amount" readonly />
+                                [ngModelOptions]="{standalone: true}" placeholder="GST Amount" disabled />
                             </td>
 
                             <td>
                               <input type="number" class="form-control" [(ngModel)]="charges.totalAmount"
-                                [ngModelOptions]="{standalone: true}" placeholder="GST Amount" readonly />
+                                [ngModelOptions]="{standalone: true}" placeholder="GST Amount" disabled />
                             </td>
 
                             <td>
                               <input type="text" class="form-control" [(ngModel)]="charges.unitLube"
-                                [ngModelOptions]="{standalone: true}" placeholder="Enter Credit unit" readonly />
+                                [ngModelOptions]="{standalone: true}" placeholder="Enter Credit unit" disabled />
 
                             </td>
                             <td style="text-align: center;">
                               <button type="submit" class="btn btn-success" (click)="addFormRequestLube()"> &nbsp; Add
                                 &nbsp;
                               </button>
-
 
                             </td>
                             <td>
@@ -3035,10 +3029,6 @@
                               </button>
                             </td>
                           </tr>
-
-
-
-
 
                         </tbody>
 
@@ -3173,13 +3163,13 @@
       <div class="row">
         <div class="col-lg-3">
           <input type="number" class="form-control" [(ngModel)]="toatalCreditAmountByStaff"
-            [ngModelOptions]="{standalone: true}" ngbTooltip="Credit Sales Total" readonly min="0" />
+            [ngModelOptions]="{standalone: true}" ngbTooltip="Credit Sales Total" disabled min="0" />
         </div>
         <div class="col-lg-3"></div>
         <div class="col-lg-3">
           <input type="number" class="form-control" [(ngModel)]="totalCashHandover"
             [ngModelOptions]="{standalone: true}" placeholder="Cash Handover" min="0" ngbTooltip="Cash Handover"
-            readonly />
+            disabled />
         </div>
         <div class="col-lg-3"></div>
       </div>

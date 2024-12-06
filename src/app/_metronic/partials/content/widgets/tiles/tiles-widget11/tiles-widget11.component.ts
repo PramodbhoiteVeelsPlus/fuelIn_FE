@@ -73,11 +73,11 @@ export class TilesWidget11Component implements OnInit {
   data3totalDebit1: number;
   data4totalCredit1: number;
   data5totalDebit1: number;
-  data1totalDebit1: number;
+  data1totalDebit1: any = 0;
   data2totalCredit1: number;
   oilCoAcTotalAmount1: number;
-  totalOilCoACDebit: any;
-  totalOilCOPurchase: number;
+  totalOilCoACDebit: any = 0;
+  totalOilCOPurchase: any = 0;
   totalOilCoCredit: number;
   closingOilCoACBlc: number;
   oilCoStatus: boolean = false;
@@ -127,11 +127,28 @@ export class TilesWidget11Component implements OnInit {
     this.accessGroup = element.accessGroupId;
     this.fuelDealerId = localStorage.getItem('dealerId');
     this.dealerCorporateId = localStorage.getItem('dealerCorporateId');
-    this.getOilCoAcBalance1()
+    this.getOILCOMPANYDataInFuelExpense(this.fuelDealerId)
     this.getBankAcBalance1()
     this.getCashAcBalance1()
     this.cd.detectChanges()
   }
+
+  getOILCOMPANYDataInFuelExpense(fuelDealerId: any) {
+    let data = {
+        dealerId: fuelDealerId,
+        startDate: this.openingDate,
+        endDate: this.closingDate,
+    }
+    this.post.getOILCOMPANYDataInFuelExpensePOST(data)
+        .subscribe(res => {
+            if (res.data.length) {
+                this.totalOilCOPurchase = res.data3[0].totalAmount
+                this.getOilCoAcBalance1();
+            } else {
+                this.getOilCoAcBalance1();
+            }
+        })
+}
 
   getOilCoAcBalance1() {
     let data = {

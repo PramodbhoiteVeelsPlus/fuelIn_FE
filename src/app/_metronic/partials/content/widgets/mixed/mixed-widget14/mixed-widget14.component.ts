@@ -99,7 +99,7 @@ export class MixedWidget14Component implements OnInit {
   totalPurchaseAmt: any;
   totalPaymentAmt: any;
   netOS: any;
-  bankAccList: any;
+  bankAccList: any = [];
   paisaWrd: any;
   rupeesWrd: any;
   amountInWords: string;
@@ -284,7 +284,7 @@ export class MixedWidget14Component implements OnInit {
           this.totalPaymentAmt = res.data[0].totalPaymentAmt
           this.netOS = res.data[0].netOS
           var osForWrd = ''
-          osForWrd = (this.totalPurchaseAmt).toFixed(2)
+          osForWrd = (this.netOS).toFixed(2)
           var osForWrd1 = osForWrd.split(".")
           this.rupeesWrd = osForWrd1[0]
           this.paisaWrd = osForWrd1[1]

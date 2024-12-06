@@ -139,9 +139,8 @@ export class TablesWidget32Component {
         this.liteAccess = true
       }
     }
-    // this.getCorporateById(this.dealerLoginVPId);
-            this.getfuelDealerIdByCorporateId(this.dealerCorporateId);
-            this.getCustomerAllDataById(this.customerId);
+    this.getfuelDealerIdByCorporateId(this.dealerCorporateId);
+    this.getCustomerAllDataById(this.customerId);
     this.cd.detectChanges()
   }
 
@@ -149,31 +148,6 @@ export class TablesWidget32Component {
     return await this.modalComponent.open();
   }
 
-  // get Corporate DetailsBy VP-Id
-  getCorporateById(dealerLoginVPId: any) {
-    let data = {
-      veelsplusCorporateId: dealerLoginVPId
-    }
-    this.post.getBranchByVeelsplusIdPOST(data)
-      .subscribe(res => {
-        if (res.status == "OK") {
-          if (res.data.length) {
-            this.customerId = res.data[0].customerId;
-            // this.headerName1 = res.data[0].companyName;
-            // this.headerName2 = res.data[0].address1+', '+res.data[0].address2+', '+res.data[0].city;
-            // this.headerName3 = res.data[0].state+'-'+res.data[0].pin+'  '+"GST: "+res.data[0].GSTNumber;
-            this.loginSQLCorporateId = res.data[0].corporateId;
-            this.getfuelDealerIdByCorporateId(this.loginSQLCorporateId);
-            this.getCustomerAllDataById(this.customerId);
-            this.cd.detectChanges()
-          }
-          else {
-            alert("Getting Error..! Please Logout & Login again..!")
-            this.cd.detectChanges()
-          }
-        }
-      })
-  }
 
   // getfuelDealerIdByDealerCorporateId
   getfuelDealerIdByCorporateId(dealerCorporateId: any) {
@@ -208,6 +182,7 @@ export class TablesWidget32Component {
                   this.netOut = this.netOut + (Number(purCal.totalOutstanding))
                 }
               })
+              this.cd.detectChanges()
 
             } else {
               this.isActiveCustomer = false;
@@ -223,6 +198,7 @@ export class TablesWidget32Component {
                   this.netOut = this.netOut + ((Number(purCal.totalCRAmt) - Number(purCal.totalDiscount) - Number(purCal.totalInvPaidAmt)) + Number(purCal.previousOutstand))
                 }
               })
+              this.cd.detectChanges()
             }
 
           }

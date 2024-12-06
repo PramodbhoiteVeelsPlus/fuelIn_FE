@@ -99,9 +99,9 @@
   <h3 class="card-title align-items-start flex-column">
     <span class="card-label fw-bolder fs-3 mb-1">Bank Account Overview</span>
   </h3>
-  <span class="badge badge-light-success fs-6 fw-bolder">
+  <!-- <span class="badge badge-light-success fs-6 fw-bolder">
     Default Account
-  </span>
+  </span> -->
   <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
     title="Click to add a user">
     <a (click)="openModal()" class="btn btn-sm btn-light-primary">
@@ -136,7 +136,6 @@
       <!-- end::Table head -->
       <!-- begin::Table body -->
       <tbody *ngFor="let data of bankAccList; let i = index">
-
         <tr>
           <td style="text-align: left;"> {{i+1}} </td>
           <td style="text-align: left;"> {{data.type}} </td>
@@ -176,10 +175,7 @@
                 </a>
               </div>
             </div>
-
           </td>
-
-
         </tr>
 
         <ng-template #editBank let-c="close" let-d="dismiss">
@@ -227,7 +223,6 @@
                   <input class="form-control" type="number" formControlName="phone"
                     onkeypress="return this.value.length < 10;" oninput="if(this.value.length=10)"
                     placeholder="Mobile Number">
-
                 </div>
                 <div class="col-md-1"></div>
                 <div class="col-md-2">
@@ -243,7 +238,6 @@
               <!-- </div> -->
               <br>
               <div class="row">
-
                 <div class="col-md-1"></div>
                 <div class="col-md-2">
                   <label class="labelNewMargin">IFSC <span style="color: red;">*</span></label>
@@ -272,7 +266,6 @@
                 <div class="col-md-3">
                   <input class="form-control" type="text" formControlName="upiId" placeholder="UPI">
                 </div>
-
               </div>
 
               <br>

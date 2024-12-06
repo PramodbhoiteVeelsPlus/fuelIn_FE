@@ -100,7 +100,6 @@ export class BaseTablesWidget3Component implements OnInit {
   allCorporateList: any = [];
   transactionData: any = [];
   quantity: string;
-  dealerData: any = [];
   companyName: any;
   oilCompanyName: any;
   state: any;
@@ -108,6 +107,7 @@ export class BaseTablesWidget3Component implements OnInit {
   city: any;
   phone1: any;
   headerName1: any;
+  headerName2: any;
   headerName3: string;
   GSTNumber: string;
   transactionDataExcel: any =[];
@@ -126,7 +126,7 @@ export class BaseTablesWidget3Component implements OnInit {
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
-    this.dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
     this.accessGroup = element.accessGroupId;
     if (this.acceesGroup == 12 || this.acceesGroup == 19) {
@@ -139,15 +139,15 @@ export class BaseTablesWidget3Component implements OnInit {
     this.managerPersonId = element.personId
     this.managerName = element.firstName + ' ' + element.lastName
     this.acceesGroup = element.accessGroupId;
-    this.companyName = this.dealerData.companyName
-    this.oilCompanyName = this.dealerData.brandName
-    this.state = this.dealerData.state
-    this.pin = this.dealerData.pin
-    this.city = this.dealerData.city
-    this.phone1 = this.dealerData.hostPhone
-    this.headerName1 = this.companyName;
-    // this.headerName2 = res.data[0].address1+', '+res.data[0].address2+', '+res.data[0].city;
-    this.headerName3 = this.state + '-' + this.pin + '  ' + "GST: " + this.GSTNumber;
+    this.companyName = dealerData.companyName
+    this.oilCompanyName = dealerData.brandName
+    this.state = dealerData.state
+    this.pin = dealerData.pin
+    this.city = dealerData.city
+    this.phone1 = dealerData.hostPhone
+    this.headerName1 = dealerData.companyName;
+    this.headerName2 = dealerData.address1+', '+dealerData.address2+', '+dealerData.city;
+    this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
     this.filterForm.controls["startDate"].setValue( "01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear() )
     this.filterForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
     this.getFuelCreditCorporateByfuelDealerId(this.fuelDealerId)
@@ -301,7 +301,7 @@ export class BaseTablesWidget3Component implements OnInit {
       doc.setFontSize(12);
       doc.text(this.headerName1, 40, 25);
       doc.setFontSize(8);
-      // doc.text(this.headerName2, 40, 40);
+      doc.text(this.headerName2, 40, 40);
       doc.text(this.headerName3, 40, 55);
       if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
         doc.text("DATE : " + moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("DD MMM YYYY") + ' To ' + moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("DD MMM YYYY"), 40, 70);
@@ -333,9 +333,6 @@ export class BaseTablesWidget3Component implements OnInit {
       doc.save("CreditBook_TransactionWise.pdf");
 
     }
-  }
-  headerName2(headerName2: any, arg1: number, arg2: number) {
-    throw new Error('Method not implemented.');
   }
 
 

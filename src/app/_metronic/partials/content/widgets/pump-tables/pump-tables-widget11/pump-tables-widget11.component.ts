@@ -136,7 +136,7 @@ export class PumpTablesWidget11Component implements OnInit {
   crSalesDetails: any = [];
   totalcrPaymentDetails: number;
   meterSalesAmount: any = [];
-  shiftWiseData: any;
+  shiftWiseData: any = [];
   shiftDetails: any = [];
   shiftNzDetails: any = [];
   totalNzDetails: any = [];

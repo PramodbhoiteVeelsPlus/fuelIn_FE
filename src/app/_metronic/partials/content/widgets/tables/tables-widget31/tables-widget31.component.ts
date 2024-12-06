@@ -134,6 +134,8 @@ export class TablesWidget31Component {
         this.liteAccess = true
       }
     }
+    // this.filterForm.controls["startDate"].setValue("01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear())
+    // this.filterForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
     this.getfuelDealerIdByCorporateId(this.dealerCorporateId)
     this.searchDealerBycustomerId(this.customerId)
     this.getMappingAccount(this.fuelDealerId);

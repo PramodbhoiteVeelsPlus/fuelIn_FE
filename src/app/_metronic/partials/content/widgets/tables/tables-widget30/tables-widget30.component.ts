@@ -72,7 +72,7 @@ export class TablesWidget30Component {
     closeButtonLabel: 'Cancel'
   };
   @ViewChild('modal') private modalComponent: ModalComponent;
-  
+
   addVehicleForm = new FormGroup({
     selectedCorp: new FormControl(''),
     addVehicleDate: new FormControl('', Validators.required),
@@ -87,7 +87,7 @@ export class TablesWidget30Component {
     personName: new FormControl('', Validators.required),
     personMobile: new FormControl('', Validators.required),
   });
-  
+
   dealerLoginVPId: any;
   loginSQLCorporateId: any;
   fuelDealerId: any;
@@ -173,6 +173,8 @@ export class TablesWidget30Component {
   ngOnInit() {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+    this.isDisableSMS = element.isSMS;
+    this.isDisableEmail = element.isEmail;
     this.fuelDealerId = dealerData.fuelDealerId;
     this.dealerCorporateId = dealerData.corporateId;
     this.headerName1 = dealerData.companyName;
@@ -185,8 +187,6 @@ export class TablesWidget30Component {
         this.liteAccess = true
       }
     }
-    // this.getCorporateById(this.dealerLoginVPId);
-    // this.addVehicleForCr()
     this.getfuelDealerIdByCorporateId(this.dealerCorporateId)
     this.cd.detectChanges()
   }
@@ -269,7 +269,6 @@ export class TablesWidget30Component {
 
     var doc = new jsPDF('l', 'pt');
 
-
     doc.setFontSize(12);
     doc.text(this.headerName1, 40, 25);
     doc.setFontSize(8);
@@ -297,7 +296,6 @@ export class TablesWidget30Component {
     });
 
     doc.save("AllCustomers.pdf");
-
 
   }
 
@@ -342,7 +340,6 @@ export class TablesWidget30Component {
   }
 
   changeValue(i: any, previousOutstand: any, maxCreditAmount: any, creditDayLimit: any, manualNumberStart: any, manualNumberEnd: any, fuelDealerCustomerMapId: any, mappingStatus: any) {
-
     this.previousOutstandExpand = ''
     this.maxCreditAmountExpand = ''
     this.creditDayLimitExpand = ''
@@ -400,7 +397,6 @@ export class TablesWidget30Component {
   }
 
   updateName(editName: any, fuelDealerCustomerMapId: any, companyName: any, mappingCustomerName: any, GSTNumber: string, mappingEmail: string, maxCreditAmount: any, creditDayLimit: any, mappingAddress1: any, mappingAddress2: any, mappingCity: any) {
-
     this.updateId = fuelDealerCustomerMapId
     this.updateCompanyName = companyName
     this.updatePersonName = mappingCustomerName
@@ -459,10 +455,8 @@ export class TablesWidget30Component {
         } else {
           this.spinner.hide();
           this.openPreOutstand(previousOut, fuelDealerCustomerMapId, previousOutstand, companyName)
-
         }
       })
-
   }
 
   openPreOutstand(openDate: any, fuelDealerCustomerMapId: any, previousOutstand: any, companyName: any) {
@@ -497,7 +491,6 @@ export class TablesWidget30Component {
   }
 
   updateCorporateReview(updateFlag: any, corporateId: any, companyName: any) {
-
     this.companyNameRemark = companyName
     this.flagCorporateId = corporateId
 
@@ -559,15 +552,14 @@ export class TablesWidget30Component {
             alert("Mapping Status Updated to Inactive!")
             this.getMappingAccount(this.fuelDealerId);
           }
-
           else {
             alert("Error to Update Mapping!")
           }
 
         })
     }
-
   }
+
   updateSms(fuelDealerCustomerMapId: any, mappingStatus: string) {
     if (mappingStatus == "TRUE") {
       mappingStatus = "FALSE";
@@ -579,20 +571,16 @@ export class TablesWidget30Component {
       this.post.updateMappingSmsStatusPOST(data)
         .subscribe(res => {
           if (res) {
-
             alert("SMS service has been DEACTIVATED for this customer, now transaction SMS will NOT be send to this customer..")
-
             this.getMappingAccount(this.fuelDealerId);
           }
           else {
             alert("Error to Update Mapping!")
           }
-
         })
 
     } else if (mappingStatus == "FALSE") {
       mappingStatus = "TRUE";
-
       let data = {
         smsStatus: mappingStatus,
         fuelDealerCustomerMapId: fuelDealerCustomerMapId,
@@ -602,13 +590,11 @@ export class TablesWidget30Component {
         .subscribe(res => {
           if (res) {
             alert("SMS service has been ACTIVATED for this customer, now transaction SMS will be send to this customer..")
-
             this.getMappingAccount(this.fuelDealerId);
           }
           else {
             alert("Error to Update Mapping!")
           }
-
         })
     } else {
       this.getCorporateReqByDealerId();
@@ -651,7 +637,6 @@ export class TablesWidget30Component {
         .subscribe(res => {
           if (res) {
             alert("Email service has been DEACTIVATED for this customer, now transaction emails will NOT be send to this customer..")
-
             this.getMappingAccount(this.fuelDealerId);
           }
           else {
@@ -661,7 +646,6 @@ export class TablesWidget30Component {
 
     } else if (mappingStatus == "FALSE") {
       mappingStatus = "TRUE";
-
       let data = {
         emailStatus: mappingStatus,
         fuelDealerCustomerMapId: fuelDealerCustomerMapId,
@@ -671,7 +655,6 @@ export class TablesWidget30Component {
         .subscribe(res => {
           if (res) {
             alert("Email service has been ACTIVATED for this customer, now transaction emails will be send to this customer..")
-
             this.getMappingAccount(this.fuelDealerId);
           }
           else {
@@ -680,7 +663,6 @@ export class TablesWidget30Component {
 
         })
     } else {
-
       this.getMappingAccount(this.fuelDealerId);
     }
   }
@@ -698,7 +680,6 @@ export class TablesWidget30Component {
         alert(res.msg)
         this.getMappingAccount(this.fuelDealerId)
         this.modalRef2.close('close')
-
       })
   }
 
@@ -806,6 +787,7 @@ export class TablesWidget30Component {
         }
       })
   }
+
   addFlagForCorp() {
     if (this.corporateFlagPurpose) {
       let data = {
@@ -832,6 +814,7 @@ export class TablesWidget30Component {
       alert("Please Enter Status OR Reason")
     }
   }
+
   updateFlagForCorp() {
     if (this.idcorporateFlag) {
       let data = {
@@ -845,7 +828,6 @@ export class TablesWidget30Component {
             this.modalUpdateName.close('close')
             this.corporateReviewFlagUpdate = ''
             this.corporateFlagPurposeUpdate = ''
-
           }
           else {
             alert("Error to Update !")
@@ -856,95 +838,93 @@ export class TablesWidget30Component {
       alert("Please Enter Status OR Reason")
     }
   }
-  
-openVehicle(addVehicle: any,fuelDealerCustomerMapId: any,fuelCorporateId: any,companyName: any){
-  this.companyNameAddVehicle = companyName
-  this.fuelDealerCorpMapIdNew = fuelDealerCustomerMapId;
-  this.customerCorporateId = fuelCorporateId
-  this.modalRef2 = this.modalService.open(addVehicle);
-  this.addVehicleForCr()
-  this.cd.detectChanges()
-  this.modalRef2.result.then(
-    (result: any) => {
-      this.closeResult = `Closed with: ${result}`;
-    },
-    (reason: any) => {
-      this.closeResult = `Dismissed`;
-    });
-}
 
-addVehicleForCr() {
-  this.countAdvance = this.countAdvance + 1;
-  if (this.countAdvance < 12) {
-    this.addVehicle = new addVehicle();
-    this.addVehicleData.push(this.addVehicle);
+  openVehicle(addVehicle: any, fuelDealerCustomerMapId: any, fuelCorporateId: any, companyName: any) {
+    this.companyNameAddVehicle = companyName
+    this.fuelDealerCorpMapIdNew = fuelDealerCustomerMapId;
+    this.customerCorporateId = fuelCorporateId
+    this.modalRef2 = this.modalService.open(addVehicle);
+    this.addVehicleForCr()
     this.cd.detectChanges()
-  }
-  else {
-    this.count = 11;
-    alert("Please save 10 credit entries")
-    this.cd.detectChanges()
+    this.modalRef2.result.then(
+      (result: any) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason: any) => {
+        this.closeResult = `Dismissed`;
+      });
   }
 
-}
+  addVehicleForCr() {
+    this.countAdvance = this.countAdvance + 1;
+    if (this.countAdvance < 12) {
+      this.addVehicle = new addVehicle();
+      this.addVehicleData.push(this.addVehicle);
+      this.cd.detectChanges()
+    }
+    else {
+      this.count = 11;
+      alert("Please save 10 credit entries")
+      this.cd.detectChanges()
+    }
 
-setVehicleNumber() {
+  }
+
+  setVehicleNumber() {
     this.addVehicleForm.controls["vehicleNumber"].setValue(this.addVehicle.vehicleNumber)
     this.checkFuelCreditVehicle();
   }
 
-  checkFuelCreditVehicle(){
-    let data ={
-      fuelDealerCustomerMapId:this.fuelDealerCorpMapIdNew,
-      dealerId:this.fuelDealerId,
-      vehicleNumber:this.addVehicleForm.value.vehicleNumber
+  checkFuelCreditVehicle() {
+    let data = {
+      fuelDealerCustomerMapId: this.fuelDealerCorpMapIdNew,
+      dealerId: this.fuelDealerId,
+      vehicleNumber: this.addVehicleForm.value.vehicleNumber
     }
-  
-  this.post.checkVehicleByfuelDealerIdPOST(data)
-  .subscribe(res=>{
-    if(res.status =="OK"){
-      if (res.data.length) {
-         alert(res.msg)
-        }
 
-      }
-     })
+    this.post.checkVehicleByfuelDealerIdPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          if (res.data.length) {
+            alert(res.msg)
+          }
+
+        }
+      })
   }
-  
+
   removeVehicle(i: number) {
     this.addVehicleData.splice(i, 1);
     this.count = this.count - 1;
   }
-  
-  addFuelCreditVehicle(){
-    if(this.fuelDealerCorpMapIdNew){
-    let createdDate = new Date
-          let data ={
-            addVehicleData: this.addVehicleData,
-            fuelDealerCustomerMapId:this.fuelDealerCorpMapIdNew,
-            dealerId:this.fuelDealerId,
-            dealerCorporateId:this.dealerCorporateId,
-            customerCorporateId:this.customerCorporateId,
-            createdAt:createdDate,
-            createdBy:this.fuelDealerId,
-          }
-    
-        
-        this.post.addFuelVehicleDetailsPOST(data)
-        .subscribe(res=>{
-         
+
+  addFuelCreditVehicle() {
+    if (this.fuelDealerCorpMapIdNew) {
+      let createdDate = new Date
+      let data = {
+        addVehicleData: this.addVehicleData,
+        fuelDealerCustomerMapId: this.fuelDealerCorpMapIdNew,
+        dealerId: this.fuelDealerId,
+        dealerCorporateId: this.dealerCorporateId,
+        customerCorporateId: this.customerCorporateId,
+        createdAt: createdDate,
+        createdBy: this.fuelDealerId,
+      }
+
+      this.post.addFuelVehicleDetailsPOST(data)
+        .subscribe(res => {
+
           alert(res.msg)
           this.addVehicleData = [];
           this.countAdvance = 1;
           this.addVehicleForCr();
           this.getMappingAccount(this.fuelDealerId);
           this.modalRef2.close('close')
-    
-    
-        })}
-        else{
-          alert("Please Select Customer..")
-        }
-    
-      }
+        })
+    }
+    else {
+      alert("Please Select Customer..")
+    }
+
+  }
 }

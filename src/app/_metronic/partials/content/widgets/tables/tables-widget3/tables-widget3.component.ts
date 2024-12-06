@@ -110,6 +110,7 @@ export class TablesWidget3Component implements OnInit {
     this.dealerCorporateId = dealerData.corporateId;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     this.vpPersonId = element.veelsPlusId
+    this.accessGroupId = element.accessGroupId
     // this.getCorporateById(this.dealerLoginVPId);
     this.getfuelDealerIdByCorporateId(this.dealerCorporateId)
     this.cd.detectChanges()
@@ -238,24 +239,24 @@ export class TablesWidget3Component implements OnInit {
     }
   }
 
-  staffEdit(updateStaff: any,fuelDealerStaffId: any,userId: any,personId: any,firstName: any,lastName: any,designation: any,salary: any){
+  staffEdit(updateStaff: any, fuelDealerStaffId: any, userId: any, personId: any, firstName: any, lastName: any, designation: any, salary: any) {
 
     this.fuelDealerStaffIdUpdate = fuelDealerStaffId,
-    this.userIdUpdate = userId,
-    this.personIdUpdate = personId,
-    this.firstName = firstName,
-    this.lastName = lastName,
-    this.designation = designation
+      this.userIdUpdate = userId,
+      this.personIdUpdate = personId,
+      this.firstName = firstName,
+      this.lastName = lastName,
+      this.designation = designation
     this.salary = salary
-    this.modalReference1 = this.modalService.open(updateStaff, {size:'lg'});
-   
+    this.modalReference1 = this.modalService.open(updateStaff, { size: 'lg' });
+
     this.modalReference1.result.then((result: any) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason: any) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
-  
+
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -265,20 +266,20 @@ export class TablesWidget3Component implements OnInit {
       return `with: ${reason}`;
     }
   }
-  
+
   UpdateDealerStaffDetails() {
-    if(this.firstName && this.lastName){
-      
-      if(this.designation == 'OPERATOR'){
+    if (this.firstName && this.lastName) {
+
+      if (this.designation == 'OPERATOR') {
         this.accessGroupIdUpdate = '13'
-        }
-        if(this.designation == 'MANAGER' && this.accessGroupId == '12' ){
-         this.accessGroupIdUpdate = '14'
-         }
-         if(this.designation == 'MANAGER' && this.accessGroupId == '19' ){
-          this.accessGroupIdUpdate = '21'
-          }
-   
+      }
+      if (this.designation == 'MANAGER' && this.accessGroupId == '12') {
+        this.accessGroupIdUpdate = '14'
+      }
+      if (this.designation == 'MANAGER' && this.accessGroupId == '19') {
+        this.accessGroupIdUpdate = '21'
+      }
+
       let data = {
         fuelDealerStaffId: this.fuelDealerStaffIdUpdate,
         userId: this.userIdUpdate,
@@ -294,53 +295,53 @@ export class TablesWidget3Component implements OnInit {
           if (res.status == "OK") {
             alert("Staff details update successfully!")
             this.modalReference1.close('close')
-            this.switchedToStaff(this.personIdUpdate,this.accessGroupIdUpdate)
+            this.switchedToStaff(this.personIdUpdate, this.accessGroupIdUpdate)
             this.getStaffDetails(this.fuelDealerId);
           }
           else {
             this.spinner.hide();
             this.modalReference1.close('close')
             alert("Error to update staff details!")
-  
+
           }
         })
-      }else{
-          alert("Please Enter Name")
-      }
+    } else {
+      alert("Please Enter Name")
     }
-    
-  switchedToStaff(personId: any,accessGroupId: string){
+  }
+
+  switchedToStaff(personId: any, accessGroupId: string) {
     let date = new Date();
     let data = {
-      personId:personId,
+      personId: personId,
       fuelDealerId: this.fuelDealerId,
-      createdAt:moment(date).format('DD-MM-YYYY HH:mm:ss'),
-      createdBy:this.vpPersonId,
-      accessGroupId:accessGroupId
+      createdAt: moment(date).format('DD-MM-YYYY HH:mm:ss'),
+      createdBy: this.vpPersonId,
+      accessGroupId: accessGroupId
     }
 
     this.post.switchedToStaffPOST(data)
-    .subscribe(res=>{
+      .subscribe(res => {
 
-    })
+      })
 
   }
-  
+
   closeModalEditStaff() {
     this.modalReference1.close('close');
   }
-  
+
   //getStaffCountPOST
-  getStaffCount(fuelDealerId: any){
+  getStaffCount(fuelDealerId: any) {
     let data = {
-        fuelDealerId: fuelDealerId,
+      fuelDealerId: fuelDealerId,
     };
     this.post.getStaffCountPOST(data).subscribe((res) => {
-        if (res.status == "OK") {
-           this.totalOperator = res.data1[0].totalOperator;
-           this.totalManager = res.data[0].totalManager;
-           this.cd.detectChanges()
-        }
+      if (res.status == "OK") {
+        this.totalOperator = res.data1[0].totalOperator;
+        this.totalManager = res.data[0].totalManager;
+        this.cd.detectChanges()
+      }
     });
   }
 }

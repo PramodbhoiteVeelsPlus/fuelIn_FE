@@ -82,6 +82,9 @@ export class StatsWidget17Component {
     creditDayLimit: new FormControl('', Validators.required),
     carrierEmail: new FormControl('', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]),
     phoneNumber: new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
+    numberOfBranches: new FormControl(''),
+    website: new FormControl(''),
+    headQuarterName: new FormControl(''),
 
   });
 
@@ -124,7 +127,7 @@ export class StatsWidget17Component {
   modalRef: any;
   closeResult: string;
   accessGroupId: any;
-  error: string;
+  error = '';
   isCarrierFound: boolean = false;
   customerId: any;
   details: string;
@@ -145,7 +148,7 @@ export class StatsWidget17Component {
   stateCode: any;
   veelsPlusBranchId: string;
   veelsUserTypePlusId: string;
-  userRole: string;
+  userRole:  any = "2";
   modalRef2: any;
   prevOutstanding: any;
   previousOutstandForModal: any;
@@ -181,6 +184,7 @@ export class StatsWidget17Component {
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     var dealerData = JSON.parse(localStorage.getItem("dealerData") || '{}');
+    this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
     this.dealerMobile = element.phone1;
     this.dealerCorporateId = dealerData.corporateId;
     this.corporateLoginVPId = element.veelsPlusCorporateID;
@@ -264,10 +268,12 @@ export class StatsWidget17Component {
               this.customerId = res.data[0].customerId;
               this.getFlagStatusByCorpId(res.data[0].corporateId)
               this.getCustomerAllDataById(this.customerId);
+              this.cd.detectChanges()
             } else {
               alert("This Mobile Number Already used for Petrol Pump..")
               this.corporateMappingForm.controls["phoneNumber"].setValue("")
               this.spinner.hide()
+              this.cd.detectChanges()
             }
           } else {
             let data = {
@@ -279,8 +285,10 @@ export class StatsWidget17Component {
                   alert("This Mobile Number Already used in System..!")
                   this.corporateMappingForm.controls["phoneNumber"].setValue("")
                   this.spinner.hide()
+                  this.cd.detectChanges()
                 } else {
                   this.spinner.hide()
+                  this.cd.detectChanges()
                 }
               });
           }
@@ -288,6 +296,7 @@ export class StatsWidget17Component {
     } else {
       ("Please Enter Valid Mobile Number!")
       this.spinner.hide()
+      this.cd.detectChanges()
     }
   }
 
@@ -446,7 +455,9 @@ export class StatsWidget17Component {
                   this.showRefrsh = true
                   this.isForm2 = false
                   this.isForm3 = true
+                  this.nextStep1()
                   this.spinner.hide()
+                  this.cd.detectChanges()
                 } else {
                   this.corporateMappingForm.reset()
                   this.error = res.msg ? res.msg : '';
@@ -635,12 +646,12 @@ export class StatsWidget17Component {
     this.createCorporateId();
     let data = {
       GSTNumber: this.corporateMappingForm.value.gstNo,
-      // numberOfBranches: this.corporateMappingForm.value.numberOfBranches,
-      // website: this.corporateMappingForm.value.website,
+      numberOfBranches: this.corporateMappingForm.value.numberOfBranches,
+      website: this.corporateMappingForm.value.website,
       numberOfEmployee: 1,
       hostName: this.corporateMappingForm1.value.firstName + ' ' + this.corporateMappingForm1.value.lastName,
       branchName: "HEAD OFFICE",
-      // headQuarterName: this.corporateMappingForm.value.headQuarterName,
+      headQuarterName: this.corporateMappingForm.value.headQuarterName,
       hostPhone: this.corporateMappingForm.value.phoneNumber,
       createdBy: this.dealerLoginVPId,
       addressId: this.addressId,
@@ -655,11 +666,14 @@ export class StatsWidget17Component {
           this.corporateIdforReg = res.data1.insertId;
           this.customerCorporateId = res.data1.insertId;
           this.corporateById(this.corporateIdforReg);
+          this.nextStep1()
+          this.cd.detectChanges()
 
         }
         else {
           alert(res.msg)
           this.spinner.hide()
+          this.cd.detectChanges()
         }
       })
 
@@ -1058,7 +1072,6 @@ export class StatsWidget17Component {
         createdBy: this.fuelDealerId,
       }
 
-
       this.post.addFuelVehicleDetailsPOST(data)
         .subscribe(res => {
 
@@ -1067,7 +1080,6 @@ export class StatsWidget17Component {
           this.countAdvance = 1;
           this.addVehicleForCr();
           this.modalRef2.close('close')
-
 
         })
     }

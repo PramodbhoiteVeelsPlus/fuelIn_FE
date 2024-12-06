@@ -402,7 +402,6 @@
       </tbody>
     </table>
 
-
     <!-- begin::Pagination -->
     <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
       style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
@@ -439,17 +438,14 @@
                   <td>
                     {{charges.vehicleNumber}}
                   </td>
-
                   <td>
                     <div class="text-center">
                       <button class="btn btn-danger"
                         (click)="removeVehiclefromCustomerMapId(charges.idfuelCreditVehicle)">Delete</button>
                     </div>
                   </td>
-
                 </tr>
               </tbody>
-
             </table>
           </div>
         </div>
@@ -609,12 +605,12 @@
         </div>
         <br><br>
         <div class="row">
-          <div class="col-md-3"></div>
+          <div class="col-md-2"></div>
           <div class="col-md-3">
             <button type="button" class="btn btn-primary" aria-label="Close"
               (click)="addOutstandAmount()">Update</button>
           </div>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <div class="col-md-1"></div>
           <div class="col-md-3">
             <button type="button" class="btn btn-secondary" aria-label="Close" (click)="d('Cross click')">Close</button>
           </div>
@@ -654,7 +650,7 @@
           <div class="col-md-3">
             <button type="button" class="btn btn-primary" aria-label="Close"
               (click)="checkManualNumRange()">Update</button>
-          </div>
+          </div>&nbsp;&nbsp;&nbsp;&nbsp;
           <div class="col-md-3">
             <button type="button" class="btn btn-secondary" aria-label="Close" (click)="d('Cross click')">Close</button>
           </div>
@@ -682,8 +678,8 @@
             oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
             [(ngModel)]="corporateFlagPurpose" [ngModelOptions]="{standalone: true}">
         </div>
-
       </div>
+
       <div class="row">
 
       </div>
@@ -694,7 +690,8 @@
         </div>
         <div class="col-md-2">
           <button type="submit" class="btn btn-primary" (click)="addFlagForCorp()">ADD</button>
-        </div>&nbsp;&nbsp;
+        </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;
         <div class="col-md-2">
           <button type="submit" class="btn btn-secondary" (click)="closeModalUpdate()">Close</button>
         </div>
@@ -750,7 +747,6 @@
                     <th>Sr No</th>
                     <th>Vehicle Number</th>
                     <th>Action</th>
-
                   </tr>
                 </thead>
                 <tbody *ngFor="let charges of addVehicleData; let i = index;">
@@ -758,7 +754,6 @@
                     <td>
                       {{i+1}}
                     </td>
-
                     <td>
                       <input type="text" class="form-control" [(ngModel)]="charges.vehicleNumber"
                         [ngModelOptions]="{standalone: true}" placeholder="Enter Vehicle no."
@@ -770,7 +765,6 @@
                       <button type="submit" class="btn btn-success btn-sm" (click)="addVehicleForCr()">
                         +
                       </button>
-
                       &nbsp;&nbsp;
                       <button *ngIf="i != 0" type="cancel" class="close btn-danger" aria-label="Close"
                         (click)="removeVehicle(i)"><span aria-hidden="true">&times;</span></button>
@@ -785,7 +779,6 @@
       </form>
 
       <div class="row justify-content-center">
-
         <div class="col-auto">
           <button type="submit" class="btn btn-primary" (click)="addFuelCreditVehicle()">Submit</button>
         </div>&nbsp;&nbsp;

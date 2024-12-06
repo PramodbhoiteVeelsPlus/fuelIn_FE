@@ -266,7 +266,7 @@ export class ListsWidget5Component {
   expenseAmountUpdate: any;
   shortamountUpdate: any;
   totalAmountUpdate: string;
-  totalCreditTally: any;
+  totalCreditTally: any = 0;
   totalCreditTally1: any;
   totalCashTally: any = 0;
   totalDigitalTally: any = 0;
@@ -414,7 +414,7 @@ export class ListsWidget5Component {
   fuelTerminalDetails: any = [];
   isDigitalSubmit: boolean;
   productPrice: string;
-  productPriceDetails: any;
+  productPriceDetails: any = [];
   fuelDealerCustomerMapId: any;
   isSelected1: boolean = false;
   mappingPreviousStatus: any;
@@ -559,6 +559,7 @@ export class ListsWidget5Component {
     this.getCorporateMappedListByDealerId(this.fuelDealerId)
     this.getFuelTerminal(this.fuelDealerId)
     this.getLubricants(this.fuelDealerId)
+    this.getProductsByDealerId(this.fuelDealerId)
     this.getGSTDetails()
     this.cd.detectChanges()
   }
@@ -2350,6 +2351,7 @@ export class ListsWidget5Component {
       .subscribe(res => {
         if (res) {
           this.corporateList = res.data;
+          this.cd.detectChanges()
         } else {
         }
       });
@@ -2791,6 +2793,7 @@ export class ListsWidget5Component {
     this.post1.getFuelProductIdByDealerIdPOST(data).subscribe(res => {
       if (res) {
         this.productInfo = res.data;
+        this.cd.detectChanges()
       }
     })
   }
@@ -3518,10 +3521,12 @@ export class ListsWidget5Component {
             this.getAllFuelCreditByStaffIdDate(this.staffId);
             this.closeModalCrLube()
             this.spinner.hide();
+            this.cd.detectChanges()
 
           } else {
             alert("Error to Created Request!")
             this.spinner.hide();
+            this.cd.detectChanges()
           }
         })
     } else {

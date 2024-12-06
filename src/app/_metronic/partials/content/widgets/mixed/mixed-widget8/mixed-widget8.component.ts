@@ -214,7 +214,7 @@ export class MixedWidget8Component implements OnInit {
           this.netOS = res.data[0].netOS
           // this.transform(Math.round(Number(this.netOS)));
           var osForWrd = ''
-          osForWrd = (this.netOS).toFixed(2)
+          osForWrd = (this.totalPurchaseAmt).toFixed(2)
           var osForWrd1 = osForWrd.split(".")
           this.rupeesWrd = osForWrd1[0]
           this.paisaWrd = osForWrd1[1]

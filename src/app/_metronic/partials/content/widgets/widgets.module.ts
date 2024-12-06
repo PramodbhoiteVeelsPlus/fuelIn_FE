@@ -41,7 +41,7 @@ import { TilesWidget13Component } from './tiles/tiles-widget13/tiles-widget13.co
 import { TilesWidget14Component } from './tiles/tiles-widget14/tiles-widget14.component';
 // Other
 import { DropdownMenusModule } from '../dropdown-menus/dropdown-menus.module';
-import { NgbActiveModal, NgbDatepickerModule, NgbDropdownModule, NgbNavModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbAlertModule, NgbDatepickerModule, NgbDropdownModule, NgbNavModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListsWidget2Component } from './lists/lists-widget2/lists-widget2.component';
 import { ListsWidget5Component } from './lists/lists-widget5/lists-widget5.component';
 import { ListsWidget6Component } from './lists/lists-widget6/lists-widget6.component';
@@ -395,7 +395,8 @@ import { PumpTablesWidget12Component } from './pump-tables/pump-tables-widget12/
     RouterModule,
     NgbNavModule,
     NgxSliderModule,
-    NgxPrintModule
+    NgxPrintModule,
+    NgbAlertModule
   ],
   exports: [
     // Advanced Tables

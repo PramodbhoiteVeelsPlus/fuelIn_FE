@@ -589,14 +589,14 @@
                         Name:</label>
                     </div>
                     <div class="col-md-3">
-                      <input class="form-control" placeholder="Product" formControlName="productCategory" readonly>
+                      <input class="form-control" placeholder="Product" formControlName="productCategory" [disabled]="true">
                     </div>
                     <div class="col-md-2">
                       <label class="labelNewMargin">Product
                         Rate:</label>
                     </div>
                     <div class="col-md-3">
-                      <input class="form-control" placeholder="Product Rate" formControlName="productRate" readonly>
+                      <input class="form-control" placeholder="Product Rate" formControlName="productRate" [disabled]="true">
                     </div>
                   </div>
                   <hr>
@@ -607,7 +607,7 @@
                     </div>
                     <div class="col-md-3">
                       <input class="form-control" placeholder="DD-MM-YYYY" name="startDate"
-                        formControlName="estimatedRefuelDateForEdit" readonly>
+                        formControlName="estimatedRefuelDateForEdit" [disabled]="true">
                     </div>
 
                     <div class="col-md-5">
@@ -655,7 +655,7 @@
                     <div class="col-md-3">
                       <span *ngIf="!isAMOUNT">
                         <input class="form-control form-control-sm mr-1 w-40" formControlName="reqCreditAmount"
-                          style="font-size: 0.750rem;" placeholder="Amount" type="number" readonly>
+                          style="font-size: 0.750rem;" placeholder="Amount" type="number" [disabled]="true">
                       </span>
                       <span *ngIf="isAMOUNT">
                         <input class="form-control form-control-sm mr-1 w-40" formControlName="reqCreditAmount"
@@ -679,7 +679,7 @@
                     <div class="col-md-3">
                       <span *ngIf="!isQUANTITY">
                         <input class="form-control form-control-sm mr-1 w-40" formControlName="reqQuantity"
-                          style="font-size: 0.750rem;" placeholder=" Quantity" type="number" readonly>
+                          style="font-size: 0.750rem;" placeholder=" Quantity" type="number" [disabled]="true">
                       </span>
                       <span *ngIf="isQUANTITY">
                         <input class="form-control form-control-sm mr-1 w-40" formControlName="reqQuantity"

@@ -140,13 +140,13 @@
                                 Submit
                             </button>
                         </div>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;
                         <div class="col-lg-1">
                             <button type="submit" class="btn btn-secondary" name="button" (click)="clearFilterForm()">
                                 Cancel
                             </button>
                         </div>
-                        <div class="col-lg-1"></div>
+                        <div class="col-md-1"></div>
 
                         <div class="col-lg-1">
                             <span style="font-size: 25px;cursor: pointer;" (click)="downloadPDF()"
@@ -167,9 +167,9 @@
                     </div>
 
                     <div class="row">
-                        <div class="search-box me-2 mb-2 d-inline-block">
+                        <div class=" col-md-6 search-box d-inline-block">
                             <div class="position-relative">
-                                <input class="form-control" type="text" (input)="onSearch()" placeholder="Search"
+                                <input class="form-control" type="text" (input)="onSearch()" placeholder="Search Customer Name"
                                     [(ngModel)]="searchData" [ngModelOptions]="{standalone: true}">
                                 <i class="bx bx-search-alt search-icon"></i>
                             </div>

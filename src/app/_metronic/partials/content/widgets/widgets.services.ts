@@ -112,6 +112,7 @@ export class WidgetService {
   private getStaffCountURL = this.baseURL + 'fuelStaff/getStaffCount'; 
   private getTotalTANKDUProductwiseURL = this.baseURL + 'dealerDashboard/getTotalTANKDUProductwise';
   private getBankDetailsByDealerIdURL = this.baseURL + 'bankDetails/getBankDetailsByDealerId';
+  private getBankAccByBankIdURL = this.baseURL + 'bankDetails/getBankAccByBankId';
   private updateAccountDetailsbyUniqueStatusURL = this.baseURL + 'bankDetails/updateAccountDetailsbyUniqueStatus';
   private getPOSByBankIdURL = this.baseURL + 'fuelTerminals/getPOSByBankId'; 
   private deleteBankAccByDealerIdURL = this.baseURL + 'bankDetails/deleteBankAccByDealerId';
@@ -171,6 +172,7 @@ export class WidgetService {
       crOutstanding2: crOutstanding2
     }
     this.setRouteForActiveArray.push(jsonStatement)
+    console.log("adtat", this.setRouteForActiveArray, this.activeStartDate)
   }
 
 
@@ -1300,6 +1302,16 @@ export class WidgetService {
     let headers = new HttpHeaders();
     headers = headers.set('authenticationToken', this.token);
     return this.http.post(this.updateTotalInvCreditAmtURL, body, {
+      headers: headers
+    })
+  }
+
+  // getBankAccByBankIdURL
+  getBankAccByBankIdPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getBankAccByBankIdURL, body, {
       headers: headers
     })
   }

@@ -82,35 +82,35 @@
       -webkit-transition: .4s;
       transition: .4s;
     }
-  
-  input:checked + .slider {
-    background-color: green;
-  }
-  
-  input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
-  }
-  
-  input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-  }
-  
-  /* Rounded sliders */
-  .slider.round {
-    border-radius: 34px;
-  }
-  
-  .slider.round:before {
-    border-radius: 50%;
-  }
 
-  label {
-    display: inline-block;
-    padding: 20px;
-    font-size: medium;
-  }
+    input:checked+.slider {
+      background-color: green;
+    }
+
+    input:focus+.slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked+.slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+
+    label {
+      display: inline-block;
+      padding: 20px;
+      font-size: medium;
+    }
   </style>
 </head>
 
@@ -120,12 +120,12 @@
   <h3 class="card-title align-items-start flex-column">
     <span class="card-label fw-bolder fs-3 mb-1">POS Overview</span>
   </h3>
-  <span class="badge badge-light-warning fs-6 fw-bolder">
+  <!-- <span class="badge badge-light-warning fs-6 fw-bolder">
     MAPPED
   </span>
   <span class="badge badge-light-danger fs-6 fw-bolder">
     UNMAPPED
-  </span>
+  </span> -->
   <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
     title="Click to add a user">
     <a (click)="openModal()" class="btn btn-sm btn-light-primary">
@@ -159,7 +159,6 @@
       <tbody *ngFor="let data of fuelTerminalDataList; let i = index">
         <tr>
           <td> {{ i + 1 }} </td>
-
           <td>
             <span *ngIf="data.terminalStatus == 'MAPPED' ">
               {{ data.terminalType }}
@@ -191,12 +190,12 @@
             <div class="d-flex justify-content-center flex-shrink-0">
               <div class="col-lg-1" style="padding: 15px;">
                 <!-- <app-keenicon name="switch" class="fs-3"></app-keenicon> -->
-                <label class="switch" *ngIf = "data.terminalStatus == 'MAPPED'">
+                <label class="switch" *ngIf="data.terminalStatus == 'MAPPED'">
                   <input type="checkbox" checked="checked"
                     (change)="updateMappingPOS($event,data.fuelTerminalsId,data.terminalStatus)">
                   <span class="slider round"></span>
                 </label>
-                <label class="switch" *ngIf = "data.terminalStatus != 'MAPPED'">
+                <label class="switch" *ngIf="data.terminalStatus != 'MAPPED'">
                   <input type="checkbox" [checked]="waive"
                     (change)="updateMappingPOS($event,data.fuelTerminalsId,data.terminalStatus)">
                   <span class="slider round"></span>
@@ -206,16 +205,17 @@
               &nbsp;&nbsp;
               &nbsp;&nbsp;
               <div class="col-lg-1" style="padding: 15px;">
-              <a class="btn btn-icon badge badge-light-warning" (click)="updatePOS(editPOS,data.fuelTerminalsId,data.terminalName,data.attachedAccountId,data.terminalType)">
-                <app-keenicon name="pencil" class="fs-3" ></app-keenicon>
-              </a>
+                <a class="btn btn-icon badge badge-light-warning"
+                  (click)="updatePOS(editPOS,data.fuelTerminalsId,data.terminalName,data.attachedAccountId,data.terminalType)">
+                  <app-keenicon name="pencil" class="fs-3"></app-keenicon>
+                </a>
               </div>
               &nbsp;&nbsp;
-              
+
               <div class="col-lg-1" style="padding: 15px;">
-              <a class="btn btn-icon badge badge-light-danger" (click)="delete(data.fuelTerminalsId)">
-                <app-keenicon name="trash" class="fs-3" ></app-keenicon>
-              </a>
+                <a class="btn btn-icon badge badge-light-danger" (click)="delete(data.fuelTerminalsId)">
+                  <app-keenicon name="trash" class="fs-3"></app-keenicon>
+                </a>
               </div>
             </div>
           </td>
@@ -225,78 +225,73 @@
       <!-- end::Table body -->
     </table>
     <!-- end::Table -->
-     
-    <ng-template #editPOS let-c="close" let-d="dismiss">
 
+    <ng-template #editPOS let-c="close" let-d="dismiss">
       <div class="modal-header">
-          <h4 class="modal-title">
-              <label>
-                  <h4>
-                      <strong>
-                          Update POS Sytem <br></strong>
-                  </h4>
-              </label>
-          </h4>
-          <button type="button" class="btn btn-danger" aria-label="Close"
-              (click)="d('Cross click')">
-              <span aria-hidden="true">&times;</span>
-          </button>
+        <h4 class="modal-title">
+          <label>
+            <h4>
+              <strong>
+                Update POS Sytem <br></strong>
+            </h4>
+          </label>
+        </h4>
+        <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
       <div class="modal-body">
-          <form [formGroup]="updateTerminal">
+        <form [formGroup]="updateTerminal">
 
-              <div class="row">
-                  <div class="col-md-1"></div>
-                  <div class="col-md-5">
-                      <label class="labelNewMargin">Terminal Name:</label>
-                  </div>
-                  <div class="col-md-6">
-                      <input class="form-control"
-                          oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
-                          type="text" formControlName="terminalName"
-                          placeholder="Terminal Name">
-                  </div>
-              </div>
-              <br>
-              <div class="row">
-                  <div class="col-md-1"></div>
-                  <div class="col-md-5">
-                      <label class="labelNewMargin">Select Account:</label>
-                  </div>
-                  <div class="col-md-6">
-                      <span *ngIf = "isOILCOUpdate">
-                          <select class="form-select"   formControlName="accountDetails">
-                              <option value="">Select Account</option>
-                              <option value="21" > OIL COMPANY </option>
-                          </select>
-                      </span>
-                      <span *ngIf = "!isOILCOUpdate">
-                      <select class="form-select" 
-                      (change)="getBankAcc1($event)"  formControlName="accountDetails" required>
-                          <option value="">Select Account</option>
-                          <option *ngFor="let data of bankAccList1" [value]="data.bankDetailsId"  >
-                                      {{data.bankName}}-{{data.accountNumber}}
-                          </option>
-                      </select>
-                      </span>
-                  </div>
-              </div>
+          <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-5">
+              <label class="labelNewMargin">Terminal Name:</label>
+            </div>
+            <div class="col-md-6">
+              <input class="form-control"
+                oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                type="text" formControlName="terminalName" placeholder="Terminal Name">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-5">
+              <label class="labelNewMargin">Select Account:</label>
+            </div>
+            <div class="col-md-6">
+              <span *ngIf="isOILCOUpdate">
+                <select class="form-select" formControlName="accountDetails">
+                  <option value="">Select Account</option>
+                  <option value="21"> OIL COMPANY </option>
+                </select>
+              </span>
+              <span *ngIf="!isOILCOUpdate">
+                <select class="form-select" (change)="getBankAcc1($event)" formControlName="accountDetails" required>
+                  <option value="">Select Account</option>
+                  <option *ngFor="let data of bankAccList1" [value]="data.bankDetailsId">
+                    {{data.bankName}}-{{data.accountNumber}}
+                  </option>
+                </select>
+              </span>
+            </div>
+          </div>
 
-              <br>
-              <div class="row">
-                  <div class="col-md-4"></div>
-                  <div class="col-auto">
-                      <button type="submit" class="btn btn-outline-success my-2 my-sm-0"
-                          (click)="updatePOSName()">Update</button>
-                  </div>&nbsp;&nbsp;
-                  <div class="col-auto">
-                      <button type="submit" class="btn btn-danger"
-                          (click)="d('Cross click')">Cancel</button>
-                  </div>
-              </div>
-          </form>
+          <br>
+          <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-auto">
+              <button type="submit" class="btn btn-outline-success my-2 my-sm-0"
+                (click)="updatePOSName()">Update</button>
+            </div>&nbsp;&nbsp;
+            <div class="col-auto">
+              <button type="submit" class="btn btn-danger" (click)="d('Cross click')">Cancel</button>
+            </div>
+          </div>
+        </form>
       </div>
-  </ng-template>
+    </ng-template>
 
   </div>
   <!-- end::Table container -->

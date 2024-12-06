@@ -5,6 +5,7 @@ import { ModalConfig } from 'src/app/_metronic/partials/layout/modals/modal.conf
 import { Modal3Component } from 'src/app/_metronic/partials/layout/modals/modal3/modal3.component';
 import { WidgetService } from '../../widgets.services';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 type Tabs =
   | 'kt_table_widget_4_tab_1'
@@ -108,7 +109,8 @@ export class TablesWidget4Component {
     private spinner: NgxSpinnerService,
     config: NgbDatepickerConfig,
     public cd: ChangeDetectorRef,
-    private modalService: NgbModal,) {
+    private modalService: NgbModal,
+    private router: Router) {
     const currentDate = new Date();
     config.minDate = { year: 2018, month: 1, day: 1 };
     config.maxDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
@@ -122,7 +124,6 @@ export class TablesWidget4Component {
     this.dealerCorporateId = dealerData.corporateId;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     this.vpPersonId = element.veelsPlusId
-    // this.getCorporateById(this.dealerLoginVPId);
     this.getfuelDealerIdByCorporateId(this.dealerCorporateId)
     this.cd.detectChanges()
   }
@@ -133,26 +134,6 @@ export class TablesWidget4Component {
 
   refreshData() {
     this.getBankDetailsByDealerId(this.fuelDealerId);
-  }
-
-  getCorporateById(dealerLoginVPId: any) {
-    let data = {
-      veelsplusCorporateId: dealerLoginVPId
-    }
-    this.post.getBranchByVeelsplusIdPOST(data)
-      .subscribe(res => {
-        if (res.status == "OK") {
-          if (res.data.length) {
-            this.loginSQLCorporateId = res.data[0].corporateId;
-            this.getfuelDealerIdByCorporateId(this.loginSQLCorporateId);
-            this.cd.detectChanges()
-          }
-          else {
-            alert("Getting Error..! Please Logout & Login again..!")
-            this.cd.detectChanges()
-          }
-        }
-      })
   }
 
   // getfuelDealerIdByDealerCorporateId
@@ -242,7 +223,7 @@ export class TablesWidget4Component {
         if (res.status == 'OK') {
           if (res.data.length) {
             alert("This Bank Account Attach with POS/Digital. Please Change Acc of POS or Delete the POS..")
-            // this.router.navigate(['../posMyDigitalPayments']);
+            this.router.navigate(['/accounting/pos']);
           } else {
             let data = {
               bankDetailsId: id
@@ -261,9 +242,7 @@ export class TablesWidget4Component {
             else {
               this.spinner.hide()
             }
-
           }
-
         }
       })
   }
