@@ -140,6 +140,7 @@ export class ListsWidget11Component {
     this.getShiftDetails(this.fuelDealerId)
     this.getAllAttendantsByDid(this.fuelDealerId)
     this.getProductsByDealerId(this.fuelDealerId)
+    this.getShiftWiseBookDetails(this.fuelDealerId)
     this.cd.detectChanges()
   }
 

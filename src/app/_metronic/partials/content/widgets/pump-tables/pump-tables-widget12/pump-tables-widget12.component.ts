@@ -73,6 +73,15 @@ export class PumpTablesWidget12Component implements OnInit {
     date: new FormControl(''),
   });
 
+  requestEditTally = new FormGroup({
+    totalCashTally: new FormControl(''),
+     paytmTotalAmount: new FormControl(''),
+      totalCreditTally: new FormControl(''),
+      expenseAmount: new FormControl(''),
+      shortamount: new FormControl(''),
+
+  });
+  
   fuelDealerId: any;
   dealerCorporateId: any;
   userId: any;
@@ -112,7 +121,6 @@ export class PumpTablesWidget12Component implements OnInit {
   reviewtotalCreditTally: any;
   totalAmountTally: any;
   tallyIdForUpdate: any;
-  requestEditTally: any;
   reviewtotalCashTallyDiff: number;
   reviewpaytmTotalAmountDiff: number;
   reviewtotalCreditTallyDiff: number;

@@ -102,7 +102,7 @@ export class ListsWidget12Component {
   isLeap: boolean = false;
   isFeb: boolean = false;
   month: any ;
-  thisYear: any ;
+  thisYear = (new Date()).getFullYear()
   quantityDetails: any = [];
   meterSales1: any;
   cash1: any;
@@ -380,8 +380,8 @@ export class ListsWidget12Component {
   shortArray: any = [];
   totalAmountTallyArray: any = [];
   productsList: any = [];
-  dayWiseis311: any;
-  dayWiseis31: any;
+  dayWiseis311: any = [];
+  dayWiseis31: any = [];
   dayWiseis30: any;
   dayWiseisLeap: any;
   dayWiseis28: any;
@@ -428,8 +428,10 @@ export class ListsWidget12Component {
       this.lastFourthYear = Number(this.currentYear) - 3;
       this.lastFifthYear = Number(this.currentYear) - 4;
 
-      this.getProductsByDealerId(this.fuelDealerId)
       this.isMonth()
+      this.getProductsByDealerId(this.fuelDealerId)
+      this.getDayWiseShiftDetailsFilter(this.fuelDealerId);
+      // this.isMonth()
       this.cd.detectChanges()
     }
 
@@ -791,6 +793,7 @@ export class ListsWidget12Component {
           this.date9 = this.thisYear + '-' + this.month + '-09'
           this.date10 = this.thisYear + '-' + this.month + '-10'
           this.date11 = this.thisYear + '-' + this.month + '-11'
+          console.log("date", this.date1)
           this.getDayWiseShiftDetailsMIDFilter(fuelDealerId)
           this.cd.detectChanges()
 
