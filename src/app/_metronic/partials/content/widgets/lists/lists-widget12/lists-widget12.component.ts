@@ -1284,6 +1284,8 @@ export class ListsWidget12Component {
 
   goToShift(date: any) {
     this.post.setRoutingWithDate(date, "ViewSummary")
+    localStorage.setItem('reportDate', JSON.stringify(date));
+    localStorage.setItem('address', JSON.stringify("ViewSummary"));
     this.router.navigate(['/shift/shiftList']);
   }
 

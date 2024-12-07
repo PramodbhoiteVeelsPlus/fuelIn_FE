@@ -160,11 +160,14 @@ export class ChartsWidget3Component implements OnInit {
         this.dealerAccess = true
       }
 
-      this.headerName1 = this.companyName;
-      // this.headerName2 = res.data[0].address1+', '+res.data[0].address2+', '+ this.city;
-      // this.headerName3 = this.state+'-'+ this.pin+'  '+"GST: "+ this.GSTNumber;
-
     }
+    this.headerName1 = dealerData.companyName;
+    this.headerName2 = dealerData.address1+', '+dealerData.address2+', '+ dealerData.city;
+    this.headerName3 = dealerData.state+'-'+ dealerData.pin+'  '+"GST: "+ dealerData.GSTNumber;
+
+    this.viewOilCompanyForm.controls["startDate"].setValue( moment(new Date()).subtract(15, 'days').format("DD-MM-YYYY"));
+    this.viewOilCompanyForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"));
+    this.getOILCOMPANYDataInFuelExpense(this.fuelDealerId)
     this.cd.detectChanges()
   }
 

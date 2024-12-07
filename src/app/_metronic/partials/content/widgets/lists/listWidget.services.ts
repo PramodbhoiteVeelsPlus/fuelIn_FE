@@ -14,6 +14,9 @@ export class ListWidgetService {
     setDate: string;
     setRoute: string;
     address: string;
+    shiftTimeId: any;
+    startDate: string;
+    endDate: string;
 
     addCreditLubeReqByDealerForTaxPost(data: { lubeAllData: any; lubricantsFuelDealerCustomerMapId: any; reqQuantity: any; reqCreditAmount: any; estimatedRefuelDate: string; fuelDealerId: any; lubricantsFuelCorporateId: any; creditSource: string; PANno: any; lubricantsTransDateTime: string; lubricantsTransactionTime: string; creditAmount: any; transactionStatus: string; fuelDealerStaffId: any; actualCreditQuantity: any; createdAt: string; productRate: string | null | undefined; vehicleNumber: any; manualCrNumber: any; personId: any; managerVPPersonId: any; managerPersonId: any; managerName: any; }) {
         throw new Error('Method not implemented.');
@@ -82,56 +85,56 @@ export class ListWidgetService {
     private getLubeTransactionByfuelDealerIdByDateURL = this.baseURL + 'fuelDealerCustMap/getLubeTransactionByfuelDealerIdByDate';
     private calOutstandingAmountforAllURL = this.baseURL + 'fuelCreditInvoice/calOutstandingAmountforAll';
     private getfuelCreditVehicleByfuelDealerCustomerMapIdURL = this.baseURL + 'fuelVehicleDetails/getfuelCreditVehicleByfuelDealerCustomerMapId';
-  private getCorporatesAllMappedRequestByDealerURL = this.baseURL + 'fuelDealerCustMap/getCorporatesAllMappedRequestByDealer';
-  private getLubricantByIdURL = this.baseURL + 'lubricants/getLubricantById'
-  private submitDigitalLubeDetailsURL = this.baseURL + "shiftList/submitDigitalLubeDetails";
-  private deleteCashBillURL = this.baseURL + "cashBillInvoice/deleteCashBill";
-  private submitCashSalesDetailsURL = this.baseURL + 'accounttransaclog/submitCashSalesDetails';
-  private addLubeTaxCashBillURL = this.baseURL + 'cashBillInvoice/addLubeTaxCashBill';
-  private getPriceByDealerProductIdByDateURL = this.baseURL + 'fuelPrice/getPriceByDealerProductIdByDate';
-  private VehicleByRegistrationNumberURL = this.baseURL + 'vehicle/searchVehicleByRegistrationNumber';
-  private addCreditSalesByOperatorURL = this.baseURL + 'fuelDealerCustMap/addCreditSalesByOperator'; 
-  private updateLastCRDateMapIdWiseURL = this.baseURL + 'fuelVendor/updateLastCRDateMapIdWise';
-  private addCreditLubeGstFromShiftURL = this.baseURL + 'fuelLube/addCreditLubeGstFromShift';
-  private updateShiftDetailsByShiftIdURL = this.baseURL + 'shiftList/updateShiftDetailsByShiftId'; 
-  private addFuelShiftTallySalesURL = this.baseURL + 'shiftList/addFuelShiftTallySales';
-  private deleteFuelShiftTimeDetailsURL = this.baseURL + 'fuelShiftTime/deleteFuelShiftTimeDetails';
-  private addFuelShiftTimeDetailsURL = this.baseURL + 'fuelShiftTime/addFuelShiftTimeDetails';
-  private updateFuelShiftTimeDetailsURL = this.baseURL + 'fuelShiftTime/updateFuelShiftTimeDetails';
-  private findPhoneNumberURL = this.baseURL + 'register/findPhoneNumber';
-  private checkStaffDetailsURL = this.baseURL + 'fuelVendor/checkStaffDetails'; 
-  private fuelStaffRegisterURL = this.baseURL + 'fuelVendor/fuelStaffRegister';
-  private addDealerStaffAccessURL = this.baseURL + 'userAccess/addDealerStaffAccess';
-  private getStaffDetailsURL = this.baseURL + 'fuelStaff/getStaffDetails';
-  private renewMappingStaffURL = this.baseURL + 'fuelStaff/renewMappingStaff'; 
-  private updateMapStatusforStaffURL = this.baseURL + 'fuelStaff/updateMapStatusforStaff'; 
-  private UpdateDealerStaffDetailsURL = this.baseURL + 'fuelStaff/UpdateDealerStaffDetails'; 
-  private switchedToStaffURL = this.baseURL + 'userAccess/switchedToStaff';
-  private transporterStaffRegisterURL = this.baseURL + 'fuelVendor/transporterStaffRegister';
-  private getStaffDetailsForTransporterURL = this.baseURL + 'fuelStaff/getStaffDetailsForTransporter';
-  private updateStafForTransporterURL = this.baseURL + 'fuelVendor/updateStafForTransporter';
-  private updateMappingStatusForTransporterURL = this.baseURL + 'fuelVendor/updateMappingStatusForTransporter';
-  private getAttendanceListURL = this.baseURL + 'attendance/getAttendanceList';
-  private getAttendanceURL = this.baseURL + 'attendance/getAttendance';
-  private deleteAttendanceURL = this.baseURL + 'attendance/deleteAttendance'; 
-  private getStaffDetailsDataURL = this.baseURL + 'attendance/getStaffDetails';
-  private addAttendanceURL = this.baseURL + 'attendance/addAttendance'; 
-  private updateAttendanceURL = this.baseURL + 'attendance/updateAttendance';
-  private getStaffDetailsForSalaryURL = this.baseURL + 'staffSalary/getStaffDetailsForSalary';
-  private getStaffSalaryURL = this.baseURL + 'staffSalary/getStaffSalary';
-  private addStaffSalaryURL = this.baseURL + 'staffSalary/addStaffSalary'; 
-  private deleteStaffSalaryURL = this.baseURL + 'staffSalary/deleteStaffSalary'; 
-  private updateStaffSalaryURL = this.baseURL + 'staffSalary/updateStaffSalary';
-  private getShiftWiseBookQuantityDetailsURL = this.baseURL + 'shiftBook/getShiftWiseBookQuantityDetails';
-  private getFuelProductIdByDealerIdURL = this.baseURL + 'fuelPrice/getFuelProductIdByDealerId';
-  private getDayWiseQuantityShiftBookURL = this.baseURL + 'shiftList/getDayWiseQuantityShiftBook'; 
-  private getDayWiseShiftBookURL = this.baseURL + 'shiftList/getDayWiseShiftBook';
-  private getDayWiseShiftBookMIDURL = this.baseURL + 'shiftList/getDayWiseShiftBookMID'; 
-  private getDayWiseShiftBookLASTURL = this.baseURL + 'shiftList/getDayWiseShiftBookLAST';
-  private getShiftTimeWiseBookDetailsURL = this.baseURL + 'shiftBook/getShiftTimeWiseBookDetails';
-  private getShiftTimeWiseBookQuantityDetailsURL = this.baseURL + 'shiftBook/getShiftTimeWiseBookQuantityDetails'; 
-  private getOperatorWiseDetailsURL = this.baseURL + 'shiftBook/getOperatorWiseDetails';
-  private getOperatorWiseQuantityDetailsURL = this.baseURL + 'shiftBook/getOperatorWiseQuantityDetails';
+    private getCorporatesAllMappedRequestByDealerURL = this.baseURL + 'fuelDealerCustMap/getCorporatesAllMappedRequestByDealer';
+    private getLubricantByIdURL = this.baseURL + 'lubricants/getLubricantById'
+    private submitDigitalLubeDetailsURL = this.baseURL + "shiftList/submitDigitalLubeDetails";
+    private deleteCashBillURL = this.baseURL + "cashBillInvoice/deleteCashBill";
+    private submitCashSalesDetailsURL = this.baseURL + 'accounttransaclog/submitCashSalesDetails';
+    private addLubeTaxCashBillURL = this.baseURL + 'cashBillInvoice/addLubeTaxCashBill';
+    private getPriceByDealerProductIdByDateURL = this.baseURL + 'fuelPrice/getPriceByDealerProductIdByDate';
+    private VehicleByRegistrationNumberURL = this.baseURL + 'vehicle/searchVehicleByRegistrationNumber';
+    private addCreditSalesByOperatorURL = this.baseURL + 'fuelDealerCustMap/addCreditSalesByOperator';
+    private updateLastCRDateMapIdWiseURL = this.baseURL + 'fuelVendor/updateLastCRDateMapIdWise';
+    private addCreditLubeGstFromShiftURL = this.baseURL + 'fuelLube/addCreditLubeGstFromShift';
+    private updateShiftDetailsByShiftIdURL = this.baseURL + 'shiftList/updateShiftDetailsByShiftId';
+    private addFuelShiftTallySalesURL = this.baseURL + 'shiftList/addFuelShiftTallySales';
+    private deleteFuelShiftTimeDetailsURL = this.baseURL + 'fuelShiftTime/deleteFuelShiftTimeDetails';
+    private addFuelShiftTimeDetailsURL = this.baseURL + 'fuelShiftTime/addFuelShiftTimeDetails';
+    private updateFuelShiftTimeDetailsURL = this.baseURL + 'fuelShiftTime/updateFuelShiftTimeDetails';
+    private findPhoneNumberURL = this.baseURL + 'register/findPhoneNumber';
+    private checkStaffDetailsURL = this.baseURL + 'fuelVendor/checkStaffDetails';
+    private fuelStaffRegisterURL = this.baseURL + 'fuelVendor/fuelStaffRegister';
+    private addDealerStaffAccessURL = this.baseURL + 'userAccess/addDealerStaffAccess';
+    private getStaffDetailsURL = this.baseURL + 'fuelStaff/getStaffDetails';
+    private renewMappingStaffURL = this.baseURL + 'fuelStaff/renewMappingStaff';
+    private updateMapStatusforStaffURL = this.baseURL + 'fuelStaff/updateMapStatusforStaff';
+    private UpdateDealerStaffDetailsURL = this.baseURL + 'fuelStaff/UpdateDealerStaffDetails';
+    private switchedToStaffURL = this.baseURL + 'userAccess/switchedToStaff';
+    private transporterStaffRegisterURL = this.baseURL + 'fuelVendor/transporterStaffRegister';
+    private getStaffDetailsForTransporterURL = this.baseURL + 'fuelStaff/getStaffDetailsForTransporter';
+    private updateStafForTransporterURL = this.baseURL + 'fuelVendor/updateStafForTransporter';
+    private updateMappingStatusForTransporterURL = this.baseURL + 'fuelVendor/updateMappingStatusForTransporter';
+    private getAttendanceListURL = this.baseURL + 'attendance/getAttendanceList';
+    private getAttendanceURL = this.baseURL + 'attendance/getAttendance';
+    private deleteAttendanceURL = this.baseURL + 'attendance/deleteAttendance';
+    private getStaffDetailsDataURL = this.baseURL + 'attendance/getStaffDetails';
+    private addAttendanceURL = this.baseURL + 'attendance/addAttendance';
+    private updateAttendanceURL = this.baseURL + 'attendance/updateAttendance';
+    private getStaffDetailsForSalaryURL = this.baseURL + 'staffSalary/getStaffDetailsForSalary';
+    private getStaffSalaryURL = this.baseURL + 'staffSalary/getStaffSalary';
+    private addStaffSalaryURL = this.baseURL + 'staffSalary/addStaffSalary';
+    private deleteStaffSalaryURL = this.baseURL + 'staffSalary/deleteStaffSalary';
+    private updateStaffSalaryURL = this.baseURL + 'staffSalary/updateStaffSalary';
+    private getShiftWiseBookQuantityDetailsURL = this.baseURL + 'shiftBook/getShiftWiseBookQuantityDetails';
+    private getFuelProductIdByDealerIdURL = this.baseURL + 'fuelPrice/getFuelProductIdByDealerId';
+    private getDayWiseQuantityShiftBookURL = this.baseURL + 'shiftList/getDayWiseQuantityShiftBook';
+    private getDayWiseShiftBookURL = this.baseURL + 'shiftList/getDayWiseShiftBook';
+    private getDayWiseShiftBookMIDURL = this.baseURL + 'shiftList/getDayWiseShiftBookMID';
+    private getDayWiseShiftBookLASTURL = this.baseURL + 'shiftList/getDayWiseShiftBookLAST';
+    private getShiftTimeWiseBookDetailsURL = this.baseURL + 'shiftBook/getShiftTimeWiseBookDetails';
+    private getShiftTimeWiseBookQuantityDetailsURL = this.baseURL + 'shiftBook/getShiftTimeWiseBookQuantityDetails';
+    private getOperatorWiseDetailsURL = this.baseURL + 'shiftBook/getOperatorWiseDetails';
+    private getOperatorWiseQuantityDetailsURL = this.baseURL + 'shiftBook/getOperatorWiseQuantityDetails';
 
 
 
@@ -226,11 +229,18 @@ export class ListWidgetService {
         this.setDate = date;
         this.setRoute = Book
     }
-    
-    setRoutingWithDate(date: any,address: string){
-    this.date = date;
-    this.address = address;
-    console.log("date", this.date, this.address)
+
+    setRoutingWithDate(date: any, address: string) {
+        this.date = date;
+        this.address = address;
+        console.log("date", this.date, this.address)
+    }
+
+    setRoutingWithShiftTimeId(shiftTimeId: any, address: string, startDate: string, endDate: string) {
+        this.shiftTimeId = shiftTimeId;
+        this.address = address;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     // getCashBillURL

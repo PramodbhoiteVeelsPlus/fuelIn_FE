@@ -267,8 +267,8 @@ export class ChartsWidget9Component implements OnInit {
           this.spinner.hide();
           this.getAllTankdetails();
           this.getPumpInfra();
-          this.getTankByDealerId(this.fuelDealerSQLId)
-          this.getProductsByDealerId(this.fuelDealerSQLId)
+          this.getTankByDealerId(this.fuelDealerId)
+          this.getProductsByDealerId(this.fuelDealerId)
           this.setTankData = []
           this.countTank = 1;
           this.addFormSetTank()
@@ -278,9 +278,6 @@ export class ChartsWidget9Component implements OnInit {
         this.spinner.hide();
       }
   });
-  }
-  fuelDealerSQLId(fuelDealerSQLId: any) {
-    throw new Error('Method not implemented.');
   }
   
   getProductsByDealerId(fuelDealerId: any) {

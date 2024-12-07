@@ -267,14 +267,14 @@
                     <div *ngIf="!isAdd" class="col-sm-1">
                         <div *ngIf="showViewTableMETER" class="text-sm-end">
                             <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF" placement="bottom"
-                                (click)="exportToPDF()"><i class="fas fa-file-pdf"></i></span>
+                                (click)="exportToPDF()"><i class="fas fa-file-pdf" style="font-size: 30px;"></i></span>
 
                         </div>
                     </div>
                     <div *ngIf="!isAdd" class="col-sm-1">
                         <div *ngIf="showViewTableMETER" class="text-sm-end">
                             <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download CSV" placement="bottom"
-                                (click)="exportexcel()"><i class="fas fa-file-csv"></i></span>
+                                (click)="exportexcel()"><i class="fas fa-file-csv" style="font-size: 30px;"></i></span>
                         </div>
                     </div>
                     <div *ngIf="!isAdd" class="col-sm-2">
@@ -571,14 +571,14 @@
                     <div *ngIf="!isAdd1" class="col-sm-1">
                         <div *ngIf="showViewTableSTOCK" class="text-sm-end">
                             <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF" placement="bottom"
-                                (click)="exportToPDF1()"><i class="fas fa-file-pdf"></i></span>
+                                (click)="exportToPDF1()"><i class="fas fa-file-pdf" style="font-size: 30px;"></i></span>
 
                         </div>
                     </div>
                     <div *ngIf="!isAdd1" class="col-sm-1">
                         <div *ngIf="showViewTableSTOCK" class="text-sm-end">
                             <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download CSV" placement="bottom"
-                                (click)="exportexcel1()"><i class="fas fa-file-csv"></i></span>
+                                (click)="exportexcel1()"><i class="fas fa-file-csv" style="font-size: 30px;"></i></span>
 
                         </div>
                     </div>
@@ -789,7 +789,6 @@
                                                 {{(data.stockQuantity + data.productPurchase) * (data.rate) |
                                                 number:'1.2-2'}}
                                             </span>
-
                                         </td>
                                         <td style="text-align: left;" container="body" ngbTooltip="Total Stock (Qty)">
                                             {{(data.totalStockQuantity + data.productPurchase) | number:'1.2-2'}}
@@ -827,15 +826,13 @@
                     <div class="col-sm-1">
                         <div *ngIf="dsrBookDetails.length" class="text-sm-end">
                             <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF" placement="bottom"
-                                (click)="exportToPDF2()"><i class="fas fa-file-pdf"></i></span>
-
+                                (click)="exportToPDF2()"><i class="fas fa-file-pdf" style="font-size: 30px;"></i></span>
                         </div>
                     </div>
                     <div class="col-sm-1">
                         <div *ngIf="dsrBookDetails.length" class="text-sm-end">
                             <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download CSV" placement="bottom"
-                                (click)="exportexcel2()"><i class="fas fa-file-csv"></i></span>
-
+                                (click)="exportexcel2()"><i class="fas fa-file-csv" style="font-size: 30px;"></i></span>
                         </div>
                     </div>
                 </div>

@@ -97,15 +97,15 @@ export class FeedsWidget11Component implements OnInit {
   lastFifthYear: string;
   meterSalesDetails: any = [];
   creditSalesProductwise: any = [];
-  totalMeterSalesDetails: number;
+  totalMeterSalesDetails: any = 0;
   productWiseCreditData: any = [];
   totalCreditSalesAmount: number;
   totalCreditWOCNGQuantity: number;
   totalCreditCNGQuantity: number;
   cashLubeDetails: any = [];
   crLubeDetails: any = [];
-  cashLubeAmt: any;
-  crLubeAmt: any;
+  cashLubeAmt: any = 0;
+  crLubeAmt: any = 0;
   tallySalesDetails: any = [];
   totalSalesDetails: any = [];
   cashSales: number;
@@ -159,6 +159,11 @@ export class FeedsWidget11Component implements OnInit {
     this.last2Year = moment(new Date()).subtract(2, "year").format("YYYY");
     this.lastFourthYear = moment(new Date()).subtract(3, "year").format("YYYY");
     this.lastFifthYear = moment(new Date()).subtract(4, "year").format("YYYY");
+    this.getOpeningBalance(this.fuelDealerId);
+    this.getDigitalTotalByDate(this.dealerCorporateId);
+    this.getSalesDetailsProductWise(this.fuelDealerId);
+    this.getoverallReportData(this.fuelDealerId);
+    this.getPreviousVariation(this.fuelDealerId);
     this.cd.detectChanges();
   }
 
@@ -507,8 +512,17 @@ export class FeedsWidget11Component implements OnInit {
           this.totalCreditCNGQuantity = Number(res.data4[0].totalCreditQuantity)
           this.cashLubeDetails = res.data5
           this.crLubeDetails = res.data6
-          this.cashLubeAmt = res.data5[0].totalCashAmount;
-          this.crLubeAmt = res.data6[0].totalCreditAmount;
+          if(res.data5.length){
+            this.cashLubeAmt = res.data5[0].totalCashAmount;
+          } else{
+            this.cashLubeAmt = 0
+          }
+
+          if(res.data6.length){
+            this.crLubeAmt = res.data6[0].totalCreditAmount;
+          } else{
+            this.crLubeAmt = 0
+          }
 
           this.meterSalesDetails.map((shift: { fuelProductId: string; productName: string; meterSaleAmount: number; meterSaleQuantity: number; totalPumpTesting: number; }) => {
             const shiftDataJSON = {

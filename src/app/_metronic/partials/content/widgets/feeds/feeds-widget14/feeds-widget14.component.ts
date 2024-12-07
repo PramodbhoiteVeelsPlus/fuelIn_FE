@@ -95,7 +95,10 @@ export class FeedsWidget14Component implements OnInit {
     this.dealerCompanyName = dealerData.companyName;
     this.dealerCity = dealerData.city;
     this.accessGroup = element.accessGroupId;
-    this.userName = element.firstName + ' '+ element.lastName 
+    this.userName = element.firstName + ' '+ element.lastName ;
+    this.filterForm.controls["startDate"].setValue("01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear())
+    this.filterForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
+    this.getReportData(this.fuelDealerId)
     this.addFormRequestBanking()
     this.cd.detectChanges();
   }

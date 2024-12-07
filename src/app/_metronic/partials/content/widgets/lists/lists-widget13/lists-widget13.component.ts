@@ -12,11 +12,11 @@ import * as XLSX from 'xlsx';
 import { Options } from '@angular-slider/ngx-slider';
 
 @Injectable()
-export class CustomAdapter extends NgbDateAdapter<any > {
+export class CustomAdapter extends NgbDateAdapter<any> {
 
   readonly DELIMITER = '-';
 
-  fromModel(value: any  | null): NgbDateStruct | null {
+  fromModel(value: any | null): NgbDateStruct | null {
     if (value) {
       let date = value.split(this.DELIMITER);
       return {
@@ -28,7 +28,7 @@ export class CustomAdapter extends NgbDateAdapter<any > {
     return null;
   }
 
-  toModel(date: NgbDateStruct | null): any  | null {
+  toModel(date: NgbDateStruct | null): any | null {
     return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : null;
   }
 }
@@ -41,7 +41,7 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 
   readonly DELIMITER = '/';
 
-  parse(value: any ): NgbDateStruct | null {
+  parse(value: any): NgbDateStruct | null {
     if (value) {
       let date = value.split(this.DELIMITER);
       return {
@@ -53,7 +53,7 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
     return null;
   }
 
-  format(date: NgbDateStruct | null): any  {
+  format(date: NgbDateStruct | null): any {
     return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : '';
   }
 }
@@ -68,17 +68,26 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 })
 
 export class ListsWidget13Component {
-  
+
   filterForm = new FormGroup({
     month: new FormControl("", Validators.required),
     year: new FormControl("", Validators.required),
     product: new FormControl("", Validators.required),
   });
 
+  shiftForm = new FormGroup({
+    operator: new FormControl(''),
+    operatorStaffId: new FormControl('', Validators.required),
+    startDate: new FormControl(''),
+    endDate: new FormControl(''),
+    shiftTimeId: new FormControl('', Validators.required),
+    productName: new FormControl('', Validators.required),
+  });
+
   fuelDealerId: any;
   dealerCorporateId: any;
   accessGroup: any;
-  managerName: any ;
+  managerName: any;
   pumpCity: any;
   userId: any;
   dealerLoginId: any;
@@ -104,11 +113,8 @@ export class ListsWidget13Component {
 
   constructor(
     private post: ListWidgetService,
-    private spinner: NgxSpinnerService,
     config: NgbDatepickerConfig,
     public cd: ChangeDetectorRef,
-    private modalService: NgbModal,
-    private excelService: ExcelService,
     private router: Router,) {
     const currentDate = new Date();
     config.minDate = { year: 2018, month: 1, day: 1 };
@@ -134,15 +140,15 @@ export class ListsWidget13Component {
       this.pin = dealerData.pin
       this.city = dealerData.city
       this.phone1 = dealerData.hostPhone
-    this.currentYear = new Date().getFullYear();
-    this.lastYear = Number(this.currentYear) - 1;
-    this.lastThirdYear = Number(this.currentYear) - 2;
-    this.lastFourthYear = Number(this.currentYear) - 3;
+      this.currentYear = new Date().getFullYear();
+      this.lastYear = Number(this.currentYear) - 1;
+      this.lastThirdYear = Number(this.currentYear) - 2;
+      this.lastFourthYear = Number(this.currentYear) - 3;
       this.lastFifthYear = Number(this.currentYear) - 4;
       this.filterForm.controls['year'].setValue(this.currentYear);
-
-      // this.getProductsByDealerId(this.fuelDealerId)
-      // this.isMonth()
+      this.shiftForm.controls["startDate"].setValue("01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear())
+      this.shiftForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
+      this.getShiftWiseBookDetails(this.fuelDealerId);
       this.cd.detectChanges()
     }
 
@@ -178,80 +184,81 @@ export class ListsWidget13Component {
 
   pageChangeEvent(event: number) {
     this.p = event;
+    this.getShiftWiseBookDetails(this.fuelDealerId);
     this.getShiftWiseBookDetailsMonthWise(this.fuelDealerId);
   }
 
-  getShiftWiseBookDetailsMonthWise(tickValue: any) {     
-    this.filterForm.controls["month"].setValue(moment(tickValue,["MM"]).format("MM"))
-    let startDate = this.filterForm.value.year+'-'+this.filterForm.value.month+'-'+'01'
-    let endDate = this.filterForm.value.year+'-'+this.filterForm.value.month+'-'+'31'
+  getShiftWiseBookDetailsMonthWise(tickValue: any) {
+    this.filterForm.controls["month"].setValue(moment(tickValue, ["MM"]).format("MM"))
+    let startDate = this.filterForm.value.year + '-' + this.filterForm.value.month + '-' + '01'
+    let endDate = this.filterForm.value.year + '-' + this.filterForm.value.month + '-' + '31'
     this.shiftWiseData.length = 0;
     this.shiftWiseQuantityData.length = 0;
     const data = {
-        dealerId: this.fuelDealerId,
-        startDate:startDate,  //startDate,
-        endDate: endDate,
+      dealerId: this.fuelDealerId,
+      startDate: startDate,  //startDate,
+      endDate: endDate,
     };
     this.post.getShiftWiseBookDetailsPOST(data).subscribe((res) => {
-        if (res.status == 'OK') {
-            this.meterSalesAmount = res.data;
-            this.shiftDetails = res.data1;
-  
-              this.shiftDetails.map((shift: { openDate: moment.MomentInput; firstName: string; lastName: string; totalCashTally: string; paytmTotalAmount: string; totalCreditTally: string; expenseAmount: string; shortamount: string; totalAmountTally: string; fuelShiftTimeDetails: string; fuelShiftTimeShiftName: string; idfuelShiftDetails: any; }) => {
-                const dataPAYJson = {
-                  openDate: '',
-                  name: '',
-                  meterSaleAmount: 0,
-                  cash: '',
-                  digital:'',
-                  credit: '',
-                  expenses: '',
-                  short: '',
-                  shiftTally: '',
-                  shiftTime: '',
-                };
-  
-                  dataPAYJson.openDate = moment(shift.openDate).format("YYYY-MM-DD");
-                  dataPAYJson.name = shift.firstName+' '+shift.lastName;
-                  dataPAYJson.cash = shift.totalCashTally;
-                  dataPAYJson.digital = shift.paytmTotalAmount;
-                  dataPAYJson.credit = shift.totalCreditTally;
-                  dataPAYJson.expenses = shift.expenseAmount;
-                  dataPAYJson.short = shift.shortamount;
-                  dataPAYJson.shiftTally = shift.totalAmountTally;
-                  dataPAYJson.shiftTime = shift.fuelShiftTimeDetails+' '+shift.fuelShiftTimeShiftName;
-  
-                  this.meterSalesAmount.map((sales: { fuelShiftDetailsId: any; meterSaleAmount: number; }) => {
-                    if (sales.fuelShiftDetailsId == shift.idfuelShiftDetails) {
-                        dataPAYJson.meterSaleAmount = sales.meterSaleAmount;
-                    }
-                })
-  
-                  this.shiftWiseData.push(dataPAYJson);
-                  this.cd.detectChanges()
-              })
-  
-        } else {
-        }
+      if (res.status == 'OK') {
+        this.meterSalesAmount = res.data;
+        this.shiftDetails = res.data1;
+
+        this.shiftDetails.map((shift: { openDate: moment.MomentInput; firstName: string; lastName: string; totalCashTally: string; paytmTotalAmount: string; totalCreditTally: string; expenseAmount: string; shortamount: string; totalAmountTally: string; fuelShiftTimeDetails: string; fuelShiftTimeShiftName: string; idfuelShiftDetails: any; }) => {
+          const dataPAYJson = {
+            openDate: '',
+            name: '',
+            meterSaleAmount: 0,
+            cash: '',
+            digital: '',
+            credit: '',
+            expenses: '',
+            short: '',
+            shiftTally: '',
+            shiftTime: '',
+          };
+
+          dataPAYJson.openDate = moment(shift.openDate).format("YYYY-MM-DD");
+          dataPAYJson.name = shift.firstName + ' ' + shift.lastName;
+          dataPAYJson.cash = shift.totalCashTally;
+          dataPAYJson.digital = shift.paytmTotalAmount;
+          dataPAYJson.credit = shift.totalCreditTally;
+          dataPAYJson.expenses = shift.expenseAmount;
+          dataPAYJson.short = shift.shortamount;
+          dataPAYJson.shiftTally = shift.totalAmountTally;
+          dataPAYJson.shiftTime = shift.fuelShiftTimeDetails + ' ' + shift.fuelShiftTimeShiftName;
+
+          this.meterSalesAmount.map((sales: { fuelShiftDetailsId: any; meterSaleAmount: number; }) => {
+            if (sales.fuelShiftDetailsId == shift.idfuelShiftDetails) {
+              dataPAYJson.meterSaleAmount = sales.meterSaleAmount;
+            }
+          })
+
+          this.shiftWiseData.push(dataPAYJson);
+          this.cd.detectChanges()
+        })
+
+      } else {
+      }
     });
-  
+
     this.post.getShiftWiseBookQuantityDetailsPOST(data).subscribe((res) => {
-      if(res.status == 'OK'){
-        if(res.data.length){
-          if(res.data1.length){
+      if (res.status == 'OK') {
+        if (res.data.length) {
+          if (res.data1.length) {
             res.data.map((res1: { fuelProductId: string; fuelShiftDetailsId: string; fuelShiftTimeDetails: string; fuelShiftTimeShiftName: string; meterSaleAmount: string; meterSaleQuantity: string; openDate: string; productName: string; firstName: string; lastName: string; shiftTimeId: any; }) => {
               const dataJson = {
-                fuelProductId:'',
+                fuelProductId: '',
                 fuelShiftDetailsId: '',
                 meterSaleAmount: '',
                 meterSaleQuantity: '',
-                openDate:'',
-                productName:'',
-                creditQuantity: '', 
-                fuelShiftTimeShiftName:'',
-                fuelShiftTimeDetails:'',
-                firstName:'',
-                lastName:'',
+                openDate: '',
+                productName: '',
+                creditQuantity: '',
+                fuelShiftTimeShiftName: '',
+                fuelShiftTimeDetails: '',
+                firstName: '',
+                lastName: '',
               };
               dataJson.fuelProductId = res1.fuelProductId;
               dataJson.fuelShiftDetailsId = res1.fuelShiftDetailsId;
@@ -264,20 +271,20 @@ export class ListsWidget13Component {
               dataJson.firstName = res1.firstName;
               dataJson.lastName = res1.lastName;
               res.data1.map((res2: { openDate: string; fuelProdId: string; shiftTimeId: any; idfuelShiftDetails: string; creditQuantity: string; }) => {
-                if(res1.openDate == res2.openDate && res1.fuelProductId == res2.fuelProdId && res1.shiftTimeId == res2.shiftTimeId && res1.fuelShiftDetailsId == res2.idfuelShiftDetails){
+                if (res1.openDate == res2.openDate && res1.fuelProductId == res2.fuelProdId && res1.shiftTimeId == res2.shiftTimeId && res1.fuelShiftDetailsId == res2.idfuelShiftDetails) {
                   dataJson.creditQuantity = res2.creditQuantity;
                 }
               })
-               
-              this.shiftWiseQuantityData.push(dataJson); 
+
+              this.shiftWiseQuantityData.push(dataJson);
               this.cd.detectChanges()
-             
-              })
-          }else{
+
+            })
+          } else {
             this.shiftWiseQuantityData = res.data;
             this.cd.detectChanges()
           }
-        }else{
+        } else {
           this.shiftWiseQuantityData = []
           this.cd.detectChanges()
         }
@@ -285,9 +292,107 @@ export class ListsWidget13Component {
     })
   }
 
-  routeShift(date: string){
-    this.post.setNavigate(date,'Book')
-      this.router.navigate(['/shift/addShift']);
-    }
-  
+  getShiftWiseBookDetails(fuelDealerId: any) {
+    this.shiftWiseData.length = 0;
+    this.shiftWiseQuantityData.length = 0;
+    const data = {
+      dealerId: fuelDealerId,
+      startDate: moment(this.shiftForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),  //startDate,
+      endDate: moment(this.shiftForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+    };
+    this.post.getShiftWiseBookDetailsPOST(data).subscribe((res) => {
+      if (res.status == 'OK') {
+        this.meterSalesAmount = res.data;
+        this.shiftDetails = res.data1;
+
+        this.shiftDetails.map((shift: { openDate: moment.MomentInput; firstName: string; lastName: string; totalCashTally: string; paytmTotalAmount: string; totalCreditTally: string; expenseAmount: string; shortamount: string; totalAmountTally: string; fuelShiftTimeDetails: string; fuelShiftTimeShiftName: string; idfuelShiftDetails: any; }) => {
+          const dataPAYJson = {
+            openDate: '',
+            name: '',
+            meterSaleAmount: 0,
+            cash: '',
+            digital: '',
+            credit: '',
+            expenses: '',
+            short: '',
+            shiftTally: '',
+            shiftTime: '',
+          };
+
+          dataPAYJson.openDate = moment(shift.openDate).format("YYYY-MM-DD");
+          dataPAYJson.name = shift.firstName + ' ' + shift.lastName;
+          dataPAYJson.cash = shift.totalCashTally;
+          dataPAYJson.digital = shift.paytmTotalAmount;
+          dataPAYJson.credit = shift.totalCreditTally;
+          dataPAYJson.expenses = shift.expenseAmount;
+          dataPAYJson.short = shift.shortamount;
+          dataPAYJson.shiftTally = shift.totalAmountTally;
+          dataPAYJson.shiftTime = shift.fuelShiftTimeDetails + ' ' + shift.fuelShiftTimeShiftName;
+
+          this.meterSalesAmount.map((sales: { fuelShiftDetailsId: any; meterSaleAmount: number; }) => {
+            if (sales.fuelShiftDetailsId == shift.idfuelShiftDetails) {
+              dataPAYJson.meterSaleAmount = sales.meterSaleAmount;
+            }
+          })
+          this.shiftWiseData.push(dataPAYJson);
+        })
+        this.cd.detectChanges()
+      } else {
+        this.cd.detectChanges()
+      }
+    });
+
+    this.post.getShiftWiseBookQuantityDetailsPOST(data).subscribe((res) => {
+      if (res.status == 'OK') {
+        if (res.data.length) {
+          if (res.data1.length) {
+            res.data.map((res1: { fuelProductId: string; fuelShiftDetailsId: string; fuelShiftTimeDetails: string; fuelShiftTimeShiftName: string; meterSaleAmount: string; meterSaleQuantity: string; openDate: string; productName: string; firstName: string; lastName: string; shiftTimeId: any; }) => {
+              const dataJson = {
+                fuelProductId: '',
+                fuelShiftDetailsId: '',
+                meterSaleAmount: '',
+                meterSaleQuantity: '',
+                openDate: '',
+                productName: '',
+                creditQuantity: '',
+                fuelShiftTimeShiftName: '',
+                fuelShiftTimeDetails: '',
+                firstName: '',
+                lastName: '',
+              };
+              dataJson.fuelProductId = res1.fuelProductId;
+              dataJson.fuelShiftDetailsId = res1.fuelShiftDetailsId;
+              dataJson.fuelShiftTimeDetails = res1.fuelShiftTimeDetails;
+              dataJson.fuelShiftTimeShiftName = res1.fuelShiftTimeShiftName;
+              dataJson.meterSaleAmount = res1.meterSaleAmount;
+              dataJson.meterSaleQuantity = res1.meterSaleQuantity;
+              dataJson.openDate = res1.openDate;
+              dataJson.productName = res1.productName;
+              dataJson.firstName = res1.firstName;
+              dataJson.lastName = res1.lastName;
+              res.data1.map((res2: { openDate: string; fuelProdId: string; shiftTimeId: any; idfuelShiftDetails: string; creditQuantity: string; }) => {
+                if (res1.openDate == res2.openDate && res1.fuelProductId == res2.fuelProdId && res1.shiftTimeId == res2.shiftTimeId && res1.fuelShiftDetailsId == res2.idfuelShiftDetails) {
+                  dataJson.creditQuantity = res2.creditQuantity;
+                }
+              })
+              this.shiftWiseQuantityData.push(dataJson);
+              this.cd.detectChanges()
+            })
+          } else {
+            this.shiftWiseQuantityData = res.data;
+            this.cd.detectChanges()
+          }
+        } else {
+          this.shiftWiseQuantityData = []
+          this.cd.detectChanges()
+        }
+      }
+    })
+  }
+
+  routeShift(date: string) {
+    this.post.setNavigate(date, 'Book')
+    this.router.navigate(['/shift/addShift']);
+  }
+
 }

@@ -107,7 +107,7 @@ export class BaseTablesWidget1Component implements OnInit {
     vehicleNumber: new FormControl(),
     productPrice: new FormControl('', [Validators.required]),
     priceDate: new FormControl(),
-    productCategory: new FormControl(),
+    productCategory: new FormControl(''),
     productRate: new FormControl(),
     estimatedRefuelDateForEdit: new FormControl(),
   });
@@ -196,6 +196,7 @@ export class BaseTablesWidget1Component implements OnInit {
   isCRQUANTITY: boolean = false;
   onlyDealerView: boolean = false;
   ownerName: string;
+  isDisabled: boolean = true
 
   constructor(
     private modalService: NgbModal,

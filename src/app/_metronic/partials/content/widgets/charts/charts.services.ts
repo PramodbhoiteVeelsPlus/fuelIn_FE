@@ -75,7 +75,8 @@ export class ChartsService {
   private editFuelPriceURL = this.baseURL + 'fuelPrice/editFuelPrice'; 
   private addCashBillURL = this.baseURL + 'cashBillInvoice/addCashBill';
   private getLubricantsURL = this.baseURL + 'lubricants/getLubricants';
-  private getGSTDataURL = this.baseURL + 'activityCount/getGSTData'
+  private getGSTDataURL = this.baseURL + 'activityCount/getGSTData';
+  private getStaffIdByPersonIdURL = this.baseURL + 'fuelExpense/getStaffIdByPersonId'; 
 
 
 
@@ -456,6 +457,16 @@ export class ChartsService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.getGSTDataURL, body, {
+            headers: headers
+        })
+    }
+  
+    // getStaffIdByPersonIdURL
+    getStaffIdByPersonIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getStaffIdByPersonIdURL, body, {
             headers: headers
         })
     }

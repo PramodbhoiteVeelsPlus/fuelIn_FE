@@ -55,7 +55,7 @@
                 </div>
                 <div class="col-md-3" *ngIf="!rateSelect">
                     <input class="form-control" placeholder="Rate" [(ngModel)]="rate"
-                        [ngModelOptions]="{standalone: true}" ngbTooltip="Rate" placement="bottom" readonly>
+                        [ngModelOptions]="{standalone: true}" ngbTooltip="Rate" placement="bottom" disabled>
                 </div>
                 <div class="col-md-3" *ngIf="rateSelect">
                     <select class="form-select" required formControlName="rate" ngbTooltip="Rate" placement="bottom">
@@ -119,13 +119,13 @@
                     <div *ngIf="isView" class="text-sm-end">
                         <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF" placement="bottom"
                             (click)="exportToPDF()">
-                            <i class="fas fa-file-pdf"></i></span>
+                            <i class="fas fa-file-pdf" style="font-size: 30px;"></i></span>
                     </div>
                 </div>
                 <div *ngIf="!isAdd" class="col-sm-1">
                     <div *ngIf="isView" class="text-sm-end">
                         <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download CSV" placement="bottom"
-                            (click)="exportexcel()"><i class="fas fa-file-csv"></i></span>
+                            (click)="exportexcel()"><i class="fas fa-file-csv" style="font-size: 30px;"></i></span>
                     </div>
                 </div>
                 <div *ngIf="!isAdd" class="col-sm-2">
@@ -363,14 +363,14 @@
                     <div class="text-sm-end">
                         <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF" placement="bottom"
                             (click)="exportToPDF1()">
-                            <i class="fas fa-file-pdf"></i></span>
+                            <i class="fas fa-file-pdf" style="font-size: 30px;"></i></span>
                     </div>
                 </div>
                 <div class="col-sm-1">
                     <div class="text-sm-end">
                         <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download CSV" placement="bottom"
                             (click)="exportexcel1()">
-                            <i class="fas fa-file-csv"></i></span>
+                            <i class="fas fa-file-csv" style="font-size: 30px;"></i></span>
                     </div>
                 </div>
             </div>

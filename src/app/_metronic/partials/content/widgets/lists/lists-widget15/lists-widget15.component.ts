@@ -149,9 +149,12 @@ export class ListsWidget15Component {
       this.lastThirdYear = Number(this.currentYear) - 2;
       this.lastFourthYear = Number(this.currentYear) - 3;
       this.lastFifthYear = Number(this.currentYear) - 4;
+      this.filterForm.controls["startDate"].setValue("01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear())
+      this.filterForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
 
       this.getAllAttendantsByDid(this.fuelDealerId)
       this.getProductsByDealerId(this.fuelDealerId)
+      this.getOperatorWiseDetails()
       this.cd.detectChanges()
     }
 
@@ -247,11 +250,13 @@ export class ListsWidget15Component {
           this.operatorWiseData = res.data;
           this.getOperatorWiseQuantityDetails()
           this.spinner.hide()
+          this.cd.detectChanges()
         } else {
           alert("Data Not Found..!")
           this.operatorQuantityData = [];
           this.getOperatorWiseQuantityDetails()
           this.spinner.hide()
+          this.cd.detectChanges()
         }
       })
     } else {
@@ -267,11 +272,13 @@ export class ListsWidget15Component {
           this.operatorWiseData = res.data;
           this.getOperatorWiseQuantityDetails()
           this.spinner.hide()
+          this.cd.detectChanges()
         } else {
           alert("Data Not Found..!")
           this.operatorQuantityData = [];
           this.getOperatorWiseQuantityDetails()
           this.spinner.hide()
+          this.cd.detectChanges()
         }
       })
     }
@@ -292,10 +299,12 @@ export class ListsWidget15Component {
         if (res.status == "OK" && res.data.length) {
           this.operatorQuantityData = res.data;
           this.spinner.hide()
+          this.cd.detectChanges()
         } else {
           alert("Data Not Found..!")
           this.operatorQuantityData = [];
           this.spinner.hide()
+          this.cd.detectChanges()
         }
       })
     } else {
@@ -310,10 +319,12 @@ export class ListsWidget15Component {
         if (res.status == "OK" && res.data.length) {
           this.operatorQuantityData = res.data;
           this.spinner.hide()
+          this.cd.detectChanges()
         } else {
           alert("Data Not Found..!")
           this.operatorQuantityData = [];
           this.spinner.hide()
+          this.cd.detectChanges()
         }
       })
     }

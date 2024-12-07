@@ -57,7 +57,7 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   ]
 })
 export class FeedsWidget13Component implements OnInit {
-  filterForm = new FormGroup({ 
+  filterForm = new FormGroup({
     startDate: new FormControl(""),
     endDate: new FormControl(""),
   });
@@ -86,6 +86,7 @@ export class FeedsWidget13Component implements OnInit {
   accountingData: any = [];
   accountingSearchData: any = [];
   selected: string;
+  userName: string;
 
   constructor(private post: FeedsService,
     private spinner: NgxSpinnerService,
@@ -100,43 +101,66 @@ export class FeedsWidget13Component implements OnInit {
     this.dealerCompanyName = dealerData.companyName;
     this.dealerCity = dealerData.city;
     this.accessGroup = element.accessGroupId;
+    this.userName = element.firstName + ' ' + element.lastName
     this.month = moment(new Date()).format("MMM");
     this.year = moment(new Date()).format("YYYY");
+    this.filterForm.controls["startDate"].setValue("01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear())
+    this.filterForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
+    this.getAccounting(this.fuelDealerId)
     this.getBankDetailsByDealerId(this.fuelDealerId)
     this.addFormRequestBanking();
     this.cd.detectChanges();
   }
 
-  
-isAddExp(){
-  this.isAddExpense = true;
-}
 
-addFormRequestBanking() {
-  this.countAddArray = this.countAddArray + 1;
-  this.addAccountingArrayData = new addAccountingArray();
-  this.addAccountingArray.push(this.addAccountingArrayData);   
-}
+  isAddExp() {
+    this.isAddExpense = true;
+  }
 
-getByTransactionType(id:any,i: any){
-  if(this.addAccountingArray[i].book == 'Expense'){
-    if(id.target.value){
-      this.addAccountingArray[i].paidFrom = '';
-      this.addAccountingArray[i].inputFrom = ''
-      this.addAccountingArray[i].isDefaultFrom = false;
-      this.addAccountingArray[i].isInputBoxFrom = false;
-      this.addAccountingArray[i].isCashBankFrom = true;
-      this.addAccountingArray[i].isExpenseAccFrom = false;
+  addFormRequestBanking() {
+    this.countAddArray = this.countAddArray + 1;
+    this.addAccountingArrayData = new addAccountingArray();
+    this.addAccountingArray.push(this.addAccountingArrayData);
+  }
 
-      this.addAccountingArray[i].paidTo = '36';
-      this.addAccountingArray[i].inputTo = '';
-      this.addAccountingArray[i].isDefaultTo = false;
-      this.addAccountingArray[i].isInputBoxTo = false;
-      this.addAccountingArray[i].isCashBankTo = false;
-      this.addAccountingArray[i].isExpenseAccTo = true;
+  getByTransactionType(id: any, i: any) {
+    if (this.addAccountingArray[i].book == 'Expense') {
+      if (id.target.value) {
+        this.addAccountingArray[i].paidFrom = '';
+        this.addAccountingArray[i].inputFrom = ''
+        this.addAccountingArray[i].isDefaultFrom = false;
+        this.addAccountingArray[i].isInputBoxFrom = false;
+        this.addAccountingArray[i].isCashBankFrom = true;
+        this.addAccountingArray[i].isExpenseAccFrom = false;
 
-      this.addAccountingArray[i].accountingExpenseCr = 'TRUE';
-    }else{              
+        this.addAccountingArray[i].paidTo = '36';
+        this.addAccountingArray[i].inputTo = '';
+        this.addAccountingArray[i].isDefaultTo = false;
+        this.addAccountingArray[i].isInputBoxTo = false;
+        this.addAccountingArray[i].isCashBankTo = false;
+        this.addAccountingArray[i].isExpenseAccTo = true;
+
+        this.addAccountingArray[i].accountingExpenseCr = 'TRUE';
+      } else {
+        this.addAccountingArray[i].paidFrom = '';
+        this.addAccountingArray[i].inputFrom = ''
+        this.addAccountingArray[i].isDefaultFrom = true;
+        this.addAccountingArray[i].isInputBoxFrom = false;
+        this.addAccountingArray[i].isCashBankFrom = false;
+        this.addAccountingArray[i].isExpenseAccFrom = false;
+
+        this.addAccountingArray[i].paidTo = '';
+        this.addAccountingArray[i].inputTo = '';
+        this.addAccountingArray[i].isDefaultTo = true;
+        this.addAccountingArray[i].isInputBoxTo = false;
+        this.addAccountingArray[i].isCashBankTo = false;
+        this.addAccountingArray[i].isExpenseAccTo = false;
+
+
+        this.addAccountingArray[i].accountingExpenseCr = 'FALSE';
+      }
+    } else {
+
       this.addAccountingArray[i].paidFrom = '';
       this.addAccountingArray[i].inputFrom = ''
       this.addAccountingArray[i].isDefaultFrom = true;
@@ -151,325 +175,304 @@ getByTransactionType(id:any,i: any){
       this.addAccountingArray[i].isCashBankTo = false;
       this.addAccountingArray[i].isExpenseAccTo = false;
 
-  
       this.addAccountingArray[i].accountingExpenseCr = 'FALSE';
     }
-  }else{
-    
-    this.addAccountingArray[i].paidFrom = '';
-    this.addAccountingArray[i].inputFrom = ''
-    this.addAccountingArray[i].isDefaultFrom = true;
-    this.addAccountingArray[i].isInputBoxFrom = false;
-    this.addAccountingArray[i].isCashBankFrom = false;
-    this.addAccountingArray[i].isExpenseAccFrom = false;
 
-    this.addAccountingArray[i].paidTo = '';
-    this.addAccountingArray[i].inputTo = '';
-    this.addAccountingArray[i].isDefaultTo = true;
-    this.addAccountingArray[i].isInputBoxTo = false;
-    this.addAccountingArray[i].isCashBankTo = false;
-    this.addAccountingArray[i].isExpenseAccTo = false;
-
-    this.addAccountingArray[i].accountingExpenseCr = 'FALSE';
+    this.checkValidation(i)
   }
 
+  checkValidation(i: any) {
+    if (this.addAccountingArray[i].details == null) {
+      this.addAccountingArray[i].details = ''
 
-this.checkValidation(i)
-}
-
-checkValidation(i: any){ 
-  if(this.addAccountingArray[i].details == null){
-    this.addAccountingArray[i].details = ''
-    
-    if(this.addAccountingArray[i].date
-      && this.addAccountingArray[i].book && this.addAccountingArray[i].transactionType
-      && (this.addAccountingArray[i].paidFrom || this.addAccountingArray[i].inputFrom) 
-      && (this.addAccountingArray[i].paidTo || this.addAccountingArray[i].inputTo)
-      && this.addAccountingArray[i].amount){ 
-        if(Number(this.addAccountingArray[i].amount) > 0){ 
-          if(this.addAccountingArray[i].book == 'POS'){
-            if(this.addAccountingArray[i].paidFrom != '22'){ 
-              if(this.addAccountingArray[i].paidFrom == '21'){      
-                this.addAccountingArray[i].accountingOilCoDb = 'TRUE'; 
+      if (this.addAccountingArray[i].date
+        && this.addAccountingArray[i].book && this.addAccountingArray[i].transactionType
+        && (this.addAccountingArray[i].paidFrom || this.addAccountingArray[i].inputFrom)
+        && (this.addAccountingArray[i].paidTo || this.addAccountingArray[i].inputTo)
+        && this.addAccountingArray[i].amount) {
+        if (Number(this.addAccountingArray[i].amount) > 0) {
+          if (this.addAccountingArray[i].book == 'POS') {
+            if (this.addAccountingArray[i].paidFrom != '22') {
+              if (this.addAccountingArray[i].paidFrom == '21') {
+                this.addAccountingArray[i].accountingOilCoDb = 'TRUE';
                 // console.log("OIL DB")
-              }else{
+              } else {
                 this.addAccountingArray[i].accountingBankDb = 'TRUE'
                 // console.log("BANK DB")
-              }  
+              }
             }
-            if(this.addAccountingArray[i].paidTo != '22'){ 
-              
-              if(this.addAccountingArray[i].paidTo == '21'){    
-                this.addAccountingArray[i].accountingOilCoCr = 'TRUE'; 
+            if (this.addAccountingArray[i].paidTo != '22') {
+
+              if (this.addAccountingArray[i].paidTo == '21') {
+                this.addAccountingArray[i].accountingOilCoCr = 'TRUE';
                 // console.log("OIL CR")
-              }else{ 
-                if(this.addAccountingArray[i].paidTo == '36'){    
+              } else {
+                if (this.addAccountingArray[i].paidTo == '36') {
                   // console.log("EXPENSE CR")
-                }else{ 
+                } else {
                   this.addAccountingArray[i].accountingBankCr = 'TRUE'
                   // console.log("BANK CR")
                 }
               }
             }
-          }else{   
-            if(this.addAccountingArray[i].book == 'Expense'){
-              if(this.addAccountingArray[i].paidFrom == '20'){
+          } else {
+            if (this.addAccountingArray[i].book == 'Expense') {
+              if (this.addAccountingArray[i].paidFrom == '20') {
                 this.addAccountingArray[i].accountingCashDb = 'TRUE'
-              }else{
+              } else {
                 this.addAccountingArray[i].accountingBankDb = 'TRUE'
               }
-            }else{
-              if(this.addAccountingArray[i].transactionType == 'Loan – Repayment'){
-                if(this.addAccountingArray[i].paidFrom == '20'){
+            } else {
+              if (this.addAccountingArray[i].transactionType == 'Loan – Repayment') {
+                if (this.addAccountingArray[i].paidFrom == '20') {
                   this.addAccountingArray[i].accountingCashDb = 'TRUE'
-                }else{
+                } else {
                   this.addAccountingArray[i].accountingBankDb = 'TRUE'
                 }
-              }else{
-                
-              }
-            }
-          } 
-          this.addAccountingArray[i].isAddRow = true;
-          this.addAccountingArray[i].isRemoveRow = true;
-          this.isSubmit = true;
-        }else{
-           this.isSubmit = false;
-           this.addAccountingArray[i].isAddRow = false;
-           this.addAccountingArray[i].isRemoveRow = true;
-        }
-      }else{
-         this.isSubmit = false;
-         this.addAccountingArray[i].isAddRow = false;
-         this.addAccountingArray[i].isRemoveRow = true;
-      }
-  
-  }else{
-    if(this.addAccountingArray[i].date
-      && this.addAccountingArray[i].book && this.addAccountingArray[i].transactionType
-      && (this.addAccountingArray[i].paidFrom || this.addAccountingArray[i].inputFrom) 
-      && (this.addAccountingArray[i].paidTo || this.addAccountingArray[i].inputTo)
-      && this.addAccountingArray[i].amount){ 
-        if(Number(this.addAccountingArray[i].amount) > 0){ 
-          
-          if(this.addAccountingArray[i].book == 'POS'){
-            if(this.addAccountingArray[i].paidFrom != '22'){ 
-              if(this.addAccountingArray[i].paidFrom == '21'){      
-                this.addAccountingArray[i].accountingOilCoDb = 'TRUE'; 
-                // console.log("OIL DB")
-              }else{
-                this.addAccountingArray[i].accountingBankDb = 'TRUE'
-                // console.log("BANK DB")
-              }  
-            }
-            if(this.addAccountingArray[i].paidTo != '22'){ 
-              
-              if(this.addAccountingArray[i].paidTo == '21'){    
-                this.addAccountingArray[i].accountingOilCoCr = 'TRUE'; 
-                // console.log("OIL CR")
-              }else{ 
-                if(this.addAccountingArray[i].paidTo == '36'){    
-                  // console.log("EXPENSE CR")
-                }else{ 
-                  this.addAccountingArray[i].accountingBankCr = 'TRUE'
-                  // console.log("BANK CR")
-                }
-              }
-            }
-          }else{   
-            if(this.addAccountingArray[i].book == 'Expense'){
-              if(this.addAccountingArray[i].paidFrom == '20'){
-                this.addAccountingArray[i].accountingCashDb = 'TRUE'
-              }else{
-                this.addAccountingArray[i].accountingBankDb = 'TRUE'
-              }
-            }else{
-              if(this.addAccountingArray[i].transactionType == 'Loan – Repayment'){
-                if(this.addAccountingArray[i].paidFrom == '20'){
-                  this.addAccountingArray[i].accountingCashDb = 'TRUE'
-                }else{
-                  this.addAccountingArray[i].accountingBankDb = 'TRUE'
-                }
-              }else{
-                
+              } else {
+
               }
             }
           }
-
           this.addAccountingArray[i].isAddRow = true;
           this.addAccountingArray[i].isRemoveRow = true;
           this.isSubmit = true;
-        }else{
-           this.isSubmit = false;
-           this.addAccountingArray[i].isAddRow = false;
-           this.addAccountingArray[i].isRemoveRow = true;
-        }
-      }else{
-         this.isSubmit = false;
-         this.addAccountingArray[i].isAddRow = false;
-         this.addAccountingArray[i].isRemoveRow = true;
-      }
-  }
-
-}
-
-getBankDetailsByDealerId(fuelDealerId: any) { 
-  let data = {
-    dealerId:fuelDealerId
-  }
-  this.post.getBankDetailsByDealerIdPOST(data)
-    .subscribe(res => {
-      if (res.data.length) {   
-          this.bankAllAccList = res.data;
-          this.bankSavingAccList = res.data1;
-          this.bankLoanAccList = res.data2;  
-      }
-    })
-
-} 
-
-addArrayRow(i: any){  
-  if((this.addAccountingArray[i].date)
-  && this.addAccountingArray[i].book && this.addAccountingArray[i].transactionType
-  && (this.addAccountingArray[i].paidFrom || this.addAccountingArray[i].inputFrom) 
-  && (this.addAccountingArray[i].paidTo || this.addAccountingArray[i].inputTo)
-  && this.addAccountingArray[i].amount){ 
-    if(Number(this.addAccountingArray[i].amount) > 0){ 
-
-      this.countAddArray = this.countAddArray + 1;
-      if (this.countAddArray < 12) {
+        } else {
           this.isSubmit = false;
           this.addAccountingArray[i].isAddRow = false;
-          this.addAccountingArray[i].isRemoveRow = false; 
+          this.addAccountingArray[i].isRemoveRow = true;
+        }
+      } else {
+        this.isSubmit = false;
+        this.addAccountingArray[i].isAddRow = false;
+        this.addAccountingArray[i].isRemoveRow = true;
+      }
+
+    } else {
+      if (this.addAccountingArray[i].date
+        && this.addAccountingArray[i].book && this.addAccountingArray[i].transactionType
+        && (this.addAccountingArray[i].paidFrom || this.addAccountingArray[i].inputFrom)
+        && (this.addAccountingArray[i].paidTo || this.addAccountingArray[i].inputTo)
+        && this.addAccountingArray[i].amount) {
+        if (Number(this.addAccountingArray[i].amount) > 0) {
+
+          if (this.addAccountingArray[i].book == 'POS') {
+            if (this.addAccountingArray[i].paidFrom != '22') {
+              if (this.addAccountingArray[i].paidFrom == '21') {
+                this.addAccountingArray[i].accountingOilCoDb = 'TRUE';
+                // console.log("OIL DB")
+              } else {
+                this.addAccountingArray[i].accountingBankDb = 'TRUE'
+                // console.log("BANK DB")
+              }
+            }
+            if (this.addAccountingArray[i].paidTo != '22') {
+
+              if (this.addAccountingArray[i].paidTo == '21') {
+                this.addAccountingArray[i].accountingOilCoCr = 'TRUE';
+                // console.log("OIL CR")
+              } else {
+                if (this.addAccountingArray[i].paidTo == '36') {
+                  // console.log("EXPENSE CR")
+                } else {
+                  this.addAccountingArray[i].accountingBankCr = 'TRUE'
+                  // console.log("BANK CR")
+                }
+              }
+            }
+          } else {
+            if (this.addAccountingArray[i].book == 'Expense') {
+              if (this.addAccountingArray[i].paidFrom == '20') {
+                this.addAccountingArray[i].accountingCashDb = 'TRUE'
+              } else {
+                this.addAccountingArray[i].accountingBankDb = 'TRUE'
+              }
+            } else {
+              if (this.addAccountingArray[i].transactionType == 'Loan – Repayment') {
+                if (this.addAccountingArray[i].paidFrom == '20') {
+                  this.addAccountingArray[i].accountingCashDb = 'TRUE'
+                } else {
+                  this.addAccountingArray[i].accountingBankDb = 'TRUE'
+                }
+              } else {
+
+              }
+            }
+          }
+          this.addAccountingArray[i].isAddRow = true;
+          this.addAccountingArray[i].isRemoveRow = true;
+          this.isSubmit = true;
+        } else {
+          this.isSubmit = false;
+          this.addAccountingArray[i].isAddRow = false;
+          this.addAccountingArray[i].isRemoveRow = true;
+        }
+      } else {
+        this.isSubmit = false;
+        this.addAccountingArray[i].isAddRow = false;
+        this.addAccountingArray[i].isRemoveRow = true;
+      }
+    }
+
+  }
+
+  getBankDetailsByDealerId(fuelDealerId: any) {
+    let data = {
+      dealerId: fuelDealerId
+    }
+    this.post.getBankDetailsByDealerIdPOST(data)
+      .subscribe(res => {
+        if (res.data.length) {
+          this.bankAllAccList = res.data;
+          this.bankSavingAccList = res.data1;
+          this.bankLoanAccList = res.data2;
+        }
+      })
+
+  }
+
+  addArrayRow(i: any) {
+    if ((this.addAccountingArray[i].date)
+      && this.addAccountingArray[i].book && this.addAccountingArray[i].transactionType
+      && (this.addAccountingArray[i].paidFrom || this.addAccountingArray[i].inputFrom)
+      && (this.addAccountingArray[i].paidTo || this.addAccountingArray[i].inputTo)
+      && this.addAccountingArray[i].amount) {
+      if (Number(this.addAccountingArray[i].amount) > 0) {
+
+        this.countAddArray = this.countAddArray + 1;
+        if (this.countAddArray < 12) {
+          this.isSubmit = false;
+          this.addAccountingArray[i].isAddRow = false;
+          this.addAccountingArray[i].isRemoveRow = false;
           this.addAccountingArrayData = new addAccountingArray();
-          this.addAccountingArray.push(this.addAccountingArrayData);   
-      }else{
-        this.countAddArray = 11;
-        alert("Please save 10 entries, before adding more entries..")
-      } 
-      }else{
+          this.addAccountingArray.push(this.addAccountingArrayData);
+        } else {
+          this.countAddArray = 11;
+          alert("Please save 10 entries, before adding more entries..")
+        }
+      } else {
         this.isSubmit = false;
         this.addAccountingArray[i].isAddRow = false;
         this.addAccountingArray[i].isRemoveRow = true;
         alert("Please Enter Valid Amount..")
       }
-    }else{
+    } else {
       this.isSubmit = false;
       this.addAccountingArray[i].isAddRow = false;
       this.addAccountingArray[i].isRemoveRow = true;
       alert("Please Select or Enter All Details..")
-    } 
+    }
 
-}
+  }
 
-removeArrayRow(i: any){
-  this.addAccountingArray.splice(i, 1);
-  this.countAddArray = this.countAddArray - 1; 
-  this.checkValidation(Number(i-1))
-}
+  removeArrayRow(i: any) {
+    this.addAccountingArray.splice(i, 1);
+    this.countAddArray = this.countAddArray - 1;
+    this.checkValidation(Number(i - 1))
+  }
 
-submitArray(){
-  this.spinner.show()
-  let data = {
-    addAccountingArray: this.addAccountingArray,
-    accountingFuelDealerId: this.fuelDealerId,
-    // accountingCreatedBy: this.userName,
-  }  
-  this.post.addAccountingPOST(data)
-  .subscribe(res => {
-      if (res.status = "OK") {
-           alert("Accounting Entries Submit Successfully..");
-           this.spinner.hide()
-          //  this.getAccounting(this.fuelDealerId);   
-          //  this.clearAll()
-      } else {
-        this.spinner.hide()
-      }
-  })
-}
+  submitArray() {
+    this.spinner.show()
+    let data = {
+      addAccountingArray: this.addAccountingArray,
+      accountingFuelDealerId: this.fuelDealerId,
+      accountingCreatedBy: this.userName,
+    }
+    this.post.addAccountingPOST(data)
+      .subscribe(res => {
+        if (res.status = "OK") {
+          alert("Accounting Entries Submit Successfully..");
+          this.spinner.hide()
+          this.getAccounting(this.fuelDealerId);
+          this.clearAll()
+        } else {
+          this.spinner.hide()
+        }
+      })
+  }
 
-clearAll(){
-  this.isAddExpense = false;
-  this.addAccountingArray = [];
-  this.isSubmit = false;
-  this.countAddArray = 1;
-  this.addFormRequestBanking();
-}
+  clearAll() {
+    this.isAddExpense = false;
+    this.addAccountingArray = [];
+    this.isSubmit = false;
+    this.countAddArray = 1;
+    this.addFormRequestBanking();
+  }
 
-filter(){ 
+  filter() {
     this.spinner.show()
     this.accountingData = []
     this.accountingSearchData = [];
-    let data = { 
-      accountingFuelDealerId: this.fuelDealerId, 
-      startDate: moment(this.filterForm.value.startDate,["DD-MM-YYYY"]).format("YYYY-MM-DD"),
-      endDate: moment(this.filterForm.value.endDate,["DD-MM-YYYY"]).format("YYYY-MM-DD"),
-      accountingBook: 'Expense', 
-    }  
+    let data = {
+      accountingFuelDealerId: this.fuelDealerId,
+      startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+      endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+      accountingBook: 'Expense',
+    }
     this.post.getAccountingPOST(data)
-    .subscribe(res => {
-        if (res.data.length) {  
+      .subscribe(res => {
+        if (res.data.length) {
           this.accountingData = res.data;
           this.accountingSearchData = res.data;
           this.spinner.hide()
           this.cd.detectChanges();
-        } else { 
+        } else {
           this.spinner.hide()
           this.cd.detectChanges();
         }
-    })
-}
-
-getAccounting(fuelDealerId: any){ 
-  this.spinner.show();
-  this.accountingData = []
-  this.accountingSearchData = [];
-  let data = { 
-    accountingFuelDealerId: fuelDealerId, 
-    startDate: moment(this.filterForm.value.startDate,["DD-MM-YYYY"]).format("YYYY-MM-DD"),
-    endDate: moment(this.filterForm.value.endDate,["DD-MM-YYYY"]).format("YYYY-MM-DD"),
-    accountingBook: 'Expense', 
-  }  
-  this.post.getAccountingPOST(data)
-  .subscribe(res => {
-      if (res.data.length) {  
-        this.accountingData = res.data;
-        this.accountingSearchData = res.data;
-        this.spinner.hide();
-        this.cd.detectChanges()
-      } else { 
-        this.spinner.hide();
-        this.cd.detectChanges()
-      }
-  })
-}
-
-cancel(){
-  this.filterForm.controls["startDate"].setValue( "01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear() )
-  this.filterForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
-  this.selected =  ( "01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear() )+ ' - ' + (moment(new Date()).format("DD-MM-YYYY"))
-  // this.filterForm.controls["formRadios"].setValue("")
-  this.getAccounting(this.fuelDealerId)
-}
-
-deleteAccounting(accountingId: any){ 
-  this.spinner.show();
-  let data = {
-    accountingId:accountingId
+      })
   }
-  if(confirm("Are you sure to delete ? ")) {
-  this.post.deleteAccountingDataPOST(data)
-    .subscribe(res => {
-      if (res.status == 'OK') {
-        alert("details deleted successfully..!")
-        this.filter(); 
-        this.spinner.hide();
-      }else{ 
-        this.spinner.hide();
-      }
-    })
+
+  getAccounting(fuelDealerId: any) {
+    this.spinner.show();
+    this.accountingData = []
+    this.accountingSearchData = [];
+    let data = {
+      accountingFuelDealerId: fuelDealerId,
+      startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+      endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+      accountingBook: 'Expense',
+    }
+    this.post.getAccountingPOST(data)
+      .subscribe(res => {
+        if (res.data.length) {
+          this.accountingData = res.data;
+          this.accountingSearchData = res.data;
+          this.spinner.hide();
+          this.cd.detectChanges()
+        } else {
+          this.spinner.hide();
+          this.cd.detectChanges()
+        }
+      })
   }
-  else{ 
+
+  cancel() {
+    this.filterForm.controls["startDate"].setValue("01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear())
+    this.filterForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
+    this.selected = ("01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear()) + ' - ' + (moment(new Date()).format("DD-MM-YYYY"))
+    // this.filterForm.controls["formRadios"].setValue("")
+    this.getAccounting(this.fuelDealerId)
   }
-}
+
+  deleteAccounting(accountingId: any) {
+    this.spinner.show();
+    let data = {
+      accountingId: accountingId
+    }
+    if (confirm("Are you sure to delete ? ")) {
+      this.post.deleteAccountingDataPOST(data)
+        .subscribe(res => {
+          if (res.status == 'OK') {
+            alert("details deleted successfully..!")
+            this.filter();
+            this.spinner.hide();
+          } else {
+            this.spinner.hide();
+          }
+        })
+    }
+    else {
+    }
+  }
 }

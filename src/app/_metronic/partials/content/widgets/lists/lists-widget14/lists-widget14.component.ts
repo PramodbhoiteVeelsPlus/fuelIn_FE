@@ -112,9 +112,8 @@ export class ListsWidget14Component {
     private spinner: NgxSpinnerService,
     config: NgbDatepickerConfig,
     public cd: ChangeDetectorRef,
-    private modalService: NgbModal,
     private excelService: ExcelService,
-    private router: Router,) {
+    private router: Router) {
     const currentDate = new Date();
     config.minDate = { year: 2018, month: 1, day: 1 };
     config.maxDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
@@ -144,6 +143,8 @@ export class ListsWidget14Component {
       this.lastThirdYear = Number(this.currentYear) - 2;
       this.lastFourthYear = Number(this.currentYear) - 3;
       this.lastFifthYear = Number(this.currentYear) - 4;
+      this.shiftForm.controls["startDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
+      this.shiftForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
 
       this.getShiftTimeDetails(this.fuelDealerId)
       this.getProductsByDealerId(this.fuelDealerId)
@@ -618,4 +619,10 @@ export class ListsWidget14Component {
     XLSX.writeFile(wb, this.fileName);
 
   }
+  
+  goToDSR(shiftTimeId: any){
+    this.post.setRoutingWithShiftTimeId(shiftTimeId,"ShiftBook",moment(this.shiftForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"), moment(this.shiftForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"))
+    localStorage.setItem('address', JSON.stringify("ShiftBook"));
+    this.router.navigate(['/shift/shiftReport']);     
+    }
 }

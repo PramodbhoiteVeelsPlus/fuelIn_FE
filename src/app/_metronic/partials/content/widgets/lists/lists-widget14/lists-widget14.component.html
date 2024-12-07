@@ -81,12 +81,12 @@
 
     <div class="col-md-1">
       <span style="font-size: 35px;cursor: pointer;" (click)="exportToPDF()" ngbTooltip="Download PDF"
-        placement="bottom"><i class="fas fa-file-pdf"></i></span><br>
+        placement="bottom"><i class="fas fa-file-pdf" style="font-size: 30px;"></i></span><br>
     </div>
 
     <div class="col-md-1">
       <span style="font-size: 35px;cursor: pointer;" (click)="exportexcel()" ngbTooltip="Download CSV"
-        placement="bottom"><i class="fas fa-file-csv"></i></span><br>
+        placement="bottom"><i class="fas fa-file-csv" style="font-size: 30px;"></i></span><br>
     </div>
 
 
@@ -120,7 +120,7 @@
           <td style="text-align: left;"> {{ data.expenses | number:'1.2-2'}} </td>
           <td style="text-align: left;"> {{ data.short | number:'1.2-2'}} </td>
           <td style="text-align: left;"> {{ data.shiftTally | number:'1.2-2'}} </td>
-          <!-- <td style="text-align: left;" style="color:blue ; cursor: pointer;" (click)="goToDSR(data.shiftTimeId)"> View -->
+          <td style="text-align: left;" style="color:blue ; cursor: pointer;" (click)="goToDSR(data.shiftTimeId)"> View
           <!-- </td> -->
         </tr>
 
@@ -157,12 +157,12 @@
 
       <div class="col-md-1">
         <span style="font-size: 35px;cursor: pointer;" (click)="exportToPDF1()" ngbTooltip="Download PDF"
-          placement="bottom"><i class="fas fa-file-pdf"></i></span><br>
+          placement="bottom"><i class="fas fa-file-pdf" style="font-size: 30px;"></i></span><br>
       </div>
 
       <div class="col-md-1">
         <span style="font-size: 35px;cursor: pointer;" (click)="exportexcel1()" ngbTooltip="Download CSV"
-          placement="bottom"><i class="fas fa-file-csv"></i></span><br>
+          placement="bottom"><i class="fas fa-file-csv" style="font-size: 30px;"></i></span><br>
       </div>
 
     </div>

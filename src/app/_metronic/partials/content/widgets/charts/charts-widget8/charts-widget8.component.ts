@@ -155,8 +155,10 @@ export class ChartsWidget8Component implements OnInit {
       // this.headerName3 = this.state+'-'+ this.pin+'  '+"GST: "+ this.GSTNumber;
 
     }
+    this.filterForm.controls["monthDAY"].setValue(moment(new Date()).format("MM YYYY"));
     this.getMappingAccount(this.fuelDealerId)
     this.getProductsByDealerId(this.fuelDealerId)
+    this.filterMonth();
     this.getFCYear()
     this.cd.detectChanges()
   }

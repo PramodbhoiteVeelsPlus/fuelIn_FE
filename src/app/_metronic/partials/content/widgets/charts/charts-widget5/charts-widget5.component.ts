@@ -154,6 +154,8 @@ export class ChartsWidget5Component implements OnInit {
         this.dealerAccess = true
       }
 
+      this.filterForm.controls["startDate"].setValue( "01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear() )
+      this.filterForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
       this.headerName1 = this.companyName;
       // this.headerName2 = res.data[0].address1+', '+res.data[0].address2+', '+ this.city;
       // this.headerName3 = this.state+'-'+ this.pin+'  '+"GST: "+ this.GSTNumber;

@@ -155,6 +155,7 @@ export class ListsWidget9Component {
     this.phone1 = dealerData.hostPhone
     this.userName = element.firstName + ' ' + element.lastName
     this.getAttendance(this.fuelDealerId)
+    this.getStaffDetails(this.fuelDealerId)
     this.cd.detectChanges()
   }
 

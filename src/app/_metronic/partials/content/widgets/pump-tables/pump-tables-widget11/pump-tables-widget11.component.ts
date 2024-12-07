@@ -147,6 +147,9 @@ export class PumpTablesWidget11Component implements OnInit {
   totalCreditPayment: number;
   routeView: string;
   dateView: any;
+  shiftTimeId: any;
+  endDate: string;
+  startDate: string;
 
   constructor(
     private modalService: NgbModal,
@@ -176,15 +179,20 @@ export class PumpTablesWidget11Component implements OnInit {
     this.managerPersonId = element.personId
     this.userName = element.firstName + ' ' + element.lastName;
     this.acceesGroup = element.accessGroupId;
+    this.shiftTimeId =  this.post2.shiftTimeId;
+    this.endDate =  this.post2.endDate;
+    this.startDate =  this.post2.startDate;
     if(this.post2.setRoute == "Book"){
       this.addShiftForm.controls["date"].setValue(moment(this.post2.setDate).format("DD-MM-YYYY"))
       this.getAllOngoingShift(this.fuelDealerId);
     }else{  
       if (this.routeView == "ViewSummary") {
-        this.addShiftForm.controls["date"].setValue(moment(this.dateView).format("DD-MM-YYYY"))    
+        this.addShiftForm.controls["date"].setValue(moment(this.dateView).format("DD-MM-YYYY"))   
         this.getAllOngoingShift(this.fuelDealerId);
-      } else {
-        this.addShiftForm.controls['date'].setValue(moment(new Date()).format('DD-MM-YYYY'));  
+      } else if (this.routeView == "ShiftBook") {
+        this.shiftTimeId = this.shiftTimeId
+      } else{
+        this.addShiftForm.controls['date'].setValue(moment(new Date()).format('DD-MM-YYYY')); 
         this.getAllOngoingShift(this.fuelDealerId);
       } 
     }

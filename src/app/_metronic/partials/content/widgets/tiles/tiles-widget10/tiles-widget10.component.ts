@@ -195,6 +195,7 @@ export class TilesWidget10Component {
     this.headerName1 = dealerData.companyName;
     this.headerName2 = dealerData.address1 + ', ' + dealerData.address2 + ', ' + dealerData.city;
     this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
+    this.filterForm.controls["date"].setValue(moment(new Date()).format("DD-MM-YYYY"))
     this.getTankList(this.fuelDealerId);
   }
 

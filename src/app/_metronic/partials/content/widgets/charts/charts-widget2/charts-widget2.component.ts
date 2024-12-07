@@ -110,6 +110,7 @@ export class ChartsWidget2Component implements OnInit {
   totalPurchase7: any;
   ownerName: string;
   oilCompanyDetails: any = [];
+  loginSQLStaffId: any;
 
   constructor(
     private post: ChartsService,
@@ -259,6 +260,24 @@ removeFormRequestOilCompany(i: number) {
 
 }
 
+getStaffIdByPersonId(personId: any,userId: any) {
+  let data = {
+    personId: personId,
+    userId: userId,
+  }
+  this.post.getStaffIdByPersonIdPOST(data)
+    .subscribe(res => {
+      if (res.status == "OK") {
+        if(res.data.length){
+          this.loginSQLStaffId = res.data[0].fuelDealerStaffId;                  
+        }
+        else{
+          alert("Getting Error..! Please Logout & Login again..!")
+        }      
+      }
+    })
+}
+
 submitOilCompanyData(){
   if(this.addOilCompanyForm.value.invoiceDate){
     if(this.addOilCompanyForm.value.receivedDate){
@@ -267,7 +286,7 @@ submitOilCompanyData(){
   let data = {
     oilCompanyData: this.CreditRequestDataArrayOilCompany,
     createdByDealerId: this.fuelDealerId,
-    // fuelDealerStaffId: this.loginSQLStaffId,
+    fuelDealerStaffId: this.loginSQLStaffId,
     bankAccountId:  "21",                                //this.addOilCompanyForm.value.paidFrom,
     invoiceDate: moment(this.addOilCompanyForm.value.invoiceDate,["DD-MM-YYYY"]).format("YYYY-MM-DD") ,
     receivedDate: moment(this.addOilCompanyForm.value.receivedDate,["DD-MM-YYYY"]).format("YYYY-MM-DD"),
@@ -285,8 +304,10 @@ submitOilCompanyData(){
          this.oilCompanyClear()
          this.getOILCOMPANYDataInFuelExpense(this.fuelDealerId)
         this.spinner.hide()
+        this.cd.detectChanges()
       }else{
         this.spinner.hide()
+        this.cd.detectChanges()
       }
     })
 }else{

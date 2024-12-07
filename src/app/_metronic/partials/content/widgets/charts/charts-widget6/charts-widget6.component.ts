@@ -107,6 +107,9 @@ export class ChartsWidget6Component implements OnInit {
   mobile: any;
   sysGeneInvoiceNumber: string;
   statementCreatedAt: Date;
+  address1: any;
+  GSTNumber: any;
+  address2: any;
 
   constructor(
     private post: ChartsService,
@@ -144,6 +147,9 @@ export class ChartsWidget6Component implements OnInit {
       this.state = dealerData.state
       this.pin = dealerData.pin
       this.city = dealerData.city
+      this.address1 = dealerData.address1
+      this.address2 = dealerData.address2
+      this.GSTNumber = dealerData.GSTNumber
       this.phone1 = dealerData.hostPhone
       this.ownerName = element.firstName + ' ' + element.lastName
       if (element.accessGroupId == 12 || element.accessGroupId == 14) {
