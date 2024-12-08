@@ -623,6 +623,6 @@ export class ListsWidget14Component {
   goToDSR(shiftTimeId: any){
     this.post.setRoutingWithShiftTimeId(shiftTimeId,"ShiftBook",moment(this.shiftForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"), moment(this.shiftForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"))
     localStorage.setItem('address', JSON.stringify("ShiftBook"));
-    this.router.navigate(['/shift/shiftReport']);     
+    this.router.navigate(['/shift/shiftTimeReport']);     
     }
 }

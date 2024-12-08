@@ -1,21 +1,309 @@
-<!--begin::Tiles Widget 12-->
-<div
-  class="card card-custom"
-  [ngClass]="cssClass"
-  [ngStyle]="{ height: widgetHeight }"
->
-  <div class="card-body">
-    <span
-      [inlineSVG]="'./assets/media/icons/duotune/finance/briefcase'"
-      class="svg-icon fs-3x"
-      [ngClass]="svgCSSClass"
-    ></span>
-    <div class="text-gray-900 font-weight-bolder font-size-h2 mt-3">8,600</div>
-    <a
-      href="#"
-      class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1"
-      >New Customers</a
-    >
-  </div>
+
+
+<div *ngIf = "accessGroup != '7'">
+
+  <!DOCTYPE html
+  PUBLIC "-//W3C//Dth XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/Dth/xhtml1-transitional.dth">
+  <html xmlns="https://www.w3.org/1999/xhtml">
+  
+  <head>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+  
+  <title>Editable Statement</title>
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <script type='text/javascript' src='../../../../../../assets/EditableInvoice/js/jquery-1.3.2.min1.js'></script>
+  <script type='text/javascript' src='../../../../../../assets/EditableInvoice/js/example1.js'></script>
+  
+  </head>
+  <body id="contentToConvert">
+      <div class="container-fluid">     
+          
+          <div id="page-wrap" >
+              <div class="row noprint">
+                  <div class="col-md-8"></div>
+                  <div class="col-auto">
+                      <button class="btn btn-success" onclick="window.print()">print</button> 
+                  </div>
+              </div>
+  
+              <div class="print" id="sanjay" >
+                  <div class="container"> 
+                      <div class="col-12 mr-2 px-1 py-1 container border-black" id="htmlData">
+                          <div>
+                      <table class="table main-table">
+                          <tr>
+                              <table class="table main-table">
+                                  <thead>
+                                      <tr>
+                                          <th colspan="12">
+                                              <h3>DAILY SALES REPORT {{startDate | date:"d MMM y"}} & {{shiftTime}}-{{shiftName}} </h3>
+                                          </th> 
+                                      </tr>
+                                      <tr>
+                                          <th colspan="3">
+                                              <span class="logo-lg">
+                                                  <img src="assets/images/fuel-in.png" alt="" height="40">
+                                              </span>
+                                          </th>
+                                          <th colspan="6">
+                                               
+                                              <span>
+                                                  {{companyName}},{{city}} <br> 
+                                                  {{brandName}} Pump
+                                              </span>
+                                          
+                                          </th>
+                                          <th colspan="3" style="text-align: right;">
+                                              <div class="text-sm-end">
+                                              <b> Generated on: </b> {{todayDate | date:"d MMM y"}}
+                                              </div>
+                                          </th>
+                                      </tr> 
+                                  </thead>
+                              </table> 
+                          </tr> 
+                      </table>
+                 
+                   
+                    
+                      <br>
+                    <table>
+                      <tr> 
+                          <th colspan="12"> 
+                              Meter Sales 
+                          </th>
+                      </tr>
+                      <tr> 
+                          <td colspan="6"> 
+                                  <table class="table main-table" >
+                                      <thead class="table-light"> 
+                                          <tr>
+                                          <th style="text-align: left; border: 2px solid #272829;">Product</th>
+                                          <th style="text-align: left; border: 2px solid #272829;">Meter Sales Quantity</th>
+                                          <th style="text-align: left; border: 2px solid #272829;">Meter Sales Amount</th>  
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr *ngFor="let data of meterSalesDetails">
+                                              <td style="text-align: center;border: 2px solid #272829;">
+                                                  <b> {{data.productName}} </b>
+                                              </td>
+                                              <td style="text-align: center;border: 2px solid #272829;">
+                                                  <span *ngIf="data.meterSaleQuantity">
+                                                      <span *ngIf="data.productName == 'CNG' ">
+                                                          {{data.meterSaleQuantity | number:'1.2-2'}} Kg
+                                                      </span>
+                                                      <span *ngIf="data.productName != 'CNG' ">
+                                                          {{data.meterSaleQuantity | number:'1.2-2'}} Ltrs
+                                                      </span>
+                                                  </span>
+                                              </td>
+                                              <td style="text-align: center;border: 2px solid #272829;">
+                                                  <span *ngIf="data.meterSaleAmount">
+                                                      ₹ {{data.meterSaleAmount | number:'1.2-2'}}
+                                                  </span>
+                                              </td>
+                                          </tr>                            
+                                      </tbody>
+                                      <tbody>
+                                          <tr>
+                                              <td style="text-align: left; border: 2px solid #272829;" colspan="2"> 
+                                                 <b> Total </b>
+                                              </td>
+                                              <td style="text-align: left; border: 2px solid #272829;"> 
+                                                  <b> {{totalMeterSalesDetails | number:'1.2-2'}} </b> 
+                                              </td>
+                                          </tr>
+                                      </tbody>
+                                  </table> 
+                          </td>
+                      </tr>  
+                  </table>
+                    
+                      <br><br>
+                   
+                      <table>
+                          <tr>
+                              <td colspan="6">
+                                  <table class="table main-table">
+                                      <thead> 
+                                          <tr> 
+                                              <th colspan="12"> 
+                                                  <b>Shift-Tally</b> 
+                                              </th>
+                                          </tr>
+                                          <tr>
+                                              <th style="text-align: left; border: 2px solid #272829;">Credit (A)</th>
+                                          <th style="text-align: left; border: 2px solid #272829;">Digital (B)</th>
+                                          <th style="text-align: left; border: 2px solid #272829;">Cash (C)</th>
+                                          <th style="text-align: left; border: 2px solid #272829;">Expenses</th>
+                                          <th style="text-align: left; border: 2px solid #272829;">Short</th>
+                                          <th style="text-align: left; border: 2px solid #272829;">Shift Tally (A+B+C)</th>
+                                          </tr> 
+                                          <tr *ngFor="let data of totalSalesDetails">
+                                              <td style="text-align: left; border: 2px solid #272829;">{{data.creditTally | number:'1.2-2'}} </td>
+                                              <td style="text-align: left; border: 2px solid #272829;"> {{(data.paytmTotal) | number:'1.2-2'}} </td> 
+                                              <td style="text-align: left; border: 2px solid #272829;"> {{data.cashTallyAmt | number:'1.2-2'}} </td>
+                                              <td style="text-align: left; border: 2px solid #272829;"> {{data.expenseAmt | number:'1.2-2'}} </td>
+                                              <td style="text-align: left; border: 2px solid #272829;"> {{data.shortAmt | number:'1.2-2'}} </td>
+                                              <td style="text-align: left; border: 2px solid #272829;"> {{(data.totalAmountTally | number:'1.2-2')}} </td>                               
+                                          </tr>        
+                                      </thead>
+                                  </table>
+                              </td>
+                           
+                          </tr>
+                      </table> 
+
+
+                      <br><br>
+                    <table>
+                      <tr>
+                          <td colspan="6">
+                              <table class="table main-table">
+                                  <thead> 
+                                      <tr> 
+                                          <th colspan="12"> 
+                                              <b>Nozzle-Wise Sales</b> 
+                                          </th>
+                                      </tr>
+                                      <tr>
+                                          <th style="text-align: left; border: 2px solid #272829;">Product</th>
+                                          <th style="text-align: left; border: 2px solid #272829;">Nozzle</th>
+                                          <th style="text-align: left; border: 2px solid #272829;">Operator</th>
+                                          <th style="text-align: left; border: 2px solid #272829;">Opening Reading</th>
+                                          <th style="text-align: left; border: 2px solid #272829;">Pump Testing</th>
+                                          <th style="text-align: left; border: 2px solid #272829;">Closing Reading</th>
+                                          <th style="text-align: left; border: 2px solid #272829;">Rate Rs/Ltr</th>
+                                          <th style="text-align: left; border: 2px solid #272829;">Meter Sales Ltrs</th>
+                                          <th style="text-align: left; border: 2px solid #272829;">Meter Sales Rs. </th>
+                                      </tr> 
+                                      <tr *ngFor="let data of shiftDetails">
+                                          <td style="text-align: left; border: 2px solid #272829;"> {{data.productName}} </td>
+                                          <td style="text-align: left; border: 2px solid #272829;"> {{data.duNo}}-{{data.nozNo}} </td>
+                                          <td style="text-align: left; border: 2px solid #272829;"> {{data.firstName}} {{data.lastName}} </td>
+                                          <td style="text-align: left; border: 2px solid #272829;"> {{data.openMeter | number:'1.2-2'}} </td>
+                                          <td style="text-align: left; border: 2px solid #272829;"> {{data.pumpTesting | number:'1.2-2'}} </td>
+                                          <td style="text-align: left; border: 2px solid #272829;"> {{data.closingReading | number:'1.2-2'}} </td>
+                                          <td style="text-align: left; border: 2px solid #272829;"> {{data.fuelPrice | number:'1.2-2'}} </td>
+                                          <td style="text-align: left; border: 2px solid #272829;"> {{data.meterSaleQuantity | number:'1.2-2'}}</td>
+                                          <td style="text-align: left; border: 2px solid #272829;"> {{data.meterSaleAmount | number:'1.2-2'}}
+                                          </td>
+                                      </tr>        
+                                  </thead>
+                              </table>
+                          </td>
+                       
+                      </tr>
+                  </table>  
+
+
+                      <br><br>
+  
+                      <table>
+                          <tr>
+                              <td colspan="6">
+                                  <table class="table main-table">
+                                      <thead> 
+                                          <tr> 
+                                              <th colspan="12"> 
+                                                  <b>Operator-Wise Shift-Tally</b> 
+                                              </th>
+                                          </tr>
+                                          <tr>
+                                              <th style="text-align: left; border: 2px solid #272829;">Operator Name</th>
+                                              <th style="text-align: left; border: 2px solid #272829;">Meter Sales Rs</th>
+                                              <th style="text-align: left; border: 2px solid #272829;">Credit (A)</th>
+                                              <th style="text-align: left; border: 2px solid #272829;">Digital (B)</th>
+                                              <th style="text-align: left; border: 2px solid #272829;">Cash (C)</th>
+                                              <th style="text-align: left; border: 2px solid #272829;">Expenses</th>
+                                              <th style="text-align: left; border: 2px solid #272829;">Short</th>
+                                              <th style="text-align: left; border: 2px solid #272829;">Shift tally (A+B+C)</th>
+                                          </tr> 
+                                          <tr *ngFor="let data of tallySalesDetails">
+                                              <td style="text-align: left; border: 2px solid #272829;"> {{data.firstName}} {{data.lastName}} </td>
+                                              <td style="text-align: left; border: 2px solid #272829;"> {{data.totalMeterSales | number:'1.2-2'}}
+                                              </td>
+                                              <td style="text-align: left; border: 2px solid #272829;"> {{data.totalCreditTally | number:'1.2-2'}}
+                                              </td>
+                                              <td style="text-align: left; border: 2px solid #272829;"> {{data.paytmTotalAmount | number:'1.2-2'}}
+                                              </td>
+                                              <td style="text-align: left; border: 2px solid #272829;"> {{data.totalCashTally | number:'1.2-2'}}
+                                              </td>
+                                              <td style="text-align: left; border: 2px solid #272829;"> {{data.expenseAmount | number:'1.2-2'}}
+                                              </td>
+                                              <td style="text-align: left; border: 2px solid #272829;"> {{data.shortamount | number:'1.2-2'}} </td>
+                                              <td style="text-align: left; border: 2px solid #272829;">{{data.totalAmountTally | number:'1.2-2'}}
+                                              </td>
+  
+                                          </tr>
+  
+                                          <tr *ngFor="let data of totalSalesDetails">
+                                              <td style="text-align: left; border: 2px solid #272829;"> <b> Total </b> </td>
+                                              <td style="text-align: left; border: 2px solid #272829;"> {{meterSalesSum | number:'1.2-2'}} </td>
+                                              <td style="text-align: left; border: 2px solid #272829;"> {{data.creditTally | number:'1.2-2'}}</td>
+                                              <td style="text-align: left; border: 2px solid #272829;"> {{data.paytmTotal | number:'1.2-2'}}</td>
+                                              <td style="text-align: left; border: 2px solid #272829;"> {{data.cashTallyAmt | number:'1.2-2'}}</td>
+                                              <td style="text-align: left; border: 2px solid #272829;"> {{data.expenseAmt | number:'1.2-2'}}</td>
+                                              <td style="text-align: left; border: 2px solid #272829;"> {{data.shortAmt | number:'1.2-2'}}</td>
+                                              <td style="text-align: left; border: 2px solid #272829;"> {{(data.totalAmountTally |
+                                                  number:'1.2-2')}}</td>
+  
+                                          </tr>       
+                                      </thead>
+                                  </table>
+                              </td>
+                           
+                          </tr>
+                      </table>  
+                      
+                      <br><br>
+  
+                      <table>
+                          <tr>
+                              <td colspan="6">
+                                  <table class="table main-table">
+                                      <thead> 
+                                          <tr> 
+                                              <th colspan="12"> 
+                                                  <b>Digital Entries</b> 
+                                              </th>
+                                          </tr>
+                                          <tr>
+                                              <th style="text-align: left; border: 2px solid #272829;">Digital POS</th>
+                                              <th style="text-align: left; border: 2px solid #272829;">Amount</th>
+                                          </tr> 
+                                          <tr *ngFor="let data of digitalDetails">
+                                              <td style="text-align: left; border: 2px solid #272829;"> {{data.terminalName}} </td>
+                                              <td style="text-align: left; border: 2px solid #272829;"> {{data.paytmTotalAmount | number:'1.2-2'}} </td>
+                                             
+  
+                                          </tr>
+  
+                                          <tr>
+                                              <td style="text-align: left; border: 2px solid #272829;"> <b> Total </b> </td>
+                                              <td style="text-align: left; border: 2px solid #272829;"> {{digitalTotalSales | number:'1.2-2'}} </td>
+                                            
+                                          </tr>       
+                                      </thead>
+                                  </table>
+                              </td>
+                           
+                          </tr>
+                      </table>  
+                      <br><br> 
+                      
+                       <br>   
+   
+                      </div>
+                  </div>
+                  </div>
+              </div>    
+          </div>
+  
+      </div>
+  </body>
+  </html>
+
 </div>
-<!--end::Tiles Widget 12-->

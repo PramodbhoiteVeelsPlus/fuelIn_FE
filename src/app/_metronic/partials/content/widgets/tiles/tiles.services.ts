@@ -74,6 +74,11 @@ export class TilesService {
     private updateStockPurchaseURL = this.baseURL + 'tankDSR/updateStockPurchase';
     private getTankDetailsByIdURL = this.baseURL + 'tankDSR/getTankDetailsById';
     private getTankDSRBookURL = this.baseURL + 'tankDSR/getTankDSRBook';
+    private getMETERSALESTotalDSRBYShiftTimeURL = this.baseURL + 'shiftBook/getMETERSALESTotalDSRBYShiftTime';
+    private getShiftVStallyBYShiftTimeURL = this.baseURL + 'shiftBook/getShiftVStallyBYShiftTime';
+    private getProductWiseDSRShiftTimeURL = this.baseURL + 'shiftBook/getProductWiseDSRShiftTime';
+    private getTotalMeterSalesAndTallyEnteryBYShiftTimeURL = this.baseURL + 'shiftBook/getTotalMeterSalesAndTallyEnteryBYShiftTime'; 
+    private getDigitalTotalByShiftTimeURL = this.baseURL + 'shiftBook/getDigitalTotalByShiftTime';
 
 
 
@@ -621,6 +626,56 @@ export class TilesService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.getTankDSRBookURL, body, {
+            headers: headers
+        })
+    }
+
+    // getMETERSALESTotalDSRBYShiftTimeURL
+    getMETERSALESTotalDSRBYShiftTimePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getMETERSALESTotalDSRBYShiftTimeURL, body, {
+            headers: headers
+        })
+    }
+
+    // getShiftVStallyBYShiftTimeURL
+    getShiftVStallyBYShiftTimePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getShiftVStallyBYShiftTimeURL, body, {
+            headers: headers
+        })
+    }
+
+    // getProductWiseDSRShiftTimeURL
+    getProductWiseDSRShiftTimePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getProductWiseDSRShiftTimeURL, body, {
+            headers: headers
+        })
+    }
+
+    // getTotalMeterSalesAndTallyEnteryBYShiftTimeURL
+    getTotalMeterSalesAndTallyEnteryBYShiftTimePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getTotalMeterSalesAndTallyEnteryBYShiftTimeURL, body, {
+            headers: headers
+        })
+    }
+
+    // getDigitalTotalByShiftTimeURL
+    getDigitalTotalByShiftTimePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getDigitalTotalByShiftTimeURL, body, {
             headers: headers
         })
     }
