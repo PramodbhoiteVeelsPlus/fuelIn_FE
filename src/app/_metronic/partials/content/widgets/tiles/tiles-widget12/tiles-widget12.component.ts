@@ -109,6 +109,7 @@ export class TilesWidget12Component implements OnInit {
     this.accessGroup = element.accessGroupId;
     this.fuelDealerId = localStorage.getItem('dealerId');
     this.dealerCorporateId = localStorage.getItem('dealerCorporateId');
+    console.log("id", this.dealerCorporateId)
     this.companyName = dealerData.companyName;
     this.brandName = dealerData.brandName;
     this.city = dealerData.city;
@@ -123,21 +124,21 @@ export class TilesWidget12Component implements OnInit {
       this.getTallyDetails(this.shiftTimeId, this.fuelDealerId); 
       this.getDSR(this.shiftTimeId, this.fuelDealerId); 
       this.getTotalMeterSalesAndTallyEntery(this.shiftTimeId, this.fuelDealerId); 
-      this.getDigitalTotalByDate(this.shiftTimeId, this.fuelDealerId); 
+      this.getDigitalTotalByDate(this.shiftTimeId, this.dealerCorporateId); 
 
     } else { 
       this.getSalesDetailsProductWise(this.shiftTimeId, this.fuelDealerId); 
       this.getTallyDetails(this.shiftTimeId, this.fuelDealerId); 
       this.getDSR(this.shiftTimeId, this.fuelDealerId); 
       this.getTotalMeterSalesAndTallyEntery(this.shiftTimeId, this.fuelDealerId); 
-      this.getDigitalTotalByDate(this.shiftTimeId, this.fuelDealerId); 
+      this.getDigitalTotalByDate(this.shiftTimeId, this.dealerCorporateId); 
   
     }
     this.getSalesDetailsProductWise(this.shiftTimeId, this.fuelDealerId); 
     this.getTallyDetails(this.shiftTimeId, this.fuelDealerId); 
     this.getDSR(this.shiftTimeId, this.fuelDealerId); 
     this.getTotalMeterSalesAndTallyEntery(this.shiftTimeId, this.fuelDealerId); 
-    this.getDigitalTotalByDate(this.shiftTimeId, this.fuelDealerId); 
+    this.getDigitalTotalByDate(this.shiftTimeId, this.dealerCorporateId); 
     this.cd.detectChanges()
   }
   
@@ -247,9 +248,9 @@ getTotalMeterSalesAndTallyEntery(shiftTimeId: any,fuelDealerId: any) {
     });
 }
 
-getDigitalTotalByDate(shiftTimeId: any,corporateId: any) {
+getDigitalTotalByDate(shiftTimeId: any,dealerCorporateId: any) {
   const data = {
-    corporateId: corporateId,
+    corporateId: dealerCorporateId,
     shiftTimeId: shiftTimeId,
     startDate: moment(this.startDate).format("YYYY-MM-DD"),
     endDate: moment(this.endDate).format("YYYY-MM-DD"),

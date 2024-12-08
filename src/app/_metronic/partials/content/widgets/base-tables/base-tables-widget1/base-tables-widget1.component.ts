@@ -416,6 +416,7 @@ export class BaseTablesWidget1Component implements OnInit {
 
   pageChangeEvent(event: number) {
     this.p = event;
+    this.searchByCorporate();
     this.getFuelCreditRequestByfuelDealerId(this.fuelDealerId);
   }
 

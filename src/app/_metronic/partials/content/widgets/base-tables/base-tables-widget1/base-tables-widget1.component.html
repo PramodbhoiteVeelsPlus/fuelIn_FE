@@ -589,7 +589,7 @@
                         Name:</label>
                     </div>
                     <div class="col-md-3">
-                      <input class="form-control" placeholder="Product" formControlName="productCategory" [disabled]="isDisabled">
+                      <input class="form-control" placeholder="Product" formControlName="productCategory" readonly />
                     </div>
                     <div class="col-md-2">
                       <label class="labelNewMargin">Product
@@ -714,7 +714,7 @@
                 <div class="row noprint">
                   <div class="col-md-8"></div>
                   <div class="col-md-2">
-                    <button class="btn btn-success" onclick="window.print()">print</button>
+                    <button class="btn btn-success" printSectionId="sanjay" ngxPrint>print</button>
                   </div>
                 </div>
                 <div id="sanjay">
