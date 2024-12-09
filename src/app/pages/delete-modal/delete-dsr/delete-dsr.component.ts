@@ -86,7 +86,7 @@ export class DeleteDsrComponent {
   });
   allDealerList: any = [];
   productsList: any = [];
-  currentYear: number;
+  currentYear: any;
   lastYear: number;
   last2Year: number;
   lastFourthYear: number;
@@ -118,6 +118,7 @@ export class DeleteDsrComponent {
     this.last2Year = Number(this.currentYear) - 2;
     this.lastFourthYear = Number(this.currentYear) - 3;
     this.lastFifthYear = Number(this.currentYear) - 4;
+    this.filterForm.controls['year'].setValue(this.currentYear);
     this.getAllDealerList()
     this.cd.detectChanges();
   }
@@ -131,7 +132,7 @@ export class DeleteDsrComponent {
     showTicks: true
   };
 
-  tickValue = moment(new Date()).format("MM");
+  tickValue = Number(moment(new Date()).format("MM"));
   tickValueoptions: Options = {
     showTicksValues: true,
     stepsArray: [
@@ -157,19 +158,19 @@ export class DeleteDsrComponent {
   selectedMonth: number = 1; // Default to January
   
   setMonth(tickValue: any) {
-  //   if ((moment(new Date()).format("MM")) >= moment(this.filterForm.value.month, ["MMM"]).format("MM")) {
-  //     if ((moment(new Date()).format("YYYY")) >= moment(this.filterForm.value.year, ["YYYY"]).format("YYYY")) {
-  //       this.filterForm.controls["month"].setValue(moment(tickValue, ["MM"]).format("MMM"))
-  //       this.getDSRMeterSales(this.fuelDealerId)
-  //     } else {
+    if ((moment(new Date()).format("MM")) >= moment(this.filterForm.value.month, ["MMM"]).format("MM")) {
+      if ((moment(new Date()).format("YYYY")) >= moment(this.filterForm.value.year, ["YYYY"]).format("YYYY")) {
+        this.filterForm.controls["month"].setValue(moment(tickValue, ["MM"]).format("MMM"))
+        this.getDSRMeterSales(this.fuelDealerId)
+      } else {
 
-  //     }
+      }
 
-  //   } else {
-  //     this.filterForm.controls["month"].setValue(moment(tickValue, ["MM"]).format("MMM"))
-  //     this.getDSRMeterSales(this.fuelDealerId)
+    } else {
+      this.filterForm.controls["month"].setValue(moment(tickValue, ["MM"]).format("MMM"))
+      this.getDSRMeterSales(this.fuelDealerId)
 
-  //   }
+    }
   }
   //getAllDealerList
   getAllDealerList() {

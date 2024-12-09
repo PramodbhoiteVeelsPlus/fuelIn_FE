@@ -5,6 +5,7 @@ import { LoginService } from '../login/login.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../../services/auth.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { StatsService } from 'src/app/_metronic/partials/content/widgets/stats/stats.services';
 // import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
@@ -42,12 +43,15 @@ export class CustloginComponent {
   });
   fuelDealerCorporateId: any;
   dealerData: any = [];
+  fuelDealerId: any;
+  managerData: any = [];
   get userMobile() {
     return this.referForm.get('dealerMobile')
   }
   // tslint:disable-next-line: max-line-length
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router,
     private post: AuthService,
+    private post1: StatsService,
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
     public cd: ChangeDetectorRef,
@@ -125,6 +129,7 @@ export class CustloginComponent {
                 this.getDealerIdByPhone(element.phone1);
               }
               // this.post.checkUrlForRefresh('login')
+              this.getAccessByPersonId(element.personId)
               // this.getDealerIdByPhone(element.phone1);
               this.modalRefer = this.modalService.open(refer)
               this.modalRefer.result.then((result: any) => {
@@ -252,4 +257,19 @@ export class CustloginComponent {
     this.router.navigate(['/dashboard']);
   }
 
+  getAccessByPersonId(personId: any) {
+    let data = {
+        personId: personId,
+    };
+    this.post1.getAccessByPersonIdPOST(data).subscribe((res) => {
+        if (res.status == "OK") {
+            this.managerData = res.data[0];
+            localStorage.setItem('managerData', JSON.stringify(this.managerData));
+            this.cd.detectChanges()
+        } else {
+            this.managerData = [];
+            this.cd.detectChanges()
+        }
+    });
+}
 }

@@ -169,8 +169,8 @@ export class StatsWidget11Component {
     this.acceesGroup = element.accessGroupId
     this.createdBy = element.firstName + ' ' + element.lastName
 
-    let id = this.route.snapshot.paramMap.get('id');
-    // localStorage.setItem('customerId', id);
+    let id = this.route.snapshot.paramMap.get('id') || '';
+    localStorage.setItem('customerId', id);
     console.log(id)
     let data = {
       customerId: id

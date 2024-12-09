@@ -77,7 +77,7 @@
               <tbody *ngFor="let data of dataCustList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
                 <tr>
                   <td class="min-w-125px">{{i+1}} </td>
-                  <td class="min-w-125px">{{data.mappingCustomerName}}</td>
+                  <td class="min-w-125px">{{data.hostName}}</td>
                 </tr>
       
               </tbody>

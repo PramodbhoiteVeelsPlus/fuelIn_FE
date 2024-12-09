@@ -23,6 +23,9 @@ export class StatsWidget5Component {
   isOS: boolean;
   isSales: boolean;
   isPayment: boolean;
+  accessGroupId: any;
+  personId: any;
+  dealerId: any;
 
   constructor(
     private post: StatsService,
@@ -32,7 +35,29 @@ export class StatsWidget5Component {
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     this.dealerMobile = element.phone1;
-    this.getDealerIdByPhone(this.dealerMobile);
+    this.accessGroupId = element.accessGroupId;
+    if(this.accessGroupId == '12'){
+      this.getDealerIdByPhone(this.dealerMobile);
+      this.cd.detectChanges()
+    } else if(this.accessGroupId == '14'){
+      var managerData = JSON.parse(localStorage.getItem("managerData") || '{}');
+      this.dealerId = managerData.fuelDealerId;
+      if (this.title == "Credit O/s") {
+        this.isOS = true;
+        this.isSales = false;
+        this.isPayment = false;
+      } else if (this.title == "Credit Sales") {
+        this.isOS = false;
+        this.isSales = true;
+        this.isPayment = false;
+      } else if (this.title == "Credit Payment") {
+        this.isOS = false;
+        this.isSales = false;
+        this.isPayment = true;            
+      }
+      this.getCreditDetailsByDealerId(this.dealerId);
+      this.cd.detectChanges()
+    }
     this.cd.detectChanges()
   }
 
@@ -43,7 +68,7 @@ export class StatsWidget5Component {
     };
     this.post.searchDealerByMobilePOST(data)
       .subscribe(res => {
-        if ((res.status = "OK")) {
+        if (res.status = "OK") {
           this.fuelDealerId = res.data[0].fuelDealerId;
           this.getCreditDetailsByDealerId(this.fuelDealerId);
           if (this.title == "Credit O/s") {

@@ -107,6 +107,7 @@ export class TilesWidget11Component implements OnInit {
   totalCashACCredit: number;
   closingCashACBlc: number;
   cashStatus: boolean = false;
+  dealerId: any;
 
   constructor(
     private modalService: NgbModal,
@@ -125,12 +126,21 @@ export class TilesWidget11Component implements OnInit {
     var element = JSON.parse(localStorage.getItem('element') || '');
     this.userName = element.firstName + ' ' + element.lastName;
     this.accessGroup = element.accessGroupId;
-    this.fuelDealerId = localStorage.getItem('dealerId');
-    this.dealerCorporateId = localStorage.getItem('dealerCorporateId');
-    this.getOILCOMPANYDataInFuelExpense(this.fuelDealerId)
-    this.getBankAcBalance1()
-    this.getCashAcBalance1()
-    this.cd.detectChanges()
+    if(this.accessGroup == '12'){
+      this.fuelDealerId = localStorage.getItem('dealerId');
+      this.dealerCorporateId = localStorage.getItem('dealerCorporateId');
+      this.getOILCOMPANYDataInFuelExpense(this.fuelDealerId)
+      this.getBankAcBalance1()
+      this.getCashAcBalance1()
+      this.cd.detectChanges()
+    } else if(this.accessGroup == '14'){
+      var managerData = JSON.parse(localStorage.getItem("managerData") || '{}');
+      this.dealerId = managerData.fuelDealerId;
+      this.getOILCOMPANYDataInFuelExpense(this.dealerId)
+      this.getBankAcBalance1()
+      this.getCashAcBalance1()
+      this.cd.detectChanges()
+  }
   }
 
   getOILCOMPANYDataInFuelExpense(fuelDealerId: any) {

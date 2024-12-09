@@ -3,13 +3,13 @@
     <div class="card mb-3">
       <div class="card-header">
         <div class="row mb-2">
-          <div class="col-md-3">
-            <input *ngIf="!isFastagReg" class="form-control mr-sm-2" type="number" placeholder="Search Phone Number"
+          <div class="col-md-4">
+            <input *ngIf="!isFastagReg" class="form-control" type="number" placeholder="Search Phone Number"
               [formControl]="searchBox" aria-label="Search">
-            <input *ngIf="isFastagReg" class="form-control mr-sm-2" type="number" [(ngModel)]="phoneSearch"
+            <input *ngIf="isFastagReg" class="form-control" type="number" [(ngModel)]="phoneSearch"
               placeholder="Search Phone Number" [formControl]="searchBox" aria-label="Search">
           </div>
-          <div class="col-md-3">
+          <div class="col-md-2">
             <button *ngIf="!isFastagReg" class="btn btn-success" (click)="addfastagStatus()">Add</button>
             <button *ngIf="isFastagReg" class="btn btn-success" (click)="searchPhoneNumber()">Search</button>
           </div>

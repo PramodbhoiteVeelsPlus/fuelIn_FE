@@ -36,10 +36,8 @@
                             </div>
                             <div class="col-md-10">
                                 <div class="p-3">
-                                    <ngx-slider 
-                                    
-                                    [(value)]="selectedMonth">
-                                  </ngx-slider>
+                                  <ngx-slider (click)="setMonth(tickValue)" [(value)]="tickValue"
+                                  [options]="tickValueoptions"></ngx-slider>
                                 </div>
                             </div>
                         </div>
@@ -117,7 +115,7 @@
                                 <div class="text-sm-end">
                                     <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF"
                                         placement="bottom" (click)="exportToPDF()"><i
-                                            class="fas fa-file-pdf"></i></span>
+                                            class="fas fa-file-pdf" style="font-size: 30px;"></i></span>
 
                                 </div>
                             </div>
@@ -125,7 +123,7 @@
                                 <div class="text-sm-end">
                                     <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download CSV"
                                         placement="bottom" (click)="exportexcel()"><i
-                                            class="fas fa-file-csv"></i></span>
+                                            class="fas fa-file-csv" style="font-size: 30px;"></i></span>
 
                                 </div>
                             </div>
@@ -209,7 +207,7 @@
                                 <div class="text-sm-end">
                                     <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF"
                                         placement="bottom" (click)="exportToPDF1()"><i
-                                            class="fas fa-file-pdf"></i></span>
+                                            class="fas fa-file-pdf" style="font-size: 30px;"></i></span>
 
                                 </div>
                             </div>
@@ -217,7 +215,7 @@
                                 <div class="text-sm-end">
                                     <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download CSV"
                                         placement="bottom" (click)="exportexcel1()"><i
-                                            class="fas fa-file-csv"></i></span>
+                                            class="fas fa-file-csv" style="font-size: 30px;"></i></span>
 
                                 </div>
                             </div>

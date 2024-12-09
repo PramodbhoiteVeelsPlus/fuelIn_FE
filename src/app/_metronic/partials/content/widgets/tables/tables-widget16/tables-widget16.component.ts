@@ -4,6 +4,7 @@ import { WidgetService } from '../../widgets.services';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as XLSX from 'xlsx';
 import moment from 'moment';
+import { ExcelService } from 'src/app/pages/excel.service';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -93,12 +94,14 @@ export class TablesWidget16Component {
   currentAccountCRPaymentAllBYentityData: any = [];
   preAccountCRPaymentAllBYentityData: any = [];
   allfastagTransactionData: any = [];
+  fastagTransactionExcelTWO: any = [];
 
   constructor(
     private post: WidgetService,
     private spinner: NgxSpinnerService,
     config: NgbDatepickerConfig,
-    public cd: ChangeDetectorRef,) {
+    public cd: ChangeDetectorRef,
+    private excelService: ExcelService) {
     const currentDate = new Date();
     config.minDate = { year: 2018, month: 1, day: 1 };
     config.maxDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
@@ -252,15 +255,33 @@ export class TablesWidget16Component {
   fileName = 'fastag Transaction Excel.xlsx';
 
   exportexcel(): void {
-    /* table id is passed over here */
-    let element = document.getElementById('excel-table');
-    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+  
+    this.fastagTransactionExcelTWO.length = 0
+  
+    this.allfastagTransactionData.map((res: { entityId: any; currentPurchase: any; currentPayment: any; currentFuelCreditSalesData: any; preAccountTransactionForCR: any; previousPurchase: any; previousPayment: any; preFuelCreditSalesData: any; currentAccountTransactionForCR: any; }) => {
+  
+      let json = {
 
-    /* generate workbook and add the worksheet */
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+        EntityId: res.entityId,
+        LastMonthTollPayment: res.currentPurchase ,
+        LastMonthTollRecharge: res.currentPayment ,
+        LastMonthFuelCredit: res.currentFuelCreditSalesData ,
+        LastMonthFuelCreditPayment: res.preAccountTransactionForCR ,
+        CurrentMonthTollPayment: res.previousPurchase ,
+        CurrentMonthTollRecharge: res.previousPayment ,
+        CurrentMonthFuelCredit: res.preFuelCreditSalesData ,
+        CurrentMonthFuelCreditPayment: res.currentAccountTransactionForCR ,
+  
+      };
+  
+      this.fastagTransactionExcelTWO.push(json);
+    });
+  
+    this.excelService.exportAsExcelFile(
+      this.fastagTransactionExcelTWO,
+      "fastag Transaction Excel TWO"
 
-    /* save to file */
-    XLSX.writeFile(wb, this.fileName);
+    );
+  
   }
 }

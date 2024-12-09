@@ -130,12 +130,18 @@ export class AdvanceTablesWidget4Component {
   p: number = 1;
   p1: number = 1;
   total: number = 0;
+  searchTerm: any;
 
   constructor(private excelService: ExcelService,
     private spinner: NgxSpinnerService,
     private modalService: NgbModal, 
     private post: Adv_TablesService,
     private cd: ChangeDetectorRef,) {
+      this.searchBox1.valueChanges
+      .subscribe((term)=>{
+        this.searchTerm1 = term;
+        this.search1();
+      })
   }
 
   activeTab: Tabs = 'kt_advance-tables_widget_4_tab_1';
@@ -159,7 +165,7 @@ export class AdvanceTablesWidget4Component {
     this.p = event;
     this.kycDetails();
   }
-
+  
   kycDetails() {
     this.post.getkycDetails()
       .subscribe(res => {

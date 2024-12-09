@@ -91,7 +91,11 @@ export class AdvanceTablesWidget12Component {
   constructor(private excelService: ExcelService, private modalService: NgbModal,
     private spinner: NgxSpinnerService, private post: Adv_TablesService,
     private cd: ChangeDetectorRef,) {
-    this.searchBox.valueChanges
+      this.searchBox.valueChanges
+      .subscribe((term)=>{
+        this.searchTerm = term;
+        this.search();
+      })
 
   }
 
@@ -191,16 +195,19 @@ export class AdvanceTablesWidget12Component {
           if (res.data.length) {
             if (res.data[0].entityId) {
               alert("Fastag Corporate Found Successfully!")
+              this.cd.detectChanges()
             } else {
               alert("Corporate Found Successfully But Need To add Fastag Info!")
               this.isAdd = true;
               this.isNumberFound = false;
               this.searchedCorpId = res.data[0].customerId;
+              this.cd.detectChanges()
             }
           } else {
             alert("Corporate Not Found. Please Register!")
             this.isNumberFound = true;
             this.isAdd = false;
+            this.cd.detectChanges()
           }
         }
       })
