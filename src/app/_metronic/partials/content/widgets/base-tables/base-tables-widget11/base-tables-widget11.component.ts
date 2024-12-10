@@ -159,7 +159,7 @@ export class BaseTablesWidget11Component implements OnInit {
     const id1 = this.route.snapshot.paramMap.get('id1');
     if (id1 == '1') {
       this.showStatement1 = true;
-      // this.getCreditAndPaymentAllDataByFuelInvoiceId()
+      this.getCreditAndPaymentAllDataByFuelInvoiceId()
     } else if (id1 == '2') {
       this.showStatement2 = true;
     } else if (id1 == '3') {

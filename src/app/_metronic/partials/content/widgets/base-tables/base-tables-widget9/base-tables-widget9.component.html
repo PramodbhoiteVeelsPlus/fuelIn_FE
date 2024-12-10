@@ -220,8 +220,8 @@
         <tbody *ngIf="showPaymetCreditTable">
           <tr
             *ngFor="let data of combineCreditAndPaymentDetails | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total };let i = index">
-            <td class="border-gray">{{ i + 1 }}</td>
-            <td class="border-gray">
+            <td class="border-gray" style="text-align: center">{{ i + 1 }}</td>
+            <td class="border-gray" style="text-align: center">
               <span *ngIf="
     (data.date | date: 'd MMM y') == '1 Jan 2021'
   ">
@@ -233,7 +233,7 @@
                 {{ data.date | date: "d MMM y" }}
               </span>
             </td>
-            <td class="border-gray">
+            <td class="border-gray" style="text-align: center">
               <span *ngIf="data.description == ''"> </span>
               <span *ngIf="data.description != ''">
                 <span *ngIf="data.description != 'null'">
@@ -243,7 +243,7 @@
               </span>
             </td>
 
-            <td class="border-gray">
+            <td class="border-gray" style="text-align: center">
               <span *ngIf="data.purpose == 'LUBE'">
                 {{ data.productName }}
               </span>
@@ -258,13 +258,13 @@
                 LUBRICANTS-TAX
               </span>
             </td>
-            <td class="border-gray">
+            <td class="border-gray" style="text-align: center">
               <span *ngIf="!data.purchase"> - </span>
               <span *ngIf="data.purchase">
                 {{ data.purchase | number: "1.2-2" }}
               </span>
             </td>
-            <td class="border-gray">
+            <td class="border-gray" style="text-align: center">
               <span *ngIf="data.purpose == 'CREDIT'">
                 <span *ngIf="data.productCategory == 'CNG'">
                   {{ data.actualCreditQuantity | number: "1.2-2" }}
@@ -282,7 +282,7 @@
                 {{ data.lubeUnit }}
               </span>
             </td>
-            <td *ngIf="showPaymetCreditTable" class="border-gray">
+            <td *ngIf="showPaymetCreditTable" class="border-gray" style="text-align: center">
               <span *ngIf="!data.payment"> - </span>
               <span *ngIf="data.payment">
                 {{ data.payment | number: "1.2-2" }}

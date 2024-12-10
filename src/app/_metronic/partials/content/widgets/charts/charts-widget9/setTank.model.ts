@@ -1,5 +1,5 @@
 export class setTank {
-    tank:any;
+    tank:any = "";
     volume:any;
     product:any;
 

@@ -31,8 +31,8 @@ export class ListsWidget3Component {
       .subscribe(res => {
         if (res.status == 'OK') {
           this.array = res.data;
-          this.cd.detectChanges();
           this.spinner.hide();
+          this.cd.detectChanges();
         } else {
           this.spinner.hide();
         }

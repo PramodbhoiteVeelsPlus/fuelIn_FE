@@ -129,8 +129,18 @@ export class SidebarMenuComponent implements OnInit {
         this.isDealer = true;
         this.isAdmin = false;
         this.isTransporter = false;
-        this.dealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
-        this.getCustomize(this.dealerId);
+        if(element.accessGroupId == '12'){
+          this.dealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
+          this.getCustomize(this.dealerId);
+          this.cd.detectChanges()
+        } else if(element.accessGroupId == '14'){
+          var managerData = JSON.parse(localStorage.getItem("managerData") || '{}');
+          this.dealerId = managerData.fuelDealerId;
+          // this.getCustomize(this.dealerId);
+          this.cd.detectChanges()
+      }
+        // this.dealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
+        // this.getCustomize(this.dealerId);
       } else {
         this.isAdmin = false;
         this.isDealer = false;

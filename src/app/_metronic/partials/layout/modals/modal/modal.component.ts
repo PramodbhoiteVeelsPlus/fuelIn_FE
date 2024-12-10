@@ -48,13 +48,20 @@ export class ModalComponent {
   ngOnInit() {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
-    this.fuelDealerId = dealerData.fuelDealerId;
-    this.dealerCorporateId = dealerData.corporateId;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     this.accessGroupId = element.accessGroupId;
     this.managerVPPersonId = element.veelsPlusId;
     this.managerPersonId = element.personId;
     this.managerName = element.firstName + " " + element.lastName;
+    if(element.accessGroupId == '12'){
+      this.fuelDealerId = dealerData.fuelDealerId;
+      this.dealerCorporateId = dealerData.corporateId;
+      this.cd.detectChanges()
+    } else if(element.accessGroupId == '14'){
+      var managerData = JSON.parse(localStorage.getItem("managerData") || '{}');
+      this.fuelDealerId = managerData.fuelDealerId;
+      this.cd.detectChanges()
+  }
     this.getProductsByDealerId(this.fuelDealerId);
     this.cd.detectChanges()
   }

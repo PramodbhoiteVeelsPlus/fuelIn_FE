@@ -67,7 +67,6 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 
 export class BaseTablesWidget10Component implements OnInit {
   fuelDealerId: any;
-  dealerData: any;
   dealerCorporateId: any;
   accessGroup: any;
   acceesGroup: number;
@@ -198,7 +197,7 @@ export class BaseTablesWidget10Component implements OnInit {
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
-    this.dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
     this.accessGroup = element.accessGroupId;
     this.userId = element.userId;
@@ -207,18 +206,19 @@ export class BaseTablesWidget10Component implements OnInit {
       this.ownerName = element.firstName + ' ' + element.lastName
     }
     this.dealerMobile = element.phone1;
+    this.loginVPId = element.veelsPlusCorporateID;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     this.managerVPPersonId = element.veelsPlusId
     this.managerPersonId = element.personId
     this.managerName = element.firstName + ' ' + element.lastName
     this.acceesGroup = element.accessGroupId;
-    this.companyName = this.dealerData.companyName
-    this.oilCompanyName = this.dealerData.brandName
-    this.state = this.dealerData.state
-    this.pin = this.dealerData.pin
-    this.city = this.dealerData.city
-    this.phone1 = this.dealerData.hostPhone
-    this.headerName1 = this.companyName;
+    this.companyName = dealerData.companyName
+    this.oilCompanyName = dealerData.brandName
+    this.state = dealerData.state
+    this.pin = dealerData.pin
+    this.city = dealerData.city
+    this.phone1 = dealerData.hostPhone
+    this.headerName1 = dealerData.companyName;
     // this.headerName2 = res.data[0].address1+', '+res.data[0].address2+', '+res.data[0].city;
     this.headerName3 = this.state + '-' + this.pin + '  ' + "GST: " + this.GSTNumber;
     this.getFCInvoiceList()

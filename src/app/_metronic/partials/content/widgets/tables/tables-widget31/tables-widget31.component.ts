@@ -119,6 +119,7 @@ export class TablesWidget31Component {
   }
 
   ngOnInit() {
+    this.mappingAccData2 = JSON.parse(localStorage.getItem('mappingAccData2') || '{}');
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.fuelDealerId = dealerData.fuelDealerId;
@@ -134,11 +135,15 @@ export class TablesWidget31Component {
         this.liteAccess = true
       }
     }
-    // this.filterForm.controls["startDate"].setValue("01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear())
-    // this.filterForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
-    this.getfuelDealerIdByCorporateId(this.dealerCorporateId)
+    
+    if(!this.mappingAccData2.length){
+      this.getMappingAccount(this.fuelDealerId);
+      console.log("isdata")
+    }else{
+      this.getMappingAccount1(this.fuelDealerId);
+      console.log("Noisdata")
+    }
     this.searchDealerBycustomerId(this.customerId)
-    this.getMappingAccount(this.fuelDealerId);
     // this.getCorporateById(this.dealerLoginVPId);
     this.cd.detectChanges()
   }
@@ -147,25 +152,6 @@ export class TablesWidget31Component {
     return await this.modalComponent.open();
   }
   
-  // getfuelDealerIdByDealerCorporateId
-  getfuelDealerIdByCorporateId(dealerCorporateId: any) {
-    let data = {
-      corporateId: dealerCorporateId
-    }
-    this.post.getfuelDealerIdByCorporateIdPOST(data)
-      .subscribe(res => {
-        if (res.status == "OK") {
-          this.fuelDealerId = res.data[0].fuelDealerId;
-          this.getMappingAccount(this.fuelDealerId);
-          // this.getFuelPriceByProductDateDealer(this.fuelDealerId);
-          this.cd.detectChanges()
-        }
-        else {
-          this.cd.detectChanges()
-        }
-      })
-  }
-
   pageChangeEvent(event: number) {
     this.p = event;
     this.getMappingAccount(this.fuelDealerId);
@@ -209,10 +195,44 @@ export class TablesWidget31Component {
               this.advanceAmt = this.advanceAmt + (Number(res.netOS))
             }
           })
+          localStorage.setItem('mappingAccData2', JSON.stringify(res.data));
           this.spinner.hide();
           this.cd.detectChanges()
         } else {
           this.mappingAccData2 = [];
+          localStorage.setItem('mappingAccData2', JSON.stringify([]));
+          this.spinner.hide();
+          this.cd.detectChanges()
+        }
+      })
+  }
+
+  getMappingAccount1(fuelDealerId: any) {
+    this.mappingAccData2 = []
+    this.mappingAccSearchData2 = []
+    this.crOutstanding2 = 0
+    this.advanceAmt = 0
+    let data = {
+      fuelDealerId: fuelDealerId
+    }
+
+    this.post.getMappingAccByFuelDealerIdPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          this.mappingAccData2 = res.data;
+          this.mappingAccSearchData2 = res.data;
+          res.data.map((res: { netOS: any; }) => {
+            this.crOutstanding2 = this.crOutstanding2 + (Number(res.netOS))
+            if ((Number(res.netOS)) < 0) {
+              this.advanceAmt = this.advanceAmt + (Number(res.netOS))
+            }
+          })
+          localStorage.setItem('mappingAccData2', JSON.stringify(res.data));
+          this.spinner.hide();
+          this.cd.detectChanges()
+        } else {
+          this.mappingAccData2 = [];
+          localStorage.setItem('mappingAccData2', JSON.stringify([]));
           this.spinner.hide();
           this.cd.detectChanges()
         }

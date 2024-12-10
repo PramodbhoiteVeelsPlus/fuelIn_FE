@@ -209,6 +209,7 @@ export class BaseTablesWidget1Component implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
+    this.allCreditReq = JSON.parse(localStorage.getItem('allCreditReq') || '{}');
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
@@ -229,8 +230,12 @@ export class BaseTablesWidget1Component implements OnInit {
     this.headerName2 = dealerData.address1 + ', ' + dealerData.address2 + ', ' + dealerData.city;
     this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
     this.getFuelCreditRequestCorporateByfuelDealerId(this.fuelDealerId)
-    this.getFuelCreditRequestByCorporateId(this.dealerCorporateId)
-    this.getFuelCreditRequestByfuelDealerId(this.fuelDealerId);
+    if (!this.allCreditReq.length) {
+      this.getFuelCreditRequestByfuelDealerId(this.fuelDealerId);
+    } else {
+      this.getFuelCreditRequestByfuelDealerId1(this.fuelDealerId);
+    }
+    // this.getFuelCreditRequestByCorporateId(this.dealerCorporateId)
     this.cd.detectChanges()
   }
 
@@ -244,7 +249,7 @@ export class BaseTablesWidget1Component implements OnInit {
           this.allCorporateList = res.data;
           // this.allCorporateListData = res;
           this.spinner.hide()
-            this.cd.detectChanges()
+          this.cd.detectChanges()
         } else {
           this.spinner.hide()
           this.cd.detectChanges()
@@ -440,12 +445,49 @@ export class BaseTablesWidget1Component implements OnInit {
           this.pageLength = creditArr;
           this.allCreditReqExcel = this.allCreditReq;
           this.showHeading = true;
+          localStorage.setItem('allCreditReq', JSON.stringify(this.allCreditReq));
           this.spinner.hide()
           this.cd.detectChanges()
         } else {
           this.showHeading = false;
           this.selectCorporate.controls["startDate"].setValue("");
           this.selectCorporate.controls["endDate"].setValue("");
+          localStorage.setItem('mappingAccData', JSON.stringify([]));
+          alert("Data not found!")
+          this.spinner.hide()
+          this.cd.detectChanges()
+        }
+      }
+      );
+  }
+
+  getFuelCreditRequestByfuelDealerId1(fuelDealerId: any) {
+    let creditArr = [];
+    let data = {
+      fuelDealerId: fuelDealerId,
+    }
+    this.post.getFuelCreditRequestByfuelDealerIdPOST(data)
+      .subscribe(res => {
+        creditArr = [];
+        if (res.data.length) {
+          creditArr = Object.values(res.data.reduce((acc: any, cur: { fuelCreditId: any; }) => Object.assign(acc, { [cur.fuelCreditId]: cur }), {}))
+          this.allCreditSalesDetails = creditArr.sort((a: any, b: any) => (a.estimatedRefuelDate > b.estimatedRefuelDate ? -1 : 1 && a.fuelCreditId > b.fuelCreditId ? -1 : 1));
+          this.allCreditReq = this.allCreditSalesDetails.sort((a: { estimatedRefuelDate: number; fuelCreditId: number; }, b: { estimatedRefuelDate: number; fuelCreditId: number; }) => (a.estimatedRefuelDate > b.estimatedRefuelDate ? -1 : 1 && a.fuelCreditId > b.fuelCreditId ? -1 : 1));
+          this.allCreditReqDataa = this.allCreditReq;
+
+          this.productWiseCRAmt = res.data1;
+
+          this.pageLength = creditArr;
+          this.allCreditReqExcel = this.allCreditReq;
+          this.showHeading = true;
+          localStorage.setItem('allCreditReq', JSON.stringify(this.allCreditReq));
+          this.spinner.hide()
+          this.cd.detectChanges()
+        } else {
+          this.showHeading = false;
+          this.selectCorporate.controls["startDate"].setValue("");
+          this.selectCorporate.controls["endDate"].setValue("");
+          localStorage.setItem('mappingAccData', JSON.stringify([]));
           alert("Data not found!")
           this.spinner.hide()
           this.cd.detectChanges()
@@ -456,27 +498,27 @@ export class BaseTablesWidget1Component implements OnInit {
 
   getFuelCreditRequestByCorporateId(corporateId: any) {
     this.spinner.show()
-     let data = {
-       corporateId: corporateId,
-     }
-     this.post.getFuelCreditByCorporateIdPOST(data)
-       .subscribe(res => {
-         if (res.data.length) {
-           this.allCreditReq = res.data;
-           this.allCreditReqData = res;
-           this.pageLength = res.data;
-           this.allCreditReqExcel = res.data;
-           this.spinner.hide()
-         } else {
-                 this.selectCorporate.controls["startDate"].setValue("");
-                 this.selectCorporate.controls["endDate"].setValue("");
-           alert("Data not found!")
-           this.spinner.hide()
-         }
-       }
-       );
+    let data = {
+      corporateId: corporateId,
+    }
+    this.post.getFuelCreditByCorporateIdPOST(data)
+      .subscribe(res => {
+        if (res.data.length) {
+          this.allCreditReq = res.data;
+          this.allCreditReqData = res;
+          this.pageLength = res.data;
+          this.allCreditReqExcel = res.data;
+          this.spinner.hide()
+        } else {
+          this.selectCorporate.controls["startDate"].setValue("");
+          this.selectCorporate.controls["endDate"].setValue("");
+          alert("Data not found!")
+          this.spinner.hide()
+        }
+      }
+      );
 
-   }
+  }
 
   exportToPDF1() {
     if (this.acceesGroup == 12 || this.acceesGroup == 14 || this.acceesGroup == 19 || this.acceesGroup == 21) {

@@ -46,6 +46,7 @@ export class ChartsWidget1Component implements OnInit {
     private cd: ChangeDetectorRef,) { }
 
   ngOnInit(): void {
+    this.spinner.show();
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     this.accessGroupId = element.accessGroupId;
     if(this.accessGroupId == '12'){
@@ -62,6 +63,7 @@ export class ChartsWidget1Component implements OnInit {
 
 
   getGraphDataByDealerId(fuelDealerId: any) {
+    this.spinner.show()
     let data = {
       fuelDealerId: fuelDealerId
     }
@@ -154,8 +156,8 @@ export class ChartsWidget1Component implements OnInit {
           this.payment = [this.payment1, this.payment2, this.payment3, this.payment4, this.payment5, this.payment6];
 
           this.chartOptions = getChartOptions(350, this.months, this.os, this.purchase, this.payment);
-          this.cd.detectChanges();
           this.spinner.hide();
+          this.cd.detectChanges();
         } else {
           this.spinner.hide();
         }

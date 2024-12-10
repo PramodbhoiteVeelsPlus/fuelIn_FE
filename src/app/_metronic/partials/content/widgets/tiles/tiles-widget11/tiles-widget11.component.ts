@@ -123,6 +123,7 @@ export class TilesWidget11Component implements OnInit {
   }
 
   ngOnInit() {
+    this.spinner.show();
     var element = JSON.parse(localStorage.getItem('element') || '');
     this.userName = element.firstName + ' ' + element.lastName;
     this.accessGroup = element.accessGroupId;
@@ -130,20 +131,23 @@ export class TilesWidget11Component implements OnInit {
       this.fuelDealerId = localStorage.getItem('dealerId');
       this.dealerCorporateId = localStorage.getItem('dealerCorporateId');
       this.getOILCOMPANYDataInFuelExpense(this.fuelDealerId)
-      this.getBankAcBalance1()
-      this.getCashAcBalance1()
+      this.getBankAcBalance1(this.fuelDealerId)
+      this.getCashAcBalance1(this.fuelDealerId)
       this.cd.detectChanges()
     } else if(this.accessGroup == '14'){
       var managerData = JSON.parse(localStorage.getItem("managerData") || '{}');
       this.dealerId = managerData.fuelDealerId;
       this.getOILCOMPANYDataInFuelExpense(this.dealerId)
-      this.getBankAcBalance1()
-      this.getCashAcBalance1()
+      this.getBankAcBalance1(this.dealerId)
+      this.getCashAcBalance1(this.dealerId)
+      this.getOilCoAcBalance1(this.dealerId);
+      this.getBankAcBalanceOPEN(this.dealerId)
       this.cd.detectChanges()
   }
   }
 
   getOILCOMPANYDataInFuelExpense(fuelDealerId: any) {
+    this.spinner.show();
     let data = {
         dealerId: fuelDealerId,
         startDate: this.openingDate,
@@ -153,16 +157,21 @@ export class TilesWidget11Component implements OnInit {
         .subscribe(res => {
             if (res.data.length) {
                 this.totalOilCOPurchase = res.data3[0].totalAmount
-                this.getOilCoAcBalance1();
+                this.getOilCoAcBalance1(this.fuelDealerId);
+                this.spinner.hide();
+                // this.cd.detectChanges()
             } else {
-                this.getOilCoAcBalance1();
+                this.getOilCoAcBalance1(this.fuelDealerId);
+                this.spinner.hide();
+                // this.cd.detectChanges()
             }
         })
 }
 
-  getOilCoAcBalance1() {
+  getOilCoAcBalance1(fuelDealerId: any) {
+    this.spinner.show();
     let data = {
-      fuelDealerId: this.fuelDealerId,
+      fuelDealerId: fuelDealerId,
       expenseCategory: "BALANCE OIL COMPANY A/C",
       corporateId: this.dealerCorporateId,
       startDate: this.openingDate,
@@ -214,20 +223,23 @@ export class TilesWidget11Component implements OnInit {
           } else {
             this.oilCoStatus = false;
           }
-          this.cd.detectChanges()
+          this.spinner.hide();
+          // this.cd.detectChanges()
         } else {
           alert("Error")
-          this.cd.detectChanges()
+          this.spinner.hide();
+          // this.cd.detectChanges()
         }
       })
   }
 
 
-  getBankAcBalance1() {
+  getBankAcBalance1(fuelDealerId: any) {
+    this.spinner.show();
     this.balanceBankData.length = 0
     this.overallBankWiseDetails.length = 0
     let data = {
-      fuelDealerId: this.fuelDealerId,
+      fuelDealerId: fuelDealerId,
       corporateId: this.dealerCorporateId,
       expenseCategory: "BALANCE BANK/LOAN A/C",
       startDate: this.openingDate,
@@ -242,23 +254,26 @@ export class TilesWidget11Component implements OnInit {
           this.totalCRBankWiseData = res.data1;
           this.totalDBBankWiseData = res.data3;
           this.totalCreditBankWiseData = res.dataPay;
-          this.getBankAcBalanceOPEN(this.balanceBankData, this.totalCREDITBankWiseData, this.totalCRBankWiseData, this.totalDBBankWiseData, this.totalCreditBankWiseData)
-          this.cd.detectChanges()
+          this.getBankAcBalanceOPEN(this.fuelDealerId)
+          this.spinner.hide();
+          // this.cd.detectChanges()
         } else {
           alert("Error")
-          this.cd.detectChanges()
+          this.spinner.hide();
+          // this.cd.detectChanges()
         }
       })
   }
 
-  getBankAcBalanceOPEN(balanceBankData: any, totalCREDITBankWiseData: any[], totalCRBankWiseData: any[], totalDBBankWiseData: any[], totalCreditBankWiseData: any[]) {
+  getBankAcBalanceOPEN(fuelDealerId: any) {
+    this.spinner.show();
     this.bankWiseDetailsOPEN.length = 0
     let data = {
-      dealerId: this.fuelDealerId,
+      dealerId: fuelDealerId,
       corporateId: this.dealerCorporateId,
       startDate: this.openingDate,
       endDate: this.closingDate,
-      bankDetails: balanceBankData,
+      bankDetails: this.balanceBankData,
 
     }
     this.post.getOpeningDBCRBalanceBANKPOST(data)
@@ -296,19 +311,19 @@ export class TilesWidget11Component implements OnInit {
             dataJson.bankId = res1.bankAccountId;
             dataJson.accType = res1.type;
 
-            totalDBBankWiseData.map(res2 => {
+            this.totalDBBankWiseData.map((res2: { bankAccountId: string; totalDebit: any; }) => {
               if (res1.bankAccountId == res2.bankAccountId) {
                 dataJson.totalDebit = Number(res2.totalDebit);
               }
             })
 
-            totalCRBankWiseData.map(res3 => {
+            this.totalCRBankWiseData.map((res3: { bankAccountId: string; totalCredit: any; }) => {
               if (res1.bankAccountId == res3.bankAccountId) {
                 dataJson.totalCredit = Number(res3.totalCredit);
               }
             })
 
-            totalCREDITBankWiseData.map(res4 => {
+            this.totalCREDITBankWiseData.map((res4: { accountId: string; totalCredit: any; }) => {
               if (res1.bankAccountId == res4.accountId) {
                 dataJson.totalCreditPayment = Number(res4.totalCredit);
               }
@@ -339,7 +354,7 @@ export class TilesWidget11Component implements OnInit {
             })
 
 
-            totalCreditBankWiseData.map(res9 => {
+            this.totalCreditBankWiseData.map((res9: { accountId: string; totalCredit: any; }) => {
               if (res1.bankAccountId == res9.accountId) {
                 dataJson.totalCreditPay = Number(res9.totalCredit);
               }
@@ -370,18 +385,21 @@ export class TilesWidget11Component implements OnInit {
             }
           })
 
-          this.cd.detectChanges()
+          this.spinner.hide();
+          // this.cd.detectChanges()
         } else {
-          this.cd.detectChanges()
+          this.spinner.hide();
+          // this.cd.detectChanges()
 
         }
       })
 
   }
 
-  getCashAcBalance1() {
+  getCashAcBalance1(fuelDealerId: any) {
+    this.spinner.show();
     let data = {
-      fuelDealerId: this.fuelDealerId,
+      fuelDealerId: fuelDealerId,
       corporateId: this.dealerCorporateId,
       expenseCategory: "BALANCE CASH A/C",
       startDate: this.openingDate,
@@ -412,10 +430,12 @@ export class TilesWidget11Component implements OnInit {
           } else {
             this.cashStatus = false;
           }
-          this.cd.detectChanges()
+          this.spinner.hide();
+          // this.cd.detectChanges()
         } else {
           alert("Error")
-          this.cd.detectChanges()
+          this.spinner.hide();
+          // this.cd.detectChanges()
         }
       })
   }

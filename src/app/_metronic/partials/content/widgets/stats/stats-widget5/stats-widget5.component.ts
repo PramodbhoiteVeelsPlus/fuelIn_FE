@@ -33,6 +33,7 @@ export class StatsWidget5Component {
     private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
+    this.spinner.show();
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     this.dealerMobile = element.phone1;
     this.accessGroupId = element.accessGroupId;
@@ -84,14 +85,14 @@ export class StatsWidget5Component {
             this.isSales = false;
             this.isPayment = true;            
           }
-          this.cd.detectChanges()
           this.spinner.hide();
+          this.cd.detectChanges()
         } else {
-          this.cd.detectChanges()
           this.spinner.hide();
+          this.cd.detectChanges()
         }
-        this.cd.detectChanges()
         this.spinner.hide();
+        this.cd.detectChanges()
       });
   }
 

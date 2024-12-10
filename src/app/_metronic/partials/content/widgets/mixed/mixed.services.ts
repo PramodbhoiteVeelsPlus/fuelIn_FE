@@ -68,6 +68,7 @@ export class MixedService {
     private updateLastCRDateMapIdWiseURL = this.baseURL + 'fuelVendor/updateLastCRDateMapIdWise';
     private updateTotalInvPaidAmtURL = this.baseURL + 'fuelCreditInvoice/updateTotalInvPaidAmt';
     private getDetailsByMapIdURL = this.baseURL + 'fuelDealerCustMap/getDetailsByMapId'; 
+    private addCoinDetailsURL = this.baseURL + 'coinConversion/addCoinDetails';
 
 
     setHeader() {
@@ -462,6 +463,16 @@ export class MixedService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.getDetailsByMapIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // addCoinDetailsURL
+    addCoinDetailsPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addCoinDetailsURL, body, {
             headers: headers
         })
     }

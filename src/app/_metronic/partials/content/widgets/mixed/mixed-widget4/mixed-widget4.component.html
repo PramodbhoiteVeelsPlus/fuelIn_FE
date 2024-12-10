@@ -35,7 +35,7 @@
                   <div class="row" *ngIf="isSelected1">
                     <div class="col-sm-12">
                       <div class="table-responsive mb-0">
-                        <table class="table table-centered table-nowrap">
+                        <table class="table table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
                           <thead style="border-width: 1px; border-color: black;">
                             <tr>
                               <th style="border-width: 1px; border-color: #000;">Khata Name</th>
@@ -47,10 +47,10 @@
                           </thead>
                           <tbody>
                             <tr>
-                              <td style="border-width: 1px; border-color: #000;"> {{dealerName}} </td>
-                              <td style="border-width: 1px; border-color: #000;"> {{personName}} </td>
-                              <td style="border-width: 1px; border-color: #000;"> {{personPhone1}} </td>
-                              <td style="border-width: 1px; border-color: #000;"> <span style="color:red"
+                              <td style="border: 1px solid black;"> {{dealerName}} </td>
+                              <td style="border: 1px solid black;"> {{personName}} </td>
+                              <td style="border: 1px solid black;"> {{personPhone1}} </td>
+                              <td style="border: 1px solid black;"> <span style="color:red"
                                   *ngIf="calOutstanding < 0">
                                   <li class="fas fa-rupee-sign"></li> {{(calOutstanding)*(-1) | number:'1.2-2'}} CR
                                 </span>
@@ -59,11 +59,11 @@
                                 </span>
                               </td>
                               <td style="border-width: 1px; border-color: #000;">
-                                <div *ngIf="isFlag" class="col-md-1" (click)="viewFlag(viewFlagModel)"
+                                <div *ngIf="isFlag" class="col-md-2" (click)="viewFlag(viewFlagModel)"
                                   style="color:red;cursor:pointer;font-size: x-large;">
                                   <i class="fas fa-exclamation-triangle" style="color: red;" aria-hidden="true"></i>
                                 </div>
-                                <div *ngIf="!isFlag" class="col-md-1">
+                                <div *ngIf="!isFlag" class="col-md-6">
                                   None
                                 </div>
                               </td>

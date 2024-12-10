@@ -76,7 +76,7 @@
           <td align="left">
             <a class="expand-row"
               (click)="changeValue(i,data.mappingPreviousStatus,data.mappingCustomerName,data.hostName,data.hostPhone,data.byManager,data.managerName,data.chequeNO)">
-              <i class="mdi mdi-plus mr-1" style="font-size: 15px;cursor: pointer;">+</i>
+              <i class="mdi mdi-plus mr-1" style="font-size: 20px;cursor: pointer;">+</i>
             </a>
           </td>
           <td style="text-align: left;">
@@ -111,7 +111,14 @@
             </svg>
             <span>{{data.avgPayment| number: '1.0-0'}}</span>
           </td>
-          <td style="text-align: left;"> {{data.pendingDays}} </td>
+          <td style="text-align: left;">
+            <span *ngIf="data.pendingDays != 'undefined'">
+              {{data.pendingDays}}
+            </span>
+            <span *ngIf="data.pendingDays == 'undefined'">
+              -
+            </span>
+          </td>
 
           <td style="text-align: left;cursor: pointer;">
             <div ngbDropdown placement="bottom-left">

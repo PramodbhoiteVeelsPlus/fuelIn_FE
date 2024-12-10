@@ -1,5 +1,5 @@
 export class SetNozzle {
-    tank:any;
+    tank:any = "";
     product:any;
     productId:any;
     pump:any;

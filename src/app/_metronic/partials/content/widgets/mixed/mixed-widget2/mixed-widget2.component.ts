@@ -107,7 +107,7 @@ export class MixedWidget2Component implements OnInit {
   viewCorpFlag: any = [];
   isAlert: boolean = false;
   fuelDealerCustomerMapId: any;
-  isSelected1: boolean;
+  isSelected1: boolean = false;
   mappingPreviousStatus: any;
   dealerName: any;
   personName: string;
@@ -144,6 +144,7 @@ export class MixedWidget2Component implements OnInit {
   isBalance1: boolean = false;
   isCRQUANTITY: boolean = false;
   isQUANTITY: boolean = false;
+  @ViewChild('content') content: any;
 
   constructor(
     private post: MixedService,
@@ -175,7 +176,6 @@ export class MixedWidget2Component implements OnInit {
     }
     this.requestTransporterLube.controls["estimatedRefuelDate"].setValue(this.todayDate);
     this.getCorporateMappedListByDealerId(this.fuelDealerId);
-    this.getFlagStatusByCorpId(this.dealerCorporateId)
     this.getLubricants(this.fuelDealerId)
     this.addFormRequestLube();
     this.cd.detectChanges()
@@ -191,7 +191,7 @@ export class MixedWidget2Component implements OnInit {
         if (res.data.length) {
           this.viewCorpFlag = res.data
           this.isAlert = true;
-          // this.openModal();
+          this.openModal();
           setTimeout(() => {
             this.isAlert = false;;
           }, 2000);
@@ -201,7 +201,9 @@ export class MixedWidget2Component implements OnInit {
           setTimeout(() => {
             this.isAlert = false;;
           }, 6000);
+          this.cd.detectChanges()
         } else {
+          this.cd.detectChanges()
         }
       });
   }
@@ -265,6 +267,7 @@ export class MixedWidget2Component implements OnInit {
           this.fuelDealerCorpMapIdNew = res.data[0].fuelDealerCustomerMapId;
           this.rangeFrom = res.data[0].manualNumberStart;
           this.rangeTo = res.data[0].manualNumberEnd;
+          this.getFlagStatusByCorpId(res.data[0].corporateId)
           this.getOutstandingBuCustMapId(this.fuelDealerCorpMapIdNew);
           this.requestTransporter1.controls["dealerName"].setValue(res.data[0].companyName);
           this.requestTransporter1.controls["dealerLocation"].setValue(res.data[0].cityArea + ',' + res.data[0].city);
@@ -737,5 +740,17 @@ export class MixedWidget2Component implements OnInit {
     this.countLube = this.countLube - 1;
     this.modalRef.close()
     console.log("COUNT:", this.countLube)
+  }
+  
+  openModal() {
+    this.modalRef = this.modalService.open(this.content, { centered: true });
+    this.modalRef.result.then(
+      (result: any) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason: any) => {
+        this.closeResult = `Dismissed`;
+      }
+    );
   }
 }

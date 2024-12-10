@@ -74,7 +74,7 @@ export class MixedWidget4Component {
   addPaymentForm = new FormGroup({
     selectedCorp: new FormControl(''),
     paymentDate: new FormControl('', Validators.required),
-    paymentAmount: new FormControl(''),
+    paymentAmount: new FormControl(),
     paymentTransactionNo: new FormControl(''),
     paymentMethod: new FormControl('', Validators.required),
     accountDetailsId: new FormControl('', Validators.required),
@@ -275,7 +275,7 @@ export class MixedWidget4Component {
 
   }
 
-  
+
   getCorporateMappedListByDealerId(fuelDealerId: any) {
     let data = {
       fuelDealerId: fuelDealerId
@@ -419,20 +419,20 @@ export class MixedWidget4Component {
   onSearchChange(id: any): void {
     if (id.target.value) {
       // this.transform(searchValue);
-          var osForWrd = ''
-          osForWrd = (id.target.value)
-          var osForWrd1 = osForWrd.split(".")
-          this.rupeesWrd = osForWrd1[0]
-          this.paisaWrd = osForWrd1[1]
-          if (this.rupeesWrd != 0 && this.paisaWrd != 0) {
-            this.amountInWords = numWords((this.rupeesWrd)) + " rupees and " + numWords((this.paisaWrd)) + " paisa only";
-          } else if (this.rupeesWrd != 0) {
-            this.amountInWords = numWords((this.rupeesWrd)) + " rupees";
-          } else if (this.paisaWrd != 0) {
-            this.amountInWords = numWords((this.paisaWrd)) + " paisa only";
-          } else {
-            this.amountInWords = "";
-          }
+      var osForWrd = ''
+      osForWrd = (id.target.value)
+      var osForWrd1 = osForWrd.split(".")
+      this.rupeesWrd = osForWrd1[0]
+      this.paisaWrd = osForWrd1[1]
+      if (this.rupeesWrd != 0 && this.paisaWrd != 0) {
+        this.amountInWords = numWords((this.rupeesWrd)) + " rupees and " + numWords((this.paisaWrd)) + " paisa only";
+      } else if (this.rupeesWrd != 0) {
+        this.amountInWords = numWords((this.rupeesWrd)) + " rupees";
+      } else if (this.paisaWrd != 0) {
+        this.amountInWords = numWords((this.paisaWrd)) + " paisa only";
+      } else {
+        this.amountInWords = "";
+      }
       this.checkSubmit()
       this.isCalculate = true;
       this.outstandingAmt = (Number(this.calOutstanding) - (id.target.value))
@@ -509,7 +509,9 @@ export class MixedWidget4Component {
                             alert("Payment to Update PAYMENT Details!")
                             this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
                             let dateCoin = moment(this.addPaymentForm.value.paymentDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD') + ' ' + moment(new Date()).format('HH:mm:ss')
-                            // this.addCoindetails(res.data.insertId, dateCoin)
+                            this.addCoindetails(res.data.insertId, dateCoin)
+                            this.resetPaymentForm();
+                            this.clearAll()
                           } else {
                             alert("ERROR to Update PAYMENT Details!")
                             this.spinner.hide();
@@ -546,7 +548,9 @@ export class MixedWidget4Component {
                           if (res) {
                             this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
                             let dateCoin = moment(this.addPaymentForm.value.paymentDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD') + ' ' + moment(new Date()).format('HH:mm:ss')
-                            // this.addCoindetails(res.data.insertId, dateCoin)
+                            this.addCoindetails(res.data.insertId, dateCoin)
+                            this.resetPaymentForm();
+                            this.clearAll()
                           } else {
                             alert("ERROR to Update PAYMENT Details!")
                             this.spinner.hide();
@@ -584,7 +588,9 @@ export class MixedWidget4Component {
                         if (res) {
                           this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
                           let dateCoin = moment(this.addPaymentForm.value.paymentDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD') + ' ' + moment(new Date()).format('HH:mm:ss')
-                          // this.addCoindetails(res.data.insertId, dateCoin)
+                          this.addCoindetails(res.data.insertId, dateCoin)
+                          this.resetPaymentForm();
+                          this.clearAll()
                         } else {
                           alert("ERROR to Update PAYMENT Details!")
                           this.spinner.hide();
@@ -688,7 +694,9 @@ export class MixedWidget4Component {
                             if (res) {
                               this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
                               let dateCoin = moment(this.addPaymentForm.value.paymentDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD') + ' ' + moment(new Date()).format('HH:mm:ss')
-                              // this.addCoindetails(res.data.insertId, dateCoin)
+                              this.addCoindetails(res.data.insertId, dateCoin)
+                              this.resetPaymentForm();
+                              this.clearAll()
                             } else {
                               alert("ERROR to Update PAYMENT Details!")
                               this.spinner.hide();
@@ -728,7 +736,9 @@ export class MixedWidget4Component {
                             if (res) {
                               this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
                               let dateCoin = moment(this.addPaymentForm.value.paymentDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD') + ' ' + moment(new Date()).format('HH:mm:ss')
-                              // this.addCoindetails(res.data.insertId, dateCoin)
+                              this.addCoindetails(res.data.insertId, dateCoin)
+                              this.resetPaymentForm();
+                              this.clearAll()
                             } else {
                               alert("ERROR to Update PAYMENT Details!")
                               this.spinner.hide();
@@ -769,7 +779,9 @@ export class MixedWidget4Component {
                           if (res) {
                             this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
                             let dateCoin = moment(this.addPaymentForm.value.paymentDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD') + ' ' + moment(new Date()).format('HH:mm:ss')
-                            // this.addCoindetails(res.data.insertId, dateCoin)
+                            this.addCoindetails(res.data.insertId, dateCoin)
+                            this.resetPaymentForm();
+                            this.clearAll()
                           } else {
                             alert("ERROR to Update PAYMENT Details!")
                             this.spinner.hide();
@@ -822,7 +834,7 @@ export class MixedWidget4Component {
     this.outstandingAmt = 0
     this.addPaymentForm.controls["accountDetailsId"].setValue("");
   }
-  
+
   getOutstandingBuCustMapId(fuelDealerCustomerMapId: any) {
 
     let data = {
@@ -841,7 +853,7 @@ export class MixedWidget4Component {
 
       })
   }
- 
+
   getDetailsByMapId1(fuelDealerCustomMapId: any) {
     let data = {
       fuelDealerCustomMapId: fuelDealerCustomMapId
@@ -860,7 +872,7 @@ export class MixedWidget4Component {
         }
       })
   }
-  
+
   updatePaymentInFuelDealerCustomerMap(fuelDealerCustomMapId: any) {
 
     let data = {
@@ -881,8 +893,8 @@ export class MixedWidget4Component {
         }
       });
 
-  } 
-  
+  }
+
   updatelastDateCR(fuelDealerCustomMapId: any) {
 
     let data1 = {
@@ -913,7 +925,7 @@ export class MixedWidget4Component {
         }
       });
   }
-  
+
   resetPaymentForm() {
     this.addPaymentForm.controls["selectedCorp"].setValue("");
     this.addPaymentForm.controls["paymentAmount"].setValue("");
@@ -924,4 +936,20 @@ export class MixedWidget4Component {
     this.isSelected1 = false;
 
   }
+
+  addCoindetails(transactionLogId: any, dateCoin: string) {
+    let data = {
+      corporateId: this.corporateIdSQL,
+      translogId: transactionLogId,
+      accountTransAmount: (this.addPaymentForm.value.paymentAmount) / 10,
+      customerId: this.customerIdSQL,
+      dateCoin: dateCoin
+    }
+    this.post.addCoinDetailsPOST(data)
+      .subscribe(res => {
+
+      })
+
+  }
+  
 }
