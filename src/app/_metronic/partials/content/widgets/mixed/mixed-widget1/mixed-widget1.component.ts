@@ -161,8 +161,6 @@ export class MixedWidget1Component {
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
-    this.fuelDealerId = dealerData.fuelDealerId;
-    this.dealerCorporateId = dealerData.corporateId;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     this.acceesGroup = element.accessGroupId;
     this.managerVPPersonId = element.veelsPlusId

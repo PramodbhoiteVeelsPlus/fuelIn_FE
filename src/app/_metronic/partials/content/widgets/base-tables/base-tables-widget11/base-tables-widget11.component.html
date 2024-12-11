@@ -1,3 +1,80 @@
+<style>
+  * { margin: 0; padding: 0; }
+
+#page-wrap { width: 700px; margin: 0 auto; }
+ 
+.bg-invoice{
+	background-color: #e7e8ea;
+}
+
+.table-head{
+	font-size: 14px;
+	background-color: #e6e6fa !important;
+}
+.table-row{
+	font-size: 12px;
+}
+.main-table{
+	width: -webkit-fill-available;
+}
+.border-black{
+	border: 1px solid black;
+}
+.child-table{
+	width: -webkit-fill-available;
+    color: black;
+    text-align: center;
+
+}
+
+.border-gray{
+	border: 1px solid #8080802e;
+}
+
+.A4 {
+    background: white;
+    width: 23cm;
+    height: 40.7cm;
+    display: block;
+    margin: 0 auto;
+    padding: 1px 1px;
+    margin-bottom: 0.5cm;
+    box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+    
+    box-sizing: border-box;
+    font-size: 12pt;
+    /* //line-height:normal; */
+  }
+  
+  @media print {
+    .page-break {
+      display: block;
+      page-break-before: always;
+    
+    size: A4 portrait;}
+  }
+  
+  @media print {
+    body {
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact;
+    }
+    .A4 {
+      box-shadow: none;
+      margin: 0;
+      width: auto;
+      height: auto;
+    }
+    .noprint {
+      display: none;
+    }
+    .print {
+      display: block;
+    }
+  }
+</style>
+
 <!DOCTYPE html
   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="https://www.w3.org/1999/xhtml">
@@ -22,7 +99,7 @@
               <div class="col-8">
                 <h3><b>{{companyName}}</b></h3>
                 <h5> {{oilCompanyName}} petrol pump </h5>
-                <!-- <h6> {{address1}} {{address2}} {{city}} <br>{{state}} {{pin}}</h6> -->
+                <h6> {{address1}} {{address2}} {{city}} <br>{{state}} {{pin}}</h6>
               </div>
               <div class="col-4">
                 <h4>&nbsp;</h4>
@@ -400,7 +477,7 @@
                 <div class="col-8">
                   <h3><b>{{companyName}}</b></h3>
                   <h5> {{oilCompanyName}} petrol pump</h5>
-                  <!-- <h6> {{address1}} {{address2}} {{city}} <br>{{state}} {{pin}}</h6> -->
+                  <h6> {{address1}} {{address2}} {{city}} <br>{{state}} {{pin}}</h6>
                 </div>
                 <div class="col-4">
                   <h4>&nbsp;</h4>

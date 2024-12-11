@@ -110,7 +110,7 @@ export class TablesWidget33Component {
   previousPendingOutstanding: number;
   selected: string;
   managerView: boolean = false;
-  acceesGroup: number;
+  accessGroup: any;
   dealerManager: boolean = false;
   isFuelStatement: boolean = false;
   dealerCorporateId: any;
@@ -137,15 +137,16 @@ export class TablesWidget33Component {
   ngOnInit() {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
-    this.fuelDealerId = dealerData.fuelDealerId;
-    this.dealerCorporateId = dealerData.corporateId;
+    this.fuelDealerId = localStorage.getItem('dealerId');
+    this.dealerCorporateId = localStorage.getItem('dealerCorporateId');
     this.customerId = dealerData.customerId;
     this.headerName1 = dealerData.companyName;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
+    this.accessGroup = element.accessGroupId;
 
-    if (this.acceesGroup == 12 || this.acceesGroup == 14 || this.acceesGroup == 19 || this.acceesGroup == 21) {
+    if (this.accessGroup == 12 || this.accessGroup == 14 || this.accessGroup == 19 || this.accessGroup == 21) {
       this.dealerManager = true;
-      if (this.acceesGroup == 14 || this.acceesGroup == 21) {
+      if (this.accessGroup == 14 || this.accessGroup == 21) {
         this.managerView = true;
         this.getAccessByPersonId(element.personId)
       }

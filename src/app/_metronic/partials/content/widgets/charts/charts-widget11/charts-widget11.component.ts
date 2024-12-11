@@ -123,6 +123,7 @@ reasonForMappStatus: any;
   }
 
   ngOnInit(): void {
+    this.pumpInfraDetails = JSON.parse(localStorage.getItem('pumpInfraDetails') || '{}');
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
@@ -147,7 +148,11 @@ reasonForMappStatus: any;
       }
 
     }
-    this.getPumpInfra();
+    if (!this.pumpInfraDetails.length) {
+      this.getPumpInfra()
+    } else {
+      this.getPumpInfra1()
+    }
     this.cd.detectChanges()
   }
 
@@ -158,6 +163,7 @@ reasonForMappStatus: any;
   }
   
   getPumpInfra() {
+    this.spinner.show()
     let data = {
       fuelDealerId:this.fuelDealerId,
     }
@@ -166,11 +172,37 @@ reasonForMappStatus: any;
       if(res){
           this.pumpInfraDetails = res;
           this.pumpInfralength = res.data;
+          localStorage.setItem('pumpInfraDetails', JSON.stringify(this.pumpInfraDetails));
+          this.spinner.hide()
           this.cd.detectChanges()
+      } else {
+        localStorage.setItem('pumpInfraDetails', JSON.stringify([]));
+        this.spinner.hide()
+        this.cd.detectChanges()
       }
   });
   }
   
+  getPumpInfra1() {
+    let data = {
+      fuelDealerId:this.fuelDealerId,
+    }
+    this.post.getPumpNozzelByDealerIdPOST(data)
+    .subscribe(res=>{
+      if(res){
+          this.pumpInfraDetails = res;
+          this.pumpInfralength = res.data;
+          localStorage.setItem('pumpInfraDetails', JSON.stringify(this.pumpInfraDetails));
+          this.spinner.hide()
+          this.cd.detectChanges()
+      } else {
+        localStorage.setItem('pumpInfraDetails', JSON.stringify([]));
+        this.spinner.hide()
+        this.cd.detectChanges()
+      }
+  });
+  }
+
   maptank(event: any,setMapped: any,mapid: any,pump: any,nozzel: any){
     this.MappedInfraIdForMappStatus = mapid;
     this.pumpIdForMappStatus = pump;

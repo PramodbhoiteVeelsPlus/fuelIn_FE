@@ -173,8 +173,8 @@ export class StatsWidget16Component {
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
-    this.fuelDealerId = dealerData.fuelDealerId;
-    this.dealerCorporateId = dealerData.corporateId;
+    this.fuelDealerId = localStorage.getItem('dealerId');
+    this.dealerCorporateId = localStorage.getItem('dealerCorporateId');
     this.dealerMobile = element.phone1;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     this.managerVPPersonId = element.veelsPlusId

@@ -131,7 +131,8 @@ export class ChartsWidget5Component implements OnInit {
     config.outsideDays = 'hidden';
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
+    this.crPurchaseData = JSON.parse(localStorage.getItem('crPurchaseData') || '{}');
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
@@ -172,6 +173,11 @@ export class ChartsWidget5Component implements OnInit {
     // this.filterForm.controls["year"].setValue(moment(new Date()).format("YYYY"));
     this.getMappingAccount(this.fuelDealerId)
     this.getProductsByDealerId(this.fuelDealerId)
+    if (!this.crPurchaseData.length) {
+      this.getPurchaseDetailsTx();
+    } else {
+      this.getPurchaseDetailsTx1();
+    }
     this.cd.detectChanges()
   }
 
@@ -322,9 +328,88 @@ export class ChartsWidget5Component implements OnInit {
               }
             })
         } else {
+          this.spinner.show()
           this.crPurchaseData = [];
           let data = {
             dealerId: this.fuelDealerId,
+            startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+            endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+            productId: "All",
+          }
+          this.post.getPurchaseDetailsTxPOST(data)
+            .subscribe(res => {
+              if (res.status == "OK") {
+                this.crPurchaseData = res.data;
+                localStorage.setItem('crPurchaseData', JSON.stringify(this.crPurchaseData));
+                this.spinner.hide();
+                this.cd.detectChanges()
+              } else {
+                this.crPurchaseData = [];
+                localStorage.setItem('crPurchaseData', JSON.stringify([]));
+                this.spinner.hide();
+                this.cd.detectChanges()
+              }
+            })
+        }
+      }
+    } else {
+      alert("Please select Date Range..!")
+    }
+  }
+
+  getPurchaseDetailsTx1() {
+    if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
+      if (this.productIdArrayTx.length) {
+        if (this.fuelDealerCorpMapId) {
+          this.crPurchaseData = [];
+          let data = {
+            dealerId: this.fuelDealerId,
+            mapId: this.fuelDealerCorpMapId,
+            startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+            endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+            productId: "Selected",
+            productIdArray: this.productIdArrayTx,
+          }
+          this.post.getPurchaseDetailsTxPOST(data)
+            .subscribe(res => {
+              if (res.status == "OK") {
+                this.crPurchaseData = res.data;
+                this.spinner.hide();
+                this.cd.detectChanges()
+              } else {
+                this.crPurchaseData = [];
+                this.spinner.hide();
+                this.cd.detectChanges()
+              }
+            })
+        } else {
+          this.crPurchaseData = [];
+          let data = {
+            dealerId: this.fuelDealerId,
+            startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+            endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+            productId: "Selected",
+            productIdArray: this.productIdArrayTx,
+          }
+          this.post.getPurchaseDetailsTxPOST(data)
+            .subscribe(res => {
+              if (res.status == "OK") {
+                this.crPurchaseData = res.data;
+                this.spinner.hide();
+                this.cd.detectChanges()
+              } else {
+                this.crPurchaseData = [];
+                this.spinner.hide();
+                this.cd.detectChanges()
+              }
+            })
+        }
+      } else {
+        if (this.fuelDealerCorpMapId) {
+          this.crPurchaseData = [];
+          let data = {
+            dealerId: this.fuelDealerId,
+            mapId: this.fuelDealerCorpMapId,
             startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
             endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
             productId: "All",
@@ -337,6 +422,28 @@ export class ChartsWidget5Component implements OnInit {
                 this.cd.detectChanges()
               } else {
                 this.crPurchaseData = [];
+                this.spinner.hide();
+                this.cd.detectChanges()
+              }
+            })
+        } else {
+          this.crPurchaseData = [];
+          let data = {
+            dealerId: this.fuelDealerId,
+            startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+            endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+            productId: "All",
+          }
+          this.post.getPurchaseDetailsTxPOST(data)
+            .subscribe(res => {
+              if (res.status == "OK") {
+                this.crPurchaseData = res.data;
+                localStorage.setItem('crPurchaseData', JSON.stringify(this.crPurchaseData));
+                this.spinner.hide();
+                this.cd.detectChanges()
+              } else {
+                this.crPurchaseData = [];
+                localStorage.setItem('crPurchaseData', JSON.stringify([]));
                 this.spinner.hide();
                 this.cd.detectChanges()
               }

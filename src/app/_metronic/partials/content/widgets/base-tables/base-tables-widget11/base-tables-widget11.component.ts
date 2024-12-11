@@ -67,7 +67,6 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 
 export class BaseTablesWidget11Component implements OnInit {
   fuelDealerId: any;
-  dealerData: any;
   dealerCorporateId: any;
   accessGroup: any;
   showStatement1: boolean = false;
@@ -92,7 +91,7 @@ export class BaseTablesWidget11Component implements OnInit {
   outstandingAmount: any;
   periodStartDate: any;
   lastOpOutstanding: number;
-  statementId: string;
+  statementId: any;
   fuelTotalAmount: any = [];
   PaymentTotalAmount: any = [];
   fuelProductTotalAmount: any = [];
@@ -131,6 +130,8 @@ export class BaseTablesWidget11Component implements OnInit {
   billedToMobile: any;
   discountcalNew: any = 0;
   bankAccList: any = [];
+  address1: any;
+  address2: any;
 
   constructor(
     private post: BaseTablesService,
@@ -145,18 +146,22 @@ export class BaseTablesWidget11Component implements OnInit {
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
-    this.dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
     this.accessGroup = element.accessGroupId;
-    this.companyName = this.dealerData.companyName
-    this.oilCompanyName = this.dealerData.brandName
-    this.state = this.dealerData.state
-    this.pin = this.dealerData.pin
-    this.city = this.dealerData.city
-    this.phone1 = this.dealerData.hostPhone
+    this.companyName = dealerData.companyName
+    this.oilCompanyName = dealerData.brandName
+    this.state = dealerData.state
+    this.pin = dealerData.pin
+    this.city = dealerData.city
+    this.phone1 = dealerData.hostPhone
+    this.address1 = dealerData.address1
+    this.address2 = dealerData.address2
     // this.getFCInvoiceList()
     const id = this.route.snapshot.paramMap.get('id');
     const id1 = this.route.snapshot.paramMap.get('id1');
+    this.invoiceId = id;
+    this.statementId = id1;
     if (id1 == '1') {
       this.showStatement1 = true;
       this.getCreditAndPaymentAllDataByFuelInvoiceId()
@@ -181,6 +186,7 @@ export class BaseTablesWidget11Component implements OnInit {
     }
     this.getBankDetailsByDealerId(this.fuelDealerId)
     this.getManagerMobileByfuelDealerId(this.fuelDealerId)
+    this.getFuelInvoiceDataByInvoiceId();
     this.cd.detectChanges()
   }
 

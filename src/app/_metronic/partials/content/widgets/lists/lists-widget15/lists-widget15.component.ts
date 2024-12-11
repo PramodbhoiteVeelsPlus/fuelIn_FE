@@ -127,6 +127,7 @@ export class ListsWidget15Component {
   }
 
   ngOnInit() {
+    this.operatorWiseData = JSON.parse(localStorage.getItem('operatorWiseData') || '{}');
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
@@ -154,7 +155,13 @@ export class ListsWidget15Component {
 
       this.getAllAttendantsByDid(this.fuelDealerId)
       this.getProductsByDealerId(this.fuelDealerId)
+      
+    if (!this.operatorWiseData.length) {
       this.getOperatorWiseDetails()
+    } else {
+      this.getOperatorWiseDetails1()
+    }
+
       this.cd.detectChanges()
     }
 
@@ -270,12 +277,14 @@ export class ListsWidget15Component {
       this.post.getOperatorWiseDetailsPOST(data).subscribe(res => {
         if (res.status == "OK" && res.data.length) {
           this.operatorWiseData = res.data;
-          this.getOperatorWiseQuantityDetails()
+          localStorage.setItem('operatorWiseData', JSON.stringify(this.operatorWiseData));
+          this.getOperatorWiseQuantityDetails() 
           this.spinner.hide()
           this.cd.detectChanges()
         } else {
           alert("Data Not Found..!")
-          this.operatorQuantityData = [];
+          this.operatorWiseData = [];
+          localStorage.setItem('operatorWiseData', JSON.stringify([]));
           this.getOperatorWiseQuantityDetails()
           this.spinner.hide()
           this.cd.detectChanges()
@@ -298,11 +307,111 @@ export class ListsWidget15Component {
       this.post.getOperatorWiseQuantityDetailsPOST(data).subscribe(res => {
         if (res.status == "OK" && res.data.length) {
           this.operatorQuantityData = res.data;
+          localStorage.setItem('operatorQuantityData', JSON.stringify(this.operatorQuantityData));
           this.spinner.hide()
           this.cd.detectChanges()
         } else {
           alert("Data Not Found..!")
           this.operatorQuantityData = [];
+          localStorage.setItem('operatorQuantityData', JSON.stringify([]));
+          this.spinner.hide()
+          this.cd.detectChanges()
+        }
+      })
+    } else {
+      this.spinner.show()
+      let data = {
+        dealerId: this.fuelDealerId,
+        startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+        endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+      }
+
+      this.post.getOperatorWiseQuantityDetailsPOST(data).subscribe(res => {
+        if (res.status == "OK" && res.data.length) {
+          this.operatorQuantityData = res.data;
+          this.spinner.hide()
+          this.cd.detectChanges()
+        } else {
+          alert("Data Not Found..!")
+          this.operatorQuantityData = [];
+          this.spinner.hide()
+          this.cd.detectChanges()
+        }
+      })
+    }
+  }
+
+
+  getOperatorWiseDetails1() {
+    if (this.filterForm.value.operatorStaffId) {
+      this.spinner.show()
+      let data = {
+        dealerId: this.fuelDealerId,
+        startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+        endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+        staffId: this.filterForm.value.operatorStaffId
+      }
+
+      this.post.getOperatorWiseDetailsPOST(data).subscribe(res => {
+        if (res.status == "OK" && res.data.length) {
+          this.operatorWiseData = res.data;
+          this.getOperatorWiseQuantityDetails()
+          this.spinner.hide()
+          this.cd.detectChanges()
+        } else {
+          alert("Data Not Found..!")
+          this.operatorQuantityData = [];
+          this.getOperatorWiseQuantityDetails()
+          this.spinner.hide()
+          this.cd.detectChanges()
+        }
+      })
+    } else {
+      let data = {
+        dealerId: this.fuelDealerId,
+        startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+        endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+      }
+
+      this.post.getOperatorWiseDetailsPOST(data).subscribe(res => {
+        if (res.status == "OK" && res.data.length) {
+          this.operatorWiseData = res.data;
+          localStorage.setItem('operatorWiseData', JSON.stringify(this.operatorWiseData));
+          this.getOperatorWiseQuantityDetails1() 
+          this.spinner.hide()
+          this.cd.detectChanges()
+        } else {
+          alert("Data Not Found..!")
+          this.operatorWiseData = [];
+          localStorage.setItem('operatorWiseData', JSON.stringify([]));
+          this.getOperatorWiseQuantityDetails1()
+          this.spinner.hide()
+          this.cd.detectChanges()
+        }
+      })
+    }
+  }
+
+
+  getOperatorWiseQuantityDetails1() {
+    if (this.filterForm.value.operatorStaffId) {
+      let data = {
+        dealerId: this.fuelDealerId,
+        startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+        endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+        staffId: this.filterForm.value.operatorStaffId
+      }
+
+      this.post.getOperatorWiseQuantityDetailsPOST(data).subscribe(res => {
+        if (res.status == "OK" && res.data.length) {
+          this.operatorQuantityData = res.data;
+          localStorage.setItem('operatorQuantityData', JSON.stringify(this.operatorQuantityData));
+          this.spinner.hide()
+          this.cd.detectChanges()
+        } else {
+          alert("Data Not Found..!")
+          this.operatorQuantityData = [];
+          localStorage.setItem('operatorQuantityData', JSON.stringify([]));
           this.spinner.hide()
           this.cd.detectChanges()
         }

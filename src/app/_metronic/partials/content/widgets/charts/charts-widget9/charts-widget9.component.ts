@@ -133,7 +133,8 @@ export class ChartsWidget9Component implements OnInit {
     config.outsideDays = 'hidden';
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
+    this.allTankDetails = JSON.parse(localStorage.getItem('allTankDetails') || '{}');
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
@@ -157,7 +158,11 @@ export class ChartsWidget9Component implements OnInit {
       }
     }
     this.addFormSetTank()
-    this.getAllTankdetails()
+    if (!this.allTankDetails.length) {
+      this.getAllTankdetails()
+    } else {
+      this.getAllTankdetails1()
+    }
     this.getFuelProductforALL(this.brandName)
     this.cd.detectChanges()
   }
@@ -326,6 +331,7 @@ export class ChartsWidget9Component implements OnInit {
   }
 
   getAllTankdetails(){
+    this.spinner.show()
     let data = {
     fuelDealerId:this.fuelDealerId,
     }
@@ -333,11 +339,36 @@ export class ChartsWidget9Component implements OnInit {
     .subscribe(result=>{
       if (result.status == "OK" && result.data.length) {
       this.allTankDetails = result
+      localStorage.setItem('allTankDetails', JSON.stringify(this.allTankDetails));
+      this.spinner.hide()
+      this.cd.detectChanges()
+    } else {
+      localStorage.setItem('allTankDetails', JSON.stringify([]));
+      this.spinner.hide()
       this.cd.detectChanges()
     }
     })
   }
   
+  getAllTankdetails1(){
+    let data = {
+    fuelDealerId:this.fuelDealerId,
+    }
+    this.post.getTankDetailPOST(data)
+    .subscribe(result=>{
+      if (result.status == "OK" && result.data.length) {
+      this.allTankDetails = result
+      localStorage.setItem('allTankDetails', JSON.stringify(this.allTankDetails));
+      this.spinner.hide()
+      this.cd.detectChanges()
+    } else {
+      localStorage.setItem('allTankDetails', JSON.stringify([]));
+      this.spinner.hide()
+      this.cd.detectChanges()
+    }
+    })
+  }
+
   cancelTankDetailForAll(){
     this.setTankData.length = 0
     this.addFormSetTank()

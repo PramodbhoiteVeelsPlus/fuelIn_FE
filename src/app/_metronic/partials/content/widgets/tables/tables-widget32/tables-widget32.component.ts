@@ -128,8 +128,8 @@ export class TablesWidget32Component {
   ngOnInit() {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
-    this.fuelDealerId = dealerData.fuelDealerId;
-    this.dealerCorporateId = dealerData.corporateId;
+    this.fuelDealerId = localStorage.getItem('dealerId');
+    this.dealerCorporateId = localStorage.getItem('dealerCorporateId');
     this.headerName1 = dealerData.companyName;
     this.customerId = dealerData.customerId;
     this.dealerLoginVPId = element.veelsPlusCorporateID;

@@ -104,7 +104,7 @@
   <span class="badge badge-light-success fs-6 fw-bolder">
     OPERATOR - {{totalOperator}}
   </span>
-  <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
+  <div *ngIf = "accessGroupId != '14' " class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
     title="Click to add a user">
     <a (click)="openModal()" class="btn btn-sm btn-light-primary">
       <app-keenicon name="plus" class="fs-3"></app-keenicon>
@@ -131,8 +131,8 @@
           <th class="min-w-120px">Mobile</th>
           <th class="min-w-120px">Role</th>
           <th class="min-w-120px">Salary</th>
-          <th class="min-w-120px">Mapping</th>
-          <th class="min-w-100px text-center">Actions</th>
+          <th *ngIf = "accessGroupId != '14' " class="min-w-120px">Mapping</th>
+          <th *ngIf = "accessGroupId != '14' " class="min-w-100px text-center">Actions</th>
         </tr>
       </thead>
       <!-- end::Table head -->

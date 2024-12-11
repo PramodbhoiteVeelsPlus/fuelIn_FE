@@ -114,6 +114,7 @@ export class BaseTablesWidget13Component implements OnInit {
   }
 
   ngOnInit(): void {
+    this.staffDetailsStaff = JSON.parse(localStorage.getItem('staffDetailsStaff') || '{}');
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
     this.dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
@@ -125,12 +126,18 @@ export class BaseTablesWidget13Component implements OnInit {
     this.pin = this.dealerData.pin
     this.city = this.dealerData.city
     this.phone1 = this.dealerData.hostPhone
+    if (!this.staffDetailsStaff.length) {
+      this.getStaffDetails(this.fuelDealerId)
+    } else {
+      this.getStaffDetails1(this.fuelDealerId)
+    }
     this.getStaffDetails(this.fuelDealerId)
     this.cd.detectChanges()
   }
 
 
   getStaffDetails(fuelDealerId: any) {
+    this.spinner.show()
     let data = {
       fuelDealerId: fuelDealerId,
     }
@@ -142,8 +149,36 @@ export class BaseTablesWidget13Component implements OnInit {
           if (this.accessGroupId == 19 && res.data.length == 2) {
             this.liteMangerLimit = true;
           }
+          
+          localStorage.setItem('staffDetailsStaff', JSON.stringify(this.staffDetailsStaff));
+          this.spinner.hide()
           this.cd.detectChanges()
         } else {
+          localStorage.setItem('staffDetailsStaff', JSON.stringify([]));
+          this.spinner.hide()
+          this.cd.detectChanges()
+        }
+      })
+  }
+
+  getStaffDetails1(fuelDealerId: any) {
+    let data = {
+      fuelDealerId: fuelDealerId,
+    }
+    this.post.getStaffDetailsPOST(data)
+      .subscribe(res => {
+        if (res) {
+          this.staffDetailsStaff = res.data
+          this.designation = res.data[0].designation;
+          if (this.accessGroupId == 19 && res.data.length == 2) {
+            this.liteMangerLimit = true;
+          }
+          localStorage.setItem('staffDetailsStaff', JSON.stringify(this.staffDetailsStaff));
+          this.spinner.hide()
+          this.cd.detectChanges()
+        } else {
+          localStorage.setItem('staffDetailsStaff', JSON.stringify([]));
+          this.spinner.hide()
           this.cd.detectChanges()
         }
       })

@@ -87,7 +87,8 @@ export class FeedsWidget14Component implements OnInit {
     public router: Router,
     private cd: ChangeDetectorRef,) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
+    this.reportData = JSON.parse(localStorage.getItem('reportData') || '{}');
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = localStorage.getItem('dealerId');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
@@ -98,7 +99,13 @@ export class FeedsWidget14Component implements OnInit {
     this.userName = element.firstName + ' '+ element.lastName ;
     this.filterForm.controls["startDate"].setValue("01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear())
     this.filterForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
-    this.getReportData(this.fuelDealerId)
+    
+    if (!this.reportData.length) {
+      this.getReportData(this.fuelDealerId)
+    } else {
+      this.getReportData1(this.fuelDealerId)
+    }
+
     this.addFormRequestBanking()
     this.cd.detectChanges();
   }
@@ -392,10 +399,35 @@ getReportData(fuelDealerId: any){
   this.post.getReportDataPOST(data).subscribe(res =>{
     if(res.status == 'OK' && res.data.length){ 
       this.reportData = res.data;
+      localStorage.setItem('reportData', JSON.stringify(this.reportData));
       this.spinner.hide();
       this.cd.detectChanges()
     }else{  
       this.reportData = [];
+      localStorage.setItem('reportData', JSON.stringify([]));
+      this.spinner.hide();
+      this.cd.detectChanges()
+    }
+  })
+}
+
+getReportData1(fuelDealerId: any){
+  this.reportData = [];
+  let data = {
+    overallReportDataFuelDealerId: fuelDealerId,
+    startDate:moment(this.filterForm.value.startDate,["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+    endDate:moment(this.filterForm.value.endDate,["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+    overallReportDataBook: 'Expense'
+  }
+  this.post.getReportDataPOST(data).subscribe(res =>{
+    if(res.status == 'OK' && res.data.length){ 
+      this.reportData = res.data;
+      localStorage.setItem('reportData', JSON.stringify(this.reportData));
+      this.spinner.hide();
+      this.cd.detectChanges()
+    }else{  
+      this.reportData = [];
+      localStorage.setItem('reportData', JSON.stringify([]));
       this.spinner.hide();
       this.cd.detectChanges()
     }

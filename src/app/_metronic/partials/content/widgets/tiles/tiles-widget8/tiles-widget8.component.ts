@@ -94,10 +94,15 @@ export class TilesWidget8Component {
 
 
   ngOnInit() {
+    this.fuelTerminalDataList = JSON.parse(localStorage.getItem('fuelTerminalDataList') || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');
     this.fuelDealerId = localStorage.getItem('dealerId');
     this.corporateIdForVendor = dealerData.corporateId;
-    this.getFuelTerminal(this.fuelDealerId);
+    if (!this.fuelTerminalDataList.length) {
+      this.getFuelTerminal(this.fuelDealerId);
+    } else {
+      this.getFuelTerminal1(this.fuelDealerId);
+    }
     this.getBankDetailsByDealerId(this.fuelDealerId);
   }
 
@@ -157,6 +162,7 @@ export class TilesWidget8Component {
   }
 
   getFuelTerminal(fuelDealerId: any) {
+    this.spinner.show()
     let dataTerminal = {
       fuelDealerId: fuelDealerId,
     }
@@ -164,8 +170,30 @@ export class TilesWidget8Component {
       .subscribe(res => {
         if (res) {
           this.fuelTerminalDataList = res.data;
+          localStorage.setItem('fuelTerminalDataList', JSON.stringify(this.fuelTerminalDataList));
+          this.spinner.hide()
           this.cd.detectChanges();
         } else {
+          localStorage.setItem('fuelTerminalDataList', JSON.stringify([]));
+          this.spinner.hide()
+          this.cd.detectChanges();
+        }
+      })
+  }
+
+  getFuelTerminal1(fuelDealerId: any) {
+    let dataTerminal = {
+      fuelDealerId: fuelDealerId,
+    }
+    this.post.getFuelTerminalPOST(dataTerminal)
+      .subscribe(res => {
+        if (res) {
+          this.fuelTerminalDataList = res.data;
+          localStorage.setItem('fuelTerminalDataList', JSON.stringify(this.fuelTerminalDataList));
+          this.spinner.hide()
+          this.cd.detectChanges();
+        } else {
+          this.spinner.hide()
           this.cd.detectChanges();
         }
       })

@@ -122,8 +122,8 @@ export class TablesWidget31Component {
     this.mappingAccData2 = JSON.parse(localStorage.getItem('mappingAccData2') || '{}');
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
-    this.fuelDealerId = dealerData.fuelDealerId;
-    this.dealerCorporateId = dealerData.corporateId;
+    this.fuelDealerId = localStorage.getItem('dealerId');
+    this.dealerCorporateId = localStorage.getItem('dealerCorporateId');
     this.customerId = dealerData.customerId;
     this.headerName1 = dealerData.companyName;
     this.headerName2 = dealerData.address1 + ', ' + dealerData.address2 + ', ' + dealerData.city;

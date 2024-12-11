@@ -34,6 +34,7 @@
                                     Submit
                                 </button>
                             </div>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
                             <div class="col-md-1">
                                 <button type="submit" class="btn btn-secondary" name="button"
                                     (click)="clearDaysLimit()">
@@ -136,7 +137,7 @@
                                 <span *ngIf="!data.grandTotalAmountInterval"> ₹ &nbsp;0.00</span>
 
                             </td>
-                            <td style="color: blue;cursor: pointer;"
+                            <td  *ngIf = "accessGroup != '14' "style="color: blue;cursor: pointer;"
                                 (click)="updateTotalInvCreditAmtForInterval(data.startDate,data.endDate)">View
                                 Statement
                             </td>

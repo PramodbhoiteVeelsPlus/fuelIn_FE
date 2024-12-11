@@ -129,6 +129,7 @@ export class ListsWidget9Component {
   }
 
   ngOnInit() {
+    this.attendanceData = JSON.parse(localStorage.getItem('attendanceData') || '{}');
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
@@ -154,7 +155,11 @@ export class ListsWidget9Component {
     this.city = dealerData.city
     this.phone1 = dealerData.hostPhone
     this.userName = element.firstName + ' ' + element.lastName
-    this.getAttendance(this.fuelDealerId)
+    if (!this.attendanceData.length) {
+      this.getAttendance(this.fuelDealerId)
+    } else {
+      this.getAttendance1(this.fuelDealerId)
+    }
     this.getStaffDetails(this.fuelDealerId)
     this.cd.detectChanges()
   }
@@ -215,11 +220,35 @@ export class ListsWidget9Component {
       .subscribe(res => {
         if (res.status == "OK") {
           this.attendanceData = res.data;
+          localStorage.setItem('attendanceData', JSON.stringify(this.attendanceData));
           this.spinner.hide();
           this.cd.detectChanges()
         }
         else {
           this.attendanceData = [];
+          localStorage.setItem('attendanceData', JSON.stringify([]));
+          this.spinner.hide();
+          this.cd.detectChanges()
+        }
+      })
+  }
+
+  getAttendance1(fuelDealerId: any) {
+    this.attendanceData = [];
+    let data = {
+      dealerId: fuelDealerId
+    }
+    this.post.getAttendancePOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          this.attendanceData = res.data;
+          localStorage.setItem('attendanceData', JSON.stringify(this.attendanceData));
+          this.spinner.hide();
+          this.cd.detectChanges()
+        }
+        else {
+          this.attendanceData = [];
+          localStorage.setItem('attendanceData', JSON.stringify([]));
           this.spinner.hide();
           this.cd.detectChanges()
         }

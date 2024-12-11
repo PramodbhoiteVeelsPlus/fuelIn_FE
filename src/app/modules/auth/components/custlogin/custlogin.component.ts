@@ -45,6 +45,8 @@ export class CustloginComponent {
   dealerData: any = [];
   fuelDealerId: any;
   managerData: any = [];
+  dealerId: any;
+  dealerCorporateId: any;
   get userMobile() {
     return this.referForm.get('dealerMobile')
   }
@@ -264,6 +266,10 @@ export class CustloginComponent {
     this.post1.getAccessByPersonIdPOST(data).subscribe((res) => {
         if (res.status == "OK") {
             this.managerData = res.data[0];
+            this.dealerId = res.data[0].fuelDealerId
+            this.dealerCorporateId = res.data[0].corporateId
+            localStorage.setItem('dealerId', this.dealerId);
+            localStorage.setItem('dealerCorporateId', this.dealerCorporateId);
             localStorage.setItem('managerData', JSON.stringify(this.managerData));
             this.cd.detectChanges()
         } else {

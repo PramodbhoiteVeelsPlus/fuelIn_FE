@@ -147,6 +147,7 @@ export class ListsWidget10Component {
   }
 
   ngOnInit() {
+    this.staffSalaryData = JSON.parse(localStorage.getItem('staffSalaryData') || '{}');
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
@@ -177,7 +178,14 @@ export class ListsWidget10Component {
     this.currentYear = moment(new Date()).format("YYYY")
     this.lastYear = Number(moment(new Date()).format("YYYY")) - 1;
     this.last2Years = Number(moment(new Date()).format("YYYY")) - 2;
-    this.getDetailsForSalary(this.fuelDealerId)
+    
+    if (!this.staffSalaryData.length) {
+      this.getStaffDetailsForSalary(this.fuelDealerId)
+      this.getStaffSalary(this.fuelDealerId)
+    } else {
+      this.getStaffDetailsForSalary(this.fuelDealerId)
+      this.getStaffSalary1(this.fuelDealerId)
+    }
     this.cd.detectChanges()
   }
 
@@ -272,11 +280,37 @@ export class ListsWidget10Component {
       .subscribe(res => {
         if (res.status == "OK") {
           this.staffSalaryData = res.data;
-          this.spinner.hide();
+          localStorage.setItem('staffSalaryData', JSON.stringify(this.staffSalaryData));
+          this.spinner.hide()
           this.cd.detectChanges()
         }
         else {
           this.staffSalaryData = [];
+          localStorage.setItem('staffSalaryData', JSON.stringify([]));
+          this.spinner.hide();
+          this.cd.detectChanges()
+        }
+      })
+  }
+
+  getStaffSalary1(fuelDealerId: any) {
+    this.staffSalaryData = [];
+    let data = {
+      dealerId: fuelDealerId,
+      month: this.month,
+      year: this.year,
+    }
+    this.post.getStaffSalaryPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          this.staffSalaryData = res.data;
+          localStorage.setItem('staffSalaryData', JSON.stringify(this.staffSalaryData));
+          this.spinner.hide()
+          this.cd.detectChanges()
+        }
+        else {
+          this.staffSalaryData = [];
+          localStorage.setItem('staffSalaryData', JSON.stringify([]));
           this.spinner.hide();
           this.cd.detectChanges()
         }

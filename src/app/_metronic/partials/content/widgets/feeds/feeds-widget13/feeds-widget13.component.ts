@@ -93,7 +93,8 @@ export class FeedsWidget13Component implements OnInit {
     public router: Router,
     private cd: ChangeDetectorRef,) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
+    this.accountingData = JSON.parse(localStorage.getItem('accountingData') || '{}');
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = localStorage.getItem('dealerId');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
@@ -106,6 +107,13 @@ export class FeedsWidget13Component implements OnInit {
     this.year = moment(new Date()).format("YYYY");
     this.filterForm.controls["startDate"].setValue("01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear())
     this.filterForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
+    
+    if (!this.accountingData.length) {
+      this.getAccounting(this.fuelDealerId)
+    } else {
+      this.getAccounting1(this.fuelDealerId)
+    }
+    
     this.getAccounting(this.fuelDealerId)
     this.getBankDetailsByDealerId(this.fuelDealerId)
     this.addFormRequestBanking();
@@ -438,9 +446,36 @@ export class FeedsWidget13Component implements OnInit {
         if (res.data.length) {
           this.accountingData = res.data;
           this.accountingSearchData = res.data;
+          localStorage.setItem('accountingData', JSON.stringify(this.accountingData));
           this.spinner.hide();
           this.cd.detectChanges()
         } else {
+          localStorage.setItem('accountingData', JSON.stringify([]));
+          this.spinner.hide();
+          this.cd.detectChanges()
+        }
+      })
+  }
+
+  getAccounting1(fuelDealerId: any) {
+    this.accountingData = []
+    this.accountingSearchData = [];
+    let data = {
+      accountingFuelDealerId: fuelDealerId,
+      startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+      endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+      accountingBook: 'Expense',
+    }
+    this.post.getAccountingPOST(data)
+      .subscribe(res => {
+        if (res.data.length) {
+          this.accountingData = res.data;
+          this.accountingSearchData = res.data;
+          localStorage.setItem('accountingData', JSON.stringify(this.accountingData));
+          this.spinner.hide();
+          this.cd.detectChanges()
+        } else {
+          localStorage.setItem('accountingData', JSON.stringify([]));
           this.spinner.hide();
           this.cd.detectChanges()
         }

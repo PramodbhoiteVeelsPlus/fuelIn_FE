@@ -176,8 +176,8 @@ export class TablesWidget30Component {
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.isDisableSMS = element.isSMS;
     this.isDisableEmail = element.isEmail;
-    this.fuelDealerId = dealerData.fuelDealerId;
-    this.dealerCorporateId = dealerData.corporateId;
+    this.fuelDealerId = localStorage.getItem('dealerId');
+    this.dealerCorporateId = localStorage.getItem('dealerCorporateId');
     this.headerName1 = dealerData.companyName;
     this.headerName2 = dealerData.address1 + ', ' + dealerData.address2 + ', ' + dealerData.city;
     this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;

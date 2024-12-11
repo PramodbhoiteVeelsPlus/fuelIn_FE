@@ -157,6 +157,7 @@ isHovered(date: NgbDate) {
   }
 
   ngOnInit(): void {
+    this.getFuelPriceData = JSON.parse(localStorage.getItem('getFuelPriceData') || '{}');
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
@@ -184,7 +185,11 @@ isHovered(date: NgbDate) {
 
     }
     this.unitForm.controls['productPriceDate'].setValue(moment(this.productPriceDate).format('DD-MM-YYYY'))
-    this.getFuelPriceByDealer(this.fuelDealerId);  
+    if (!this.getFuelPriceData.length) {
+      this.getFuelPriceByDealer(this.fuelDealerId);
+    } else {
+      this.getFuelPriceByDealer1(this.fuelDealerId);
+    }  
     this.getProductsByDealerId(this.fuelDealerId);    
     this.cd.detectChanges()
   }
@@ -391,6 +396,7 @@ isHovered(date: NgbDate) {
   }
   
   getFuelPriceByDealer(fuelDealerId: any) {
+    this.spinner.show()
     let data ={
       dealerId : fuelDealerId,
     }
@@ -398,15 +404,44 @@ isHovered(date: NgbDate) {
     .subscribe(res=>{
       if(res.data.length){
         this.getFuelPriceData = res.data;
+        localStorage.setItem('getFuelPriceData', JSON.stringify(this.getFuelPriceData));
+        this.spinner.hide()
         this.cd.detectChanges()
       }
       else{
+        this.getFuelPriceData = [];
+        localStorage.setItem('getFuelPriceData', JSON.stringify([]));
+        this.spinner.hide()
+        this.cd.detectChanges()
   
       }
       
     })
   }
   
+  getFuelPriceByDealer1(fuelDealerId: any) {
+    let data ={
+      dealerId : fuelDealerId,
+    }
+    this.post.getPriceByDealerIdPOST(data)
+    .subscribe(res=>{
+      if(res.data.length){
+        this.getFuelPriceData = res.data;
+        localStorage.setItem('getFuelPriceData', JSON.stringify(this.getFuelPriceData));
+        this.spinner.hide()
+        this.cd.detectChanges()
+      }
+      else{
+        this.getFuelPriceData = [];
+        localStorage.setItem('getFuelPriceData', JSON.stringify([]));
+        this.spinner.hide()
+        this.cd.detectChanges()
+  
+      }
+      
+    })
+  }
+
   updatePrice(editPrice: any,FuelPriceID: any,productSellingPrice: any){
     this.modalRef = this.modalService.open(editPrice);
     this.fuelPriceID = FuelPriceID;

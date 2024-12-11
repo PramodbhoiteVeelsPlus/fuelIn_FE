@@ -195,6 +195,7 @@ export class BaseTablesWidget10Component implements OnInit {
   }
 
   ngOnInit(): void {
+    this.FCInvoiceListDetails = JSON.parse(localStorage.getItem('FCInvoiceListDetails') || '{}');
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
@@ -221,7 +222,12 @@ export class BaseTablesWidget10Component implements OnInit {
     this.headerName1 = dealerData.companyName;
     // this.headerName2 = res.data[0].address1+', '+res.data[0].address2+', '+res.data[0].city;
     this.headerName3 = this.state + '-' + this.pin + '  ' + "GST: " + this.GSTNumber;
-    this.getFCInvoiceList()
+    
+    if (!this.FCInvoiceListDetails.length) {
+      this.getFCInvoiceList()
+    } else {
+      this.getFCInvoiceList1()
+    }
     this.getFuelCreditRequestCorporateByfuelDealerId(this.fuelDealerId)
     this.cd.detectChanges()
   }
@@ -287,9 +293,62 @@ export class BaseTablesWidget10Component implements OnInit {
         this.FCInvoiceListDetails = res.data;
         this.FCInvoiceListDetailsNew = res.data;
         this.pageLength = res.data;
+        localStorage.setItem('FCInvoiceListDetails', JSON.stringify(this.FCInvoiceListDetails));
         this.spinner.hide()
         this.cd.detectChanges()
       } else {
+        localStorage.setItem('FCInvoiceListDetails', JSON.stringify([]));
+        this.spinner.hide()
+        this.cd.detectChanges()
+      }
+    });
+  }
+
+  getFCInvoiceList1() {
+    this.FCInvoiceListDetails = [];
+    this.pageLength = [];
+
+    this.endDate = this.statementListForm.value.endDate;
+
+    if (!this.statementListForm.value.selectCorporateMapId) {
+      this.custMapId1 = "";
+    } else {
+      this.custMapId1 = this.statementListForm.value.selectCorporateMapId;
+    }
+    if (!this.statementListForm.value.startDate) {
+      this.startDate1 = "";
+    } else {
+      this.startDate1 = moment(this.statementListForm.value.startDate, [
+        "DD-MM-YYYY",
+      ]).format("YYYY-MM-DD");
+    }
+
+    if (!this.statementListForm.value.endDate) {
+      this.endDate1 = "";
+    } else {
+      this.endDate1 = moment(this.statementListForm.value.endDate, [
+        "DD-MM-YYYY",
+      ]).format("YYYY-MM-DD");
+    }
+
+    const data = {
+      VBCorporateId: this.loginVPId,
+      custMapId: this.custMapId1,
+      startDate: this.startDate1,
+      endDate: this.endDate1,
+      invoiceOf: this.statementListForm.value.setInvoiceType
+    };
+
+    this.post.getAllSavedInvoiceListPOST(data).subscribe((res) => {
+      if (res.status == "OK") {
+        this.FCInvoiceListDetails = res.data;
+        this.FCInvoiceListDetailsNew = res.data;
+        this.pageLength = res.data;
+        localStorage.setItem('FCInvoiceListDetails', JSON.stringify(this.FCInvoiceListDetails));
+        this.spinner.hide()
+        this.cd.detectChanges()
+      } else {
+        localStorage.setItem('FCInvoiceListDetails', JSON.stringify([]));
         this.spinner.hide()
         this.cd.detectChanges()
       }

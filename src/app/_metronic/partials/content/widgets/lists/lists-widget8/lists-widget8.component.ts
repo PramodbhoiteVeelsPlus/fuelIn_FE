@@ -108,6 +108,7 @@ export class ListsWidget8Component {
   }
 
   ngOnInit() {
+    this.fuelShiftTimeDetailsTime = JSON.parse(localStorage.getItem('fuelShiftTimeDetailsTime') || '{}');
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
@@ -125,7 +126,12 @@ export class ListsWidget8Component {
     this.city = dealerData.city
     this.phone1 = dealerData.hostPhone
     this.createdBy = element.firstName + ' ' + element.lastName
-    this.getShiftDetailsTime(this.fuelDealerId)
+    
+    if (!this.fuelShiftTimeDetailsTime.length) {
+      this.getShiftDetailsTime(this.fuelDealerId)
+    } else {
+      this.getShiftDetailsTime1(this.fuelDealerId)
+    }
     this.cd.detectChanges()
   }
 
@@ -193,6 +199,7 @@ export class ListsWidget8Component {
   }
 
   getShiftDetailsTime(fuelDealerId: any) {
+    this.spinner.show()
     this.fuelShiftTimeDetailsTime = []
     let data = {
       fuelShiftTimeDealerId: fuelDealerId
@@ -202,10 +209,39 @@ export class ListsWidget8Component {
         if (res.status == "OK") {
           if (res.data.length) {
             this.fuelShiftTimeDetailsTime = res.data;
+            localStorage.setItem('fuelShiftTimeDetailsTime', JSON.stringify(this.fuelShiftTimeDetailsTime));
             this.spinner.hide()
             this.cd.detectChanges()
           } else {
             this.fuelShiftTimeDetailsTime = [];
+            localStorage.setItem('fuelShiftTimeDetailsTime', JSON.stringify([]));
+            this.spinner.hide()
+            this.cd.detectChanges()
+          }
+        }
+        else {
+          this.spinner.hide()
+          this.cd.detectChanges()
+        }
+      })
+  }
+
+  getShiftDetailsTime1(fuelDealerId: any) {
+    this.fuelShiftTimeDetailsTime = []
+    let data = {
+      fuelShiftTimeDealerId: fuelDealerId
+    }
+    this.post.getFuelShiftTimeDetailsPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          if (res.data.length) {
+            this.fuelShiftTimeDetailsTime = res.data;
+            localStorage.setItem('fuelShiftTimeDetailsTime', JSON.stringify(this.fuelShiftTimeDetailsTime));
+            this.spinner.hide()
+            this.cd.detectChanges()
+          } else {
+            this.fuelShiftTimeDetailsTime = [];
+            localStorage.setItem('fuelShiftTimeDetailsTime', JSON.stringify([]));
             this.spinner.hide()
             this.cd.detectChanges()
           }

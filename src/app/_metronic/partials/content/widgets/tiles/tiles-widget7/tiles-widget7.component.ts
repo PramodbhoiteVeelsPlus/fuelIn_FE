@@ -71,6 +71,7 @@ export class TilesWidget7Component {
   ) { }
 
   ngOnInit(): void {
+    this.bankAccList = JSON.parse(localStorage.getItem('bankAccList') || '{}');
     var element = JSON.parse(localStorage.getItem('element') || '');
     this.personId = element.personId;
     this.fuelDealerId = localStorage.getItem('dealerId');
@@ -82,7 +83,11 @@ export class TilesWidget7Component {
     this.addBankDetailsForm.controls['branchName'].setValue("")
     this.addBankDetailsForm.controls['upiId'].setValue("")
     this.addBankDetailsForm.controls['accountType'].setValue("SAVING")
-    this.getBankDetailsByDealerId(this.fuelDealerId)
+    if (!this.bankAccList.length) {
+      this.getBankDetailsByDealerId(this.fuelDealerId)
+    } else {
+      this.getBankDetailsByDealerId1(this.fuelDealerId)
+    }
   }
 
   //Add Bank Account Modal
@@ -151,6 +156,7 @@ export class TilesWidget7Component {
 
   // Bank Details By fuelDealerId
   getBankDetailsByDealerId(fuelDealerId: any) {
+    this.spinner.show()
     this.bankAccList.length = 0;
     let data = {
       dealerId: fuelDealerId
@@ -159,8 +165,32 @@ export class TilesWidget7Component {
       .subscribe(res => {
         if (res.data.length) {
           this.bankAccList = res.data;
+          localStorage.setItem('bankAccList', JSON.stringify(this.bankAccList));
+          this.spinner.hide()
           this.cd.detectChanges();
         } else {
+          localStorage.setItem('bankAccList', JSON.stringify([]));
+          this.spinner.hide()
+          this.cd.detectChanges();
+        }
+      })
+  }
+
+  getBankDetailsByDealerId1(fuelDealerId: any) {
+    this.bankAccList.length = 0;
+    let data = {
+      dealerId: fuelDealerId
+    }
+    this.post.getBankDetailsByDealerIdPOST(data)
+      .subscribe(res => {
+        if (res.data.length) {
+          this.bankAccList = res.data;
+          localStorage.setItem('bankAccList', JSON.stringify(this.bankAccList));
+          this.spinner.hide()
+          this.cd.detectChanges();
+        } else {
+          localStorage.setItem('bankAccList', JSON.stringify([]));
+          this.spinner.hide()
           this.cd.detectChanges();
         }
       })

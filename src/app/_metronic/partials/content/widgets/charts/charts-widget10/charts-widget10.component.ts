@@ -134,7 +134,8 @@ export class ChartsWidget10Component implements OnInit {
     config.outsideDays = 'hidden';
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
+    this.pumpInfraDetails = JSON.parse(localStorage.getItem('pumpInfraDetails') || '{}');
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
@@ -160,7 +161,12 @@ export class ChartsWidget10Component implements OnInit {
     }
     this.addFormSetNozzel()
     this.getAllTankdetails()
-    this.getPumpInfra()
+    if (!this.pumpInfraDetails.length) {
+      this.getPumpInfra()
+    } else {
+      this.getPumpInfra1()
+    }
+    
     this.cd.detectChanges()
   }
 
@@ -302,6 +308,7 @@ export class ChartsWidget10Component implements OnInit {
   }
 
   getPumpInfra() {
+    this.spinner.show()
     let data = {
       fuelDealerId:this.fuelDealerId,
     }
@@ -310,11 +317,37 @@ export class ChartsWidget10Component implements OnInit {
       if(res){
           this.pumpInfraDetails = res;
           this.pumpInfralength = res.data;
+          localStorage.setItem('pumpInfraDetails', JSON.stringify(this.pumpInfraDetails));
+          this.spinner.hide()
           this.cd.detectChanges()
+      } else {
+        localStorage.setItem('pumpInfraDetails', JSON.stringify([]));
+        this.spinner.hide()
+        this.cd.detectChanges()
       }
   });
   }
   
+  getPumpInfra1() {
+    let data = {
+      fuelDealerId:this.fuelDealerId,
+    }
+    this.post.getPumpNozzelByDealerIdPOST(data)
+    .subscribe(res=>{
+      if(res){
+          this.pumpInfraDetails = res;
+          this.pumpInfralength = res.data;
+          localStorage.setItem('pumpInfraDetails', JSON.stringify(this.pumpInfraDetails));
+          this.spinner.hide()
+          this.cd.detectChanges()
+      } else {
+        localStorage.setItem('pumpInfraDetails', JSON.stringify([]));
+        this.spinner.hide()
+        this.cd.detectChanges()
+      }
+  });
+  }
+
   cancelNozzelDetailForAll(){
     this.SetNozzelData.length = 0;
     this.addFormSetNozzel()

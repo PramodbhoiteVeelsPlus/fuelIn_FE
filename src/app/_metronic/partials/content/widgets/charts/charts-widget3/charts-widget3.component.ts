@@ -138,6 +138,7 @@ export class ChartsWidget3Component implements OnInit {
   }
 
   ngOnInit(): void {
+    this.oilCompanyDetails = JSON.parse(localStorage.getItem('oilCompanyDetails') || '{}');
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
@@ -167,7 +168,11 @@ export class ChartsWidget3Component implements OnInit {
 
     this.viewOilCompanyForm.controls["startDate"].setValue( moment(new Date()).subtract(15, 'days').format("DD-MM-YYYY"));
     this.viewOilCompanyForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"));
-    this.getOILCOMPANYDataInFuelExpense(this.fuelDealerId)
+    if (!this.oilCompanyDetails.length) {
+      this.getOILCOMPANYDataInFuelExpense(this.fuelDealerId)
+    } else {
+      this.getOILCOMPANYDataInFuelExpense1(this.fuelDealerId)
+    }
     this.cd.detectChanges()
   }
 
@@ -237,16 +242,46 @@ export class ChartsWidget3Component implements OnInit {
         if (res.data.length) {
           this.oilCompanyDetails = res.data;
           this.isOilCompanyDetails = true;
+          localStorage.setItem('oilCompanyDetails', JSON.stringify(this.oilCompanyDetails));
+          this.spinner.hide()
           this.spinner.hide();
           this.cd.detectChanges()
         } else {
           this.isOilCompanyDetails = false;
+          localStorage.setItem('oilCompanyDetails', JSON.stringify([]));
+          this.spinner.hide()
           this.spinner.hide();
           this.cd.detectChanges()
         }
       })
   }
 
+  getOILCOMPANYDataInFuelExpense1(fuelDealerId: any) {
+    this.oilCompanyDetails.length = 0;
+    this.oilCompanyTotalQuantity.length = 0;
+    this.allAmtTotal = 0
+
+    let data = {
+      dealerId: fuelDealerId
+    }
+    this.post.getOILCOMPANYDataInFuelExpensePOST(data)
+      .subscribe(res => {
+        if (res.data.length) {
+          this.oilCompanyDetails = res.data;
+          this.isOilCompanyDetails = true;
+          localStorage.setItem('oilCompanyDetails', JSON.stringify(this.oilCompanyDetails));
+          this.spinner.hide()
+          this.spinner.hide();
+          this.cd.detectChanges()
+        } else {
+          this.isOilCompanyDetails = false;
+          localStorage.setItem('oilCompanyDetails', JSON.stringify([]));
+          this.spinner.hide()
+          this.spinner.hide();
+          this.cd.detectChanges()
+        }
+      })
+  }
 
   exportToPDF() {
     var cols = [["Invoice Date", "Vehicle Number", "Invoice Number", "Received Date", "Product", "Quantity", "Basic Amount", "Vat Amount", "Vat Percent", "Cess Amount", "Total Tax", "Other Components", "Total Amount", "Created By"]];

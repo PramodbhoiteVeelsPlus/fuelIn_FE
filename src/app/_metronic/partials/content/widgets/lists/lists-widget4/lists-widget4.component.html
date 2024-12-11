@@ -71,30 +71,26 @@
     .page-break {
       display: block;
       page-break-before: always;
-
-      size: A4 portrait;
-    }
+    
+    size: A4 portrait;}
   }
-
+  
   @media print {
     body {
       margin: 0;
       padding: 0;
       -webkit-print-color-adjust: exact;
     }
-
     .A4 {
       box-shadow: none;
       margin: 0;
       width: auto;
       height: auto;
     }
-
     .noprint {
       display: none;
     }
-
-    .enable-print {
+    .print {
       display: block;
     }
   }
@@ -136,7 +132,7 @@
                   routerLink="/credit/AddLubeTaxGstSale"> Back </button>
               </div>
               <div class="col-md-1">
-                &nbsp; <button class="noprint" style="font-size: medium;" onclick="window.print()"> &nbsp;&nbsp;<i
+                &nbsp; <button class="noprint" style="font-size: medium;" printSectionId="sanjay" ngxPrint> &nbsp;&nbsp;<i
                     class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
               </div>
             </div>

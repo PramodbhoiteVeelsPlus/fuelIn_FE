@@ -105,6 +105,7 @@ export class TilesWidget4Component {
   }
 
   ngOnInit(): void {
+    this.accountingData = JSON.parse(localStorage.getItem('accountingData') || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');
     this.fuelDealerId = localStorage.getItem('dealerId');
     this.filterForm.controls["startDate"].setValue("01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear())
@@ -115,12 +116,17 @@ export class TilesWidget4Component {
     this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
 
     this.getBankDetailsByDealerId(this.fuelDealerId);
-    this.getAccounting(this.fuelDealerId);
+    if (!this.accountingData.length) {
+      this.getAccounting(this.fuelDealerId);
+    } else {
+      this.getAccounting1(this.fuelDealerId);
+    }
   }
 
 
   //getAccounting
   getAccounting(fuelDealerId: any) {
+    this.spinner.show()
     this.accountingData = []
     this.accountingSearchData = [];
     let data = {
@@ -133,8 +139,36 @@ export class TilesWidget4Component {
         if (res.data.length) {
           this.accountingData = res.data;
           this.accountingSearchData = res.data;
+          localStorage.setItem('accountingData', JSON.stringify(this.accountingData));
+          this.spinner.hide()
           this.cd.detectChanges();
         } else {
+          localStorage.setItem('accountingData', JSON.stringify([]));
+          this.spinner.hide()
+          this.cd.detectChanges();
+        }
+      })
+  }
+
+  getAccounting1(fuelDealerId: any) {
+    this.accountingData = []
+    this.accountingSearchData = [];
+    let data = {
+      accountingFuelDealerId: fuelDealerId,
+      startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+      endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+    }
+    this.post.getAccountingPOST(data)
+      .subscribe(res => {
+        if (res.data.length) {
+          this.accountingData = res.data;
+          this.accountingSearchData = res.data;
+          localStorage.setItem('accountingData', JSON.stringify(this.accountingData));
+          this.spinner.hide()
+          this.cd.detectChanges();
+        } else {
+          localStorage.setItem('accountingData', JSON.stringify([]));
+          this.spinner.hide()
           this.cd.detectChanges();
         }
       })

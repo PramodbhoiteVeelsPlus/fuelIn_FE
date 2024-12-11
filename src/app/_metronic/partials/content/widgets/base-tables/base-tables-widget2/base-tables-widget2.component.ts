@@ -137,6 +137,7 @@ export class BaseTablesWidget2Component implements OnInit {
   }
 
   ngOnInit(): void {
+    this.crPaymentDetails = JSON.parse(localStorage.getItem('crPaymentDetails') || '{}');
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
@@ -156,14 +157,18 @@ export class BaseTablesWidget2Component implements OnInit {
     this.headerName1 = dealerData.companyName;
     this.headerName2 = dealerData.address1 + ', ' + dealerData.address2 + ', ' + dealerData.city;
     this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
-    this.getCRPayment(this.dealerCorporateId);
-    this.getFilterCRPaymentFORDealer()
+    if (!this.crPaymentDetails.length) {
+      this.getCRPayment(this.dealerCorporateId);
+    } else {
+      this.getCRPayment1(this.dealerCorporateId);
+    }
     this.getFuelCreditRequestCorporateByfuelDealerId(this.fuelDealerId)
     this.cd.detectChanges()
   }
 
 
   getFuelCreditRequestCorporateByfuelDealerId(fuelDealerId: any) {
+    this.spinner.show()
     let data = {
       fuelDealerId: fuelDealerId
     }
@@ -290,6 +295,7 @@ export class BaseTablesWidget2Component implements OnInit {
   getCRPayment(dealerCorporateId: any) {
     if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
       if (this.filterForm.value.selectCorporateName) {
+        this.spinner.show()
         let data = {
           fuelDealerId: this.fuelDealerId,
           corporateId: this.dealerCorporateId,
@@ -306,11 +312,135 @@ export class BaseTablesWidget2Component implements OnInit {
                   this.crPaymentDetailsData = res.data;
                   this.showHeading = true;
                   this.cd.detectChanges();
+                  this.spinner.hide()
                 }
                 else {
                   alert("Don't have any Credit Payment in this Month!")
                   this.showHeading = false;
                   this.cd.detectChanges();
+                  this.spinner.hide()
+                }
+              }
+              else {
+              }
+            })
+        }
+      }
+      else {
+        this.spinner.show()
+        let data = {
+          corporateId: this.dealerCorporateId,
+          startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+          endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+        }
+        if (this.acceesGroup == 12 || this.acceesGroup == 14 || this.acceesGroup == 19 || this.acceesGroup == 21) {
+          this.post.getAllCRPaymentByDealerPOST(data)
+            .subscribe(res => {
+              if (res.status == "OK") {
+                if (res.data.length) {
+                  this.crPaymentDetails = res.data;
+                  this.crPaymentDetailsData = res.data;
+                  this.showHeading = true;
+                  this.cd.detectChanges();
+                  this.spinner.hide()
+                }
+                else {
+                  alert("Don't have any Credit Payment in this Month!")
+                  this.showHeading = false;
+                  this.cd.detectChanges();
+                  this.spinner.hide()
+                }
+              }
+              else {
+              }
+            })
+        }
+      }
+    } else {
+      this.spinner.show()
+      let data = {
+        corporateId: dealerCorporateId,
+        startDate: moment(new Date()).subtract(15, 'day').format("YYYY-MM-DD"),
+        endDate: moment(new Date()).format("YYYY-MM-DD"),
+      }
+
+      if (this.acceesGroup == 12 || this.acceesGroup == 14 || this.acceesGroup == 19 || this.acceesGroup == 21) {
+        this.post.getAllCRPaymentByDealerPOST(data)
+          .subscribe(res => {
+            if (res.status == "OK") {
+              if (res.data.length) {
+                this.crPaymentDetails = res.data;
+                this.crPaymentDetailsData = res.data;
+                // this.crPaymentDetails1 = res.data1;
+                this.showHeading = true;
+                localStorage.setItem('crPaymentDetails', JSON.stringify(this.crPaymentDetails));
+                this.cd.detectChanges();
+                this.spinner.hide()
+              }
+              else {
+                // this.crPaymentDetails1 = res.data1;
+                this.crPaymentDetails.length = 0;
+                localStorage.setItem('crPaymentDetails', JSON.stringify([]));
+                this.cd.detectChanges();
+                this.spinner.hide()
+              }
+            }
+            else {
+            }
+          })
+      } else {
+        this.spinner.show()
+        this.post.getAllCRPaymentByCorporatePOST(data)
+          .subscribe(res => {
+            if (res.status == "OK") {
+              if (res.data.length) {
+                this.crPaymentDetails = res.data;
+                this.crPaymentDetailsData = res.data;
+                // this.crPaymentDetails1 = res.data1;
+                this.showHeading = true;
+                this.cd.detectChanges();
+                this.spinner.hide()
+              }
+              else {
+                // this.crPaymentDetails1 = res.data1;
+                this.crPaymentDetails.length = 0;
+                this.cd.detectChanges();
+                this.spinner.hide()
+              }
+            }
+            else {
+            }
+          })
+      }
+    }
+  }
+
+  getCRPayment1(dealerCorporateId: any) {
+    if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
+      if (this.filterForm.value.selectCorporateName) {
+        let data = {
+          fuelDealerId: this.fuelDealerId,
+          corporateId: this.dealerCorporateId,
+          mapId: this.fuelDealerCorpMapIdNew,
+          startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+          endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+        }
+        if (this.acceesGroup == 12 || this.acceesGroup == 14 || this.acceesGroup == 19 || this.acceesGroup == 21) {
+          this.post.getAllCRPaymentByCustNameDealerPOST(data)
+            .subscribe(res => {
+              if (res.status == "OK") {
+                if (res.data.length) {
+                  this.crPaymentDetails = res.data;
+                  this.crPaymentDetailsData = res.data;
+                  this.showHeading = true;
+                  this.cd.detectChanges();
+                  this.spinner.hide()
+                }
+                else {
+                  alert("Don't have any Credit Payment in this Month!")
+                  this.showHeading = false;
+                  this.cd.detectChanges();
+                  this.spinner.hide()
                 }
               }
               else {
@@ -333,11 +463,13 @@ export class BaseTablesWidget2Component implements OnInit {
                   this.crPaymentDetailsData = res.data;
                   this.showHeading = true;
                   this.cd.detectChanges();
+                  this.spinner.hide()
                 }
                 else {
                   alert("Don't have any Credit Payment in this Month!")
                   this.showHeading = false;
                   this.cd.detectChanges();
+                  this.spinner.hide()
                 }
               }
               else {
@@ -361,12 +493,16 @@ export class BaseTablesWidget2Component implements OnInit {
                 this.crPaymentDetailsData = res.data;
                 // this.crPaymentDetails1 = res.data1;
                 this.showHeading = true;
+                localStorage.setItem('crPaymentDetails', JSON.stringify(this.crPaymentDetails));
                 this.cd.detectChanges();
+                this.spinner.hide()
               }
               else {
                 // this.crPaymentDetails1 = res.data1;
                 this.crPaymentDetails.length = 0;
+                localStorage.setItem('crPaymentDetails', JSON.stringify([]));
                 this.cd.detectChanges();
+                this.spinner.hide()
               }
             }
             else {
@@ -382,11 +518,13 @@ export class BaseTablesWidget2Component implements OnInit {
                 // this.crPaymentDetails1 = res.data1;
                 this.showHeading = true;
                 this.cd.detectChanges();
+                this.spinner.hide()
               }
               else {
                 // this.crPaymentDetails1 = res.data1;
                 this.crPaymentDetails.length = 0;
                 this.cd.detectChanges();
+                this.spinner.hide()
               }
             }
             else {

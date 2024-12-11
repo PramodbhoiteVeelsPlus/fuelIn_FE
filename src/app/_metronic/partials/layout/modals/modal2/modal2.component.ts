@@ -130,8 +130,8 @@ export class Modal2Component {
   ngOnInit() {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
-    this.fuelDealerId = dealerData.fuelDealerId;
-    this.dealerCorporateId = dealerData.corporateId;
+    this.fuelDealerId = localStorage.getItem('dealerId');
+    this.dealerCorporateId = localStorage.getItem('dealerCorporateId');
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     this.accessGroupId = element.accessGroupId;
     this.managerVPPersonId = element.veelsPlusId;

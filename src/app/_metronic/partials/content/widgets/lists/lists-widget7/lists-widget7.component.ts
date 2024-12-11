@@ -100,6 +100,7 @@ export class ListsWidget7Component {
   }
 
   ngOnInit() {
+    this.allShift = JSON.parse(localStorage.getItem('allShift') || '{}');
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
@@ -116,15 +117,17 @@ export class ListsWidget7Component {
     this.pin = dealerData.pin
     this.city = dealerData.city
     this.phone1 = dealerData.hostPhone
-    // this.createdBy = element.firstName + ' ' + element.lastName
-    // this.vpPersonId = element.veelsPlusId
-    // this.transporterCorpId = this.dealerData.corporateId
-    this.getAllOngoingShift(this.fuelDealerId)
-    // this.getStaffDetails(this.fuelDealerId)
+    
+    if (!this.allShift.length) {
+      this.getAllOngoingShift(this.fuelDealerId)
+    } else {
+      this.getAllOngoingShift1(this.fuelDealerId)
+    }
     this.cd.detectChanges()
   }
 
   getAllOngoingShift(fuelDealerId: any) {
+    this.spinner.show()
     this.allShift = []
     const data = {
       dealerId: fuelDealerId,
@@ -133,9 +136,31 @@ export class ListsWidget7Component {
       .subscribe(res => {
         if (res.status == 'OK') {
           this.allShift = res.data;
+          localStorage.setItem('allShift', JSON.stringify(this.allShift));
           this.spinner.hide()
           this.cd.detectChanges()
         } else {
+          localStorage.setItem('allShift', JSON.stringify([]));
+          this.spinner.hide()
+          this.cd.detectChanges()
+        }
+      });
+  }
+
+  getAllOngoingShift1(fuelDealerId: any) {
+    this.allShift = []
+    const data = {
+      dealerId: fuelDealerId,
+    };
+    this.post.getShiftOngoingDetailsByDealerIdPOST(data)
+      .subscribe(res => {
+        if (res.status == 'OK') {
+          this.allShift = res.data;
+          localStorage.setItem('allShift', JSON.stringify(this.allShift));
+          this.spinner.hide()
+          this.cd.detectChanges()
+        } else {
+          localStorage.setItem('allShift', JSON.stringify([]));
           this.spinner.hide()
           this.cd.detectChanges()
         }

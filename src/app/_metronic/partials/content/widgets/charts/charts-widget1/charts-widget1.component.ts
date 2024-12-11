@@ -40,6 +40,7 @@ export class ChartsWidget1Component implements OnInit {
   payment6: any = 0;
   accessGroupId: any;
   dealerId: any;
+  dealerCorporateId: any;
 
   constructor(private post: ChartsService, 
     private spinner: NgxSpinnerService,
@@ -48,17 +49,11 @@ export class ChartsWidget1Component implements OnInit {
   ngOnInit(): void {
     this.spinner.show();
     var element = JSON.parse(localStorage.getItem("element") || '{}');
+    this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
+    this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
     this.accessGroupId = element.accessGroupId;
-    if(this.accessGroupId == '12'){
-      this.fuelDealerId = localStorage.getItem("dealerId");
-      this.getGraphDataByDealerId(this.fuelDealerId)
-      this.cd.detectChanges()
-    } else if(this.accessGroupId == '14'){
-      var managerData = JSON.parse(localStorage.getItem("managerData") || '{}');
-      this.dealerId = managerData.fuelDealerId;
-      this.getGraphDataByDealerId(this.dealerId);
-      this.cd.detectChanges()
-    }
+    this.getGraphDataByDealerId(this.fuelDealerId);
+    this.cd.detectChanges()
   }
 
 

@@ -542,7 +542,8 @@ export class ListsWidget11Component {
         }
   }
   
- getShiftWiseBookDetails(fuelDealerId: any) {       
+ getShiftWiseBookDetails(fuelDealerId: any) { 
+  this.spinner.show      
   this.shiftWiseData.length = 0;
   this.shiftWiseQuantityData.length = 0;
   const data = {

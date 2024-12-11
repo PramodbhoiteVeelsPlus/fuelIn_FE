@@ -100,7 +100,7 @@
       <div class="card">
         <div class="card-body">
           <div *ngIf="accessGroup == '12' || accessGroup == '14'">
-            <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
+            <div *ngIf = "accessGroup != '14' " class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
               title="Click to add a user">
               <a (click)="openModal()" class="btn btn-sm btn-light-primary">
                 <app-keenicon name="plus" class="fs-3"></app-keenicon>

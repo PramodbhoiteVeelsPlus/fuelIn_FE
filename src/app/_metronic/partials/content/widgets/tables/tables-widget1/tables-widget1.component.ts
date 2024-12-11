@@ -131,28 +131,19 @@ export class TablesWidget1Component {
   ngOnInit() {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+    this.fuelDealerId = localStorage.getItem('dealerId');
+    this.dealerCorporateId = localStorage.getItem('dealerCorporateId');
     this.fuelDealerId = dealerData.fuelDealerId;
     this.dealerCorporateId = dealerData.corporateId;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     if (element.accessGroupId == 12 || element.accessGroupId == 14 || element.accessGroupId == 19 || element.accessGroupId == 21) {
       this.dealerAccess = true
-      if(element.accessGroupId == '12'){
-        this.fuelDealerId = localStorage.getItem('dealerId');
-        this.dealerCorporateId = localStorage.getItem('dealerCorporateId');
-        this.getProductsByDealerId(this.fuelDealerId);
-        this.getFuelPriceByProductDateDealer(this.fuelDealerId);
-        this.cd.detectChanges()
-      } else if(element.accessGroupId == '14'){
-        var managerData = JSON.parse(localStorage.getItem("managerData") || '{}');
-        this.dealerId = managerData.fuelDealerId;
-        this.getProductsByDealerId(this.dealerId);
-        this.getFuelPriceByProductDateDealer(this.dealerId);
-        this.cd.detectChanges()
-    }
       if (element.accessGroupId == 19 || element.accessGroupId == 21) {
         this.liteAccess = true
       }
     }
+    this.getProductsByDealerId(this.fuelDealerId);
+    this.getFuelPriceByProductDateDealer(this.fuelDealerId);
     this.cd.detectChanges()
   }
 

@@ -145,6 +145,7 @@ export class ChartsWidget14Component implements OnInit {
   }
 
   ngOnInit(): void {
+    this.lubeCashBillList = JSON.parse(localStorage.getItem('lubeCashBillList') || '{}');
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
@@ -177,7 +178,11 @@ export class ChartsWidget14Component implements OnInit {
       this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
 
     }
-    this.getCashBillDetails();
+    if (!this.lubeCashBillList.length) {
+      this.getCashBillDetails();
+    } else {
+      this.getCashBillDetails1();
+    }
     this.cd.detectChanges()
   }
 
@@ -235,6 +240,7 @@ export class ChartsWidget14Component implements OnInit {
   }
   
   getCashBillDetails() {
+    this.spinner.show()
     this.fuelCashBillList.length = 0
     let data = {
       fuelDealerId: this.fuelDealerId
@@ -247,8 +253,41 @@ export class ChartsWidget14Component implements OnInit {
 
         this.lubeCashBillList = res.data2;
         this.allLubeCashBillData = res.data2;
+        localStorage.setItem('lubeCashBillList', JSON.stringify(this.lubeCashBillList));
+        this.spinner.hide()
         this.cd.detectChanges()
-        
+      } else {
+        this.lubeCashBillList = [];
+        this.allLubeCashBillData = [];
+        localStorage.setItem('lubeCashBillList', JSON.stringify([]));
+        this.spinner.hide()
+        this.cd.detectChanges()
+      }
+    })
+    }
+    
+  getCashBillDetails1() {
+    this.fuelCashBillList.length = 0
+    let data = {
+      fuelDealerId: this.fuelDealerId
+    }
+    this.post1.getCashBillPOST(data)
+    .subscribe(res => {
+      if (res.status == 'OK') {
+        this.fuelCashBillList = res.data1;
+        this.allCashBillData = res.data1;
+
+        this.lubeCashBillList = res.data2;
+        this.allLubeCashBillData = res.data2;
+        localStorage.setItem('lubeCashBillList', JSON.stringify(this.lubeCashBillList));
+        this.spinner.hide()
+        this.cd.detectChanges()
+      } else {
+        this.lubeCashBillList = [];
+        this.allLubeCashBillData = [];
+        localStorage.setItem('lubeCashBillList', JSON.stringify([]));
+        this.spinner.hide()
+        this.cd.detectChanges()
       }
     })
     }

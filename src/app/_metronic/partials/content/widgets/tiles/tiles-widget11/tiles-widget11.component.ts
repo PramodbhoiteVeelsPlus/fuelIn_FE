@@ -125,48 +125,37 @@ export class TilesWidget11Component implements OnInit {
   ngOnInit() {
     this.spinner.show();
     var element = JSON.parse(localStorage.getItem('element') || '');
+    this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
+    this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
     this.userName = element.firstName + ' ' + element.lastName;
     this.accessGroup = element.accessGroupId;
-    if(this.accessGroup == '12'){
-      this.fuelDealerId = localStorage.getItem('dealerId');
-      this.dealerCorporateId = localStorage.getItem('dealerCorporateId');
-      this.getOILCOMPANYDataInFuelExpense(this.fuelDealerId)
-      this.getBankAcBalance1(this.fuelDealerId)
-      this.getCashAcBalance1(this.fuelDealerId)
-      this.cd.detectChanges()
-    } else if(this.accessGroup == '14'){
-      var managerData = JSON.parse(localStorage.getItem("managerData") || '{}');
-      this.dealerId = managerData.fuelDealerId;
-      this.getOILCOMPANYDataInFuelExpense(this.dealerId)
-      this.getBankAcBalance1(this.dealerId)
-      this.getCashAcBalance1(this.dealerId)
-      this.getOilCoAcBalance1(this.dealerId);
-      this.getBankAcBalanceOPEN(this.dealerId)
-      this.cd.detectChanges()
-  }
+    this.getOILCOMPANYDataInFuelExpense(this.fuelDealerId)
+    this.getBankAcBalance1(this.fuelDealerId)
+    this.getCashAcBalance1(this.fuelDealerId)
+    this.cd.detectChanges()
   }
 
   getOILCOMPANYDataInFuelExpense(fuelDealerId: any) {
     this.spinner.show();
     let data = {
-        dealerId: fuelDealerId,
-        startDate: this.openingDate,
-        endDate: this.closingDate,
+      dealerId: fuelDealerId,
+      startDate: this.openingDate,
+      endDate: this.closingDate,
     }
     this.post.getOILCOMPANYDataInFuelExpensePOST(data)
-        .subscribe(res => {
-            if (res.data.length) {
-                this.totalOilCOPurchase = res.data3[0].totalAmount
-                this.getOilCoAcBalance1(this.fuelDealerId);
-                this.spinner.hide();
-                // this.cd.detectChanges()
-            } else {
-                this.getOilCoAcBalance1(this.fuelDealerId);
-                this.spinner.hide();
-                // this.cd.detectChanges()
-            }
-        })
-}
+      .subscribe(res => {
+        if (res.data.length) {
+          this.totalOilCOPurchase = res.data3[0].totalAmount
+          this.getOilCoAcBalance1(this.fuelDealerId);
+          this.spinner.hide();
+          this.cd.detectChanges()
+        } else {
+          this.getOilCoAcBalance1(this.fuelDealerId);
+          this.spinner.hide();
+          this.cd.detectChanges()
+        }
+      })
+  }
 
   getOilCoAcBalance1(fuelDealerId: any) {
     this.spinner.show();
@@ -224,11 +213,11 @@ export class TilesWidget11Component implements OnInit {
             this.oilCoStatus = false;
           }
           this.spinner.hide();
-          // this.cd.detectChanges()
+          this.cd.detectChanges()
         } else {
           alert("Error")
           this.spinner.hide();
-          // this.cd.detectChanges()
+          this.cd.detectChanges()
         }
       })
   }
@@ -256,11 +245,11 @@ export class TilesWidget11Component implements OnInit {
           this.totalCreditBankWiseData = res.dataPay;
           this.getBankAcBalanceOPEN(this.fuelDealerId)
           this.spinner.hide();
-          // this.cd.detectChanges()
+          this.cd.detectChanges()
         } else {
           alert("Error")
           this.spinner.hide();
-          // this.cd.detectChanges()
+          this.cd.detectChanges()
         }
       })
   }
@@ -386,10 +375,10 @@ export class TilesWidget11Component implements OnInit {
           })
 
           this.spinner.hide();
-          // this.cd.detectChanges()
+          this.cd.detectChanges()
         } else {
           this.spinner.hide();
-          // this.cd.detectChanges()
+          this.cd.detectChanges()
 
         }
       })
@@ -431,11 +420,11 @@ export class TilesWidget11Component implements OnInit {
             this.cashStatus = false;
           }
           this.spinner.hide();
-          // this.cd.detectChanges()
+          this.cd.detectChanges()
         } else {
           alert("Error")
           this.spinner.hide();
-          // this.cd.detectChanges()
+          this.cd.detectChanges()
         }
       })
   }
