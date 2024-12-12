@@ -107,6 +107,7 @@ export class SidebarMenuComponent implements OnInit {
   isSummaryReport: boolean = true;
   isViswasaTxExcel: boolean = true;
   isSalesPurReport: boolean = true;
+  accessGroupId: any;
 
   constructor(private router: Router,
     private post: StatsService,
@@ -117,6 +118,7 @@ export class SidebarMenuComponent implements OnInit {
     if (JSON.parse(localStorage.getItem('isLoggedin') || '{}') == true) {
       var element = JSON.parse(localStorage.getItem("element") || '{}');
       this.veelsplusCorporate = element.veelsPlusCorporateID;
+      this.accessGroupId = element.accessGroupId
       if (element.accessGroupId == '7') {
         this.isAdmin = true;
         this.isDealer = false;
@@ -125,7 +127,7 @@ export class SidebarMenuComponent implements OnInit {
         this.isTransporter = true;
         this.isAdmin = false;
         this.isDealer = false;
-      } else if (element.accessGroupId == '12' || element.accessGroupId == '14') {
+      } else if (element.accessGroupId == '12' || element.accessGroupId == '14' || element.accessGroupId == '19') {
         this.isDealer = true;
         this.isAdmin = false;
         this.isTransporter = false;
@@ -444,5 +446,8 @@ export class SidebarMenuComponent implements OnInit {
       });
   }
 
+  alert(){
+    alert('To use all petrol pump management modules, upgrade to fuelin prime')
+  }
 
 }

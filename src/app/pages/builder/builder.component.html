@@ -3,7 +3,7 @@
   <div class="col-xl-6">
     <app-tables-widget1 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget1>
   </div>
-  <div class="col-xl-6">
+  <div *ngIf="accessGroupId != '19'" class="col-xl-6">
     <app-tables-widget2 class="card card-xxl-stretch mb-5 mb-xl-8"></app-tables-widget2>
   </div>
 </div>

@@ -142,6 +142,11 @@ export class MixedWidget1Component {
   autoManualNumber: any;
   autoManualNumberLube: any;
   autoManualNumberVehicle: any;
+  islastCRDate: boolean = false;
+  lastCRDate: any;
+  isTable: boolean = false;
+  isTable1: boolean = false;
+  isTable2: boolean = false;
 
   constructor(
     private post: MixedService,
@@ -179,6 +184,7 @@ export class MixedWidget1Component {
     this.addFormVehicleRequest();
     this.getProductsByDealerId(this.fuelDealerId)
     this.getAllVehicle()
+    this.getFuelStaffIdByfuelDealerId(this.fuelDealerId);
     this.cd.detectChanges()
   }
 
@@ -631,7 +637,7 @@ export class MixedWidget1Component {
                     this.isBalance1 = false;
                     this.spinner.hide();
                     this.myInputField.nativeElement.focus();
-                    // this.checkDates(this.vehicleMapId, moment(this.requestVehicle.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
+                    this.checkDates(this.vehicleMapId, moment(this.requestVehicle.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
                     this.isCRQUANTITY = false;
                     this.isQUANTITY = false;
                     this.CreditVehicleRequestDataArray = [];
@@ -712,7 +718,7 @@ export class MixedWidget1Component {
                         this.isBalance1 = false;
                         this.spinner.hide();
                         this.myInputField.nativeElement.focus();
-                        // this.checkDates(this.vehicleMapId, moment(this.requestVehicle.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
+                        this.checkDates(this.vehicleMapId, moment(this.requestVehicle.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
                         this.isCRQUANTITY = false;
                         this.isQUANTITY = false;
                         this.countVehicle = 1;
@@ -798,5 +804,93 @@ export class MixedWidget1Component {
     this.modalRef.close()
 
   }
+  
+  checkDates(mapId: any,date: any){ 
+    if(this.islastCRDate = true){       
+   this.spinner.show();
+    var g1 = new Date(date);
+   var g2 = new Date(this.lastCRDate);
+   if (g1.getTime() >= g2.getTime()){
+       const oneDay = 24 * 60 * 60 * 1000
+       const diffDays = Math.round(Math.abs((g1.getTime() - g2.getTime()) / oneDay))
+       this.spinner.hide();
+       this.fuelDealerCorpMapIdNew = ''
+       this.lastCRDate = ''
+       this.isVehicleViewed = false
+       this.requestVehicle.controls["vehicleNumber"].setValue('');
+     }
+   else {        
+       let data={
+         mapId:mapId,
+         date:date
+       }
+       this.post.updateLastCRDateByMapIdPOST(data)
+       .subscribe(res => {
+           if (res.status == 'OK') {
+             this.spinner.hide();
+             this.updateDateByMapId(mapId)
+             this.isTable = false
+             this.isTable1 = false
+             this.isTable2 = false
+             this.lastCRDate = ''
+             this.isVehicleViewed = false
+             this.requestVehicle.controls["vehicleNumber"].setValue('');
+           } else {
+             this.spinner.hide();
+             this.updateDateByMapId(mapId)
+             this.isTable = false
+             this.isTable1 = false
+             this.isTable2 = false
+             this.lastCRDate = ''
+             this.isVehicleViewed = false
+             this.requestVehicle.controls["vehicleNumber"].setValue('');
+           }
+         });
+    } 
+   }else{
+     this.spinner.show();
+     let data={
+       mapId:mapId,
+       date:date
+     }
+     this.post.updateLastCRDateByMapIdPOST(data)
+     .subscribe(res => {
+         if (res.status == 'OK') {
+           this.updateDateByMapId(mapId)
+           this.spinner.hide();   
+             this.isTable = false
+             this.isTable1 = false
+             this.isTable2 = false
+             this.lastCRDate = ''
+             this.isVehicleViewed = false
+             this.requestVehicle.controls["vehicleNumber"].setValue('');
+         } else {
+           this.spinner.hide();
+           this.updateDateByMapId(mapId)
+             this.isTable = false
+             this.isTable1 = false
+             this.isTable2 = false
+             this.lastCRDate = ''
+             this.isVehicleViewed = false
+             this.requestVehicle.controls["vehicleNumber"].setValue('');
+         }
+       });
+   }
+
+ }
+ 
+updateDateByMapId(fuelDealerCustomMapId: any){
+  let data1 = {
+    mapId:fuelDealerCustomMapId
+  }
+  this.post.updateLastCRDateMapIdWisePOST(data1)
+  .subscribe((res) => {
+    if (res.status == 'OK') {
+      this.fuelDealerCorpMapIdNew = ''
+    }else{
+      this.fuelDealerCorpMapIdNew = ''
+    }
+  })
+}
 }
 

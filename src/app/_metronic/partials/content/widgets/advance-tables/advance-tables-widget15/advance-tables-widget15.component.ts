@@ -109,8 +109,6 @@ export class AdvanceTablesWidget15Component {
   city: any;
   phone1: any;
   dealerAccess: boolean;
-  headerName1: any;
-  headerName3: string;
   GSTNumber: string;
   lubricantList: any = [];
   modalReference: any;
@@ -129,8 +127,6 @@ export class AdvanceTablesWidget15Component {
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.accessGroup = element.accessGroupId;
-    // this.managerVPPersonId = element.veelsPlusId
-    // this.managerPersonId = element.personId
     this.managerName = element.firstName + ' ' + element.lastName
     if (element.accessGroupId == 12 || element.accessGroupId == 14) {
       this.createdBy = element.firstName + ' ' + element.lastName
@@ -147,9 +143,6 @@ export class AdvanceTablesWidget15Component {
       if (element.accessGroupId == 12 || element.accessGroupId == 14) {
         this.dealerAccess = true
       }
-      this.headerName1 = this.companyName;
-      // this.headerName2 = res.data[0].address1+', '+res.data[0].address2+', '+res.data[0].city;
-      this.headerName3 = this.state + '-' + this.pin + '  ' + "GST: " + this.GSTNumber;
 
     }
     this.getLubricants(this.fuelDealerId);

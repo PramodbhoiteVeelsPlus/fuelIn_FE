@@ -156,7 +156,9 @@ export class StatsService {
     private updateVeelsPlusCorporateIdwithPermURL = this.baseURL + 'register/updateVeelsPlusCorporateIdwithPerm';
     private addNewCustDealerReqURL = this.baseURL + 'fuelDealerCustMap/addNewCustDealerReq';
     private addReferralURL = this.baseURL + 'referral/addReferral'; 
-    private getAccessByPersonIdURL = this.baseURL + 'userAccess/getAccessByPersonId'
+    private getAccessByPersonIdURL = this.baseURL + 'userAccess/getAccessByPersonId';
+    private requestForLiteToPrimeURL = this.baseURL + 'fuelVendor/requestForLiteToPrime';
+    private getReqInfoByPersonIdURL = this.baseURL + 'fuelVendor/getReqInfoByPersonId'
 
 
 
@@ -1379,6 +1381,26 @@ export class StatsService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.getAccessByPersonIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // requestForLiteToPrimeURL
+    requestForLiteToPrimePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.requestForLiteToPrimeURL, body, {
+            headers: headers
+        })
+    }
+
+    // getReqInfoByPersonIdURL
+    getReqInfoByPersonIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getReqInfoByPersonIdURL, body, {
             headers: headers
         })
     }

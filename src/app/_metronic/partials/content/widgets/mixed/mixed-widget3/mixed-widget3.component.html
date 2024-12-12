@@ -176,7 +176,7 @@
                     </div>
                   </div>
                 </div>
-                <table class="table table-centered table-nowrap">
+                <table class="table table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
                   <thead style="border-width: 1px; border-color: #000;">
                     <tr>
                       <th style="text-align: left;border-width: 1px; border-color: #000;">Khata Name</th>
@@ -189,15 +189,15 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td style="text-align: left;border-width: 1px; border-color: #000;">{{dealerName}}</td>
-                      <td style="text-align: left;border-width: 1px; border-color: #000;">
+                      <td style="text-align: left;border: 1px solid black;">{{dealerName}}</td>
+                      <td style="text-align: left;border: 1px solid black;">
                         {{personName}}
                       </td>
-                      <td style="text-align: left;border-width: 1px; border-color: #000;"> {{personPhone1}} </td>
-                      <td style="text-align: left;border-width: 1px; border-color: #000;">
+                      <td style="text-align: left;border: 1px solid black;"> {{personPhone1}} </td>
+                      <td style="text-align: left;border: 1px solid black;">
                         {{rangeFrom}} - {{rangeTo}}
                       </td>
-                      <td style="text-align: left;border-width: 1px; border-color: #000;">
+                      <td style="text-align: left;border: 1px solid black;">
                         <span *ngIf="calOutstanding< 0">
                           <li class="fas fa-rupee-sign"></li> {{(calOutstanding)*(-1) | number:'1.2-2'}} CR
                         </span>
@@ -206,7 +206,7 @@
                         </span>
 
                       </td>
-                      <td style="text-align: left;border-width: 1px; border-color: #000;">
+                      <td style="text-align: left;border: 1px solid black;">
                         <span *ngIf="viewCorpFlag.length" class="col-md-1" (click)="viewFlag(viewFlagModel)"
                           style="color:red;cursor:pointer;font-size: x-large;">
                           <i class="fa fa-exclamation-triangle fa-fw fa-3x"></i>

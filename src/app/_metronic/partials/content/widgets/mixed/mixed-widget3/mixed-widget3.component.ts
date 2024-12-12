@@ -172,6 +172,7 @@ export class MixedWidget3Component implements OnInit {
     this.requestTransporterAdvance.controls["estimatedRefuelDate"].setValue(this.todayDate);
     this.getCorporateMappedListByDealerId(this.fuelDealerId);
     this.addFormRequestAdvance();
+    this.getFuelStaffIdByfuelDealerId(this.fuelDealerId);
     this.cd.detectChanges()
   }
   

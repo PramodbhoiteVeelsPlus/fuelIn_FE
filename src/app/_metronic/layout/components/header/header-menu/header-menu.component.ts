@@ -6,6 +6,7 @@ import { LayoutService } from '../../../core/layout.service';
 import { StatsService } from 'src/app/_metronic/partials/content/widgets/stats/stats.services';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import moment from 'moment';
 
 @Component({
   selector: 'app-header-menu',
@@ -34,6 +35,18 @@ export class HeaderMenuComponent implements OnInit {
   modalRefCancel: any;
   closeResult: string;
   fuelDealerId: any;
+  primeDealerStatus: any;
+  personId: any;
+  firstName: any;
+  lastName: any;
+  mobileNumber: any;
+  email: any;
+  state: any;
+  brandName: any;
+  isUpdateLite: boolean = false;
+  fuelDealerConversionId: any;
+  userName: string;
+
   constructor(private router: Router, private layout: LayoutService, private layoutInit: LayoutInitService, 
     private post: StatsService,
     public cd: ChangeDetectorRef,private modalService: NgbModal,) {}
@@ -44,6 +57,15 @@ export class HeaderMenuComponent implements OnInit {
       this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
       this.veelsplusCorporate = element.veelsPlusCorporateID;
       this.accessGroup = element.accessGroupId;
+      this.primeDealerStatus = element.primeDealerStatus;
+      this.personId = element.personId;
+      this.firstName  = element.firstName
+      this.lastName = element.lastName
+      this.mobileNumber = element.phone1;
+      this.email = element.email1;
+      this.state = element.state;
+      this.brandName = element.brandName;
+      this.userName = element.firstName +' '+element.lastName;
       this.getCorporateById(this.veelsplusCorporate)
       if (element.accessGroupId == '7') {
         this.isAdmin = true;
@@ -53,7 +75,7 @@ export class HeaderMenuComponent implements OnInit {
         this.isTransporter = true;
         this.isAdmin = false;
         this.isDealer = false;
-      }else if (element.accessGroupId == '12' || element.accessGroupId == '14') {
+      }else if (element.accessGroupId == '12' || element.accessGroupId == '14' || element.accessGroupId == '19') {
         this.isDealer = true;
         this.isAdmin = false;
         this.isTransporter = false;
@@ -63,6 +85,7 @@ export class HeaderMenuComponent implements OnInit {
         this.isTransporter = false;
         this.router.navigate(['/auth/login']);
       }
+      this.getReqInfoByPersonId()
       this.cd.detectChanges();
     } else {
       this.router.navigate(['/auth/login'])
@@ -129,10 +152,6 @@ export class HeaderMenuComponent implements OnInit {
     this.referForm.reset();
     this.modalRefCancel.close('close')
   }
-  
-  calculateMenuItemCssClass(url: string): string {
-    return checkIsActive(this.router.url, url) ? 'active' : '';
-  }
 
   setBaseLayoutType(layoutType: LayoutType) {
     this.layoutInit.setBaseLayoutType(layoutType);
@@ -179,25 +198,63 @@ export class HeaderMenuComponent implements OnInit {
         }
       })
   }
+
+  cofirmToUpdate(cancelReq: any) {
+    this.modalRefCancel = this.modalService.open(cancelReq)
+    this.modalRefCancel.result.then((result: any) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason: any) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });    
+  }
+
+  requestForLiteToPrime(){
+    let data = {
+      fuelDealerConversionPreAccessGroupId: this.accessGroup,
+      fuelDealerConversionCurrentAccessGroupId: this.accessGroup,
+      fuelDealerConversionStatus:"PROGRESS",
+      fuelDealerConversionPersonId:this.personId,
+      fuelDealerConversionCreatedBy:this.personId,
+      convertedAt: moment(new Date()).format('YYYY-MM-DD'),
+      convertedByPersonId: this.personId,
+      fuelDealerConversionCreatedAt:moment(new Date()).format('YYYY-MM-DD'),
+      userName:this.firstName +' '+this.lastName,
+      companyName:this.companyName,
+      mobileNumber:this.mobileNumber,
+      city: this.city,
+      email:this.email,
+      state: this.state,
+      fuelDealerId: this.fuelDealerId,
+      fuelDealerConversionId: this.fuelDealerConversionId,
+      oilCompany: this.brandName,
+    }
+    // console.log(data)
+    this.post.requestForLiteToPrimePOST(data)
+    .subscribe(res=>{
+      alert(res.msg)
+      this.modalRefCancel.close('close')
+      
+      // this.logout();
+
+    })
+  }
+  
+  getReqInfoByPersonId(){
+    let data = {
+      fuelDealerConversionPersonId:this.personId
+    }
+    this.post.getReqInfoByPersonIdPOST(data)
+    .subscribe(res=>{
+      if(res.data.length){
+        this.fuelDealerConversionId = res.data[0].fuelDealerConversionId
+        if(res.data[0].fuelDealerConversionStatus == "PROGRESS" || res.data[0].fuelDealerConversionStatus == "ACCEPT"){
+          this.isUpdateLite = true;
+
+        }else{
+          this.isUpdateLite = false;
+        }
+      }
+    })
+  }
 }
 
-const getCurrentUrl = (pathname: string): string => {
-  return pathname.split(/[?#]/)[0];
-};
-
-const checkIsActive = (pathname: string, url: string) => {
-  const current = getCurrentUrl(pathname);
-  if (!current || !url) {
-    return false;
-  }
-
-  if (current === url) {
-    return true;
-  }
-
-  if (current.indexOf(url) > -1) {
-    return true;
-  }
-
-  return false;
-};

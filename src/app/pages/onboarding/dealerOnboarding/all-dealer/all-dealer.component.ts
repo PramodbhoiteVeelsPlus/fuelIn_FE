@@ -25,7 +25,7 @@ export class AllDealerComponent {
         this.isTransporter = true;
         this.isAdmin = false;
         this.isDealer = false;
-      }else if (element.accessGroupId == '12' || element.accessGroupId == '14') {
+      }else if (element.accessGroupId == '12' || element.accessGroupId == '14' || element.accessGroupId == '19') {
         this.isDealer = true;
         this.isAdmin = false;
         this.isTransporter = false;

@@ -161,7 +161,7 @@
 
                 <div class="col col-xl-12 col-lg-12">
                   <div class="table-responsive mb-0">
-                    <table class="table table-centered table-nowrap">
+                    <table class="table table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
                       <thead style="border-width: 1px; border-color: #000;">
                         <tr>
                           <th style="border-width: 1px; border-color: #000;">Khata </th>
@@ -172,38 +172,38 @@
                         </tr>
                       </thead>
                       <tbody *ngFor="let vehicleList of customerVehicleList; let i = index;">
-                        <tr style="cursor: pointer;"
+                        <tr style="cursor: pointer;border: 1px solid black;"
                           (click)="getvehicleDetailsForCR(vehicleList.fuelDealerCustomerMapId,vehicleList.vehicleNumber,vehicleList.idfuelCreditVehicle,vehicleList.mappingPreviousStatus,vehicleList.mappingCompanyName,vehicleList.companyName)">
 
                           <td *ngIf="vehicleList.mappingPreviousStatus == 'TRUE'"
-                            style="border-width: 1px; border-color: #000;">
+                            style="border: 1px solid black;">
                             <input type="text" class="form-control" [(ngModel)]="vehicleList.mappingCompanyName"
                               [ngModelOptions]="{standalone: true}" placeholder="Khata Name" disabled />
 
                           </td>
                           <td *ngIf="vehicleList.mappingPreviousStatus == 'FALSE'"
-                            style="border-width: 1px; border-color: #000;">
+                            style="border: 1px solid black;">
                             <input type="text" class="form-control" [(ngModel)]="vehicleList.companyName"
                               [ngModelOptions]="{standalone: true}" placeholder="Khata Name" disabled />
 
                           </td>
                           <td *ngIf="vehicleList.mappingPreviousStatus == 'FALSE'"
-                            style="border-width: 1px; border-color: #000;">
+                            style="border: 1px solid black;">
                             <input type="text" class="form-control" [(ngModel)]="vehicleList.hostName"
                               [ngModelOptions]="{standalone: true}" placeholder="person name" disabled />
 
                           </td>
                           <td *ngIf="vehicleList.mappingPreviousStatus == 'TRUE'"
-                            style="border-width: 1px; border-color: #000;">
+                            style="border: 1px solid black;">
                             <input type="text" class="form-control" [(ngModel)]="vehicleList.mappingCustomerName"
                               [ngModelOptions]="{standalone: true}" placeholder="person name" disabled />
 
                           </td>
-                          <td style="border-width: 1px; border-color: #000;">
+                          <td style="border: 1px solid black;">
                             <input type="text" class="form-control" [(ngModel)]="vehicleList.hostPhone"
                               [ngModelOptions]="{standalone: true}" placeholder="phone number" disabled />
                           </td>
-                          <td style="border-width: 1px; border-color: #000;">
+                          <td style="border: 1px solid black;">
                             {{vehicleList.manualNumberStart}} - {{vehicleList.manualNumberEnd}}
                           </td>
 

@@ -129,10 +129,12 @@ export class CustloginComponent {
               var element = JSON.parse(localStorage.getItem("element") || '{}');
               if (res.element.accessGroupId == 12) {
                 this.getDealerIdByPhone(element.phone1);
+              } 
+              if(res.element.accessGroupId == 14){
+                this.getAccessByPersonId(element.personId)
               }
               // this.post.checkUrlForRefresh('login')
-              this.getAccessByPersonId(element.personId)
-              // this.getDealerIdByPhone(element.phone1);
+              this.getDealerIdByPhone(element.phone1);
               this.modalRefer = this.modalService.open(refer)
               this.modalRefer.result.then((result: any) => {
                 this.closeResult = `Closed with: ${result}`;

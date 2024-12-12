@@ -81,14 +81,11 @@ export class AdvanceTablesWidget1Component {
   accountNumber: any;
   beneficiaryName: any;
   ifscCode: any;
-  searchBoxAllCustomerList:FormControl = new FormControl();
-  searchTermAllCustomerList: any="";
+  searchBoxAllCustomerList: FormControl = new FormControl();
+  searchTermAllCustomerList: any = "";
   p: number = 1;
   p1: number = 1;
   total: number = 0;
-
-
-
 
   constructor(private post: Adv_TablesService, private excelService: ExcelService,
     private modalService: NgbModal,
@@ -279,7 +276,7 @@ export class AdvanceTablesWidget1Component {
       })
   }
 
-  addVendorOnboarding(info:any) {
+  addVendorOnboarding(info: any) {
     this.spinner.show();
     let data = {
       vendorDetailsId: info.vendorDetailsId,
@@ -315,47 +312,47 @@ export class AdvanceTablesWidget1Component {
   searchAllCustomerList1() {
     this.searchBoxAllCustomerList.valueChanges
       // .distinctUntilChanged()
-      .subscribe((termAllCustomerList:any) => {
+      .subscribe((termAllCustomerList: any) => {
         this.searchTermAllCustomerList = termAllCustomerList;
         this.searchAllCustomerList();
       })
   }
 
   searchAllCustomerList() {
-    let term = this.searchTermAllCustomerList;  
-    this.getVishUserCustList2 = this.getVishUserCustList3.filter(function (res:any) {
+    let term = this.searchTermAllCustomerList;
+    this.getVishUserCustList2 = this.getVishUserCustList3.filter(function (res: any) {
+      return res.vishUserFirstName.indexOf(term) >= 0;
+    });
+    if (this.getVishUserCustList2.length == 0) {
+      term = this.searchTermAllCustomerList;
+      this.getVishUserCustList2 = this.getVishUserCustList3.filter(function (res: any) {
         return res.vishUserFirstName.indexOf(term) >= 0;
-      });  
-      if(this.getVishUserCustList2.length == 0){
-        term = this.searchTermAllCustomerList;
-        this.getVishUserCustList2 = this.getVishUserCustList3.filter(function (res:any) {
-          return res.vishUserFirstName.indexOf(term) >= 0;
-        });
-      }  
-      if(this.getVishUserCustList2.length == 0){
-        term = this.searchTermAllCustomerList;
-        this.getVishUserCustList2 = this.getVishUserCustList3.filter(function (res:any) {
-          return res.vishUserLastName.indexOf(term) >= 0;
-        });
-      }  
-      if(this.getVishUserCustList2.length == 0){
-        term = this.searchTermAllCustomerList;
-        this.getVishUserCustList2 = this.getVishUserCustList3.filter(function (res:any) {
-          return res.vishUserMobile.indexOf(term) >= 0;
-        });
-      }  
-      if(this.getVishUserCustList2.length == 0){
-        term = this.searchTermAllCustomerList;
-        this.getVishUserCustList2 = this.getVishUserCustList3.filter(function (res:any) {
-          return res.vishUserMail.indexOf(term) >= 0;
-        });
-      }  
-      if(this.getVishUserCustList2.length == 0){
-        term = this.searchTermAllCustomerList;
-        this.getVishUserCustList2 = this.getVishUserCustList3.filter(function (res:any) {
-          return res.vishUserCreatedBy.indexOf(term) >= 0;
-        });
-      }
-    
+      });
+    }
+    if (this.getVishUserCustList2.length == 0) {
+      term = this.searchTermAllCustomerList;
+      this.getVishUserCustList2 = this.getVishUserCustList3.filter(function (res: any) {
+        return res.vishUserLastName.indexOf(term) >= 0;
+      });
+    }
+    if (this.getVishUserCustList2.length == 0) {
+      term = this.searchTermAllCustomerList;
+      this.getVishUserCustList2 = this.getVishUserCustList3.filter(function (res: any) {
+        return res.vishUserMobile.indexOf(term) >= 0;
+      });
+    }
+    if (this.getVishUserCustList2.length == 0) {
+      term = this.searchTermAllCustomerList;
+      this.getVishUserCustList2 = this.getVishUserCustList3.filter(function (res: any) {
+        return res.vishUserMail.indexOf(term) >= 0;
+      });
+    }
+    if (this.getVishUserCustList2.length == 0) {
+      term = this.searchTermAllCustomerList;
+      this.getVishUserCustList2 = this.getVishUserCustList3.filter(function (res: any) {
+        return res.vishUserCreatedBy.indexOf(term) >= 0;
+      });
+    }
+
   }
 }

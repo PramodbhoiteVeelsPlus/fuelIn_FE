@@ -7,6 +7,7 @@ import { StatsService } from '../stats.services';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import moment from 'moment';
 import { CreditRequest } from 'src/app/pages/dealer/credit/creditRequest.modal';
+import { MixedService } from '../../mixed/mixed.services';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -115,7 +116,7 @@ export class StatsWidget16Component {
   autoManualNumber: any;
   productInfo: any = [];
   dealerLoginVPId: any;
-  loginSQLCorporateId: any;
+  dealerCorporateId: any;
   settingRate: any;
   allProductPriceList: any = [];
   acceesGroup: any;
@@ -154,15 +155,19 @@ export class StatsWidget16Component {
   indexFuelCr: number;
   closeRequestDate = moment(new Date()).format("DD-MM-YYYY");
   fuelDealerStaffId: any;
-  isBalance1: boolean;
-  isCRQUANTITY: boolean;
-  isQUANTITY: boolean;
+  isBalance1: boolean = false;
+  isCRQUANTITY: boolean = false;
+  isQUANTITY: boolean = false;
   fleetStatus: any;
-  dealerCorporateId: any;
+  isTable: boolean = false;
+  isTable1: boolean = false;
+  isTable2: boolean = false;
+  isVehicleViewed: boolean = false;
 
   constructor(
     private modalService: NgbModal,
     private post: StatsService,
+    private post1: MixedService,
     private spinner: NgxSpinnerService,
     config: NgbDatepickerConfig,
     private excelService: ExcelService,
@@ -186,7 +191,7 @@ export class StatsWidget16Component {
     this.requestTransporter.controls["estimatedRefuelDate"].setValue(this.todayDate);
     this.requestTransporter.controls["priceDate"].setValue(this.todayDate);
     this.getfuelDealerIdByCorporateId(this.dealerCorporateId);
-    // this.getCorporateById(this.dealerLoginVPId);
+    this.getFuelStaffIdByfuelDealerId(this.fuelDealerId);
     this.cd.detectChanges()
   }
 
@@ -204,8 +209,8 @@ export class StatsWidget16Component {
   //           // this.headerName1 = res.data[0].companyName;
   //           // this.headerName2 = res.data[0].address1 + ', ' + res.data[0].address2 + ', ' + res.data[0].city;
   //           // this.headerName3 = res.data[0].state + '-' + res.data[0].pin + '  ' + "GST: " + res.data[0].GSTNumber;
-  //           this.loginSQLCorporateId = res.data[0].corporateId;
-  //           this.getfuelDealerIdByCorporateId(this.loginSQLCorporateId);
+  //           this.dealerCorporateId = res.data[0].corporateId;
+  //           this.getfuelDealerIdByCorporateId(this.dealerCorporateId);
   //           // this.searchDealerBycustomerId(this.customerId)
   //           this.cd.detectChanges()
   //         }
@@ -846,7 +851,7 @@ export class StatsWidget16Component {
                       driverId: this.personId,
                       fleetNoFleetStatus: this.fleetStatus,
                       fuelProductId: this.requestTransporter.value.productName,
-                      fuelCorporateId: this.loginSQLCorporateId,
+                      fuelCorporateId: this.dealerCorporateId,
                       creditSource: "DEALER",
                       PANno: this.PANno,
                       transDateTime: moment(this.closeRequestDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
@@ -873,7 +878,7 @@ export class StatsWidget16Component {
                           this.spinner.hide();
                           if (this.autoManualStatus == 'TRUE') {
                             this.myInputField.nativeElement.focus();
-                            // this.updateAssignedAutoManualNumber('CREDIT', res.count)
+                            this.updateAssignedAutoManualNumber('CREDIT', res.count)
 
                             // this.getFuelCreditRequestByfuelDealerId(this.fuelDealerId);
                             this.isCRQUANTITY = false;
@@ -883,7 +888,7 @@ export class StatsWidget16Component {
                             this.requestTransporter.controls["requestType"].setValue("showamount");
                             this.requestTransporter.controls["requestTypeCR"].setValue("showamount");
                             // this.closeRequestForm.controls["requestTypeClose"].setValue("showamount");
-                            // this.checkDates(this.fuelDealerCorpMapIdNew, moment(this.requestTransporter.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
+                            this.checkDates(this.fuelDealerCorpMapIdNew, moment(this.requestTransporter.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
                             this.requestTransporter.controls["manualCrNumber"].setValue("");
                             this.requestTransporter.controls["actualCreditQuantity"].setValue("");
                             this.requestTransporter.controls["actualCreditAmount"].setValue("");
@@ -902,7 +907,7 @@ export class StatsWidget16Component {
                             this.requestTransporter.controls["requestTypeCR"].setValue("showamount");
                             // this.closeRequestForm.controls["requestTypeClose"].setValue("showamount");
                             this.addFormRequest();
-                            // this.checkDates(this.fuelDealerCorpMapIdNew, moment(this.requestTransporter.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
+                            this.checkDates(this.fuelDealerCorpMapIdNew, moment(this.requestTransporter.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
                             this.requestTransporter.controls["manualCrNumber"].setValue("");
                             this.requestTransporter.controls["actualCreditQuantity"].setValue("");
                             this.requestTransporter.controls["actualCreditAmount"].setValue("");
@@ -974,12 +979,12 @@ export class StatsWidget16Component {
                         reqQuantity: this.requestTransporter.value.reqQuantity,
                         reqCreditAmount: this.requestTransporter.value.reqCreditAmount,
                         estimatedRefuelDate: moment(this.requestTransporter.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
-                        fuelDealerId: this.fuelDealerSQLId,
+                        fuelDealerId: this.fuelDealerId,
                         vehicleId: this.vehicleId,
                         driverId: this.personId,
                         fleetNoFleetStatus: this.fleetStatus,
                         fuelProductId: this.requestTransporter.value.productName,
-                        fuelCorporateId: this.loginSQLCorporateId,
+                        fuelCorporateId: this.dealerCorporateId,
                         creditSource: "DEALER",
                         PANno: this.PANno,
                         transDateTime: moment(this.closeRequestDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
@@ -1008,7 +1013,7 @@ export class StatsWidget16Component {
                             this.isBalance1 = false;
                             this.spinner.hide();
                             if (this.autoManualStatus == 'TRUE') {
-                              // this.updateAssignedAutoManualNumber('CREDIT', res.count)
+                              this.updateAssignedAutoManualNumber('CREDIT', res.count)
 
                               // this.getFuelCreditRequestByfuelDealerId(this.fuelDealerId);
                               this.isCRQUANTITY = false;
@@ -1018,7 +1023,7 @@ export class StatsWidget16Component {
                               this.requestTransporter.controls["requestType"].setValue("showamount");
                               this.requestTransporter.controls["requestTypeCR"].setValue("showamount");
                               // this.closeRequestForm.controls["requestTypeClose"].setValue("showamount");
-                              // this.checkDates(this.fuelDealerCorpMapIdNew, moment(this.requestTransporter.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
+                              this.checkDates(this.fuelDealerCorpMapIdNew, moment(this.requestTransporter.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
                               this.requestTransporter.controls["manualCrNumber"].setValue("");
                               this.requestTransporter.controls["actualCreditQuantity"].setValue("");
                               this.requestTransporter.controls["actualCreditAmount"].setValue("");
@@ -1035,7 +1040,7 @@ export class StatsWidget16Component {
                               this.requestTransporter.controls["requestTypeCR"].setValue("showamount");
                               // this.closeRequestForm.controls["requestTypeClose"].setValue("showamount");
                               this.addFormRequest();
-                              // this.checkDates(this.fuelDealerCorpMapIdNew, moment(this.requestTransporter.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
+                              this.checkDates(this.fuelDealerCorpMapIdNew, moment(this.requestTransporter.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
                               this.requestTransporter.controls["manualCrNumber"].setValue("");
                               this.requestTransporter.controls["actualCreditQuantity"].setValue("");
                               this.requestTransporter.controls["actualCreditAmount"].setValue("");
@@ -1043,8 +1048,6 @@ export class StatsWidget16Component {
                               this.requestTransporter.controls["reqQuantity"].setValue("");
                               this.requestTransporter.controls["vehicleNumber"].setValue("");
                             }
-
-
                           }
 
                           else {
@@ -1122,4 +1125,117 @@ export class StatsWidget16Component {
     this.count = this.count - 1;
     this.modalRef.close()
   }
+  
+  updateAssignedAutoManualNumber(status: string,count: any){
+    if(status =="CREDIT"){
+      let data = {
+        fuelDealerId:this.fuelDealerId,
+        assignedAutoManualNumber:Number(this.autoManualNumber) + Number(count),
+        status:status
+      }
+      this.post1.updateAssignedAutoManualNumberPOST(data)
+      .subscribe(res=>{ 
+        // this.getfuelDealerIdByCorporateIdForCalling(status)
+    
+      })
+    } else {
+      
+    }
+      }
+      
+   checkDates(mapId: any,date: any){ 
+    if(this.islastCRDate = true){       
+   this.spinner.show();
+    var g1 = new Date(date);
+   var g2 = new Date(this.lastCRDate);
+   if (g1.getTime() >= g2.getTime()){
+       const oneDay = 24 * 60 * 60 * 1000
+       const diffDays = Math.round(Math.abs((g1.getTime() - g2.getTime()) / oneDay))
+       this.spinner.hide();
+       this.fuelDealerCorpMapIdNew = ''
+       this.isSelected1 = false
+       this.requestTransporter1.controls["selectedCorp"].setValue('');
+       this.isTable = false
+       this.isTable1 = false
+       this.isTable2 = false
+       this.lastCRDate = ''
+       this.isVehicleViewed = false
+     }
+   else {        
+       let data={
+         mapId:mapId,
+         date:date
+       }
+       this.post1.updateLastCRDateByMapIdPOST(data)
+       .subscribe(res => {
+           if (res.status == 'OK') {
+             this.spinner.hide();
+             this.updateDateByMapId(mapId)
+             this.isSelected1 = false
+             this.requestTransporter1.controls["selectedCorp"].setValue('');
+             this.isTable = false
+             this.isTable1 = false
+             this.isTable2 = false
+             this.lastCRDate = ''
+             this.isVehicleViewed = false
+           } else {
+             this.spinner.hide();
+             this.updateDateByMapId(mapId)
+             this.isSelected1 = false
+             this.requestTransporter1.controls["selectedCorp"].setValue('');
+             this.isTable = false
+             this.isTable1 = false
+             this.isTable2 = false
+             this.lastCRDate = ''
+             this.isVehicleViewed = false
+           }
+         });
+    } 
+   }else{
+     this.spinner.show();
+     let data={
+       mapId:mapId,
+       date:date
+     }
+     this.post1.updateLastCRDateByMapIdPOST(data)
+     .subscribe(res => {
+         if (res.status == 'OK') {
+           this.updateDateByMapId(mapId)
+           this.spinner.hide();           
+             this.isSelected1 = false
+             this.requestTransporter1.controls["selectedCorp"].setValue('');
+             this.isTable = false
+             this.isTable1 = false
+             this.isTable2 = false
+             this.lastCRDate = ''
+             this.isVehicleViewed = false
+         } else {
+           this.spinner.hide();
+           this.updateDateByMapId(mapId)
+             this.isSelected1 = false
+             this.requestTransporter1.controls["selectedCorp"].setValue('');
+             this.isTable = false
+             this.isTable1 = false
+             this.isTable2 = false
+             this.lastCRDate = ''
+             this.isVehicleViewed = false
+         }
+       });
+   }
+
+ }
+ 
+updateDateByMapId(fuelDealerCustomMapId: any){
+  let data1 = {
+    mapId:fuelDealerCustomMapId
+  }
+  this.post1.updateLastCRDateMapIdWisePOST(data1)
+  .subscribe((res) => {
+    if (res.status == 'OK') {
+      this.fuelDealerCorpMapIdNew = ''
+    }else{
+      this.fuelDealerCorpMapIdNew = ''
+    }
+  })
+}
 }

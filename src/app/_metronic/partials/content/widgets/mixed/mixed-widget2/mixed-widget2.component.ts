@@ -145,6 +145,11 @@ export class MixedWidget2Component implements OnInit {
   isCRQUANTITY: boolean = false;
   isQUANTITY: boolean = false;
   @ViewChild('content') content: any;
+  fuelDealerStaffId: any;
+  isVehicleViewed: boolean = false;
+  isTable1: boolean = false;
+  isTable: boolean = false;
+  isTable2: boolean = false;
 
   constructor(
     private post: MixedService,
@@ -178,10 +183,26 @@ export class MixedWidget2Component implements OnInit {
     this.getCorporateMappedListByDealerId(this.fuelDealerId);
     this.getLubricants(this.fuelDealerId)
     this.addFormRequestLube();
+    this.getFuelStaffIdByfuelDealerId(this.fuelDealerId);
     this.cd.detectChanges()
   }
 
 
+  getFuelStaffIdByfuelDealerId(fuelDealerId: any) {
+    let data = {
+      fuelDealerId: fuelDealerId,
+    }
+    this.post1.getFuelStaffIdByfuelDealerIdPOST(data)
+      .subscribe(res => {
+        if (res) {
+          this.fuelDealerStaffId = res.data[0].fuelDealerStaffId;
+        }
+        else {
+
+        }
+      })
+  }
+  
   getFlagStatusByCorpId(corporateIdForFlag: any) {
     let data = {
       corporateIdForFlag: corporateIdForFlag
@@ -502,7 +523,7 @@ export class MixedWidget2Component implements OnInit {
                         lubricantsTransactionTime: moment(new Date()).format('hh:mm:ss'),
                         creditAmount: this.requestTransporterLube.value.actualCreditAmount,
                         transactionStatus: 'COMPLETE',
-                        // fuelDealerStaffId: this.fuelDealerStaffId,
+                        fuelDealerStaffId: this.fuelDealerStaffId,
                         actualCreditQuantity: this.requestTransporterLube.value.actualCreditQuantity,
                         createdAt: moment(this.todayDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
                         productRate: this.requestTransporterLube.value.productPrice,
@@ -521,12 +542,12 @@ export class MixedWidget2Component implements OnInit {
                             this.spinner.hide();
                             if (this.autoManualStatus == 'TRUE') {
                               this.myInputField.nativeElement.focus();
-                              // this.updateAssignedAutoManualNumber('LUBE', res.count)
+                              this.updateAssignedAutoManualNumber('LUBE', res.count)
                               this.isCRQUANTITY = false;
                               this.isQUANTITY = false;
                               this.CreditRequestDataLube = [];
                               this.countLube = 1;
-                              // this.checkDates(this.fuelDealerCorpMapIdNew, moment(this.requestTransporterLube.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
+                              this.checkDates(this.fuelDealerCorpMapIdNew, moment(this.requestTransporterLube.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
                               this.requestTransporterLube.controls["requestType"].setValue("showamount");
                               this.requestTransporterLube.controls["requestTypeCR"].setValue("showamount");
                               this.requestTransporterLube.controls["priceDate"].setValue(this.todayDate);
@@ -541,7 +562,7 @@ export class MixedWidget2Component implements OnInit {
                               this.CreditRequestDataLube = [];
                               this.countLube = 1;
                               this.addFormRequestLube()
-                              // this.checkDates(this.fuelDealerCorpMapIdNew,moment(this.requestTransporterLube.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
+                              this.checkDates(this.fuelDealerCorpMapIdNew,moment(this.requestTransporterLube.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
                               this.requestTransporterLube.controls["requestType"].setValue("showamount");
                               this.requestTransporterLube.controls["requestTypeCR"].setValue("showamount");
                               this.requestTransporterLube.controls["priceDate"].setValue(this.todayDate);
@@ -620,7 +641,7 @@ export class MixedWidget2Component implements OnInit {
                           lubricantsTransactionTime: moment(new Date()).format('hh:mm:ss'),
                           creditAmount: this.requestTransporterLube.value.actualCreditAmount,
                           transactionStatus: 'COMPLETE',
-                          // fuelDealerStaffId: this.fuelDealerStaffId,
+                          fuelDealerStaffId: this.fuelDealerStaffId,
                           actualCreditQuantity: this.requestTransporterLube.value.actualCreditQuantity,
                           createdAt: moment(this.todayDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
                           productRate: this.requestTransporterLube.value.productPrice,
@@ -640,8 +661,8 @@ export class MixedWidget2Component implements OnInit {
                               this.spinner.hide();
                               if (this.autoManualStatus == 'TRUE') {
                                 this.myInputField.nativeElement.focus();
-                                // this.updateAssignedAutoManualNumber('LUBE',res.count)
-                                // this.checkDates(this.fuelDealerCorpMapIdNew,moment(this.requestTransporterLube.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
+                                this.updateAssignedAutoManualNumber('LUBE',res.count)
+                                this.checkDates(this.fuelDealerCorpMapIdNew,moment(this.requestTransporterLube.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
                                 this.isCRQUANTITY = false;
                                 this.isQUANTITY = false;
                                 this.CreditRequestDataLube = [];
@@ -655,7 +676,7 @@ export class MixedWidget2Component implements OnInit {
                                 this.requestTransporterLube.controls["creditAmount"].setValue("");
                                 this.requestTransporterLube.controls["vehicleNumber"].setValue("");
                               } else {
-                                // this.checkDates(this.fuelDealerCorpMapIdNew,moment(this.requestTransporterLube.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
+                                this.checkDates(this.fuelDealerCorpMapIdNew,moment(this.requestTransporterLube.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
                                 this.isCRQUANTITY = false;
                                 this.isQUANTITY = false;
                                 this.CreditRequestDataLube = [];
@@ -753,4 +774,106 @@ export class MixedWidget2Component implements OnInit {
       }
     );
   }
+  
+  checkDates(mapId: any,date: any){ 
+    if(this.islastCRDate = true){       
+   this.spinner.show();
+    var g1 = new Date(date);
+   var g2 = new Date(this.lastCRDate);
+   if (g1.getTime() >= g2.getTime()){
+       const oneDay = 24 * 60 * 60 * 1000
+       const diffDays = Math.round(Math.abs((g1.getTime() - g2.getTime()) / oneDay))
+       this.spinner.hide();
+       this.fuelDealerCorpMapIdNew = ''
+       this.lastCRDate = ''
+       this.isVehicleViewed = false
+     }
+   else {        
+       let data={
+         mapId:mapId,
+         date:date
+       }
+       this.post.updateLastCRDateByMapIdPOST(data)
+       .subscribe(res => {
+           if (res.status == 'OK') {
+             this.spinner.hide();
+             this.updateDateByMapId(mapId)
+             this.isTable = false
+             this.isTable1 = false
+             this.isTable2 = false
+             this.lastCRDate = ''
+             this.isVehicleViewed = false
+           } else {
+             this.spinner.hide();
+             this.updateDateByMapId(mapId)
+             this.isTable = false
+             this.isTable1 = false
+             this.isTable2 = false
+             this.lastCRDate = ''
+             this.isVehicleViewed = false
+           }
+         });
+    } 
+   }else{
+     this.spinner.show();
+     let data={
+       mapId:mapId,
+       date:date
+     }
+     this.post.updateLastCRDateByMapIdPOST(data)
+     .subscribe(res => {
+         if (res.status == 'OK') {
+           this.updateDateByMapId(mapId)
+           this.spinner.hide();   
+             this.isTable = false
+             this.isTable1 = false
+             this.isTable2 = false
+             this.lastCRDate = ''
+             this.isVehicleViewed = false
+         } else {
+           this.spinner.hide();
+           this.updateDateByMapId(mapId)
+             this.isTable = false
+             this.isTable1 = false
+             this.isTable2 = false
+             this.lastCRDate = ''
+             this.isVehicleViewed = false
+         }
+       });
+   }
+
+ }
+ 
+updateDateByMapId(fuelDealerCustomMapId: any){
+  let data1 = {
+    mapId:fuelDealerCustomMapId
+  }
+  this.post.updateLastCRDateMapIdWisePOST(data1)
+  .subscribe((res) => {
+    if (res.status == 'OK') {
+      this.fuelDealerCorpMapIdNew = ''
+    }else{
+      this.fuelDealerCorpMapIdNew = ''
+    }
+  })
+}
+
+updateAssignedAutoManualNumber(status: string,count: any){
+ if (status =="LUBE") {
+    let data = {
+      fuelDealerId:this.fuelDealerId,
+      assignedAutoManualNumber:Number(this.autoManualNumberLube) + Number(count),
+      status:status
+    }
+    this.post.updateAssignedAutoManualNumberPOST(data)
+    .subscribe(res=>{
+      // this.getfuelDealerIdByCorporateIdForCalling(status)
+  
+    })
+    
+  } 
+  else {
+    
+  }
+    }
 }
