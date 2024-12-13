@@ -154,6 +154,7 @@ export class ListsWidget4Component {
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+    var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
     this.accessGroup = element.accessGroupId;
     this.brandName = dealerData.brandName;
     // this.getLubeTaxDetailsByDealerIdPost()
@@ -173,6 +174,11 @@ export class ListsWidget4Component {
       this.lubeTaxBill = true;
     }
     this.getCustomerAllDataById(dealerData.customerId)
+
+    if(this.accessGroup == '14'){
+      this.getCustomerAllDataById(managerData.customerId)
+
+    }
     this.cd.detectChanges()
   }
   

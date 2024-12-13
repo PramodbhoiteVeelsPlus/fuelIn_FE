@@ -69,7 +69,6 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 
 export class BaseTablesWidget13Component implements OnInit {
   fuelDealerId: any;
-  dealerData: any;
   dealerCorporateId: any;
   accessGroup: any;
   companyName: any;
@@ -117,15 +116,15 @@ export class BaseTablesWidget13Component implements OnInit {
     this.staffDetailsStaff = JSON.parse(localStorage.getItem('staffDetailsStaff') || '{}');
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
-    this.dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
     this.accessGroup = element.accessGroupId;
-    this.companyName = this.dealerData.companyName
-    this.oilCompanyName = this.dealerData.brandName
-    this.state = this.dealerData.state
-    this.pin = this.dealerData.pin
-    this.city = this.dealerData.city
-    this.phone1 = this.dealerData.hostPhone
+    this.companyName = dealerData.companyName
+    this.oilCompanyName = dealerData.brandName
+    this.state = dealerData.state
+    this.pin = dealerData.pin
+    this.city = dealerData.city
+    this.phone1 = dealerData.hostPhone
     if (!this.staffDetailsStaff.length) {
       this.getStaffDetails(this.fuelDealerId)
     } else {

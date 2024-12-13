@@ -69,7 +69,7 @@ export class BaseTablesWidget9Component implements OnInit {
   fuelDealerId: any;
   dealerCorporateId: any;
   accessGroup: any;
-  acceesGroup: number;
+  acceesGroup: any;
   dealerView: boolean;
   ownerName: string;
   dealerMobile: any;
@@ -180,6 +180,7 @@ export class BaseTablesWidget9Component implements OnInit {
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+    var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
     this.accessGroup = element.accessGroupId;
     if (this.acceesGroup == 12 || this.acceesGroup == 19) {
@@ -201,6 +202,12 @@ export class BaseTablesWidget9Component implements OnInit {
     this.phone1 = dealerData.hostPhone
     this.fromGSTNo = dealerData.GSTNumber
     this.fromAddress = dealerData.address1
+    if(this.acceesGroup == '14'){
+      this.fromName = managerData.companyName
+      this.fromState = managerData.state
+      this.fromAddress = managerData.address1
+      this.fromGSTNo = managerData.GSTNumber
+    }
     this.headerName1 = this.companyName;
     // this.headerName2 = res.data[0].address1+', '+res.data[0].address2+', '+res.data[0].city;
     this.headerName3 = this.state + '-' + this.pin + '  ' + "GST: " + this.GSTNumber;
@@ -543,13 +550,13 @@ export class BaseTablesWidget9Component implements OnInit {
     }
 
     let data = {
-      fromGSTNo: this.fromGSTNo,
+      fromGSTNo: this.fromGSTNo,  //for manager
       invoiceNo: this.invoiceNo,
       hsnCode: this.hsnCode,
       invoiceDate: new Date(),
-      fromState: this.fromState,
-      fromName: this.fromName,
-      fromAddress: this.fromAddress,
+      fromState: this.fromState,  //
+      fromName: this.fromName,   //
+      fromAddress: this.fromAddress,   //
       toName: this.name,
       toAddress: this.toAddress,
       toGSTNo: this.toGSTNo,

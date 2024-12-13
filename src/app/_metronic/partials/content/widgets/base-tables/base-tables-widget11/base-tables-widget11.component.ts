@@ -148,6 +148,7 @@ export class BaseTablesWidget11Component implements OnInit {
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
+    var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
     this.accessGroup = element.accessGroupId;
     this.companyName = dealerData.companyName
     this.oilCompanyName = dealerData.brandName
@@ -157,6 +158,16 @@ export class BaseTablesWidget11Component implements OnInit {
     this.phone1 = dealerData.hostPhone
     this.address1 = dealerData.address1
     this.address2 = dealerData.address2
+    if(this.accessGroup == '14'){
+      this.companyName = managerData.companyName
+      this.oilCompanyName = managerData.brandName
+      this.state = managerData.state
+      this.pin = managerData.pin
+      this.city = managerData.city
+      this.phone1 = managerData.hostPhone
+      this.address1 = managerData.address1
+      this.address2 = managerData.address2
+    }
     // this.getFCInvoiceList()
     const id = this.route.snapshot.paramMap.get('id');
     const id1 = this.route.snapshot.paramMap.get('id1');
@@ -638,6 +649,9 @@ export class BaseTablesWidget11Component implements OnInit {
           }
           this.GSTNumber = res.data[0].fromGSTNo;
           this.custMapId = res.data[0].custMapId;
+          this.address1 = res.data[0].fromAddress;
+          this.address2 = res.data[0].address2;
+          this.state = res.data[0].fromState;
           this.invoiceCode = res.data[0].invoiceCode;
           this.manualInvoiceNumber = res.data[0].invoiceNo
           if (res.data[0].hsnCode && res.data[0].hsnCode != "undefined") {

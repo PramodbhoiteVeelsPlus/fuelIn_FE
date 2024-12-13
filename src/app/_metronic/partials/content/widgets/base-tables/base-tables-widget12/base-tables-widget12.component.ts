@@ -67,7 +67,6 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 
 export class BaseTablesWidget12Component implements OnInit {
   fuelDealerId: any;
-  dealerData: any;
   dealerCorporateId: any;
   accessGroup: any;
   companyName: any;
@@ -99,6 +98,11 @@ export class BaseTablesWidget12Component implements OnInit {
   p: number = 1;
   p1: number = 1;
   total: number = 0;
+  fromName: any;
+  fromState: any;
+  fromAddress: any;
+  fromGSTNo: any;
+  loginVPId: any;
 
   constructor(
     private post: BaseTablesService,
@@ -113,15 +117,23 @@ export class BaseTablesWidget12Component implements OnInit {
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
-    this.dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
+    var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
     this.accessGroup = element.accessGroupId;
-    this.companyName = this.dealerData.companyName
-    this.oilCompanyName = this.dealerData.brandName
-    this.state = this.dealerData.state
-    this.pin = this.dealerData.pin
-    this.city = this.dealerData.city
-    this.phone1 = this.dealerData.hostPhone
+    this.companyName = dealerData.companyName
+    this.oilCompanyName = dealerData.brandName
+    this.state = dealerData.state
+    this.pin = dealerData.pin
+    this.city = dealerData.city
+    this.phone1 = dealerData.hostPhone
+    this.loginVPId = element.veelsPlusCorporateID;
+    if(this.accessGroup == '14'){
+      this.fromName = managerData.companyName
+      this.fromState = managerData.state
+      this.fromAddress = managerData.address1
+      this.fromGSTNo = managerData.GSTNumber
+    }
     this.getDetailsCrDaysLimit(this.fuelDealerId)
     // this.getManagerMobileByfuelDealerId(this.fuelDealerId)
     this.cd.detectChanges()
@@ -241,11 +253,11 @@ createInvoiceByCrDays(){
     endDate:moment(this.searchDiscountForm.value.endDateCrDays,["DD-MM-YYYY"]).format("YYYY-MM-DD"),
     invoiceType:this.searchDiscountForm.value.setInvoiceTypeCrDays,
     custData: this.customerDetails,
-    // fromName: this.fromName,
-    // fromState: this.fromState,
-    // fromGSTNo: this.fromGSTNo,
-    // fromAddress: this.fromAddress,
-    // fuelInvoiceCreatedBy: this.loginVPId,
+    fromName: this.fromName,
+    fromState: this.fromState,
+    fromGSTNo: this.fromGSTNo,
+    fromAddress: this.fromAddress,
+    fuelInvoiceCreatedBy: this.loginVPId,
   }
     this.post.addSavedInvoiceByCrDaysPOST(data).subscribe((res) =>{
       if(res.status=="OK"){

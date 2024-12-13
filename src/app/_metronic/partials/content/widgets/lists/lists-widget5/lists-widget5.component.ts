@@ -519,6 +519,7 @@ export class ListsWidget5Component {
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
     this.dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+    var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
     this.accessGroup = element.accessGroupId;
     this.managerName = element.firstName + ' ' + element.lastName;
     this.pumpCity = this.dealerData.city
@@ -534,6 +535,10 @@ export class ListsWidget5Component {
     this.city = this.dealerData.city
     this.phone1 = this.dealerData.hostPhone
     this.createdBy = element.firstName + ' ' + element.lastName
+    if(this.accessGroup == '14'){
+      this.city = managerData.city
+      this.companyName = managerData.companyName
+    }
     if(this.post.setRoute == "Book"){
       this.addShiftForm.controls["date"].setValue(moment(this.post.setDate).format("DD-MM-YYYY"))   
       this.requestTransporterLube.controls["estimatedRefuelDate"].setValue(moment(this.post.setDate).format("DD-MM-YYYY"));

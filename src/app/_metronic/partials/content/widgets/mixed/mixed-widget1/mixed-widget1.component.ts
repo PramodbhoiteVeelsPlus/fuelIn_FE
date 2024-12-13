@@ -147,6 +147,10 @@ export class MixedWidget1Component {
   isTable: boolean = false;
   isTable1: boolean = false;
   isTable2: boolean = false;
+  personId: any;
+  smsMappingStatus: any;
+  emailMappingStatus: any;
+  PANno: any;
 
   constructor(
     private post: MixedService,
@@ -412,8 +416,10 @@ export class MixedWidget1Component {
               this.idfuelCreditVehicle = res.data[0].idfuelCreditVehicle
             if (res.data[0].mappingPreviousStatus == 'TRUE') {
               this.mappingCompanyNameForVehicle = res.data[0].mappingCompanyName
+              this.getCorporateInfoByfuelDealerCustomerMapId(res.data[0].mappingCompanyName);
             } else {
               this.mappingCompanyNameForVehicle = res.data[0].companyName
+              this.getCorporateInfoByfuelDealerCustomerMapId(res.data[0].companyName);
             }
             this.cd.detectChanges()
           } else {
@@ -423,6 +429,29 @@ export class MixedWidget1Component {
           }
 
 
+        } else {
+        }
+      });
+
+  }
+
+  getCorporateInfoByfuelDealerCustomerMapId(customerName: any) {
+
+    let data = {
+      fuelDealerId: this.fuelDealerId,
+      customerName: customerName,
+    }
+    this.post.getCorporateInfoByfuelDealerCustomerMapIdPOST(data)
+      .subscribe(res => {
+        if (res) {
+          this.fuelDealerCorpMapIdNew = res.data[0].fuelDealerCustomerMapId;
+          this.rangeFrom = res.data[0].manualNumberStart;
+          this.rangeTo = res.data[0].manualNumberEnd;
+          this.getFlagStatusByCorpId(res.data[0].corporateId)
+          this.personId = res.data[0].personId;
+          this.smsMappingStatus = res.data[0].isMappingSMS;
+          this.emailMappingStatus = res.data[0].isMappingEmail;
+          this.PANno = res.data[0].PANno;
         } else {
         }
       });
@@ -616,7 +645,7 @@ export class MixedWidget1Component {
                 fuelProductId: this.requestVehicle.value.productName,
                 lubricantsFuelCorporateId: this.dealerCorporateId,
                 creditSource: "DEALER",
-                // PANno: this.PANno,
+                PANno: this.PANno,
                 vehicleTransDateTime: moment(this.closeRequestDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
                 vehicleTransactionTime: moment(new Date()).format('hh:mm:ss'),
                 creditAmount: this.requestVehicle.value.actualCreditAmount,
@@ -625,9 +654,9 @@ export class MixedWidget1Component {
                 actualCreditQuantity: this.requestVehicle.value.actualCreditQuantity,
                 createdAt: moment(this.todayDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
                 productRate: this.requestVehicle.value.productPrice,
-                // personId: this.personId,
-                // isMappingSMS: this.smsMappingStatus,
-                // isMappingEmail: this.emailMappingStatus,
+                personId: this.personId,
+                isMappingSMS: this.smsMappingStatus,
+                isMappingEmail: this.emailMappingStatus,
                 autoManualStatus: this.autoManualStatus
               }
               this.post.addCreditVehicleReqByDealerForAllPOST(data)
@@ -684,87 +713,88 @@ export class MixedWidget1Component {
           if (this.requestVehicle.value.actualCreditAmount || this.requestVehicle.value.reqQuantity) {
             if (this.vehicleMapId) {
               if (this.requestVehicle.value.productName) {
-                // if (this.personId) {
-                if (this.requestVehicle.value.manualCrNumber) {
+                if (this.personId) {
+                  if (this.requestVehicle.value.manualCrNumber) {
 
-                  let data = {
-                    idfuelCreditVehicle: this.idfuelCreditVehicle,
-                    fuelVehicleNumber: this.fuelVehicleNumber,
-                    customerVehicleList: this.CreditVehicleRequestDataArray,
-                    fuelDealerVehicleMapId: this.vehicleMapId,
-                    estimatedRefuelDate: moment(this.requestVehicle.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
-                    fuelDealerId: this.fuelDealerId,
-                    fuelProductId: this.requestVehicle.value.productName,
-                    lubricantsFuelCorporateId: this.dealerCorporateId,
-                    creditSource: "DEALER",
-                    // PANno: this.PANno,
-                    vehicleTransDateTime: moment(this.closeRequestDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
-                    vehicleTransactionTime: moment(new Date()).format('hh:mm:ss'),
-                    transactionStatus: 'COMPLETE',
-                    fuelDealerStaffId: this.fuelDealerStaffId,
-                    createdAt: moment(this.todayDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
-                    productRate: this.requestVehicle.value.productPrice,
-                    manualCrNumber: this.requestVehicle.value.manualCrNumber,
-                    // personId: this.personId,
-                    managerVPPersonId: this.managerVPPersonId,
-                    managerPersonId: this.managerPersonId,
-                    managerName: this.managerName,
-                    autoManualStatus: this.autoManualStatus
-                  }
-                  this.post.addCreditVehicleReqByDealerForAllPOST(data)
-                    .subscribe(res => {
-                      if (res.status == "OK") {
-                        alert("Credit Added Sccessfully!");
-                        this.isBalance1 = false;
-                        this.spinner.hide();
-                        this.myInputField.nativeElement.focus();
-                        this.checkDates(this.vehicleMapId, moment(this.requestVehicle.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
-                        this.isCRQUANTITY = false;
-                        this.isQUANTITY = false;
-                        this.countVehicle = 1;
-                        if (this.autoManualStatus == 'TRUE') {
+                    let data = {
+                      idfuelCreditVehicle: this.idfuelCreditVehicle,
+                      fuelVehicleNumber: this.fuelVehicleNumber,
+                      customerVehicleList: this.CreditVehicleRequestDataArray,
+                      fuelDealerVehicleMapId: this.vehicleMapId,
+                      estimatedRefuelDate: moment(this.requestVehicle.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+                      fuelDealerId: this.fuelDealerId,
+                      fuelProductId: this.requestVehicle.value.productName,
+                      lubricantsFuelCorporateId: this.dealerCorporateId,
+                      creditSource: "DEALER",
+                      PANno: this.PANno,
+                      vehicleTransDateTime: moment(this.closeRequestDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+                      vehicleTransactionTime: moment(new Date()).format('hh:mm:ss'),
+                      transactionStatus: 'COMPLETE',
+                      fuelDealerStaffId: this.fuelDealerStaffId,
+                      createdAt: moment(this.todayDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+                      productRate: this.requestVehicle.value.productPrice,
+                      manualCrNumber: this.requestVehicle.value.manualCrNumber,
+                      personId: this.personId,
+                      managerVPPersonId: this.managerVPPersonId,
+                      managerPersonId: this.managerPersonId,
+                      managerName: this.managerName,
+                      autoManualStatus: this.autoManualStatus
+                    }
+                    this.post.addCreditVehicleReqByDealerForAllPOST(data)
+                      .subscribe(res => {
+                        if (res.status == "OK") {
+                          alert("Credit Added Sccessfully!");
+                          this.isBalance1 = false;
+                          this.spinner.hide();
+                          this.myInputField.nativeElement.focus();
+                          this.checkDates(this.vehicleMapId, moment(this.requestVehicle.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
+                          this.isCRQUANTITY = false;
+                          this.isQUANTITY = false;
+                          this.countVehicle = 1;
+                          if (this.autoManualStatus == 'TRUE') {
 
-                          this.updateAssignedAutoManualNumber('VEHICLE', res.count)
+                            this.updateAssignedAutoManualNumber('VEHICLE', res.count)
+                          } else {
+                            this.addFormVehicleRequest()
+                          }
+                          this.requestVehicle.controls["requestType"].setValue("showamount");
+                          // this.closeRequestForm.controls["requestTypeClose"].setValue("showamount");
                         } else {
-                          this.addFormVehicleRequest()
+                          alert("Error to Created Request!")
+                          this.isBalance1 = false;
+                          this.spinner.hide();
                         }
-                        this.requestVehicle.controls["requestType"].setValue("showamount");
-                        // this.closeRequestForm.controls["requestTypeClose"].setValue("showamount");
-                      } else {
-                        alert("Error to Created Request!")
-                        this.isBalance1 = false;
-                        this.spinner.hide();
-                      }
 
-                    })
+                      })
 
-                } else {
-                  alert("Please Enter Bill / Ref Number!")
+                  } else {
+                    alert("Please Enter Bill / Ref Number!")
+                    this.spinner.hide();
+                  }
+                }
+                else {
                   this.spinner.hide();
                 }
               }
-              // else {                
-              //   this.spinner.hide();
-              // }
+              else {
+                alert("Please Select Product!")
+                this.spinner.hide();
+              }
             }
             else {
-              alert("Please Select Product!")
+              alert("Please Select Customer!")
               this.spinner.hide();
             }
           }
           else {
-            alert("Please Select Customer!")
+            alert("Please Enter Amount & Quantity..!")
             this.spinner.hide();
           }
         }
         else {
-          alert("Please Enter Amount & Quantity..!")
+          alert("Please Select Date!")
           this.spinner.hide();
         }
-      }
-      else {
-        alert("Please Select Date!")
-        this.spinner.hide();
       }
     }
   }
@@ -804,93 +834,93 @@ export class MixedWidget1Component {
     this.modalRef.close()
 
   }
-  
-  checkDates(mapId: any,date: any){ 
-    if(this.islastCRDate = true){       
-   this.spinner.show();
-    var g1 = new Date(date);
-   var g2 = new Date(this.lastCRDate);
-   if (g1.getTime() >= g2.getTime()){
-       const oneDay = 24 * 60 * 60 * 1000
-       const diffDays = Math.round(Math.abs((g1.getTime() - g2.getTime()) / oneDay))
-       this.spinner.hide();
-       this.fuelDealerCorpMapIdNew = ''
-       this.lastCRDate = ''
-       this.isVehicleViewed = false
-       this.requestVehicle.controls["vehicleNumber"].setValue('');
-     }
-   else {        
-       let data={
-         mapId:mapId,
-         date:date
-       }
-       this.post.updateLastCRDateByMapIdPOST(data)
-       .subscribe(res => {
-           if (res.status == 'OK') {
-             this.spinner.hide();
-             this.updateDateByMapId(mapId)
-             this.isTable = false
-             this.isTable1 = false
-             this.isTable2 = false
-             this.lastCRDate = ''
-             this.isVehicleViewed = false
-             this.requestVehicle.controls["vehicleNumber"].setValue('');
-           } else {
-             this.spinner.hide();
-             this.updateDateByMapId(mapId)
-             this.isTable = false
-             this.isTable1 = false
-             this.isTable2 = false
-             this.lastCRDate = ''
-             this.isVehicleViewed = false
-             this.requestVehicle.controls["vehicleNumber"].setValue('');
-           }
-         });
-    } 
-   }else{
-     this.spinner.show();
-     let data={
-       mapId:mapId,
-       date:date
-     }
-     this.post.updateLastCRDateByMapIdPOST(data)
-     .subscribe(res => {
-         if (res.status == 'OK') {
-           this.updateDateByMapId(mapId)
-           this.spinner.hide();   
-             this.isTable = false
-             this.isTable1 = false
-             this.isTable2 = false
-             this.lastCRDate = ''
-             this.isVehicleViewed = false
-             this.requestVehicle.controls["vehicleNumber"].setValue('');
-         } else {
-           this.spinner.hide();
-           this.updateDateByMapId(mapId)
-             this.isTable = false
-             this.isTable1 = false
-             this.isTable2 = false
-             this.lastCRDate = ''
-             this.isVehicleViewed = false
-             this.requestVehicle.controls["vehicleNumber"].setValue('');
-         }
-       });
-   }
 
- }
- 
-updateDateByMapId(fuelDealerCustomMapId: any){
-  let data1 = {
-    mapId:fuelDealerCustomMapId
-  }
-  this.post.updateLastCRDateMapIdWisePOST(data1)
-  .subscribe((res) => {
-    if (res.status == 'OK') {
-      this.fuelDealerCorpMapIdNew = ''
-    }else{
-      this.fuelDealerCorpMapIdNew = ''
+  checkDates(mapId: any, date: any) {
+    if (this.islastCRDate = true) {
+      this.spinner.show();
+      var g1 = new Date(date);
+      var g2 = new Date(this.lastCRDate);
+      if (g1.getTime() >= g2.getTime()) {
+        const oneDay = 24 * 60 * 60 * 1000
+        const diffDays = Math.round(Math.abs((g1.getTime() - g2.getTime()) / oneDay))
+        this.spinner.hide();
+        this.fuelDealerCorpMapIdNew = ''
+        this.lastCRDate = ''
+        this.isVehicleViewed = false
+        this.requestVehicle.controls["vehicleNumber"].setValue('');
+      }
+      else {
+        let data = {
+          mapId: mapId,
+          date: date
+        }
+        this.post.updateLastCRDateByMapIdPOST(data)
+          .subscribe(res => {
+            if (res.status == 'OK') {
+              this.spinner.hide();
+              this.updateDateByMapId(mapId)
+              this.isTable = false
+              this.isTable1 = false
+              this.isTable2 = false
+              this.lastCRDate = ''
+              this.isVehicleViewed = false
+              this.requestVehicle.controls["vehicleNumber"].setValue('');
+            } else {
+              this.spinner.hide();
+              this.updateDateByMapId(mapId)
+              this.isTable = false
+              this.isTable1 = false
+              this.isTable2 = false
+              this.lastCRDate = ''
+              this.isVehicleViewed = false
+              this.requestVehicle.controls["vehicleNumber"].setValue('');
+            }
+          });
+      }
+    } else {
+      this.spinner.show();
+      let data = {
+        mapId: mapId,
+        date: date
+      }
+      this.post.updateLastCRDateByMapIdPOST(data)
+        .subscribe(res => {
+          if (res.status == 'OK') {
+            this.updateDateByMapId(mapId)
+            this.spinner.hide();
+            this.isTable = false
+            this.isTable1 = false
+            this.isTable2 = false
+            this.lastCRDate = ''
+            this.isVehicleViewed = false
+            this.requestVehicle.controls["vehicleNumber"].setValue('');
+          } else {
+            this.spinner.hide();
+            this.updateDateByMapId(mapId)
+            this.isTable = false
+            this.isTable1 = false
+            this.isTable2 = false
+            this.lastCRDate = ''
+            this.isVehicleViewed = false
+            this.requestVehicle.controls["vehicleNumber"].setValue('');
+          }
+        });
     }
-  })
-}
+
+  }
+
+  updateDateByMapId(fuelDealerCustomMapId: any) {
+    let data1 = {
+      mapId: fuelDealerCustomMapId
+    }
+    this.post.updateLastCRDateMapIdWisePOST(data1)
+      .subscribe((res) => {
+        if (res.status == 'OK') {
+          this.fuelDealerCorpMapIdNew = ''
+        } else {
+          this.fuelDealerCorpMapIdNew = ''
+        }
+      })
+  }
 }
 

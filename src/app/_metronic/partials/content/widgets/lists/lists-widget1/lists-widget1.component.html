@@ -75,7 +75,7 @@
       <div class="row" *ngIf="isSelected1">
         <div class="col-lg-12">
           <div class="table-responsive mb-0">
-            <table class="table table-centered table-nowrap">
+            <table class="table table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
               <thead>
                 <tr>
                   <th style="text-align: left;border-width: 1px; border-color: #000;">Khata Name</th>
@@ -88,15 +88,15 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="text-align: left;border-width: 1px; border-color: #000;">{{dealerName}}</td>
-                  <td style="text-align: left;border-width: 1px; border-color: #000;">
+                  <td style="text-align: left; border: 1px solid black;">{{dealerName}}</td>
+                  <td style="text-align: left; border: 1px solid black;">
                     {{personName}}
                   </td>
-                  <td style="text-align: left;border-width: 1px; border-color: #000;"> {{personPhone1}} </td>
-                  <td style="text-align: left;border-width: 1px; border-color: #000;">
+                  <td style="text-align: left; border: 1px solid black;"> {{personPhone1}} </td>
+                  <td style="text-align: left; border: 1px solid black;">
                     {{rangeFrom}} - {{rangeTo}}
                   </td>
-                  <td style="text-align: left;border-width: 1px; border-color: #000;">
+                  <td style="text-align: left; border: 1px solid black;">
                     <span *ngIf=" gstNumber != 'undefined'">
                       <b *ngIf="gstNumber !='' ">{{gstNumber}}</b></span>
                     <!-- <span *ngIf="fuelStaffAccess.outstanding == 'TRUE'">
@@ -105,7 +105,7 @@
                     </span> -->
                   </td>
 
-                  <td style="text-align: left;border-width: 1px; border-color: #000;">
+                  <td style="text-align: left; border: 1px solid black;">
                     <span *ngIf="viewCorpFlag.length" class="col-md-1" (click)="viewFlag(viewFlagModel)"
                       style="color:red;cursor:pointer;font-size: x-large;">
                       <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>

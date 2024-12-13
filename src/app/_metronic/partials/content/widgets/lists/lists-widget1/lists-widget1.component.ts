@@ -173,7 +173,12 @@ export class ListsWidget1Component {
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
     this.accessGroup = element.accessGroupId;
+    this.managerVPPersonId = element.veelsPlusId
+    this.managerPersonId = element.personId
+    this.managerName = element.firstName + ' '+ element.lastName
+    this.requestTransporterLubeTax.controls["estimatedRefuelDate"].setValue(this.todayDate);
     this.getCorporateMappedListByDealerId(this.fuelDealerId)
+    this.getFuelStaffIdByfuelDealerId(this.fuelDealerId)
     this.getLubricants(this.fuelDealerId)
     this.getGSTDetails()
     this.addFormRequestLubeTax()
@@ -189,6 +194,20 @@ export class ListsWidget1Component {
     else {
       alert("Please select customer")
     }
+  }
+
+  getFuelStaffIdByfuelDealerId(fuelDealerId: any) {
+    let data = {
+      fuelDealerId: fuelDealerId,
+    }
+    this.post1.getFuelStaffIdByfuelDealerIdPOST(data)
+      .subscribe(res => {
+        if (res) {
+          this.fuelDealerStaffId = res.data[0].fuelDealerStaffId;
+        }
+        else {
+        }
+      })
   }
 
   getCorporateInfoByfuelDealerCustomerMapId(customerName: any) {
@@ -524,7 +543,7 @@ export class ListsWidget1Component {
                           lubricantsTransactionTime: moment(new Date()).format('hh:mm:ss'),
                           creditAmount: this.requestTransporterLubeTax.value.actualCreditAmount,
                           transactionStatus: 'COMPLETE',
-                          // fuelDealerStaffId: this.fuelDealerStaffId,
+                          fuelDealerStaffId: this.fuelDealerStaffId,
                           actualCreditQuantity: this.requestTransporterLubeTax.value.actualCreditQuantity,
                           createdAt: moment(this.todayDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
                           productRate: this.requestTransporterLubeTax.value.productPrice,
@@ -608,7 +627,7 @@ export class ListsWidget1Component {
 
 
     } else {
-      if (this.acceesGroup == 14) {
+      if (this.accessGroup == 14) {
 
         this.spinner.show()
 
@@ -628,7 +647,7 @@ export class ListsWidget1Component {
                           // reqCreditAmount: this.requestTransporterLubeTax.value.reqCreditAmount,
                           estimatedRefuelDate: moment(this.requestTransporterLubeTax.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
                           fuelDealerId: this.fuelDealerSQLId,
-                          lubricantsFuelCorporateId: this.loginCorporateId,
+                          lubricantsFuelCorporateId: this.dealerCorporateId,
                           creditSource: "DEALER",
                           PANno: this.PANno,
                           lubricantsTransDateTime: moment(this.closeRequestDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
