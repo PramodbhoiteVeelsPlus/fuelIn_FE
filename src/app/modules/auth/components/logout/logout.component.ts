@@ -19,6 +19,7 @@ export class LogoutComponent implements OnInit {
   logout() {
     localStorage.setItem('isLoggedin', 'false');
     localStorage.clear();
-    this.router.navigate(['/auth/login'])
+    // this.router.navigate(['/auth/login'])
+    this.router.navigate(['/auth/home'])
   }
 }
