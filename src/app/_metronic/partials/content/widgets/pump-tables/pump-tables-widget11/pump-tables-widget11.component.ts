@@ -150,6 +150,9 @@ export class PumpTablesWidget11Component implements OnInit {
   shiftTimeId: any;
   endDate: string;
   startDate: string;
+  companyName: any;
+  brandName: any;
+  city: any;
 
   constructor(
     private modalService: NgbModal,
@@ -169,6 +172,7 @@ export class PumpTablesWidget11Component implements OnInit {
     this.dateView =  JSON.parse(localStorage.getItem('reportDate') || '{}');
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     var dealerData = JSON.parse(localStorage.getItem("dealerData") || '{}');
+    var managerData = JSON.parse(localStorage.getItem("managerData") || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
     this.userId = element.userId;
@@ -179,6 +183,18 @@ export class PumpTablesWidget11Component implements OnInit {
     this.managerPersonId = element.personId
     this.userName = element.firstName + ' ' + element.lastName;
     this.acceesGroup = element.accessGroupId;
+    if(this.acceesGroup == '12'){
+      this.companyName = dealerData.companyName
+      this.brandName = dealerData.brandName
+      this.city = dealerData.city
+    }
+  
+    if(this.acceesGroup == '14'){
+      this.companyName = managerData.companyName
+      this.brandName = managerData.brandName
+      this.city = managerData.city
+    }
+
     this.shiftTimeId =  this.post2.shiftTimeId;
     this.endDate =  this.post2.endDate;
     this.startDate =  this.post2.startDate;
@@ -210,7 +226,7 @@ getAllOngoingShift(fuelDealerId: any) {
   // console.log(fuelDealerId)
     this.selectedDate = moment(this.addShiftForm.value.date, ["DD-MM-YYYY"]).format("YYYY-MM-DD")
     const data = {
-      dealerId: this.fuelDealerId,    //Need this.fuelDealerId "PRAMOD"
+      dealerId: fuelDealerId,    //Need this.fuelDealerId "PRAMOD"
       date:moment(this.addShiftForm.value.date, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),  
   
     };

@@ -69,6 +69,7 @@ export class PumpTablesService {
     private getShiftDetailsByDealerIdURL = this.baseURL + 'shiftList/getShiftDetailsByDealerId';
     private getDUNZDetailsByShiftIdURL = this.baseURL + 'shiftList/getDUNZDetailsByShiftId';
     private updateTallySalesForPortalURL = this.baseURL + 'shiftList/updateTallySalesForPortal';
+    private getCustomerByCustomerIdURL = this.baseURL + 'customer/getCustomerBycustomerId';
 
     
 
@@ -483,6 +484,16 @@ export class PumpTablesService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.updateTallySalesForPortalURL, body, {
+            headers: headers
+        })
+    }
+    
+    // getCustomerByCustomerIdURL
+    getCustomerByCustomerIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getCustomerByCustomerIdURL, body, {
             headers: headers
         })
     }
