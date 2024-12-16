@@ -114,7 +114,8 @@ export class FeedsWidget14Component implements OnInit {
   addFormRequestBanking() {
     this.countAddArray = this.countAddArray + 1;
     this.addAccountingArrayData = new addAccountingArray();
-    this.addAccountingArray.push(this.addAccountingArrayData);    
+    this.addAccountingArray.push(this.addAccountingArrayData);  
+    this.cd.detectChanges();  
   }
   
  getBankDetailsByDealerId(fuelDealerId: any) { 

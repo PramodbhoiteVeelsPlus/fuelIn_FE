@@ -121,32 +121,10 @@ export class Modal3Component {
     this.managerPersonId = element.personId;
     this.managerName = element.firstName + " " + element.lastName;
     this.personId = element.personId
-    // this.getCorporateById(this.dealerLoginVPId);
-    this.getfuelDealerIdByCorporateId(this.dealerCorporateId)
+    // this.getfuelDealerIdByCorporateId(this.dealerCorporateId)
     this.cd.detectChanges()
   }
 
-  // get Corporate DetailsBy VP-Id
-  getCorporateById(dealerLoginVPId: any) {
-    let data = {
-      veelsplusCorporateId: dealerLoginVPId
-    }
-    this.post.getBranchByVeelsplusIdPOST(data)
-      .subscribe(res => {
-        if (res.status == "OK") {
-          if (res.data.length) {
-            this.loginSQLCorporateId = res.data[0].corporateId;
-            this.FuelVeelsVendorID = res.data[0].veelsPlusBranchID;
-            this.getfuelDealerIdByCorporateId(this.loginSQLCorporateId);
-            this.cd.detectChanges()
-          }
-          else {
-            alert("Getting Error..! Please Logout & Login again..!")
-            this.cd.detectChanges()
-          }
-        }
-      })
-  }
 
   // getfuelDealerIdByDealerCorporateId
   getfuelDealerIdByCorporateId(dealerCorporateId: any) {
@@ -210,7 +188,7 @@ export class Modal3Component {
         accountNumber:this.addBankDetailsForm.value.accountNumber,
         accountHolderName:this.addBankDetailsForm.value.accountHolderName,
         ifsc:this.addBankDetailsForm.value.ifsc,
-        corporateId:this.loginSQLCorporateId,
+        corporateId:this.dealerCorporateId,
         branchName:this.addBankDetailsForm.value.branchName,
         bankName:this.addBankDetailsForm.value.bankName,
         phone:this.addBankDetailsForm.value.AccPhoneNumber,

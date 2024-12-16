@@ -182,8 +182,10 @@ export class PumpTablesWidget2Component implements OnInit {
             }
           }
           this.spinner.hide();
+          this.cd.detectChanges()
         } else {
           this.spinner.hide();
+          this.cd.detectChanges()
         }
       })
   }

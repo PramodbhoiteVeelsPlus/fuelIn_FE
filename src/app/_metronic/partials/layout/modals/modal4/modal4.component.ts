@@ -177,7 +177,7 @@ export class Modal4Component {
             terminalType: this.terminal.value.terminalType,
             terminalName: this.terminal.value.terminalName,
             fuelDealerId: this.fuelDealerId,
-            corporateId: this.loginSQLCorporateId,
+            corporateId: this.dealerCorporateId,
             attachedAccountId: this.terminal.value.accountDetails,
             attachedBankName: this.terminal.value.bankName,
           }

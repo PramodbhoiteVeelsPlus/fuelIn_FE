@@ -186,7 +186,7 @@ export class StatsWidget17Component {
     var dealerData = JSON.parse(localStorage.getItem("dealerData") || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
     this.dealerMobile = element.phone1;
-    this.dealerCorporateId = dealerData.corporateId;
+    this.dealerCorporateId = localStorage.getItem('dealerCorporateId');
     this.corporateLoginVPId = element.veelsPlusCorporateID;
     this.personIdLoginUser = element.personId
     this.dealerLoginVPId = element.veelsPlusCorporateID;
