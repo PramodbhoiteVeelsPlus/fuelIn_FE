@@ -193,6 +193,8 @@ import { PumpTablesWidget11Component } from './pump-tables/pump-tables-widget11/
 import { NgxPrintModule } from 'ngx-print';
 import { BaseTablesWidget14Component } from './base-tables/base-tables-widget14/base-tables-widget14.component';
 import { PumpTablesWidget12Component } from './pump-tables/pump-tables-widget12/pump-tables-widget12.component';
+import { TransTablesWidget1Component } from './trans-tables/trans-tables-widget1/trans-tables-widget1.component';
+import { TransTablesWidget2Component } from './trans-tables/trans-tables-widget2 copy/trans-tables-widget2.component';
 // import { routes } from 'src/app/app-routing.module';
 @NgModule({
   declarations: [
@@ -377,7 +379,9 @@ import { PumpTablesWidget12Component } from './pump-tables/pump-tables-widget12/
     PumpTablesWidget10Component,
     PumpTablesWidget11Component,
     BaseTablesWidget14Component,
-    PumpTablesWidget12Component
+    PumpTablesWidget12Component,
+    TransTablesWidget1Component,
+    TransTablesWidget2Component
   ],
   imports: [
     ReactiveFormsModule,
@@ -580,7 +584,9 @@ import { PumpTablesWidget12Component } from './pump-tables/pump-tables-widget12/
     PumpTablesWidget10Component,
     PumpTablesWidget11Component,
     BaseTablesWidget14Component,
-    PumpTablesWidget12Component
+    PumpTablesWidget12Component,
+    TransTablesWidget1Component,
+    TransTablesWidget2Component
   ],
   providers: [NgbActiveModal, ExcelService],
 })

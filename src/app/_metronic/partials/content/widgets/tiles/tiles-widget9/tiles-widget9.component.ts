@@ -52,7 +52,6 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   }
 }
 
-
 @Component({
   selector: 'app-tiles-widget9',
   templateUrl: './tiles-widget9.component.html',

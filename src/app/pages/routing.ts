@@ -108,6 +108,10 @@ const Routing: Routes = [
     loadChildren: () => import('./dealer/pump/pump.module').then((m) => m.PumpModule),
   },
   {
+    path: 'transporter',
+    loadChildren: () => import('./Transporter/transporter.module').then((m) => m.TransporterModule),
+  },
+  {
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full',

@@ -1,0 +1,185 @@
+<div class="container-fluid" *ngIf="accessGroup == 2 ||accessGroup == 16 ">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+
+          <form [formGroup]="basicTrip">
+            <div class="row">
+              <!-- <div class="col-md-1"></div> -->
+              <div class="col-md-12">
+                <div class="table-responsive mb-0">
+                  <table class="table table-centered table-nowrap">
+                    <thead class="table-light">
+                      <tr>
+                        <th style="text-align: left;">
+                        </th>
+                        <th style="text-align: left;">
+                          {{lastMonthYear}}</th>
+                        <th style="text-align: left;">
+                          {{thisMonthYear}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style="text-align: left;"> Fuel Credit
+                          Purchase </td>
+                        <td style="text-align: left;">
+                          <!-- <i
+                                          class="fas fa-rupee-sign" aria-hidden="true"></i> -->
+                          ₹ {{lastMonthPurchase | number:'1.2-2'}}
+                        </td>
+                        <td style="text-align: left;">
+                          <!-- <i
+                                          class="fas fa-rupee-sign" aria-hidden="true"></i> -->
+                          ₹ {{currentMonthPurchase | number:'1.2-2'}}
+                        </td>
+                      </tr>
+                      <!-- <tr>
+                                  <td style="text-align: left;"> 
+                                      Bill Payment
+                                  </td>
+                                  <td style="text-align: left;"> 
+                                          ₹ {{lastMonthBillPayment | number:'1.2-2'}} </td>
+                                  <td style="text-align: left;"> 
+                                          ₹ {{thisMonthBillPayment | number:'1.2-2'}} </td>
+                              </tr> -->
+
+                      <tr *ngIf="isActive == 'YES' && (bothFT || FT)">
+                        <td style="text-align: left;"> FastTag Toll Payments - yes Bank </td>
+                        <td style="text-align: left;"><b>₹</b> {{sumAllprevious | number:'1.2-2'}} </td>
+                        <td style="text-align: left;"><b> ₹</b> {{sumAllcurrent | number:'1.2-2'}} </td>
+                      </tr>
+                      <tr *ngIf="isActive == 'YES' && (bothFT || LQFT)">
+                        <td style="text-align: left;"> FastTag Toll Payments - Livquik </td>
+                        <td style="text-align: left;"><b>₹</b> {{liquikPrevPayment | number:'1.2-2'}} </td>
+                        <td style="text-align: left;"><b> ₹</b> {{livquikPayment | number:'1.2-2'}} </td>
+                      </tr>
+                      <tr *ngIf="isActive == 'YES' ">
+                        <td style="text-align: left;"> Total Trip Expense </td>
+                        <td style="text-align: left;"><b> ₹</b> {{(liquikPrevPayment) + (sumAllprevious) +
+                          (lastMonthBillPayment) + (lastMonthCrSale) | number:'1.2-2'}} </td>
+                        <td style="text-align: left;"><b> ₹</b> {{(livquikPayment) + (sumAllcurrent) +
+                          (thisMonthBillPayment) + (thisMonthCrSale) | number:'1.2-2'}} </td>
+                      </tr>
+                      <tr *ngIf="isActive != 'YES' ">
+                        <td colspan="3">
+                          <b>Get Fastag and earn on your fuel credit transactions. To apply for Fastag, please contact
+                            9825600424 or write to hello.plus</b>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <!-- <div class="col-md-1"></div> -->
+              <div class="col-md-4">
+                <b style="font-size: 17px;">Fuel credit payable:&nbsp;
+                  <span *ngIf='totalOutstanding < 0'>
+                    <!-- <i class="fas fa-rupee-sign" aria-hidden="true"></i> -->
+                    ₹ {{totalOutstanding * (-1) | number:'1.2-2'}} CR
+                  </span>
+                  <span *ngIf='totalOutstanding > 0'>
+                    <!-- <i class="fas fa-rupee-sign" aria-hidden="true"></i> -->
+                    ₹ {{totalOutstanding | number:'1.2-2'}}
+                  </span>
+                  <span *ngIf='totalOutstanding == 0'>
+                    <!-- <i class="fas fa-rupee-sign" aria-hidden="true"></i> -->
+                    ₹ {{totalOutstanding | number:'1.2-2'}}
+                  </span>
+                </b>
+              </div>
+              <!-- <div class="col-md-1"></div> -->
+              <div class="col-md-4">
+                <span *ngIf="isActive == 'YES'&& (bothFT || LQFT)">
+                  <b style="font-size: 17px;">Fastag balance - Livquik:&nbsp;
+                    <!-- <i class="fas fa-rupee-sign" aria-hidden="true"></i> -->
+                    ₹ {{avlBalanceLQ}}
+                  </b>
+                </span>
+              </div>
+              <!-- <div class="col-md-1"></div> -->
+              <div class="col-md-4">
+                <span *ngIf="isActive == 'YES' && (bothFT || FT)">
+                  <b style="font-size: 17px;">Fastag balance-yes Bank:&nbsp;
+                    <!-- <i class="fas fa-rupee-sign" aria-hidden="true"></i> -->
+                    ₹ {{avlBalance}}
+                  </b>
+                </span>
+              </div>
+
+              <!-- <div class="col-md-4">
+                  Fastag balance:
+                  <span *ngIf = "isActive == 'YES'">
+                      <i class="fas fa-rupee-sign" aria-hidden="true"></i> {{avlBalance}} 
+                  </span>
+              </div> -->
+
+            </div>
+            <br>
+          </form>
+
+          <br>
+
+
+ <!-- new tab view -->
+ <div class="row">
+      
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <!-- <h4 class="card-title">Custom Tabs</h4> -->
+        <ul ngbNav #customNav="ngbNav" [activeId]="3" class="nav-tabs nav-tabs-custom nav-justified" style="width: 100%;">
+
+          <li [ngbNavItem]="1" *ngIf = "isCreditPayable || isPurchasePayment">
+              <a ngbNavLink>
+                <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                <span class="d-none d-sm-block" style="font-size: 13.5px;">FUEL CREDIT PAYABLE/ PURCHASE/ PAYMENTS</span>
+              </a>
+              <ng-template ngbNavContent> 
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="2" *ngIf = "isPurchasePayment">
+              <a ngbNavLink>
+                <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                <span class="d-none d-sm-block" style="font-size: 13.5px;">FUEL CREDIT</span>
+              </a>
+              <ng-template ngbNavContent>
+                <app-trans-tables-widget2></app-trans-tables-widget2>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="3" *ngIf = "LQFT || FT">
+              <a ngbNavLink>
+                <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                <span class="d-none d-sm-block"  style="font-size: 13.5px;">FASTAG</span>
+              </a>
+              <ng-template ngbNavContent>
+                  <!-- <app-trans-tables-widget1></app-trans-tables-widget1>  -->
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="4" *ngIf = "FT || bothFT" >
+              <a ngbNavLink>
+                <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                <span class="d-none d-sm-block"  style="font-size: 13.5px;">FASTAG PAYMENT/ RECHARGE</span>
+              </a>
+              <ng-template ngbNavContent>
+                  <!-- <app-trans-tables-widget1></app-trans-tables-widget1>  -->
+              </ng-template>
+            </li>
+        </ul>
+        <div [ngbNavOutlet]="customNav"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- new tab view end -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>

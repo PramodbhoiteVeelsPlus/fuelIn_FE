@@ -1,0 +1,47 @@
+
+<br>
+<div class="row">
+    <!-- <div class="col-md-1"></div> -->
+    <div class="col-md-12">
+        <div class="table-responsive mb-0">
+            <table class="table table-centered table-nowrap">
+                <thead class="table-light">
+                    <tr>
+                        <th style="text-align: left;">
+                        </th>
+                        <th style="text-align: left;">
+                            {{lastMonthYear}}</th>
+                        <th style="text-align: left;">
+                            {{thisMonthYear}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: left;"> Fuel Credit
+                            Purchase </td>
+                        <td style="text-align: left;"> 
+                            <!-- <i
+                                class="fas fa-rupee-sign" aria-hidden="true"></i> -->
+                                ₹ {{lastMonthPurchase | number:'1.2-2'}} </td>
+                        <td style="text-align: left;">
+                             <!-- <i
+                                class="fas fa-rupee-sign" aria-hidden="true"></i> -->
+                                ₹ {{currentMonthPurchase | number:'1.2-2'}} </td>
+                    </tr>
+                    
+            <tr>
+                <td style="text-align: left;"> Fuel Credit Payments </td>
+                <td style="text-align: left;"> 
+                    <!-- <i
+                    class="fas fa-rupee-sign" aria-hidden="true"></i> -->
+                    ₹ {{lastMonthPayment | number:'1.2-2'}} </td>
+            <td style="text-align: left;"> 
+                <!-- <i
+                    class="fas fa-rupee-sign" aria-hidden="true"></i> -->
+                    ₹ {{currentMonthPayment | number:'1.2-2'}} </td>
+            </tr>  
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
