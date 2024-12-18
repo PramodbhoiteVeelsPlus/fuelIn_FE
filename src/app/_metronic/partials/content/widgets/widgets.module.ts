@@ -194,7 +194,11 @@ import { NgxPrintModule } from 'ngx-print';
 import { BaseTablesWidget14Component } from './base-tables/base-tables-widget14/base-tables-widget14.component';
 import { PumpTablesWidget12Component } from './pump-tables/pump-tables-widget12/pump-tables-widget12.component';
 import { TransTablesWidget1Component } from './trans-tables/trans-tables-widget1/trans-tables-widget1.component';
-import { TransTablesWidget2Component } from './trans-tables/trans-tables-widget2 copy/trans-tables-widget2.component';
+import { TransTablesWidget2Component } from './trans-tables/trans-tables-widget2/trans-tables-widget2.component';
+import { TransTablesWidget3Component } from './trans-tables/trans-tables-widget3/trans-tables-widget3.component';
+import { TransTablesWidget4Component } from './trans-tables/trans-tables-widget4/trans-tables-widget4.component';
+import { TransTablesWidget5Component } from './trans-tables/trans-tables-widget5/trans-tables-widget5.component';
+import { TransTablesWidget6Component } from './trans-tables/trans-tables-widget6/trans-tables-widget6.component';
 // import { routes } from 'src/app/app-routing.module';
 @NgModule({
   declarations: [
@@ -381,7 +385,12 @@ import { TransTablesWidget2Component } from './trans-tables/trans-tables-widget2
     BaseTablesWidget14Component,
     PumpTablesWidget12Component,
     TransTablesWidget1Component,
-    TransTablesWidget2Component
+    TransTablesWidget2Component,
+    TransTablesWidget3Component,
+    TransTablesWidget4Component,
+    TransTablesWidget5Component,
+    TransTablesWidget6Component,
+
   ],
   imports: [
     ReactiveFormsModule,
@@ -586,7 +595,11 @@ import { TransTablesWidget2Component } from './trans-tables/trans-tables-widget2
     BaseTablesWidget14Component,
     PumpTablesWidget12Component,
     TransTablesWidget1Component,
-    TransTablesWidget2Component
+    TransTablesWidget2Component,
+    TransTablesWidget3Component,
+    TransTablesWidget4Component,
+    TransTablesWidget5Component,
+    TransTablesWidget6Component,
   ],
   providers: [NgbActiveModal, ExcelService],
 })

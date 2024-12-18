@@ -1,0 +1,101 @@
+<br>
+<div class="row" *ngIf="bothFT || FT">
+    <div class="col-md-6">
+        <div class="col" style="text-align: center; font-size: initial;"> <b> Yes Bank </b> </div>
+        <br>
+        <div class="table-responsive mb-0">
+            <table class="table table-centered table-nowrap">
+                <thead class="table-light">
+                    <tr>
+                        <th style="text-align: left;">
+                        </th>
+                        <th style="text-align: left;">
+                            {{lastMonthYear}}</th>
+                        <th style="text-align: left;">
+                            {{thisMonthYear}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr *ngIf="isActive == 'YES' && (bothFT || FT)">
+                        <td style="text-align: left;"> Total payment</td>
+                        <td style="text-align: left;"><b>₹ </b> {{sumAllprevious | number:'1.2-2'}} </td>
+                        <td style="text-align: left;"><b> ₹ </b> {{sumAllcurrent | number:'1.2-2'}} </td>
+                    </tr>
+
+                    <tr *ngIf="isActive == 'YES' && (bothFT || FT)">
+                        <td style="text-align: left;"> Total Recharge </td>
+                        <td style="text-align: left;"><b> ₹ </b> {{sumAllpreviousRecharge | number:'1.2-2'}} </td>
+                        <td style="text-align: left;"><b> ₹ </b> {{sumAllcurrentRecharge | number:'1.2-2'}} </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-6" *ngIf="LQFT">
+        <div class="col" style="text-align: center; font-size: initial;"><b> Livquik </b></div>
+        <br>
+        <div class="table-responsive mb-0">
+            <table class="table table-centered table-nowrap">
+                <thead class="table-light">
+                    <tr>
+                        <th style="text-align: left;">
+                        </th>
+                        <th style="text-align: left;">
+                            {{lastMonthYear}}</th>
+                        <th style="text-align: left;">
+                            {{thisMonthYear}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="isActive == 'YES' ">
+                        <td style="text-align: left;"> Total payment</td>
+                        <td style="text-align: left;"><b>₹ </b> {{liquikPrevPayment | number:'1.2-2'}} </td>
+                        <td style="text-align: left;"><b> ₹ </b> {{livquikPayment | number:'1.2-2'}} </td>
+                    </tr>
+
+                    <tr *ngIf="isActive == 'YES' ">
+                        <td style="text-align: left;"> Total Recharge </td>
+                        <td style="text-align: left;"><b> ₹ </b> {{livquikPrevRecharge | number:'1.2-2'}} </td>
+                        <td style="text-align: left;"><b> ₹ </b> {{livquikRecharge | number:'1.2-2'}} </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="LQ">
+    <div class="col-md-6">
+        <div class="col" style="text-align: center; font-size: initial;"><b> Livquik </b></div>
+        <br>
+        <div class="table-responsive mb-0">
+            <table class="table table-centered table-nowrap">
+                <thead class="table-light">
+                    <tr>
+                        <th style="text-align: left;">
+                        </th>
+                        <th style="text-align: left;">
+                            {{lastMonthYear}}</th>
+                        <th style="text-align: left;">
+                            {{thisMonthYear}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="isActive == 'YES' ">
+                        <td style="text-align: left;"> Total payment</td>
+                        <td style="text-align: left;"><b>₹ </b> {{liquikPrevPayment | number:'1.2-2'}} </td>
+                        <td style="text-align: left;"><b> ₹ </b> {{livquikPayment | number:'1.2-2'}} </td>
+                    </tr>
+
+                    <tr *ngIf="isActive == 'YES' ">
+                        <td style="text-align: left;"> Total Recharge </td>
+                        <td style="text-align: left;"><b> ₹ </b> {{livquikPrevRecharge | number:'1.2-2'}} </td>
+                        <td style="text-align: left;"><b> ₹ </b> {{livquikRecharge | number:'1.2-2'}} </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

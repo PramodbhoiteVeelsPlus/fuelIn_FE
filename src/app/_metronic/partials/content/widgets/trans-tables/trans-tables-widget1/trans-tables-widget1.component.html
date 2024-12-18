@@ -125,57 +125,60 @@
           <br>
 
 
- <!-- new tab view -->
- <div class="row">
-      
-  <div class="col-lg-12">
-    <div class="card">
-      <div class="card-body">
-        <!-- <h4 class="card-title">Custom Tabs</h4> -->
-        <ul ngbNav #customNav="ngbNav" [activeId]="3" class="nav-tabs nav-tabs-custom nav-justified" style="width: 100%;">
+          <!-- new tab view -->
+          <div class="row">
 
-          <li [ngbNavItem]="1" *ngIf = "isCreditPayable || isPurchasePayment">
-              <a ngbNavLink>
-                <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-                <span class="d-none d-sm-block" style="font-size: 13.5px;">FUEL CREDIT PAYABLE/ PURCHASE/ PAYMENTS</span>
-              </a>
-              <ng-template ngbNavContent> 
-              </ng-template>
-            </li>
-            <li [ngbNavItem]="2" *ngIf = "isPurchasePayment">
-              <a ngbNavLink>
-                <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-                <span class="d-none d-sm-block" style="font-size: 13.5px;">FUEL CREDIT</span>
-              </a>
-              <ng-template ngbNavContent>
-                <app-trans-tables-widget2></app-trans-tables-widget2>
-              </ng-template>
-            </li>
-            <li [ngbNavItem]="3" *ngIf = "LQFT || FT">
-              <a ngbNavLink>
-                <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
-                <span class="d-none d-sm-block"  style="font-size: 13.5px;">FASTAG</span>
-              </a>
-              <ng-template ngbNavContent>
-                  <!-- <app-trans-tables-widget1></app-trans-tables-widget1>  -->
-              </ng-template>
-            </li>
-            <li [ngbNavItem]="4" *ngIf = "FT || bothFT" >
-              <a ngbNavLink>
-                <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
-                <span class="d-none d-sm-block"  style="font-size: 13.5px;">FASTAG PAYMENT/ RECHARGE</span>
-              </a>
-              <ng-template ngbNavContent>
-                  <!-- <app-trans-tables-widget1></app-trans-tables-widget1>  -->
-              </ng-template>
-            </li>
-        </ul>
-        <div [ngbNavOutlet]="customNav"></div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- new tab view end -->
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-body">
+                  <!-- <h4 class="card-title">Custom Tabs</h4> -->
+                  <ul ngbNav #customNav="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified"
+                    style="width: 100%;">
+
+                    <li [ngbNavItem]="1" *ngIf="isCreditPayable || isPurchasePayment">
+                      <a ngbNavLink>
+                        <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                        <span class="d-none d-sm-block" style="font-size: 13.5px;">FUEL CREDIT PAYABLE/ PURCHASE/
+                          PAYMENTS</span>
+                      </a>
+                      <ng-template ngbNavContent>
+                        <app-trans-tables-widget3></app-trans-tables-widget3>
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="2" *ngIf="isPurchasePayment">
+                      <a ngbNavLink>
+                        <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                        <span class="d-none d-sm-block" style="font-size: 13.5px;">FUEL CREDIT</span>
+                      </a>
+                      <ng-template ngbNavContent>
+                        <app-trans-tables-widget2></app-trans-tables-widget2>
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="3" *ngIf="LQFT || FT">
+                      <a ngbNavLink>
+                        <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                        <span class="d-none d-sm-block" style="font-size: 13.5px;">FASTAG</span>
+                      </a>
+                      <ng-template ngbNavContent>
+                        <app-trans-tables-widget4></app-trans-tables-widget4>
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="4" *ngIf="FT || bothFT">
+                      <a ngbNavLink>
+                        <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                        <span class="d-none d-sm-block" style="font-size: 13.5px;">FASTAG PAYMENT/ RECHARGE</span>
+                      </a>
+                      <ng-template ngbNavContent>
+                        <!-- <app-trans-tables-widget1></app-trans-tables-widget1>  -->
+                      </ng-template>
+                    </li>
+                  </ul>
+                  <div [ngbNavOutlet]="customNav"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- new tab view end -->
 
         </div>
       </div>

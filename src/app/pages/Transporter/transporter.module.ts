@@ -8,9 +8,12 @@ import { InlineSVGModule } from 'ng-inline-svg-2';
 import { SharedModule } from "../../_metronic/shared/shared.module";
 import { ModalsModule, WidgetsModule } from '../../_metronic/partials';
 import { TransDashboardComponent } from './trans-dashboard/trans-dashboard.component';
+import { ViewPetrolPumpComponent } from './view-petrol-pump/view-petrol-pump.component';
 
 @NgModule({
-  declarations: [TransDashboardComponent],
+  declarations: [TransDashboardComponent,
+    ViewPetrolPumpComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -22,10 +25,10 @@ import { TransDashboardComponent } from './trans-dashboard/trans-dashboard.compo
         path: 'transDashboard',
         component: TransDashboardComponent,
       },
-    //   {
-    //     path: 'ftVehicle/:id',
-    //     component: FtVehicleComponent,
-    //   },
+      {
+        path: 'viewPetrolPump',
+        component: ViewPetrolPumpComponent,
+      },
     ]),
     WidgetsModule,
     ModalsModule,

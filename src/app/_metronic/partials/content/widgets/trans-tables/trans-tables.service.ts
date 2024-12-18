@@ -33,6 +33,10 @@ export class TransTablesService {
   private getTotalOutstandingByCorpIdURL = this.baseURL + 'transporter/getTotalOutstandingByCorpId';
   private getCorpWalletBalLQURL = this.baseURL + 'fastag/getCorpWalletBalLQ';
   private getCorpWalletBalURL = this.baseURL + 'fastag/getCorpWalletBal';
+  private getCreditAccByFuelCorporateIdNewURL = this.baseURL + 'transporter/getCreditAccByFuelCorporateIdNew';
+  private getAllCreditAccByDealerIdURL = this.baseURL + 'fuelDealerCustMap/getAllCreditAccByDealerIdNEW';
+  private removeTransactionLogURL = this.baseURL + 'accounttransaclog/removeTransactionLog';
+  private editTransactionLogURL = this.baseURL + 'accounttransaclog/editTransactionLog';
 
 
   
@@ -149,6 +153,46 @@ export class TransTablesService {
       let headers = new HttpHeaders();
       headers = headers.set('authenticationToken', this.token);
       return this.http.post(this.getCorpWalletBalURL, body, {
+        headers: headers
+      })
+    }
+    
+    // getCreditAccByFuelCorporateIdNewURL
+    getCreditAccByFuelCorporateIdNewPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getCreditAccByFuelCorporateIdNewURL, body, {
+        headers: headers
+      })
+    }
+    
+    // getAllCreditAccByDealerIdURL
+    getAllCreditAccByDealerIdPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getAllCreditAccByDealerIdURL, body, {
+        headers: headers
+      })
+    }
+    
+    // removeTransactionLogURL
+    removeTransactionLogPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.removeTransactionLogURL, body, {
+        headers: headers
+      })
+    }
+    
+    // editTransactionLogURL
+    editTransactionLogPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.editTransactionLogURL, body, {
         headers: headers
       })
     }

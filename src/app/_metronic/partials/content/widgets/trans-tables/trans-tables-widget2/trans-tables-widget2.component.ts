@@ -66,8 +66,8 @@ export class TransTablesWidget2Component implements OnInit {
   thisMonthYear = moment(new Date()).format("MMM y")
   lastMonthYear = moment(new Date()).subtract(1, 'month').format("MMM y")
   corporateId: any;
-  transporterCorpId: string | null;
-  isPurchasePayment: boolean;
+  transporterCorpId: any;
+  isPurchasePayment: boolean = false;
   crData: any = [];
   currentMonth: any;
   currentMonthPurchase: any;
