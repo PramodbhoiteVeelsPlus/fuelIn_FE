@@ -1,0 +1,176 @@
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <form [formGroup]="filterForm">
+                        <div class="row">
+                            <!-- <div class="col-md-1"></div> -->
+                            <!-- <div class="col-auto"> -->
+                        <label for="example-text-input" class="col-auto col-form-label">Select Customer  </label>
+
+                            <!-- </div> -->
+                            <div class="col-auto">
+                                <input class="form-control" type="text" list="allCorporateList"
+                                    placeholder="select pump" formControlName="customerName"
+                                    (change)="getDetailsByCustomerMapName($event)">
+                                <datalist id="allCorporateList">
+                                    <option *ngFor="let data of allCorporateList" [value]="data.companyName">
+                                </datalist>
+                            </div>
+
+                            <label for="example-text-input" class="col-auto col-form-label">Date Range </label>
+                            <div class="col-lg-4">
+                            <ng-template #t let-date let-focused="focused">
+                              <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+                                [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+                                (mouseleave)="hoveredDate = null">
+                                {{ date.day }}
+                              </span>
+                            </ng-template>
+                        
+                            <input type="text" class="form-control date" (click)="hidden=!hidden" name="daterange" autocomplete="off"
+                              [(ngModel)]="selected"[ngModelOptions]="{standalone: true}"/>
+                        
+                            <ngb-datepicker #dp (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
+                              outsideDays="hidden" [hidden]="hidden">
+                            </ngb-datepicker>
+                            </div>
+
+
+                            <div class="col-auto">
+                                <!-- <button type="button" class="btn btn-primary" (click)="totalPendingoutstanding()">
+                                    Submit
+                                </button> -->
+                                
+                                <button type="button" class="btn btn-primary" (click)="getTransactionWiseLedger()">
+                                    Submit
+                                </button>
+                            </div>
+
+                            <div class="col-auto">
+                                <!-- <button type="button" class="btn btn-outline-secondary my-2 my-sm-0"
+                                    (click)="exportexcel()">download </button> -->
+                              <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF" (click)="exportexcel()"  ><i class="fas fa-file-pdf" style="font-size: 30px;"></i></span> <br>
+
+                            </div>
+                        </div>
+
+                        <div class="row" *ngIf="isAccountNameTableShow">
+                            <div class="col-md-1"></div>
+                            <div class="col-auto" *ngIf="!isSelectedAccountName">
+                                <div class="card-body table-responsive">
+                                    <h6> <b>click on radio button to select your business account</b></h6>
+                                    <table class="table table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th align=left>Radio Button</th>
+                                                <th align=left>Account Name</th>
+                                                <th align=left>Acc Key Person Name</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngFor="let data of accountNameList; let i = index;">
+                                            <tr>
+                                                <td style="text-align: center;">
+                                                    <input type="radio" name="radio" [value]="true" class="form-check-input" 
+                                                        (change)="getSelectedMapId(data.fuelDealerCustomerMapId,data.companyName,data.hostName)"
+                                                        readonly />
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control"
+                                                        [(ngModel)]="data.companyName"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        placeholder="customer name" readonly />
+
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" [(ngModel)]="data.hostName"
+                                                        [ngModelOptions]="{standalone: true}" placeholder="person name"
+                                                        readonly />
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-auto" *ngIf="isSelectedAccountName">
+                                <b>Selected Business Account Name :</b> {{selectedAcc}} , {{selectedAccHost}}
+                            </div>
+                        </div>
+                    </form>
+                    <hr>
+
+                    <div class="table-responsive mb-0">
+
+                        <table class="table table-centered">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="text-align: left;"> Transaction Date</th>
+                                    <th style="text-align: left;"> Pump Name</th>
+                                    <th style="text-align: left;"> Key Person Name </th>
+                                    <th style="text-align: left;"> Key Person Mobile </th>
+                                    <th style="text-align: left;"> Description </th>
+                                    <th style="text-align: left;"> Quantity </th>
+                                    <th style="text-align: left;"> Debit (Purchase) </th>
+                                    <th style="text-align: left;"> Credit (Payment) </th>
+                                    <th style="text-align: left;"> Balance (Outstanding) </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr
+                                    *ngFor="let data of transactionData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                                    <td style="text-align: left;"> {{data.date | date:"mediumDate"}} </td>
+                                    <td style="text-align: left;"> {{ data.companyName }} </td>
+                                    <td style="text-align: left;"> {{ data.hostName }} </td>
+                                    <td style="text-align: left;"> {{ data.hostPhone }} </td>
+                                    <td style="text-align: left;"> {{ data.description }} </td>
+                                    <td *ngIf="data.purpose == 'CREDIT'" style="text-align: left;"> 
+                                        {{ data.quantity }} Ltrs 
+                                    </td>
+                                    <td *ngIf="data.purpose != 'CREDIT'" style="text-align: left;"> 
+                                         
+                                    </td>
+                                    <td style="text-align: left;"> {{ data.purchase | number:'1.2-2'}} </td>
+                                    <td style="text-align: left;"> {{ data.payment | number:'1.2-2'}} </td>
+                                    <td style="text-align: left;">
+                                        <span *ngIf='data.balance < 0'>
+                                            {{(data.balance) * (-1) | number:'1.2-2'}} CR
+                                        </span>
+                                        <span *ngIf='(data.balance) >= 0'>
+                                            {{(data.balance) | number:'1.2-2'}}
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <tr *ngIf="totalDiscount != 0 ">
+                                    <td style="text-align: right;" colspan="6"><i> total rewards </i> </td>
+                                    <td style="text-align: left;" colspan="2"> {{totalDiscount | number:'1.2-2'}} <i
+                                            class="fa fa-inr" aria-hidden="true"></i> </td>
+                                </tr>
+                                <tr *ngIf="totalDiscount == 0 ">
+
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- begin::Pagination -->
+                        <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                            style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                        </pagination-controls>
+                        <!-- end::Pagination -->
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        

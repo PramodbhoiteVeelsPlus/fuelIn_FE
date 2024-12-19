@@ -105,6 +105,7 @@ export class TransTablesWidget1Component implements OnInit {
   avlBalance: any;
   last2Mon: string;
   isCreditPayable: boolean = false;
+  transporterCorpId: string | null;
 
   constructor(private cd: ChangeDetectorRef,
     private post: TransTablesService,
@@ -120,38 +121,21 @@ export class TransTablesWidget1Component implements OnInit {
 
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '');
-    this.fuelDealerId = localStorage.getItem('dealerId');
+    var transporterData = JSON.parse(localStorage.getItem('transporterData') || '');
+    this.transporterCorpId = localStorage.getItem('transporterCorpId');
     this.accessGroup = element.accessGroupId
     this.corporateId = element.veelsPlusCorporateID;
+    this.customerId = transporterData.customerId
+    this.hostPhone = transporterData.phone1;
     this.currentMonth = moment(new Date()).format("MMM")
     this.lastMon = moment(new Date()).subtract(1, 'month').format("MMM")
     this.last2Mon = moment(new Date()).subtract(2, 'month').format("MMM")
-    this.getCorporateById(this.corporateId)
+    this.getMonthlyCredits(this.transporterCorpId);
+    this.getLastMonthCrDetailForTransporter(this.transporterCorpId);
+    this.getTotalOutstanding(this.transporterCorpId)
+    this.getFastagCorporateByCorpId(this.customerId)
+    this.getMonthwiseBillPay(this.hostPhone);
     this.cd.detectChanges()
-  }
-
-  getCorporateById(corporateId: any) {
-    let data = {
-      veelsplusCorporateId: corporateId,
-    };
-
-    this.post.getBranchByVeelsplusIdPOST(data).subscribe((res) => {
-      if (res) {
-        this.corporateId = res.data[0].corporateId;
-        localStorage.setItem('transporterCorpId', this.corporateId);
-
-        this.hostPhone = res.data[0].hostPhone;
-        this.getMonthlyCredits(this.corporateId);
-        this.getMonthwiseBillPay(this.hostPhone);
-
-        this.customerId = res.data[0].customerId
-        this.getFastagCorporateByCorpId(this.customerId)
-        this.getLastMonthCrDetailForTransporter(this.corporateId);
-        this.getTotalOutstanding(this.corporateId)
-        this.cd.detectChanges()
-
-      }
-    });
   }
 
   getMonthlyCredits(corporateId: any) {

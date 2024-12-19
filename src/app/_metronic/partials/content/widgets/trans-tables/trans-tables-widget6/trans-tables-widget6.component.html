@@ -4,13 +4,9 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-
                     <hr>
-
                     <div class="card-body table-responsive">
                         <form [formGroup]="filterForm">
-
-
                             <div class="row">
                                 <div class="col-auto">
                                     <p style="color: red;"> <label><b> Total payable</b>:</label> </p>
@@ -60,31 +56,20 @@
                                 </div>
 
                                 <div class="col-auto">
-                                    <!-- <button type="button" class="btn btn-primary"
-                                    (click)="getCreditAccByDealerIdByFilterByDate()">
-                                    Submit
-                                </button> -->
                                     <button type="button" class="btn btn-primary" (click)="getCreditAccDetails()">
                                         Submit
                                     </button>
                                 </div>
 
-
                                 <div class="col-auto">
-                                    <!-- <span *ngIf="!isDateFiltrer" style="font-size: 30px;cursor: pointer;"
+                                    <span *ngIf="!isDateFiltrer" style="font-size: 30px;cursor: pointer;"
                                         (click)="downloadExcel()" ngbTooltip="Download CSV" placement="bottom"><i
-                                            class="fas fa-file-csv"></i></span>
+                                            class="fas fa-file-csv" style="font-size: 30px;"></i></span>
                                     <span *ngIf="isDateFiltrer" style="font-size: 30px;cursor: pointer;"
                                         (click)="exportexcel()" ngbTooltip="Download CSV" placement="bottom"><i
-                                            class="fas fa-file-csv"></i></span> -->
+                                            class="fas fa-file-csv" style="font-size: 30px;"></i></span>
                                 </div>
-
-
-
                             </div>
-
-
-
 
                             <div class="table-responsive mb-0">
                                 <table *ngIf="!isDateFiltrer" class="table table-centered">
@@ -100,12 +85,10 @@
                                             <th style="text-align: left;">Net Outstanding </th>
                                             <th style="text-align: left;">Mapping Status</th>
                                             <!-- <th style="text-align: left;">View Account Details</th> -->
-
                                         </tr>
                                     </thead>
                                     <tbody
                                         *ngFor="let data of crAccDetails | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
-
                                         <tr>
                                             <td style="text-align: left;">
                                                 {{data.brandName}}</td>
@@ -116,8 +99,6 @@
                                             </td>
                                             <td style="text-align: left;">
                                                 <span *ngIf="data.mappingPreviousStatus == 'FALSE' ">
-                                                    <!-- <b> {{transporterCompanyName}} </b> <br>
-                                                    {{transporterHostName}} -->
                                                 </span>
                                                 <span *ngIf="data.mappingPreviousStatus == 'TRUE' ">
                                                     <b> {{data.mappingCompanyName}}</b> <br>
@@ -125,7 +106,6 @@
                                                 </span>
                                             </td>
                                             <td style="text-align: left;">
-                                                <!-- {{data.openningOS | number:'1.2-2'}} -->
                                                 <span *ngIf="data.openningOS < 0 ">
                                                     {{data.openningOS * (-1)|
                                                     number:'1.2-2'}} CR
@@ -176,12 +156,6 @@
 
 
                                             <td style="text-align: left;">{{data.mappingStatus}} </td>
-
-                                            <!-- <td style="text-align: left;color:blue;cursor: pointer;"
-                                        (click)="viewAccount(bankDetails,data.fuelDealerId)">View </td> -->
-
-
-
                                         </tr>
 
                                     </tbody>
@@ -194,51 +168,7 @@
                                             </h4>
                                         </div>
                                         <div class="modal-body">
-                                            <!-- <div class="row">
-                                        <div class="col-md-3">
-                                            <b>Account Holder Name</b>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <b> Account Number</b>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <b>IFSC</b>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <b>Branch Name</b>
-                                        </div>
-
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <input class="form-control" type="text" [(ngModel)]="accountHolderName"
-                                                [ngModelOptions]="{standalone: true}" placeholder="Account Holder Name"
-                                                readonly>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input class="form-control" type="text" [(ngModel)]="accountNumber"
-                                                [ngModelOptions]="{standalone: true}" placeholder="Account Number"
-                                                readonly>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input class="form-control" type="text" style="font-weight: bold;"
-                                                [(ngModel)]="ifsc" [ngModelOptions]="{standalone: true}"
-                                                placeholder="IFSC" readonly>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input class="form-control" type="text" style="font-weight: bold;"
-                                                [(ngModel)]="branchName" [ngModelOptions]="{standalone: true}"
-                                                placeholder="Branch Name" readonly>
-                                        </div>
-                                    </div> -->
-
-
                                             <div class="row">
-
-
-
-
-
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-5">
@@ -349,7 +279,6 @@
                                                     -
                                                 </span>
                                             </td>
-
                                             <td style="text-align: left;">
                                                 <span>
                                                     {{data.totalPurchaseAmt | number:'1.2-2'}}
@@ -368,7 +297,6 @@
                                                     {{data.totalDiscount | number:'1.2-2'}}
                                                 </span>
                                             </td>
-
                                             <td style="text-align: left;">
                                                 <span *ngIf="data.mappingStatus == 'ACTIVE'">
                                                     <span *ngIf="data.netOS < 0">
@@ -389,319 +317,7 @@
                                                 </span>
                                             </td>
 
-                                            <!-- <td style="text-align: left;">
-                                        <span
-                                            (click)="sendToCreateStat(data.fuelDealerCustomerMapId,data.companyName)">
-                                            <button type="button" class="btn btn-outline-info my-2 my-sm-0"> view
-                                            </button>
-                                        </span>
-                                    </td> -->
-
-
                                         </tr>
-
-
-                                        <!-- payReport Payment Starts -->
-                                        <ng-template #payReport let-c="close" let-d="dismiss">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">
-                                                    <!-- <strong>
-                                                        &nbsp;&nbsp;&nbsp;
-                                                        Payment Details for {{companyName}} </strong> -->
-                                                </h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <b>Total Given Credit</b>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <b> Total rewards</b>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <b>Total Credit After rewards</b>
-                                                    </div>
-
-
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <input class="form-control" type="number"
-                                                            [(ngModel)]="overAllCRAmountWithPrevOutstandung"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            placeholder="Total Credit Given" readonly>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <input class="form-control" type="number"
-                                                            [(ngModel)]="discountAmt"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            placeholder="Total rewards" readonly>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <input class="form-control" type="number"
-                                                            style="font-weight: bold;"
-                                                            [(ngModel)]="AfterDiscountWithPrevOutstanding"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            placeholder="Total Paid" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <b>Total Paid</b>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <b> Total Advance</b>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <b> Prev Outstanding</b>
-                                                    </div>
-
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <input class="form-control" type="number"
-                                                            [(ngModel)]="overAllPaidAmount"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            placeholder="Total Paid" readonly>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <input class="form-control" type="number"
-                                                            [(ngModel)]="advanceAmt"
-                                                            [ngModelOptions]="{standalone: true}" placeholder="Advance"
-                                                            readonly>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <input class="form-control" type="number"
-                                                            [(ngModel)]="previousOutstandForDetails"
-                                                            [ngModelOptions]="{standalone: true}" placeholder="Previous"
-                                                            readonly>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col-md-5">
-
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <button type="button" class="btn btn-danger" aria-label="Close"
-                                                            (click)="d('Cross click')">Close</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </ng-template>
-                                        <ng-template #cancelReq let-c="close" let-d="dismiss">
-
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">
-                                                    <label>
-                                                        <h4><strong>
-                                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                                                                Do You Want To Cancel ?</strong></h4>
-                                                    </label>
-                                                </h4>
-                                                <button type="button" class="btn btn-danger" aria-label="Close"
-                                                    (click)="d('Cross click')">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="row">
-                                                    <div class="col-md-4">
-
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <button type="button"
-                                                            class="btn btn-outline-success my-2 my-sm-0"
-                                                            (click)="removeTransLog()">
-                                                            Yes</button>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <button type="button" class="btn btn-danger" aria-label="Close"
-                                                            (click)="d('Cross click')">No</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </ng-template>
-                                        <ng-template #updateRequest let-c="close" let-d="dismiss">
-
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">
-                                                    <label>
-                                                        <h4><strong>
-                                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                                                                EDIT PAYMENT</strong></h4>
-                                                    </label>
-                                                </h4>
-                                                <button type="button" class="btn btn-danger" aria-label="Close"
-                                                    (click)="d('Cross click')">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form [formGroup]="editPaymentForm">
-                                                    <div class="row">
-                                                        <div class="col-md-2">
-                                                            <label class="labelNewMargin">
-                                                                Payment Method:</label>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <!-- <input class="form-control"
-                                                          placeholder="Payment Method"
-                                                          formControlName="editpaymentMethod"> -->
-                                                            <select class="form-control"
-                                                                formControlName="editpaymentMethod" required>
-                                                                <option value="">Select Payment Method</option>
-                                                                <option value="CHEQUE">CHEQUE</option>
-                                                                <option value="CASH">CASH</option>
-                                                                <!-- <option value="PAYTM">PAYTM</option> -->
-                                                                <option value="CARD">CARD</option>
-                                                                <option value="NET BANKING">NET BANKING</option>
-                                                                <option value="UPI">UPI</option>
-                                                                <!-- <option value="GOOGLE PAY">GOOGLE PAY</option> -->
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <label class="labelNewMargin">
-                                                                Transaction Number:</label>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <input class="form-control" placeholder="Transaction Number"
-                                                                formControlName="editpaymentTransactionNo">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row">
-                                                        <div class="col-md-2">
-                                                            <label class="labelNewMargin">
-                                                                Payment Date:</label>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <input class="form-control" placeholder="DD-MM-YYYY"
-                                                                name="startDate" (click)="endDate.toggle()"
-                                                                formControlName="editpaymentDate" ngbDatepicker
-                                                                #endDate="ngbDatepicker">
-                                                            <!-- [markDisabled]="isDisabled" -->
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <label class="labelNewMargin">
-                                                                Amount Paid:</label>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <input class="form-control" placeholder="Amount Paid"
-                                                                formControlName="editpaymentAmount">
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-
-                                                        <div class="col-md-6" style="text-align: right;">
-                                                            <button type="submit"
-                                                                class="btn btn-outline-success my-2 my-sm-0"
-                                                                (click)="updateTransLog()">Save</button>
-
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <button type="cancel" class="btn btn-secondary"
-                                                                (click)="c('Close click')">Close</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-
-                                            </div>
-                                        </ng-template>
-
-                                        <ng-template #previousOut let-c="close" let-d="dismiss">
-                                            <div class="modal-header">
-                                                <h6 class="modal-title">
-                                                    <strong>
-                                                        Add Previous Outstanding Amount
-                                                    </strong>
-                                                </h6>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form>
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <!-- <label><b>Amount :</b> </label> -->
-                                                            <label><b>previous Outstanding Amount :</b>
-                                                                {{previousOutstandForModal}}</label>
-                                                            <input class="form-control" type="number"
-                                                                style="font-size: 0.750rem;" min="0"
-                                                                [(ngModel)]="pendingOutstanding"
-                                                                [ngModelOptions]="{standalone: true}"
-                                                                placeholder="Enter Amount">
-                                                        </div>
-
-                                                    </div>
-                                                    <br><br>
-                                                    <div class="row">
-                                                        <div class="col-md-3"></div>
-                                                        <div class="col-md-3">
-                                                            <!-- <button type="button" class="btn btn-primary"
-                                                                aria-label="Close"
-                                                                (click)="addOutstandAmount()">Update</button> -->
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <button type="button" class="btn btn-danger"
-                                                                aria-label="Close"
-                                                                (click)="d('Cross click')">Close</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </ng-template>
-                                        <!-- payReport Payment Ends -->
-
-                                        <!-- Open Date Modal Starts -->
-                                        <ng-template #openDate let-c="close" let-d="dismiss">
-                                            <div class="modal-header">
-                                                <h6 class="modal-title">
-                                                    <strong>
-                                                        Please Select Date
-                                                    </strong>
-                                                </h6>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form [formGroup]="billingForm">
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <label><b>Start Date :</b> </label>
-                                                            <input class="form-control" placeholder="DD-MM-YYYY"
-                                                                name="startDate" (click)="startDate.toggle()"
-                                                                ngbDatepicker #startDate="ngbDatepicker"
-                                                                formControlName="billingStartDate"
-                                                                style="font-size: 0.750rem;" placeholder="Select Date"
-                                                                readonly style="background-color: #ffffff;">
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <label><b>End Date :</b> </label>
-                                                            <input class="form-control" placeholder="DD-MM-YYYY"
-                                                                name="endDate" (click)="endDate.toggle()" ngbDatepicker
-                                                                #endDate="ngbDatepicker"
-                                                                formControlName="billingEndDate"
-                                                                style="font-size: 0.750rem;" placeholder="Select Date"
-                                                                readonly style="background-color: #ffffff;">
-                                                        </div>
-                                                    </div>
-                                                    <br><br>
-                                                    <div class="row">
-                                                        <div class="col-md-3"></div>
-                                                        <div class="col-md-3">
-                                                            <!-- <button type="button" class="btn btn-primary"
-                                                                aria-label="Close"
-                                                                (click)="openStatement()">View</button> -->
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <button type="button" class="btn btn-danger"
-                                                                aria-label="Close"
-                                                                (click)="d('Cross click')">Close</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </ng-template>
-                                        <!-- Open Date Modal Ends -->
 
                                     </tbody>
 
@@ -714,13 +330,8 @@
                             </pagination-controls>
                             <!-- end::Pagination -->
 
-
-
                         </form>
                         <br>
-
-
-
                     </div>
 
                 </div>

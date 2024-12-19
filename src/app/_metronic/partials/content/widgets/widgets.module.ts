@@ -199,6 +199,9 @@ import { TransTablesWidget3Component } from './trans-tables/trans-tables-widget3
 import { TransTablesWidget4Component } from './trans-tables/trans-tables-widget4/trans-tables-widget4.component';
 import { TransTablesWidget5Component } from './trans-tables/trans-tables-widget5/trans-tables-widget5.component';
 import { TransTablesWidget6Component } from './trans-tables/trans-tables-widget6/trans-tables-widget6.component';
+import { TransTablesWidget7Component } from './trans-tables/trans-tables-widget7/trans-tables-widget7.component';
+import { TransTablesWidget8Component } from './trans-tables/trans-tables-widget8/trans-tables-widget8.component';
+import { TransTablesWidget9Component } from './trans-tables/trans-tables-widget9/trans-tables-widget9.component';
 // import { routes } from 'src/app/app-routing.module';
 @NgModule({
   declarations: [
@@ -390,7 +393,9 @@ import { TransTablesWidget6Component } from './trans-tables/trans-tables-widget6
     TransTablesWidget4Component,
     TransTablesWidget5Component,
     TransTablesWidget6Component,
-
+    TransTablesWidget7Component,
+    TransTablesWidget8Component, 
+    TransTablesWidget9Component
   ],
   imports: [
     ReactiveFormsModule,
@@ -600,6 +605,9 @@ import { TransTablesWidget6Component } from './trans-tables/trans-tables-widget6
     TransTablesWidget4Component,
     TransTablesWidget5Component,
     TransTablesWidget6Component,
+    TransTablesWidget7Component,
+    TransTablesWidget8Component,
+    TransTablesWidget9Component
   ],
   providers: [NgbActiveModal, ExcelService],
 })

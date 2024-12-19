@@ -37,6 +37,24 @@ export class TransTablesService {
   private getAllCreditAccByDealerIdURL = this.baseURL + 'fuelDealerCustMap/getAllCreditAccByDealerIdNEW';
   private removeTransactionLogURL = this.baseURL + 'accounttransaclog/removeTransactionLog';
   private editTransactionLogURL = this.baseURL + 'accounttransaclog/editTransactionLog';
+  private getfuelDealerIdByCorporateIdURL = this.baseURL + 'fuelDealerCustMap/getFuelDealerIdfromCorporateId';
+  private getFuelCreditRequestCorporateByfuelDealerIdURL = this.baseURL + 'fuelDealerCustMap/getFuelCreditRequestCorporateByfuelDealerId';
+  private getFuelCreditRequestByfuelDealerIdURL = this.baseURL + 'fuelDealerCustMap/getFuelCreditRequestByfuelDealerId';
+  private getFuelCreditByCorporateIdURL = this.baseURL + 'fuelDealerCustMap/getFuelCreditByCorporateId';
+  private getFuelCreditRequestByfuelDealerIdAndFuelCorporateId1URL = this.baseURL + 'fuelDealerCustMap/getFuelCreditRequestByfuelDealerIdAndFuelCorporateId1';
+  private getFuelCreditRequestByCorporateIdAndFuelDealerURL = this.baseURL + 'fuelDealerCustMap/getFuelCreditRequestByCorporateIdAndFuelDealer';
+  private getAllDealersListURL = this.baseURL + 'dealerDashboard/getAllDealersList'; 
+  private getAllCRPaymentByCustNameCorporateURL = this.baseURL + 'accounttransaclog/getAllCRPaymentByCustNameCorporate';
+  private getAllCRPaymentByCorporateURL = this.baseURL + 'accounttransaclog/getAllCRPaymentByCorporate';
+  private getCorporateInfoByfuelDealerCustomerMapIdURL = this.baseURL + 'fuelDealerCustMap/getCorporateInfoByfuelDealerCustomerMapId1';
+  private getAllCRPaymentByCustNameDealerURL = this.baseURL + 'accounttransaclog/getAllCRPaymentByCustNameDealer'; 
+  private getAllCRPaymentByDealerURL = this.baseURL + 'accounttransaclog/getAllCRPaymentByDealer';
+  private getCorporateInfoByCorporateCustomerMapIdURL = this.baseURL + 'fuelDealerCustMap/getCorporateInfoByCorporateCustomerMapId';
+  private getFuelCreditDealersByCorporateIdURL = this.baseURL + 'fuelDealerCustMap/getFuelCreditDealersByCorporateId';
+  private getTransactionWiseLedgerURL = this.baseURL + 'transporter/getTransactionWiseLedger';
+  private getTransactionwiseLedgerByDealerCorporateIdURL = this.baseURL + 'myCRTimeLine/getTransactionwiseLedgerByDealerCorporateId';
+  private getFuelCorpIdByMapIdURL = this.baseURL + 'fuelDealerCustMap/getFuelCorpIdByMapId'; 
+  private getPreviousOutstandingByDealerIdURL = this.baseURL + 'myCRTimeLine/getPreviousOutstandingByDealerId'
 
 
   
@@ -193,6 +211,186 @@ export class TransTablesService {
       let headers = new HttpHeaders();
       headers = headers.set('authenticationToken', this.token);
       return this.http.post(this.editTransactionLogURL, body, {
+        headers: headers
+      })
+    }
+    
+    // getfuelDealerIdByCorporateIdURL
+    getfuelDealerIdByCorporateIdPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getfuelDealerIdByCorporateIdURL, body, {
+        headers: headers
+      })
+    }
+    
+    // getFuelCreditRequestCorporateByfuelDealerIdURL
+    getFuelCreditRequestCorporateByfuelDealerIdPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getFuelCreditRequestCorporateByfuelDealerIdURL, body, {
+        headers: headers
+      })
+    }
+    
+    // getFuelCreditRequestByfuelDealerIdURL
+    getFuelCreditRequestByfuelDealerIdPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getFuelCreditRequestByfuelDealerIdURL, body, {
+        headers: headers
+      })
+    }
+    
+    // getFuelCreditByCorporateIdURL
+    getFuelCreditByCorporateIdPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getFuelCreditByCorporateIdURL, body, {
+        headers: headers
+      })
+    }
+    
+    // getFuelCreditRequestByfuelDealerIdAndFuelCorporateId1URL
+    getFuelCreditRequestByfuelDealerIdAndFuelCorporateId1POST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getFuelCreditRequestByfuelDealerIdAndFuelCorporateId1URL, body, {
+        headers: headers
+      })
+    }
+    
+    // getFuelCreditRequestByCorporateIdAndFuelDealerURL
+    getFuelCreditRequestByCorporateIdAndFuelDealerPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getFuelCreditRequestByCorporateIdAndFuelDealerURL, body, {
+        headers: headers
+      })
+    }
+    
+    // getAllDealersListURL
+    getAllDealersListPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getAllDealersListURL, body, {
+        headers: headers
+      })
+    }
+    
+    // getAllCRPaymentByCustNameCorporateURL
+    getAllCRPaymentByCustNameCorporatePOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getAllCRPaymentByCustNameCorporateURL, body, {
+        headers: headers
+      })
+    }
+    
+    // getAllCRPaymentByCorporateURL
+    getAllCRPaymentByCorporatePOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getAllCRPaymentByCorporateURL, body, {
+        headers: headers
+      })
+    }
+    
+    // getCorporateInfoByfuelDealerCustomerMapIdURL
+    getCorporateInfoByfuelDealerCustomerMapIdPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getCorporateInfoByfuelDealerCustomerMapIdURL, body, {
+        headers: headers
+      })
+    }
+    
+    // getAllCRPaymentByCustNameDealerURL
+    getAllCRPaymentByCustNameDealerPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getAllCRPaymentByCustNameDealerURL, body, {
+        headers: headers
+      })
+    }
+    
+    // getAllCRPaymentByDealerURL
+    getAllCRPaymentByDealerPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getAllCRPaymentByDealerURL, body, {
+        headers: headers
+      })
+    }
+    
+    // getCorporateInfoByCorporateCustomerMapIdURL
+    getCorporateInfoByCorporateCustomerMapIdPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getCorporateInfoByCorporateCustomerMapIdURL, body, {
+        headers: headers
+      })
+    }
+    
+    // getFuelCreditDealersByCorporateIdURL
+    getFuelCreditDealersByCorporateIdPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getFuelCreditDealersByCorporateIdURL, body, {
+        headers: headers
+      })
+    }
+    
+    // getTransactionWiseLedgerURL
+    getTransactionWiseLedgerPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getTransactionWiseLedgerURL, body, {
+        headers: headers
+      })
+    }
+    
+    // getTransactionwiseLedgerByDealerCorporateIdURL
+    getTransactionwiseLedgerByDealerCorporateIdPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getTransactionwiseLedgerByDealerCorporateIdURL, body, {
+        headers: headers
+      })
+    }
+    
+    // getFuelCorpIdByMapIdURL
+    getFuelCorpIdByMapIdPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getFuelCorpIdByMapIdURL, body, {
+        headers: headers
+      })
+    }
+    
+    // getPreviousOutstandingByDealerIdURL
+    getPreviousOutstandingByDealerIdPOST(body: Object): Observable<any> {
+      this.setHeader();
+      let headers = new HttpHeaders();
+      headers = headers.set('authenticationToken', this.token);
+      return this.http.post(this.getPreviousOutstandingByDealerIdURL, body, {
         headers: headers
       })
     }

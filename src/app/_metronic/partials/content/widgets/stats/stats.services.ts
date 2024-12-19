@@ -158,7 +158,9 @@ export class StatsService {
     private addReferralURL = this.baseURL + 'referral/addReferral'; 
     private getAccessByPersonIdURL = this.baseURL + 'userAccess/getAccessByPersonId';
     private requestForLiteToPrimeURL = this.baseURL + 'fuelVendor/requestForLiteToPrime';
-    private getReqInfoByPersonIdURL = this.baseURL + 'fuelVendor/getReqInfoByPersonId'
+    private getReqInfoByPersonIdURL = this.baseURL + 'fuelVendor/getReqInfoByPersonId';
+    private getTransporterDetailsURL = this.baseURL + 'userAccess/getTransporterDetails';
+    private getFastagCorporateByCustmerIdURL = this.baseURL + 'fastag/getFastagCorporateByCustmerId';
 
 
 
@@ -1405,5 +1407,24 @@ export class StatsService {
         })
     }
 
+    // getTransporterDetailsURL
+    getTransporterDetailsPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getTransporterDetailsURL, body, {
+            headers: headers
+        })
+    }
+
+    // getFastagCorporateByCustmerIdURL
+    getFastagCorporateByCustmerIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getFastagCorporateByCustmerIdURL, body, {
+            headers: headers
+        })
+    }
 
 }

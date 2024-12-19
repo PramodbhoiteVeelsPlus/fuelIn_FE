@@ -1,0 +1,300 @@
+<!-- Transporter -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <form [formGroup]="selectCorporate">
+                        <div class="row">
+                            <div class="col-auto">
+                                <label><b></b></label>
+                            </div>
+                            <label for="example-text-input" class="col-auto col-form-label">Select Pump :</label>
+
+                            <div class="col-auto">
+                                <input class="form-control" type="text" list="allCorporateList" placeholder="All Pump"
+                                    formControlName="selectCorporateId">
+                                <datalist id="allCorporateList">
+                                    <option *ngFor="let data of allCorporateList" [value]="data.companyName">
+                                </datalist>
+                            </div>
+
+                            <label for="example-text-input" class="col-auto col-form-label">Date Range :</label>
+                            <div class="col-lg-4">
+                                <ng-template #t let-date let-focused="focused">
+                                    <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+                                        [class.faded]="isHovered(date) || isInside(date)"
+                                        (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">
+                                        {{ date.day }}
+                                    </span>
+                                </ng-template>
+
+                                <input type="text" class="form-control date" (click)="hidden=!hidden" name="daterange"
+                                    autocomplete="off" [(ngModel)]="selected" [ngModelOptions]="{standalone: true}" />
+
+                                <ngb-datepicker #dp (dateSelect)="onDateSelection($event)" [displayMonths]="2"
+                                    [dayTemplate]="t" outsideDays="hidden" [hidden]="hidden">
+                                </ngb-datepicker>
+                            </div>
+
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-primary" name="button" (click)="searchByCorp()">
+                                    Submit
+                                </button>
+                            </div>
+
+                            <div class="col-auto">
+                                <span style="font-size: 30px;cursor: pointer;" (click)="downloadExcelForDealer()"
+                                    ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv" style="font-size: 30px;"></i></span>
+                            </div>
+                        </div>
+                    </form>
+
+                    <hr>
+
+
+                    <form [formGroup]="filterForm">
+                        <div class="row">
+                            <div class="col-auto">
+                                <label><b></b></label>
+                            </div>
+                            <label for="example-text-input" class="col-auto col-form-label">Transaction Type :</label>
+
+                            <div class="col-md-2">
+                                <select formControlName="transactionType" class="form-control"
+                                    (change)="getDetailsByTransactionType()" required>
+                                    <option value=""> Select Type </option>
+                                    <option value="CREDIT"> FUEL </option>
+                                    <option value="LUBE"> LUBRICANTS </option>
+                                    <option value="LUBETAX"> LUBRICANTS-TAX </option>
+                                    <option value="AdvAmt"> ADVANCE </option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+
+
+                    <!--  Table Start -->
+
+
+                    <div class="table-responsive mb-0">
+                        <table class="table table-centered">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="text-align: left;">Sr No</th>
+                                    <th style="text-align: left;">Date</th>
+                                    <th style="text-align: left;">Petrol Pump Name</th>
+                                    <th style="text-align: left;">Oil Company</th>
+                                    <th style="text-align: left;">Account Name</th>
+                                    <th style="text-align: left;">Vehicle No</th>
+                                    <th style="text-align: left;">Other Details</th>
+                                    <th style="text-align: left;">Product</th>
+                                    <th style="text-align: left;">Rate</th>
+                                    <th style="text-align: left;">Quantity</th>
+                                    <th style="text-align: left;">Amount</th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody
+                                *ngFor="let data of allCreditReq | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+
+                                <tr>
+                                    <td style="text-align: left;"> {{i+1}} </td>
+
+                                    <td style="text-align: left;">
+                                        {{data.estimatedRefuelDate | date:'mediumDate'}}
+                                    </td>
+
+                                    <td style="text-align: left;">
+                                        {{data.companyName}}
+                                    </td>
+
+                                    <td style="text-align: left;">
+                                        {{data.brandName}}
+                                    </td>
+
+
+                                    <td style="text-align: left;">
+                                        <!-- <span *ngIf="data.mappingPreviousStatus == 'FALSE' ">
+                                            <b> {{transporterCompanyName}} </b> <br>
+                                            {{transporterHostName}}
+                                        </span> -->
+                                        <span *ngIf="data.mappingPreviousStatus == 'TRUE' ">
+                                            <b> {{data.mappingCompanyName}}</b> <br>
+                                            {{data.mappingCustomerName}}
+                                        </span>
+                                    </td>
+
+                                    <td style="text-align: left;">
+                                        <span *ngIf="data.purpose == 'CREDIT'">
+                                            <span *ngIf="data.vehicleNumber == 'undefined'">
+
+                                            </span>
+                                            <span *ngIf="data.vehicleNumber != 'undefined'">
+                                                {{data.vehicleNumber}}
+                                            </span>
+                                        </span>
+                                        <span *ngIf="data.purpose == 'LUBE'">
+                                            <span *ngIf="data.vehicleNumber == 'undefined'">
+
+                                            </span>
+                                            <span *ngIf="data.vehicleNumber != 'undefined'">
+                                                {{data.vehicleNumber}}
+                                            </span>
+                                        </span>
+                                        <span *ngIf="data.purpose == 'LUBETAX'">
+                                            <span *ngIf="data.vehicleNumber == 'undefined'">
+
+                                            </span>
+                                            <span *ngIf="data.vehicleNumber != 'undefined'">
+                                                {{data.vehicleNumber}}
+                                            </span>
+                                        </span>
+
+                                    </td>
+
+
+                                    <td style="text-align: left;">
+                                        <span *ngIf="data.purpose == 'CREDIT'">
+                                            <span *ngIf="data.vehicleNumber == 'undefined'">
+                                                {{data.manualCrNumber}}
+                                            </span>
+                                            <span *ngIf="data.vehicleNumber != 'undefined'">
+                                                {{data.manualCrNumber}}
+                                            </span>
+                                        </span>
+                                        <span *ngIf="data.purpose == 'LUBE'">
+                                            <span *ngIf="data.vehicleNumber == 'undefined'">
+                                                {{data.lubeName}}/{{data.manualCrNumber}}
+                                            </span>
+                                            <span *ngIf="data.vehicleNumber != 'undefined'">
+                                                {{data.lubeName}}/{{data.manualCrNumber}}
+                                            </span>
+                                        </span>
+                                        <span *ngIf="data.purpose == 'LUBETAX'">
+                                            <span *ngIf="data.vehicleNumber == 'undefined'">
+                                                {{data.lubeName}}/{{data.manualCrNumber}}
+                                            </span>
+                                            <span *ngIf="data.vehicleNumber != 'undefined'">
+                                                {{data.lubeName}}/{{data.manualCrNumber}}
+                                            </span>
+                                        </span>
+                                        <span *ngIf="data.purpose == 'AdvAmt'">
+                                            <span *ngIf="data.advMobile == 'undefined'">
+                                                {{data.advName}} {{data.manualCrNumber}}
+
+                                            </span>
+                                            <span *ngIf="data.advMobile != 'undefined'">
+                                                {{data.advName}} <span *ngIf="data.advMobile != 'null' ">
+                                                    {{data.advMobile}} </span> {{data.manualCrNumber}}
+
+                                            </span>
+
+                                        </span>
+
+                                    </td>
+
+
+
+
+                                    <td style="text-align: left;">
+                                        <span *ngIf="data.purpose == 'CREDIT'">
+                                            {{data.productName}}
+                                        </span>
+                                        <span *ngIf="data.purpose == 'LUBE'">
+                                            {{data.productName}}
+                                        </span>
+                                        <span *ngIf="data.purpose == 'LUBETAX'">
+                                            <!-- {{data.productName}} -->
+                                            LUBRICANTS-TAX
+                                        </span>
+                                        <span *ngIf="data.purpose == 'AdvAmt'">
+                                            ADVANCE
+                                        </span>
+                                    </td>
+
+                                    <td style="text-align: left;">
+                                        {{data.productRate}}
+                                    </td>
+
+                                    <td style="text-align: left;">
+                                        <span *ngIf="data.purpose == 'CREDIT'">
+                                            <span *ngIf="data.transactionStatus == 'CANCEL'">
+                                                CANCELLED
+                                            </span>
+                                            <span *ngIf="data.transactionStatus != 'CANCEL'">
+                                                <span *ngIf="data.transactionStatus != 'PENDING'">
+                                                    <span *ngIf="data.productCategory == 'CNG'">
+                                                        {{data.actualCreditQuantity | number:'1.2-2'}} Kg
+                                                    </span>
+                                                    <span *ngIf="data.productCategory != 'CNG'">
+                                                        {{data.actualCreditQuantity | number:'1.2-2'}} Ltrs
+                                                    </span>
+                                                </span>
+                                                <span *ngIf="data.transactionStatus == 'PENDING'">
+                                                    PENDING
+                                                </span>
+                                            </span>
+                                        </span>
+                                        <span *ngIf="data.purpose == 'LUBE'">
+                                            <span *ngIf="data.lubeUnit != 'undefined'">
+                                                {{data.actualCreditQuantity | number:'1.2-2'}} {{data.lubeUnit}}
+                                            </span>
+                                            <span *ngIf="data.lubeUnit == 'undefined'">
+                                                {{data.actualCreditQuantity | number:'1.2-2'}}
+                                            </span>
+
+                                        </span>
+                                        <span *ngIf="data.purpose == 'LUBETAX'">
+                                            <span *ngIf="data.lubeUnit != 'undefined'">
+                                                {{data.actualCreditQuantity | number:'1.2-2'}} {{data.lubeUnit}}
+                                            </span>
+                                            <span *ngIf="data.lubeUnit == 'undefined'">
+                                                {{data.actualCreditQuantity | number:'1.2-2'}}
+                                            </span>
+
+                                        </span>
+                                        <span *ngIf="data.purpose == 'AdvAmt'">
+                                            -
+                                        </span>
+
+                                    </td>
+
+                                    <td style="text-align: left;">
+                                        <span *ngIf="data.transactionStatus != 'CANCEL'">
+                                            <span *ngIf="data.transactionStatus != 'PENDING'">
+                                                ₹{{data.creditAmount | number:'1.2-2'}}
+                                            </span>
+                                            <span *ngIf="data.transactionStatus == 'PENDING'">
+                                                PENDING
+                                            </span>
+                                        </span>
+                                        <span *ngIf="data.transactionStatus == 'CANCEL'">
+                                            CANCELLED
+                                        </span>
+                                    </td>
+
+
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                      
+                            <!-- begin::Pagination -->
+                            <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                                style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+                            </pagination-controls>
+                            <!-- end::Pagination -->
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

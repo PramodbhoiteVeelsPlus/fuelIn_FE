@@ -108,6 +108,8 @@ export class SidebarMenuComponent implements OnInit {
   isViswasaTxExcel: boolean = true;
   isSalesPurReport: boolean = true;
   accessGroupId: any;
+  customerId: any;
+  isFTActive: any = "NO"; 
 
   constructor(private router: Router,
     private post: StatsService,
@@ -117,6 +119,7 @@ export class SidebarMenuComponent implements OnInit {
   ngOnInit(): void {
     if (JSON.parse(localStorage.getItem('isLoggedin') || '{}') == true) {
       var element = JSON.parse(localStorage.getItem("element") || '{}');
+      var transporterData = JSON.parse(localStorage.getItem('transporterData') || '');
       this.veelsplusCorporate = element.veelsPlusCorporateID;
       this.accessGroupId = element.accessGroupId
       if (element.accessGroupId == '7') {
@@ -127,6 +130,8 @@ export class SidebarMenuComponent implements OnInit {
         this.isTransporter = true;
         this.isAdmin = false;
         this.isDealer = false;
+        this.customerId = transporterData.customerId
+        this.getFastagCorporateByCustId(this.customerId)
       } else if (element.accessGroupId == '12' || element.accessGroupId == '14' || element.accessGroupId == '19') {
         this.isDealer = true;
         this.isAdmin = false;
@@ -450,4 +455,24 @@ export class SidebarMenuComponent implements OnInit {
     alert('To use all petrol pump management modules, upgrade to fuelin prime')
   }
 
+  getFastagCorporateByCustId(customerId: any) {
+    let data = {
+        customerId: customerId,
+    };
+    this.post.getFastagCorporateByCustmerIdPOST(data).subscribe((res) => {
+        if (res.data.length) {
+            this.isFTActive = res.data[0].isActive;
+        } else {
+          if (res.data1.length) {
+            this.isFTActive = res.data1[0].isActive;
+        } else {
+            this.isFTActive = "NO";
+        }
+        }
+    });
+  }
+  
+  alertFt(){
+    alert('Get Fastag and earn on your fuel credit transactions. To apply for Fastag, please contact 9825600424 or write to hello@veels.plus')
+  }
 }

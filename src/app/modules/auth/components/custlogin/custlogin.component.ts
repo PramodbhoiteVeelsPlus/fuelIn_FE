@@ -47,6 +47,8 @@ export class CustloginComponent {
   managerData: any = [];
   dealerId: any;
   dealerCorporateId: any;
+  transporterData: any;
+  transporterCorpId: any;
   get userMobile() {
     return this.referForm.get('dealerMobile')
   }
@@ -144,7 +146,10 @@ export class CustloginComponent {
             } else {
               var element = JSON.parse(localStorage.getItem("element") || '{}');
               if (res.element.accessGroupId == 7 || res.element.accessGroupId == 2 || res.element.accessGroupId == 16) {
-                this.router.navigate(['/dashboard']);
+                this.router.navigate(['/transporter/transDashboard']);
+                if(res.element.accessGroupId == '2'){
+                  this.getTransporter(element.personId)
+                }
               } else {
                 alert("Oops..! Getting some Error.. Please Re-Login..")
                 // this.post.checkUrlForRefresh('login')
@@ -279,5 +284,22 @@ export class CustloginComponent {
             this.cd.detectChanges()
         }
     });
+}
+
+getTransporter(personId: any) {
+  let data = {
+      personId: personId,
+  };
+  this.post1.getTransporterDetailsPOST(data).subscribe((res) => {
+      if (res.status == "OK") {
+          this.transporterData = res.data[0];
+          this.transporterCorpId = res.data[0].corporateId
+          localStorage.setItem('transporterData', JSON.stringify(this.transporterData));
+          localStorage.setItem('transporterCorpId', this.transporterCorpId);
+          this.cd.detectChanges()
+      } else {
+          this.cd.detectChanges()
+      }
+  });
 }
 }

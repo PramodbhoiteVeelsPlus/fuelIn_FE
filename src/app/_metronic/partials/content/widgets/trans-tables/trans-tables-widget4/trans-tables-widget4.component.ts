@@ -97,7 +97,6 @@ export class TransTablesWidget4Component implements OnInit {
 
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '');
-    this.fuelDealerId = localStorage.getItem('dealerId');
     this.transporterCorpId = localStorage.getItem('transporterCorpId');
     this.accessGroup = element.accessGroupId
     this.corporateId = element.veelsPlusCorporateID;

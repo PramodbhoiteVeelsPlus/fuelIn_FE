@@ -2130,6 +2130,147 @@
       </div>
     </div>
 
+    <!-- Fastag -->
+    <div *ngIf="isFastag" class="menu-item menu-accordion" routerLinkActive="here show"
+    data-kt-menu-trigger="click">
+    <span class="menu-link">
+      <span class="menu-icon">
+        <app-keenicon name="element-plus" class="fs-2"></app-keenicon>
+      </span>
+      <span class="menu-title">FASTAG 
+      </span>
+      <span class="menu-arrow"></span>
+    </span>
+    <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+      <div *ngIf="isAccInfo" class="menu-item menu-accordion">
+        <div *ngIf="isFTActive != 'NO'" routerLinkActive="here show" data-kt-menu-trigger="click"
+          routerLink="/pump/ftAccountInfo">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">Account Info
+            </span>
+          </span>
+        </div>
+        <div *ngIf="isFTActive == 'NO'" routerLinkActive="here show" data-kt-menu-trigger="click">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title" (click)="alertFt()">Account Info
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="menu-item menu-accordion">
+        <div *ngIf="isFTActive != 'NO'" routerLinkActive="here show" data-kt-menu-trigger="click"
+          routerLink="/pump/ftAllTollTransaction">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">All Toll Transaction
+            </span>
+          </span>
+        </div>
+        <div *ngIf="isFTActive == 'NO'">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title" (click)="alertFt()">All Toll Transaction
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="menu-item menu-accordion">
+        <div *ngIf="isFTActive != 'NO'" routerLinkActive="here show" data-kt-menu-trigger="click"
+          routerLink="/pump/ftActiveVehicle">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">Active Vehicle
+            </span>
+          </span>
+        </div>
+        <div *ngIf="isFTActive == 'NO'">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title" (click)="alertFt()">Active Vehicle
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="menu-item menu-accordion">
+        <div *ngIf="isFTActive != 'NO'" routerLinkActive="here show" data-kt-menu-trigger="click"
+          routerLink="/pump/ftTollPlaza">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">Toll Plaza
+            </span>
+          </span>
+        </div>
+        <div *ngIf="isFTActive == 'NO'">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title" (click)="alertFt()">Toll Plaza
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="menu-item menu-accordion">
+        <div *ngIf="isFTActive != 'NO'" routerLinkActive="here show" data-kt-menu-trigger="click"
+          routerLink="/pump/ftTotalRecharge">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">Total Recharge
+            </span>
+          </span>
+        </div>
+        <div *ngIf="isFTActive == 'NO'">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title" (click)="alertFt()">Total Recharge
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="menu-item menu-accordion">
+        <div *ngIf="isFTActive != 'NO'" routerLinkActive="here show" data-kt-menu-trigger="click"
+          routerLink="/pump/ftVehicleSummary">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">Vehicle Summary
+            </span>
+          </span>
+        </div>
+        <div *ngIf="isFTActive == 'NO'">
+          <span class="menu-link">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title" (click)="alertFt()">Vehicle Summary
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
     <br><br><br><br>
     <!-- Logout -->

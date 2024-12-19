@@ -9,10 +9,17 @@ import { SharedModule } from "../../_metronic/shared/shared.module";
 import { ModalsModule, WidgetsModule } from '../../_metronic/partials';
 import { TransDashboardComponent } from './trans-dashboard/trans-dashboard.component';
 import { ViewPetrolPumpComponent } from './view-petrol-pump/view-petrol-pump.component';
+import { ViewCreditPurchaseComponent } from './view-credit-purchase/view-credit-purchase.component';
+import { ViewCreditPaymentComponent } from './view-credit-payment/view-credit-payment.component';
+import { FuelLedgerComponent } from './fuel-ledger/fuel-ledger.component';
 
 @NgModule({
-  declarations: [TransDashboardComponent,
-    ViewPetrolPumpComponent
+  declarations: [
+    TransDashboardComponent,
+    ViewPetrolPumpComponent,
+    ViewCreditPurchaseComponent,
+    ViewCreditPaymentComponent,
+    FuelLedgerComponent
   ],
   imports: [
     CommonModule,
@@ -28,6 +35,18 @@ import { ViewPetrolPumpComponent } from './view-petrol-pump/view-petrol-pump.com
       {
         path: 'viewPetrolPump',
         component: ViewPetrolPumpComponent,
+      },
+      {
+        path: 'viewCreditPurchase',
+        component: ViewCreditPurchaseComponent,
+      },
+      {
+        path: 'viewCreditPayment',
+        component: ViewCreditPaymentComponent,
+      },
+      {
+        path: 'fuelLedger',
+        component: FuelLedgerComponent,
       },
     ]),
     WidgetsModule,
