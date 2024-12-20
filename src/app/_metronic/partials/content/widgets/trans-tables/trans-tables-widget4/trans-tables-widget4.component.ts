@@ -65,7 +65,6 @@ export class TransTablesWidget4Component implements OnInit {
   accessGroup: any;
   thisMonthYear = moment(new Date()).format("MMM y")
   lastMonthYear = moment(new Date()).subtract(1, 'month').format("MMM y")
-  corporateId: any;
   transporterCorpId: any;
   FT: boolean;
   fastagId: any;
@@ -99,7 +98,6 @@ export class TransTablesWidget4Component implements OnInit {
     var element = JSON.parse(localStorage.getItem('element') || '');
     this.transporterCorpId = localStorage.getItem('transporterCorpId');
     this.accessGroup = element.accessGroupId
-    this.corporateId = element.veelsPlusCorporateID;
     this.getFastagCorporateByCorpId(this.transporterCorpId)
     this.cd.detectChanges()
   }

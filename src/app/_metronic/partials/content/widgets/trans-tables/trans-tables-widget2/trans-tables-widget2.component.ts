@@ -65,7 +65,6 @@ export class TransTablesWidget2Component implements OnInit {
   accessGroup: any;
   thisMonthYear = moment(new Date()).format("MMM y")
   lastMonthYear = moment(new Date()).subtract(1, 'month').format("MMM y")
-  corporateId: any;
   transporterCorpId: any;
   isPurchasePayment: boolean = false;
   crData: any = [];
@@ -93,7 +92,6 @@ export class TransTablesWidget2Component implements OnInit {
     var element = JSON.parse(localStorage.getItem('element') || '');
     this.transporterCorpId = localStorage.getItem('transporterCorpId');
     this.accessGroup = element.accessGroupId
-    this.corporateId = element.veelsPlusCorporateID;
     this.currentMonth = moment(new Date()).format("MMM")
     this.lastMon = moment(new Date()).subtract(1, 'month').format("MMM")
     this.last2Mon = moment(new Date()).subtract(2, 'month').format("MMM")
@@ -104,47 +102,46 @@ export class TransTablesWidget2Component implements OnInit {
   getMonthlyCredits(transporterCorpId: any) {
     this.spinner.show()
     let data = {
-        fuelCorporateId: transporterCorpId
+      fuelCorporateId: transporterCorpId
     }
 
     this.post.getCreditDetailsByMonthPOST(data)
-        .subscribe(res => {
-            this.isPurchasePayment = true
-            if (res.status == "OK" && res.data.length) {
-                this.crData = res.data.reverse()
-                console.log(this.crData)
-                if (this.currentMonth == this.crData[0].month) {
-                    this.currentMonthPurchase = this.crData[0].purchase
-                    this.currentMonthPayment = this.crData[0].payment
-                    // this.totalOutstanding = this.crData[0].totalOutstand
-                    if (this.lastMon == this.crData[1].month) {
-                        this.lastMonthPurchase = this.crData[1].purchase
-                        this.lastMonthPayment = this.crData[1].payment
-                    } else {
-                    }
-                } else {
-                    this.currentMonthPurchase = 0
-                    this.currentMonthPayment = 0
-                    // this.totalOutstanding = this.crData[0].totalOutstand
-                    if (this.lastMon == this.crData[0].month) {
-                        this.lastMonthPurchase = this.crData[0].purchase
-                        this.lastMonthPayment = this.crData[0].payment
-
-                    } else {
-                        this.lastMonthPurchase = 0
-                        this.lastMonthPayment = 0
-                    }
-                }
-                console.log("111", this.lastMonthPurchase)
-                this.spinner.hide()
-                this.cd.detectChanges()
+      .subscribe(res => {
+        this.isPurchasePayment = true
+        if (res.status == "OK" && res.data.length) {
+          this.crData = res.data.reverse()
+          console.log(this.crData)
+          if (this.currentMonth == this.crData[0].month) {
+            this.currentMonthPurchase = this.crData[0].purchase
+            this.currentMonthPayment = this.crData[0].payment
+            // this.totalOutstanding = this.crData[0].totalOutstand
+            if (this.lastMon == this.crData[1].month) {
+              this.lastMonthPurchase = this.crData[1].purchase
+              this.lastMonthPayment = this.crData[1].payment
+            } else {
+            }
+          } else {
+            this.currentMonthPurchase = 0
+            this.currentMonthPayment = 0
+            // this.totalOutstanding = this.crData[0].totalOutstand
+            if (this.lastMon == this.crData[0].month) {
+              this.lastMonthPurchase = this.crData[0].purchase
+              this.lastMonthPayment = this.crData[0].payment
 
             } else {
-              this.spinner.hide()
-              this.cd.detectChanges()
-                
+              this.lastMonthPurchase = 0
+              this.lastMonthPayment = 0
             }
-        })
-}
+          }
+          this.spinner.hide()
+          this.cd.detectChanges()
+
+        } else {
+          this.spinner.hide()
+          this.cd.detectChanges()
+
+        }
+      })
+  }
 
 }

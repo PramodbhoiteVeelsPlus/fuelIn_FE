@@ -117,6 +117,7 @@ export class PumpTablesWidget10Component implements OnInit {
   FTLQDetails: any = [];
   FTLQTransactionDetails: any = [];
   totalFTLQ: any = [];
+  transporterCorpId: string | null;
 
   constructor(
     private modalService: NgbModal,
@@ -144,7 +145,13 @@ export class PumpTablesWidget10Component implements OnInit {
     this.managerPersonId = element.personId
     this.userName = element.firstName + ' ' + element.lastName;
     this.acceesGroup = element.accessGroupId;
-    this.getFastagCorporateByCorpId(this.dealerCorporateId)
+    if(this.acceesGroup == '12'){
+      this.getFastagCorporateByCorpId(this.dealerCorporateId)
+    } 
+    if(this.acceesGroup == '2'){
+      this.transporterCorpId = localStorage.getItem('transporterCorpId');
+      this.getFastagCorporateByCorpId(this.transporterCorpId)
+    }
     this.getVehicleList()
     this.cd.detectChanges()
   }
@@ -232,11 +239,18 @@ export class PumpTablesWidget10Component implements OnInit {
         this.entityIdForCorp = res.data[0].entityId
         // this.entityIdForCorpLQ = res.data1[0].entityId
         this.thrLimit = res.data[0].thrLimit
+        this.getVehicleList();
+        this.getVehicleListLQ()
+        this.getVehicleWiseFT()
         this.getVehicleTransactionData(this.entityIdForCorp)
         if(res.data1.length){
           this.bothFT = true
           this.LQFT = true 
           this.entityIdForCorpLQ = res.data1[0].entityId
+          this.getVehicleList();
+          this.getVehicleListLQ()
+          this.getVehicleWiseFT()
+          this.getVehicleWiseFTLQ()
           this.getVehicleTransactionLQ(this.entityIdForCorpLQ)
         }
         } else {
@@ -244,6 +258,9 @@ export class PumpTablesWidget10Component implements OnInit {
             this.LQFT = true
             this.LQ = true  
             this.entityIdForCorpLQ = res.data1[0].entityId
+            this.getVehicleList();
+            this.getVehicleListLQ()
+            this.getVehicleWiseFTLQ()
             this.getVehicleTransactionLQ(this.entityIdForCorpLQ)
           }
         }

@@ -125,6 +125,8 @@ export class PumpTablesWidget5Component implements OnInit {
   combineVehicleLQData: any = [];
   fastagLQData: any = [];
   fastagLQLength: any = [];
+  transporterCorpId: string | null;
+  vehicleLQList: any;
 
   constructor(
     private modalService: NgbModal,
@@ -151,6 +153,13 @@ export class PumpTablesWidget5Component implements OnInit {
     this.managerPersonId = element.personId
     this.userName = element.firstName + ' ' + element.lastName;
     this.acceesGroup = element.accessGroupId;
+    if(this.acceesGroup == '12'){
+      this.getFastagCorporateByCorpId(this.dealerCorporateId)
+    } 
+    if(this.acceesGroup == '2'){
+      this.transporterCorpId = localStorage.getItem('transporterCorpId');
+      this.getFastagCorporateByCorpId(this.transporterCorpId)
+    }
     this.cd.detectChanges()
   }
 
@@ -169,16 +178,15 @@ export class PumpTablesWidget5Component implements OnInit {
           this.entityIdForCorp = res.data[0].entityId
           this.thrLimit = res.data[0].thrLimit
           // this.filter()
-          // this.getTransactionDetailsByveelsId()
-          // this.getCorpWalletBalance(this.entityIdForCorp)
+        this.getVehicleTransactionData(this.entityIdForCorp)
+        this.getVehiclAllData(this.entityIdForCorp)
           if (res.data1.length) {
             this.bothFT = true
             this.LQFT = true;
             this.entityIdForCorpLQ = res.data1[0].entityId
             this.thrLimitLQ = res.data1[0].thrLimit
-            // this.filterLQ();
-            // this.getFTLQTransactionDetails()
-            // this.getBalanceByEntityIdLQ(this.entityIdForCorpLQ)
+            this.getVehicleTransactionLQData(this.entityIdForCorpLQ)
+            this.getVehicleLQAllData(this.entityIdForCorpLQ)
           }
         } else {
           if (res.data1.length) {
@@ -186,9 +194,8 @@ export class PumpTablesWidget5Component implements OnInit {
             this.LQ = true
             this.entityIdForCorpLQ = res.data1[0].entityId
             this.thrLimitLQ = res.data1[0].thrLimit
-            // this.filterLQ();
-            // this.getFTLQTransactionDetails()
-            // this.getBalanceByEntityIdLQ(this.entityIdForCorpLQ)
+            this.getVehicleTransactionLQData(this.entityIdForCorpLQ)
+            this.getVehicleLQAllData(this.entityIdForCorpLQ)
           }
         }
       } else {
@@ -402,5 +409,17 @@ export class PumpTablesWidget5Component implements OnInit {
     this.post.setRoutingActiveVehicleLQList(this.fastagLQData, moment(this.filterFormLQ.value.startDate).format("YYYY-MM-DD"), moment(this.filterFormLQ.value.endDate).format("YYYY-MM-DD"))
     this.router.navigate(['/pump/activeVehicleLQPdf']);
   }
+      
+  getVehicleLQAllData(id: any) {
+    const data = {
+      fastagTransactionEntityId: id,  
+    };
+    this.post.getAllVehicleNumberLQPOST(data).subscribe((res) => {
+    if (res.status == 'OK') {
+      this.vehicleLQList = res.data
+    } else {
+    }
+    });
+    }
 }
 

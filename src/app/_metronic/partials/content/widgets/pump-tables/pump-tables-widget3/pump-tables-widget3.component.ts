@@ -95,6 +95,7 @@ export class PumpTablesWidget3Component implements OnInit {
   corpWalletIFSC: any;
   corpWalletUPI: any;
   yesbankltd: any = '@yesbankltd'
+  transporterCorpId: string | null;
 
   constructor(
     private modalService: NgbModal,
@@ -119,7 +120,13 @@ export class PumpTablesWidget3Component implements OnInit {
     this.managerVPPersonId = element.veelsPlusId
     this.managerPersonId = element.personId
     this.userName = element.firstName + ' ' + element.lastName;
-    this.acceesGroup = element.accessGroupId;
+    if(this.acceesGroup == '12'){
+      this.getFastagCorporateByCorpId(this.dealerCorporateId)
+    } 
+    if(this.acceesGroup == '2'){
+      this.transporterCorpId = localStorage.getItem('transporterCorpId');
+      this.getFastagCorporateByCorpId(this.transporterCorpId)
+    }
     this.cd.detectChanges()
   }
 

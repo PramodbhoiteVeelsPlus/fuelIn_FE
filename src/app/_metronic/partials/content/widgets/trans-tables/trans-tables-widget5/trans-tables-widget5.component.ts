@@ -92,7 +92,6 @@ export class TransTablesWidget5Component implements OnInit {
     this.fuelDealerId = localStorage.getItem('dealerId');
     this.transporterCorpId = localStorage.getItem('transporterCorpId');
     this.accessGroup = element.accessGroupId
-    this.corporateId = element.veelsPlusCorporateID;
     this.getFastagCorporateByCorpId(this.transporterCorpId)
     this.cd.detectChanges()
   }
@@ -101,11 +100,11 @@ export class TransTablesWidget5Component implements OnInit {
   typeFastag = "ColumnChart";
   creditDataFastag = [];
   columnNamesFastag = [
-      "Month",
-      "Recharge",
-      { role: "annotation", type: "string" },
-      "Payment",
-      { role: "annotation", type: "string" },
+    "Month",
+    "Recharge",
+    { role: "annotation", type: "string" },
+    "Payment",
+    { role: "annotation", type: "string" },
   ];
 
   getFastagCorporateByCorpId(transporterCorpId: any) {

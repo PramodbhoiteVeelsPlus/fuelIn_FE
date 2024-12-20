@@ -125,7 +125,10 @@ export class PumpTablesWidget8Component implements OnInit {
   combineVehicleLQData: any = [];
   fastagLQData: any = [];
   fastagLQLength: any = [];
-dropTollNameLQ: any;
+  dropTollNameLQ: any;
+  transporterCorpId: string | null;
+  tollPaymentMonthWiseLQDetails: any;
+  resultLQArray: { beneficiaryName: string; totalAmount: any; }[];
 
   constructor(
     private modalService: NgbModal,
@@ -155,7 +158,13 @@ dropTollNameLQ: any;
     this.hostPhone = dealerData.hostPhone
     this.userName = element.firstName + ' ' + element.lastName;
     this.acceesGroup = element.accessGroupId;
-    this.getFastagCorporateByCorpId(this.dealerCorporateId)
+    if (this.acceesGroup == '12') {
+      this.getFastagCorporateByCorpId(this.dealerCorporateId)
+    }
+    if (this.acceesGroup == '2') {
+      this.transporterCorpId = localStorage.getItem('transporterCorpId');
+      this.getFastagCorporateByCorpId(this.transporterCorpId)
+    }
     this.cd.detectChanges()
   }
 
@@ -229,17 +238,20 @@ dropTollNameLQ: any;
           this.FT = true;
           this.entityIdForCorp = res.data[0].entityId
           this.thrLimit = res.data[0].thrLimit
+          this.getTollTransactionData(this.entityIdForCorp)
           if (res.data1.length) {
             this.bothFT = true
             this.LQFT = true;
             this.entityIdForCorpLQ = res.data1[0].entityId
             this.thrLimitLQ = res.data1[0].thrLimit
+            this.getFastagTollPaymentMonthWiseLQ(this.entityIdForCorpLQ)
           }
         } else {
           if (res.data1.length) {
             this.LQFT = true;
             this.LQ = true
             this.entityIdForCorpLQ = res.data1[0].entityId
+            this.getFastagTollPaymentMonthWiseLQ(this.entityIdForCorpLQ)
           }
         }
       } else {
@@ -416,29 +428,65 @@ dropTollNameLQ: any;
 
 
   }
-  
-  
+
+
   viewTollTransactionLQ() {
-    if(this.dropTollNameLQ && this.filterFormLQ.value.startDate && this.filterFormLQ.value.endDate){
+    if (this.dropTollNameLQ && this.filterFormLQ.value.startDate && this.filterFormLQ.value.endDate) {
       const data = {
-        fastagTransactionEntityId: this.entityIdForCorpLQ,  
-        tollName:this.dropTollNameLQ,
-        startDate:moment(this.filterFormLQ.value.startDate).format('YYYY-MM-DD') + ' 00:00:01',
-        endDate:moment(this.filterFormLQ.value.endDate).format('YYYY-MM-DD') + ' 23:59:59',   
+        fastagTransactionEntityId: this.entityIdForCorpLQ,
+        tollName: this.dropTollNameLQ,
+        startDate: moment(this.filterFormLQ.value.startDate).format('YYYY-MM-DD') + ' 00:00:01',
+        endDate: moment(this.filterFormLQ.value.endDate).format('YYYY-MM-DD') + ' 23:59:59',
       };
       this.post.geTransactionFastagByTollNameLQPOST(data).subscribe((res) => {
-      if (res.status == 'OK') {
-        this.fastagLQData = res.data
-        this.fastagLQLength = res.data
-        this.callLocLQ(res.data[0].fastagBeneficiaryIdLQ)
-       // this.getLocation();
-      } else {
-      }
+        if (res.status == 'OK') {
+          this.fastagLQData = res.data
+          this.fastagLQLength = res.data
+          this.callLocLQ(res.data[0].fastagBeneficiaryIdLQ)
+          // this.getLocation();
+        } else {
+        }
       });
-    }else{
+    } else {
       alert("Select Toll & Date..!")
     }
 
+  }
+
+  getFastagTollPaymentMonthWiseLQ(id: any) {
+    const data = {
+      entityId: id,
+      startDate: moment(new Date()).format('YYYY-MM-01 00:00:01'),
+      endDate: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
+    };
+    this.post.getTransactionFastagByVeelsIdDatewiseLQPOST(data).subscribe((res) => {
+      if (res.status == 'OK') {
+        this.tollPaymentMonthWiseLQDetails = res.data.result
+        let totalsLQByTransactionType: any = {};
+
+        this.tollPaymentMonthWiseLQDetails.forEach((obj: any) => {
+          if (obj.transaction && obj.transaction.type === 'DEBIT') {
+            let beneficiaryName = obj.transaction.beneficiaryName;
+            let amount = parseFloat(obj.transaction.amount);
+
+            // Initialize or accumulate the total amount for each transactionType
+            if (!totalsLQByTransactionType[beneficiaryName]) {
+              totalsLQByTransactionType[beneficiaryName] = 0;
+            }
+            totalsLQByTransactionType[beneficiaryName] += amount;
+          }
+        });
+
+        // Convert the totalsByTransactionType object to an array of results
+        this.resultLQArray = Object.keys(totalsLQByTransactionType).map(beneficiaryName => ({
+          beneficiaryName: beneficiaryName,
+          totalAmount: totalsLQByTransactionType[beneficiaryName]
+        }));
+
+        console.log("Toll Plaza", this.tollPaymentMonthWiseLQDetails, this.resultLQArray)
+      } else {
+      }
+    });
   }
 }
 

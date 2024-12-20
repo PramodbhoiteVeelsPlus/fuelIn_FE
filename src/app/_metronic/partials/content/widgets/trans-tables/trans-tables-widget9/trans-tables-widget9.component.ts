@@ -270,7 +270,7 @@ export class TransTablesWidget9Component implements OnInit {
 
   pageChangeEvent(event: number) {
     this.p = event;
-    // this.showCustomer();
+    this.getTransactionWiseLedger();
   }
 
   getTransactionWiseLedger() {
@@ -280,8 +280,8 @@ export class TransTablesWidget9Component implements OnInit {
         this.spinner.show()
         let data = {
           fuelDealerCustomerMapId: this.fuelDealerCorpMapId,
-          startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
-          endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD" + " " + "23:59:59"),
+          startDate: moment(this.filterForm.value.startDate, ["MM-DD-YYYY"]).format("YYYY-MM-DD"),
+          endDate: moment(this.filterForm.value.endDate, ["MM-DD-YYYY"]).format("YYYY-MM-DD" + " " + "23:59:59"),
         }
 
         this.post.getTransactionWiseLedgerPOST(data)
@@ -289,9 +289,11 @@ export class TransTablesWidget9Component implements OnInit {
             if (res.status == "OK" && res.data.length) {
               this.transactionData = res.data;
               this.spinner.hide()
+              this.cd.detectChanges()
             } else {
               alert("No Data Found..!")
               this.spinner.hide()
+              this.cd.detectChanges()
             }
           })
       } else {
@@ -306,9 +308,11 @@ export class TransTablesWidget9Component implements OnInit {
             if (res.status == "OK" && res.data.length) {
               this.transactionData = res.data;
               this.spinner.hide()
+              this.cd.detectChanges()
             } else {
               alert("No Data Found..!")
               this.spinner.hide()
+              this.cd.detectChanges()
             }
           })
       }

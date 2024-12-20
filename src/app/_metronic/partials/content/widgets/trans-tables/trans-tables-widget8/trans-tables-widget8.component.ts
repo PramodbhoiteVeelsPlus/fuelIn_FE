@@ -141,10 +141,10 @@ export class TransTablesWidget8Component implements OnInit {
     }
   }
   filterForm = new FormGroup({
-    startDate:new FormControl(''),
+    startDate: new FormControl(''),
     endDate: new FormControl(''),
     selectCorporateName: new FormControl(''),
-    });
+  });
 
   fuelDealerId: any;
   accessGroup: any;
@@ -172,332 +172,333 @@ export class TransTablesWidget8Component implements OnInit {
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '');
     this.transporterCorpId = localStorage.getItem('transporterCorpId');
-    this.ownerName = element.firstName + ' '+ element.lastName  
+    this.ownerName = element.firstName + ' ' + element.lastName
     this.accessGroup = element.accessGroupId
     this.getCRPayment(this.transporterCorpId);
+    this.getAllDealersNameList(this.transporterCorpId);
     this.cd.detectChanges()
   }
 
-  
-    getAllDealersNameList(transporterCorpId: any){
-      let data = {
-        corporateId: transporterCorpId,
-      }
-      this.post.getAllDealersListPOST(data)
-        .subscribe(res => {
-          if (res.status == "OK") {
-            if(res.data.length){
-              this.crPaymentDetails2 = res.data;             
-            }   
-            this.cd.detectChanges()         
-          }
-          else {
-            this.cd.detectChanges()
-          }
-        })
-    }
 
-    getCorporateInfoByfuelDealerCustomerMapId(id: any) {   
-      let data = {
-        fuelDealerId: this.fuelDealerId,
-        customerName: id.target.value,
-      }
-      this.post.getCorporateInfoByfuelDealerCustomerMapIdPOST(data)
-        .subscribe(res => {
+  getAllDealersNameList(transporterCorpId: any) {
+    let data = {
+      corporateId: transporterCorpId,
+    }
+    this.post.getAllDealersListPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
           if (res.data.length) {
-            this.fuelDealerCorpMapIdNew = res.data[0].fuelDealerCustomerMapId;
-            // this.getFilterCRPaymentFORDealer();
-    this.cd.detectChanges()
-          } else {
-            this.getCRPayment(this.transporterCorpId);
-            this.cd.detectChanges()
+            this.crPaymentDetails2 = res.data;
           }
-        });
-  
+          this.cd.detectChanges()
+        }
+        else {
+          this.cd.detectChanges()
+        }
+      })
+  }
+
+  getCorporateInfoByfuelDealerCustomerMapId(id: any) {
+    let data = {
+      fuelDealerId: this.fuelDealerId,
+      customerName: id.target.value,
+    }
+    this.post.getCorporateInfoByfuelDealerCustomerMapIdPOST(data)
+      .subscribe(res => {
+        if (res.data.length) {
+          this.fuelDealerCorpMapIdNew = res.data[0].fuelDealerCustomerMapId;
+          // this.getFilterCRPaymentFORDealer();
+          this.cd.detectChanges()
+        } else {
+          this.getCRPayment(this.transporterCorpId);
+          this.cd.detectChanges()
+        }
+      });
+
+  }
+
+  getFilterCRPayment() {
+    if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
+      if (this.filterForm.value.selectCorporateName) {
+        let data = {
+          fuelDealerId: this.fuelDealerId,
+          corporateId: this.transporterCorpId,
+          customerName: this.filterForm.value.selectCorporateName,
+          startDate: moment(this.filterForm.value.startDate, ["MM-DD-YYYY"]).format("YYYY-MM-DD"),
+          endDate: moment(this.filterForm.value.endDate, ["MM-DD-YYYY"]).format("YYYY-MM-DD"),
+        }
+
+        this.post.getAllCRPaymentByCustNameCorporatePOST(data)
+          .subscribe(res => {
+            if (res.status == "OK") {
+              if (res.data.length) {
+                this.crPaymentDetails = res.data;
+                this.crPaymentDetailsData = res.data;
+                this.showHeading = true;
+                this.cd.detectChanges()
+              }
+              else {
+                alert("Don't have any Credit Payment in this Month!")
+                this.cd.detectChanges()
+              }
+            }
+            else {
+            }
+          })
+
+
+      }
+      else {
+        let data = {
+          corporateId: this.transporterCorpId,
+          startDate: moment(this.filterForm.value.startDate, ["MM-DD-YYYY"]).format("YYYY-MM-DD"),
+          endDate: moment(this.filterForm.value.endDate, ["MM-DD-YYYY"]).format("YYYY-MM-DD"),
+        }
+
+        this.post.getAllCRPaymentByCorporatePOST(data)
+          .subscribe(res => {
+            if (res.status == "OK") {
+              if (res.data.length) {
+                this.crPaymentDetails = res.data;
+                this.crPaymentDetailsData = res.data;
+                this.showHeading = true;
+                this.cd.detectChanges()
+              }
+              else {
+                alert("Don't have any Credit Payment in this Month!")
+                this.cd.detectChanges()
+              }
+            }
+            else {
+            }
+          })
+
+
+      }
+    }
+    else {
+      if (this.filterForm.value.selectCorporateName) {
+
+        let data = {
+          fuelDealerId: this.fuelDealerId,
+          corporateId: this.transporterCorpId,
+          customerName: this.filterForm.value.selectCorporateName,
+          // startDate:  moment(startDate).format("YYYY-MM-DD") ,
+          startDate: moment(new Date()).subtract(15, 'day').format("YYYY-MM-DD"),
+          endDate: moment(new Date()).format("YYYY-MM-DD"),
+        }
+
+        this.post.getAllCRPaymentByCustNameCorporatePOST(data)
+          .subscribe(res => {
+            if (res.status == "OK") {
+              if (res.data.length) {
+                this.crPaymentDetails = res.data;
+                this.crPaymentDetailsData = res.data;
+                this.showHeading = true;
+                this.cd.detectChanges()
+              }
+              else {
+                alert("Don't have any Credit Payment in this Month for selected Customer!")
+                this.cd.detectChanges()
+              }
+            }
+            else {
+            }
+          })
+
+
+      }
+      else {
+        this.getCRPayment(this.transporterCorpId);
+        this.cd.detectChanges()
+        //this.excelDownload()
+      }
     }
 
-    getFilterCRPayment() {        
-      if(this.filterForm.value.startDate && this.filterForm.value.endDate){
-        if(this.filterForm.value.selectCorporateName){
-          let data = {          
-            fuelDealerId:this.fuelDealerId,
-            corporateId: this.transporterCorpId,
-            customerName:this.filterForm.value.selectCorporateName,
-            startDate:  moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD") ,
-            endDate:  moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD") ,
-          }
-         
-            this.post.getAllCRPaymentByCustNameCorporatePOST(data)
+  }
+
+  getCRPayment(transporterCorpId: any) {
+
+    if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
+      if (this.filterForm.value.selectCorporateName) {
+        let data = {
+          fuelDealerId: this.fuelDealerId,
+          corporateId: this.transporterCorpId,
+          mapId: this.fuelDealerCorpMapIdNew,
+          startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+          endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+        }
+        if (this.accessGroup == 12 || this.accessGroup == 14 || this.accessGroup == 19 || this.accessGroup == 21) {
+          this.post.getAllCRPaymentByCustNameDealerPOST(data)
             .subscribe(res => {
               if (res.status == "OK") {
-                if(res.data.length){
-                  this.crPaymentDetails = res.data; 
+                if (res.data.length) {
+                  this.crPaymentDetails = res.data;
+                  this.crPaymentDetailsData = res.data;
+
+                  this.showHeading = true;
+                  this.cd.detectChanges()
+                }
+                else {
+                  alert("Don't have any Credit Payment in this Month!")
+                  this.showHeading = false;
+                  this.cd.detectChanges()
+                }
+              }
+              else {
+              }
+            })
+        }
+
+      }
+      else {
+        let data = {
+          corporateId: this.transporterCorpId,
+          startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+          endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+        }
+        if (this.accessGroup == 12 || this.accessGroup == 14 || this.accessGroup == 19 || this.accessGroup == 21) {
+          this.post.getAllCRPaymentByDealerPOST(data)
+            .subscribe(res => {
+              if (res.status == "OK") {
+                if (res.data.length) {
+                  this.crPaymentDetails = res.data;
                   this.crPaymentDetailsData = res.data;
                   this.showHeading = true;
                   this.cd.detectChanges()
                 }
-                else{
-                  alert("Don't have any Credit Payment in this Month!")
-                  this.cd.detectChanges()
-                }      
-              }
-              else {
-              }
-            })
-          
-          
-        }
-        else{
-        let data = {
-          corporateId: this.transporterCorpId,
-          startDate:  moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD") ,
-          endDate:  moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD") ,
-        }
-        
-          this.post.getAllCRPaymentByCorporatePOST(data)
-          .subscribe(res => {
-            if (res.status == "OK") {
-              if(res.data.length){
-                this.crPaymentDetails = res.data;  
-                this.crPaymentDetailsData = res.data;
-                this.showHeading = true;
-                this.cd.detectChanges()
-              }
-              else{
-                alert("Don't have any Credit Payment in this Month!")
-                this.cd.detectChanges()
-              }      
-            }
-            else {
-            }
-          })
-        
-       
-        }
-      }
-      else{
-        if(this.filterForm.value.selectCorporateName){
-        
-        let data = {          
-          fuelDealerId:this.fuelDealerId,
-          corporateId: this.transporterCorpId,
-          customerName:this.filterForm.value.selectCorporateName,
-          // startDate:  moment(startDate).format("YYYY-MM-DD") ,
-          startDate:  moment(new Date()).subtract(15, 'day').format("YYYY-MM-DD") ,
-          endDate:  moment(new Date()).format("YYYY-MM-DD") ,
-        }
-       
-          this.post.getAllCRPaymentByCustNameCorporatePOST(data)
-          .subscribe(res => {
-            if (res.status == "OK") {
-              if(res.data.length){
-                this.crPaymentDetails = res.data; 
-                this.crPaymentDetailsData = res.data;
-                this.showHeading = true;
-                this.cd.detectChanges()
-              }
-              else{
-                alert("Don't have any Credit Payment in this Month for selected Customer!")
-                this.cd.detectChanges()
-              }      
-            }
-            else {
-            }
-          })
-        
-        
-        }
-        else{
-          this.getCRPayment(this.transporterCorpId);
-          this.cd.detectChanges()
-          //this.excelDownload()
-        }
-      }
-      
-    }
-    
-    getCRPayment(transporterCorpId: any) {
-  
-      if(this.filterForm.value.startDate && this.filterForm.value.endDate){
-        if(this.filterForm.value.selectCorporateName){
-          let data = {          
-            fuelDealerId:this.fuelDealerId,
-            corporateId: this.transporterCorpId,
-            mapId:this.fuelDealerCorpMapIdNew,
-            startDate:  moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD") ,
-            endDate:  moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD") ,
-          }
-          if(this.accessGroup == 12 || this.accessGroup == 14 || this.accessGroup == 19||this.accessGroup == 21){
-            this.post.getAllCRPaymentByCustNameDealerPOST(data)
-            .subscribe(res => {
-              if (res.status == "OK") {
-                if(res.data.length){
-                  this.crPaymentDetails = res.data; 
-                  this.crPaymentDetailsData = res.data; 
-  
-                  this.showHeading = true;
-                  this.cd.detectChanges()
-                }
-                else{
+                else {
                   alert("Don't have any Credit Payment in this Month!")
                   this.showHeading = false;
                   this.cd.detectChanges()
-                }      
+                }
               }
               else {
               }
             })
-          }
-          
         }
-        else{
-        let data = {
-          corporateId: this.transporterCorpId,
-          startDate:  moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD") ,
-          endDate:  moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD") ,
-        }
-        if(this.accessGroup == 12 || this.accessGroup == 14 || this.accessGroup == 19||this.accessGroup == 21){
-          this.post.getAllCRPaymentByDealerPOST(data)
+
+      }
+    } else {
+      let data = {
+        corporateId: transporterCorpId,
+        startDate: moment(new Date()).subtract(15, 'day').format("YYYY-MM-DD"),
+        endDate: moment(new Date()).format("YYYY-MM-DD"),
+      }
+
+      if (this.accessGroup == 12 || this.accessGroup == 14 || this.accessGroup == 19 || this.accessGroup == 21) {
+        this.post.getAllCRPaymentByDealerPOST(data)
           .subscribe(res => {
             if (res.status == "OK") {
-              if(res.data.length){
-                this.crPaymentDetails = res.data;  
-                this.crPaymentDetailsData = res.data;
-                this.showHeading = true;
-                this.cd.detectChanges()
-              }
-              else{
-                alert("Don't have any Credit Payment in this Month!")
-                this.showHeading = false;
-                this.cd.detectChanges()
-              }      
-            }
-            else {
-            }
-          })
-        }
-       
-        }
-      }else{
-        let data = {
-          corporateId: transporterCorpId,
-          startDate:  moment(new Date()).subtract(15, 'day').format("YYYY-MM-DD") ,
-          endDate:  moment(new Date()).format("YYYY-MM-DD") ,
-        }
-        
-        if(this.accessGroup == 12 || this.accessGroup == 14 || this.accessGroup == 19||this.accessGroup == 21){
-          this.post.getAllCRPaymentByDealerPOST(data)
-          .subscribe(res => {
-            if (res.status == "OK") {
-              if(res.data.length){
-                this.crPaymentDetails = res.data; 
+              if (res.data.length) {
+                this.crPaymentDetails = res.data;
                 this.crPaymentDetailsData = res.data;
                 this.crPaymentDetails1 = res.data1;
-                this.showHeading = true; 
-                this.cd.detectChanges()
-              }
-              else{
-                //alert("Don't have any Credit Payment in this Month!")
-                this.crPaymentDetails1 = res.data1; 
-                this.crPaymentDetails.length = 0;
-                this.cd.detectChanges()
-              }      
-            }
-            else {
-            }
-          })
-        }else{
-          this.post.getAllCRPaymentByCorporatePOST(data)
-          .subscribe(res => {
-            if (res.status == "OK") {
-              if(res.data.length){
-                this.crPaymentDetails = res.data; 
-                this.crPaymentDetailsData = res.data;
-                this.crPaymentDetails1 = res.data1; 
                 this.showHeading = true;
                 this.cd.detectChanges()
               }
-              else{
+              else {
                 //alert("Don't have any Credit Payment in this Month!")
-                this.crPaymentDetails1 = res.data1; 
+                this.crPaymentDetails1 = res.data1;
                 this.crPaymentDetails.length = 0;
                 this.cd.detectChanges()
-              }      
+              }
             }
             else {
             }
           })
-        }
-  
+      } else {
+        this.post.getAllCRPaymentByCorporatePOST(data)
+          .subscribe(res => {
+            if (res.status == "OK") {
+              if (res.data.length) {
+                this.crPaymentDetails = res.data;
+                this.crPaymentDetailsData = res.data;
+                this.crPaymentDetails1 = res.data1;
+                this.showHeading = true;
+                this.cd.detectChanges()
+              }
+              else {
+                //alert("Don't have any Credit Payment in this Month!")
+                this.crPaymentDetails1 = res.data1;
+                this.crPaymentDetails.length = 0;
+                this.cd.detectChanges()
+              }
+            }
+            else {
+            }
+          })
       }
-      
+
     }
-    
-    excelDownload(){
-      if(this.accessGroup == 12 || this.accessGroup == 14 || this.accessGroup == 19||this.accessGroup == 21){
-        this.paymentDetails.length = 0
-  
-        this.crPaymentDetails.map((res: { byManager: string; managerName: any; transacDate: moment.MomentInput; companyName: any; hostName: any; hostPhone: any; paymentMethod: any; grandTotalAmount: any; pendingDays: any; bankName: string; accountNumber: string; avgPayment: any; }) => {
-  
-          if(res.byManager == 'FALSE'){
-            this.createdBy = this.ownerName
-          }else{
-            this.createdBy = res.managerName
-          }
-      
-          let json = {
-            Date: moment(res.transacDate).format("DD-MM-YYYY"),
-            CustomerName:res.companyName,
-            KeyPersonName: res.hostName,
-            KeyPersonMobile: res.hostPhone,
-            PaymentMode: res.paymentMethod,
-            Amount: Number(res.grandTotalAmount),
-            PendingDays: res.pendingDays,
-            Account: res.bankName+' '+res.accountNumber,
-            PaymentScore: Number(res.avgPayment).toFixed(0),
-            CreatedBy: this.createdBy,
-            
-          };
-      
-      
-          this.paymentDetails.push(json);
-        });
-      
-        this.excelService.exportAsExcelFile(
-          this.paymentDetails,
-          "CreditPaymentReport"
-        );
-      }
-    else{
-      
+
+  }
+
+  excelDownload() {
+    if (this.accessGroup == 12 || this.accessGroup == 14 || this.accessGroup == 19 || this.accessGroup == 21) {
       this.paymentDetails.length = 0
-  
-      this.crPaymentDetails.map((res: { transacDate: moment.MomentInput; companyName: any; hostName: any; hostPhone: any; paymentMethod: any; grandTotalAmount: any; }) => {
-    
+
+      this.crPaymentDetails.map((res: { byManager: string; managerName: any; transacDate: moment.MomentInput; companyName: any; hostName: any; hostPhone: any; paymentMethod: any; grandTotalAmount: any; pendingDays: any; bankName: string; accountNumber: string; avgPayment: any; }) => {
+
+        if (res.byManager == 'FALSE') {
+          this.createdBy = this.ownerName
+        } else {
+          this.createdBy = res.managerName
+        }
+
         let json = {
           Date: moment(res.transacDate).format("DD-MM-YYYY"),
-          PumpName:res.companyName,
+          CustomerName: res.companyName,
+          KeyPersonName: res.hostName,
+          KeyPersonMobile: res.hostPhone,
+          PaymentMode: res.paymentMethod,
+          Amount: Number(res.grandTotalAmount),
+          PendingDays: res.pendingDays,
+          Account: res.bankName + ' ' + res.accountNumber,
+          PaymentScore: Number(res.avgPayment).toFixed(0),
+          CreatedBy: this.createdBy,
+
+        };
+
+
+        this.paymentDetails.push(json);
+      });
+
+      this.excelService.exportAsExcelFile(
+        this.paymentDetails,
+        "CreditPaymentReport"
+      );
+    }
+    else {
+
+      this.paymentDetails.length = 0
+
+      this.crPaymentDetails.map((res: { transacDate: moment.MomentInput; companyName: any; hostName: any; hostPhone: any; paymentMethod: any; grandTotalAmount: any; }) => {
+
+        let json = {
+          Date: moment(res.transacDate).format("DD-MM-YYYY"),
+          PumpName: res.companyName,
           KeyPersonName: res.hostName,
           KeyPersonMobile: res.hostPhone,
           PaymentMode: res.paymentMethod,
           Amount: res.grandTotalAmount,
-        };  
-    
+        };
+
         this.paymentDetails.push(json);
       });
-    
+
       this.excelService.exportAsExcelFile(
         this.paymentDetails,
         "PaymentReport"
       );
-    
+
     }
-  
-    }
-    
+
+  }
+
   pageChangeEvent(event: number) {
     this.p = event;
-    // this.showCustomer();
+    this.getCRPayment(this.transporterCorpId);
   }
 
 }

@@ -136,6 +136,7 @@ export class PumpTablesWidget4Component implements OnInit {
   searchBoxRange1LQ: FormControl = new FormControl();
   searchTermRange1LQ: any = "";
   exceldata1LQ: any = [];
+  transporterCorpId: string | null;
 
   constructor(
     private modalService: NgbModal,
@@ -199,6 +200,13 @@ export class PumpTablesWidget4Component implements OnInit {
     this.managerPersonId = element.personId
     this.userName = element.firstName + ' ' + element.lastName;
     this.acceesGroup = element.accessGroupId;
+    if(this.acceesGroup == '12'){
+      this.getFastagCorporateByCorpId(this.dealerCorporateId)
+    } 
+    if(this.acceesGroup == '2'){
+      this.transporterCorpId = localStorage.getItem('transporterCorpId');
+      this.getFastagCorporateByCorpId(this.transporterCorpId)
+    }
     this.cd.detectChanges()
   }
 

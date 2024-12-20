@@ -154,6 +154,7 @@ export class TransTablesWidget7Component implements OnInit {
     this.transporterCorpId = localStorage.getItem('transporterCorpId');
     this.accessGroup = element.accessGroupId
     this.getfuelDealerIdByCorporateId(this.transporterCorpId)
+    this.getAllDealersNameList(this.transporterCorpId)
     this.getDetailsByTransactionType()
     this.cd.detectChanges()
   }
@@ -165,15 +166,10 @@ export class TransTablesWidget7Component implements OnInit {
     this.post.getfuelDealerIdByCorporateIdPOST(data)
       .subscribe(res => {
         if (res.status == "OK") {
-          this.fuelDealerId = res.data[0].fuelDealerId;
+          // this.fuelDealerId = res.data[0].fuelDealerId;
           this.brandName = res.data[0].brandName;
           console.log("fuelOf", this.fuelDealerId)
 
-          // this.getFuelCreditRequestByfuelDealerId(this.fuelDealerId);
-          this.getFuelCreditRequestCorporateByfuelDealerId(this.fuelDealerId)
-          // this.getProductsByDealerId(this.fuelDealerId);
-          // this.getDetailsByTransactionType()
-          // this.getManagerMobileByfuelDealerId(this.fuelDealerId)
           this.cd.detectChanges()
 
         }
@@ -183,20 +179,21 @@ export class TransTablesWidget7Component implements OnInit {
       })
   }
 
-  getFuelCreditRequestCorporateByfuelDealerId(fuelDealerId: any) {
+  getAllDealersNameList(transporterCorpId: any){
     let data = {
-      fuelDealerId: fuelDealerId
+      corporateId: transporterCorpId,
     }
-    this.post.getFuelCreditRequestCorporateByfuelDealerIdPOST(data)
+    this.post.getAllDealersListPOST(data)
       .subscribe(res => {
-        if (res.data.length) {
-          this.allCorporateList = res.data;
-          this.allCorporateListData = res;
-          this.cd.detectChanges()
-        } else {
-          this.cd.detectChanges()
+        if (res.status == "OK") {
+          if(res.data.length){
+            this.allCorporateList = res.data;
+            this.allCorporateListData = res;            
+          }            
         }
-      });
+        else {
+        }
+      })
   }
 
   onDateSelection(date: NgbDate) {
@@ -240,7 +237,7 @@ export class TransTablesWidget7Component implements OnInit {
 
   pageChangeEvent(event: number) {
     this.p = event;
-    // this.showCustomer();
+    this.getDetailsByTransactionType()
   }
 
   searchByCorp() {
@@ -262,8 +259,8 @@ export class TransTablesWidget7Component implements OnInit {
 
           let data = {
             fuelDealerId: this.fuelDealerId,
-            startDate: moment(this.selectCorporate.value.startDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
-            endDate: moment(this.selectCorporate.value.endDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+            startDate: moment(this.selectCorporate.value.startDate, ["MM-DD-YYYY"]).format('YYYY-MM-DD'),
+            endDate: moment(this.selectCorporate.value.endDate, ["MM-DD-YYYY"]).format('YYYY-MM-DD'),
           }
           this.post.getFuelCreditRequestByfuelDealerIdPOST(data)
             .subscribe(res => {
@@ -304,8 +301,8 @@ export class TransTablesWidget7Component implements OnInit {
         if (this.selectCorporate.value.startDate || this.selectCorporate.value.endDate) {
           let data = {
             corporateId: this.transporterCorpId,
-            startDate: moment(this.selectCorporate.value.startDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
-            endDate: moment(this.selectCorporate.value.endDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+            startDate: moment(this.selectCorporate.value.startDate, ["MM-DD-YYYY"]).format('YYYY-MM-DD'),
+            endDate: moment(this.selectCorporate.value.endDate, ["MM-DD-YYYY"]).format('YYYY-MM-DD'),
           }
           this.post.getFuelCreditByCorporateIdPOST(data)
             .subscribe(res => {
@@ -516,8 +513,8 @@ export class TransTablesWidget7Component implements OnInit {
           let data = {
             fuelDealerId: this.fuelDealerId,
             fuelCorporateId: this.selectCorporate.value.selectCorporateId,
-            startDate: moment(this.selectCorporate.value.startDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
-            endDate: moment(this.selectCorporate.value.endDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+            startDate: moment(this.selectCorporate.value.startDate, ["MM-DD-YYYY"]).format('YYYY-MM-DD'),
+            endDate: moment(this.selectCorporate.value.endDate, ["MM-DD-YYYY"]).format('YYYY-MM-DD'),
             transactionType: this.filterForm.value.transactionType,
           }
           this.post.getFuelCreditRequestByfuelDealerIdAndFuelCorporateId1POST(data)
@@ -555,8 +552,8 @@ export class TransTablesWidget7Component implements OnInit {
 
           let data = {
             fuelDealerId: this.fuelDealerId,
-            startDate: moment(this.selectCorporate.value.startDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
-            endDate: moment(this.selectCorporate.value.endDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+            startDate: moment(this.selectCorporate.value.startDate, ["MM-DD-YYYY"]).format('YYYY-MM-DD'),
+            endDate: moment(this.selectCorporate.value.endDate, ["MM-DD-YYYY"]).format('YYYY-MM-DD'),
             transactionType: this.filterForm.value.transactionType,
           }
           this.post.getFuelCreditRequestByfuelDealerIdPOST(data)
@@ -619,8 +616,8 @@ export class TransTablesWidget7Component implements OnInit {
           let data = {
             corporateId: this.transporterCorpId,
             fuelDealer: this.selectCorporate.value.selectCorporateId,
-            startDate: moment(this.selectCorporate.value.startDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
-            endDate: moment(this.selectCorporate.value.endDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+            startDate: moment(this.selectCorporate.value.startDate, ["MM-DD-YYYY"]).format('YYYY-MM-DD'),
+            endDate: moment(this.selectCorporate.value.endDate, ["MM-DD-YYYY"]).format('YYYY-MM-DD'),
             transactionType: this.filterForm.value.transactionType,
           }
           this.post.getFuelCreditRequestByCorporateIdAndFuelDealerPOST(data)
@@ -647,8 +644,8 @@ export class TransTablesWidget7Component implements OnInit {
 
           let data = {
             corporateId: this.transporterCorpId,
-            startDate: moment(this.selectCorporate.value.startDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
-            endDate: moment(this.selectCorporate.value.endDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+            startDate: moment(this.selectCorporate.value.startDate, ["MM-DD-YYYY"]).format('YYYY-MM-DD'),
+            endDate: moment(this.selectCorporate.value.endDate, ["MM-DD-YYYY"]).format('YYYY-MM-DD'),
             transactionType: this.filterForm.value.transactionType,
           }
           this.post.getFuelCreditByCorporateIdPOST(data)

@@ -66,7 +66,6 @@ export class TransTablesWidget3Component implements OnInit {
   accessGroup: any;
   thisMonthYear = moment(new Date()).format("MMM y")
   lastMonthYear = moment(new Date()).subtract(1, 'month').format("MMM y")
-  corporateId: any;
   transporterCorpId: any;
   isPurchasePayment: boolean = false;
   crData: any = [];
@@ -123,7 +122,6 @@ export class TransTablesWidget3Component implements OnInit {
     var element = JSON.parse(localStorage.getItem('element') || '');
     this.transporterCorpId = localStorage.getItem('transporterCorpId');
     this.accessGroup = element.accessGroupId
-    this.corporateId = element.veelsPlusCorporateID;
     this.currentMonth = moment(new Date()).format("MMM")
     this.lastMon = moment(new Date()).subtract(1, 'month').format("MMM")
     this.getGraphDataByDealerId(this.transporterCorpId)
@@ -226,7 +224,6 @@ getGraphDataByDealerId(transporterCorpId: any) {
         this.payment = [this.payment1, this.payment2, this.payment3, this.payment4, this.payment5, this.payment6];
 
         this.chartOptions = getChartOptions(350, this.months, this.os, this.purchase, this.payment);
-        console.log("dataGra", this.chartOptions)
         this.spinner.hide();
         this.cd.detectChanges();
       } else {

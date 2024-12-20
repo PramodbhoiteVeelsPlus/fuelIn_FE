@@ -138,10 +138,10 @@ export class TransTablesWidget1Component implements OnInit {
     this.cd.detectChanges()
   }
 
-  getMonthlyCredits(corporateId: any) {
+  getMonthlyCredits(transporterCorpId: any) {
     this.spinner.show()
     let data = {
-      fuelCorporateId: corporateId
+      fuelCorporateId: transporterCorpId
     }
 
     this.post.getCreditDetailsByMonthPOST(data)
@@ -182,9 +182,9 @@ export class TransTablesWidget1Component implements OnInit {
       })
   }
 
-  getFastagCorporateByCorpId(id: any) {
+  getFastagCorporateByCorpId(transporterCorpId: any) {
     const data = {
-      corporateId: id,
+      corporateId: transporterCorpId,
     };
     this.post.getFastagCorporateByCorpIdPOST(data).subscribe((res) => {
       if (res.status == 'OK') {
@@ -317,9 +317,9 @@ export class TransTablesWidget1Component implements OnInit {
       });
   }
 
-  getLastMonthCrDetailForTransporter(corporateId: any) {
+  getLastMonthCrDetailForTransporter(transporterCorpId: any) {
     let data = {
-      corporateId: corporateId,
+      corporateId: transporterCorpId,
     };
     this.post.getLastMonthCrDetailsForTransporterPOST(data).subscribe((res) => {
       if (res.status == "OK") {
@@ -330,10 +330,10 @@ export class TransTablesWidget1Component implements OnInit {
     });
   }
 
-  getThisMonthCrDetail(fuelDealerId: any, corporateId: any) {
+  getThisMonthCrDetail(fuelDealerId: any, transporterCorpId: any) {
     let data = {
       fuelDealerId: fuelDealerId,
-      corporateId: corporateId,
+      corporateId: transporterCorpId,
     };
     this.post.getThisMonthCrDetailsPOST(data).subscribe((res) => {
       if (res.status == "OK") {
@@ -344,8 +344,8 @@ export class TransTablesWidget1Component implements OnInit {
           Number(res.data2[0].totalCrSale) -
           Number(res.data2[0].totalDiscount);
         this.totalPayment = Number(res.data4[0].totalCrPayment);
-        this.getMonthlyCredits(this.corporateId)
-        this.getTotalOutstanding(this.corporateId)
+        this.getMonthlyCredits(this.transporterCorpId)
+        this.getTotalOutstanding(this.transporterCorpId)
 
         // this.getLastMonthCrDetail(fuelDealerId, corporateId);
         this.cd.detectChanges()
@@ -354,10 +354,10 @@ export class TransTablesWidget1Component implements OnInit {
     });
   }
 
-  getTotalOutstanding(corporateId: any) {
+  getTotalOutstanding(transporterCorpId: any) {
     this.spinner.hide();
     let data = {
-      fuelCorporateId: corporateId
+      fuelCorporateId: transporterCorpId
     }
 
     this.post.getTotalOutstandingByCorpIdPOST(data).subscribe(res => {
