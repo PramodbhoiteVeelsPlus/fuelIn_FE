@@ -165,7 +165,7 @@
                         </td>
                       </tr>
 
-                      <tr style="border-collapse: collapse; border: 1px solid black;">
+                      <tr>
                         <td colspan="6">
                           <thead>
                             <tr>
@@ -193,7 +193,7 @@
 
                             </tr>
                           </thead>
-                    <tbody>
+                    <tbody  style="border-collapse: collapse; border: 1px solid black;">
                       <tr *ngFor="let data of meterSalesDetails; let i = index">
                         <td colspan="2" style="text-align: center; border: 1px solid #272829;"> {{i+1}} </td>
                         <td colspan="2" style="text-align: center; border: 1px solid #272829;"> {{data.productName}}
@@ -284,7 +284,7 @@
                             Total Amount (Rs)</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody style="border-collapse: collapse; border: 1px solid black;">
                         <tr *ngFor="let data of creditDetails; let i = index">
                           <td colspan="2" style="text-align: center; border: 1px solid #272829;"> {{i+1}} </td>
                           <td colspan="4" style="text-align: center; border: 1px solid #272829;"> {{data.companyName}}
@@ -309,7 +309,7 @@
                             number:'1.2-2'}} </td>
                         </tr>
                       </tbody>
-                      <tbody>
+                      <tbody style="border-collapse: collapse; border: 1px solid black;">
                         <tr style="border-bottom: 1px solid #272829;">
                           <td colspan="8" style="text-align: center; border: 1px solid #272829;"> <b>Total</b> </td>
                           <td colspan="2" style="text-align: center; border: 1px solid #272829;"> <b>{{totalCrCustQty |
@@ -348,7 +348,7 @@
                               Shift Tally (A+B+C) (Rs)</th>
                           </tr>
                         </thead>
-                        <tbody *ngIf="totalSalesDetails.length">
+                        <tbody *ngIf="totalSalesDetails.length" style="border-collapse: collapse; border: 1px solid black;">
                           <tr *ngFor="let data of totalSalesDetails; let i = index">
                             <td colspan="2" style="text-align: center; border: 1px solid #272829;">
                               {{(totalMeterSalesDetails) + (cashLubeAmt) + (crLubeAmt) | number:'1.2-2'}} </td>
@@ -385,7 +385,7 @@
                               Amount (Rs)</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody style="border-collapse: collapse; border: 1px solid black;">
                           <tr *ngFor="let data of digitalDetails; let i = index">
                             <td colspan="4" style="text-align: center; border: 1px solid #272829;">
                               {{data.terminalName}}
@@ -430,7 +430,7 @@
                               Account</th>
                           </tr>
                         </thead>
-                        <tbody *ngFor="let data of creditPaymentDetails">
+                        <tbody *ngFor="let data of creditPaymentDetails" style="border-collapse: collapse; border: 1px solid black;">
                           <tr>
                             <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{data.companyName}}
                             </td>
@@ -464,7 +464,7 @@
                               Sales (Pieces)</th>
                           </tr>
                         </thead>
-                        <tbody *ngFor="let data of lubeWiseDetails">
+                        <tbody *ngFor="let data of lubeWiseDetails" style="border-collapse: collapse; border: 1px solid black;">
                           <tr>
                             <td colspan="4" style="text-align: center; border: 1px solid #272829;"> {{data.lubeName}}
                             </td>
@@ -518,7 +518,7 @@
                               Total</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody style="border-collapse: collapse; border: 1px solid black;">
                           <tr>
                             <td colspan="4" style="text-align: center; border: 1px solid #272829;"> {{totalLubeCrAmt |
                               number:'1.2-2'}} </td>
@@ -565,7 +565,7 @@
                               Amount</th>
                           </tr>
                         </thead>
-                        <tbody *ngFor="let data of bankoverallReportData; let i = index">
+                        <tbody *ngFor="let data of bankoverallReportData; let i = index" style="border-collapse: collapse; border: 1px solid black;">
                           <tr>
                             <td colspan="2" style="text-align: center; border: 1px solid #272829;">
                               <span *ngIf="data.overallReportDataDate == '2022-01-01' ">
@@ -626,7 +626,7 @@
                               Amount</th>
                           </tr>
                         </thead>
-                        <tbody *ngFor="let data of overallReportDataData; let i = index">
+                        <tbody *ngFor="let data of overallReportDataData; let i = index" style="border-collapse: collapse; border: 1px solid black;">
                           <tr>
                             <td colspan="2" style="text-align: center; border: 1px solid #272829;">
                               <span *ngIf="data.overallReportDataDate == '2022-01-01' ">
@@ -667,7 +667,7 @@
                             </th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody style="border-collapse: collapse; border: 1px solid black;">
                           <tr>
                             <th colspan="3" style="text-align: center; border: 1px solid #272829;"> Product </th>
                             <th colspan="3" style="text-align: center; border: 1px solid #272829;"> Quantity </th>
@@ -695,7 +695,7 @@
                             </th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody style="border-collapse: collapse; border: 1px solid black;">
                           <tr style="text-align: right;">
                             <td colspan="3" style="text-align: center; border: 1px solid #272829;"><b> Opening Balance
                               </b></td>

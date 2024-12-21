@@ -225,6 +225,7 @@ getGraphDataByDealerId(transporterCorpId: any) {
 
         this.chartOptions = getChartOptions(350, this.months, this.os, this.purchase, this.payment);
         this.spinner.hide();
+        console.log("this",)
         this.cd.detectChanges();
       } else {
         this.spinner.hide();

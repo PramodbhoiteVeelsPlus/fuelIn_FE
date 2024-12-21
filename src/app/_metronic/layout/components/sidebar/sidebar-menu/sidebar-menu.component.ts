@@ -119,7 +119,6 @@ export class SidebarMenuComponent implements OnInit {
   ngOnInit(): void {
     if (JSON.parse(localStorage.getItem('isLoggedin') || '{}') == true) {
       var element = JSON.parse(localStorage.getItem("element") || '{}');
-      var transporterData = JSON.parse(localStorage.getItem('transporterData') || '');
       this.veelsplusCorporate = element.veelsPlusCorporateID;
       this.accessGroupId = element.accessGroupId
       if (element.accessGroupId == '7') {
@@ -127,6 +126,7 @@ export class SidebarMenuComponent implements OnInit {
         this.isDealer = false;
         this.isTransporter = false;
       } else if (element.accessGroupId == '2') {
+        var transporterData = JSON.parse(localStorage.getItem('transporterData') || '');
         this.isTransporter = true;
         this.isAdmin = false;
         this.isDealer = false;
