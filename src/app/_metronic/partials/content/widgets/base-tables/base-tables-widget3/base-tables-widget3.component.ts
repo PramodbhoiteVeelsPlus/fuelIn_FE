@@ -124,6 +124,7 @@ export class BaseTablesWidget3Component implements OnInit {
   }
 
   ngOnInit(): void {
+    this.transactionData = JSON.parse(localStorage.getItem('transactionData') || '{}');
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
@@ -151,6 +152,11 @@ export class BaseTablesWidget3Component implements OnInit {
     this.filterForm.controls["startDate"].setValue( "01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear() )
     this.filterForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
     this.getFuelCreditCorporateByfuelDealerId(this.fuelDealerId)
+    if (!this.transactionData.length) {
+      this.getTransaction();
+    } else {
+      this.getTransaction1();
+    }
     this.cd.detectChanges()
   }
 
@@ -256,10 +262,60 @@ export class BaseTablesWidget3Component implements OnInit {
         .subscribe(res => {
           if (res.status == "OK" && res.data.length) {
             this.transactionData = res.data;
+            localStorage.setItem('transactionData', JSON.stringify(this.transactionData));
             this.spinner.hide();
             this.cd.detectChanges()
           } else {
             alert("Data Not Found..!")
+            localStorage.setItem('transactionData', JSON.stringify([]));
+            this.spinner.hide();
+            this.cd.detectChanges()
+
+          }
+        })
+    }
+  }
+
+  getTransaction1() {
+    if (this.fuelDealerCorpMapId) {
+      this.transactionData.length = 0
+      this.spinner.show()
+      let data = {
+        fuelDealerCustomerMapId: this.fuelDealerCorpMapId,
+        startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+        endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+      }
+
+      this.post.getTransactionwiseLedgerByMapIdPOST(data)
+        .subscribe(res => {
+          if (res.status == "OK" && res.data.length) {
+            this.transactionData = res.data;
+            this.spinner.hide();
+            this.cd.detectChanges()
+          } else {
+            alert("Data Not Found..!")
+            this.spinner.hide();
+            this.cd.detectChanges()
+          }
+        })
+    } else {
+      this.transactionData.length = 0
+      let data = {
+        fuelDealerId: this.fuelDealerId,
+        startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+        endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+      }
+
+      this.post.getTransactionwiseLedgerByMapIdPOST(data)
+        .subscribe(res => {
+          if (res.status == "OK" && res.data.length) {
+            this.transactionData = res.data;
+            localStorage.setItem('transactionData', JSON.stringify(this.transactionData));
+            this.spinner.hide();
+            this.cd.detectChanges()
+          } else {
+            alert("Data Not Found..!")
+            localStorage.setItem('transactionData', JSON.stringify([]));
             this.spinner.hide();
             this.cd.detectChanges()
 

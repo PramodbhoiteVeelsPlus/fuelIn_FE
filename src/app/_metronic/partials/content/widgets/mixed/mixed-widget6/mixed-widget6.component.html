@@ -1,46 +1,37 @@
 <style>
-  * {
-    margin: 0;
-    padding: 0;
-  }
+ * { margin: 0; padding: 0; }
 
-  #page-wrap {
-    width: 700px;
-    margin: 0 auto;
-  }
+#page-wrap { width: 700px; margin: 0 auto; }
+ 
+.bg-invoice{
+	background-color: #e7e8ea;
+}
 
-  .bg-invoice {
-    background-color: #e7e8ea;
-  }
-
-  .table-head {
-    font-size: 14px;
-    background-color: #e6e6fa !important;
-  }
-
-  .table-row {
-    font-size: 12px;
-  }
-
-  .main-table {
-    width: -webkit-fill-available;
-  }
-
-  .border-black {
-    border: 1px solid black;
-  }
-
-  .child-table {
-    width: -webkit-fill-available;
+.table-head{
+	font-size: 14px;
+	background-color: #e6e6fa !important;
+}
+.table-row{
+	font-size: 12px;
+}
+.main-table{
+	width: -webkit-fill-available;
+}
+.border-black{
+	border: 1px solid black;
+}
+.child-table{
+	width: -webkit-fill-available;
     color: black;
     text-align: center;
-  }
 
-  .border-gray {
-    border: 1px solid #8080802e;
-  }
+}
 
-  .A4 {
+.border-gray{
+	border: 1px solid #8080802e;
+}
+
+.A4 {
     background: white;
     width: 23cm;
     height: 40.7cm;
@@ -49,38 +40,35 @@
     padding: 1px 1px;
     margin-bottom: 0.5cm;
     box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+    
     box-sizing: border-box;
     font-size: 12pt;
     /* //line-height:normal; */
   }
-
+  
   @media print {
     .page-break {
       display: block;
       page-break-before: always;
-
-      size: A4 portrait;
-    }
+    
+    size: A4 portrait;}
   }
-
+  
   @media print {
     body {
       margin: 0;
       padding: 0;
       -webkit-print-color-adjust: exact;
     }
-
     .A4 {
       box-shadow: none;
       margin: 0;
       width: auto;
       height: auto;
     }
-
     .noprint {
       display: none;
     }
-
     .print {
       display: block;
     }
@@ -406,7 +394,7 @@
 
 </div>
 
-<div class="container-fluid" *ngIf="oldInvoice == 'FALSE' ">
+<div class="container-fluid" id="sanjay" *ngIf="oldInvoice == 'FALSE' ">
   <div class="row" id="page-wrap">
     <div class="col-lg-12">
       <div class="invoice-title">
@@ -573,7 +561,7 @@
         <div class="row">
           <div class="col-md-6">
             <div class="table-responsive">
-              <table class="table">
+              <table class="table table-centered table-nowrap table-bordered" style="border: 1px solid black;">
                 <thead>
                   <tr>
                     <th>Product</th>
@@ -610,7 +598,7 @@
         <div class="row">
           <div class="col-md-6">
             <div class="table-responsive">
-              <table class="table">
+              <table class="table table-centered table-nowrap table-bordered" style="border: 1px solid black;">
                 <thead>
                   <tr>
                     <th>Lube</th>
@@ -751,7 +739,9 @@
 
         <div class="d-print-none">
           <div class="float-end">
-            <a href="javascript:window.print()" class="btn btn-success"><i class="fa fa-print"></i></a>
+            <!-- <a href="javascript:window.print()" class="btn btn-success"><i class="fa fa-print"></i></a> -->
+             <button class="noprint" style="font-size: medium;"  printSectionId="sanjay" ngxPrint> &nbsp;&nbsp;<i
+            class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
           </div>
         </div>
       </div>

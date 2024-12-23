@@ -121,6 +121,7 @@ export class Modal3Component {
     this.managerPersonId = element.personId;
     this.managerName = element.firstName + " " + element.lastName;
     this.personId = element.personId
+    this.addBankDetailsForm.controls["accountType"].setValue("SAVING")
     // this.getfuelDealerIdByCorporateId(this.dealerCorporateId)
     this.cd.detectChanges()
   }

@@ -115,6 +115,7 @@ export class BaseTablesWidget4Component implements OnInit {
   previousYear: number;
   dayWiseData: any = [];
   headerName2: string;
+  currentYear: string;
 
   constructor(
     private modalService: NgbModal,
@@ -128,6 +129,7 @@ export class BaseTablesWidget4Component implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dayWiseData = JSON.parse(localStorage.getItem('dayWiseData') || '{}');
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
@@ -152,10 +154,17 @@ export class BaseTablesWidget4Component implements OnInit {
     this.headerName1 = dealerData.companyName;
     this.headerName2 = dealerData.address1+', '+dealerData.address2+', '+dealerData.city;
     this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
+    this.currentYear = moment(new Date()).format("MM YYYY");
     this.filterForm.controls["startDate"].setValue( "01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear() )
     this.filterForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
+    this.filterForm.controls["monthDAY"].setValue(this.currentYear)
     this.getFuelCreditCorporateByfuelDealerId(this.fuelDealerId)
     this.getFCYear()
+    if (!this.dayWiseData.length) {
+      this.getDayWise();
+    } else {
+      this.getDayWise1();
+    }
     this.cd.detectChanges()
   }
 
@@ -306,11 +315,64 @@ export class BaseTablesWidget4Component implements OnInit {
     .subscribe(res => {
       if(res.status == "OK" && res.data.length){
         this.dayWiseData = res.data;
+        localStorage.setItem('dayWiseData', JSON.stringify(this.dayWiseData));
         this.spinner.hide();
         this.cd.detectChanges()
 
       } else {
         alert("Data Not Found..!")
+        localStorage.setItem('dayWiseData', JSON.stringify([]));
+        this.spinner.hide();
+        this.cd.detectChanges()
+      }
+    })
+    }
+ }
+
+ getDayWise1(){
+  if(this.fuelDealerCorpMapId){
+        
+    this.dayWiseData = []
+    this.spinner.show()
+    let data ={
+    fuelDealerCustomerMapId: this.fuelDealerCorpMapId,
+    month: moment(this.filterForm.value.monthDAY, ["MM YYYY"]).format("MM"),
+    year: moment(this.filterForm.value.monthDAY, ["MM YYYY"]).format("YYYY"),
+    }
+
+    this.post.getDayWiseLedgerByMapIdPOST(data)
+    .subscribe(res => {
+      if(res.status == "OK" && res.data.length){
+        this.dayWiseData = res.data;
+        this.spinner.hide();
+        this.cd.detectChanges()
+
+      } else {
+        alert("Data Not Found..!")
+        this.spinner.hide();
+        this.cd.detectChanges()
+      }
+    })
+    } else {
+      
+    this.dayWiseData = []
+    let data ={
+    fuelDealerId: this.fuelDealerId,
+    month: moment(this.filterForm.value.monthDAY, ["MM YYYY"]).format("MM"),
+    year: moment(this.filterForm.value.monthDAY, ["MM YYYY"]).format("YYYY"),
+    }
+
+    this.post.getDayWiseLedgerByMapIdPOST(data)
+    .subscribe(res => {
+      if(res.status == "OK" && res.data.length){
+        this.dayWiseData = res.data;
+        localStorage.setItem('dayWiseData', JSON.stringify(this.dayWiseData));
+        this.spinner.hide();
+        this.cd.detectChanges()
+
+      } else {
+        alert("Data Not Found..!")
+        localStorage.setItem('dayWiseData', JSON.stringify([]));
         this.spinner.hide();
         this.cd.detectChanges()
       }

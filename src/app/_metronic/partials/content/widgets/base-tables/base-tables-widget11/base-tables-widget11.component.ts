@@ -203,6 +203,7 @@ export class BaseTablesWidget11Component implements OnInit {
 
 
   getManagerMobileByfuelDealerId(fuelDealerId: any) {
+    this.spinner.show()
     const data = {
       fuelDealerId: fuelDealerId,
     };
@@ -211,15 +212,17 @@ export class BaseTablesWidget11Component implements OnInit {
         if (res.data.length) {
           this.managerMobile = res.data[0].mobile;
           this.mobileStatus = true;
+          this.spinner.hide()
         } else {
           this.mobileStatus = false;
+          this.spinner.hide()
         }
       }
       );
   }
 
   getCustomerDataByCorporateIdForSavedInvoice() {
-
+    this.spinner.show()
     const data = {
       fuelDealerCustomerMapId: this.custMapId,
     };
@@ -241,12 +244,16 @@ export class BaseTablesWidget11Component implements OnInit {
             this.billedToGstNo = res.data[0].GSTNumber;
             this.billedToMobile = res.data[0].hostPhone;
           }
+          this.spinner.hide()
+        } else {
+          this.spinner.hide()
         }
       }
       );
   }
 
   getCreditAndPaymentAllDataByFuelInvoiceId() {
+    this.spinner.show()
     this.creditPaymentCombineArrayDetails = []
     this.creditArrayList = []
     this.paymentArrayList = []
@@ -418,26 +425,31 @@ export class BaseTablesWidget11Component implements OnInit {
           }
           this.totalPendingoutstanding();
           this.getOutStandingNewFlowForSavedInvoice()
+          this.spinner.hide()
           this.cd.detectChanges()
 
         } else {
+          this.spinner.hide()
         }
       });
   }
 
   totalPendingoutstanding() {
+    this.spinner.show()
     const data = {
       fuelDealerCustomerMapId: this.fuelDealerCustomerMapId,
     };
     this.post.getFuelCorpIdByMapIdPOST(data).subscribe((res) => {
       if (res) {
         this.previousPendingOutstanding = Number(res.data[0].previousOutstand);
+        this.spinner.hide()
         this.cd.detectChanges()
       }
     });
   }
 
   getOutStandingNewFlowForSavedInvoice() {
+    this.spinner.show()
     this.outstandingAmount = 0;
     const data = {
       fuelDealerCustomerMapId: this.fuelDealerCustomerMapId,
@@ -452,12 +464,14 @@ export class BaseTablesWidget11Component implements OnInit {
           if (this.statementId = '5') {
             // this.transform(Math.round(((Number(this.creditAmountNew) - Number(this.discountcalNew)) + Number(this.lastOpOutstanding) - Number(this.totalTransactionAmountNew))));
           }
+          this.spinner.hide()
         }
         this.cd.detectChanges()
       });
   }
 
   getTotalTransactionCreditPaymentForFuelInvoice() {
+    this.spinner.show()
     this.fuelTotalAmount = []
     this.PaymentTotalAmount = []
     this.fuelProductTotalAmount = []
@@ -475,12 +489,15 @@ export class BaseTablesWidget11Component implements OnInit {
 
           if (this.statementId == '6') {
           }
+          this.spinner.hide()
         } else {
+          this.spinner.hide()
         }
       });
   }
 
   getAllCreditDetailsByFuelInvoiceId() {
+    this.spinner.show()
     this.creditPaymentCombineArrayDetails = []
     this.creditArrayList = []
     this.paymentArrayList = []
@@ -616,8 +633,10 @@ export class BaseTablesWidget11Component implements OnInit {
 
             this.creditPaymentCombineArrayDetails.push(dataJson);
           })
+          this.spinner.hide()
           this.cd.detectChanges()
         } else {
+          this.spinner.hide()
           this.cd.detectChanges()
         }
         this.totalPendingoutstanding();
@@ -626,6 +645,7 @@ export class BaseTablesWidget11Component implements OnInit {
   }
 
   getFuelInvoiceDataByInvoiceId() {
+    this.spinner.show()
     this.savedPreviousOutstanding = 0;
     this.savedTotalPurchase = 0;
     this.savedTotalPayment = 0;
@@ -674,13 +694,16 @@ export class BaseTablesWidget11Component implements OnInit {
 
           this.getLubricantTotal(this.totalCreditOutstanding);
           this.getCustomerDataByCorporateIdForSavedInvoice()
+          this.spinner.hide()
         } else {
+          this.spinner.hide()
         }
       });
   }
 
   //getLubricantTotal()
   getLubricantTotal(totalCreditOutstanding: number) {
+    this.spinner.show()
     this.totalLubePurchase = 0;
     this.finalNETOutstanding = 0;
     let data = {
@@ -697,14 +720,17 @@ export class BaseTablesWidget11Component implements OnInit {
           } else {
             this.finalNETOutstanding = totalCreditOutstanding
           }
+          this.spinner.hide()
         } else {
           alert("Error to get Data..")
+          this.spinner.hide()
         }
       })
   }
 
   getBankDetailsByDealerId(fuelDealerId: any) {
     // console.log("CALL API ===========")
+    this.spinner.show()
     this.bankAccList.length = 0;
     let data = {
       dealerId: fuelDealerId
@@ -713,6 +739,7 @@ export class BaseTablesWidget11Component implements OnInit {
       .subscribe(res => {
         if (res.data.length) {
           this.bankAccList = res.data1;
+          this.spinner.hide()
         }
       })
 

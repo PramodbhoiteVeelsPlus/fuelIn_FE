@@ -132,6 +132,7 @@ export class BaseTablesWidget8Component implements OnInit {
   }
 
   ngOnInit(): void {
+    this.yearWiseQtyData = JSON.parse(localStorage.getItem('yearWiseQtyData') || '{}');
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
@@ -173,6 +174,11 @@ export class BaseTablesWidget8Component implements OnInit {
     this.currentMonth = new Date().getMonth() + 1
     this.filterForm.controls['fiscalyear'].setValue(this.fiscalyear2);
     this.getFuelCreditCorporateByfuelDealerId(this.fuelDealerId)
+    if (!this.yearWiseQtyData.length) {
+      this.getYearQtyWise();
+    } else {
+      this.getYearQtyWise1();
+    }
     this.cd.detectChanges()
   }
 
@@ -249,11 +255,9 @@ export class BaseTablesWidget8Component implements OnInit {
     if (this.filterForm.value.fiscalyear == this.fiscalyear1) {
       this.startDate = new Date().getFullYear() - 1
       this.endDate = new Date().getFullYear()
-      console.log("11", this.filterForm.value.fiscalyear, this.fiscalyear1, this.startDate, this.endDate)
     } else if (this.filterForm.value.fiscalyear == this.fiscalyear2) {
       this.startDate = new Date().getFullYear()
       this.endDate = new Date().getFullYear() + 1
-      console.log("111", this.filterForm.value.fiscalyear, this.fiscalyear1, this.startDate, this.endDate)
     } else {
 
     }
@@ -293,10 +297,70 @@ export class BaseTablesWidget8Component implements OnInit {
         .subscribe(res => {
           if (res.status == "OK" && res.data.length) {
             this.yearWiseQtyData = res.data;
+            localStorage.setItem('yearWiseQtyData', JSON.stringify(this.yearWiseQtyData));
             this.spinner.hide();
             this.cd.detectChanges()
           } else {
             alert("Data Not Found..!")
+            localStorage.setItem('yearWiseQtyData', JSON.stringify([]));
+            this.spinner.hide();
+            this.cd.detectChanges()
+          }
+        })
+    }
+  }
+
+  getYearQtyWise1() {
+    if (this.filterForm.value.fiscalyear == this.fiscalyear1) {
+      this.startDate = new Date().getFullYear() - 1
+      this.endDate = new Date().getFullYear()
+    } else if (this.filterForm.value.fiscalyear == this.fiscalyear2) {
+      this.startDate = new Date().getFullYear()
+      this.endDate = new Date().getFullYear() + 1
+    } else {
+
+    }
+
+    if (this.fuelDealerCorpMapId) {
+      this.yearWiseQtyData = []
+      this.spinner.show()
+      let data = {
+        fuelDealerCustomerMapId: this.fuelDealerCorpMapId,
+        startDate: moment(this.startDate, ["YYYY"]).format("YYYY-04-01"),
+        endDate: moment(this.endDate, ["YYYY"]).format("YYYY-03-31")
+      }
+
+      this.post.getMonthlyCrDetailsQtyPOST(data)
+        .subscribe(res => {
+          if (res.status == "OK" && res.data.length) {
+            this.yearWiseQtyData = res.data;
+            this.spinner.hide();
+            this.cd.detectChanges()
+
+          } else {
+            alert("Data Not Found..!")
+            this.spinner.hide();
+            this.cd.detectChanges()
+          }
+        })
+    } else {
+      this.yearWiseQtyData = []
+      let data = {
+        fuelDealerId: this.fuelDealerId,
+        startDate: moment(this.startDate, ["YYYY"]).format("YYYY-04-01"),
+        endDate: moment(this.endDate, ["YYYY"]).format("YYYY-03-31")
+      }
+
+      this.post.getMonthlyCrDetailsQtyPOST(data)
+        .subscribe(res => {
+          if (res.status == "OK" && res.data.length) {
+            this.yearWiseQtyData = res.data;
+            localStorage.setItem('yearWiseQtyData', JSON.stringify(this.yearWiseQtyData));
+            this.spinner.hide();
+            this.cd.detectChanges()
+          } else {
+            alert("Data Not Found..!")
+            localStorage.setItem('yearWiseQtyData', JSON.stringify([]));
             this.spinner.hide();
             this.cd.detectChanges()
           }

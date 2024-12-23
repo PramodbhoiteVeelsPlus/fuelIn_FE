@@ -144,7 +144,7 @@
                                         <td>
                                             <br>
                                             <input class="form-control" placeholder="DD-MM-YYYY"
-                                                style="background-color: #ffffff;" name="startDate"
+                                                style="background-color: #ffffff; width: 110px" name="startDate"
                                                 ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker
                                                 #startDate="ngbDatepicker" formControlName="startDate"
                                                 (dateSelect)="getRateReadingByDate()">
@@ -164,7 +164,7 @@
                                         <td *ngIf="!rateSelect" style="text-align: left;">
                                             <br>
                                             <input type="number" class="form-control" [(ngModel)]="data.rate"
-                                                style="text-align: left;" [ngModelOptions]="{standalone: true}"
+                                                style="text-align: left; width: 100px" [ngModelOptions]="{standalone: true}"
                                                 placeholder="rate" readonly />
                                         </td>
                                         <td *ngFor="let data of readingData" style="text-align: left;">
@@ -205,7 +205,7 @@
                                         <td>
                                             <br>
                                             <input class="form-control" placeholder="DD-MM-YYYY"
-                                                style="background-color: #ffffff;" name="startDate"
+                                                style="background-color: #ffffff; width: 110px" name="startDate"
                                                 ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker
                                                 #startDate="ngbDatepicker" formControlName="startDate"
                                                 (dateSelect)="getRateReadingByDate()">
@@ -213,7 +213,7 @@
                                         <td style="text-align: left;">
                                             <br>
                                             <input type="number" class="form-control" [(ngModel)]="data.rate"
-                                                style="text-align: left;" [ngModelOptions]="{standalone: true}"
+                                                style="text-align: left; width:100px" [ngModelOptions]="{standalone: true}"
                                                 placeholder="rate" readonly />
                                         </td>
                                         <td *ngFor="let data of readingData" style="text-align: left;">

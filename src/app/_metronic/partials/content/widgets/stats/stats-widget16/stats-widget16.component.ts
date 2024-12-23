@@ -195,33 +195,6 @@ export class StatsWidget16Component {
     this.cd.detectChanges()
   }
 
-
-  // get Corporate DetailsBy VP-Id
-  // getCorporateById(dealerLoginVPId: any) {
-  //   let data = {
-  //     veelsplusCorporateId: dealerLoginVPId
-  //   }
-  //   this.post.getBranchVeelsplusId(data)
-  //     .subscribe(res => {
-  //       if (res.status == "OK") {
-  //         if (res.data.length) {
-  //           this.customerId = res.data[0].customerId;
-  //           // this.headerName1 = res.data[0].companyName;
-  //           // this.headerName2 = res.data[0].address1 + ', ' + res.data[0].address2 + ', ' + res.data[0].city;
-  //           // this.headerName3 = res.data[0].state + '-' + res.data[0].pin + '  ' + "GST: " + res.data[0].GSTNumber;
-  //           this.dealerCorporateId = res.data[0].corporateId;
-  //           this.getfuelDealerIdByCorporateId(this.dealerCorporateId);
-  //           // this.searchDealerBycustomerId(this.customerId)
-  //           this.cd.detectChanges()
-  //         }
-  //         else {
-  //           alert("Getting Error..! Please Logout & Login again..!")
-  //           this.cd.detectChanges()
-  //         }
-  //       }
-  //     })
-  // }
-
   // getfuelDealerIdByDealerCorporateId
   getfuelDealerIdByCorporateId(dealerCorporateId: any) {
     let data = {

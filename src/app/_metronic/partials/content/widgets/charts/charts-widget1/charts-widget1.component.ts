@@ -47,7 +47,7 @@ export class ChartsWidget1Component implements OnInit {
     private cd: ChangeDetectorRef,) { }
 
   ngOnInit(): void {
-    this.spinner.show();
+    // this.spinner.show();
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
@@ -152,7 +152,7 @@ export class ChartsWidget1Component implements OnInit {
 
           this.chartOptions = getChartOptions(350, this.months, this.os, this.purchase, this.payment);
           this.spinner.hide();
-          this.cd.detectChanges();
+          // this.cd.detectChanges();
         } else {
           this.spinner.hide();
         }

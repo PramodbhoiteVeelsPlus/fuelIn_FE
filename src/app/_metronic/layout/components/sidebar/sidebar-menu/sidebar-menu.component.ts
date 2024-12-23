@@ -161,7 +161,7 @@ export class SidebarMenuComponent implements OnInit {
 
   getCustomize(dealerId: any) {
     this.creditData = [];
-    this.spinner.show();
+    // this.spinner.show();
     const data = {
       customizeDealerId: dealerId,
     };
@@ -443,9 +443,9 @@ export class SidebarMenuComponent implements OnInit {
 
 
           this.cd.detectChanges();
-          this.spinner.hide();
+          // this.spinner.hide();
         } else {
-          this.spinner.hide();
+          // this.spinner.hide();
           this.cd.detectChanges();
         }
       });

@@ -132,6 +132,7 @@ export class BaseTablesWidget5Component implements OnInit {
   }
 
   ngOnInit(): void {
+    this.yearWiseData = JSON.parse(localStorage.getItem('yearWiseData') || '{}');
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
@@ -174,6 +175,11 @@ export class BaseTablesWidget5Component implements OnInit {
     this.filterForm.controls['fiscalyear'].setValue(this.fiscalyear2);
     this.getFuelCreditCorporateByfuelDealerId(this.fuelDealerId)
     this.getFCYear()
+    if (!this.yearWiseData.length) {
+      this.getYearWise();
+    } else {
+      this.getYearWise1();
+    }
     this.cd.detectChanges()
   }
 
@@ -287,12 +293,13 @@ export class BaseTablesWidget5Component implements OnInit {
 
 
   getYearWise() {
+    console.log("years", this.filterForm.value.fiscalyear, this.fiscalyear1, this.fiscalyear2)
     if (this.filterForm.value.fiscalyear == this.fiscalyear1) {
-      this.startDate = new Date().getFullYear() - 2
-      this.endDate = new Date().getFullYear() - 1
-    } else if (this.filterForm.value.fiscalyear == this.fiscalyear2) {
       this.startDate = new Date().getFullYear() - 1
-      this.endDate = new Date().getFullYear()
+      this.endDate = new Date().getFullYear() 
+    } else if (this.filterForm.value.fiscalyear == this.fiscalyear2) {
+      this.startDate = new Date().getFullYear() 
+      this.endDate = new Date().getFullYear() + 1
     } else {
 
     }
@@ -334,11 +341,74 @@ export class BaseTablesWidget5Component implements OnInit {
         .subscribe(res => {
           if (res.status == "OK" && res.data.length) {
             this.yearWiseData = res.data;
+            localStorage.setItem('yearWiseData', JSON.stringify(this.yearWiseData));
             this.spinner.hide();
             this.cd.detectChanges()
 
           } else {
             alert("Data Not Found..!")
+            localStorage.setItem('yearWiseData', JSON.stringify([]));
+            this.spinner.hide();
+            this.cd.detectChanges()
+          }
+        })
+    }
+  }
+
+  getYearWise1() {
+    if (this.filterForm.value.fiscalyear == this.fiscalyear1) {
+      this.startDate = new Date().getFullYear() - 1
+      this.endDate = new Date().getFullYear() 
+    } else if (this.filterForm.value.fiscalyear == this.fiscalyear2) {
+      this.startDate = new Date().getFullYear() 
+      this.endDate = new Date().getFullYear() + 1
+    } else {
+
+    }
+
+    if (this.fuelDealerCorpMapId) {
+
+      this.yearWiseData = []
+      this.spinner.show()
+      let data = {
+        fuelDealerCustomerMapId: this.fuelDealerCorpMapId,
+        startDate: moment(this.startDate, ["YYYY"]).format("YYYY-04-01"),
+        endDate: moment(this.endDate, ["YYYY"]).format("YYYY-03-31")
+      }
+
+      this.post.getMonthlyCrDetailsPOST(data)
+        .subscribe(res => {
+          if (res.status == "OK" && res.data.length) {
+            this.yearWiseData = res.data;
+            this.spinner.hide();
+            this.cd.detectChanges()
+
+          } else {
+            alert("Data Not Found..!")
+            this.spinner.hide();
+            this.cd.detectChanges()
+          }
+        })
+    } else {
+
+      this.yearWiseData = []
+      let data = {
+        fuelDealerId: this.fuelDealerId,
+        startDate: moment(this.startDate, ["YYYY"]).format("YYYY-04-01"),
+        endDate: moment(this.endDate, ["YYYY"]).format("YYYY-03-31")
+      }
+
+      this.post.getMonthlyCrDetailsPOST(data)
+        .subscribe(res => {
+          if (res.status == "OK" && res.data.length) {
+            this.yearWiseData = res.data;
+            localStorage.setItem('yearWiseData', JSON.stringify(this.yearWiseData));
+            this.spinner.hide();
+            this.cd.detectChanges()
+
+          } else {
+            alert("Data Not Found..!")
+            localStorage.setItem('yearWiseData', JSON.stringify([]));
             this.spinner.hide();
             this.cd.detectChanges()
           }

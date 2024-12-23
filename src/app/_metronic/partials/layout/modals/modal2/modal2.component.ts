@@ -137,31 +137,9 @@ export class Modal2Component {
     this.managerVPPersonId = element.veelsPlusId;
     this.managerPersonId = element.personId;
     this.managerName = element.firstName + " " + element.lastName;
-    // this.getCorporateById(this.dealerLoginVPId);
+    this.userForm.controls["role"].setValue("")
     this.getfuelDealerIdByCorporateId(this.dealerCorporateId)
     this.cd.detectChanges()
-  }
-
-  // get Corporate DetailsBy VP-Id
-  getCorporateById(dealerLoginVPId: any) {
-    let data = {
-      veelsplusCorporateId: dealerLoginVPId
-    }
-    this.post.getBranchByVeelsplusIdPOST(data)
-      .subscribe(res => {
-        if (res.status == "OK") {
-          if (res.data.length) {
-            this.loginSQLCorporateId = res.data[0].corporateId;
-            this.FuelVeelsVendorID = res.data[0].veelsPlusBranchID;
-            this.getfuelDealerIdByCorporateId(this.loginSQLCorporateId);
-            this.cd.detectChanges()
-          }
-          else {
-            alert("Getting Error..! Please Logout & Login again..!")
-            this.cd.detectChanges()
-          }
-        }
-      })
   }
 
   // getfuelDealerIdByDealerCorporateId
@@ -234,31 +212,34 @@ export class Modal2Component {
   }
 
   checkStaffDetails() {
-    this.spinner.show()
-    let data = {
-      phone: this.userForm.value.phoneNumber,
+    if(this.userForm.value.phoneNumber){
+      this.spinner.show()
+      let data = {
+        phone: this.userForm.value.phoneNumber,
+      }
+      this.post.checkStaffDetailsPOST(data)
+        .subscribe(res => {
+          if (res.status == "OK") {
+            this.isNewUser = false;
+            this.mobileNumber = this.userForm.value.phoneNumber
+            this.reNewStaffForm.controls["mobileNumber"].setValue(this.mobileNumber);
+            this.fuelDealerStaffIdForReNew = res.data[0].fuelDealerStaffId;
+            this.reNewStaffForm.controls["firstName"].setValue(res.data[0].firstName);
+            this.reNewStaffForm.controls["lastName"].setValue(res.data[0].lastName);
+            this.reNewStaffForm.controls["email"].setValue(res.data[0].email1);
+            this.reNewStaffForm.controls["role"].setValue(res.data[0].designation);
+            this.reNewStaffForm.controls["city"].setValue(res.data[0].city);
+            this.reNewStaffForm.controls["state"].setValue(res.data[0].state);
+            this.spinner.hide();
+          }
+          else {
+            alert("This User Already Mapped with Another Dealer!");
+            this.userForm.controls["role"].setValue("")
+            this.userForm.controls["phoneNumber"].setValue("")
+            this.spinner.hide();
+          }
+        })
     }
-    this.post.checkStaffDetailsPOST(data)
-      .subscribe(res => {
-        if (res.status == "OK") {
-          this.isNewUser = false;
-          this.mobileNumber = this.userForm.value.phoneNumber
-          this.reNewStaffForm.controls["mobileNumber"].setValue(this.mobileNumber);
-          this.fuelDealerStaffIdForReNew = res.data[0].fuelDealerStaffId;
-          this.reNewStaffForm.controls["firstName"].setValue(res.data[0].firstName);
-          this.reNewStaffForm.controls["lastName"].setValue(res.data[0].lastName);
-          this.reNewStaffForm.controls["email"].setValue(res.data[0].email1);
-          this.reNewStaffForm.controls["role"].setValue(res.data[0].designation);
-          this.reNewStaffForm.controls["city"].setValue(res.data[0].city);
-          this.reNewStaffForm.controls["state"].setValue(res.data[0].state);
-          this.spinner.hide();
-        }
-        else {
-          alert("This User Already Mapped with Another Dealer!");
-          this.userForm.reset({ 'phoneNumber': '' })
-          this.spinner.hide();
-        }
-      })
   }
 
   createCorporateId() {
