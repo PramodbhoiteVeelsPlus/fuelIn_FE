@@ -217,7 +217,6 @@ export class FeedsWidget12Component implements OnInit {
     private cd: ChangeDetectorRef,) { }
 
   ngOnInit(): void {
-    this.spinner.show();
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = localStorage.getItem('dealerId');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
@@ -418,6 +417,7 @@ export class FeedsWidget12Component implements OnInit {
   }
 
   getAllProductPurchase() {
+    this.spinner.show();
     this.productPurchaseDetails.length = 0
     this.vatSalesDetails.length = 0;
     this.productWiseMeterSales.length = 0
@@ -453,6 +453,7 @@ export class FeedsWidget12Component implements OnInit {
             this.isMonthTab = false;
             alert("Data not found..!")
           }
+          this.spinner.hide()
           this.cd.detectChanges()
         }
       })

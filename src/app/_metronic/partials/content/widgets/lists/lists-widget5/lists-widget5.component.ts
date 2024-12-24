@@ -249,7 +249,7 @@ export class ListsWidget5Component {
   isADDEDIT: boolean = false;
   isVIEW: boolean = false;
   shiftIdUpdate: any;
-  CreditRequestDataArrayUpdate:any = [];
+  CreditRequestDataArrayUpdate: any = [];
   nozzleDetailsUpdate: any = [];
   shiftTimeId: any;
   shiftTimeDetail: string;
@@ -328,9 +328,9 @@ export class ListsWidget5Component {
   totalCreditCNGQuantity: number;
   totalCashAmount: any;
   totalCreditAmount: any;
-  totalCashLubeDetails: any;
-  totalCreditLubeDetails: any;
-  totalDigitalLubeDetails: any;
+  totalCashLubeDetails: any = [];
+  totalCreditLubeDetails: any = [];
+  totalDigitalLubeDetails: any = [];
   totalSalesDetails: any = [];
   tallySalesDetails: any = [];
   cashSales: number;
@@ -343,9 +343,9 @@ export class ListsWidget5Component {
   cashHandover: any;
   shiftNzDetails: any = [];
   totalNzDetails: any = [];
-  totalLubeCash: any;
-  totalLubeCredit: any;
-  totalLubeDigital: any;
+  totalLubeCash: any = [];
+  totalLubeCredit: any = [];
+  totalLubeDigital: any = [];
   cashHandOverAmount: number;
   digitalTotalSales: number;
   digitalDetails: any = [];
@@ -362,13 +362,13 @@ export class ListsWidget5Component {
   totalLubeKgQuantity: number;
   totalLubeLtrQuantity: number;
   totalAdvAmt: number;
-  lubeCrDetails: any;
+  lubeCrDetails: any = [];
   lubeCashTotalAmt: any;
   lubeCashTotalQuan: any;
   lubeCashTotalUnit: any;
   totalLubeQuantityInPiece: number;
   totalLubeCashQuantityInPiece: number;
-  creditPaymentDetails: any;
+  creditPaymentDetails: any = [];
   keyPerson: string;
   companyName: any;
   oilCompanyName: any;
@@ -535,28 +535,33 @@ export class ListsWidget5Component {
     this.city = dealerData.city
     this.phone1 = dealerData.hostPhone
     this.createdBy = element.firstName + ' ' + element.lastName
-    if(this.accessGroup == '14'){
+    if (this.accessGroup == '14') {
       this.pumpCity = dealerData.city
       this.city = managerData.city
       this.companyName = managerData.companyName
     }
-    if(this.post.setRoute == "Book"){
-      this.addShiftForm.controls["date"].setValue(moment(this.post.setDate).format("DD-MM-YYYY"))   
+    if (this.post.setRoute == "Book") {
+      this.addShiftForm.controls["date"].setValue(moment(this.post.setDate).format("DD-MM-YYYY"))
       this.requestTransporterLube.controls["estimatedRefuelDate"].setValue(moment(this.post.setDate).format("DD-MM-YYYY"));
       this.requestTransporter.controls["estimatedRefuelDate"].setValue(moment(this.post.setDate).format("DD-MM-YYYY"));
-      this.requestTransporter.controls["priceDate"].setValue(moment(this.post.setDate).format("DD-MM-YYYY"));  
-      this.requestTransporter.controls["priceDate"].setValue(moment(this.post.setDate).format("DD-MM-YYYY"));  
+      this.requestTransporter.controls["priceDate"].setValue(moment(this.post.setDate).format("DD-MM-YYYY"));
+      this.requestTransporter.controls["priceDate"].setValue(moment(this.post.setDate).format("DD-MM-YYYY"));
       this.cashBillLubricantForm.controls["priceDate"].setValue(moment(this.post.setDate).format("DD-MM-YYYY"));
       this.digitalLubricantForm.controls["priceDate"].setValue(moment(this.post.setDate).format("DD-MM-YYYY"));
-    }else{  
-    this.addShiftForm.controls['date'].setValue(moment(new Date()).format('DD-MM-YYYY'));   
-    this.requestTransporter.controls["priceDate"].setValue(moment(new Date()).format('DD-MM-YYYY'));      
-    this.requestTransporterLube.controls["estimatedRefuelDate"].setValue(moment(new Date()).format('DD-MM-YYYY'));
-    this.requestTransporter.controls["estimatedRefuelDate"].setValue(moment(new Date()).format('DD-MM-YYYY'));
-    this.requestTransporter.controls["priceDate"].setValue(moment(new Date()).format("DD-MM-YYYY"));  
-    this.cashBillLubricantForm.controls["priceDate"].setValue(moment(new Date()).format("DD-MM-YYYY"));
-    this.digitalLubricantForm.controls["priceDate"].setValue(moment(new Date()).format("DD-MM-YYYY"));
+    } else {
+      this.addShiftForm.controls['date'].setValue(moment(new Date()).format('DD-MM-YYYY'));
+      this.requestTransporter.controls["priceDate"].setValue(moment(new Date()).format('DD-MM-YYYY'));
+      this.requestTransporterLube.controls["estimatedRefuelDate"].setValue(moment(new Date()).format('DD-MM-YYYY'));
+      this.requestTransporter.controls["estimatedRefuelDate"].setValue(moment(new Date()).format('DD-MM-YYYY'));
+      this.requestTransporter.controls["priceDate"].setValue(moment(new Date()).format("DD-MM-YYYY"));
+      this.cashBillLubricantForm.controls["priceDate"].setValue(moment(new Date()).format("DD-MM-YYYY"));
+      this.digitalLubricantForm.controls["priceDate"].setValue(moment(new Date()).format("DD-MM-YYYY"));
     }
+    this.digitalLubricantForm.controls["taxDetails"].setValue('INCLUDE')
+    this.digitalLubricantForm.controls["gst"].setValue("")
+    this.digitalLubricantForm.controls["deviceName"].setValue("")
+    this.cashBillLubricantForm.controls["taxDetails"].setValue('INCLUDE')
+    this.cashBillLubricantForm.controls["gst"].setValue("")
     this.getAllOngoingShift(this.fuelDealerId);
     this.getAllAttendantsByDid(this.fuelDealerId)
     this.getShiftDetails(this.fuelDealerId)
@@ -571,14 +576,15 @@ export class ListsWidget5Component {
   }
 
   getAllOngoingShift(fuelDealerId: any) {
+    this.spinner.show()
     this.parentValue = moment(this.addShiftForm.value.date, ["DD-MM-YYYY"]).format("YYYY-MM-DD")
     this.selectedDate = moment(this.addShiftForm.value.date, ["DD-MM-YYYY"]).format("YYYY-MM-DD")
     console.log("parentValue", this.parentValue, this.selectedDate)
     this.requestTransporterLube.controls["estimatedRefuelDate"].setValue(this.addShiftForm.value.date);
     this.requestTransporter.controls["estimatedRefuelDate"].setValue(this.addShiftForm.value.date);
-    this.requestTransporter.controls["priceDate"].setValue(this.addShiftForm.value.date);  
-    this.cashBillLubricantForm.controls["priceDate"].setValue(this.addShiftForm.value.date); 
-    this.digitalLubricantForm.controls["priceDate"].setValue(this.addShiftForm.value.date);  
+    this.requestTransporter.controls["priceDate"].setValue(this.addShiftForm.value.date);
+    this.cashBillLubricantForm.controls["priceDate"].setValue(this.addShiftForm.value.date);
+    this.digitalLubricantForm.controls["priceDate"].setValue(this.addShiftForm.value.date);
 
     const data = {
       dealerId: this.fuelDealerId,
@@ -592,6 +598,7 @@ export class ListsWidget5Component {
           // this.post.setRouting(this.selectedDate)
           // console.log("data1", this.selectedDate)
           // this.router.navigate(['/credit/cashBillInvoice']);
+          this.spinner.hide()
           this.cd.detectChanges()
         } else {
           this.spinner.hide()
@@ -639,6 +646,7 @@ export class ListsWidget5Component {
       this.isVIEW = true;
     }
 
+    this.spinner.show()
     this.shiftIdUpdate = idfuelShiftDetails;
     this.CreditRequestDataArrayUpdate.length = 0
     this.nozzleDetailsUpdate.length = 0
@@ -706,13 +714,15 @@ export class ListsWidget5Component {
         this.getDigitalEntryDetailsByShiftIdUpdate(this.shiftId);
         this.getCASHDetailsByShiftIdUpdate(this.shiftId);
         this.getTotalTallyUpdate()
+        this.spinner.hide()
         this.cd.detectChanges()
       } else {
+        this.spinner.hide()
         this.cd.detectChanges()
       }
     });
 
-     this.getDigitalEntryDetailsByShiftId(idfuelShiftDetails)
+    this.getDigitalEntryDetailsByShiftId(idfuelShiftDetails)
     this.getCASHDetailsByShiftId(idfuelShiftDetails)
     //  // this.getLubeCashBillByShiftId(idfuelShiftDetails)
     this.getDigitalLubeByShiftId(idfuelShiftDetails)
@@ -786,11 +796,13 @@ export class ListsWidget5Component {
         this.spinner.hide();
       } else {
         this.getOperatorVPId(this.fuelDealerStaffId);
+        this.spinner.hide()
       }
     });
   }
 
   getOperatorVPId(fuelDealerStaffId: any) {
+    this.spinner.show()
     const data = {
       fuelDealerStaffId: fuelDealerStaffId,
     };
@@ -818,6 +830,7 @@ export class ListsWidget5Component {
 
   startShift() {
     if (this.accessGroup == 12) {
+      this.spinner.show()
       const data = {
         fuelDealerStaffId: this.addShiftForm.value.operatorStaffId,
         fuelDealerId: this.fuelDealerId,
@@ -849,6 +862,7 @@ export class ListsWidget5Component {
         });
     } else {
       if (this.accessGroup == 14) {
+        this.spinner.show()
         const data = {
           fuelDealerStaffId: this.addShiftForm.value.operatorStaffId,
           fuelDealerId: this.fuelDealerId,
@@ -934,6 +948,7 @@ export class ListsWidget5Component {
   }
 
   getInfraDetailsByShiftId(idfuelShiftDetails: any) {
+    this.spinner.show()
     const data = {
       shiftId: idfuelShiftDetails,
     };
@@ -942,6 +957,7 @@ export class ListsWidget5Component {
         if (res.data1.length) {
           this.nozzleCount = res.data1[0].nozzleCount;
           this.meterSales = Number(res.data1[0].meterSales).toFixed(2);
+          this.spinner.hide()
           // this.getDifference();
         }
       }
@@ -949,20 +965,24 @@ export class ListsWidget5Component {
   }
 
   getAllAttendantsByDid(fuelDealerId: any) {
+    this.spinner.show()
     const data = {
       fuelDealerId: fuelDealerId,
     };
     this.post.getAllAttendantsByDidPOST(data).subscribe((res) => {
       if (res.status == 'OK') {
         this.staffDetails = res.data;
+        this.spinner.hide()
         this.cd.detectChanges()
       } else {
+        this.spinner.hide()
         this.cd.detectChanges()
       }
     });
   }
 
   getShiftDetails(fuelDealerId: any) {
+    this.spinner.show()
     this.fuelShiftTimeDetails.length = 0;
     let data = {
       fuelShiftTimeDealerId: fuelDealerId
@@ -973,9 +993,11 @@ export class ListsWidget5Component {
         if (res.status == "OK") {
           if (res.data.length) {
             this.fuelShiftTimeDetails = res.data;
+            this.spinner.hide()
             this.cd.detectChanges()
           } else {
             this.fuelShiftTimeDetails.length = 0;
+            this.spinner.hide()
             this.cd.detectChanges()
           }
         }
@@ -1014,6 +1036,7 @@ export class ListsWidget5Component {
 
   deleteShiftById() {
     if (this.shiftId) {
+      this.spinner.show()
       let data = {
         shiftId: this.shiftId,
       }
@@ -1023,7 +1046,9 @@ export class ListsWidget5Component {
             alert("Shift Deleted successfully..!")
             this.modalDeleteShift.close('close')
             this.getAllOngoingShift(this.fuelDealerId);
+            this.spinner.hide()
           } else {
+            this.spinner.hide()
             alert("Error to Delete..")
           }
         });
@@ -1215,6 +1240,7 @@ export class ListsWidget5Component {
   }
 
   getCASHDetailsByShiftIdUpdate(fuelShiftDetailsId: any) {
+    this.spinner.show()
     this.cashDetailsUpdate.length = 0
     this.totalCASHSalesUpdate = 0
     let data = {
@@ -1333,7 +1359,7 @@ export class ListsWidget5Component {
   }
 
   getFuelCreditByDate(fuelDealerId: any) {
-    this.spinner.hide()
+    this.spinner.show()
     this.creditDetails = []
     this.lubeDetails = []
     this.advAmtDetails = []
@@ -2513,57 +2539,57 @@ export class ListsWidget5Component {
   }
 
   submitLubeDigital() {
-    if(this.digitalLubricantForm.value.productName && this.digitalLubricantForm.value.gst && this.digitalLubricantForm.value.deviceName && 
+    if (this.digitalLubricantForm.value.productName && this.digitalLubricantForm.value.gst && this.digitalLubricantForm.value.deviceName &&
       this.digitalLubricantForm.value.totalAmount && this.digitalLubricantForm.value.reqQuantity && this.digitalLubricantForm.value.quantityInPieces
     ) {
-    this.spinner.show()
-    let data = {
-      corporateId: this.dealerCorporateId,
-      transacDate: moment(this.digitalLubricantForm.value.priceDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
-      fuelDealerStaffId: this.staffId,
-      terminalId: this.digitalLubricantForm.value.deviceName,
-      transactionId: this.digitalLubricantForm.value.digitalTransitionId,
-      paytmTotalAmount: this.digitalLubricantForm.value.totalAmount,
-      grandTotalAmount: this.digitalLubricantForm.value.totalAmount,
-      shiftId: this.shiftIdUpdate,
-      managerName: this.managerName,
-      transactionPurpose: "SHIFT",
-      fuelDealerCustomerMapId: this.fuelDealerCustomerMapId,
-      paymentByType: "DIGITAL-LUBETAX",
-      totalPayment: this.digitalLubricantForm.value.totalAmount,
-      entryFROM: "PORTAL",
-      idfuelCreditVehicle: this.digitalLubricantForm.value.vehicleNumber,
-      paymentCust: this.digitalLubricantForm.value.customerName,
-      paymentCustAddress: this.digitalLubricantForm.value.address,
-      PaymentCustGST: this.digitalLubricantForm.value.gstNumber,
-      PaymentProduct: this.digitalLubricantForm.value.productName,
-      paymentProdUnit: this.digitalLubricantForm.value.unit,
-      PaymentTax: this.digitalLubricantForm.value.gst,
-      paymentTaxDetails: this.digitalLubricantForm.value.taxDetails,
-      paymentIGST: this.digitalLubricantForm.value.igst,
-      PaymentSGST: this.digitalLubricantForm.value.cgst,
-      paymentCGST: this.digitalLubricantForm.value.cgst,
-      paymentActualAmount: this.digitalLubricantForm.value.totalWOGSTAmount,
-      paymentQuantity: this.digitalLubricantForm.value.reqQuantity,
-      paymentQuantityInPieces: this.digitalLubricantForm.value.quantityInPieces,
-      paymentCustMobile: this.digitalLubricantForm.value.customerNumber,
-      paymentManualNumber: this.digitalLubricantForm.value.billNumber,
-    }
+      this.spinner.show()
+      let data = {
+        corporateId: this.dealerCorporateId,
+        transacDate: moment(this.digitalLubricantForm.value.priceDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+        fuelDealerStaffId: this.staffId,
+        terminalId: this.digitalLubricantForm.value.deviceName,
+        transactionId: this.digitalLubricantForm.value.digitalTransitionId,
+        paytmTotalAmount: this.digitalLubricantForm.value.totalAmount,
+        grandTotalAmount: this.digitalLubricantForm.value.totalAmount,
+        shiftId: this.shiftIdUpdate,
+        managerName: this.managerName,
+        transactionPurpose: "SHIFT",
+        fuelDealerCustomerMapId: this.fuelDealerCustomerMapId,
+        paymentByType: "DIGITAL-LUBETAX",
+        totalPayment: this.digitalLubricantForm.value.totalAmount,
+        entryFROM: "PORTAL",
+        idfuelCreditVehicle: this.digitalLubricantForm.value.vehicleNumber,
+        paymentCust: this.digitalLubricantForm.value.customerName,
+        paymentCustAddress: this.digitalLubricantForm.value.address,
+        PaymentCustGST: this.digitalLubricantForm.value.gstNumber,
+        PaymentProduct: this.digitalLubricantForm.value.productName,
+        paymentProdUnit: this.digitalLubricantForm.value.unit,
+        PaymentTax: this.digitalLubricantForm.value.gst,
+        paymentTaxDetails: this.digitalLubricantForm.value.taxDetails,
+        paymentIGST: this.digitalLubricantForm.value.igst,
+        PaymentSGST: this.digitalLubricantForm.value.cgst,
+        paymentCGST: this.digitalLubricantForm.value.cgst,
+        paymentActualAmount: this.digitalLubricantForm.value.totalWOGSTAmount,
+        paymentQuantity: this.digitalLubricantForm.value.reqQuantity,
+        paymentQuantityInPieces: this.digitalLubricantForm.value.quantityInPieces,
+        paymentCustMobile: this.digitalLubricantForm.value.customerNumber,
+        paymentManualNumber: this.digitalLubricantForm.value.billNumber,
+      }
 
-    this.post.submitDigitalLubeDetailsPOST(data)
-      .subscribe(res => {
-        if (res.status == "OK") {
-          alert(res.msg)
-          this.closeModalLubeDigital()
-          this.isAddPOSUpdate = false;
-          this.getDigitalLubeByShiftId(this.shiftIdUpdate)
-          this.spinner.hide();
-        } else {
-          alert(res.msg)
-          this.closeModalLubeDigital()
-          this.spinner.hide()
-        }
-      })
+      this.post.submitDigitalLubeDetailsPOST(data)
+        .subscribe(res => {
+          if (res.status == "OK") {
+            alert(res.msg)
+            this.closeModalLubeDigital()
+            this.isAddPOSUpdate = false;
+            this.getDigitalLubeByShiftId(this.shiftIdUpdate)
+            this.spinner.hide();
+          } else {
+            alert(res.msg)
+            this.closeModalLubeDigital()
+            this.spinner.hide()
+          }
+        })
     } else {
       alert("Please Enter required details...!")
     }
@@ -3767,7 +3793,7 @@ export class ListsWidget5Component {
     this.totalAmountUpdate = (Number(this.totalCashTallyUpdate) + Number(this.totalDigitalTallyUpdate)
       + Number(this.totalCreditTallyUpdate)).toFixed(2);
     this.getDifferenceUpdate()
-        this.cd.detectChanges()
+    this.cd.detectChanges()
   }
 
   getDifferenceUpdate() {

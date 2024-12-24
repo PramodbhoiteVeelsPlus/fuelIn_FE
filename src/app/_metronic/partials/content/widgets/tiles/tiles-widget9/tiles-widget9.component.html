@@ -214,7 +214,7 @@
                                             <br>
                                             <input type="number" class="form-control" [(ngModel)]="data.rate"
                                                 style="text-align: left; width:100px" [ngModelOptions]="{standalone: true}"
-                                                placeholder="rate" readonly />
+                                                placeholder="rate" disabled />
                                         </td>
                                         <td *ngFor="let data of readingData" style="text-align: left;">
                                             <br>
@@ -297,7 +297,7 @@
                 <div class="row" *ngIf="showViewTableMETER">
                     <div *ngIf="!isAdd" class="col col-xl-12 col-lg-12">
                         <div class="table-responsive mb-0">
-                            <table *ngIf="isUpdateCol" class="table table-centered table-nowrap">
+                            <table *ngIf="isUpdateCol" id="excel-table" class="table table-centered table-nowrap">
                                 <thead>
                                     <tr>
                                         <th style="text-align: left;"> Date </th>

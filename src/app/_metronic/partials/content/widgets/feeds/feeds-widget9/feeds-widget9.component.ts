@@ -89,8 +89,7 @@ export class FeedsWidget9Component implements OnInit {
     public router: Router,
     private cd: ChangeDetectorRef,) { }
 
-  ngOnInit(): void {    
-    this.spinner.show();
+  ngOnInit(): void {   
     if(this.post.profitReportData){
       this.profitReportData = this.post.profitReportData
       this.month = this.profitReportData.profitReportMonth
@@ -115,6 +114,7 @@ export class FeedsWidget9Component implements OnInit {
 
   //getAllProfitReport
   getAllProfitReport(fuelDealerId: any){
+    this.spinner.show()
     let data = {
       fuelDealerId: fuelDealerId,
       year: this.year,
@@ -146,9 +146,11 @@ export class FeedsWidget9Component implements OnInit {
             this.totalVariationAmt = res.data1[0].totalVariationAmt;
           }
           this.totalVariationAmt1 = res.data1[0].totalVariationAmt;
+          this.spinner.hide()
           this.cd.detectChanges();
         }
       }else{
+        this.spinner.hide()
         this.cd.detectChanges();
       }
     })

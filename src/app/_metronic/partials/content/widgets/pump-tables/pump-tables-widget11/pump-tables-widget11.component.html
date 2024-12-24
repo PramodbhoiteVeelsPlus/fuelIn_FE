@@ -20,7 +20,7 @@
             <div class="row noprint">
                 <div class="col-md-8"></div>
                 <div class="col-auto">
-                    <button class="btn btn-success" printSectionId="sanjay" ngxPrint>print</button>
+                    <button class="btn btn-success" printSectionId="sanjay" [useExistingCss]="true" ngxPrint>print</button>
                 </div>
                 <div class="col-auto">
                     <button class="btn btn-outline-secondary my-2 my-sm-0 noprint" (click)="back()"> back </button>
@@ -65,7 +65,7 @@
                                 </tr>
                             </table>
 
-                            <table *ngIf="meterSalesDetails">
+                            <table *ngIf="meterSalesDetails.length">
                                 <tr>
                                     <th colspan="12">
                                         Product-wise Summary
@@ -73,7 +73,8 @@
                                 </tr>
                                 <tr>
                                     <td colspan="6">
-                                        <table class="table main-table" style="border-collapse: collapse; border: 1px solid black;">
+                                        <table class="table main-table"
+                                            style="border-collapse: collapse; border: 1px solid black;">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th style="text-align: left; border: 2px solid #272829;">Product
@@ -174,7 +175,7 @@
                                 </tr>
                             </table>
 
-                            <table *ngIf="productWiseCreditData">
+                            <table *ngIf="productWiseCreditData.length">
                                 <tr>
                                     <td colspan="12">
                                         Product-wise Credit Summary
@@ -182,7 +183,8 @@
                                 </tr>
                                 <tr>
                                     <td colspan="12">
-                                        <table class="table main-table" style="border-collapse: collapse; border: 1px solid black;">
+                                        <table class="table main-table"
+                                            style="border-collapse: collapse; border: 1px solid black;">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th style="text-align: left; border: 2px solid #272829;">Product
@@ -248,7 +250,8 @@
                             <table *ngIf="totalMeterSalesDetails || totalAmountTally">
                                 <tr>
                                     <td colspan="6">
-                                        <table class="table main-table" style="border-collapse: collapse; border: 1px solid black;">
+                                        <table class="table main-table"
+                                            style="border-collapse: collapse; border: 1px solid black;">
                                             <thead>
                                                 <tr>
                                                     <th colspan="12">
@@ -291,7 +294,8 @@
                             <table *ngIf="totalMeterSalesDetails || totalAmountTally">
                                 <tr>
                                     <td colspan="8">
-                                        <table class="table main-table" style="border-collapse: collapse; border: 1px solid black;">
+                                        <table class="table main-table"
+                                            style="border-collapse: collapse; border: 1px solid black;">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th style="text-align: left; border: 2px solid #272829;">Shift Sales
@@ -333,7 +337,8 @@
                             <table *ngIf="totalMeterSalesDetails || totalAmountTally">
                                 <tr>
                                     <td colspan="6">
-                                        <table class="table main-table" style="border-collapse: collapse; border: 1px solid black;">
+                                        <table class="table main-table"
+                                            style="border-collapse: collapse; border: 1px solid black;">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th style="text-align: left; border: 2px solid #272829;">C-Cash
@@ -363,10 +368,11 @@
                                 </tr>
                             </table>
 
-                            <table *ngIf="shiftWiseData">
+                            <table *ngIf="shiftWiseData.length">
                                 <tr>
                                     <td colspan="6">
-                                        <table class="table main-table" style="border-collapse: collapse; border: 1px solid black;">
+                                        <table class="table main-table"
+                                            style="border-collapse: collapse; border: 1px solid black;">
                                             <thead>
                                                 <tr>
                                                     <th colspan="12">
@@ -403,10 +409,11 @@
                                 </tr>
                             </table>
 
-                            <table *ngIf="shiftWiseData">
+                            <table *ngIf="shiftWiseData.length">
                                 <tr>
                                     <td colspan="12">
-                                        <table class="table main-table" style="border-collapse: collapse; border: 1px solid black;">
+                                        <table class="table main-table"
+                                            style="border-collapse: collapse; border: 1px solid black;">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th style="text-align: left; border: 2px solid #272829;">Shift</th>
@@ -447,10 +454,11 @@
                                 </tr>
                             </table>
 
-                            <table *ngIf="shiftWiseData">
+                            <table *ngIf="shiftWiseData.length">
                                 <tr>
                                     <td colspan="12">
-                                        <table class="table main-table" style="border-collapse: collapse; border: 1px solid black;">
+                                        <table class="table main-table"
+                                            style="border-collapse: collapse; border: 1px solid black;">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th style="text-align: left; border: 2px solid #272829;">Shift</th>
@@ -491,7 +499,7 @@
                                 </tr>
                             </table>
 
-                            <table *ngIf="shiftNzDetails" style="font-size: x-small;">
+                            <table *ngIf="shiftNzDetails.length" style="font-size: x-small;">
                                 <tr>
                                     <th colspan="12">
                                         All-in-One Shift Sales Summary
@@ -499,7 +507,8 @@
                                 </tr>
                                 <tr>
                                     <td colspan="6">
-                                        <table class="table main-table" style="border-collapse: collapse; border: 1px solid black;">
+                                        <table class="table main-table"
+                                            style="border-collapse: collapse; border: 1px solid black;">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th colspan="1"
@@ -566,8 +575,8 @@
                             </table>
                             <br>
                             <br>
-                            <table *ngIf="totalLubeCash" class="table  table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;"
-                                style="width: 90%;">
+                            <table *ngIf="totalLubeCash.length" class="table  table-centered table-nowrap"
+                                style="border-collapse: collapse; border: 1px solid black;" style="width: 90%;">
                                 <tr>
                                     <th colspan="12">
                                         All-in-One(Lube) Shift Sales Summary
@@ -647,7 +656,7 @@
                         </tbody>
                     </table> -->
 
-                            <table *ngIf="digitalDetails">
+                            <table *ngIf="digitalDetails.length">
                                 <tr>
                                     <th colspan="12">
                                         Digital Summary
@@ -655,7 +664,8 @@
                                 </tr>
                                 <tr>
                                     <td colspan="6">
-                                        <table class="table main-table" style="border-collapse: collapse; border: 1px solid black;">
+                                        <table class="table main-table"
+                                            style="border-collapse: collapse; border: 1px solid black;">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th style="text-align: left; border: 2px solid #272829;">Digital POS
@@ -692,7 +702,7 @@
                                 </tr>
                             </table>
 
-                            <table *ngIf="digitalLubeData">
+                            <table *ngIf="digitalLubeData.length">
                                 <tr>
                                     <td colspan="12">
                                         Digital(Lube) Summary
@@ -701,7 +711,8 @@
                                 <tr>
                                     <td colspan="6">
                                         <div class="table-responsive mb-0">
-                                            <table class="table  table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
+                                            <table class="table  table-centered table-nowrap"
+                                                style="border-collapse: collapse; border: 1px solid black;">
                                                 <thead class="table-light">
                                                     <tr>
                                                         <th style="text-align: left; border: 2px solid #272829;">Sr No
@@ -771,7 +782,8 @@
                                 </tr>
                                 <tr>
                                     <td colspan="12">
-                                        <table class="table main-table" style="border-collapse: collapse; border: 1px solid black;">
+                                        <table class="table main-table"
+                                            style="border-collapse: collapse; border: 1px solid black;">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th style="text-align: left; border: 2px solid #272829;">A-Shift
@@ -812,7 +824,7 @@
                                 </tr>
                             </table>
 
-                            <table *ngIf="creditDetails">
+                            <table *ngIf="creditDetails.length">
                                 <tr>
                                     <th colspan="12">
                                         Credit Customers Sales Summary
@@ -820,7 +832,8 @@
                                 </tr>
                                 <tr>
                                     <td colspan="12">
-                                        <table class="table main-table table-sm" style="border-collapse: collapse; border: 1px solid black;">
+                                        <table class="table main-table table-sm"
+                                            style="border-collapse: collapse; border: 1px solid black;">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th style="text-align: left; border: 2px solid #272829;">Sr No</th>
@@ -869,7 +882,8 @@
                                                     <td style="text-align: left; border: 2px solid #272829;"
                                                         colspan="6"><b>Total</b> </td>
                                                     <td style="text-align: left; border: 2px solid #272829;">
-                                                        <b>{{totalCreditSalesAmount | number:'1.2-2'}}</b> (Rs)</td>
+                                                        <b>{{totalCreditSalesAmount | number:'1.2-2'}}</b> (Rs)
+                                                    </td>
                                                     <td style="text-align: left; border: 2px solid #272829;"> <span
                                                             *ngIf="totalCreditWOCNGQuantity"><b>{{totalCreditWOCNGQuantity
                                                                 | number:'1.2-2'}}</b> (Ltr)</span> <span
@@ -885,7 +899,7 @@
                                 </tr>
                             </table>
 
-                            <table *ngIf="creditPaymentDetails">
+                            <table *ngIf="creditPaymentDetails.length">
                                 <tr>
                                     <th colspan="12">
                                         Credit Customers Payments Summary
@@ -893,7 +907,8 @@
                                 </tr>
                                 <tr>
                                     <td colspan="12">
-                                        <table class="table main-table" style="border-collapse: collapse; border: 1px solid black;">
+                                        <table class="table main-table"
+                                            style="border-collapse: collapse; border: 1px solid black;">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th style="text-align: left; border: 2px solid #272829;">Khata Name
@@ -951,7 +966,7 @@
                                 </tr>
                             </table>
 
-                            <table *ngIf="lubeCrDetails">
+                            <table *ngIf="lubeCrDetails.length">
                                 <tr>
                                     <td colspan="12">
                                         Lube Customers Sales Summary
@@ -960,7 +975,8 @@
                                 <tr>
                                     <td colspan="12">
                                         <div class="table-responsive mb-0">
-                                            <table class="table  table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
+                                            <table class="table  table-centered table-nowrap"
+                                                style="border-collapse: collapse; border: 1px solid black;">
                                                 <thead class="table-light">
                                                     <tr>
                                                         <th style="text-align: left; border: 2px solid #272829;">Sr No
@@ -1006,10 +1022,12 @@
                                                         <td style="text-align: left; border: 2px solid #272829;"
                                                             colspan="5"><b>Total</b> </td>
                                                         <td style="text-align: left; border: 2px solid #272829;">
-                                                            <b>{{totalLubeAmt | number:'1.2-2'}}</b> (Rs)</td>
+                                                            <b>{{totalLubeAmt | number:'1.2-2'}}</b> (Rs)
+                                                        </td>
                                                         <td style="text-align: left; border: 2px solid #272829;">
                                                             <span><b>{{totalLubeLtrQuantity | number:'1.2-2'}}</b>
-                                                            </span> </td>
+                                                            </span>
+                                                        </td>
                                                         <td style="text-align: left; border: 2px solid #272829;"> </td>
 
                                                     </tr>
@@ -1020,7 +1038,7 @@
                                 </tr>
                             </table>
 
-                            <table *ngIf="advAmtDetails">
+                            <table *ngIf="advAmtDetails.length">
                                 <tr>
                                     <td colspan="12">
                                         Advance Amt Customers Summary
@@ -1029,7 +1047,8 @@
                                 <tr>
                                     <td colspan="12">
                                         <div class="table-responsive mb-0">
-                                            <table class="table  table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
+                                            <table class="table  table-centered table-nowrap"
+                                                style="border-collapse: collapse; border: 1px solid black;">
                                                 <thead class="table-light">
                                                     <tr>
                                                         <th style="text-align: left; border: 2px solid #272829;">Khata
@@ -1068,7 +1087,8 @@
                                                         <td style="text-align: left; border: 2px solid #272829;"
                                                             colspan="3"><b>Total</b> </td>
                                                         <td style="text-align: left; border: 2px solid #272829;">
-                                                            <b>{{totalAdvAmt | number:'1.2-2'}}</b> (Rs)</td>
+                                                            <b>{{totalAdvAmt | number:'1.2-2'}}</b> (Rs)
+                                                        </td>
                                                         <td style="text-align: left; border: 2px solid #272829;"> </td>
                                                     </tr>
                                                 </tbody>
@@ -1079,7 +1099,7 @@
 
                             </table>
 
-                            <table *ngIf="lubeDetails">
+                            <table *ngIf="lubeDetails.length">
                                 <tr>
                                     <td colspan="12">
                                         Lube(Credit) Customers Sales Summary
@@ -1088,7 +1108,8 @@
                                 <tr>
                                     <td colspan="12">
                                         <div class="table-responsive mb-0">
-                                            <table class="table  table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
+                                            <table class="table  table-centered table-nowrap"
+                                                style="border-collapse: collapse; border: 1px solid black;">
                                                 <thead class="table-light">
                                                     <tr>
                                                         <th style="text-align: left; border: 2px solid #272829;">Sr No
@@ -1138,7 +1159,8 @@
                                                         <td style="text-align: left; border: 2px solid #272829;"
                                                             colspan="5"><b>Total</b> </td>
                                                         <td style="text-align: left; border: 2px solid #272829;">
-                                                            <b>{{totalLubeAmt | number:'1.2-2'}}</b> (Rs)</td>
+                                                            <b>{{totalLubeAmt | number:'1.2-2'}}</b> (Rs)
+                                                        </td>
                                                         <td style="text-align: left; border: 2px solid #272829;">
                                                             <span *ngIf="totalLubeLtrQuantity"><b>{{totalLubeLtrQuantity
                                                                     | number:'1.2-2'}}</b> (Ltr)</span>
@@ -1159,16 +1181,17 @@
                             </table>
                             <br>
                             <br><br>
-                            <table *ngIf="lubeDetails">
+                            <table *ngIf="lubeDetails.length">
                                 <tr>
                                     <td colspan="12">
-                                       Lube(Cash) Customers Sales Summary
+                                        Lube(Cash) Customers Sales Summary
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="12">
                                         <div class="table-responsive mb-0">
-                                            <table class="table  table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
+                                            <table class="table  table-centered table-nowrap"
+                                                style="border-collapse: collapse; border: 1px solid black;">
                                                 <thead class="table-light">
                                                     <tr>
                                                         <th style="text-align: left; border: 2px solid #272829;">Sr No
@@ -1215,7 +1238,8 @@
                                                         <td style="text-align: left; border: 2px solid #272829;"
                                                             colspan="5"><b>Total</b> </td>
                                                         <td style="text-align: left; border: 2px solid #272829;">
-                                                            <b>{{lubeCashTotalAmt | number:'1.2-2'}}</b> (Rs)</td>
+                                                            <b>{{lubeCashTotalAmt | number:'1.2-2'}}</b> (Rs)
+                                                        </td>
                                                         <td style="text-align: left; border: 2px solid #272829;">
                                                             <b>{{lubeCashTotalQuan |
                                                                 number:'1.2-2'}}{{lubeCashTotalUnit}}</b>
@@ -1240,7 +1264,7 @@
             <div class="row noprint">
                 <div class="col-md-10"></div>
                 <div class="col-auto">
-                    <button class="btn btn-success" onclick="window.print()">print</button>
+                    <button class="btn btn-success" printSectionId="sanjay" [useExistingCss]="true" ngxPrint>print</button>
                 </div>
                 <!-- <div class="col-md-1">
                 <button class="btn btn-primary" >Send</button> 

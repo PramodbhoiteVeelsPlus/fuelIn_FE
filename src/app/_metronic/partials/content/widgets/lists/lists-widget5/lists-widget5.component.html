@@ -88,32 +88,40 @@
           <div class="col-md-11">
             <form [formGroup]="addShiftForm">
               <div class="row" *ngIf="!isStart">
-                <div class="col-auto">
-                  <b>Select Operator</b>
-                </div>
-                <div class="col-auto">
-                  <select class="form-control" formControlName="operatorStaffId" (change)="checkOperatorShift($event)"
-                    required>
-                    <option value="">Select operator </option>
-                    <option *ngFor="let data of staffDetails" [value]="data.fuelDealerStaffId">
-                      {{data.firstName}} {{data.lastName}}
-                    </option>
-                  </select>
-                </div>
-
-                <div class="col-auto">
-                  <b>Select Shift</b>
-                </div>
-                <div class="col-auto">
-                  <select class="form-control" formControlName="shiftTimeId" required>
-                    <option value="1">Select Shift </option>
-                    <option *ngFor="let data of fuelShiftTimeDetails" [value]="data.fuelShiftTimeId">
-                      {{data.fuelShiftTimeShiftName}} {{data.fuelShiftTimeDetails}}
-                    </option>
-                  </select>
+                <div class="col-md-4">
+                  <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+                    <span class="badge badge-light-success fs-6 fw-bolder">
+                      Select Operator</span>
+                  </a>
+                  <br>
+                  <span class="badge badge-light-success fs-6 fw-bolder">
+                    <select class="form-control" formControlName="operatorStaffId" (change)="checkOperatorShift($event)"
+                      required>
+                      <option value="">Select operator </option>
+                      <option *ngFor="let data of staffDetails" [value]="data.fuelDealerStaffId">
+                        {{data.firstName}} {{data.lastName}}
+                      </option>
+                    </select>
+                  </span>
                 </div>
 
-                <div class="col-auto">
+                <div class="col-md-4">
+                  <a class="text-gray-800 text-hover-primary fw-bolder fs-5">
+                    <span class="badge badge-light-success fs-6 fw-bolder">
+                      Select Shift</span>
+                  </a>
+                  <br>
+                  <span class="badge badge-light-success fs-6 fw-bolder">
+                    <select class="form-control" formControlName="shiftTimeId" required>
+                      <option value="1">Select Shift </option>
+                      <option *ngFor="let data of fuelShiftTimeDetails" [value]="data.fuelShiftTimeId">
+                        {{data.fuelShiftTimeShiftName}} {{data.fuelShiftTimeDetails}}
+                      </option>
+                    </select>
+                  </span>
+                </div>
+
+                <div class="col-md-4" style="margin-top: 25px">
                   <button type="button" class="btn btn-primary" (click)="createShiftId()">
                     Start Shift
                   </button>
@@ -270,7 +278,7 @@
               <hr style="border-top: 1px dashed rgb(52, 51, 56);margin-top: 3px;margin-bottom: 8px;">
 
 
-              <table *ngIf="meterSalesDetails">
+              <table *ngIf="meterSalesDetails.length">
                 <tr>
                   <td colspan="12">
                     <h5>Product-wise Summary</h5>
@@ -279,7 +287,8 @@
                 <tr>
                   <td colspan="6">
                     <div class="table-responsive mb-0">
-                      <table class="table table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
+                      <table class="table table-centered table-nowrap"
+                        style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
                             <th style="text-align: left; border: 2px solid #272829;">Product</th>
@@ -369,7 +378,7 @@
                 </tr>
               </table>
               <br>
-              <table *ngIf="productWiseCreditData">
+              <table *ngIf="productWiseCreditData.length">
                 <tr>
                   <td colspan="12">
                     <h5>Product-wise Credit Summary</h5>
@@ -378,7 +387,8 @@
                 <tr>
                   <td colspan="12">
                     <div class="table-responsive mb-0">
-                      <table class="table  table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
+                      <table class="table  table-centered table-nowrap"
+                        style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
                             <th style="text-align: left; border: 2px solid #272829;">Product</th>
@@ -442,7 +452,8 @@
                 <tr>
                   <td colspan="6">
                     <div class="table-responsive mb-0">
-                      <table class="table  table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
+                      <table class="table  table-centered table-nowrap"
+                        style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
                             <th style="text-align: left; border: 2px solid #272829;">Shift Sales (Rs)</th>
@@ -478,7 +489,8 @@
                 <tr>
                   <td colspan="8">
                     <div class="table-responsive mb-0">
-                      <table class="table  table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
+                      <table class="table  table-centered table-nowrap"
+                        style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
                             <th style="text-align: left; border: 2px solid #272829;">Shift Sales (Rs)</th>
@@ -513,7 +525,8 @@
                 <tr>
                   <td colspan="7">
                     <div class="table-responsive mb-0">
-                      <table class="table  table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
+                      <table class="table  table-centered table-nowrap"
+                        style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
                             <th style="text-align: left; border: 2px solid #272829;">C-Cash (1+2+3) (Rs)</th>
@@ -543,7 +556,7 @@
                 <br>
               </table>
               <br>
-              <table *ngIf="shiftWiseData">
+              <table *ngIf="shiftWiseData.length">
                 <tr>
                   <td colspan="12">
                     <h5>Shift-wise Summary</h5>
@@ -552,7 +565,8 @@
                 <tr>
                   <td colspan="8">
                     <div class="table-responsive mb-0">
-                      <table class="table  table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
+                      <table class="table  table-centered table-nowrap"
+                        style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
                             <th style="text-align: left; border: 2px solid #272829;">Shift</th>
@@ -583,7 +597,8 @@
                 <tr>
                   <td colspan="12">
                     <div class="table-responsive mb-0">
-                      <table class="table  table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
+                      <table class="table  table-centered table-nowrap"
+                        style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
                             <th style="text-align: left; border: 2px solid #272829;">Shift</th>
@@ -620,7 +635,8 @@
                 <tr>
                   <td colspan="12">
                     <div class="table-responsive mb-0">
-                      <table class="table  table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
+                      <table class="table  table-centered table-nowrap"
+                        style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
                             <th style="text-align: left; border: 2px solid #272829;">Shift</th>
@@ -654,7 +670,7 @@
                 <br>
               </table>
               <br>
-              <table style="width: 90%;" *ngIf="shiftNzDetails">
+              <table style="width: 90%;" *ngIf="shiftNzDetails.length">
                 <tr>
                   <td colspan="12">
                     <h5>All-in-One Shift Sales Summary</h5>
@@ -663,7 +679,8 @@
                 <tr>
                   <td colspan="12">
                     <div class="table-responsive mb-0">
-                      <table class="table  table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
+                      <table class="table  table-centered table-nowrap"
+                        style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
                             <th style="text-align: left; border: 2px solid #272829;">Shift</th>
@@ -712,7 +729,7 @@
                 <br>
               </table>
               <br>
-              <table *ngIf="totalLubeCash" class="table  table-centered table-nowrap" style="width: 90%;">
+              <table *ngIf="totalLubeCash.length" class="table  table-centered table-nowrap" style="width: 90%;">
                 <tr>
                   <th colspan="12">
                     <h5>All-in-One(Lube) Shift Sales Summary</h5>
@@ -720,7 +737,7 @@
                 </tr>
                 <tr>
                   <td>
-                    <thead class="table-light">
+                    <thead class="table-light" style="border-collapse: collapse; border: 1px solid black;">
                       <tr>
                         <th style="text-align: left; border: 2px solid #272829;">Shift</th>
                         <th style="text-align: left; border: 2px solid #272829;">Staff Name</th>
@@ -729,7 +746,7 @@
                         <th style="text-align: left; border: 2px solid #272829;">Quantity</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody style="border-collapse: collapse; border: 1px solid black;">
                       <tr *ngFor="let data of totalLubeCash">
                         <td style="text-align: left; border: 2px solid #272829;"> {{data.fuelShiftTimeShiftName}} </td>
                         <td style="text-align: left; border: 2px solid #272829;"> {{data.firstName}} {{data.lastName}}
@@ -764,7 +781,7 @@
                 </tr>
               </table>
               <br>
-              <table *ngIf="digitalDetails">
+              <table *ngIf="digitalDetails.length">
                 <tr>
                   <td colspan="12">
                     <h5>Digital Summary</h5>
@@ -773,7 +790,8 @@
                 <tr>
                   <td colspan="6">
                     <div class="table-responsive mb-0">
-                      <table class="table  table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
+                      <table class="table  table-centered table-nowrap"
+                        style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
                             <th style="text-align: left; border: 2px solid #272829;">Digital POS</th>
@@ -806,7 +824,7 @@
                 <br>
               </table>
               <br>
-              <table *ngIf="digitalLubeData">
+              <table *ngIf="digitalLubeData.length">
                 <tr>
                   <td colspan="12">
                     <h5>Digital(Lube) Summary</h5>
@@ -815,7 +833,8 @@
                 <tr>
                   <td colspan="6">
                     <div class="table-responsive mb-0">
-                      <table class="table  table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
+                      <table class="table  table-centered table-nowrap"
+                        style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
                             <th style="text-align: left; border: 2px solid #272829;">Sr No</th>
@@ -869,7 +888,8 @@
                 <tr>
                   <td colspan="12">
                     <div class="table-responsive mb-0">
-                      <table class="table  table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
+                      <table class="table  table-centered table-nowrap"
+                        style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
                             <th style="text-align: left; border: 2px solid #272829;">A-Shift Sales (Rs)</th>
@@ -914,7 +934,7 @@
                 <br>
               </table>
               <br>
-              <table *ngIf="creditDetails">
+              <table *ngIf="creditDetails.length">
                 <tr>
                   <td colspan="12">
                     <h5>Credit Customers Sales Summary</h5>
@@ -923,7 +943,8 @@
                 <tr>
                   <td colspan="12">
                     <div class="table-responsive mb-0">
-                      <table class="table  table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
+                      <table class="table  table-centered table-nowrap"
+                        style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
                             <th style="text-align: left; border: 2px solid #272829;">Sr No</th>
@@ -977,7 +998,7 @@
                 <br>
               </table>
               <br>
-              <table *ngIf="creditPaymentDetails">
+              <table *ngIf="creditPaymentDetails.length">
                 <tr>
                   <td colspan="12">
                     <h5>Credit Customers Payments Summary</h5>
@@ -986,7 +1007,8 @@
                 <tr>
                   <td colspan="12">
                     <div class="table-responsive mb-0">
-                      <table class="table  table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
+                      <table class="table  table-centered table-nowrap"
+                        style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
                             <th style="text-align: left; border: 2px solid #272829;">Khata Name</th>
@@ -1035,7 +1057,7 @@
                 <br>
               </table>
               <br>
-              <table *ngIf="lubeCrDetails">
+              <table *ngIf="lubeCrDetails.length">
                 <tr>
                   <td colspan="12">
                     <h5>Lube Customers Sales Summary</h5>
@@ -1044,7 +1066,8 @@
                 <tr>
                   <td colspan="12">
                     <div class="table-responsive mb-0">
-                      <table class="table  table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
+                      <table class="table  table-centered table-nowrap"
+                        style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
                             <th style="text-align: left; border: 2px solid #272829;">Sr No</th>
@@ -1089,7 +1112,7 @@
                 </tr>
               </table>
               <br>
-              <table *ngIf="lubeDetails">
+              <table *ngIf="lubeDetails.length">
                 <tr>
                   <td colspan="12">
                     <h5>Lube(Credit) Customers Sales Summary</h5>
@@ -1098,7 +1121,8 @@
                 <tr>
                   <td colspan="12">
                     <div class="table-responsive mb-0">
-                      <table class="table  table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
+                      <table class="table  table-centered table-nowrap"
+                        style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
                             <th style="text-align: left; border: 2px solid #272829;">Sr No</th>
@@ -1154,7 +1178,7 @@
               </table>
               <br>
               <br><br>
-              <table *ngIf="lubeDetails">
+              <table *ngIf="lubeDetails.length">
                 <tr>
                   <td colspan="12">
                     <h5>Lube(Cash) Customers Sales Summary</h5>
@@ -1163,7 +1187,8 @@
                 <tr>
                   <td colspan="12">
                     <div class="table-responsive mb-0">
-                      <table class="table  table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
+                      <table class="table  table-centered table-nowrap"
+                        style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
                             <th style="text-align: left; border: 2px solid #272829;">Sr No</th>
@@ -1225,7 +1250,7 @@
                 <br>
               </table>
               <br>
-              <table *ngIf="advAmtDetails">
+              <table *ngIf="advAmtDetails.length">
                 <tr>
                   <td colspan="12">
                     <h5>Advance Amt Customers Summary</h5>
@@ -1234,7 +1259,8 @@
                 <tr>
                   <td colspan="12">
                     <div class="table-responsive mb-0">
-                      <table class="table  table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
+                      <table class="table  table-centered table-nowrap"
+                        style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
                             <th style="text-align: left; border: 2px solid #272829;">Khata Name</th>
@@ -1448,7 +1474,7 @@
 
                     <td style="text-align: left;">
                       <input type="text" class="form-control" [(ngModel)]="charges.product" style="text-align: left;"
-                        [ngModelOptions]="{standalone: true}" placeholder="Product" readonly />
+                        [ngModelOptions]="{standalone: true}" placeholder="Product" disabled />
                     </td>
 
                     <td style="text-align: left;">
@@ -1480,12 +1506,12 @@
                     </td>
                     <td style="text-align: left;">
                       <input type="number" class="form-control" [(ngModel)]="charges.meterSalesRs"
-                        [ngModelOptions]="{standalone: true}" placeholder="Meter Sales Rs" readonly />
+                        [ngModelOptions]="{standalone: true}" placeholder="Meter Sales Rs" disabled />
                     </td>
 
                     <td style="text-align: left;">
                       <input type="number" class="form-control" [(ngModel)]="charges.meterSalesLtr"
-                        [ngModelOptions]="{standalone: true}" placeholder="Meter SalesL tr" readonly />
+                        [ngModelOptions]="{standalone: true}" placeholder="Meter SalesL tr" disabled />
                     </td>
 
 
@@ -2601,28 +2627,28 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="table-responsive mb-0" *ngIf="isSelected1">
-                    <table class="table table-centered table-nowrap">
+                    <table class="table table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
                       <thead>
                         <tr>
-                          <th style="text-align: left;border-width: 1px; border-color: #000;">Khata Name</th>
-                          <th style="text-align: left;border-width: 1px; border-color: #000;">Key Person Name</th>
-                          <th style="text-align: left;border-width: 1px; border-color: #000;">Key Person Mobile</th>
-                          <th style="text-align: left;border-width: 1px; border-color: #000;">Bill Nos. Set</th>
-                          <th style="text-align: left;border-width: 1px; border-color: #000;">Outstanding</th>
-                          <th style="text-align: left;border-width: 1px; border-color: #000;">Alert</th>
+                          <th style="border-width: 1px; border-color: #000;">Khata Name</th>
+                          <th style="border-width: 1px; border-color: #000;">Key Person Name</th>
+                          <th style="border-width: 1px; border-color: #000;">Key Person Mobile</th>
+                          <th style="border-width: 1px; border-color: #000;">Bill Nos. Set</th>
+                          <th style="border-width: 1px; border-color: #000;">Outstanding</th>
+                          <th style="border-width: 1px; border-color: #000;">Alert</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td style="text-align: left;border-width: 1px; border-color: #000;">{{dealerName}}</td>
-                          <td style="text-align: left;border-width: 1px; border-color: #000;">
+                          <td style="border: 1px solid black;">{{dealerName}}</td>
+                          <td style="border: 1px solid black;">
                             {{personName}}
                           </td>
-                          <td style="text-align: left;border-width: 1px; border-color: #000;"> {{personPhone1}} </td>
-                          <td style="text-align: left;border-width: 1px; border-color: #000;">
+                          <td style="border: 1px solid black;"> {{personPhone1}} </td>
+                          <td style="border: 1px solid black;">
                             {{rangeFrom}} - {{rangeTo}}
                           </td>
-                          <td style="text-align: left;border-width: 1px; border-color: #000;color: red;">
+                          <td style="border: 1px solid black;color: red;">
                             <span *ngIf="calOutstanding< 0">
                               <li class="fas fa-rupee-sign"></li> {{(calOutstanding)*(-1) | number:'1.2-2'}} CR
                             </span>
@@ -2631,7 +2657,7 @@
                             </span>
 
                           </td>
-                          <td style="text-align: left;border-width: 1px; border-color: #000;">
+                          <td style="border: 1px solid black;">
                             <span *ngIf="viewCorpFlag.length" class="col-md-1" (click)="viewFlag(viewFlagModel)"
                               style="color:red;cursor:pointer;font-size: x-large;">
                               <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
@@ -2859,29 +2885,29 @@
                   <div class="row">
                     <div class="col-lg-12">
                       <div class="table-responsive mb-0" *ngIf="isSelected1">
-                        <table class="table table-centered table-nowrap">
+                        <table class="table table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
                           <thead>
                             <tr>
-                              <th style="text-align: left;border-width: 1px; border-color: #000;">Khata Name</th>
-                              <th style="text-align: left;border-width: 1px; border-color: #000;">Key Person Name</th>
-                              <th style="text-align: left;border-width: 1px; border-color: #000;">Key Person Mobile</th>
-                              <th style="text-align: left;border-width: 1px; border-color: #000;">Bill Nos. Set</th>
-                              <th style="text-align: left;border-width: 1px; border-color: #000;">Outstanding</th>
-                              <th style="text-align: left;border-width: 1px; border-color: #000;">Alert</th>
+                              <th style="border-width: 1px; border-color: #000;">Khata Name</th>
+                              <th style="border-width: 1px; border-color: #000;">Key Person Name</th>
+                              <th style="border-width: 1px; border-color: #000;">Key Person Mobile</th>
+                              <th style="border-width: 1px; border-color: #000;">Bill Nos. Set</th>
+                              <th style="border-width: 1px; border-color: #000;">Outstanding</th>
+                              <th style="border-width: 1px; border-color: #000;">Alert</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
-                              <td style="text-align: left;border-width: 1px; border-color: #000;">{{dealerName}}</td>
-                              <td style="text-align: left;border-width: 1px; border-color: #000;">
+                              <td style="border: 1px solid black;">{{dealerName}}</td>
+                              <td style="border: 1px solid black;">
                                 {{personName}}
                               </td>
-                              <td style="text-align: left;border-width: 1px; border-color: #000;"> {{personPhone1}}
+                              <td style="border: 1px solid black;"> {{personPhone1}}
                               </td>
-                              <td style="text-align: left;border-width: 1px; border-color: #000;;">
+                              <td style="border: 1px solid black;">
                                 {{rangeFrom}} - {{rangeTo}}
                               </td>
-                              <td style="text-align: left;border-width: 1px; border-color: #000;">
+                              <td style="border: 1px solid black;">
                                 <span *ngIf="calOutstanding< 0">
                                   <li class="fas fa-rupee-sign"></li> {{(calOutstanding)*(-1) | number:'1.2-2'}} CR
                                 </span>
@@ -2890,7 +2916,7 @@
                                 </span>
 
                               </td>
-                              <td style="text-align: left;border-width: 1px; border-color: #000;">
+                              <td style="border: 1px solid black;">
                                 <span *ngIf="viewCorpFlag.length" class="col-md-1" (click)="viewFlag(viewFlagModel)"
                                   style="color:red;cursor:pointer;font-size: x-large;">
                                   <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
@@ -3222,7 +3248,7 @@
       </div>
       <br>
 
-      <table class="table  table-centered table-nowrap">
+      <table class="table table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
         <thead class="table-light">
           <tr>
             <th style="text-align: left; border: 2px solid #272829;">Khata Name</th>

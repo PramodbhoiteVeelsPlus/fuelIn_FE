@@ -50,6 +50,7 @@ export class FeedsWidget8Component implements OnInit {
 
   //getAllProfitReport
   getAllProfitReport(fuelDealerId: any) {
+    this.spinner.show()
     let data = {
       fuelDealerId: fuelDealerId,
     }

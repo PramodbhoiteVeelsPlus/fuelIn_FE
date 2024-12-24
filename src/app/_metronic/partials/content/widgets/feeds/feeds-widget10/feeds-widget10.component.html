@@ -72,7 +72,7 @@
       </div>
       <div class="col-md-4"></div>
       <div class="col-auto noprint">
-        <button class="btn btn-success" printSectionId="sanjay" ngxPrint>print </button>
+        <button class="btn btn-success" printSectionId="sanjay" [useExistingCss]="true" ngxPrint>print </button>
       </div>
       <div class="col-auto">
         <button class="btn btn-primary" (click)="downloadReport()">download </button>

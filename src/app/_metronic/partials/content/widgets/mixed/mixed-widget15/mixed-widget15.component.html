@@ -1,7 +1,7 @@
 <br>
 <form [formGroup]="shiftForm">
   <div class="row">
-    <div class="col-md-1"></div>
+    <!-- <div class="col-md-1"></div> -->
     <div class="col-auto">
       <label><b>Select Shift :</b></label>
       <select class="form-control" formControlName="shiftTimeId" (change)="getPosDetailsByOperatorTerminal()" required>
@@ -45,7 +45,7 @@
       <input class="form-control" placeholder="DD-MM-YYYY" name="endDate" readonly style="background-color: #ffffff;"
         (click)="endDate.toggle()" formControlName="endDate" ngbDatepicker #endDate="ngbDatepicker">
     </div>
-    <div class="col-auto">
+    <div class="col-auto" style="margin-top: -7px;">
       <br>
       <button type="button" class="btn btn-primary" style="margin: 7px" (click)="getPosDetailsByOperatorTerminal()">
         Submit
