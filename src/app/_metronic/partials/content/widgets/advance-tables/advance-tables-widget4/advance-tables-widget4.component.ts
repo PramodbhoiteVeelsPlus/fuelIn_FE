@@ -167,6 +167,7 @@ export class AdvanceTablesWidget4Component {
   }
   
   kycDetails() {
+    this.spinner.show()
     this.post.getkycDetails()
       .subscribe(res => {
         this.kycRawData = res;
@@ -175,6 +176,7 @@ export class AdvanceTablesWidget4Component {
             this.kycData.push(detail)
             this.kycDataOnboarding.push(detail)
           })
+          this.spinner.hide()
           this.cd.detectChanges();
       })
   }

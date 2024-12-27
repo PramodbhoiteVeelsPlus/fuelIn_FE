@@ -160,6 +160,7 @@ export class TransTablesWidget7Component implements OnInit {
   }
 
   getfuelDealerIdByCorporateId(transporterCorpId: any) {
+    this.spinner.show()
     let data = {
       corporateId: transporterCorpId
     }
@@ -169,17 +170,18 @@ export class TransTablesWidget7Component implements OnInit {
           // this.fuelDealerId = res.data[0].fuelDealerId;
           this.brandName = res.data[0].brandName;
           console.log("fuelOf", this.fuelDealerId)
-
-          this.cd.detectChanges()
-
+          this.spinner.hide()
+          this.cd.detectChanges();
         }
         else {
-          this.cd.detectChanges()
+          this.spinner.hide()
+          this.cd.detectChanges();
         }
       })
   }
 
   getAllDealersNameList(transporterCorpId: any){
+    this.spinner.show()
     let data = {
       corporateId: transporterCorpId,
     }
@@ -189,9 +191,13 @@ export class TransTablesWidget7Component implements OnInit {
           if(res.data.length){
             this.allCorporateList = res.data;
             this.allCorporateListData = res;            
-          }            
+          }   
+          this.spinner.hide()
+          this.cd.detectChanges();         
         }
         else {
+          this.spinner.hide()
+          this.cd.detectChanges();
         }
       })
   }
@@ -257,6 +263,7 @@ export class TransTablesWidget7Component implements OnInit {
         this.isFilterByMapId = false;
         if (this.selectCorporate.value.startDate || this.selectCorporate.value.endDate) {
 
+          this.spinner.show()
           let data = {
             fuelDealerId: this.fuelDealerId,
             startDate: moment(this.selectCorporate.value.startDate, ["MM-DD-YYYY"]).format('YYYY-MM-DD'),
@@ -275,12 +282,14 @@ export class TransTablesWidget7Component implements OnInit {
                 this.pageLength = creditArr;
                 this.allCreditReqExcel = this.allCreditReq;
                 this.showHeading = true;
+                this.spinner.hide()
                 this.cd.detectChanges()
               } else {
                 this.selectCorporate.controls["startDate"].setValue("");
                 this.selectCorporate.controls["endDate"].setValue("");
                 alert("Data not found!")
                 this.showHeading = false;
+                this.spinner.hide()
                 this.cd.detectChanges()
                 // this.getFuelCreditRequestByfuelDealerId(this.fuelDealerId);
               }
@@ -299,6 +308,7 @@ export class TransTablesWidget7Component implements OnInit {
       } else {
         this.isFilterByMapId = false;
         if (this.selectCorporate.value.startDate || this.selectCorporate.value.endDate) {
+          this.spinner.show()
           let data = {
             corporateId: this.transporterCorpId,
             startDate: moment(this.selectCorporate.value.startDate, ["MM-DD-YYYY"]).format('YYYY-MM-DD'),
@@ -311,11 +321,13 @@ export class TransTablesWidget7Component implements OnInit {
                 this.allCreditReqData = res;
                 this.pageLength = res.data;
                 this.allCreditReqExcel = res.data;
+                this.spinner.hide()
                 this.cd.detectChanges()
               } else {
                 this.selectCorporate.controls["startDate"].setValue("");
                 this.selectCorporate.controls["endDate"].setValue("");
                 alert("Data not found!")
+                this.spinner.hide()
                 this.cd.detectChanges()
                 // this.getFuelCreditRequestByCorporateId(this.loginCorporateId);
               }

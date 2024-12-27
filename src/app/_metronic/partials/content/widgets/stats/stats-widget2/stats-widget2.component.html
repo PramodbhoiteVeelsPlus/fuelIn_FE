@@ -47,8 +47,8 @@
         <input class="form-control" placeholder="dd-mm-yyyy" name="endDate" readonly style="background-color: #ffffff;"
           (click)="endDate.toggle()" formControlName="endDate" ngbDatepicker #endDate="ngbDatepicker">
       </div>
-      <div class="col-md-1"></div>
-      <div class="col-auto" style="margin-top:28px">
+      <!-- <div class="col-md-1"></div> -->
+      <div class="col-auto" style="margin-top:20px">
         <button class="btn btn-outline-success" (click)="getDetailsByfuelDealerCustomerMapIdId()">
           view
         </button>
@@ -60,7 +60,7 @@
   <div *ngIf="isAllCreditAccount">
     <div class="row">
       <div class="col-lg-1">
-        <button type="button" class="btn btn-outline-success my-2 my-sm-0"
+        <button type="button" class="btn btn-outline-success"
           (click)="exportexcelForAllCredit()">Download</button>
       </div>
     </div>
@@ -267,7 +267,7 @@
     </div>
   </div>
   <div *ngIf="isActiveCreditAccount">
-    <button class="btn btn-outline-secondary my-2 my-sm-0" type="button" (click)="downloadExcel()">
+    <button class="btn btn-outline-secondary" type="button" (click)="downloadExcel()">
       download
     </button>
     <div class="card-body table-responsive">

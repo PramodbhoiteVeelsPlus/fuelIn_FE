@@ -321,6 +321,7 @@ export class TransTablesWidget8Component implements OnInit {
 
     if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
       if (this.filterForm.value.selectCorporateName) {
+        this.spinner.show()
         let data = {
           fuelDealerId: this.fuelDealerId,
           corporateId: this.transporterCorpId,
@@ -337,11 +338,13 @@ export class TransTablesWidget8Component implements OnInit {
                   this.crPaymentDetailsData = res.data;
 
                   this.showHeading = true;
+                  this.spinner.hide()
                   this.cd.detectChanges()
                 }
                 else {
                   alert("Don't have any Credit Payment in this Month!")
                   this.showHeading = false;
+                  this.spinner.hide()
                   this.cd.detectChanges()
                 }
               }
@@ -352,6 +355,7 @@ export class TransTablesWidget8Component implements OnInit {
 
       }
       else {
+        this.spinner.show()
         let data = {
           corporateId: this.transporterCorpId,
           startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
@@ -365,11 +369,13 @@ export class TransTablesWidget8Component implements OnInit {
                   this.crPaymentDetails = res.data;
                   this.crPaymentDetailsData = res.data;
                   this.showHeading = true;
+                  this.spinner.hide()
                   this.cd.detectChanges()
                 }
                 else {
                   alert("Don't have any Credit Payment in this Month!")
                   this.showHeading = false;
+                  this.spinner.hide()
                   this.cd.detectChanges()
                 }
               }
@@ -380,6 +386,7 @@ export class TransTablesWidget8Component implements OnInit {
 
       }
     } else {
+      this.spinner.show()
       let data = {
         corporateId: transporterCorpId,
         startDate: moment(new Date()).subtract(15, 'day').format("YYYY-MM-DD"),
@@ -395,12 +402,14 @@ export class TransTablesWidget8Component implements OnInit {
                 this.crPaymentDetailsData = res.data;
                 this.crPaymentDetails1 = res.data1;
                 this.showHeading = true;
+                this.spinner.hide()
                 this.cd.detectChanges()
               }
               else {
                 //alert("Don't have any Credit Payment in this Month!")
                 this.crPaymentDetails1 = res.data1;
                 this.crPaymentDetails.length = 0;
+                this.spinner.hide()
                 this.cd.detectChanges()
               }
             }
@@ -408,6 +417,7 @@ export class TransTablesWidget8Component implements OnInit {
             }
           })
       } else {
+        this.spinner.show()
         this.post.getAllCRPaymentByCorporatePOST(data)
           .subscribe(res => {
             if (res.status == "OK") {
@@ -416,12 +426,14 @@ export class TransTablesWidget8Component implements OnInit {
                 this.crPaymentDetailsData = res.data;
                 this.crPaymentDetails1 = res.data1;
                 this.showHeading = true;
+                this.spinner.hide()
                 this.cd.detectChanges()
               }
               else {
                 //alert("Don't have any Credit Payment in this Month!")
                 this.crPaymentDetails1 = res.data1;
                 this.crPaymentDetails.length = 0;
+                this.spinner.hide()
                 this.cd.detectChanges()
               }
             }

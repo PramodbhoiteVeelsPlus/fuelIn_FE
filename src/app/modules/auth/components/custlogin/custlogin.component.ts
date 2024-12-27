@@ -146,8 +146,9 @@ export class CustloginComponent {
             } else {
               var element = JSON.parse(localStorage.getItem("element") || '{}');
               if (res.element.accessGroupId == 7 || res.element.accessGroupId == 2 || res.element.accessGroupId == 16) {
-                this.router.navigate(['/transporter/transDashboard']);
+                this.router.navigate(['/dashboard']);
                 if(res.element.accessGroupId == '2'){
+                  this.router.navigate(['/transporter/transDashboard']);
                   this.getTransporter(element.personId)
                 }
               } else {

@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form [formGroup]="filterForm">
+                    <form [formGroup]="fuelVendorDetailsForm">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -243,7 +243,7 @@
                                                     (click)="getGeoLocation()">
                                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                                 </button>
-                                                <input class="form-control" placeholder="Geo Location" readonly
+                                                <input class="form-control" placeholder="Geo Location" [disabled]="true"
                                                     formControlName="geoLocation">
                                             </div>
 
@@ -333,7 +333,7 @@
 
                                     <br>
 
-                                    <div class="row">
+                                    <!-- <div class="row">
 
                                         <table class="" style="width:900px;margin-left:35px !important">
 
@@ -349,11 +349,8 @@
 
                                                     <td>
                                                         Business PAN:
-
-                                                        <!-- <input type="file" formControlName="businesspanCard"
-                                                            (change)="onBusPan($event)"> -->
-
-
+                                                        <input type="file" formControlName="businesspanCard"
+                                                            (change)="onBusPan($event)">
                                                         <div>
                                                             <img style="width:50px" (click)="opendoc(doc)">
                                                         </div>
@@ -374,20 +371,17 @@
 
                                                     <td>
                                                         Business GST:
-
-                                                        <!-- <input type="file" formControlName="gstNumberDoc"
-                                                            (change)="onGst($event)"> -->
-
+                                                        <input type="file" formControlName="gstNumberDoc"
+                                                            (change)="onGst($event)">
                                                         <div>
                                                             <img style="width:50px" (click)="opendoc(doc)">
                                                         </div>
                                                     </td>
 
                                                     <td>
-                                                        Owner PAN:
-
-                                                        <!-- <input type="file" formControlName="individualPanCard"
-                                                            (change)="onPan($event)"> -->
+                                                        Owner PAN
+                                                        <input type="file" formControlName="individualPanCard"
+                                                            (change)="onPan($event)">
                                                         <div>
 
                                                             <img style="width:50px" (click)="opendoc(doc)">
@@ -400,12 +394,9 @@
                                                 <tr>
                                                     <td>
                                                         Owner Aadhar Front:
-
-                                                        <!-- <input type="file" formControlName="aadharcardfrontdoc"
-                                                            (change)="onAdhrFront($event)"> -->
-
+                                                        <input type="file" formControlName="aadharcardfrontdoc"
+                                                            (change)="onAdhrFront($event)">
                                                         <div>
-
                                                             <img style="width:50px" (click)="opendoc(doc)">
 
                                                         </div>
@@ -413,9 +404,8 @@
 
                                                     <td>
                                                         Owner Aadhar Back:
-
-                                                        <!-- <input type="file" formControlName="addharLinkDoc"
-                                                            (change)="onAdhrBack($event)"> -->
+                                                        <input type="file" formControlName="addharLinkDoc"
+                                                            (change)="onAdhrBack($event)">
 
                                                         <div>
                                                             <img style="width:50px" (click)="opendoc(doc)">
@@ -424,9 +414,8 @@
 
                                                     <td>
                                                         Owner DL:
-
-                                                        <!-- <input type="file" formControlName="licenceLinkDoc"
-                                                            (change)="onDl($event)"> -->
+                                                        <input type="file" formControlName="licenceLinkDoc"
+                                                            (change)="onDl($event)">
 
                                                         <div>
                                                             <img style="width:50px" (click)="opendoc(doc)">
@@ -437,9 +426,8 @@
                                                 <tr>
                                                     <td>
                                                         Oil Company product receipt:
-
-                                                        <!-- <input type="file" formControlName="oilCmpProductReceipt"
-                                                            (change)="onOilCmpReceipt($event)"> -->
+                                                        <input type="file" formControlName="oilCmpProductReceipt"
+                                                            (change)="onOilCmpReceipt($event)">
 
                                                         <div>
 
@@ -453,7 +441,18 @@
                                             </tbody>
                                         </table>
 
+                                    </div> -->
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-5"></div>
+                                    <div class="col-md-12" style="margin-left: 400px">
+                                        <button type="submit" class="btn btn-primary" (click)="addFuelVendor()">Save</button> &nbsp;
+                                        &nbsp;
+                                        &nbsp;<button type="cancel" class="btn btn-secondary">Cancel</button>
+                
                                     </div>
+                                    <div class="col-md-5"></div>
                                 </div>
 
                             </div>

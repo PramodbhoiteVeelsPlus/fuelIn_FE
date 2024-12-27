@@ -188,16 +188,17 @@ export class TablesWidget26Component {
             productName: this.productForm.value.productName,
             productCode: this.productForm.value.productCode,
           }
-          this.post.addFuelProductPOST(data)
-            .subscribe((res) => {
-              if (res) {
-                alert("Brand Added Successfully!")
-                this.productForm.reset();
-                this.productForm.controls["productCategory"].setValue("");
-                this.getBrandList();
-              } else {
-              }
-            });
+          console.log("data", data)
+          // this.post.addFuelProductPOST(data)
+          //   .subscribe((res) => {
+          //     if (res) {
+          //       alert("Brand Added Successfully!")
+          //       this.productForm.reset();
+          //       this.productForm.controls["productCategory"].setValue("");
+          //       this.getBrandList();
+          //     } else {
+          //     }
+          //   });
         } else {
           alert("Please enter product name")
         }

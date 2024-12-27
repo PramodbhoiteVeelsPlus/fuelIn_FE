@@ -176,8 +176,8 @@ export class TablesWidget9Component {
       .subscribe(res => {
         this.allEntityIdLQList = res.data
         localStorage.setItem('allEntityIdLQList', JSON.stringify(res.data));
-        this.cd.detectChanges();
         this.spinner.hide()
+        this.cd.detectChanges();
       })
   }
 

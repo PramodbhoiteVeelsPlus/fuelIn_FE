@@ -59,7 +59,8 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 
 export class StatsWidget12Component {
   localStoragecorporateId: any;
-  filterForm = new FormGroup({
+  
+  fuelVendorDetailsForm = new FormGroup({
     name: new FormControl("", Validators.required),
     firstName: new FormControl("", Validators.required),
     lastName: new FormControl("", Validators.required),
@@ -71,8 +72,8 @@ export class StatsWidget12Component {
     password: new FormControl("", Validators.required),
     companyName: new FormControl("", Validators.required),
     email: new FormControl("", [
-      Validators.required,
-      Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"),
+        Validators.required,
+        Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"),
     ]),
     brandName: new FormControl("", Validators.required),
     address1: new FormControl("", Validators.required),
@@ -97,14 +98,24 @@ export class StatsWidget12Component {
     addharLinkDoc: new FormControl("", Validators.required),
     CompanyLogo: new FormControl("", Validators.required),
     onOilCmpReceipt: new FormControl("", Validators.required),
-  });
+});
+
   getAllOilBrandProductNameCodeDetails: any = [];
-  submitted: boolean = false;
+  submitted: boolean;
   modalService: any;
   closeResult: string;
+  veelsUserTypePlusId: any;
+  veelsPlusCorporateId: any;
+  VPCorporateId: any;
+  personId: any;
+  dateCode: any;
+  monthCode: number;
+  monthAlpha: string;
+  yearCode: any;
+  stateCode: string;
 
   get userMobile() {
-    return this.filterForm.get("phone1");
+    return this.fuelVendorDetailsForm.get("phone1");
   }
   constructor(
     private post: StatsService,
@@ -125,6 +136,8 @@ export class StatsWidget12Component {
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.localStoragecorporateId = element.veelsPlusCorporateID
+    this.VPCorporateId = element.veelsPlusCorporateID;
+    this.personId = element.personId
     this.getBrandProductNameForDropdown()
     this.cd.detectChanges();
   }
@@ -132,12 +145,12 @@ export class StatsWidget12Component {
 
   checkPhoneNumber() {
     let data = {
-      phone: this.filterForm.value.phone1,
+      phone: this.fuelVendorDetailsForm.value.phone1,
     };
     this.post.findPhoneNumberPOST(data).subscribe((res) => {
       if (res.status == "OK") {
         alert("Mobile Number Already Exits! Use another Mobile Number");
-        this.filterForm.reset({ phone1: "" });
+        this.fuelVendorDetailsForm.reset({ phone1: "" });
         // this.router.navigate(['../listVendor/']);
       }
     });
@@ -161,22 +174,22 @@ export class StatsWidget12Component {
   
   getGeoLocation() {
     this.submitted = true;
-    if (this.filterForm.value.companyName) {
-        if (this.filterForm.value.cityArea) {
-            if (this.filterForm.value.city) {
+    if (this.fuelVendorDetailsForm.value.companyName) {
+        if (this.fuelVendorDetailsForm.value.cityArea) {
+            if (this.fuelVendorDetailsForm.value.city) {
                 const data = {
                     geoAddress:
-                        this.filterForm.value.companyName +
+                        this.fuelVendorDetailsForm.value.companyName +
                         "+" +
-                        this.filterForm.value.cityArea +
+                        this.fuelVendorDetailsForm.value.cityArea +
                         "+" +
-                        this.filterForm.value.city,
+                        this.fuelVendorDetailsForm.value.city,
                 };
 
                 this.post.getGeoLocationPOST(data).subscribe((res) => {
                     if (res.status == "OK") {
                         alert(res.msg);
-                        this.filterForm.controls[
+                        this.fuelVendorDetailsForm.controls[
                             "geoLocation"
                         ].setValue(
                             res.result.results[0].geometry.location.lat +
@@ -184,7 +197,7 @@ export class StatsWidget12Component {
                                 res.result.results[0].geometry.location.lng
                         );
                     } else {
-                        this.filterForm.controls[
+                        this.fuelVendorDetailsForm.controls[
                             "geoLocation"
                         ].setValue("lat:" + "" + ",lng:" + "");
                     }
@@ -219,5 +232,266 @@ private getDismissReason(reason: any): string {
       return `with: ${reason}`;
   }
 }
-  
+
+addFuelVendor() {
+  this.spinner.show();
+    this.createCorporateId();
+
+    let data = {
+        firstName: this.fuelVendorDetailsForm.value.firstName,
+        lastName: this.fuelVendorDetailsForm.value.lastName,
+        phone1: this.fuelVendorDetailsForm.value.phone1,
+        kycStatus: "pending",
+        accessGroupId: "12",
+        veelsUserTypePlusId: this.veelsUserTypePlusId,
+        veelsPlusCorporateID: this.veelsPlusCorporateId,
+        state: this.fuelVendorDetailsForm.value.state,
+        password: this.fuelVendorDetailsForm.value.password,
+        companyName: this.fuelVendorDetailsForm.value.companyName,
+        email1: this.fuelVendorDetailsForm.value.email,
+        brandName: this.fuelVendorDetailsForm.value.brandName,
+        address1: this.fuelVendorDetailsForm.value.address1,
+        address2: this.fuelVendorDetailsForm.value.address2,
+        city: this.fuelVendorDetailsForm.value.city,
+        hostName: this.fuelVendorDetailsForm.value.firstName+' '+this.fuelVendorDetailsForm.value.lastName ,
+        hostPhone: this.fuelVendorDetailsForm.value.phone1,
+        headQuarterName: this.fuelVendorDetailsForm.value.city,
+        pin: this.fuelVendorDetailsForm.value.pin,
+        dist: this.fuelVendorDetailsForm.value.dist,
+        cityArea: this.fuelVendorDetailsForm.value.cityArea,
+        geoLocation: this.fuelVendorDetailsForm.value.geoLocation,
+        phone2: this.fuelVendorDetailsForm.value.phone2,
+        highwayNumber: this.fuelVendorDetailsForm.value.highwayNumber,
+        businessType: this.fuelVendorDetailsForm.value.businessType,
+        GSTNumber: this.fuelVendorDetailsForm.value.GSTNumber,
+        uniqueCodeAssigned: this.fuelVendorDetailsForm.value.uniqueCodeAssigned,
+        businessPanName: this.fuelVendorDetailsForm.value.businessPanName,
+        businessPancardNumber: this.fuelVendorDetailsForm.value.businessPancardNumber,
+        fuelDealerCreateBy: this.VPCorporateId ,
+        // businesspanCard: this.panBusLogoLinkDoc,
+        // gstNumberDoc:this.gstLogoLinkDoc,
+        // individualPanCard: this.panLogoLinkDoc,
+        // licenceLinkDoc: this.dlLogoLinkDoc,
+        // aadharcardfrontdoc: this.adhrFrontLogoLinkDoc,
+        // addharLinkDoc: this.adhrBackLogoLinkDoc,
+        // CompanyLogo: this.CompanyLogoLinkDoc,
+        // oilReceipt:this.oilReceiptLinkDoc,
+        businesspanCard: "",
+        gstNumberDoc:"",
+        individualPanCard: "",
+        licenceLinkDoc: "",
+        aadharcardfrontdoc: "",
+        addharLinkDoc: "",
+        CompanyLogo: "",
+        oilReceipt: "",
+        userCreatedBy:this.personId,
+        onBoardStatus:"FALSE"
+    };
+    // console.log("data", data);
+    this.post.fuelDealerRegister(data).subscribe((res) => {
+        if (res) {
+            
+          this.spinner.hide();
+            alert("Fuel Dealer Registered Successfully!")
+            this.router.navigate(['/admin/listCustomerOnboarding']);
+
+        }
+        else{
+            this.spinner.hide();
+          alert("Error to Register Fuel Dealer!")
+        }
+    });
+    this.spinner.hide();
+}
+
+createCorporateId() {
+  this.createStateCode();
+  this.dateCode = new Date();
+  this.monthCode = this.dateCode.getMonth() + 1;
+
+  switch (this.monthCode) {
+      case 1:
+          this.monthAlpha = "A";
+          break;
+      case 2:
+          this.monthAlpha = "B";
+
+          break;
+
+      case 3:
+          this.monthAlpha = "C";
+          break;
+
+      case 4:
+          this.monthAlpha = "D";
+          break;
+
+      case 5:
+          this.monthAlpha = "E";
+          break;
+      case 6:
+          this.monthAlpha = "F";
+
+          break;
+
+      case 7:
+          this.monthAlpha = "G";
+          break;
+
+      case 8:
+          this.monthAlpha = "H";
+          break;
+      case 9:
+          this.monthAlpha = "I";
+
+          break;
+
+      case 10:
+          this.monthAlpha = "J";
+          break;
+
+      case 11:
+          this.monthAlpha = "K";
+          break;
+
+      case 12:
+          this.monthAlpha = "L";
+          break;
+  }
+  this.yearCode = this.dateCode.getYear().toString().slice(1, 3);
+
+  this.veelsUserTypePlusId = "VP" + this.stateCode + "12" + this.monthAlpha + this.yearCode;
+  this.veelsPlusCorporateId="VB" + this.stateCode + "12" + this.monthAlpha+this.yearCode;
+}
+
+createStateCode() {
+  switch (this.fuelVendorDetailsForm.value.state) {
+      case "ANDHRA PRADESH":
+          this.stateCode = "01";
+          break;
+      case "ARUNACHAL PRADESH":
+          this.stateCode = "02";
+
+          break;
+      case "ASSAM":
+          this.stateCode = "03";
+
+          break;
+      case "BIHAR":
+          this.stateCode = "04";
+
+          break;
+      case "CHHATTISGARH":
+          this.stateCode = "05";
+
+          break;
+      case "GOA":
+          this.stateCode = "06";
+
+          break;
+      case "GUJARAT":
+          this.stateCode = "07";
+
+          break;
+
+      case "HARYANA":
+          this.stateCode = "08";
+
+          break;
+
+      case "HIMACHAL PRADESH":
+          this.stateCode = "09";
+
+          break;
+      case "JHARKHAND":
+          this.stateCode = "10";
+
+          break;
+      case "KARNATAKA":
+          this.stateCode = "11";
+          break;
+
+      case "KERALA":
+          this.stateCode = "12";
+          break;
+
+      case "MADHYA PRADESH":
+          this.stateCode = "13";
+          break;
+
+      case "MAHARASHTRA":
+          this.stateCode = "14";
+          break;
+
+      case "MANIPUR":
+          this.stateCode = "15";
+          break;
+
+      case "MEGHALAYA":
+          this.stateCode = "16";
+          break;
+      case "MIZORAM":
+          this.stateCode = "17";
+          break;
+      case "NAGALAND":
+          this.stateCode = "18";
+          break;
+      case "ODISHA":
+          this.stateCode = "19";
+          break;
+      case "PUNJAB":
+          this.stateCode = "20";
+          break;
+      case "RAJASTHAN":
+          this.stateCode = "21";
+          break;
+      case "SIKKIM":
+          this.stateCode = "22";
+          break;
+      case "TAMIL NADU":
+          this.stateCode = "23";
+          break;
+      case "TELANGANA":
+          this.stateCode = "24";
+          break;
+      case "TRIPURA":
+          this.stateCode = "25";
+          break;
+      case "UTTAR PRADESH":
+          this.stateCode = "26";
+          break;
+      case "UTTARAKHAND":
+          this.stateCode = "27";
+          break;
+      case "WEST BENGAL":
+          this.stateCode = "28";
+          break;
+      case "ANDAMAN AND NICOBAR ISLANDS":
+          this.stateCode = "29";
+          break;
+      case "CHANDIGARH":
+          this.stateCode = "30";
+          break;
+      case "DADRA AND NAGAR HAVELI AND DAMAN AND DIU":
+          this.stateCode = "31";
+          break;
+      case "DELHI":
+          this.stateCode = "32";
+          break;
+      case "LAKSHADWEEP":
+          this.stateCode = "33";
+          break;
+      case "PUDUCHERRY":
+          this.stateCode = "34";
+          break;
+      case "JAMMU AND KASHMIR":
+          this.stateCode = "35";
+          break;
+      case "LADAKH":
+          this.stateCode = "36";
+          break;
+      default:
+          break;
+  }
+}
 }

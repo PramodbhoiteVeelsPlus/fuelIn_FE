@@ -161,6 +161,7 @@ export class StatsService {
     private getReqInfoByPersonIdURL = this.baseURL + 'fuelVendor/getReqInfoByPersonId';
     private getTransporterDetailsURL = this.baseURL + 'userAccess/getTransporterDetails';
     private getFastagCorporateByCustmerIdURL = this.baseURL + 'fastag/getFastagCorporateByCustmerId';
+    private fuelDealerRegisterURL = this.baseURL + 'fuelVendor/fuelDealerRegister'; 
 
 
 
@@ -881,7 +882,7 @@ export class StatsService {
         this.setHeader();
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
-        return this.http.get(this.getGeoLocationURL, {
+        return this.http.post(this.getGeoLocationURL, {
             headers: headers
         })
     }
@@ -1423,6 +1424,16 @@ export class StatsService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.getFastagCorporateByCustmerIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // fuelDealerRegisterURL
+    fuelDealerRegister(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.fuelDealerRegisterURL, body, {
             headers: headers
         })
     }

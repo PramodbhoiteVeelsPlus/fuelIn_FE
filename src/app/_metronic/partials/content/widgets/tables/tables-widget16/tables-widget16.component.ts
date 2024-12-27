@@ -126,6 +126,7 @@ export class TablesWidget16Component {
 
 
   getAllFastagDetails() {
+    this.spinner.show()
     this.thisMonthFastag = new Date().getMonth();
     this.lastMonthFastag = new Date().getMonth() - 1;
     this.thisMonthYearFastag = moment(new Date()).format("MMM y")
@@ -175,9 +176,12 @@ export class TablesWidget16Component {
           this.preAccountCRPaymentAllBYentityData = res.preAccountCRPaymentAllBYentityData
 
           this.combineFastag()
+          this.spinner.hide()
           this.cd.detectChanges();
 
         } else {
+          this.spinner.hide()
+          this.cd.detectChanges();
         }
       });
   }

@@ -123,10 +123,10 @@ export class TransTablesWidget1Component implements OnInit {
     var element = JSON.parse(localStorage.getItem('element') || '');
     var transporterData = JSON.parse(localStorage.getItem('transporterData') || '');
     this.transporterCorpId = localStorage.getItem('transporterCorpId');
-    this.accessGroup = element.accessGroupId
-    this.corporateId = element.veelsPlusCorporateID;
     this.customerId = transporterData.customerId
     this.hostPhone = transporterData.phone1;
+    this.accessGroup = element.accessGroupId
+    this.corporateId = element.veelsPlusCorporateID;
     this.currentMonth = moment(new Date()).format("MMM")
     this.lastMon = moment(new Date()).subtract(1, 'month').format("MMM")
     this.last2Mon = moment(new Date()).subtract(2, 'month').format("MMM")
@@ -174,8 +174,10 @@ export class TransTablesWidget1Component implements OnInit {
           }
 
           console.log("pur0", this.lastMonthPurchase)
+          this.spinner.hide()
           this.cd.detectChanges()
         } else {
+          this.spinner.hide()
           this.cd.detectChanges()
 
         }

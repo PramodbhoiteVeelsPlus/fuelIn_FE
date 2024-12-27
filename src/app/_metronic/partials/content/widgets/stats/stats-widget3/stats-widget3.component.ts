@@ -1,4 +1,4 @@
-import { Component, Injectable, Input, OnInit, TemplateRef } from '@angular/core';
+import { ChangeDetectorRef, Component, Injectable, Input, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgbDateAdapter, NgbDateStruct, NgbDateParserFormatter, NgbActiveModal, NgbDatepickerConfig, NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import moment from 'moment';
@@ -242,7 +242,9 @@ export class StatsWidget3Component {
   constructor(private post: StatsService,
     private excelService: ExcelService,
     private modalService: NgbModal,
-    config: NgbDatepickerConfig,) {
+    config: NgbDatepickerConfig,
+    private spinner: NgxSpinnerService,
+    private cd: ChangeDetectorRef,) {
     const currentDate = new Date();
     config.minDate = { year: 2018, month: 1, day: 1 };
     config.maxDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
@@ -263,15 +265,19 @@ export class StatsWidget3Component {
   }
 
   getAllDealer() {
+    this.spinner.show()
     let data = {
     }
     this.post.getFuelVendorsList(data)
       .subscribe(res => {
         this.corporateList = res.data
+        this.spinner.hide()
+        this.cd.detectChanges();
       })
   }
 
   getDetailsByDealerId(fuelDealerId: any) {
+    this.spinner.show()
     let data = {
       fuelVendorId: fuelDealerId
     }
@@ -284,6 +290,8 @@ export class StatsWidget3Component {
           this.FuelVeelsId = res.data[0].FuelVeelsId;
           this.getAllCreditAccByDealerId(fuelDealerId)
           this.creditTxnPayment1(this.loginCorporateId)
+          this.spinner.hide()
+          this.cd.detectChanges();
         }
       })
   }
@@ -342,6 +350,7 @@ export class StatsWidget3Component {
   }
 
   getAllCreditAccByDealerId(fuelDealerId: any) {
+    this.spinner.show()
     this.allCreditAccByDealer.length = 0;
     this.allCreditAccByDealerList.length = 0;
     this.allCreditAccByDealerList1.length = 0;
@@ -363,14 +372,19 @@ export class StatsWidget3Component {
           this.getCombineActive();
           this.getThisMonthCrDetail(this.fuelDealerId, this.loginCorporateId)
           this.getAllClapsAndStarsCalculation(this.fuelDealerId)
+          this.spinner.hide()
+          this.cd.detectChanges();
         }
         else {
           alert("Error to Show Account List!")
+          this.spinner.hide()
+          this.cd.detectChanges();
         }
       })
   }
 
   getAllClapsAndStarsCalculation(fuelDealerId: any) {
+    this.spinner.show()
     let data = {
       fuelDealerId: fuelDealerId
     }
@@ -380,11 +394,14 @@ export class StatsWidget3Component {
           this.allPaymentSum = res.allData;
           this.last5PaymentSum = res.lastData;
           this.getAllclapsCalculationByCorpId(fuelDealerId)
+          this.spinner.hide()
+          this.cd.detectChanges();
         }
       })
   }
 
   getAllclapsCalculationByCorpId(fuelDealerId: any) {
+    this.spinner.show()
     let data = {
       fuelDealerId: fuelDealerId
     }
@@ -393,6 +410,8 @@ export class StatsWidget3Component {
         if (res.status == "OK") {
           this.allcorpClapSumData = res.allcorpClapSumData;
           this.getAllcal(this.allPaymentSum, this.last5PaymentSum, this.allcorpClapSumData)
+          this.spinner.hide()
+          this.cd.detectChanges();
         }
       })
   }
@@ -518,6 +537,7 @@ export class StatsWidget3Component {
   }
 
   getThisMonthCrDetail(fuelDealerId: any, corporateId: any) {
+    this.spinner.show()
     let data = {
       fuelDealerId: fuelDealerId,
       corporateId: corporateId,
@@ -530,12 +550,15 @@ export class StatsWidget3Component {
           this.totalPurchase = Number(res.data2[0].totalCrSale) - Number(res.data2[0].totalDiscount);
           this.totalPayment = Number(res.data4[0].totalCrPayment)
           this.getPreviousOutstandingByfuelDealerId(this.fuelDealerId, this.totalPurchase, this.totalPayment);
+          this.spinner.hide()
+          this.cd.detectChanges();
 
         }
       })
   }
 
   getPreviousOutstandingByfuelDealerId(fuelDealerId: any, totalPurchase: any, totalPayment: any) {
+    this.spinner.show()
     let data = {
       fuelDealerId: fuelDealerId
     }
@@ -544,7 +567,11 @@ export class StatsWidget3Component {
         if (res.status == 'OK') {
           this.previousOutstanding = res.data[0].previousOutstanding;
           this.totalOutstanding = Number(totalPurchase) - Number(totalPayment) + Number(this.previousOutstanding);
+          this.spinner.hide()
+          this.cd.detectChanges();
         } else {
+          this.spinner.hide()
+          this.cd.detectChanges();
         }
       });
   }
@@ -1006,6 +1033,7 @@ export class StatsWidget3Component {
 
   creditSales() {
     if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
+      this.spinner.show()
       this.allCreditReq = [];
       this.allCreditReqDataa = [];
       this.allCreditReqExcel = []
@@ -1029,11 +1057,16 @@ export class StatsWidget3Component {
               this.allCreditReqData = this.allCreditReq;
               this.pageLength = this.allCreditReq.length;
               this.allCreditReqExcel = this.allCreditReq;
+              this.spinner.hide()
+              this.cd.detectChanges();
             } else {
               alert("Data not found!")
+              this.spinner.hide()
+              this.cd.detectChanges();
             }
           });
       } else {
+        this.spinner.show()
         this.IsDealerId = false;
         let creditArr = []
         let data = {
@@ -1053,8 +1086,12 @@ export class StatsWidget3Component {
               this.pageLength = this.allCreditReq.length;
               this.allCreditReqExcel = this.allCreditReq;
               this.dealerIdCombine()
+              this.spinner.hide()
+              this.cd.detectChanges();
             } else {
               alert("Data not found!")
+              this.spinner.hide()
+              this.cd.detectChanges();
             }
           });
       }
@@ -1136,6 +1173,7 @@ export class StatsWidget3Component {
 
   creditTxnPayment(loginCorporateId: any) {
     if (loginCorporateId) {
+      this.spinner.show()
       this.isCreditPayment = true;
       let data = {
         corporateId: loginCorporateId,
@@ -1147,15 +1185,20 @@ export class StatsWidget3Component {
           if (res.status == "OK") {
             if (res.data.length) {
               this.crPaymentDetails = res.data;
+              this.spinner.hide()
+              this.cd.detectChanges();
             }
             else {
               alert("Don't have any Credit Payment in this Month!")
+              this.spinner.hide()
+              this.cd.detectChanges();
             }
           }
           else {
           }
         })
     } else {
+      this.spinner.show()
       this.isCreditPayment = false;
       let data = {
         startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
@@ -1168,8 +1211,12 @@ export class StatsWidget3Component {
               this.crPaymentDetailsData = res.data;
               this.creditPaymentJson(this.crPaymentDetailsData)
             }
+            this.spinner.hide()
+            this.cd.detectChanges();
           }
           else {
+            this.spinner.hide()
+            this.cd.detectChanges();
           }
         })
     }
@@ -1177,6 +1224,7 @@ export class StatsWidget3Component {
 
   creditTxnPayment1(loginCorporateId: any) {
     if (loginCorporateId) {
+      this.spinner.show()
       this.isCreditPayment = true;
       let data = {
         corporateId: loginCorporateId,
@@ -1191,11 +1239,16 @@ export class StatsWidget3Component {
             }
             else {
             }
+            this.spinner.hide()
+            this.cd.detectChanges();
           }
           else {
+            this.spinner.hide()
+            this.cd.detectChanges();
           }
         })
     } else {
+      this.spinner.show()
       this.isCreditPayment = false;
       let data = {
         startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
@@ -1208,8 +1261,12 @@ export class StatsWidget3Component {
               this.crPaymentDetailsData = res.data;
               this.creditPaymentJson(this.crPaymentDetailsData)
             }
+            this.spinner.hide()
+            this.cd.detectChanges();
           }
           else {
+            this.spinner.hide()
+            this.cd.detectChanges();
           }
         })
     }
@@ -1511,11 +1568,17 @@ export class StatsWidget3Component {
           this.firstSixMonthsPetrolPumpList4 = res.data4[0].NumberOfDealerInMonth
           this.firstSixMonthsPetrolPumpList5 = res.data5[0].NumberOfDealerInMonth
           this.firstSixMonthsPetrolPumpList6 = res.data6[0].NumberOfDealerInMonth
-        } else { }
+          this.spinner.hide()
+          this.cd.detectChanges();
+        } else {
+          this.spinner.hide()
+          this.cd.detectChanges();
+         }
       });
   }
 
   getLastSixMonthPetrolPumpName() {
+    this.spinner.show()
     let data = {};
     this.post.getLastSixMonthPetrolPumpNamePOST(data)
       .subscribe((res) => {
@@ -1526,11 +1589,17 @@ export class StatsWidget3Component {
           this.firstSixMonthsPetrolPumpList10 = res.data4[0].NumberOfDealerInMonth
           this.firstSixMonthsPetrolPumpList11 = res.data5[0].NumberOfDealerInMonth
           this.firstSixMonthsPetrolPumpList12 = res.data6[0].NumberOfDealerInMonth
-        } else { }
+          this.spinner.hide()
+          this.cd.detectChanges();
+        } else { 
+          this.spinner.hide()
+          this.cd.detectChanges();
+        }
       });
   }
 
   getFirstSixMonthCustomerName() {
+    this.spinner.show()
     let data = {};
     this.post.getFirstSixMonthCustomerNamePOST(data)
       .subscribe((res) => {
@@ -1541,11 +1610,17 @@ export class StatsWidget3Component {
           this.firstSixMonthsCustomerList4 = res.data4[0].NumberOfCustomerInMonth
           this.firstSixMonthsCustomerList5 = res.data5[0].NumberOfCustomerInMonth
           this.firstSixMonthsCustomerList6 = res.data6[0].NumberOfCustomerInMonth
-        } else { }
+          this.spinner.hide()
+          this.cd.detectChanges();
+        } else {
+          this.spinner.hide()
+          this.cd.detectChanges();
+         }
       });
   }
 
   getLastSixMonthCustomerName() {
+    this.spinner.show()
     let data = {
     };
     this.post.getLastSixMonthCustomerNamePOST(data)
@@ -1557,22 +1632,31 @@ export class StatsWidget3Component {
           this.firstSixMonthsCustomerList10 = res.data4[0].NumberOfCustomerInMonth
           this.firstSixMonthsCustomerList11 = res.data5[0].NumberOfCustomerInMonth
           this.firstSixMonthsCustomerList12 = res.data6[0].NumberOfCustomerInMonth
-        } else { }
+          this.spinner.hide()
+          this.cd.detectChanges();
+        } else {
+          this.spinner.hide()
+          this.cd.detectChanges();
+         }
       });
   }
 
   getAllDealerAndCustumerCount() {
+    this.spinner.show()
     let data = {}
     this.post.getDealerAndCustomerPOST(data)
       .subscribe(res => {
         if (res.status == "OK") {
           this.allDealerCount = res.data[0].NumberOfDealerInAll
           this.allCustomerCount = res.data1[0].NumberOfCustomerInAll
+          this.spinner.hide()
+          this.cd.detectChanges();
         }
       })
   }
 
   getFirstSixMonthActivePumpCount() {
+    this.spinner.show()
     let data = {}
     this.post.getFirstSixMonthActivePumpNamePOST(data)
       .subscribe(res => {
@@ -1583,11 +1667,14 @@ export class StatsWidget3Component {
           this.allActiveDealer4 = res.data4.length
           this.allActiveDealer5 = res.data5.length
           this.allActiveDealer6 = res.data6.length
+          this.spinner.hide()
+          this.cd.detectChanges();
         }
       })
   }
 
   getLastSixMonthActivePumpCount() {
+    this.spinner.show()
     let data = {
     }
     this.post.getLastSixMonthActivePumpNamePost(data)
@@ -1599,12 +1686,15 @@ export class StatsWidget3Component {
           this.allActiveDealer10 = res.data4.length
           this.allActiveDealer11 = res.data5.length
           this.allActiveDealer12 = res.data6.length
+          this.spinner.hide()
+          this.cd.detectChanges();
         }
       })
   }
 
 
   getFirstSixMonthActiveCustomer() {
+    this.spinner.show()
     let data1 = []
     let data2 = []
     let data3 = []
@@ -1635,11 +1725,14 @@ export class StatsWidget3Component {
           this.allActiveCustomer6 = res.data6
           data6 = Object.values(this.allActiveCustomer6.reduce((acc:any, cur:any) => Object.assign(acc, { [cur.fuelCorporateId]: cur }), {}))
           this.allActiveCustomer6Length = data6.length
+          this.spinner.hide()
+          this.cd.detectChanges();
         }
       })
   }
 
   getLastSixMonthActiveCustomer() {
+    this.spinner.show()
     let data7 = []
     let data8 = []
     let data9 = []
@@ -1674,6 +1767,8 @@ export class StatsWidget3Component {
           this.allActiveCustomer12 = res.data6
           data12 = Object.values(this.allActiveCustomer12.reduce((acc:any, cur:any) => Object.assign(acc, { [cur.fuelCorporateId]: cur }), {}))
           this.allActiveCustomer12Length = data12.length
+          this.spinner.hide()
+          this.cd.detectChanges();
         }
       })
   }
@@ -1728,6 +1823,7 @@ export class StatsWidget3Component {
       alert('date not find')
     }
 
+    this.spinner.show()
     let data = {
       startDate: startDate,
       endDate: endDate
@@ -1742,6 +1838,8 @@ export class StatsWidget3Component {
           }, (reason:any) => {
             this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
           });
+          this.spinner.hide()
+          this.cd.detectChanges();
         }
       })
   }
@@ -1795,6 +1893,7 @@ export class StatsWidget3Component {
       alert('date not find')
     }
 
+    this.spinner.show()
     let data = {
       startDate: startDate,
       endDate: endDate
@@ -1809,6 +1908,8 @@ export class StatsWidget3Component {
           }, (reason:any) => {
             this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
           });
+          this.spinner.hide()
+          this.cd.detectChanges();
         }
       })
   }
@@ -1858,6 +1959,7 @@ export class StatsWidget3Component {
       alert('date not find')
     }
 
+    this.spinner.show()
     let data = {
       startDate: startDate,
       endDate: endDate
@@ -1872,6 +1974,8 @@ export class StatsWidget3Component {
           }, (reason:any) => {
             this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
           });
+          this.spinner.hide()
+          this.cd.detectChanges();
         }
       })
   }
@@ -1922,6 +2026,7 @@ export class StatsWidget3Component {
       alert('date not find')
     }
 
+    this.spinner.show()
     let data = {
       startDate: startDate,
       endDate: endDate
@@ -1936,6 +2041,8 @@ export class StatsWidget3Component {
           }, (reason:any) => {
             this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
           });
+          this.spinner.hide()
+          this.cd.detectChanges();
         }
       })
   }
