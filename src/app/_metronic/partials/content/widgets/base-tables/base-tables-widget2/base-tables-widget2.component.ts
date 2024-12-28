@@ -397,6 +397,7 @@ export class BaseTablesWidget2Component implements OnInit {
                 this.crPaymentDetails = res.data;
                 this.crPaymentDetailsData = res.data;
                 // this.crPaymentDetails1 = res.data1;
+                localStorage.setItem('crPaymentDetails', JSON.stringify(this.crPaymentDetails));
                 this.showHeading = true;
                 this.cd.detectChanges();
                 this.spinner.hide()
@@ -404,6 +405,7 @@ export class BaseTablesWidget2Component implements OnInit {
               else {
                 // this.crPaymentDetails1 = res.data1;
                 this.crPaymentDetails.length = 0;
+                localStorage.setItem('crPaymentDetails', JSON.stringify([]));
                 this.cd.detectChanges();
                 this.spinner.hide()
               }

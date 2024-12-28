@@ -8,6 +8,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import moment from 'moment';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable'
+import numWords from 'num-words';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<any> {
@@ -97,7 +98,7 @@ export class BaseTablesWidget11Component implements OnInit {
   fuelProductTotalAmount: any = [];
   creditAmountNew: any;
   totalTransactionAmountNew: any;
-  savedPreviousOutstanding: number;
+  savedPreviousOutstanding: any = 0;
   savedTotalPurchase: number;
   savedTotalPayment: number;
   fuelInvoiceList: any = [];
@@ -132,6 +133,10 @@ export class BaseTablesWidget11Component implements OnInit {
   bankAccList: any = [];
   address1: any;
   address2: any;
+  rupeesWrd: any;
+  paisaWrd: any;
+  amountInWords: any;
+  amountInWords1: string;
 
   constructor(
     private post: BaseTablesService,
@@ -158,7 +163,7 @@ export class BaseTablesWidget11Component implements OnInit {
     this.phone1 = dealerData.hostPhone
     this.address1 = dealerData.address1
     this.address2 = dealerData.address2
-    if(this.accessGroup == '14'){
+    if (this.accessGroup == '14') {
       this.companyName = managerData.companyName
       this.oilCompanyName = managerData.brandName
       this.state = managerData.state
@@ -487,6 +492,21 @@ export class BaseTablesWidget11Component implements OnInit {
           this.creditAmountNew = res.creditArraySum[0].productTotalAmount
           this.totalTransactionAmountNew = res.paymentArraySum[0].totalPurchaseAmount
 
+          var osForWrd = ''
+          osForWrd = (this.creditAmountNew).toFixed(2)
+          var osForWrd1 = osForWrd.split(".")
+          this.rupeesWrd = osForWrd1[0]
+          this.paisaWrd = osForWrd1[1]
+          if (this.rupeesWrd != 0 && this.paisaWrd != 0) {
+            this.amountInWords1 = numWords((this.rupeesWrd)) + " rupees and " + numWords((this.paisaWrd)) + " paisa only";
+          } else if (this.rupeesWrd != 0) {
+            this.amountInWords1 = numWords((this.rupeesWrd)) + " rupees";
+          } else if (this.paisaWrd != 0) {
+            this.amountInWords1 = numWords((this.paisaWrd)) + " paisa only";
+          } else {
+            this.amountInWords = "";
+          }
+
           if (this.statementId == '6') {
           }
           this.spinner.hide()
@@ -683,11 +703,40 @@ export class BaseTablesWidget11Component implements OnInit {
           this.savedTotalPayment = res.data[0].fuelInvoicTotalPaymentAmount;
           this.totalOut = this.savedTotalPurchase - this.savedTotalPayment
           this.finalNetOutstandingForSavedInv = this.totalOut + this.savedPreviousOutstanding;
+          console.log("this.savedPreviousOutstanding", this.savedPreviousOutstanding)
 
           if (this.invoiceOf == "LUBE TAX") {
             // this.transform(Math.round(((Number(this.savedTotalPurchase)))));
+            var osForWrd = ''
+            osForWrd = (this.savedTotalPurchase).toFixed(2)
+            var osForWrd1 = osForWrd.split(".")
+            this.rupeesWrd = osForWrd1[0]
+            this.paisaWrd = osForWrd1[1]
+            if (this.rupeesWrd != 0 && this.paisaWrd != 0) {
+              this.amountInWords = numWords((this.rupeesWrd)) + " rupees and " + numWords((this.paisaWrd)) + " paisa only";
+            } else if (this.rupeesWrd != 0) {
+              this.amountInWords = numWords((this.rupeesWrd)) + " rupees";
+            } else if (this.paisaWrd != 0) {
+              this.amountInWords = numWords((this.paisaWrd)) + " paisa only";
+            } else {
+              this.amountInWords = "";
+            }
           } else {
             // this.transform(Math.round(((Number(this.savedTotalPurchase) - Number(this.savedTotalPayment)) + Number(this.savedPreviousOutstanding))));
+            var osForWrd = ''
+            osForWrd = (((Number(this.savedTotalPurchase) - Number(this.savedTotalPayment)) + Number(this.savedPreviousOutstanding))).toFixed(2)
+            var osForWrd1 = osForWrd.split(".")
+            this.rupeesWrd = osForWrd1[0]
+            this.paisaWrd = osForWrd1[1]
+            if (this.rupeesWrd != 0 && this.paisaWrd != 0) {
+              this.amountInWords = numWords((this.rupeesWrd)) + " rupees and " + numWords((this.paisaWrd)) + " paisa only";
+            } else if (this.rupeesWrd != 0) {
+              this.amountInWords = numWords((this.rupeesWrd)) + " rupees";
+            } else if (this.paisaWrd != 0) {
+              this.amountInWords = numWords((this.paisaWrd)) + " paisa only";
+            } else {
+              this.amountInWords = "";
+            }
           }
           this.totalCreditOutstanding = ((Number(this.savedTotalPurchase) - Number(this.savedTotalPayment)) + Number(this.savedPreviousOutstanding))
           // console.log("TotalCreditOutstanding",this.totalCreditOutstanding)

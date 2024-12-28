@@ -248,14 +248,14 @@
                 <h5 class="text-primary"><b>Total Tax</b></h5>
                 <span>
                   <i class="fas fa-rupee-sign"></i>
-                  {{totalTaxAmt}}
+                  {{totalTaxAmt | number: '1.2-2'}}
                 </span>
               </div>
               <div class="col text-center border border-success px-1 py-1 mr-1">
                 <h5 class="text-primary"><b>Total Purchase</b></h5>
                 <span>
                   <i class="fas fa-rupee-sign"></i>
-                  {{totalPurchase}}
+                  {{totalPurchase | number: '1.2-2'}}
                 </span>
               </div>
             </div>
@@ -264,7 +264,7 @@
               <h5> Please Pay </h5>
               <h5>
                 <i class="fas fa-rupee-sign"></i>
-                {{totalPurchase}}
+                {{totalPurchase | number: '1.2-2'}}
               </h5>
               <h5 class=""> <i class="fas fa-rupee-sign"></i> {{amountInWords}} </h5>
             </div>

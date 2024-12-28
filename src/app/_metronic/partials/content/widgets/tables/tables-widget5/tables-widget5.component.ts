@@ -122,6 +122,7 @@ export class TablesWidget5Component implements OnInit {
 
   // getfuelDealerIdByDealerCorporateId
   getfuelDealerIdByCorporateId(dealerCorporateId: any) {
+    this.spinner.show()
     let data = {
       corporateId: dealerCorporateId
     }
@@ -131,15 +132,18 @@ export class TablesWidget5Component implements OnInit {
           this.fuelDealerId = res.data[0].fuelDealerId;
           this.getFuelTerminal(this.fuelDealerId);
           this.getBankDetailsByDealerId(this.fuelDealerId)
+          this.spinner.hide()
           this.cd.detectChanges()
         }
         else {
+          this.spinner.hide()
           this.cd.detectChanges()
         }
       })
   }
 
   getFuelTerminal(fuelDealerId: any) {
+    this.spinner.show()
 
     let dataTerminal = {
       fuelDealerId: fuelDealerId,
@@ -150,9 +154,11 @@ export class TablesWidget5Component implements OnInit {
         if (res.status == "OK") {
           this.fuelTerminalData = res
           this.fuelTerminalDataList = res.data;
+          this.spinner.hide()
           this.cd.detectChanges()
         } else {
           this.fuelTerminalDataList = [];
+          this.spinner.hide()
           this.cd.detectChanges()
         }
       })
@@ -207,6 +213,7 @@ export class TablesWidget5Component implements OnInit {
   }
 
   delete(id: any) {
+    this.spinner.show()
     let data = {
       fuelTerminalsId: id,
     }
@@ -216,7 +223,9 @@ export class TablesWidget5Component implements OnInit {
         if (res.status == 'OK') {
           alert("Delete successfully..")
           this.getFuelTerminal(this.fuelDealerId);
+          this.spinner.hide()
         } else {
+          this.spinner.hide()
           alert("Error to Delete..")
         }
       })
@@ -266,6 +275,7 @@ export class TablesWidget5Component implements OnInit {
   }
 
   getBankDetailsByDealerId(fuelDealerId: any) {
+    this.spinner.show()
     this.bankAccList.length = 0;
     this.bankAccList1.length = 0;
     let data = {
@@ -276,6 +286,7 @@ export class TablesWidget5Component implements OnInit {
         if (res.data.length) {
           this.bankAccList = res.data;
           this.bankAccList1 = res.data1;
+          this.spinner.hide()
         }
       })
   }

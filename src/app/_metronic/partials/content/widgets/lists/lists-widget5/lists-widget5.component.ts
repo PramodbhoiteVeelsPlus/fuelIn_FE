@@ -275,7 +275,7 @@ export class ListsWidget5Component {
   totalAmount: any = 0;
   expenseAmtDetails: any;
   meterSalesUpdate: string;
-  meterSales: string;
+  meterSales: any = 0;
   shiftId: any;
   modalRefpass: any;
   fuelShiftId: string;
@@ -400,14 +400,14 @@ export class ListsWidget5Component {
   totalDigitalLube: any;
   totalCreditSalesByStaff: any = [];
   toatalCreditAmountByStaff: number;
-  totalDigitalLubeAmt: any;
+  totalDigitalLubeAmt: any = 0;
   meterSalesTotal: any = 0;
-  totalLubeCrAmt: any;
+  totalLubeCrAmt: any = 0;
   cashDetails: any = [];
   totalCASHSales: number;
   totalCashHandover: any = 0;
   cashLubeData: any = [];
-  totalCashLubeAmt: any;
+  totalCashLubeAmt: any = 0;
   digitalLubeDetails: any = [];
   isAddPOSUpdate: boolean = false;
   terminalTypeUpdate: any;

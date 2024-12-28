@@ -151,10 +151,11 @@ export class TablesWidget1Component {
 
   refreshData() {
     this.getProductsByDealerId(this.fuelDealerId);
-    this.getFuelPriceByProductDateDealer(this.fuelDealerId);    
+    this.getFuelPriceByProductDateDealer(this.fuelDealerId);
   }
 
   getProductsByDealerId(fuelDealerId: any) {
+    this.spinner.show()
     let data = {
       fuelDealerId: fuelDealerId,
     };
@@ -264,6 +265,7 @@ export class TablesWidget1Component {
 
         this.allProductPriceList = res.data;
         // this.getProductDetails(res.data);
+        this.spinner.hide()
         this.cd.detectChanges()
       }
     });
@@ -271,6 +273,7 @@ export class TablesWidget1Component {
 
 
   getFuelPriceByProductDateDealer(fuelDealerId: any) {
+    this.spinner.show()
     let data = {
       sellingSetBy: fuelDealerId,
       productPriceDate: moment(this.todayDate).format("YYYY-MM-DD"),
@@ -2985,6 +2988,7 @@ export class TablesWidget1Component {
           this.product6Rate2 = "please set rate";
         }
 
+        this.spinner.hide()
         this.cd.detectChanges()
       } else {
         if (res.data1.length) {
@@ -4404,6 +4408,7 @@ export class TablesWidget1Component {
         } else {
           this.isNoRate = true;
         }
+        this.spinner.hide()
         this.cd.detectChanges()
       }
     });

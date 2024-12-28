@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Injectable, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Injectable, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbDateAdapter, NgbDateParserFormatter, NgbDatepickerConfig, NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -58,6 +58,7 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 })
 
 export class StatsWidget17Component {
+  @ViewChild('content') content: any;
   corporateMappingForm = new FormGroup({
     carrierOwnerName: new FormControl(''),
     ownerPhone: new FormControl(''),
@@ -88,27 +89,6 @@ export class StatsWidget17Component {
 
   });
 
-  corporateMappingForm1 = new FormGroup({
-    carrierOwnerName: new FormControl(''),
-    ownerPhone: new FormControl(''),
-    bussinessPAN: new FormControl(''),
-    individualPAN: new FormControl(''),
-    corporatePAN: new FormControl(''),
-    carrierVPId: new FormControl(''),
-    personPan: new FormControl(''),
-    personEmail: new FormControl(''),
-    personMobile: new FormControl(''),
-    personName: new FormControl(''),
-    bussinessType: new FormControl(''),
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    address2: new FormControl(''),
-    address1: new FormControl(''),
-    city: new FormControl('', Validators.required),
-    state: new FormControl(),
-    carrierEmail: new FormControl('', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]),
-
-  });
   addVehicleForm = new FormGroup({
     selectedCorp: new FormControl(''),
     addVehicleDate: new FormControl('', Validators.required),
@@ -246,9 +226,6 @@ export class StatsWidget17Component {
       }
     );
   }
-  content(content: any, arg1: { centered: true; }): any {
-    throw new Error('Method not implemented.');
-  }
 
 
   searchCorporateByPhone() {
@@ -264,7 +241,7 @@ export class StatsWidget17Component {
             if (res.data[0].accessGroupId == 2) {
               this.error = 'Carrier Found Successfully!';
               this.isCarrierFound = true;
-              this.corporateMappingForm1.controls["carrierVPId"].setValue(res.data[0].veelsPlusBranchID);
+              this.corporateMappingForm.controls["carrierVPId"].setValue(res.data[0].veelsPlusBranchID);
               this.customerId = res.data[0].customerId;
               this.getFlagStatusByCorpId(res.data[0].corporateId)
               this.getCustomerAllDataById(this.customerId);
@@ -362,8 +339,10 @@ export class StatsWidget17Component {
           this.customerCorporateId = res.data[0].corporateId;
           this.kycId = res.data[0].kycId;
           this.spinner.hide()
+          this.cd.detectChanges()
         } else {
           this.spinner.hide()
+          this.cd.detectChanges()
         }
       })
   }
@@ -436,14 +415,14 @@ export class StatsWidget17Component {
               creditDayLimit: this.corporateMappingForm.value.creditDayLimit,
               mappingCreatedDate: this.dateToday,
               requestSource: "DEALER",
-              mappingCustomerName: this.corporateMappingForm1.value.firstName + ' ' + this.corporateMappingForm1.value.lastName,
+              mappingCustomerName: this.corporateMappingForm.value.firstName + ' ' + this.corporateMappingForm.value.lastName,
               mappingCompanyName: this.corporateMappingForm.value.carrierName,
               mappingGST: this.corporateMappingForm.value.gstNo,
-              mappingEmail: this.corporateMappingForm1.value.carrierEmail,
+              mappingEmail: this.corporateMappingForm.value.carrierEmail,
               mappingPreviousStatus: "TRUE",
-              mappingAddress1: this.corporateMappingForm1.value.address1,
-              mappingAddress2: this.corporateMappingForm1.value.address2,
-              mappingCity: this.corporateMappingForm1.value.city,
+              mappingAddress1: this.corporateMappingForm.value.address1,
+              mappingAddress2: this.corporateMappingForm.value.address2,
+              mappingCity: this.corporateMappingForm.value.city,
 
             }
             this.post.sendReqForNewCustomerPOST(data)
@@ -482,7 +461,7 @@ export class StatsWidget17Component {
 
   submit() {
 
-    if (this.corporateMappingForm1.value.state) {
+    if (this.corporateMappingForm.value.state) {
       if (this.corporateMappingForm.value.maxCreditAmount) {
         if (this.corporateMappingForm.value.creditDayLimit) {
 
@@ -505,19 +484,19 @@ export class StatsWidget17Component {
   }
 
   submitCorporateRegister() {
-    if (this.corporateMappingForm1.value.firstName) {
-      if (this.corporateMappingForm1.value.lastName) {
+    if (this.corporateMappingForm.value.firstName) {
+      if (this.corporateMappingForm.value.lastName) {
         if (this.corporateMappingForm.value.carrierName) {
-          if (this.corporateMappingForm1.value.state) {
+          if (this.corporateMappingForm.value.state) {
             if (this.corporateMappingForm.value.phoneNumber) {
-              if (this.corporateMappingForm1.value.city) {
+              if (this.corporateMappingForm.value.city) {
 
                 this.createCorporateId();
                 let data = {
-                  firstName: this.corporateMappingForm1.value.firstName,
-                  lastName: this.corporateMappingForm1.value.lastName,
+                  firstName: this.corporateMappingForm.value.firstName,
+                  lastName: this.corporateMappingForm.value.lastName,
                   phone1: this.corporateMappingForm.value.phoneNumber,
-                  email1: this.corporateMappingForm1.value.carrierEmail,
+                  email1: this.corporateMappingForm.value.carrierEmail,
                   kycStatus: "Accept",
                   veelsUserTypePlusId: this.veelsUserTypePlusId,
                   password: "1234",
@@ -526,7 +505,6 @@ export class StatsWidget17Component {
                   userCreatedBy: this.personIdLoginUser,
                   onBoardStatus: "FALSE"
                 }
-
                 this.post.userRegisterPOST(data)
                   .subscribe(res => {
                     if (res.status == "OK") {
@@ -566,10 +544,10 @@ export class StatsWidget17Component {
 
   submitAddress() {
     const data1 = {
-      state: this.corporateMappingForm1.value.state,
-      address1: this.corporateMappingForm1.value.address1,
-      address2: this.corporateMappingForm1.value.address2,
-      city: this.corporateMappingForm1.value.city,
+      state: this.corporateMappingForm.value.state,
+      address1: this.corporateMappingForm.value.address1,
+      address2: this.corporateMappingForm.value.address2,
+      city: this.corporateMappingForm.value.city,
       personId: this.personId
     }
     this.post.addAddressPOST(data1)
@@ -649,7 +627,7 @@ export class StatsWidget17Component {
       numberOfBranches: this.corporateMappingForm.value.numberOfBranches,
       website: this.corporateMappingForm.value.website,
       numberOfEmployee: 1,
-      hostName: this.corporateMappingForm1.value.firstName + ' ' + this.corporateMappingForm1.value.lastName,
+      hostName: this.corporateMappingForm.value.firstName + ' ' + this.corporateMappingForm.value.lastName,
       branchName: "HEAD OFFICE",
       headQuarterName: this.corporateMappingForm.value.headQuarterName,
       hostPhone: this.corporateMappingForm.value.phoneNumber,
@@ -814,7 +792,7 @@ export class StatsWidget17Component {
   }
 
   createStateCode() {
-    switch (this.corporateMappingForm1.value.state) {
+    switch (this.corporateMappingForm.value.state) {
       case 'ANDHRA PRADESH':
         this.stateCode = '01'
         break;

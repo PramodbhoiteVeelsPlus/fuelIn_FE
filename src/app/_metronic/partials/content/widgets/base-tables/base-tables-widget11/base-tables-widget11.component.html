@@ -271,7 +271,7 @@
             <div class="col text-center border border-success px-1 py-1 mr-1">
               <h5 class="text-primary"><b> opening outstanding </b></h5>
               <b>
-                <span *ngIf="savedPreviousOutstanding<0">
+                <span *ngIf="savedPreviousOutstanding < 0">
                   <i class="fas fa-rupee-sign"></i>
                   {{savedPreviousOutstanding *(-1) | number:'1.2-2'}} CR
                 </span>
@@ -355,7 +355,18 @@
           <div *ngIf="invoiceOf != 'LUBE TAX' " class="row px-4 py-4">
             <div class="col border-gray text-center px-1 py-1 mr-1">
               <h5 class=""><b> credit outstanding </b></h5>
-              <b> <i class="fas fa-rupee-sign"></i> {{totalCreditOutstanding | number:'1.2-2'}}
+              <b> 
+                <!-- <i class="fas fa-rupee-sign"></i> {{totalCreditOutstanding | number:'1.2-2'}} -->
+                
+                <span *ngIf="totalCreditOutstanding < 0">
+                  <i class="fas fa-rupee-sign"></i>
+                  {{totalCreditOutstanding *(-1) | number:'1.2-2'}} CR
+                </span>
+                <span *ngIf="totalCreditOutstanding >= 0">
+                  <i class="fas fa-rupee-sign"></i>
+                  <!-- {{lastOpOutstanding | number:'1.2-2'}} -->
+                  {{totalCreditOutstanding | number:'1.2-2'}}
+                </span>
               </b>
             </div>
             <div class="col text-center px-1 py-1 mr-1 border-gray">
@@ -365,7 +376,17 @@
             </div>
             <div class="col text-center  px-1 py-1 mr-1 border-gray">
               <h5 class=""><b>final outstanding</b></h5>
-              <b><i class="fas fa-rupee-sign"></i> {{finalNETOutstanding | number:'1.2-2'}}
+              <b>
+                <!-- <i class="fas fa-rupee-sign"></i> {{finalNETOutstanding | number:'1.2-2'}} -->
+                <span *ngIf="finalNETOutstanding < 0">
+                  <i class="fas fa-rupee-sign"></i>
+                  {{finalNETOutstanding *(-1) | number:'1.2-2'}} CR
+                </span>
+                <span *ngIf="finalNETOutstanding >= 0">
+                  <i class="fas fa-rupee-sign"></i>
+                  <!-- {{lastOpOutstanding | number:'1.2-2'}} -->
+                  {{finalNETOutstanding | number:'1.2-2'}}
+                </span>
               </b>
             </div>
           </div>
@@ -378,7 +399,7 @@
                   {{((savedTotalPurchase - savedTotalPayment) ++ savedPreviousOutstanding) |
                   number:'1.0-0'}}
                 </span></p>
-              <!-- <p class=""> <i class="fas fa-rupee-sign"></i> {{amountInWord}}</p> -->
+              <p class=""> <i class="fas fa-rupee-sign"></i> {{amountInWords}}</p>
             </div>
             <div class="container border border-success px-2 py-2 alert alert-success" *ngIf="invoiceOf == 'LUBE TAX' ">
               <p> Please pay <span *ngIf="dueDate"> before Due Date {{dueDate}} </span> <br> <span class=""
@@ -387,7 +408,7 @@
                   {{((savedTotalPurchase - savedTotalPayment) ) |
                   number:'1.0-0'}}
                 </span></p>
-              <!-- <p class=""> <i class="fas fa-rupee-sign"></i> {{amountInWord}}</p> -->
+              <p class=""> <i class="fas fa-rupee-sign"></i> {{amountInWords}}</p>
             </div>
           </span>
 
@@ -741,7 +762,17 @@
                 <div *ngIf="invoiceOf != 'LUBE TAX' " class="row px-4 py-4">
                   <div class="col border-gray text-center px-1 py-1 mr-1">
                     <h5 class=""><b> credit outstanding </b></h5>
-                    <b> <i class="fas fa-rupee-sign"></i> {{totalCreditOutstanding | number:'1.2-2'}}
+                    <b> 
+                      <!-- <i class="fas fa-rupee-sign"></i> {{totalCreditOutstanding | number:'1.2-2'}} -->
+                      <span *ngIf="totalCreditOutstanding < 0">
+                        <i class="fas fa-rupee-sign"></i>
+                        {{totalCreditOutstanding *(-1) | number:'1.2-2'}} CR
+                      </span>
+                      <span *ngIf="totalCreditOutstanding >= 0">
+                        <i class="fas fa-rupee-sign"></i>
+                        <!-- {{lastOpOutstanding | number:'1.2-2'}} -->
+                        {{totalCreditOutstanding | number:'1.2-2'}}
+                      </span>
                     </b>
                   </div>
                   <div class="col text-center px-1 py-1 mr-1 border-gray">
@@ -751,7 +782,17 @@
                   </div>
                   <div class="col text-center  px-1 py-1 mr-1 border-gray">
                     <h5 class=""><b>final outstanding</b></h5>
-                    <b><i class="fas fa-rupee-sign"></i> {{finalNETOutstanding | number:'1.2-2'}}
+                    <b>
+                      <!-- <i class="fas fa-rupee-sign"></i> {{finalNETOutstanding | number:'1.2-2'}} -->
+                      <span *ngIf="finalNETOutstanding < 0">
+                        <i class="fas fa-rupee-sign"></i>
+                        {{finalNETOutstanding *(-1) | number:'1.2-2'}} CR
+                      </span>
+                      <span *ngIf="finalNETOutstanding >= 0">
+                        <i class="fas fa-rupee-sign"></i>
+                        <!-- {{lastOpOutstanding | number:'1.2-2'}} -->
+                        {{finalNETOutstanding | number:'1.2-2'}}
+                      </span>
                     </b>
                   </div>
                 </div>
@@ -784,7 +825,7 @@
                         {{((savedTotalPurchase - savedTotalPayment) ++ savedPreviousOutstanding) |
                         number:'1.0-0'}}
                       </span></p>
-                    <!-- <p class=""> <i class="fas fa-rupee-sign"></i> {{amountInWord}}</p> -->
+                    <p class=""> <i class="fas fa-rupee-sign"></i> {{amountInWords}}</p>
                   </div>
                   <div class="container border-gray px-2 py-2 alert" *ngIf="invoiceOf == 'LUBE TAX' ">
                     <p> Please pay <span *ngIf="dueDate"> before Due Date {{dueDate}} </span> <br> <span class=""
@@ -793,7 +834,7 @@
                         {{((savedTotalPurchase - savedTotalPayment) ) |
                         number:'1.0-0'}}
                       </span></p>
-                    <!-- <p class=""> <i class="fas fa-rupee-sign"></i> {{amountInWord}}</p> -->
+                    <p class=""> <i class="fas fa-rupee-sign"></i> {{amountInWords}}</p>
                   </div>
                 </span>
                 <br>
@@ -844,8 +885,8 @@
 <body id="contentToConvert" *ngIf="showStatement6">
   <div id="page-wrap">
     <div class="col-md-12 noprint">
-      &nbsp; <button class="noprint" style="font-size: medium;" onclick="window.print()"> &nbsp;&nbsp;<i
-          class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
+      &nbsp; <button class="noprint" style="font-size: medium;"  printSectionId="sanjay" [useExistingCss]="true" ngxPrint> &nbsp;&nbsp;<i
+        class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
     </div>
 
     <div id="sanjay">
@@ -857,7 +898,7 @@
                 <div class="col-8">
                   <h3><b>{{companyName}}</b></h3>
                   <h5> {{oilCompanyName}} petrol pump</h5>
-                  <!-- <h6> {{address1}} {{address2}} {{city}} <br>{{state}} {{pin}}</h6> -->
+                  <h6> {{address1}} {{address2}} {{city}} <br>{{state}} {{pin}}</h6>
                 </div>
                 <div class="col-4">
                   <h4>&nbsp;</h4>
@@ -1079,7 +1120,7 @@
                         <i class="fas fa-rupee-sign"></i>
                         {{creditAmountNew | number:'1.0-0'}}
                       </span></p>
-                    <!-- <p class=""> <i class="fas fa-rupee-sign"></i> {{amountInWord}}</p> -->
+                    <p class=""> <i class="fas fa-rupee-sign"></i> {{amountInWords1}}</p>
                   </div>
                 </span>
                 <p><b>Note : interest will be charged if bill not paid within 7 days</b></p>

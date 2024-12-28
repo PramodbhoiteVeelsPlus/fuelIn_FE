@@ -185,6 +185,7 @@ export class MixedWidget1Component {
     this.requestVehicle.controls["requestType"].setValue("showamount");
     this.requestVehicle.controls["estimatedRefuelDate"].setValue(this.todayDate);
     this.requestVehicle.controls["priceDate"].setValue(this.todayDate);
+    this.requestVehicle.controls["productPrice"].setValue("");
     this.addFormVehicleRequest();
     this.getProductsByDealerId(this.fuelDealerId)
     this.getAllVehicle()

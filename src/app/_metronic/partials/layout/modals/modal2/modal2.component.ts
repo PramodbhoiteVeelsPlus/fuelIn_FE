@@ -138,6 +138,7 @@ export class Modal2Component {
     this.managerPersonId = element.personId;
     this.managerName = element.firstName + " " + element.lastName;
     this.userForm.controls["role"].setValue("")
+    this.FuelVeelsVendorID = dealerData.veelsPlusBranchID;
     this.getfuelDealerIdByCorporateId(this.dealerCorporateId)
     this.cd.detectChanges()
   }
@@ -465,7 +466,7 @@ export class Modal2Component {
       state: this.userForm.value.state,
       city: this.userForm.value.city,
     }
-    console.log(data)
+    // console.log("data", data)
     this.post.fuelStaffRegisterPOST(data).subscribe(result => {
       if (result.status == "OK") {
         alert("Staff Added Successfully!")

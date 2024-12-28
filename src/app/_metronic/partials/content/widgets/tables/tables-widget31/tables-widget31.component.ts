@@ -138,10 +138,8 @@ export class TablesWidget31Component {
     
     if(!this.mappingAccData2.length){
       this.getMappingAccount(this.fuelDealerId);
-      console.log("isdata")
     }else{
       this.getMappingAccount1(this.fuelDealerId);
-      console.log("Noisdata")
     }
     this.searchDealerBycustomerId(this.customerId)
     // this.getCorporateById(this.dealerLoginVPId);

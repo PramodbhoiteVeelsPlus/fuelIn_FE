@@ -124,29 +124,10 @@ export class TablesWidget3Component implements OnInit {
     this.getStaffDetails(this.fuelDealerId);
   }
 
-  // get Corporate DetailsBy VP-Id
-  getCorporateById(dealerLoginVPId: any) {
-    let data = {
-      veelsplusCorporateId: dealerLoginVPId
-    }
-    this.post.getBranchByVeelsplusIdPOST(data)
-      .subscribe(res => {
-        if (res.status == "OK") {
-          if (res.data.length) {
-            this.loginSQLCorporateId = res.data[0].corporateId;
-            this.getfuelDealerIdByCorporateId(this.loginSQLCorporateId);
-            this.cd.detectChanges()
-          }
-          else {
-            alert("Getting Error..! Please Logout & Login again..!")
-            this.cd.detectChanges()
-          }
-        }
-      })
-  }
 
   // getfuelDealerIdByDealerCorporateId
   getfuelDealerIdByCorporateId(dealerCorporateId: any) {
+    this.spinner.show()
     let data = {
       corporateId: dealerCorporateId
     }
@@ -156,15 +137,18 @@ export class TablesWidget3Component implements OnInit {
           this.fuelDealerId = res.data[0].fuelDealerId;
           this.getStaffDetails(this.fuelDealerId);
           this.getStaffCount(this.fuelDealerId);
+          this.spinner.hide()
           this.cd.detectChanges()
         }
         else {
+          this.spinner.hide()
           this.cd.detectChanges()
         }
       })
   }
 
   getStaffDetails(fuelDealerId: any) {
+    this.spinner.show()
     let data = {
       fuelDealerId: fuelDealerId,
     }
@@ -176,8 +160,10 @@ export class TablesWidget3Component implements OnInit {
           if (this.accessGroupId == 19 && res.data.length == 2) {
             this.liteMangerLimit = true;
           }
+          this.spinner.hide()
           this.cd.detectChanges()
         } else {
+          this.spinner.hide()
           this.cd.detectChanges()
         }
       })
@@ -280,6 +266,7 @@ export class TablesWidget3Component implements OnInit {
         this.accessGroupIdUpdate = '21'
       }
 
+      this.spinner.show()
       let data = {
         fuelDealerStaffId: this.fuelDealerStaffIdUpdate,
         userId: this.userIdUpdate,
@@ -297,6 +284,7 @@ export class TablesWidget3Component implements OnInit {
             this.modalReference1.close('close')
             this.switchedToStaff(this.personIdUpdate, this.accessGroupIdUpdate)
             this.getStaffDetails(this.fuelDealerId);
+            this.spinner.hide()
           }
           else {
             this.spinner.hide();
@@ -333,6 +321,7 @@ export class TablesWidget3Component implements OnInit {
 
   //getStaffCountPOST
   getStaffCount(fuelDealerId: any) {
+    this.spinner.show()
     let data = {
       fuelDealerId: fuelDealerId,
     };
@@ -340,6 +329,7 @@ export class TablesWidget3Component implements OnInit {
       if (res.status == "OK") {
         this.totalOperator = res.data1[0].totalOperator;
         this.totalManager = res.data[0].totalManager;
+        this.spinner.hide()
         this.cd.detectChanges()
       }
     });

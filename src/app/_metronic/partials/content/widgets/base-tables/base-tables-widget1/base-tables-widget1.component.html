@@ -111,7 +111,7 @@
       <div class="col-md-6">
         <div class="search-box">
           <div class="position-relative">
-            <input class="form-control " type="text" placeholder="search"
+            <input class="form-control " type="text" placeholder="search" style="width: 150px"
               oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
               [(ngModel)]="searchData" [ngModelOptions]="{standalone: true}" (input)="onSearch()">
             <i class="bx bx-search-alt search-icon"></i>
@@ -121,6 +121,7 @@
     </div>
 
   </div>
+  <br>
   <!-- Body -->
   <div class="card-body pt-2 pb-0 mt-n3">
     <div class="table-responsive mb-0">
@@ -908,7 +909,7 @@
                 </div>
                 <div class="row noprint" style="text-align: center;align-items: center;">
                   <div class="col-md-12" style="text-align: center;align-items: center;">
-                    <button class="btn btn-success" (click)="downloadBillRedFlag()"> download </button>&nbsp;
+                    <button class="btn btn-success" (click)="downloadBillRedFlag()"> Download </button>&nbsp;
                     <button type="button" class="btn btn-danger" aria-label="Close" style="width: 19%;"
                       (click)="d('Cross click')">cancel</button>
                   </div>

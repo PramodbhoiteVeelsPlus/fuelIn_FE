@@ -439,7 +439,7 @@
                     {{charges.vehicleNumber}}
                   </td>
                   <td>
-                    <div class="text-center">
+                    <div>
                       <button class="btn btn-danger"
                         (click)="removeVehiclefromCustomerMapId(charges.idfuelCreditVehicle)">Delete</button>
                     </div>
@@ -674,7 +674,7 @@
           <label class="labelNewMargin"> Remarks :</label>
         </div>
         <div class="col-md-6">
-          <input class="form-control"
+          <input class="form-control" style="margin-top: 10px"
             oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
             [(ngModel)]="corporateFlagPurpose" [ngModelOptions]="{standalone: true}">
         </div>

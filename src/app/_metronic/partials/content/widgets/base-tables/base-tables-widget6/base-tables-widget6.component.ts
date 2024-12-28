@@ -365,7 +365,7 @@ export class BaseTablesWidget6Component implements OnInit {
       doc.setFontSize(12);
       doc.text(this.headerName1, 40, 25);
       doc.setFontSize(8);
-      // doc.text(this.headerName2,40, 40 );   
+      doc.text(this.headerName2,40, 40 );   
       doc.text(this.headerName3, 40, 55);
       if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
         doc.text("DATE : " + moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("DD MMM YYYY") + ' To ' + moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("DD MMM YYYY"), 40, 70);

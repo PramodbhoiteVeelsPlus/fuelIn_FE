@@ -126,6 +126,7 @@ export class TablesWidget2Component {
 
   // getfuelDealerIdByDealerCorporateId
   getfuelDealerIdByCorporateId(dealerCorporateId: any) {
+    this.spinner.show()
     let data = {
       corporateId: dealerCorporateId
     }
@@ -135,9 +136,11 @@ export class TablesWidget2Component {
           this.fuelDealerId = res.data[0].fuelDealerId;
           this.getTotalTANKDUByDealerId(this.fuelDealerId);
           // this.getFuelPriceByProductDateDealer(this.fuelDealerId);
+          this.spinner.hide()
           this.cd.detectChanges()
         }
         else {
+          this.spinner.hide()
           this.cd.detectChanges()
         }
       })
@@ -145,6 +148,7 @@ export class TablesWidget2Component {
 
   //getTotalTANKDUProductwise
   getTotalTANKDUByDealerId(fuelDealerId: any) {
+    this.spinner.show()
     let data = {
       fuelDealerId: fuelDealerId,
     };
@@ -176,9 +180,11 @@ export class TablesWidget2Component {
 
             this.infraDetails.push(dataJson);
           });
+          this.spinner.hide()
           this.cd.detectChanges()
         }
 
+        this.spinner.hide()
         this.cd.detectChanges()
 
       }

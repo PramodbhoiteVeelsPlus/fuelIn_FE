@@ -138,6 +138,7 @@ export class TablesWidget4Component {
 
   // getfuelDealerIdByDealerCorporateId
   getfuelDealerIdByCorporateId(dealerCorporateId: any) {
+    this.spinner.show()
     let data = {
       corporateId: dealerCorporateId
     }
@@ -146,9 +147,11 @@ export class TablesWidget4Component {
         if (res.status == "OK") {
           this.fuelDealerId = res.data[0].fuelDealerId;
           this.getBankDetailsByDealerId(this.fuelDealerId);
+          this.spinner.hide()
           this.cd.detectChanges()
         }
         else {
+          this.spinner.hide()
           this.cd.detectChanges()
         }
       })
@@ -164,8 +167,10 @@ export class TablesWidget4Component {
       .subscribe(res => {
         if (res.status == "OK") {
           this.bankAccList = res.data;
+          this.spinner.hide()
           this.cd.detectChanges()
         } else {
+          this.spinner.hide()
           this.cd.detectChanges()
         }
       })
@@ -178,6 +183,7 @@ export class TablesWidget4Component {
     } else if (event.target.checked == false) {
       checkedStatus = "FALSE"
     }
+    this.spinner.show()
     let data = {
       bankDetailsId: bankDetailsId,
       dealerId: dealerId,
@@ -188,6 +194,7 @@ export class TablesWidget4Component {
         if (res.status == 'OK') {
           alert("Default Account Selected..!")
           this.getBankDetailsByDealerId(this.fuelDealerId);
+          this.spinner.hide()
         }
       })
   }
@@ -214,6 +221,7 @@ export class TablesWidget4Component {
   }
 
   deletBankAcc(id: any) {
+    this.spinner.show()
 
     let data = {
       bankDetailsId: id
@@ -252,6 +260,7 @@ export class TablesWidget4Component {
     if (this.updateBankDetailsForm.value.accountNumber) {
       if (this.updateBankDetailsForm.value.phone) {
         if (this.updateBankDetailsForm.value.ifsc) {
+          this.spinner.show()
           let data = {
             bankDetailsId: this.bankDetailsId,
             bankName: this.updateBankDetailsForm.value.bankName,
@@ -268,8 +277,10 @@ export class TablesWidget4Component {
                 alert("Bank Account Updated Successfully..!")
                 this.clearModal()
                 this.getBankDetailsByDealerId(this.fuelDealerId);
+                this.spinner.hide()
               } else {
                 alert("Error to Update")
+                this.spinner.hide()
               }
             })
         } else {

@@ -157,7 +157,7 @@
                                           transform: translate(-50%, -50%);">
               <div class="row justify-content-center">
                 <div class="col-xl-10" style="color: red">
-                  <i class="fa fa-exclamation-triangle fa-fw fa-6x" style="color: red" ></i>
+                  <i class="fa fa-exclamation-triangle fa-fw fa-6x" style="color: red"></i>
                 </div>
               </div>
             </div>
@@ -259,7 +259,8 @@
                 <td style="text-align: left;border: solid 1px black;border-bottom: solid 1px black;">
                   {{personName}}
                 </td>
-                <td style="text-align: left;border: solid 1px black;border-bottom: solid 1px black;"> {{personPhone1}} </td>
+                <td style="text-align: left;border: solid 1px black;border-bottom: solid 1px black;"> {{personPhone1}}
+                </td>
                 <td style="text-align: left;border-width: 1px; border-color: #000;border-bottom: solid 1px black;">
                   {{rangeFrom}} - {{rangeTo}}
                 </td>
@@ -381,7 +382,7 @@
                     <span *ngIf="showamount">
                       <input type="number" class="form-control" [(ngModel)]="charges.creditAmount"
                         [ngModelOptions]="{standalone: true}" placeholder="Enter Credit Amount"
-                        (blur)="amountCalculateNEW(i)" disabled/>
+                        (blur)="amountCalculateNEW(i)" disabled />
                     </span>
                   </td>
                   <td>
@@ -411,7 +412,7 @@
         <button *ngIf="isVehSelect" type="submit" class="btn btn-primary"
           (click)="submitByDealerNEW1()">Submit</button>&nbsp;&nbsp;
         <button *ngIf="!isVehSelect" type="submit" class="btn btn-primary"
-          (click)="selectVehicle()">Submit1</button>&nbsp;&nbsp;
+          (click)="selectVehicle()">Submit</button>&nbsp;&nbsp;
         <button type="submit" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
       </div>
       <ng-template #removeTable let-c="close" let-d="dismiss">

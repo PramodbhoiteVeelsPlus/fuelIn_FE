@@ -101,8 +101,9 @@
                    -->
         <!-- <button *ngIf="isSetPath == 'Individual'" class="btn btn-outline-success my-2 my-sm-0 btn-sm "(click) = "goToBack()">Back</button></span> -->
 
-        &nbsp; <button class="noprint" style="font-size: medium;" printSectionId="sanjay" [useExistingCss]="true" ngxPrint> &nbsp;&nbsp;<i
-            class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
+        &nbsp; 
+        <button class="noprint" style="font-size: medium;"  printSectionId="sanjay" [useExistingCss]="true" ngxPrint> &nbsp;&nbsp;<i
+       class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
       </div>
 
       <!--Start New Statement Design by Mohit-->
@@ -418,7 +419,7 @@
 </div>
 
 
-<div class="container-fluid" *ngIf="oldInvoice == 'FALSE' ">
+<div class="container-fluid" *ngIf="oldInvoice == 'FALSE' " id="sanjay">
   <div class="row">
     <div class="col-lg-12">
       <div class="invoice-title">
@@ -744,7 +745,9 @@
         <strong> For {{companyName}} </strong>
         <div class="d-print-none">
           <div class="float-end">
-            <a href="javascript:window.print()" class="btn btn-success"><i class="fa fa-print"></i></a>
+            
+            <button class="noprint" style="font-size: medium;"  printSectionId="sanjay" [useExistingCss]="true" ngxPrint> &nbsp;&nbsp;<i
+              class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
           </div>
         </div>
       </div>

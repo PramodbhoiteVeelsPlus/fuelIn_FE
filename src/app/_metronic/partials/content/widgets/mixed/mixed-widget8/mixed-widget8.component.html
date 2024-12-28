@@ -365,7 +365,7 @@
   <!-- statement 2 end -->
 </div>
 
-<div class="container-fluid" *ngIf="oldInvoice == 'FALSE' ">
+<div class="container-fluid" *ngIf="oldInvoice == 'FALSE' " id="sanjay">
   <div class="row" id="page-wrap">
     <div class="col-lg-12">
       <div class="invoice-title">
@@ -652,7 +652,9 @@
 
         <div class="d-print-none">
           <div class="float-end">
-            <a href="javascript:window.print()" class="btn btn-success"><i class="fa fa-print"></i></a>
+            <!-- <a href="javascript:window.print()" class="btn btn-success"><i class="fa fa-print"></i></a> -->
+            <button class="noprint" style="font-size: medium;"  printSectionId="sanjay" [useExistingCss]="true" ngxPrint> &nbsp;&nbsp;<i
+              class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
           </div>
         </div>
       </div>
