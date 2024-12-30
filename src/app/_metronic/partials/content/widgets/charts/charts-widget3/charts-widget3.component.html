@@ -57,7 +57,8 @@
                     </div>
                     <div class="col-lg-1">
                       <span style="font-size: 35px;cursor: pointer;" (click)="oilCompanyExcelDownload()"
-                        ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv" style="font-size: 30px;"></i></span><br>
+                        ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv"
+                          style="font-size: 30px;"></i></span><br>
                     </div>
                   </div>
                 </div>
@@ -70,7 +71,8 @@
               <div class="row" *ngIf="showPriceTable">
                 <div class="col-md-6">
                   <div class="table-responsive mb-0">
-                    <table class="table table-centered table-nowrap">
+                    <table class="table table-centered table-nowrap"
+                      style="border-collapse: collapse; border: 1px solid black;">
                       <thead class="table-light">
                         <tr>
                           <th style="text-align: center;border-width: 1px; border-color: #000;"> Product</th>
@@ -80,16 +82,16 @@
                       </thead>
                       <tbody>
                         <tr *ngFor="let data of oilCompanyTotalQuantity ;  let i = index;">
-                          <td style="border-width: 1px; border-color: #000;"> {{data.productName}} </td>
-                          <td style="border-width: 1px; border-color: #000;"> {{data.totalQuantity | number:'1.2-2'}}
+                          <td style="text-align: center;border: 1px solid black;"> {{data.productName}} </td>
+                          <td style="text-align: center;border: 1px solid black;"> {{data.totalQuantity | number:'1.2-2'}}
                           </td>
-                          <td style="border-width: 1px; border-color: #000;"> {{data.totalAmount | number:'1.2-2'}}
+                          <td style="text-align: center;border: 1px solid black;"> {{data.totalAmount | number:'1.2-2'}}
                           </td>
                         </tr>
 
                         <tr>
-                          <td colspan="2" style="border-width: 1px; border-color: #000;">Total </td>
-                          <td style="border-width: 1px; border-color: #000;">{{allAmtTotal | number:'1.2-2'}}</td>
+                          <td colspan="2" style="text-align: center;border: 1px solid black;">Total </td>
+                          <td style="text-align: center;border: 1px solid black;">{{allAmtTotal | number:'1.2-2'}}</td>
 
                         </tr>
 

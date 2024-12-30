@@ -285,6 +285,8 @@ export class FeedsWidget12Component implements OnInit {
     this.isPrint = true;
     this.month = this.filterForm1.value.month;
     this.year = this.filterForm1.value.year;
+    this.startDate = "01" + '-' + this.month + '-' + this.year
+    this.endDate = "31" + '-' + this.month + '-' + this.year
 
   }
   viewTables() {
@@ -408,7 +410,6 @@ export class FeedsWidget12Component implements OnInit {
 
   view() {
     if (this.filterForm1.value.month && this.filterForm1.value.year) {
-
       this.getAllProductPurchase();
     } else {
       alert("please select month and year")
@@ -425,6 +426,7 @@ export class FeedsWidget12Component implements OnInit {
     this.purchaseTotal = 0
     this.salesTotal = 0
 
+    this.spinner.show()
     let data = {
       dealerId: this.fuelDealerId,
       startDate: this.filterForm1.value.year + '-' + moment(this.filterForm1.value.month, ["MMM"]).format("MM") + '-' + "01",

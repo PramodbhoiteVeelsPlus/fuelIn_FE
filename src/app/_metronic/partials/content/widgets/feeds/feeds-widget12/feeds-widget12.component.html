@@ -480,11 +480,11 @@ PUBLIC "-//W3C//Dth XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/Dt
                                     <div class="col-md-8"></div>
                                     <div class="col-md-2" *ngIf = "isYear">
                                         <button class="btn btn-primary my-2 my-sm-0" type="button" (click)="exportexcel()">
-                                            download
+                                            Download
                                         </button>
                                     </div>
                                     <div class="col-md-2" *ngIf = "!isYear">
-                                        <button class="btn btn-outline-secondary my-2 my-sm-0 noprint" (click)="viewYearTables()"> back </button>
+                                        <button class="btn btn-outline-secondary my-2 my-sm-0 noprint" (click)="viewYearTables()"> Back </button>
                                     </div>
                                 </div>
             
@@ -973,13 +973,13 @@ PUBLIC "-//W3C//Dth XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/Dt
                         <div class="col-md-4"></div>  
                         <div class="col-auto">           
                             &nbsp;  <button class="btn btn-success" printSectionId="sanjay" [useExistingCss]="true"
-                            ngxPrint>print </button>
+                            ngxPrint>Print </button>
                         </div> 
                         <div class="col-auto">
-                            <button class="btn btn-primary" (click)="downloadReport()">download </button> 
+                            <button class="btn btn-primary" (click)="downloadReport()">Download </button> 
                         </div>
-                        <div class="col-md-6">
-                            <button class="btn btn-outline-secondary my-2 my-sm-0 noprint" (click)="viewTables()"> back </button>
+                        <div class="col-auto">
+                            <button class="btn btn-secondary my-2 my-sm-0 noprint" (click)="viewTables()"> Back </button>
                         </div>
                     </div>
 

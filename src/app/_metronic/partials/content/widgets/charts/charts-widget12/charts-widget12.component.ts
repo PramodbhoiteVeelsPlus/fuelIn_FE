@@ -59,6 +59,10 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 @Component({
   selector: 'app-charts-widget12',
   templateUrl: './charts-widget12.component.html',
+    providers: [
+      { provide: NgbDateAdapter, useClass: CustomAdapter },
+      { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }
+    ]
 })
 export class ChartsWidget12Component implements OnInit {
   filterForm = new FormGroup({

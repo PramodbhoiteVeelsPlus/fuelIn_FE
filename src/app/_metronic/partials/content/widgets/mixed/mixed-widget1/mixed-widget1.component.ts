@@ -660,6 +660,7 @@ export class MixedWidget1Component {
                 isMappingEmail: this.emailMappingStatus,
                 autoManualStatus: this.autoManualStatus
               }
+
               this.post.addCreditVehicleReqByDealerForAllPOST(data)
                 .subscribe(res => {
                   if (res.status == "OK") {
@@ -680,6 +681,16 @@ export class MixedWidget1Component {
                     }
 
                     this.mappingCompanyNameForVehicle = "";
+                    this.requestVehicle.controls["vehicleNumber"].setValue('');
+                    this.requestVehicle.controls["productPrice"].setValue('');
+                    this.requestVehicle.controls["productName"].setValue('');
+                    this.isVehicleViewed = false
+                    this.mappingCompanyNameForVehicle = ""
+                    this.CreditVehicleRequestDataArray[0].manualNumber = '';
+                    this.CreditVehicleRequestDataArray[0].creditAmount = '';
+                    this.CreditVehicleRequestDataArray[0].creditQuantity = '';
+                    this.countVehicle = 1
+                    this.spinner.hide()
                   } else {
                     alert("Error to Created Request!")
                     this.isBalance1 = false;
@@ -741,6 +752,7 @@ export class MixedWidget1Component {
                       managerName: this.managerName,
                       autoManualStatus: this.autoManualStatus
                     }
+
                     this.post.addCreditVehicleReqByDealerForAllPOST(data)
                       .subscribe(res => {
                         if (res.status == "OK") {
@@ -759,6 +771,16 @@ export class MixedWidget1Component {
                             this.addFormVehicleRequest()
                           }
                           this.requestVehicle.controls["requestType"].setValue("showamount");
+                          this.requestVehicle.controls["vehicleNumber"].setValue('');
+                          this.requestVehicle.controls["productPrice"].setValue('');
+                          this.requestVehicle.controls["productName"].setValue('');
+                          this.isVehicleViewed = false
+                          this.mappingCompanyNameForVehicle = ""
+                          this.CreditVehicleRequestDataArray[0].manualNumber = '';
+                          this.CreditVehicleRequestDataArray[0].creditAmount = '';
+                          this.CreditVehicleRequestDataArray[0].creditQuantity = '';
+                          this.countVehicle = 1
+                          this.spinner.hide()
                           // this.closeRequestForm.controls["requestTypeClose"].setValue("showamount");
                         } else {
                           alert("Error to Created Request!")

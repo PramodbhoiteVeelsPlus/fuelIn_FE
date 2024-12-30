@@ -76,7 +76,7 @@ export class ListsWidget2Component {
   accessGroup: any;
   lubeDetailsList: any = [];
   TotalAmount: number;
-  lubeDetailsList1: any;
+  lubeDetailsList1: any = [];
   allCreditAccByCorporateIdList: any;
   allCreditAccByCorporateIdLength: any;
   lubeDetailsListExcel: any = [];
@@ -102,6 +102,8 @@ export class ListsWidget2Component {
   closeResult: string;
   password: any;
   userId: any;
+  searchCustName: FormControl = new FormControl();
+  searchTermm: any;
 
   constructor(
     private post: ListWidgetService,
@@ -117,6 +119,12 @@ export class ListsWidget2Component {
     config.minDate = { year: 2018, month: 1, day: 1 };
     config.maxDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
     config.outsideDays = 'hidden';
+    
+    this.searchCustName.valueChanges
+    .subscribe((termm) => {
+      this.searchTermm = termm;
+      this.search();
+    })
   }
 
   ngOnInit() {
@@ -412,4 +420,65 @@ export class ListsWidget2Component {
     this.post.setRoutingWithType1("lubeTaxBill", cashBillId)
     this.router.navigate(['/credit/cashBillInvoice']);
   }
+  
+search() {
+  // console.log("search")
+  let termm = this.searchTermm;
+
+  this.lubeDetailsList = this.lubeDetailsList1.data.filter(function (res: { vehicleNumber: string | any[]; }) {
+    return res.vehicleNumber.indexOf(termm) >= 0;
+  });
+
+  if(this.lubeDetailsList.length == 0){
+    termm = this.searchTermm;
+    this.lubeDetailsList = this.lubeDetailsList1.data.filter(function (res: { vehicleNumber: string | any[]; }) { 
+        return res.vehicleNumber.indexOf(termm) >= 0;         
+    });
+  } 
+
+  if(this.lubeDetailsList.length == 0){
+    termm = this.searchTermm;
+    this.lubeDetailsList = this.lubeDetailsList1.data.filter(function (res: { lubeName: string | any[]; }) { 
+        return res.lubeName.indexOf(termm) >= 0;         
+    });
+  } 
+
+  if(this.lubeDetailsList.length == 0){
+    termm = this.searchTermm;
+    this.lubeDetailsList = this.lubeDetailsList1.data.filter(function (res: { manualCrNumber: string | any[]; }) { 
+        return res.manualCrNumber.indexOf(termm) >= 0;         
+    });
+  } 
+
+  if(this.lubeDetailsList.length == 0){
+    termm = this.searchTermm;
+    this.lubeDetailsList = this.lubeDetailsList1.data.filter(function (res: { vehicleNumber: string | any[]; }) { 
+        return res.vehicleNumber.indexOf(termm) >= 0;         
+    });
+  } 
+
+
+  if(this.lubeDetailsList.length == 0){
+    termm = this.searchTermm;
+    this.lubeDetailsList = this.lubeDetailsList1.data.filter(function (res: { companyName: string | any[]; }) { 
+        return res.companyName.indexOf(termm) >= 0;         
+    });
+  } 
+
+  if(this.lubeDetailsList.length == 0){
+    termm = this.searchTermm;
+    this.lubeDetailsList = this.lubeDetailsList1.data.filter(function (res: { hostName: string | any[]; }) { 
+        return res.hostName.indexOf(termm) >= 0;         
+    });
+  } 
+
+  if(this.lubeDetailsList.length == 0){
+    termm = this.searchTermm;
+    this.lubeDetailsList = this.lubeDetailsList1.data.filter(function (res: { hostPhone: string | any[]; }) { 
+        return res.hostPhone.indexOf(termm) >= 0;         
+    });
+  } 
+
+
+}
 }

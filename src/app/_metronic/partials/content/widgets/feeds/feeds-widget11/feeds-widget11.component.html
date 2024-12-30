@@ -126,7 +126,7 @@
                           </thead>
                           <tbody>
                             <tr *ngFor="let data of meterSalesDetails; let i = index">
-                              <td colspan="2" style="text-align: left; border: 2px solid #272829;">
+                              <td colspan="2" style="text-align: center; border: 2px solid #272829;">
                                 {{i+1}} </td>
                               <td colspan="2" style="text-align: left; border: 2px solid #272829;">
                                 {{data.productName}} </td>
@@ -156,7 +156,7 @@
                               </td>
                             </tr>
                             <tr *ngFor="let data of cashLubeDetails; let i = index">
-                              <td colspan="2" style="text-align: left; border: 1px solid #272829;">
+                              <td colspan="2" style="text-align: center; border: 1px solid #272829;">
                                 {{meterSalesDetails.length+1}} </td>
                               <td colspan="2" style="text-align: left; border: 1px solid #272829;">
                                 {{data.cashBillProduct}}(CASH) </td>
@@ -171,7 +171,7 @@
                               </td>
                             </tr>
                             <tr *ngFor="let data of crLubeDetails; let i = index">
-                              <td colspan="2" style="text-align: left; border: 1px solid #272829;">
+                              <td colspan="2" style="text-align: center; border: 1px solid #272829;">
                                 {{meterSalesDetails.length + cashLubeDetails.length +1}} </td>
                               <td colspan="2" style="text-align: left; border: 1px solid #272829;">
                                 {{data.lubeName}}(CREDIT) </td>

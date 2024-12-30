@@ -869,6 +869,8 @@ export class StatsWidget16Component {
                             this.requestTransporter.controls["reqCreditAmount"].setValue("");
                             this.requestTransporter.controls["reqQuantity"].setValue("");
                             this.requestTransporter.controls["vehicleNumber"].setValue("");
+                            this.requestTransporter.controls["productPrice"].setValue('');
+                            this.requestTransporter.controls["productName"].setValue('');
                           } else {
 
                             this.myInputField.nativeElement.focus();
@@ -888,6 +890,8 @@ export class StatsWidget16Component {
                             this.requestTransporter.controls["reqCreditAmount"].setValue("");
                             this.requestTransporter.controls["reqQuantity"].setValue("");
                             this.requestTransporter.controls["vehicleNumber"].setValue("");
+                            this.requestTransporter.controls["productPrice"].setValue('');
+                            this.requestTransporter.controls["productName"].setValue('');
                           }
 
                         } else {

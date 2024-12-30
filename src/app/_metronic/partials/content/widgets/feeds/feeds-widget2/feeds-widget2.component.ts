@@ -138,7 +138,9 @@ export class FeedsWidget2Component implements OnInit {
     this.filterForm.controls['year'].setValue(this.currentYear);
     this.filterForm.controls['month'].setValue(moment(new Date()).format("MM"));
     this.getProductsByDealerId(this.fuelDealerId);
+    this.cd.detectChanges()
   }
+
   //For Product DropDown
   getProductsByDealerId(fuelDealerId: any) {
     let data = {
@@ -147,6 +149,7 @@ export class FeedsWidget2Component implements OnInit {
     this.post.getFuelProductIdByDealerIdPOST(data).subscribe((res) => {
       if (res.data.length) {
         this.productsList = res.data;
+        this.cd.detectChanges()
       }
     });
   }
@@ -172,11 +175,13 @@ export class FeedsWidget2Component implements OnInit {
           this.productName = res.data[0].product;
           this.month = moment(this.filterForm.value.month).format("MMM") + this.filterForm.value.year;
           this.spinner.hide();
+          this.cd.detectChanges()
         } else {
           this.salesPurData = []
           this.totalOpeningStock = '';
           this.totalSales = '';
           this.spinner.hide();
+          this.cd.detectChanges()
         }
       })
   }
@@ -218,6 +223,7 @@ export class FeedsWidget2Component implements OnInit {
     /* save to file */
     XLSX.writeFile(wb, 'salePurchaseReport.xlsx');
   }
+  
   fileName = 'salesReport.xlsx'
   exportExcel(): void {
     /* table id is passed over here */

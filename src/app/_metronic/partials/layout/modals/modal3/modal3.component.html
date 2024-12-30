@@ -56,7 +56,8 @@
                   IFSC <span style="color: red;">*</span></span>
               </a>
               <span class="badge badge-light-warningfs-6 fw-bolder">
-                <input type="number" placeholder="IFSC" class="form-control" formControlName="ifsc">
+                <input placeholder="IFSC" class="form-control" formControlName="ifsc"
+                oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"   >
               </span>
             </div>
 

@@ -79,7 +79,7 @@ export class FeedsWidget11Component implements OnInit {
   totalAmountTallyForPrevious: number;
   totalLubeAmountPrevious: number;
   totalCrAmtForPrevious: number;
-  openingBlc: number;
+  openingBlc: any = 0;
   netTotal: number;
   creditSales: number;
   totalLubeCrAmount: number;
@@ -148,11 +148,13 @@ export class FeedsWidget11Component implements OnInit {
     private cd: ChangeDetectorRef,) { }
 
   ngOnInit(): void {
-    this.fuelDealerId = localStorage.getItem('dealerId');
+    this.fuelDealerId = localStorage.getItem('dealerId') ;
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');
     this.dealerCompanyName = dealerData.companyName;
     this.dealerCity = dealerData.city;
+    this.startDate = moment(new Date()).format('YYYY-MM-01');
+    this.endDate = moment(new Date()).format('YYYY-MM-31'); 
     this.month = moment(new Date()).format("MMM");
     this.year = moment(new Date()).format("YYYY");
     this.lastYear = moment(new Date()).subtract(1, "year").format("YYYY");
@@ -303,6 +305,7 @@ export class FeedsWidget11Component implements OnInit {
     this.getSalesDetailsProductWise(this.fuelDealerId);
     this.getoverallReportData(this.fuelDealerId);
     this.getPreviousVariation(this.fuelDealerId);
+    this.cd.detectChanges();
   }
 
   getOpeningBalance(fuelDealerId: any) {
@@ -668,11 +671,13 @@ export class FeedsWidget11Component implements OnInit {
     this.post.getBankACwiseDetailsPOST(data)
     .subscribe(res => {
         if (res.status == 'OK') { 
+          console.log("110",this.openingAmtDate, this.startDate, this.totalCrBank)
           if(res.data1[0].bankCrAmt){
           this.totalCrBank = res.data1[0].bankCrAmt;
           }
           this.bankoverallReportData = res.data;
           if(this.openingAmtDate < (this.startDate)){
+            console.log("110",this.openingAmtDate, this.startDate)
             this.netAmtForPrevious();           
           }else{
             this.netAmt();              
@@ -882,7 +887,7 @@ export class FeedsWidget11Component implements OnInit {
     this.openingBlc = 0
     this.closingBlcForPrevious = Number(this.netTotalForPrevious) - Number(this.creditSalesForPrevious) - Number(this.totalLubeCrAmountPrevious) - Number(this.digitalTotalSalesForPrevious) - Number(this.totalExpenseAmtForPrevious) - Number(this.shiftExpenseAmtForPrevious) - Number(this.totalCrBankForPrevious) - Number(this.shortAmtTotalForPrevious) + Number(this.totalVariationPrevAmt)
     this.openingBlc = this.closingBlcForPrevious
-    // console.log("openingBlc ",this.openingBlc, '=', this.netTotalForPrevious ,'-', this.creditSalesForPrevious ,'-', this.totalLubeCrAmountPrevious ,'-', this.digitalTotalSalesForPrevious ,'-', this.totalExpenseAmtForPrevious ,'-', this.shiftExpenseAmtForPrevious ,'-', this.totalCrBankForPrevious, '-', this.shortAmtTotalForPrevious , this.totalVariationPrevAmt)
+    console.log("openingBlc ",this.openingBlc, '=', this.netTotalForPrevious ,'-', this.creditSalesForPrevious ,'-', this.totalLubeCrAmountPrevious ,'-', this.digitalTotalSalesForPrevious ,'-', this.totalExpenseAmtForPrevious ,'-', this.shiftExpenseAmtForPrevious ,'-', this.totalCrBankForPrevious, '-', this.shortAmtTotalForPrevious , this.totalVariationPrevAmt)
     this.netAmt()
   }
 
