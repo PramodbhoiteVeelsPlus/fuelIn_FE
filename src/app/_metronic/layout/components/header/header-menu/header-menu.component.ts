@@ -120,7 +120,11 @@ export class HeaderMenuComponent implements OnInit {
     this.post.findPhoneNumberPOST(data)
       .subscribe(res => {
         if (res.status == "OK") {
-          alert(res.msg)
+          if(this.mobileNumber == this.referForm.value.dealerMobile){
+            alert("Can't Enter Your Own Number...")
+            this.referForm.controls["dealerMobile"].setValue("")
+          } 
+          // alert(res.msg)
          
         }
       })

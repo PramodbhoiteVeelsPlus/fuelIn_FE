@@ -1,239 +1,70 @@
-<div class="account-pages my-5 pt-sm-5">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-8 col-lg-6 col-xl-5">
-        <div class="card overflow-hidden">
-          <div class="bg-soft bg-primary">
-            <div class="row">
-              <div class="col-7">
-                <div class="text-primary p-4">
-                  <h5 class="text-primary">Welcome Back !</h5>
-                  <p>Sign in to continue </p>
-                </div>
-              </div>
-              <div class="col-5 align-self-end">
-                <img src="assets/images/ProfilepicResetPassword.png" alt="" class="img-fluid">
-              </div>
-            </div>
-          </div>
-          <div class="card-body pt-0">
-            <div>
-              <a routerLink="/">
-                <div class="avatar-md profile-user-wid mb-4">
-                  <span class="avatar-title rounded-circle bg-light">
-                    <img src="assets/images/wheel.png" alt="" class="rounded-circle" height="34">
-                  </span>
-                </div>
-              </a>
-            </div>
-            <div class="p-2">
-              <form class="form-horizontal" [formGroup]="loginForm">
-                <!-- (ngSubmit)="onSubmit(openModal, refer)" -->
-                <!-- <ngb-alert type="danger" *ngIf="error" [dismissible]="false">{{ error }}</ngb-alert> -->
 
-                <div class="mb-3">
-                  <label for="email">Mobile</label>
-                  <input type="number" min="0" class="form-control" formControlName="email"
-                    onkeypress="return this.value.length < 10;" oninput="if(this.value.length=10)"
-                    placeholder="Enter 10 Digits Mobile Number" required>
-                  <span *ngIf="isvalidPhone" style="color:red;">Mobile Number Should Be 10 Digits</span>
+<div class="container-fluid" *ngIf="!show">
+  <br>
+  <div class="row">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-4">
+      <h2 style="font-size: 3.625rem;">
+        FUELIN <span style="color: blue;">PLUS </span>
+      </h2> <br>
 
-                </div>
+      <h4 style="color: blue;">
+        <b>Simple & Secure Accounting Software
+          for petrol pump dealers</b>
+      </h4>
+      <br>
+      <h6 style="color: black;">
+        <p style="font-size: 126%;">
+          <!-- <b> -->
+          Manage credit sales, track outstanding, send payment reminders, review shift collections, record accounting
+          entries, monitor daily meter sales and dip sales - all on the app.
+          <!-- </b> -->
+        </p>
+      </h6>
+      <br>
 
-                <div class="mb-3">
-                  <label for="password">Password</label>
-                  <div class="input-group auth-pass-inputgroup">
-                    <input type="password" [type]="_pwdType" class="form-control" formControlName="password"
-                      placeholder="Enter password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
-                      aria-label="Password" aria-describedby="password-addon">
+      <h4 style="color: blue;">
+        <b>Sign-up for petrol pump dealers only</b>
+      </h4>
+      <br>
 
-                    <button class="btn btn-light ms-0" type="button" id="password-addon"><i class="fa fa-eye"
-                        (click)="toggleShow()"></i></button>
+      <h6 style="color: black;">
+        <p style="font-size: 127%;">
+          <b>
+            1. Download the App
+          </b>
+        </p>
+      </h6>
 
-                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                      <span *ngIf="f.password.errors.required">Password is required</span>
-                    </div>
-                  </div>
-                </div>
+      <a href="https://play.google.com/store/apps/details?id=com.veelsplusfueldealerapp" target="_blank">
+        <img src="assets/images/signUpPlayStore.png" alt="" class="img-fluid" style="max-width: 37%;">
+      </a>
 
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="remember-check">
-                  <label class="form-check-label" for="remember-check">
-                    Remember me
-                  </label>
-                </div>
+      <br> <br>
 
-                <div class="mt-3 d-grid">
-                  <button class="btn btn-primary" type="submit">Log In</button>
-                </div>
-                <div class="mt-4 text-center">
-                  <a routerLink="/account/reset-password" class="" style="color: blue;"><i
-                      class="mdi mdi-lock mr-1"></i> Forgot
-                    your
-                    password?</a>
-                  <p> Crafted with <i class="mdi mdi-heart text-danger"></i> by veelsPlus</p>
-                </div>
-              </form>
-            </div>
+      <h6 style="color: black;">
+        <p style="font-size: 127%;">
+          <b>
+            2. Complete Sign-up on the App
+          </b>
+        </p>
+      </h6> <br>
 
-            <!-- <ng-template #openModal let-c="close" let-d="dismiss">
-              <div class="modal-header">
-                <h4 class="modal-title">
-                  Select One Business to continue...!
-                </h4>
-                <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="row" *ngFor="let data of allData; let i = index">
-                  <div class="col-md-2">
-                    <input class="form-check-input" type="radio" name="formRadios" id="business"
-                      (change)="selectBusiness(i, refer)" value="business">
-                  </div>
-                  <div class="col-md-10">
-                    <b> {{data.companyName}}, {{data.headQuarterName}} <br>
-                      {{data.GSTNumber}} </b>
-                  </div>
-                </div>
-              </div>
-            </ng-template> -->
+      <h6 style="color: black;">
+        <p style="font-size: 127%;">
+          <b>
+            3. Get free access to credit software (web & app)
+          </b>
+        </p>
+      </h6> <br>
 
-            <!-- Refferal -->
-            <!-- <ng-template #refer let-c="close" let-d="dismiss">
-              <div class="modal-header">
-                <h4 class="modal-title">
-                  <label>
-                    <h5><b> Reffer other Dealers and get ₹ 3000.00 *</b> </h5> <br>
-                    <h6> *Ask your friends to signup and make an initial payment. Once done,
-                          you earn ₹ 3000.00 for 1 refer, for 2 refers earn ₹ 8000.00 and 
-                          for 3 refers earn ₹ 15000.00 . <br>
-                      <i>T&C apply*</i>
-                    </h6>
-                  </label>
-                </h4>
-                <button type="button" class="btn btn-danger" aria-label="Close"  (click)="closeRefModal()">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <form [formGroup]="referForm">
-                  <div class="row">
-                    <div class="col-md-3">
-                      <label class="labelNewMargin"><b>Dealer Name</b><span style="color: red;">*</span></label>
-                    </div>
-                    <div class="col-md-9">
-                      <input type="text" class="form-control" placeholder="Enter Dealer Name"
-                        formControlName="dealerName">
-                    </div>
-                  </div><br>
-                  <div class="row">
-                    <div class="col-md-3">
-                      <label class="labelNewMargin"><b>Dealer Petrol Pump</b><span style="color: red;">*</span></label>
-                    </div>
-                    <div class="col-md-9">
-                      <input type="text" class="form-control" placeholder="Enter Petrol Pump" formControlName="petrolPump">
-                    </div>
-                  </div><br>
-                  <div class="row">
-                    <div class="col-md-3">
-                      <label class="labelNewMargin"><b>Dealer Mobile</b><span style="color: red;">*</span></label>
-                    </div>
-                    <div class="col-md-9">
-                      <input type="number" class="form-control" formControlName="dealerMobile" minlength="10"
-                        [class.is-invalid]="userMobile.invalid && userMobile.touched"
-                        onkeypress="return this.value.length < 10;" oninput="if(this.value.length=10)"
-                        placeholder="Enter 10 Digits Mobile Number" (blur)="checkPhone()" required>
-                      <div *ngIf="(userMobile.invalid && userMobile.touched) || userMobile.dirty">
-                        <small *ngIf="userMobile.errors?.required" class="text-danger">Mobile Number is required</small>
-
-                        <small *ngIf="userMobile.errors?.pattern" class="text-danger">
-                          Please provide a valid 10 Digit Mobile Number</small>
-                      </div>
-                    </div>
-                  </div><br>
-                  <div class="row">
-                    <div class="col-md-3">
-                      <label class="labelNewMargin"><b>Dealer City</b></label>
-                    </div>
-                    <div class="col-md-9">
-                      <input type="text" class="form-control" placeholder="Enter Dealer City"
-                        formControlName="dealerCity">
-                    </div>
-                  </div><br>
-                  <div class="row">
-                    <div class="col-md-3">
-                      <label class="labelNewMargin"><b>Dealer State</b></label>
-                    </div>
-                    <div class="col-md-9">
-                      <select class="form-control" formControlName="dealerState" required placeholder="Select State">
-                        <option value="">Select State</option>
-                        <option value="ANDHRA PRADESH">Andhra Pradesh</option>
-                        <option value="ARUNACHAL PRADESH">Arunachal Pradesh</option>
-                        <option value="ASSAM">Assam</option>
-                        <option value="BIHAR">Bihar</option>
-                        <option value="CHHATTISGARH">Chhattisgarh</option>
-                        <option value="GOA">Goa</option>
-                        <option value="GUJARAT">Gujarat</option>
-                        <option value="HARYANA">Haryana</option>
-                        <option value="HIMACHAL PRADESH">Himachal Pradesh</option>
-                        <option value="JHARKHAND">Jharkhand</option>
-                        <option value="KARNATAKA">Karnataka</option>
-                        <option value="KERALA">Kerala</option>
-                        <option value="MADHYA PRADESH">Madhya Pradesh</option>
-                        <option value="MAHARASHTRA">Maharashtra</option>
-                        <option value="MANIPUR">Manipur</option>
-                        <option value="MEGHALAYA">Meghalaya</option>
-                        <option value="MIZORAM">Mizoram</option>
-                        <option value="NAGALAND">Nagaland</option>
-                        <option value="ODISHA">Odisha</option>
-                        <option value="PUNJAB">Punjab</option>
-                        <option value="RAJASTHAN">Rajasthan</option>
-                        <option value="SIKKIM">Sikkim</option>
-                        <option value="TAMIL NADU">Tamil Nadu</option>
-                        <option value="TELANGANA">Telangana</option>
-                        <option value="TRIPURA">Tripura</option>
-                        <option value="UTTAR PRADESH">Uttar Pradesh</option>
-                        <option value="UTTARAKHAND">Uttarakhand</option>
-                        <option value="WEST BENGAL">West Bengal</option>
-                        <option value="ANDAMAN AND NICOBAR ISLANDS">Andaman and Nicobar Islands</option>
-                        <option value="CHANDIGARH">Chandigarh</option>
-                        <option value="DADRA AND NAGAR HAVELI AND DAMAN AND DIU">Dadra and Nagar Haveli
-                          and Daman and Diu</option>
-                        <option value="DELHI">Delhi</option>
-                        <option value="LAKSHADWEEP">Lakshadweep</option>
-                        <option value="PUDUCHERRY">Puducherry (Pondicherry)</option>
-                        <option value="JAMMU AND KASHMIR">Jammu and Kashmir</option>
-                        <option value="LADAKH">Ladakh</option>
-                      </select>
-                    </div>
-                  </div><br>
-                  <div class="row">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-3">
-                      <button class="btn btn-success" type="submit" (click)="submitRefferal()">
-                        Submit
-                      </button>
-                    </div>
-                    <div class="col-md-5">
-                      <button class="btn btn-danger" type="submit" (click)="closeRefModal()">
-                        Go to Dashboard
-                      </button>
-                    </div>
-                  </div><br>
-
-                </form>
-              </div>
-            </ng-template> -->
-
-
-
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <!-- end container -->
+    <div class="col-7 align-self-end">
+      <img src="assets/images/signUpImg.png" alt="" class="img-fluid" style="max-width: 95%;">
+    </div>
+
+  </div>
 </div>
-<!-- end page -->
+
+

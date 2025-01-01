@@ -93,7 +93,6 @@ export class TablesWidget2Component {
         this.liteAccess = true
       }
     }
-    // this.getCorporateById(this.dealerLoginVPId);
     this.getfuelDealerIdByCorporateId(this.dealerCorporateId)
     this.cd.detectChanges()
   }
@@ -101,27 +100,6 @@ export class TablesWidget2Component {
   addInfra() {
     this.router.navigate(['/pump/infra']);
     this.cd.detectChanges()
-  }
-
-  // get Corporate DetailsBy VP-Id
-  getCorporateById(dealerLoginVPId: any) {
-    let data = {
-      veelsplusCorporateId: dealerLoginVPId
-    }
-    this.post.getBranchByVeelsplusIdPOST(data)
-      .subscribe(res => {
-        if (res.status == "OK") {
-          if (res.data.length) {
-            this.loginSQLCorporateId = res.data[0].corporateId;
-            this.getfuelDealerIdByCorporateId(this.loginSQLCorporateId);
-            this.cd.detectChanges()
-          }
-          else {
-            alert("Getting Error..! Please Logout & Login again..!")
-            this.cd.detectChanges()
-          }
-        }
-      })
   }
 
   // getfuelDealerIdByDealerCorporateId

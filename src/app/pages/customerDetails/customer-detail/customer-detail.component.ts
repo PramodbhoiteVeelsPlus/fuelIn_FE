@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrl: './customer-detail.component.scss'
 })
 export class CustomerDetailComponent {
+  acceesGroup: any;
+
+  ngOnInit(): void {
+    var element = JSON.parse(localStorage.getItem('element') || '{}');
+    this.acceesGroup = element.accessGroupId
+  }
 
 }

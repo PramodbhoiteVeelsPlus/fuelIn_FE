@@ -1,0 +1,435 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <ul ngbNav #customNav="ngbNav" [activeId]="1"
+                                        class="nav-tabs nav-tabs-custom nav-justified" style="width: 50%;">
+                                        <li [ngbNavItem]="1">
+                                            <a ngbNavLink>
+                                                <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                                <span class="d-none d-sm-block" style="font-size: 13.5px;">Person
+                                                    Details</span>
+                                            </a>
+                                            <ng-template ngbNavContent>
+                                                <ng-template [ngTemplateOutlet]="persondetails"></ng-template>
+                                            </ng-template>
+                                        </li>
+                                        <li [ngbNavItem]="2">
+                                            <a ngbNavLink>
+                                                <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                                                <span class="d-none d-sm-block" style="font-size: 13.5px;">Business
+                                                    Details</span>
+                                            </a>
+                                            <ng-template ngbNavContent>
+                                                <ng-template [ngTemplateOutlet]="businessdetails"></ng-template>
+                                            </ng-template>
+                                        </li>
+                                        <li [ngbNavItem]="3">
+                                            <a ngbNavLink>
+                                                <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                                                <span class="d-none d-sm-block" style="font-size: 13.5px;">KYC
+                                                    Upload</span>
+                                            </a>
+                                            <ng-template ngbNavContent>
+                                                <ng-template [ngTemplateOutlet]="KYCupload"></ng-template>
+                                            </ng-template>
+                                        </li>
+
+                                    </ul>
+                                    <div [ngbNavOutlet]="customNav"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ng-template #persondetails>
+                        <br>
+                        <div class="row" *ngIf="accessGroup != '7' ">
+
+                            <div class="col-md-4">
+
+                                <div class="row">
+                                    <div class="col col-md-4 col-lg-4">
+                                        <label class="labelMargin" for="detailerOutletName">Name</label>
+                                    </div>
+                                    <div class="col col-md-8 col-lg-8">
+                                        <input class="form-control" placeholder="Fuel Partner Outlet Name"
+                                            [(ngModel)]="personName" disabled>
+                                    </div>
+                                </div>
+
+                                <br>
+                                <div class="row">
+                                    <div class="col col-md-4 col-lg-4">
+                                        <label class="labelMargin" for="emailIdOfDealer">Email</label>
+                                    </div>
+                                    <div class="col col-md-8 col-lg-8">
+                                        <input class="form-control" type="email" placeholder="Email ID"
+                                            [(ngModel)]="personEmail" disabled>
+                                    </div>
+                                </div>
+
+                                <br>
+                                <div class="row">
+                                    <div class="col col-md-4 col-lg-4">
+                                        <label class="labelMargin" for="mobileNumberOfDealer">Mobile Number </label>
+                                    </div>
+                                    <div class="col col-md-8 col-lg-8">
+                                        <input class="form-control" type="number" placeholder="Mobile Number"
+                                            [(ngModel)]="personMobileNumber" disabled>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" *ngIf="accessGroup == '7' ">
+
+                            <div class="col-md-4">
+
+                                <div class="row">
+                                    <div class="col col-md-4 col-lg-4">
+                                        <label class="labelMargin" for="detailerOutletName">Name</label>
+                                    </div>
+                                    <div class="col col-md-8 col-lg-8">
+                                        <input class="form-control" placeholder="Fuel Partner Outlet Name"
+                                            [(ngModel)]="keyPerson" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col col-md-4 col-lg-4">
+                                        <label class="labelMargin" for="emailIdOfDealer">Email</label>
+                                    </div>
+                                    <div class="col col-md-8 col-lg-8">
+                                        <input class="form-control" type="email" placeholder="Email ID"
+                                            [(ngModel)]="dealerEmail" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col col-md-4 col-lg-4">
+                                        <label class="labelMargin" for="mobileNumberOfDealer">Mobile Number </label>
+                                    </div>
+                                    <div class="col col-md-8 col-lg-8">
+                                        <input class="form-control" type="number" placeholder="Mobile Number"
+                                            [(ngModel)]="dealerMobile" disabled>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </ng-template>
+
+                    <ng-template #businessdetails>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-5">
+                                <div class="row">
+                                    <div class="col col-md-5 col-lg-5">
+                                        <label class="labelMargin" for="mobileNumberOfDealer">Petrol Pump Name</label>
+                                    </div>
+                                    <div class="col col-md-6 col-lg-6">
+                                        <input class="form-control" placeholder="Pump Name" [(ngModel)]="pumpName"
+                                        disabled>
+                                    </div>
+                                </div>
+
+                                <br>
+                                <div class="row">
+
+                                    <div class="col col-md-5 col-lg-5">
+                                        <label class="labelMargin" for="detailerOutletName">Name Of Admin</label>
+                                    </div>
+                                    <div class="col col-md-6 col-lg-6">
+                                        <input class="form-control" placeholder="name of admin" [(ngModel)]="firstName"
+                                        disabled>
+                                    </div>
+                                </div>
+
+                                <br>
+                                <div class="row">
+
+                                    <div class="col col-md-5 col-lg-5">
+                                        <label class="labelMargin" for="emailIdOfDealer">Email Id Of Admin</label>
+                                    </div>
+                                    <div class="col col-md-6 col-lg-6">
+                                        <input class="form-control" type="email" placeholder="email id of admin"
+                                            [(ngModel)]="email" disabled>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-5">
+                                <div class="row">
+                                    <form [formGroup]="dealerForm">
+                                        <div class="col col-md-5 col-lg-5">
+                                            <label for="logo">Logo :</label>
+                                            <input class="form-control" [(ngModel)]="logo"
+                                                [ngModelOptions]="{standalone: true}" type="file"
+                                                (change)="onlogoImagePicked($event)" required>
+                                        </div>
+                                        <div class="col col-md-6 col-lg-6">
+                                            <img [src]="logoLinkDoc" style="width: 50%;">
+                                        </div>
+                                    </form>
+                                </div>
+                                <hr>
+                                <br>
+                                <div class="row">
+
+                                    <div class="col col-md-6 col-lg-6">
+                                        <label class="labelMargin" for="mobileNumberOfDealer">Mobile Number Of
+                                            Admin</label>
+                                    </div>
+                                    <div class="col col-md-6 col-lg-6">
+                                        <input class="form-control" type="number" placeholder="mobile number of admin"
+                                            [(ngModel)]="mobileNumber" disabled>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col col-md-6 col-lg-6">
+                                        <label class="labelMargin" for="oilCompany">Oil Company</label>
+                                    </div>
+                                    <div class="col col-md-6 col-lg-6">
+                                        <input class="form-control" placeholder="Oil Company" [(ngModel)]="brandName"
+                                        disabled>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col col-md-6 col-lg-6">
+                                        <label class="labelMargin" for="oilCompany">Fuel VF ID</label>
+                                    </div>
+                                    <div class="col col-md-6 col-lg-6">
+                                        <input class="form-control" placeholder="Dealer VF Id"
+                                            [(ngModel)]="fuelDealerVFId" disabled>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <hr>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col col-md-4 col-lg-4">
+                                    <div class="row">
+                                        <div class="col-md-10 col-lg-10">
+                                            <label>Business Type:</label>
+
+                                            <input class="form-control" placeholder="Bussiness Type"
+                                                [(ngModel)]="bussinessType" disabled>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col col-md-4 col-lg-4">
+                                    <div class="row">
+                                        <div class="col-md-10 col-lg-10">
+                                            <label>GST Number :</label>
+
+                                            <input class="form-control" placeholder="GST number"
+                                                [(ngModel)]="bussinessGSTNumber" disabled>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col col-md-4 col-lg-4">
+
+                                    <div class="row">
+                                        <div class="col col-md-10 col-lg-10">
+                                            <label>Unique Code Assigned :</label>
+
+                                            <input class="form-control" placeholder="Unique code"
+                                                [(ngModel)]="uniqueCode" disabled>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <br>
+
+
+                            <div class="row">
+                                <div class="col col-md-4 col-lg-4">
+                                    <div class="row">
+                                        <div class="col col-md-10 col-lg-10">
+                                            <label>Addres Line1 :</label>
+
+                                            <input class="form-control" placeholder="Address" [(ngModel)]="addressLine1"
+                                            disabled>
+
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col col-md-10 col-lg-10">
+                                            <label>Address Line2 :</label>
+
+                                            <input class="form-control" placeholder="Address" [(ngModel)]="addressLine2"
+                                            disabled>
+
+                                        </div>
+
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col col-md-10 col-lg-10">
+                                            <label>City Area :</label>
+
+                                            <input class="form-control" placeholder="City Area" [(ngModel)]="cityArea"
+                                            disabled>
+
+                                        </div>
+
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col col-md-10 col-lg-10">
+                                            <label>City :</label>
+                                            <input class="form-control" placeholder="City" [(ngModel)]="city" disabled>
+
+                                        </div>
+
+                                    </div>
+
+
+
+                                </div>
+                                <div class="col col-md-4 col-lg-4">
+                                    <div class="row">
+                                        <div class="col col-md-10 col-lg-10">
+                                            <label>District :</label>
+
+                                            <input class="form-control" placeholder="District" [(ngModel)]="district"
+                                            disabled>
+
+                                        </div>
+
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col col-md-10 col-lg-10">
+                                            <label>State :</label>
+
+                                            <input class="form-control" placeholder="State" [(ngModel)]="state"
+                                            disabled>
+
+                                        </div>
+
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col col-md-10 col-lg-10">
+                                            <label>Pincode :</label>
+
+                                            <input class="form-control" placeholder="PIN Code" [(ngModel)]="pinCode"
+                                            disabled>
+
+                                        </div>
+
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <div class="row" style="text-align: center;">
+                                        <div class="col"></div>
+                                        <div class="col">
+                                        </div>
+                                        <div class="col"></div>
+
+                                    </div>
+                                </div>
+                                <div class="col col-md-4 col-lg-4">
+
+                                    <div class="row">
+                                        <div class="col col-md-10 col-lg-10">
+                                            <label>Geo Location :</label>
+                                            <input class="form-control" placeholder="Geo Location"
+                                                [(ngModel)]="geoLocation" disabled>
+
+                                        </div>
+
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col col-md-10 col-lg-10">
+                                            <label>Phone Number :</label>
+
+                                            <input class="form-control" placeholder="Phone Number" [(ngModel)]="phone2"
+                                            disabled>
+
+                                        </div>
+
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col col-md-10 col-lg-10">
+                                            <label>NH/SH No. :</label>
+
+                                            <input class="form-control" placeholder="Highway No"
+                                                [(ngModel)]="highwayNumber" disabled>
+
+                                        </div>
+
+                                    </div>
+                                    <br>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </ng-template>
+
+                    <ng-template #KYCupload>
+                        <br>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label><b>Bank Statement :</b></label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="file" class="form-control" (change)="onIndividualBankDocPicked($event)">
+                                <p>Last 12 months bank statement across all operative bank accounts</p>
+                            </div>
+                            <div class="col-md-1"></div>
+
+                            <div class="col-md-2">
+                                <label><b>Sales Volume :</b></label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="file" class="form-control"
+                                    (change)="onIndividualSalesVolumePicked($event)">
+                                <p>associated OMC, monthly sales volume for last 6 months
+                                </p>
+                            </div>
+                            <div class="col-md-2"></div>
+
+
+                        </div>
+
+                    </ng-template>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

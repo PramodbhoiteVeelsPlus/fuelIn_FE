@@ -1,4 +1,13 @@
-<div class="card-header">
-    <b>Customer Details</b>
+<div *ngIf="acceesGroup != '14'">
+    <div class="card-header">
+        <b>Customer Details</b>
+    </div>
+    <app-stats-widget10></app-stats-widget10>
 </div>
-<app-stats-widget10></app-stats-widget10> 
+
+<div *ngIf="acceesGroup == '14'">
+    <div class="card-header">
+        <b>My Profile Details</b>
+    </div>
+    <app-trans-tables-widget10></app-trans-tables-widget10>
+</div>

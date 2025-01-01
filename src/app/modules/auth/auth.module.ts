@@ -19,7 +19,7 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
     ForgotPasswordComponent,
     LogoutComponent,
     AuthComponent,
-    CustloginComponent
+    CustloginComponent,
   ],
   imports: [
     CommonModule,
