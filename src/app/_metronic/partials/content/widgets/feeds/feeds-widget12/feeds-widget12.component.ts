@@ -220,10 +220,19 @@ export class FeedsWidget12Component implements OnInit {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = localStorage.getItem('dealerId');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
-    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');
-    this.dealerCompanyName = dealerData.companyName;
-    this.brandName = dealerData.brandName;
-    this.dealerCity = dealerData.city;
+    if(this.accessGroup == '12'){
+      var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');
+      this.dealerCompanyName = dealerData.companyName;
+      this.brandName = dealerData.brandName;
+      this.dealerCity = dealerData.city;
+    } 
+    if(this.accessGroup == '14'){
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '');
+      this.dealerCompanyName = managerData.companyName;
+      this.brandName = managerData.brandName;
+      this.dealerCity = managerData.city;
+    } 
+
     this.month = moment(new Date()).format("MMM");
     this.year = moment(new Date()).format("YYYY");
     this.currentYear = new Date().getFullYear();

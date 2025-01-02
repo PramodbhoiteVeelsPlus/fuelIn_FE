@@ -146,27 +146,43 @@ export class ChartsWidget3Component implements OnInit {
     this.accessGroup = element.accessGroupId;
     if (element.accessGroupId == 12 || element.accessGroupId == 14) {
       this.managerName = element.firstName + ' ' + element.lastName;
-      this.pumpCity = dealerData.city
       this.userId = element.userId;
-      this.dealerLoginId = element.veelsPlusCorporateID;
-      this.companyName = dealerData.companyName
-      this.oilCompanyName = dealerData.brandName
-      this.brandName = dealerData.brandName
-      this.state = dealerData.state
-      this.pin = dealerData.pin
-      this.city = dealerData.city
-      this.phone1 = dealerData.hostPhone
       this.ownerName = element.firstName + ' ' + element.lastName
+      this.dealerLoginId = element.veelsPlusCorporateID;
+
+      if (this.accessGroup == '12') {
+        var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');
+        this.pumpCity = dealerData.city
+        this.companyName = dealerData.companyName
+        this.oilCompanyName = dealerData.brandName
+        this.brandName = dealerData.brandName
+        this.state = dealerData.state
+        this.pin = dealerData.pin
+        this.city = dealerData.city
+        this.phone1 = dealerData.hostPhone
+      }
+      if (this.accessGroup == '14') {
+        var managerData = JSON.parse(localStorage.getItem('managerData') || '');
+        this.pumpCity = managerData.city
+        this.companyName = managerData.companyName
+        this.oilCompanyName = managerData.brandName
+        this.brandName = managerData.brandName
+        this.state = managerData.state
+        this.pin = managerData.pin
+        this.city = managerData.city
+        this.phone1 = managerData.hostPhone
+      }
+
       if (element.accessGroupId == 12 || element.accessGroupId == 14) {
         this.dealerAccess = true
       }
 
     }
     this.headerName1 = dealerData.companyName;
-    this.headerName2 = dealerData.address1+', '+dealerData.address2+', '+ dealerData.city;
-    this.headerName3 = dealerData.state+'-'+ dealerData.pin+'  '+"GST: "+ dealerData.GSTNumber;
+    this.headerName2 = dealerData.address1 + ', ' + dealerData.address2 + ', ' + dealerData.city;
+    this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
 
-    this.viewOilCompanyForm.controls["startDate"].setValue( moment(new Date()).subtract(15, 'days').format("DD-MM-YYYY"));
+    this.viewOilCompanyForm.controls["startDate"].setValue(moment(new Date()).subtract(15, 'days').format("DD-MM-YYYY"));
     this.viewOilCompanyForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"));
     if (!this.oilCompanyDetails.length) {
       this.getOILCOMPANYDataInFuelExpense(this.fuelDealerId)

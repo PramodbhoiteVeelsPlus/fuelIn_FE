@@ -193,10 +193,21 @@ export class TilesWidget9Component {
     this.lastFourthYear = Number(this.currentYear) - 3;
     this.lastFifthYear = Number(this.currentYear) - 4;
     this.addDSRArray.push(this.newRowDSR);
-    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '')
-    this.headerName1 = dealerData.companyName;
-    this.headerName2 = dealerData.address1 + ', ' + dealerData.address2 + ', ' + dealerData.city;
-    this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
+    
+    this.accessGroupId = element.accessGroupId;
+    if (this.accessGroupId == '12') {
+      var dealerData = JSON.parse(localStorage.getItem('dealerData') || '')
+      this.headerName1 = dealerData.companyName;
+      this.headerName2 = dealerData.address1 + ', ' + dealerData.address2 + ', ' + dealerData.city;
+      this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
+    }
+    if (this.accessGroupId == '14') {
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '');
+      this.headerName1 = managerData.companyName;
+      this.headerName2 = managerData.address1 + ', ' + managerData.address2 + ', ' + managerData.city;
+      this.headerName3 = managerData.state + '-' + managerData.pin + '  ' + "GST: " + managerData.GSTNumber;
+    }
+
     this.getProductsByDealerId(this.fuelDealerId);
     this.getProductWiseMeterSales(this.fuelDealerId)
   }

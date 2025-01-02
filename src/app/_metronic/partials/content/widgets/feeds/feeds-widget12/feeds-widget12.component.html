@@ -1,1209 +1,1415 @@
+<style>
+    .A4 {
+    background: white;
+    width: 23cm;
+    height: 40.7cm;
+    display: block;
+    margin: 0 auto;
+    padding: 1px 1px;
+    margin-bottom: 0.5cm;
+    box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+    
+    box-sizing: border-box;
+    font-size: 12pt;
+    /* //line-height:normal; */
+  }
+  
+  @media print {
+    .page-break {
+      display: block;
+      page-break-before: always;
+    
+    size: A4 portrait;}
+  }
+  
+  @media print {
+    body {
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact;
+    }
+    .A4 {
+      box-shadow: none;
+      margin: 0;
+      width: auto;
+      height: auto;
+    }
+    .noprint {
+      display: none;
+    }
+    .enable-print {
+      display: block;
+    }
+  }
+  
+  .table{
+    border: 2px solid #272829; 
+    
+    thead{
+       
+        th{
+            border: 2px solid #272829;
+        }
+    }
+    td{
+        border: 2px solid #272829;
+    }
+}
+
+</style>
+
 <!DOCTYPE html
-PUBLIC "-//W3C//Dth XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/Dth/xhtml1-transitional.dth">
+    PUBLIC "-//W3C//Dth XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/Dth/xhtml1-transitional.dth">
 <html xmlns="https://www.w3.org/1999/xhtml">
 
 <head>
-<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
 
-<title>Editable Statement</title>
-<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-<script type='text/javascript' src='../../../../../../assets/EditableInvoice/js/jquery-1.3.2.min1.js'></script>
-<script type='text/javascript' src='../../../../../../assets/EditableInvoice/js/example1.js'></script>
+    <title>Editable Statement</title>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script type='text/javascript' src='../../../../../../assets/EditableInvoice/js/jquery-1.3.2.min1.js'></script>
+    <script type='text/javascript' src='../../../../../../assets/EditableInvoice/js/example1.js'></script>
 
 </head>
+
 <body id="contentToConvert">
-    <div *ngIf="accessGroup !='19'" class="container-fluid">    
+    <div *ngIf="accessGroup !='19'" class="container-fluid">
         <div class="row">
             <div class="col-12">
-              <div class="card">
-                <div class="card-body">
-                    <div *ngIf = "!isPrint">
-                <!-- new tab view -->
-                <div class="row">
-                    
-                    <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                        <ul ngbNav #customNav="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified" style="width: 50%;">
-                            <li [ngbNavItem]="1">
-                            <a ngbNavLink>
-                                <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-                                <span class="d-none d-sm-block" style="font-size: 13.5px;">MONTH</span>
-                            </a>
-                            <ng-template ngbNavContent>
-                                <ng-template [ngTemplateOutlet]="Month"></ng-template>
-                            </ng-template>
-                            </li>
-                            <li [ngbNavItem]="2">
-                            <a ngbNavLink>
-                                <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
-                                <span class="d-none d-sm-block"  style="font-size: 13.5px;">YEAR</span>
-                            </a>
-                            <ng-template ngbNavContent>
-                                <ng-template [ngTemplateOutlet]="Year"></ng-template>
-                            </ng-template>
-                            </li> 
-                        </ul>
-                        <div [ngbNavOutlet]="customNav"></div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                <!-- new tab view end -->
-                
-               
-                <!-- MONTH -->
-                <ng-template #Month> 
-                    <br> 
-                    <form [formGroup]="filterForm1"> 
-                
-                        <div class="row" *ngIf = "!isPrint">  
-                            
-                            <div class="col-md-1"></div>              
-                            <div class="col-auto">
-                                <br>
-                                <label><b>Select Month :</b></label>
-                            </div>
-                            <div class="col-auto"> 
-                                <br>  
-                                <select formControlName="month" class="form-control" 
-                                (change) = "getDates()"  required>
-                                    <option value=""> Select Month </option>
-                                    <option value="Jan"> Jan </option>
-                                    <option value="Feb"> Feb </option>
-                                    <option value="Mar"> Mar </option>
-                                    <option value="Apr"> Apr </option>
-                                    <option value="May"> May </option>
-                                    <option value="Jun"> Jun </option>
-                                    <option value="Jul"> Jul </option>
-                                    <option value="Aug"> Aug </option>
-                                    <option value="Sep"> Sep </option>
-                                    <option value="Oct"> Oct </option>
-                                    <option value="Nov"> Nov </option>
-                                    <option value="Dec"> Dec </option>
-                                </select>
-                            </div>
-                            <div class="col-auto">
-                                <br>
-                                <label><b>Select Year :</b></label>
-                            </div>
-                            <div class="col-auto">   
-                                <br>
-                                <select formControlName="year" class="form-control"
-                                (change) = "getDates()" required>
-                                    <option value={{currentYear}}> {{currentYear}} </option>
-                                    <option value={{lastYear}}> {{lastYear}} </option>
-                                    <option value={{lastThirdYear}}> {{lastThirdYear}} </option>
-                                    <option value={{lastFourthYear}}> {{lastFourthYear}} </option>
-                                    <option value={{lastFifthYear}}> {{lastFifthYear}} </option>
-                                </select>                            
-                            </div>
-                            <div class="col-auto">
-                                <br>
-                                <button class="btn btn-primary my-2 my-sm-0" type="button" (click)="view()">
-                                    view
-                                </button>
-                            </div>
-                        </div>  
-                        <br>
-    
-                        <hr>
-    
-    
-                        <div class="row">
-                    
-                            <div class="col-lg-12">
-                            <div class="card">
-                                <div class="card-body">
-                                <ul ngbNav #customNav1="ngbNav" [activeId]="3" class="nav-tabs nav-tabs-custom nav-justified" style="width: 50%;">
-                                    <li [ngbNavItem]="3">
-                                    <a ngbNavLink>
-                                        <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-                                        <span class="d-none d-sm-block" style="font-size: 13.5px;">MONTH-WISE</span>
-                                    </a>
-                                    <ng-template ngbNavContent>
-                                        <ng-template [ngTemplateOutlet]="DSRMeter1"></ng-template>
-                                    </ng-template>
-                                    </li>
-                                    <li [ngbNavItem]="4">
-                                    <a ngbNavLink>
-                                        <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
-                                        <span class="d-none d-sm-block"  style="font-size: 13.5px;">PURCHASE</span>
-                                    </a>
-                                    <ng-template ngbNavContent>
-                                        <ng-template [ngTemplateOutlet]="DSRTank1"></ng-template>
-                                    </ng-template>
-                                    </li> 
-                                </ul>
-                                <div [ngbNavOutlet]="customNav1"></div>
+                <div class="card">
+                    <div class="card-body">
+                        <div *ngIf="!isPrint">
+                            <!-- new tab view -->
+                            <div class="row">
+
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <ul ngbNav #customNav="ngbNav" [activeId]="1"
+                                                class="nav-tabs nav-tabs-custom nav-justified" style="width: 50%;">
+                                                <li [ngbNavItem]="1">
+                                                    <a ngbNavLink>
+                                                        <span class="d-block d-sm-none"><i
+                                                                class="fas fa-home"></i></span>
+                                                        <span class="d-none d-sm-block"
+                                                            style="font-size: 13.5px;">MONTH</span>
+                                                    </a>
+                                                    <ng-template ngbNavContent>
+                                                        <ng-template [ngTemplateOutlet]="Month"></ng-template>
+                                                    </ng-template>
+                                                </li>
+                                                <li [ngbNavItem]="2">
+                                                    <a ngbNavLink>
+                                                        <span class="d-block d-sm-none"><i
+                                                                class="far fa-user"></i></span>
+                                                        <span class="d-none d-sm-block"
+                                                            style="font-size: 13.5px;">YEAR</span>
+                                                    </a>
+                                                    <ng-template ngbNavContent>
+                                                        <ng-template [ngTemplateOutlet]="Year"></ng-template>
+                                                    </ng-template>
+                                                </li>
+                                            </ul>
+                                            <div [ngbNavOutlet]="customNav"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            </div>
-                        </div> 
+                            <!-- new tab view end -->
 
 
-                           <!-- MONTH -->
-                            <ng-template #DSRMeter1> 
-                                <br> 
-                                <div class="row" *ngIf = "!isPrint">
-                                    <div class="col col-xl-1 col-lg-1" ></div>
-                                    <div class="col col-xl-10 col-lg-10"  *ngIf = "isMonthTab">
-                                        <div class="row">
-                                            <div class="col-md-8"></div>
-                                            <div class="col-md-2">
-                                                <button class="btn btn-outline-secondary my-2 my-sm-0" type="button" (click)="viewPDF()">
-                                                    view PDF
-                                                </button>
+                            <!-- MONTH -->
+                            <ng-template #Month>
+                                <br>
+                                <form [formGroup]="filterForm1">
+
+                                    <div class="row" *ngIf="!isPrint">
+
+                                        <div class="col-md-1"></div>
+                                        <div class="col-auto">
+                                            <br>
+                                            <label><b>Select Month :</b></label>
+                                        </div>
+                                        <div class="col-auto">
+                                            <br>
+                                            <select formControlName="month" class="form-control" (change)="getDates()"
+                                                required>
+                                                <option value=""> Select Month </option>
+                                                <option value="Jan"> Jan </option>
+                                                <option value="Feb"> Feb </option>
+                                                <option value="Mar"> Mar </option>
+                                                <option value="Apr"> Apr </option>
+                                                <option value="May"> May </option>
+                                                <option value="Jun"> Jun </option>
+                                                <option value="Jul"> Jul </option>
+                                                <option value="Aug"> Aug </option>
+                                                <option value="Sep"> Sep </option>
+                                                <option value="Oct"> Oct </option>
+                                                <option value="Nov"> Nov </option>
+                                                <option value="Dec"> Dec </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-auto">
+                                            <br>
+                                            <label><b>Select Year :</b></label>
+                                        </div>
+                                        <div class="col-auto">
+                                            <br>
+                                            <select formControlName="year" class="form-control" (change)="getDates()"
+                                                required>
+                                                <option value={{currentYear}}> {{currentYear}} </option>
+                                                <option value={{lastYear}}> {{lastYear}} </option>
+                                                <option value={{lastThirdYear}}> {{lastThirdYear}} </option>
+                                                <option value={{lastFourthYear}}> {{lastFourthYear}} </option>
+                                                <option value={{lastFifthYear}}> {{lastFifthYear}} </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-auto">
+                                            <br>
+                                            <button class="btn btn-primary my-2 my-sm-0" type="button" (click)="view()">
+                                                view
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <br>
+
+                                    <hr>
+
+
+                                    <div class="row">
+
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <ul ngbNav #customNav1="ngbNav" [activeId]="3"
+                                                        class="nav-tabs nav-tabs-custom nav-justified"
+                                                        style="width: 50%;">
+                                                        <li [ngbNavItem]="3">
+                                                            <a ngbNavLink>
+                                                                <span class="d-block d-sm-none"><i
+                                                                        class="fas fa-home"></i></span>
+                                                                <span class="d-none d-sm-block"
+                                                                    style="font-size: 13.5px;">MONTH-WISE</span>
+                                                            </a>
+                                                            <ng-template ngbNavContent>
+                                                                <ng-template
+                                                                    [ngTemplateOutlet]="DSRMeter1"></ng-template>
+                                                            </ng-template>
+                                                        </li>
+                                                        <li [ngbNavItem]="4">
+                                                            <a ngbNavLink>
+                                                                <span class="d-block d-sm-none"><i
+                                                                        class="far fa-user"></i></span>
+                                                                <span class="d-none d-sm-block"
+                                                                    style="font-size: 13.5px;">PURCHASE</span>
+                                                            </a>
+                                                            <ng-template ngbNavContent>
+                                                                <ng-template
+                                                                    [ngTemplateOutlet]="DSRTank1"></ng-template>
+                                                            </ng-template>
+                                                        </li>
+                                                    </ul>
+                                                    <div [ngbNavOutlet]="customNav1"></div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="row" *ngIf = "isMonthTab">
+                                    </div>
+
+
+                                    <!-- MONTH -->
+                                    <ng-template #DSRMeter1>
+                                        <br>
+                                        <div class="row" *ngIf="!isPrint">
+                                            <div class="col col-xl-1 col-lg-1"></div>
+                                            <div class="col col-xl-10 col-lg-10" *ngIf="isMonthTab">
+                                                <div class="row">
+                                                    <div class="col-md-8"></div>
+                                                    <div class="col-md-2">
+                                                        <button class="btn btn-secondary my-2 my-sm-0"
+                                                            type="button" (click)="viewPDF()">
+                                                            view PDF
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="row" *ngIf="isMonthTab">
+                                                    <div class="col-md-12">
+                                                        <div class="card-body table-responsive">
+                                                            <table class="table table-hover b">
+                                                                <tr style="background-color: aquamarine;">
+                                                                    <th style="border: 2px solid #272829;text-align: center;"
+                                                                        colspan="12">
+                                                                        <b>PURCHASE</b>
+                                                                    </th>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                        Product
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                        Basic Amount
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829;" colspan="1">
+                                                                        VAT %
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                        VAT Amount
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829;" colspan="1">
+                                                                        Cess Amount
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                        Other Components
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                        Total Amount
+                                                                    </th>
+                                                                </tr>
+
+                                                                <tr
+                                                                    *ngFor="let data of productPurchaseDetails; let i = index;">
+                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                        {{data.productName}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                        {{data.basicAmt | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829;" colspan="1">
+                                                                        {{data.vatPercent | number:'1.2-2'}} %
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                        {{data.vatAmt | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829;" colspan="1">
+                                                                        {{data.cessAmt | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                        {{data.components | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                        {{data.totalAmount | number:'1.2-2'}}
+                                                                    </td>
+                                                                </tr>
+
+
+
+                                                                <tr>
+                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                        <b> PURCHASE TOTAL </b>
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829;" colspan="2">
+
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829;" colspan="1">
+
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                        <b>{{purchaseTotal | number:'1.2-2'}}</b>
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829;" colspan="1">
+
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829;" colspan="2">
+
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829;" colspan="2">
+
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr style="background-color: aquamarine;">
+                                                                    <th style="border: 2px solid #272829;text-align: center;"
+                                                                        colspan="12">
+                                                                        <b>SALE</b>
+                                                                    </th>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                        Product
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                        Basic Amount
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829;" colspan="1">
+                                                                        VAT %
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                        VAT Amount
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829;" colspan="1">
+
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829;" colspan="2">
+
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                        Total Amount
+                                                                    </th>
+                                                                </tr>
+
+                                                                <tr
+                                                                    *ngFor="let data of vatSalesDetails; let i = index;">
+                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                        {{data.productName}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                        {{data.basicAmount | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829;" colspan="1">
+                                                                        {{data.vat | number:'1.2-2'}} %
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                        {{data.vatAmount | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829;" colspan="1">
+
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829;" colspan="2">
+
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                        {{data.totalAmount | number:'1.2-2'}}
+                                                                    </td>
+                                                                </tr>
+
+
+
+                                                                <tr>
+                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                        <b> SALE TOTAL </b>
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829;" colspan="2">
+
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829;" colspan="1">
+
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                        <b>{{salesTotal | number:'1.2-2'}}</b>
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829;" colspan="1">
+
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829;" colspan="2">
+
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829;" colspan="2">
+
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                        <br>
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                        <br>
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829;" colspan="1">
+                                                                        <br>
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                        <br>
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829;" colspan="1">
+                                                                        <br>
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                        <br>
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                        <br>
+                                                                    </th>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <th style="border: 2px solid #272829;" colspan="5">
+                                                                        <b>VAT PAYABLE</b>
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                        <b>{{(salesTotal) - (purchaseTotal) |
+                                                                            number:'1.2-2'}} </b>
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829;" colspan="1">
+
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829;" colspan="2">
+
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829;" colspan="2">
+
+                                                                    </th>
+                                                                </tr>
+
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </ng-template>
+
+                                    <!-- YEAR -->
+                                    <ng-template #DSRTank1>
+                                        <br>
+                                        <div class="row" *ngIf="isViewPDF">
                                             <div class="col-md-12">
-                                            <div class="card-body table-responsive">
-                                                <table class="table table-hover b">
-                                                    <tr style="background-color: aquamarine;"> 
-                                                        <th style="border: 2px solid #272829;text-align: center;" colspan="12"> 
-                                                        <b>PURCHASE</b> 
-                                                        </th> 
+                                                <div class="card-body table-responsive">
+                                                    <table class="table table-hover table-striped">
+                                                        <thead style="background-color: aquamarine;">
+                                                            <tr>
+                                                                <th style="text-align: center;"> invoice date</th>
+                                                                <th style="text-align: center;"> vehicle number </th>
+                                                                <th style="text-align: center;"> invoice number </th>
+                                                                <th style="text-align: center;"> received date</th>
+                                                                <th style="text-align: center;"> product</th>
+                                                                <th style="text-align: center;"> quantity</th>
+                                                                <th style="text-align: center;"> basic amount</th>
+                                                                <th style="text-align: center;"> vat amount</th>
+                                                                <th style="text-align: center;"> vat %</th>
+                                                                <th style="text-align: center;"> cess amount</th>
+                                                                <th style="text-align: center;"> totaltax</th>
+                                                                <th style="text-align: center;"> other components </th>
+                                                                <th style="text-align: center;"> totalamount </th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody *ngFor="let data of oilCompanyDetails;  let i = index;">
+                                                            <tr>
+                                                                <td style="text-align: center;"> {{data.invoiceDate |
+                                                                    date:"mediumDate"}}</td>
+                                                                <td style="text-align: center;"> {{data.vehicleNumber}}
+                                                                </td>
+                                                                <td style="text-align: center;"> {{data.invoiceNumber}}
+                                                                </td>
+                                                                <td style="text-align: center;"> {{data.receivedDate |
+                                                                    date:"mediumDate"}}</td>
+                                                                <td style="text-align: center;"> {{data.productName}}
+                                                                </td>
+                                                                <td style="text-align: center;">
+                                                                    <span *ngIf="data.productName == 'CNG'">
+                                                                        {{data.quantity}} kg
+                                                                    </span>
+                                                                    <span *ngIf="data.productName != 'CNG'">
+                                                                        {{data.quantity}} ltr
+                                                                    </span>
+                                                                </td>
+
+                                                                <td style="text-align: center;"> {{data.basicAmt |
+                                                                    number:'1.2-2'}}
+                                                                </td>
+                                                                <td style="text-align: center;"> {{data.vatAmt |
+                                                                    number:'1.2-2'}} </td>
+                                                                <td style="text-align: center;"> {{data.vatPercent}}
+                                                                </td>
+                                                                <td style="text-align: center;"> {{data.cessAmt |
+                                                                    number:'1.2-2'}} </td>
+                                                                <td style="text-align: center;"> {{data.totalTax |
+                                                                    number:'1.2-2'}}
+                                                                </td>
+                                                                <td style="text-align: center;"> {{data.components}}
+                                                                </td>
+                                                                <td style="text-align: center;">
+                                                                    {{data.totalAmount | number:'1.2-2'}}
+                                                                </td>
+
+                                                            </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+
+
+                                </form>
+                            </ng-template>
+
+                            <!-- YEAR -->
+                            <ng-template #Year>
+                                <br>
+                                <form [formGroup]="filterForm">
+
+                                    <div class="row" *ngIf="!isPrint">
+
+                                        <div class="col-md-1"></div>
+
+
+                                        <div class="col-auto">
+                                            <br>
+                                            <label><b>Select Year :</b></label>
+                                        </div>
+                                        <div class="col-auto">
+                                            <br>
+                                            <select class="form-control" formControlName="fiscalyear" required>
+                                                <option value="">Select </option>
+                                                <option value="1"> {{fiscalyear}} </option>
+                                                <option value="2"> {{fiscalyear2}} </option>
+                                                <option value="3"> {{fiscalyear3}} </option>
+                                                <option value="4"> {{fiscalyear4}} </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-auto">
+                                            <br>
+                                            <button class="btn btn-primary my-2 my-sm-0" type="button"
+                                                (click)="viewFiscalYearWise()">
+                                                view
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row" *ngIf="!isPrint">
+                                        <div class="col col-xl-1 col-lg-1"></div>
+                                        <div class="col col-xl-10 col-lg-10">
+                                            <div class="row">
+                                                <div class="col-md-8"></div>
+                                                <div class="col-md-2" *ngIf="isYear">
+                                                    <button class="btn btn-primary my-2 my-sm-0" type="button"
+                                                        (click)="exportexcel()">
+                                                        Download
+                                                    </button>
+                                                </div>
+                                                <div class="col-md-2" *ngIf="!isYear">
+                                                    <button class="btn btn-outline-secondary my-2 my-sm-0 noprint"
+                                                        (click)="viewYearTables()"> Back </button>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row" *ngIf="isYear">
+                                                <div class="col-md-12">
+                                                    <div class="card-body table-responsive">
+                                                        <table id="excel-table" class="table table-hover b"
+                                                            style="border-collapse: collapse; border: 1px solid black;">
+                                                            <thead style="background-color: aquamarine;">
+                                                                <tr>
+                                                                    <th style="border: 2px solid #272829; text-align: center;"
+                                                                        colspan="2">
+                                                                        Month
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829; text-align: center;"
+                                                                        colspan="2">
+                                                                        Total purchase VAT
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829; text-align: center;"
+                                                                        colspan="1">
+                                                                        Total sales VAT
+                                                                    </th>
+                                                                    <th style="border: 2px solid #272829; text-align: center;"
+                                                                        colspan="2">
+                                                                        VAT payable
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                                <tr *ngIf="isMonth1">
+                                                                    <td style="border: 2px solid #272829; text-align: center;"
+                                                                        colspan="2">
+                                                                        {{month1}} {{yearMonth1}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;"
+                                                                        colspan="2"
+                                                                        (click)="getAllProductPurchaseForYear(month1,yearMonth1)">
+                                                                        {{purchaseTotalMonth1 | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;"
+                                                                        (click)="getMonthSales(month1,yearMonth1)"
+                                                                        colspan="1">
+                                                                        {{salesTotalMonth1 | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center;;"
+                                                                        colspan="2">
+                                                                        {{(salesTotalMonth1) - (purchaseTotalMonth1) |
+                                                                        number:'1.2-2'}}
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr *ngIf="isMonth2">
+                                                                    <td style="border: 2px solid #272829; text-align: center;;"
+                                                                        colspan="2">
+                                                                        {{month2}} {{yearMonth2}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;"
+                                                                        colspan="2"
+                                                                        (click)="getAllProductPurchaseForYear(month2,yearMonth2)">
+                                                                        {{purchaseTotalMonth2 | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center;color: blue;cursor: hand;cursor: pointer;"
+                                                                        (click)="getMonthSales(month2,yearMonth2)"
+                                                                        colspan="1">
+                                                                        {{salesTotalMonth2 | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center;;"
+                                                                        colspan="2">
+                                                                        {{(salesTotalMonth2) - (purchaseTotalMonth2) |
+                                                                        number:'1.2-2'}}
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr *ngIf="isMonth3">
+                                                                    <td style="border: 2px solid #272829; text-align: center;;"
+                                                                        colspan="2">
+                                                                        {{month3}} {{yearMonth3}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;"
+                                                                        colspan="2"
+                                                                        (click)="getAllProductPurchaseForYear(month3,yearMonth3)">
+                                                                        {{purchaseTotalMonth3 | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center;color: blue;cursor: hand;cursor: pointer;"
+                                                                        (click)="getMonthSales(month3,yearMonth3)"
+                                                                        colspan="1">
+                                                                        {{salesTotalMonth3 | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center;;"
+                                                                        colspan="2">
+                                                                        {{(salesTotalMonth3) - (purchaseTotalMonth3) |
+                                                                        number:'1.2-2'}}
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr *ngIf="isMonth4">
+                                                                    <td style="border: 2px solid #272829; text-align: center;;"
+                                                                        colspan="2">
+                                                                        {{month4}} {{yearMonth4}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;"
+                                                                        colspan="2"
+                                                                        (click)="getAllProductPurchaseForYear(month4,yearMonth4)">
+                                                                        {{purchaseTotalMonth4 | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center;color: blue;cursor: hand;cursor: pointer;"
+                                                                        (click)="getMonthSales(month4,yearMonth4)"
+                                                                        colspan="1">
+                                                                        {{salesTotalMonth4 | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center;;"
+                                                                        colspan="2">
+                                                                        {{(salesTotalMonth4) - (purchaseTotalMonth4) |
+                                                                        number:'1.2-2'}}
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr *ngIf="isMonth5">
+                                                                    <td style="border: 2px solid #272829; text-align: center;;"
+                                                                        colspan="2">
+                                                                        {{month5}} {{yearMonth5}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;"
+                                                                        colspan="2"
+                                                                        (click)="getAllProductPurchaseForYear(month5,yearMonth5)">
+                                                                        {{purchaseTotalMonth5 | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center;color: blue;cursor: hand;cursor: pointer;"
+                                                                        (click)="getMonthSales(month5,yearMonth5)"
+                                                                        colspan="1">
+                                                                        {{salesTotalMonth5 | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center;;"
+                                                                        colspan="2">
+                                                                        {{(salesTotalMonth5) - (purchaseTotalMonth5) |
+                                                                        number:'1.2-2'}}
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr *ngIf="isMonth6">
+                                                                    <td style="border: 2px solid #272829; text-align: center;;"
+                                                                        colspan="2">
+                                                                        {{month6}} {{yearMonth6}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;"
+                                                                        colspan="2"
+                                                                        (click)="getAllProductPurchaseForYear(month6,yearMonth6)">
+                                                                        {{purchaseTotalMonth6 | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center;color: blue;cursor: hand;cursor: pointer;"
+                                                                        (click)="getMonthSales(month6,yearMonth6)"
+                                                                        colspan="1">
+                                                                        {{salesTotalMonth6 | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center;;"
+                                                                        colspan="2">
+                                                                        {{(salesTotalMonth6) - (purchaseTotalMonth6) |
+                                                                        number:'1.2-2'}}
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr *ngIf="isMonth7">
+                                                                    <td style="border: 2px solid #272829; text-align: center;;"
+                                                                        colspan="2">
+                                                                        {{month7}} {{yearMonth7}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;"
+                                                                        colspan="2"
+                                                                        (click)="getAllProductPurchaseForYear(month7,yearMonth7)">
+                                                                        {{purchaseTotalMonth7 | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center;color: blue;cursor: hand;cursor: pointer;"
+                                                                        (click)="getMonthSales(month7,yearMonth7)"
+                                                                        colspan="1">
+                                                                        {{salesTotalMonth7 | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center;;"
+                                                                        colspan="2">
+                                                                        {{(salesTotalMonth7) - (purchaseTotalMonth7) |
+                                                                        number:'1.2-2'}}
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr *ngIf="isMonth8">
+                                                                    <td style="border: 2px solid #272829; text-align: center;;"
+                                                                        colspan="2">
+                                                                        {{month8}} {{yearMonth8}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;"
+                                                                        colspan="2"
+                                                                        (click)="getAllProductPurchaseForYear(month8,yearMonth8)">
+                                                                        {{purchaseTotalMonth8 | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center;color: blue;cursor: hand;cursor: pointer;"
+                                                                        (click)="getMonthSales(month8,yearMonth8)"
+                                                                        colspan="1">
+                                                                        {{salesTotalMonth8 | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center;;"
+                                                                        colspan="2">
+                                                                        {{(salesTotalMonth8) - (purchaseTotalMonth8) |
+                                                                        number:'1.2-2'}}
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr *ngIf="isMonth9">
+                                                                    <td style="border: 2px solid #272829; text-align: center;;"
+                                                                        colspan="2">
+                                                                        {{month9}} {{yearMonth9}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;"
+                                                                        colspan="2"
+                                                                        (click)="getAllProductPurchaseForYear(month9,yearMonth9)">
+                                                                        {{purchaseTotalMonth9 | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center;color: blue;cursor: hand;cursor: pointer;"
+                                                                        (click)="getMonthSales(month9,yearMonth9)"
+                                                                        colspan="1">
+                                                                        {{salesTotalMonth9 | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center;;"
+                                                                        colspan="2">
+                                                                        {{(salesTotalMonth9) - (purchaseTotalMonth9) |
+                                                                        number:'1.2-2'}}
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr *ngIf="isMonth10">
+                                                                    <td style="border: 2px solid #272829; text-align: center;;"
+                                                                        colspan="2">
+                                                                        {{month10}} {{yearMonth10}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;"
+                                                                        colspan="2"
+                                                                        (click)="getAllProductPurchaseForYear(month10,yearMonth10)">
+                                                                        {{purchaseTotalMonth10 | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center;color: blue;cursor: hand;cursor: pointer;"
+                                                                        (click)="getMonthSales(month10,yearMonth10)"
+                                                                        colspan="1">
+                                                                        {{salesTotalMonth10 | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center;;"
+                                                                        colspan="2">
+                                                                        {{(salesTotalMonth10) - (purchaseTotalMonth10) |
+                                                                        number:'1.2-2'}}
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr *ngIf="isMonth11">
+                                                                    <td style="border: 2px solid #272829; text-align: center;;"
+                                                                        colspan="2">
+                                                                        {{month11}} {{yearMonth11}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;"
+                                                                        colspan="2"
+                                                                        (click)="getAllProductPurchaseForYear(month11,yearMonth11)">
+                                                                        {{purchaseTotalMonth11 | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center;color: blue;cursor: hand;cursor: pointer;"
+                                                                        (click)="getMonthSales(month11,yearMonth11)"
+                                                                        colspan="1">
+                                                                        {{salesTotalMonth11 | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center;;"
+                                                                        colspan="2">
+                                                                        {{(salesTotalMonth11) - (purchaseTotalMonth11) |
+                                                                        number:'1.2-2'}}
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr *ngIf="isMonth12">
+                                                                    <td style="border: 2px solid #272829; text-align: center;;"
+                                                                        colspan="2">
+                                                                        {{month12}} {{yearMonth12}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;"
+                                                                        colspan="2"
+                                                                        (click)="getAllProductPurchaseForYear(month12,yearMonth12)">
+                                                                        {{purchaseTotalMonth12 | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center;color: blue;cursor: hand;cursor: pointer;"
+                                                                        (click)="getMonthSales(month12,yearMonth12)"
+                                                                        colspan="1">
+                                                                        {{salesTotalMonth12 | number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="border: 2px solid #272829; text-align: center;;"
+                                                                        colspan="2">
+                                                                        {{(salesTotalMonth12) - (purchaseTotalMonth12) |
+                                                                        number:'1.2-2'}}
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" *ngIf="isProductPurchase">
+                                                <div class="col-md-12">
+                                                    <div class="card-body table-responsive">
+                                                        <table class="table table-hover table-striped">
+                                                            <thead style=" background-color: aquamarine;">
+                                                                <tr>
+                                                                    <th style="text-align: center;"> invoice date</th>
+                                                                    <th style="text-align: center;"> vehicle number
+                                                                    </th>
+                                                                    <th style="text-align: center;"> invoice number
+                                                                    </th>
+                                                                    <th style="text-align: center;"> received date</th>
+                                                                    <th style="text-align: center;"> product</th>
+                                                                    <th style="text-align: center;"> quantity</th>
+                                                                    <th style="text-align: center;"> basic amount</th>
+                                                                    <th style="text-align: center;"> vat amount</th>
+                                                                    <th style="text-align: center;"> vat %</th>
+                                                                    <th style="text-align: center;"> cess amount</th>
+                                                                    <th style="text-align: center;"> totaltax</th>
+                                                                    <th style="text-align: center;"> other components
+                                                                    </th>
+                                                                    <th style="text-align: center;"> totalamount </th>
+
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody
+                                                                *ngFor="let data of oilCompanyDetailsForYear | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total };  let i = index;">
+                                                                <tr>
+                                                                    <td style="text-align: center;"> {{data.invoiceDate
+                                                                        |
+                                                                        date:"mediumDate"}}</td>
+                                                                    <td style="text-align: center;">
+                                                                        {{data.vehicleNumber}} </td>
+                                                                    <td style="text-align: center;">
+                                                                        {{data.invoiceNumber}} </td>
+                                                                    <td style="text-align: center;"> {{data.receivedDate
+                                                                        | date:"mediumDate"}}</td>
+                                                                    <td style="text-align: center;">
+                                                                        {{data.productName}} </td>
+                                                                    <td style="text-align: center;">
+                                                                        <span *ngIf="data.productName == 'CNG'">
+                                                                            {{data.quantity}} kg
+                                                                        </span>
+                                                                        <span *ngIf="data.productName != 'CNG'">
+                                                                            {{data.quantity}} ltr
+                                                                        </span>
+                                                                    </td>
+
+                                                                    <td style="text-align: center;"> {{data.basicAmt |
+                                                                        number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="text-align: center;"> {{data.vatAmt |
+                                                                        number:'1.2-2'}} </td>
+                                                                    <td style="text-align: center;"> {{data.vatPercent}}
+                                                                    </td>
+                                                                    <td style="text-align: center;"> {{data.cessAmt |
+                                                                        number:'1.2-2'}} </td>
+                                                                    <td style="text-align: center;"> {{data.totalTax |
+                                                                        number:'1.2-2'}}
+                                                                    </td>
+                                                                    <td style="text-align: center;"> {{data.components}}
+                                                                    </td>
+                                                                    <td style="text-align: center;">
+                                                                        {{data.totalAmount | number:'1.2-2'}}
+                                                                    </td>
+
+                                                                </tr>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" *ngIf="isMonthSale">
+                                                <div class="col-md-12">
+                                                    <div class="card-body table-responsive">
+                                                        <table class="table table-hover b">
+                                                            <tr style="background-color: aquamarine;">
+                                                                <th style="border: 2px solid #272829;text-align: center;"
+                                                                    colspan="12">
+                                                                    <b>PURCHASE</b>
+                                                                </th>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th style="border: 2px solid #272829;" colspan="2">
+                                                                    Product
+                                                                </th>
+                                                                <th style="border: 2px solid #272829;" colspan="2">
+                                                                    Basic Amount
+                                                                </th>
+                                                                <th style="border: 2px solid #272829;" colspan="1">
+                                                                    VAT %
+                                                                </th>
+                                                                <th style="border: 2px solid #272829;" colspan="2">
+                                                                    VAT Amount
+                                                                </th>
+                                                                <th style="border: 2px solid #272829;" colspan="1">
+                                                                    Cess Amount
+                                                                </th>
+                                                                <th style="border: 2px solid #272829;" colspan="2">
+                                                                    Other Components
+                                                                </th>
+                                                                <th style="border: 2px solid #272829;" colspan="2">
+                                                                    Total Amount
+                                                                </th>
+                                                            </tr>
+
+                                                            <tr
+                                                                *ngFor="let data of productPurchaseDetails; let i = index;">
+                                                                <td style="border: 2px solid #272829;" colspan="2">
+                                                                    {{data.productName}}
+                                                                </td>
+                                                                <td style="border: 2px solid #272829;" colspan="2">
+                                                                    {{data.basicAmt | number:'1.2-2'}}
+                                                                </td>
+                                                                <td style="border: 2px solid #272829;" colspan="1">
+                                                                    {{data.vatPercent | number:'1.2-2'}} %
+                                                                </td>
+                                                                <td style="border: 2px solid #272829;" colspan="2">
+                                                                    {{data.vatAmt | number:'1.2-2'}}
+                                                                </td>
+                                                                <td style="border: 2px solid #272829;" colspan="1">
+                                                                    {{data.cessAmt | number:'1.2-2'}}
+                                                                </td>
+                                                                <td style="border: 2px solid #272829;" colspan="2">
+                                                                    {{data.components | number:'1.2-2'}}
+                                                                </td>
+                                                                <td style="border: 2px solid #272829;" colspan="2">
+                                                                    {{data.totalAmount | number:'1.2-2'}}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border: 2px solid #272829;" colspan="2">
+                                                                    <b> PURCHASE TOTAL </b>
+                                                                </td>
+                                                                <td style="border: 2px solid #272829;" colspan="2">
+
+                                                                </td>
+                                                                <td style="border: 2px solid #272829;" colspan="1">
+
+                                                                </td>
+                                                                <td style="border: 2px solid #272829;" colspan="2">
+                                                                    <b>{{purchaseTotal | number:'1.2-2'}}</b>
+                                                                </td>
+                                                                <td style="border: 2px solid #272829;" colspan="1">
+
+                                                                </td>
+                                                                <td style="border: 2px solid #272829;" colspan="2">
+
+                                                                </td>
+                                                                <td style="border: 2px solid #272829;" colspan="2">
+
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr style="background-color: aquamarine;">
+                                                                <th style="border: 2px solid #272829;text-align: center;"
+                                                                    colspan="12">
+                                                                    <b>SALE</b>
+                                                                </th>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th style="border: 2px solid #272829;" colspan="2">
+                                                                    Product
+                                                                </th>
+                                                                <th style="border: 2px solid #272829;" colspan="2">
+                                                                    Basic Amount
+                                                                </th>
+                                                                <th style="border: 2px solid #272829;" colspan="1">
+                                                                    VAT %
+                                                                </th>
+                                                                <th style="border: 2px solid #272829;" colspan="2">
+                                                                    VAT Amount
+                                                                </th>
+                                                                <th style="border: 2px solid #272829;" colspan="1">
+
+                                                                </th>
+                                                                <th style="border: 2px solid #272829;" colspan="2">
+
+                                                                </th>
+                                                                <th style="border: 2px solid #272829;" colspan="2">
+                                                                    Total Amount
+                                                                </th>
+                                                            </tr>
+
+                                                            <tr *ngFor="let data of vatSalesDetails; let i = index;">
+                                                                <td style="border: 2px solid #272829;" colspan="2">
+                                                                    {{data.productName}}
+                                                                </td>
+                                                                <td style="border: 2px solid #272829;" colspan="2">
+                                                                    {{data.basicAmount | number:'1.2-2'}}
+                                                                </td>
+                                                                <td style="border: 2px solid #272829;" colspan="1">
+                                                                    {{data.vat | number:'1.2-2'}} %
+                                                                </td>
+                                                                <td style="border: 2px solid #272829;" colspan="2">
+                                                                    {{data.vatAmount | number:'1.2-2'}}
+                                                                </td>
+                                                                <td style="border: 2px solid #272829;" colspan="1">
+
+                                                                </td>
+                                                                <td style="border: 2px solid #272829;" colspan="2">
+
+                                                                </td>
+                                                                <td style="border: 2px solid #272829;" colspan="2">
+                                                                    {{data.totalAmount | number:'1.2-2'}}
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td style="border: 2px solid #272829;" colspan="2">
+                                                                    <b> SALE TOTAL </b>
+                                                                </td>
+                                                                <td style="border: 2px solid #272829;" colspan="2">
+
+                                                                </td>
+                                                                <td style="border: 2px solid #272829;" colspan="1">
+
+                                                                </td>
+                                                                <td style="border: 2px solid #272829;" colspan="2">
+                                                                    <b>{{salesTotal | number:'1.2-2'}}</b>
+                                                                </td>
+                                                                <td style="border: 2px solid #272829;" colspan="1">
+
+                                                                </td>
+                                                                <td style="border: 2px solid #272829;" colspan="2">
+
+                                                                </td>
+                                                                <td style="border: 2px solid #272829;" colspan="2">
+
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th style="border: 2px solid #272829;" colspan="2">
+                                                                    <br>
+                                                                </th>
+                                                                <th style="border: 2px solid #272829;" colspan="2">
+                                                                    <br>
+                                                                </th>
+                                                                <th style="border: 2px solid #272829;" colspan="1">
+                                                                    <br>
+                                                                </th>
+                                                                <th style="border: 2px solid #272829;" colspan="2">
+                                                                    <br>
+                                                                </th>
+                                                                <th style="border: 2px solid #272829;" colspan="1">
+                                                                    <br>
+                                                                </th>
+                                                                <th style="border: 2px solid #272829;" colspan="2">
+                                                                    <br>
+                                                                </th>
+                                                                <th style="border: 2px solid #272829;" colspan="2">
+                                                                    <br>
+                                                                </th>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th style="border: 2px solid #272829;" colspan="5">
+                                                                    <b>VAT PAYABLE</b>
+                                                                </th>
+                                                                <th style="border: 2px solid #272829;" colspan="2">
+                                                                    <b>{{(salesTotal) - (purchaseTotal) |
+                                                                        number:'1.2-2'}} </b>
+                                                                </th>
+                                                                <th style="border: 2px solid #272829;" colspan="1">
+
+                                                                </th>
+                                                                <th style="border: 2px solid #272829;" colspan="2">
+
+                                                                </th>
+                                                                <th style="border: 2px solid #272829;" colspan="2">
+
+                                                                </th>
+                                                            </tr>
+
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </ng-template>
+                        </div>
+
+                        <div id="page-wrap" *ngIf="isPrint">
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-auto">
+                                    &nbsp; <button class="btn btn-success" printSectionId="sanjay"
+                                        [useExistingCss]="true" ngxPrint>Print </button>
+                                </div>
+                                <div class="col-auto">
+                                    <button class="btn btn-primary" (click)="downloadReport()">Download </button>
+                                </div>
+                                <div class="col-auto">
+                                    <button class="btn btn-secondary my-2 my-sm-0 noprint" (click)="viewTables()"> Back
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="sanjay">
+                                <div class="container">
+                                    <div class="col-12 mr-2 px-1 py-1 container border-black" id="htmlData">
+                                        <div>
+                                            <br>
+                                            <table class="table main-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="border: 2px solid #272829; border-right: 0px solid #272829;"
+                                                            colspan="1">
+                                                            <b>MONTH-</b> <br>
+                                                            {{month}} {{year}}
+                                                        </th>
+                                                        <th style="border: 2px solid #272829; border-left: 0px solid #272829;"
+                                                            colspan="1">
+                                                        </th>
+                                                        <th style="border: 2px solid #272829;" colspan="8">
+                                                            <b>{{dealerCompanyName}}</b> <br>
+                                                            <b>{{brandName}}</b> <br>
+                                                            <b> {{dealerCity}} </b>
+                                                        </th>
+                                                        <th style="border: 2px solid #272829;" colspan="2">
+                                                            <b>DATE-</b><br>
+                                                            {{startDate | date:'dd-MM-yyyy'}} to {{endDate |
+                                                            date:'dd-MM-yyyy'}}
+                                                        </th>
                                                     </tr>
-                                
+
+                                                    <tr>
+                                                        <th style="border: 2px solid #272829;" colspan="2"></th>
+                                                        <th style="border: 2px solid #272829;text-align: center;"
+                                                            colspan="8">
+                                                            <b> Monthly VAT summary Report </b>
+                                                        </th>
+                                                        <th style="border: 2px solid #272829;" colspan="2"></th>
+                                                    </tr>
+
+                                                    <tr style="background-color: aquamarine;">
+                                                        <th style="border: 2px solid #272829;text-align: center;"
+                                                            colspan="12">
+                                                            PURCHASE
+                                                        </th>
+                                                    </tr>
                                                     <tr>
                                                         <th style="border: 2px solid #272829;" colspan="2">
                                                             Product
                                                         </th>
-                                                        <th style="border: 2px solid #272829;" colspan="2"> 
+                                                        <th style="border: 2px solid #272829;" colspan="2">
                                                             Basic Amount
                                                         </th>
-                                                        <th style="border: 2px solid #272829;" colspan="1"> 
+                                                        <th style="border: 2px solid #272829;" colspan="1">
                                                             VAT %
                                                         </th>
-                                                        <th style="border: 2px solid #272829;" colspan="2"> 
+                                                        <th style="border: 2px solid #272829;" colspan="2">
                                                             VAT Amount
                                                         </th>
-                                                        <th style="border: 2px solid #272829;" colspan="1"> 
+                                                        <th style="border: 2px solid #272829;" colspan="1">
                                                             Cess Amount
                                                         </th>
-                                                        <th style="border: 2px solid #272829;" colspan="2"> 
+                                                        <th style="border: 2px solid #272829;" colspan="2">
                                                             Other Components
                                                         </th>
                                                         <th style="border: 2px solid #272829;" colspan="2">
                                                             Total Amount
                                                         </th>
                                                     </tr>
-                                
+
                                                     <tr *ngFor="let data of productPurchaseDetails; let i = index;">
                                                         <td style="border: 2px solid #272829;" colspan="2">
                                                             {{data.productName}}
                                                         </td>
-                                                        <td style="border: 2px solid #272829;" colspan="2"> 
+                                                        <td style="border: 2px solid #272829;" colspan="2">
                                                             {{data.basicAmt | number:'1.2-2'}}
                                                         </td>
-                                                        <td style="border: 2px solid #272829;" colspan="1"> 
-                                                        {{data.vatPercent | number:'1.2-2'}} %
+                                                        <td style="border: 2px solid #272829;" colspan="1">
+                                                            {{data.vatPercent | number:'1.2-2'}} %
                                                         </td>
-                                                        <td style="border: 2px solid #272829;" colspan="2"> 
+                                                        <td style="border: 2px solid #272829;" colspan="2">
                                                             {{data.vatAmt | number:'1.2-2'}}
                                                         </td>
-                                                        <td style="border: 2px solid #272829;" colspan="1"> 
+                                                        <td style="border: 2px solid #272829;" colspan="1">
                                                             {{data.cessAmt | number:'1.2-2'}}
                                                         </td>
-                                                        <td style="border: 2px solid #272829;" colspan="2"> 
+                                                        <td style="border: 2px solid #272829;" colspan="2">
                                                             {{data.components | number:'1.2-2'}}
                                                         </td>
                                                         <td style="border: 2px solid #272829;" colspan="2">
                                                             {{data.totalAmount | number:'1.2-2'}}
                                                         </td>
                                                     </tr>
-                                
-                                                
-                                
+
+
+
                                                     <tr>
                                                         <td style="border: 2px solid #272829;" colspan="2">
-                                                        <b> PURCHASE TOTAL </b>
-                                                        </td>
-                                                        <td style="border: 2px solid #272829;" colspan="2"> 
-                                                            
-                                                        </td>
-                                                        <td style="border: 2px solid #272829;" colspan="1"> 
-                                                            
-                                                        </td>
-                                                        <td style="border: 2px solid #272829;" colspan="2"> 
-                                                            <b>{{purchaseTotal | number:'1.2-2'}}</b> 
-                                                        </td>
-                                                        <td style="border: 2px solid #272829;" colspan="1"> 
-                                                            
-                                                        </td>
-                                                        <td style="border: 2px solid #272829;" colspan="2"> 
-                                                            
+                                                            <b> PURCHASE TOTAL </b>
                                                         </td>
                                                         <td style="border: 2px solid #272829;" colspan="2">
-                                                            
+
+                                                        </td>
+                                                        <td style="border: 2px solid #272829;" colspan="1">
+
+                                                        </td>
+                                                        <td style="border: 2px solid #272829;" colspan="2">
+                                                            <b>{{purchaseTotal | number:'1.2-2'}}</b>
+                                                        </td>
+                                                        <td style="border: 2px solid #272829;" colspan="1">
+
+                                                        </td>
+                                                        <td style="border: 2px solid #272829;" colspan="2">
+
+                                                        </td>
+                                                        <td style="border: 2px solid #272829;" colspan="2">
+
                                                         </td>
                                                     </tr>
-                                
-                                                    <tr style="background-color: aquamarine;"> 
-                                                        <th style="border: 2px solid #272829;text-align: center;" colspan="12"> 
-                                                            <b>SALE</b> 
-                                                        </th> 
+
+                                                    <tr style="background-color: aquamarine;">
+                                                        <th style="border: 2px solid #272829;text-align: center;"
+                                                            colspan="12">
+                                                            <b>SALE</b>
+                                                        </th>
                                                     </tr>
-                                
                                                     <tr>
                                                         <th style="border: 2px solid #272829;" colspan="2">
                                                             Product
                                                         </th>
-                                                        <th style="border: 2px solid #272829;" colspan="2"> 
+                                                        <th style="border: 2px solid #272829;" colspan="2">
                                                             Basic Amount
                                                         </th>
-                                                        <th style="border: 2px solid #272829;" colspan="1"> 
+                                                        <th style="border: 2px solid #272829;" colspan="1">
                                                             VAT %
                                                         </th>
-                                                        <th style="border: 2px solid #272829;" colspan="2"> 
+                                                        <th style="border: 2px solid #272829;" colspan="2">
                                                             VAT Amount
                                                         </th>
-                                                        <th style="border: 2px solid #272829;" colspan="1"> 
-                                                            
+                                                        <th style="border: 2px solid #272829;" colspan="1">
+
                                                         </th>
-                                                        <th style="border: 2px solid #272829;" colspan="2"> 
-                                                            
+                                                        <th style="border: 2px solid #272829;" colspan="2">
+
                                                         </th>
                                                         <th style="border: 2px solid #272829;" colspan="2">
                                                             Total Amount
                                                         </th>
                                                     </tr>
-                                
+
                                                     <tr *ngFor="let data of vatSalesDetails; let i = index;">
                                                         <td style="border: 2px solid #272829;" colspan="2">
                                                             {{data.productName}}
                                                         </td>
-                                                        <td style="border: 2px solid #272829;" colspan="2"> 
+                                                        <td style="border: 2px solid #272829;" colspan="2">
                                                             {{data.basicAmount | number:'1.2-2'}}
                                                         </td>
-                                                        <td style="border: 2px solid #272829;" colspan="1"> 
-                                                        {{data.vat | number:'1.2-2'}} %
+                                                        <td style="border: 2px solid #272829;" colspan="1">
+                                                            {{data.vat | number:'1.2-2'}} %
                                                         </td>
-                                                        <td style="border: 2px solid #272829;" colspan="2"> 
+                                                        <td style="border: 2px solid #272829;" colspan="2">
                                                             {{data.vatAmount | number:'1.2-2'}}
                                                         </td>
-                                                        <td style="border: 2px solid #272829;" colspan="1"> 
-                                                            
+                                                        <td style="border: 2px solid #272829;" colspan="1">
+
                                                         </td>
-                                                        <td style="border: 2px solid #272829;" colspan="2"> 
-                                                            
+                                                        <td style="border: 2px solid #272829;" colspan="2">
+
                                                         </td>
                                                         <td style="border: 2px solid #272829;" colspan="2">
                                                             {{data.totalAmount | number:'1.2-2'}}
                                                         </td>
                                                     </tr>
-                                
-                                                
-                                
+
+
                                                     <tr>
                                                         <td style="border: 2px solid #272829;" colspan="2">
-                                                        <b> SALE TOTAL </b>
-                                                        </td>
-                                                        <td style="border: 2px solid #272829;" colspan="2"> 
-                                                            
-                                                        </td>
-                                                        <td style="border: 2px solid #272829;" colspan="1"> 
-                                                            
-                                                        </td>
-                                                        <td style="border: 2px solid #272829;" colspan="2"> 
-                                                            <b>{{salesTotal | number:'1.2-2'}}</b> 
-                                                        </td>
-                                                        <td style="border: 2px solid #272829;" colspan="1"> 
-                                                            
-                                                        </td>
-                                                        <td style="border: 2px solid #272829;" colspan="2"> 
-                                                            
+                                                            <b> SALE TOTAL </b>
                                                         </td>
                                                         <td style="border: 2px solid #272829;" colspan="2">
-                                                            
+
+                                                        </td>
+                                                        <td style="border: 2px solid #272829;" colspan="1">
+
+                                                        </td>
+                                                        <td style="border: 2px solid #272829;" colspan="2">
+                                                            <b>{{salesTotal | number:'1.2-2'}}</b>
+                                                        </td>
+                                                        <td style="border: 2px solid #272829;" colspan="1">
+
+                                                        </td>
+                                                        <td style="border: 2px solid #272829;" colspan="2">
+
+                                                        </td>
+                                                        <td style="border: 2px solid #272829;" colspan="2">
+
                                                         </td>
                                                     </tr>
 
-                                                    <tr>
-                                                        <th style="border: 2px solid #272829;" colspan="2">
-                                                            <br>
-                                                        </th>
-                                                        <th style="border: 2px solid #272829;" colspan="2"> 
-                                                            <br>
-                                                        </th>
-                                                        <th style="border: 2px solid #272829;" colspan="1"> 
-                                                            <br>
-                                                        </th>
-                                                        <th style="border: 2px solid #272829;" colspan="2"> 
-                                                            <br>   
-                                                        </th>
-                                                        <th style="border: 2px solid #272829;" colspan="1"> 
-                                                            <br>
-                                                        </th>
-                                                        <th style="border: 2px solid #272829;" colspan="2"> 
-                                                            <br>
-                                                        </th>
-                                                        <th style="border: 2px solid #272829;" colspan="2">
-                                                            <br>
-                                                        </th>
-                                                    </tr>
-                                
                                                     <tr>
                                                         <th style="border: 2px solid #272829;" colspan="5">
                                                             <b>VAT PAYABLE</b>
-                                                        </th> 
-                                                        <th style="border: 2px solid #272829;" colspan="2"> 
-                                                            <b>{{(salesTotal) - (purchaseTotal) | number:'1.2-2'}} </b> 
-                                                        </th>
-                                                        <th style="border: 2px solid #272829;" colspan="1"> 
-                                                            
-                                                        </th>
-                                                        <th style="border: 2px solid #272829;" colspan="2"> 
-                                                            
                                                         </th>
                                                         <th style="border: 2px solid #272829;" colspan="2">
-                                                            
+                                                            <b>{{(salesTotal) - (purchaseTotal) | number:'1.2-2'}} </b>
+                                                        </th>
+                                                        <th style="border: 2px solid #272829;" colspan="1">
+
+                                                        </th>
+                                                        <th style="border: 2px solid #272829;" colspan="2">
+
+                                                        </th>
+                                                        <th style="border: 2px solid #272829;" colspan="2">
+
                                                         </th>
                                                     </tr>
-                                
-                                                </table>
-                                            </div>
-                                            </div>
-                                        </div>
-                                    
-                                    </div>
-                                </div>
-                            </ng-template>
-                
-                            <!-- YEAR -->
-                            <ng-template #DSRTank1> 
-                                <br>  
-                                <div class="row" *ngIf = "isViewPDF">
-                                    <div class="col-md-12">
-                                    <div class="card-body table-responsive">
-                                        <table class="table table-hover table-striped">
-                                            <thead style=" background-color: aquamarine;">
-                                                <tr>
-                                                    <th style="text-align: center;"> invoice date</th>
-                                                    <th style="text-align: center;"> vehicle number </th>
-                                                    <th style="text-align: center;"> invoice number </th>
-                                                    <th style="text-align: center;"> received date</th>
-                                                    <th style="text-align: center;"> product</th> 
-                                                    <th style="text-align: center;"> quantity</th>
-                                                    <th style="text-align: center;"> basic amount</th>
-                                                    <th style="text-align: center;"> vat amount</th>
-                                                    <th style="text-align: center;"> vat %</th>
-                                                    <th style="text-align: center;"> cess amount</th>
-                                                    <th style="text-align: center;"> totaltax</th>
-                                                    <th style="text-align: center;"> other components </th>
-                                                    <th style="text-align: center;"> totalamount </th> 
 
-                                                </tr>
-                                            </thead>
-                                            <tbody
-                                                *ngFor="let data of oilCompanyDetails;  let i = index;">
-                                                <tr>
-                                                    <td style="text-align: center;"> {{data.invoiceDate |
-                                                        date:"mediumDate"}}</td>
-                                                    <td style="text-align: center;"> {{data.vehicleNumber}} </td>
-                                                    <td style="text-align: center;"> {{data.invoiceNumber}} </td>
-                                                    <td style="text-align: center;"> {{data.receivedDate | date:"mediumDate"}}</td>
-                                                    <td style="text-align: center;"> {{data.productName}} </td> 
-                                                    <td style="text-align: center;">
-                                                        <span *ngIf="data.productName == 'CNG'">
-                                                            {{data.quantity}} kg
-                                                        </span>
-                                                        <span *ngIf="data.productName != 'CNG'">
-                                                            {{data.quantity}} ltr
-                                                        </span>
-                                                    </td>
 
-                                                    <td style="text-align: center;"> {{data.basicAmt | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="text-align: center;"> {{data.vatAmt | number:'1.2-2'}} </td>
-                                                    <td style="text-align: center;"> {{data.vatPercent}} </td>
-                                                    <td style="text-align: center;"> {{data.cessAmt | number:'1.2-2'}} </td>
-                                                    <td style="text-align: center;"> {{data.totalTax | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="text-align: center;"> {{data.components}} </td>
-                                                    <td style="text-align: center;">
-                                                        {{data.totalAmount | number:'1.2-2'}}
-                                                    </td> 
-
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    </div>
-                                </div>    
-                            </ng-template>
-               
-                       
-                </form>
-                </ng-template>
-    
-                <!-- YEAR -->
-                <ng-template #Year> 
-                    <br>  
-                    <form [formGroup]="filterForm"> 
-        
-                        <div class="row" *ngIf = "!isPrint">  
-                               
-                            <div class="col-md-1"></div>              
-                            
-                          
-                            <div class="col-auto">
-                                <br>
-                                <label><b>Select Year :</b></label>
-                            </div>
-                            <div class="col-auto">   
-                                <br>
-                                <select class="form-control"  
-                                formControlName="fiscalyear" required> 
-                                <option value="">Select </option>
-                                <option value="1"> {{fiscalyear}} </option>
-                                <option value="2"> {{fiscalyear2}} </option>
-                                <option value="3"> {{fiscalyear3}} </option>
-                                <option value="4"> {{fiscalyear4}} </option>
-                            </select>                          
-                            </div>
-                            <div class="col-auto">
-                                <br>
-                                <button class="btn btn-primary my-2 my-sm-0" type="button" (click)="viewFiscalYearWise()">
-                                    view
-                                </button>
-                            </div>
-                        </div>  
-                        <br>
-                        <div class="row" *ngIf = "!isPrint">
-                            <div class="col col-xl-1 col-lg-1"  ></div>
-                            <div class="col col-xl-10 col-lg-10"  >
-                                <div class="row">
-                                    <div class="col-md-8"></div>
-                                    <div class="col-md-2" *ngIf = "isYear">
-                                        <button class="btn btn-primary my-2 my-sm-0" type="button" (click)="exportexcel()">
-                                            Download
-                                        </button>
-                                    </div>
-                                    <div class="col-md-2" *ngIf = "!isYear">
-                                        <button class="btn btn-outline-secondary my-2 my-sm-0 noprint" (click)="viewYearTables()"> Back </button>
-                                    </div>
-                                </div>
-            
-            
-                                <div class="row" *ngIf = "isYear" >
-                                    <div class="col-md-12">
-                                    <div class="card-body table-responsive">
-                                        <table id="excel-table" class="table table-hover b" style="border-collapse: collapse; border: 1px solid black;">  
-                                            <thead style="background-color: aquamarine;">
-                                                <tr>
-                                                    <th style="border: 2px solid #272829; text-align: center;" colspan="2">
-                                                        Month
-                                                    </th>
-                                                    <th style="border: 2px solid #272829; text-align: center;" colspan="2"> 
-                                                        Total purchase VAT
-                                                    </th>
-                                                    <th style="border: 2px solid #272829; text-align: center;" colspan="1"> 
-                                                        Total sales VAT
-                                                    </th>
-                                                    <th style="border: 2px solid #272829; text-align: center;" colspan="2"> 
-                                                        VAT payable
-                                                    </th> 
-                                                </tr>
-                                            </thead>           
-                                           
-                                            <tbody>
-                                                <tr *ngIf = "isMonth1">
-                                                    <td style="border: 2px solid #272829; text-align: center;" colspan="2">
-                                                        {{month1}} {{yearMonth1}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;" colspan="2" (click) = "getAllProductPurchaseForYear(month1,yearMonth1)"> 
-                                                        {{purchaseTotalMonth1 | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;" (click) = "getMonthSales(month1,yearMonth1)" colspan="1"> 
-                                                        {{salesTotalMonth1 | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center;;" colspan="2"> 
-                                                        {{(salesTotalMonth1) - (purchaseTotalMonth1) | number:'1.2-2'}}
-                                                    </td> 
-                                                </tr>
-            
-                                                <tr *ngIf = "isMonth2">
-                                                    <td style="border: 2px solid #272829; text-align: center;;" colspan="2">
-                                                        {{month2}} {{yearMonth2}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;" colspan="2" (click) = "getAllProductPurchaseForYear(month2,yearMonth2)"> 
-                                                        {{purchaseTotalMonth2 | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center;color: blue;cursor: hand;cursor: pointer;" (click) = "getMonthSales(month2,yearMonth2)" colspan="1"> 
-                                                        {{salesTotalMonth2 | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center;;" colspan="2"> 
-                                                        {{(salesTotalMonth2) - (purchaseTotalMonth2) | number:'1.2-2'}}
-                                                    </td> 
-                                                </tr>
-            
-                                                <tr *ngIf = "isMonth3">
-                                                    <td style="border: 2px solid #272829; text-align: center;;" colspan="2">
-                                                        {{month3}} {{yearMonth3}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;" colspan="2" (click) = "getAllProductPurchaseForYear(month3,yearMonth3)"> 
-                                                        {{purchaseTotalMonth3 | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center;color: blue;cursor: hand;cursor: pointer;" (click) = "getMonthSales(month3,yearMonth3)" colspan="1"> 
-                                                        {{salesTotalMonth3 | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center;;" colspan="2"> 
-                                                        {{(salesTotalMonth3) - (purchaseTotalMonth3) | number:'1.2-2'}}
-                                                    </td> 
-                                                </tr>
-            
-                                                <tr *ngIf = "isMonth4">
-                                                    <td style="border: 2px solid #272829; text-align: center;;" colspan="2">
-                                                        {{month4}} {{yearMonth4}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;" colspan="2" (click) = "getAllProductPurchaseForYear(month4,yearMonth4)"> 
-                                                        {{purchaseTotalMonth4 | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center;color: blue;cursor: hand;cursor: pointer;" (click) = "getMonthSales(month4,yearMonth4)" colspan="1"> 
-                                                        {{salesTotalMonth4 | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center;;" colspan="2"> 
-                                                        {{(salesTotalMonth4) - (purchaseTotalMonth4) | number:'1.2-2'}}
-                                                    </td> 
-                                                </tr>
-            
-                                                <tr *ngIf = "isMonth5">
-                                                    <td style="border: 2px solid #272829; text-align: center;;" colspan="2">
-                                                        {{month5}} {{yearMonth5}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;" colspan="2" (click) = "getAllProductPurchaseForYear(month5,yearMonth5)"> 
-                                                        {{purchaseTotalMonth5 | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center;color: blue;cursor: hand;cursor: pointer;" (click) = "getMonthSales(month5,yearMonth5)" colspan="1"> 
-                                                        {{salesTotalMonth5 | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center;;" colspan="2"> 
-                                                        {{(salesTotalMonth5) - (purchaseTotalMonth5) | number:'1.2-2'}}
-                                                    </td> 
-                                                </tr>
-            
-                                                <tr *ngIf = "isMonth6">
-                                                    <td style="border: 2px solid #272829; text-align: center;;" colspan="2">
-                                                        {{month6}} {{yearMonth6}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;" colspan="2" (click) = "getAllProductPurchaseForYear(month6,yearMonth6)"> 
-                                                        {{purchaseTotalMonth6 | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center;color: blue;cursor: hand;cursor: pointer;" (click) = "getMonthSales(month6,yearMonth6)" colspan="1"> 
-                                                        {{salesTotalMonth6 | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center;;" colspan="2"> 
-                                                        {{(salesTotalMonth6) - (purchaseTotalMonth6) | number:'1.2-2'}}
-                                                    </td> 
-                                                </tr>
-            
-                                                <tr *ngIf = "isMonth7">
-                                                    <td style="border: 2px solid #272829; text-align: center;;" colspan="2">
-                                                        {{month7}} {{yearMonth7}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;" colspan="2" (click) = "getAllProductPurchaseForYear(month7,yearMonth7)"> 
-                                                        {{purchaseTotalMonth7 | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center;color: blue;cursor: hand;cursor: pointer;" (click) = "getMonthSales(month7,yearMonth7)" colspan="1"> 
-                                                        {{salesTotalMonth7 | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center;;" colspan="2"> 
-                                                        {{(salesTotalMonth7) - (purchaseTotalMonth7) | number:'1.2-2'}}
-                                                    </td> 
-                                                </tr>
-            
-                                                <tr *ngIf = "isMonth8">
-                                                    <td style="border: 2px solid #272829; text-align: center;;" colspan="2">
-                                                        {{month8}} {{yearMonth8}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;" colspan="2" (click) = "getAllProductPurchaseForYear(month8,yearMonth8)"> 
-                                                        {{purchaseTotalMonth8 | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center;color: blue;cursor: hand;cursor: pointer;" (click) = "getMonthSales(month8,yearMonth8)" colspan="1"> 
-                                                        {{salesTotalMonth8 | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center;;" colspan="2"> 
-                                                        {{(salesTotalMonth8) - (purchaseTotalMonth8) | number:'1.2-2'}}
-                                                    </td> 
-                                                </tr>
-            
-                                                <tr *ngIf = "isMonth9">
-                                                    <td style="border: 2px solid #272829; text-align: center;;" colspan="2">
-                                                        {{month9}} {{yearMonth9}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;" colspan="2" (click) = "getAllProductPurchaseForYear(month9,yearMonth9)"> 
-                                                        {{purchaseTotalMonth9 | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center;color: blue;cursor: hand;cursor: pointer;" (click) = "getMonthSales(month9,yearMonth9)" colspan="1"> 
-                                                        {{salesTotalMonth9 | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center;;" colspan="2"> 
-                                                        {{(salesTotalMonth9) - (purchaseTotalMonth9) | number:'1.2-2'}}
-                                                    </td> 
-                                                </tr>
-            
-                                                <tr *ngIf = "isMonth10">
-                                                    <td style="border: 2px solid #272829; text-align: center;;" colspan="2">
-                                                        {{month10}} {{yearMonth10}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;" colspan="2" (click) = "getAllProductPurchaseForYear(month10,yearMonth10)"> 
-                                                        {{purchaseTotalMonth10 | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center;color: blue;cursor: hand;cursor: pointer;" (click) = "getMonthSales(month10,yearMonth10)" colspan="1"> 
-                                                        {{salesTotalMonth10 | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center;;" colspan="2"> 
-                                                        {{(salesTotalMonth10) - (purchaseTotalMonth10) | number:'1.2-2'}}
-                                                    </td> 
-                                                </tr>
-            
-                                                <tr *ngIf = "isMonth11">
-                                                    <td style="border: 2px solid #272829; text-align: center;;" colspan="2">
-                                                        {{month11}} {{yearMonth11}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;" colspan="2" (click) = "getAllProductPurchaseForYear(month11,yearMonth11)"> 
-                                                        {{purchaseTotalMonth11 | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center;color: blue;cursor: hand;cursor: pointer;" (click) = "getMonthSales(month11,yearMonth11)" colspan="1"> 
-                                                        {{salesTotalMonth11 | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center;;" colspan="2"> 
-                                                        {{(salesTotalMonth11) - (purchaseTotalMonth11) | number:'1.2-2'}}
-                                                    </td> 
-                                                </tr>
-            
-                                                <tr *ngIf = "isMonth12">
-                                                    <td style="border: 2px solid #272829; text-align: center;;" colspan="2">
-                                                        {{month12}} {{yearMonth12}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center; color: blue;cursor: hand;cursor: pointer;" colspan="2" (click) = "getAllProductPurchaseForYear(month12,yearMonth12)"> 
-                                                        {{purchaseTotalMonth12 | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center;color: blue;cursor: hand;cursor: pointer;" (click) = "getMonthSales(month12,yearMonth12)" colspan="1"> 
-                                                        {{salesTotalMonth12 | number:'1.2-2'}}
-                                                    </td>
-                                                    <td style="border: 2px solid #272829; text-align: center;;" colspan="2"> 
-                                                        {{(salesTotalMonth12) - (purchaseTotalMonth12) | number:'1.2-2'}}
-                                                    </td> 
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    </div>
-                                </div>
-                                <div class="row" *ngIf = "isProductPurchase" >
-                                    <div class="col-md-12">
-                                        <div class="card-body table-responsive">
-                                            <table class="table table-hover table-striped">
-                                                <thead style=" background-color: aquamarine;">
-                                                    <tr>
-                                                        <th style="text-align: center;"> invoice date</th>
-                                                        <th style="text-align: center;"> vehicle number </th>
-                                                        <th style="text-align: center;"> invoice number </th>
-                                                        <th style="text-align: center;"> received date</th>
-                                                        <th style="text-align: center;"> product</th> 
-                                                        <th style="text-align: center;"> quantity</th>
-                                                        <th style="text-align: center;"> basic amount</th>
-                                                        <th style="text-align: center;"> vat amount</th>
-                                                        <th style="text-align: center;"> vat %</th>
-                                                        <th style="text-align: center;"> cess amount</th>
-                                                        <th style="text-align: center;"> totaltax</th>
-                                                        <th style="text-align: center;"> other components </th>
-                                                        <th style="text-align: center;"> totalamount </th> 
-            
-                                                    </tr>
                                                 </thead>
-                                                <tbody
-                                                    *ngFor="let data of oilCompanyDetailsForYear | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total };  let i = index;">
-                                                    <tr>
-                                                        <td style="text-align: center;"> {{data.invoiceDate |
-                                                            date:"mediumDate"}}</td>
-                                                        <td style="text-align: center;"> {{data.vehicleNumber}} </td>
-                                                        <td style="text-align: center;"> {{data.invoiceNumber}} </td>
-                                                        <td style="text-align: center;"> {{data.receivedDate | date:"mediumDate"}}</td>
-                                                        <td style="text-align: center;"> {{data.productName}} </td> 
-                                                        <td style="text-align: center;">
-                                                            <span *ngIf="data.productName == 'CNG'">
-                                                                {{data.quantity}} kg
-                                                            </span>
-                                                            <span *ngIf="data.productName != 'CNG'">
-                                                                {{data.quantity}} ltr
-                                                            </span>
-                                                        </td>
-            
-                                                        <td style="text-align: center;"> {{data.basicAmt | number:'1.2-2'}}
-                                                        </td>
-                                                        <td style="text-align: center;"> {{data.vatAmt | number:'1.2-2'}} </td>
-                                                        <td style="text-align: center;"> {{data.vatPercent}} </td>
-                                                        <td style="text-align: center;"> {{data.cessAmt | number:'1.2-2'}} </td>
-                                                        <td style="text-align: center;"> {{data.totalTax | number:'1.2-2'}}
-                                                        </td>
-                                                        <td style="text-align: center;"> {{data.components}} </td>
-                                                        <td style="text-align: center;">
-                                                            {{data.totalAmount | number:'1.2-2'}}
-                                                        </td> 
-            
-                                                    </tr>
-                
-                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row" *ngIf = "isMonthSale">
-                                    <div class="col-md-12">
-                                    <div class="card-body table-responsive">
-                                        <table class="table table-hover b">
-                                            <tr style="background-color: aquamarine;"> 
-                                                <th style="border: 2px solid #272829;text-align: center;" colspan="12"> 
-                                                <b>PURCHASE</b> 
-                                                </th> 
-                                            </tr>
-                        
-                                            <tr>
-                                                <th style="border: 2px solid #272829;" colspan="2">
-                                                    Product
-                                                </th>
-                                                <th style="border: 2px solid #272829;" colspan="2"> 
-                                                    Basic Amount
-                                                </th>
-                                                <th style="border: 2px solid #272829;" colspan="1"> 
-                                                    VAT %
-                                                </th>
-                                                <th style="border: 2px solid #272829;" colspan="2"> 
-                                                    VAT Amount
-                                                </th>
-                                                <th style="border: 2px solid #272829;" colspan="1"> 
-                                                    Cess Amount
-                                                </th>
-                                                <th style="border: 2px solid #272829;" colspan="2"> 
-                                                    Other Components
-                                                </th>
-                                                <th style="border: 2px solid #272829;" colspan="2">
-                                                    Total Amount
-                                                </th>
-                                            </tr>
-                        
-                                            <tr *ngFor="let data of productPurchaseDetails; let i = index;">
-                                                <td style="border: 2px solid #272829;" colspan="2">
-                                                    {{data.productName}}
-                                                </td>
-                                                <td style="border: 2px solid #272829;" colspan="2"> 
-                                                    {{data.basicAmt | number:'1.2-2'}}
-                                                </td>
-                                                <td style="border: 2px solid #272829;" colspan="1"> 
-                                                {{data.vatPercent | number:'1.2-2'}} %
-                                                </td>
-                                                <td style="border: 2px solid #272829;" colspan="2"> 
-                                                    {{data.vatAmt | number:'1.2-2'}}
-                                                </td>
-                                                <td style="border: 2px solid #272829;" colspan="1"> 
-                                                    {{data.cessAmt | number:'1.2-2'}}
-                                                </td>
-                                                <td style="border: 2px solid #272829;" colspan="2"> 
-                                                    {{data.components | number:'1.2-2'}}
-                                                </td>
-                                                <td style="border: 2px solid #272829;" colspan="2">
-                                                    {{data.totalAmount | number:'1.2-2'}}
-                                                </td>
-                                            </tr> 
-                                            <tr>
-                                                <td style="border: 2px solid #272829;" colspan="2">
-                                                <b> PURCHASE TOTAL </b>
-                                                </td>
-                                                <td style="border: 2px solid #272829;" colspan="2"> 
-                                                    
-                                                </td>
-                                                <td style="border: 2px solid #272829;" colspan="1"> 
-                                                    
-                                                </td>
-                                                <td style="border: 2px solid #272829;" colspan="2"> 
-                                                    <b>{{purchaseTotal | number:'1.2-2'}}</b> 
-                                                </td>
-                                                <td style="border: 2px solid #272829;" colspan="1"> 
-                                                    
-                                                </td>
-                                                <td style="border: 2px solid #272829;" colspan="2"> 
-                                                    
-                                                </td>
-                                                <td style="border: 2px solid #272829;" colspan="2">
-                                                    
-                                                </td>
-                                            </tr>
-                        
-                                            <tr style="background-color: aquamarine;"> 
-                                                <th style="border: 2px solid #272829;text-align: center;" colspan="12"> 
-                                                    <b>SALE</b> 
-                                                </th> 
-                                            </tr>
-                        
-                                            <tr>
-                                                <th style="border: 2px solid #272829;" colspan="2">
-                                                    Product
-                                                </th>
-                                                <th style="border: 2px solid #272829;" colspan="2"> 
-                                                    Basic Amount
-                                                </th>
-                                                <th style="border: 2px solid #272829;" colspan="1"> 
-                                                    VAT %
-                                                </th>
-                                                <th style="border: 2px solid #272829;" colspan="2"> 
-                                                    VAT Amount
-                                                </th>
-                                                <th style="border: 2px solid #272829;" colspan="1"> 
-                                                    
-                                                </th>
-                                                <th style="border: 2px solid #272829;" colspan="2"> 
-                                                    
-                                                </th>
-                                                <th style="border: 2px solid #272829;" colspan="2">
-                                                    Total Amount
-                                                </th>
-                                            </tr>
-                        
-                                            <tr *ngFor="let data of vatSalesDetails; let i = index;">
-                                                <td style="border: 2px solid #272829;" colspan="2">
-                                                    {{data.productName}}
-                                                </td>
-                                                <td style="border: 2px solid #272829;" colspan="2"> 
-                                                    {{data.basicAmount | number:'1.2-2'}}
-                                                </td>
-                                                <td style="border: 2px solid #272829;" colspan="1"> 
-                                                {{data.vat | number:'1.2-2'}} %
-                                                </td>
-                                                <td style="border: 2px solid #272829;" colspan="2"> 
-                                                    {{data.vatAmount | number:'1.2-2'}}
-                                                </td>
-                                                <td style="border: 2px solid #272829;" colspan="1"> 
-                                                    
-                                                </td>
-                                                <td style="border: 2px solid #272829;" colspan="2"> 
-                                                    
-                                                </td>
-                                                <td style="border: 2px solid #272829;" colspan="2">
-                                                    {{data.totalAmount | number:'1.2-2'}}
-                                                </td>
-                                            </tr> 
-                        
-                                            <tr>
-                                                <td style="border: 2px solid #272829;" colspan="2">
-                                                <b> SALE TOTAL </b>
-                                                </td>
-                                                <td style="border: 2px solid #272829;" colspan="2"> 
-                                                    
-                                                </td>
-                                                <td style="border: 2px solid #272829;" colspan="1"> 
-                                                    
-                                                </td>
-                                                <td style="border: 2px solid #272829;" colspan="2"> 
-                                                    <b>{{salesTotal | number:'1.2-2'}}</b> 
-                                                </td>
-                                                <td style="border: 2px solid #272829;" colspan="1"> 
-                                                    
-                                                </td>
-                                                <td style="border: 2px solid #272829;" colspan="2"> 
-                                                    
-                                                </td>
-                                                <td style="border: 2px solid #272829;" colspan="2">
-                                                    
-                                                </td>
-                                            </tr>
-            
-                                            <tr>
-                                                <th style="border: 2px solid #272829;" colspan="2">
-                                                    <br>
-                                                </th>
-                                                <th style="border: 2px solid #272829;" colspan="2"> 
-                                                    <br>
-                                                </th>
-                                                <th style="border: 2px solid #272829;" colspan="1"> 
-                                                    <br>
-                                                </th>
-                                                <th style="border: 2px solid #272829;" colspan="2"> 
-                                                    <br>   
-                                                </th>
-                                                <th style="border: 2px solid #272829;" colspan="1"> 
-                                                    <br>
-                                                </th>
-                                                <th style="border: 2px solid #272829;" colspan="2"> 
-                                                    <br>
-                                                </th>
-                                                <th style="border: 2px solid #272829;" colspan="2">
-                                                    <br>
-                                                </th>
-                                            </tr>
-                        
-                                            <tr>
-                                                <th style="border: 2px solid #272829;" colspan="5">
-                                                    <b>VAT PAYABLE</b>
-                                                </th> 
-                                                <th style="border: 2px solid #272829;" colspan="2"> 
-                                                    <b>{{(salesTotal) - (purchaseTotal) | number:'1.2-2'}} </b> 
-                                                </th>
-                                                <th style="border: 2px solid #272829;" colspan="1"> 
-                                                    
-                                                </th>
-                                                <th style="border: 2px solid #272829;" colspan="2"> 
-                                                    
-                                                </th>
-                                                <th style="border: 2px solid #272829;" colspan="2">
-                                                    
-                                                </th>
-                                            </tr>
-                        
-                                        </table>
-                                    </div>
-                                    </div>
-                                </div>
-            
-            
                             </div>
                         </div>
-                                   
-                    </form>
-                </ng-template>
-                </div>
-                
-                <div id="page-wrap" *ngIf = "isPrint">
-                    <div class="row">
-                        <div class="col-md-4"></div>  
-                        <div class="col-auto">           
-                            &nbsp;  <button class="btn btn-success" printSectionId="sanjay" [useExistingCss]="true"
-                            ngxPrint>Print </button>
-                        </div> 
-                        <div class="col-auto">
-                            <button class="btn btn-primary" (click)="downloadReport()">Download </button> 
-                        </div>
-                        <div class="col-auto">
-                            <button class="btn btn-secondary my-2 my-sm-0 noprint" (click)="viewTables()"> Back </button>
-                        </div>
-                    </div>
 
-                    <div id="sanjay" >
-                        <div class="container"> 
-                            <div class="col-12 mr-2 px-1 py-1 container border-black" id="htmlData">
-                                <div>
-                                    <br>
-                            <table class="table main-table">
-                            <thead>
-                                <tr>
-                                    <th style="border: 2px solid #272829; border-right: 0px solid #272829;" colspan="1">
-                                        <b>MONTH-</b> <br>
-                                        {{month}} {{year}}
-                                    </th>
-                                    <th style="border: 2px solid #272829; border-left: 0px solid #272829;" colspan="1">
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="8"> 
-                                        <b>{{dealerCompanyName}}</b> <br>
-                                        <b>{{brandName}}</b> <br>
-                                        <b> {{dealerCity}}  </b>
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2">
-                                        <b>DATE-</b><br>
-                                        {{startDate | date:'dd-MM-yyyy'}} to {{endDate | date:'dd-MM-yyyy'}}
-                                    </th>
-                                </tr>
-
-                                <tr>
-                                    <th style="border: 2px solid #272829;" colspan="2"></th>
-                                    <th style="border: 2px solid #272829;text-align: center;" colspan="8"> 
-                                    <b> Monthly VAT summary Report </b>
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2"></th>
-                                </tr>
-
-                                <tr style="background-color: aquamarine;"> 
-                                    <th style="border: 2px solid #272829;text-align: center;" colspan="12"> 
-                                        PURCHASE
-                                    </th> 
-                                </tr>
-                                <tr>
-                                    <th style="border: 2px solid #272829;" colspan="2">
-                                        Product
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2"> 
-                                        Basic Amount
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="1"> 
-                                        VAT %
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2"> 
-                                        VAT Amount
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="1"> 
-                                        Cess Amount
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2"> 
-                                        Other Components
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2">
-                                        Total Amount
-                                    </th>
-                                </tr>
-
-                                <tr *ngFor="let data of productPurchaseDetails; let i = index;">
-                                    <td style="border: 2px solid #272829;" colspan="2">
-                                        {{data.productName}}
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2"> 
-                                        {{data.basicAmt | number:'1.2-2'}}
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="1"> 
-                                    {{data.vatPercent | number:'1.2-2'}} %
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2"> 
-                                        {{data.vatAmt | number:'1.2-2'}}
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="1"> 
-                                        {{data.cessAmt | number:'1.2-2'}}
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2"> 
-                                        {{data.components | number:'1.2-2'}}
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2">
-                                        {{data.totalAmount | number:'1.2-2'}}
-                                    </td>
-                                </tr>
-
-                            
-
-                                <tr>
-                                    <td style="border: 2px solid #272829;" colspan="2">
-                                    <b> PURCHASE TOTAL </b>
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2"> 
-                                        
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="1"> 
-                                        
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2"> 
-                                        <b>{{purchaseTotal | number:'1.2-2'}}</b> 
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="1"> 
-                                        
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2"> 
-                                        
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2">
-                                        
-                                    </td>
-                                </tr>
-
-                                <tr style="background-color: aquamarine;"> 
-                                    <th style="border: 2px solid #272829;text-align: center;" colspan="12"> 
-                                        <b>SALE</b> 
-                                    </th> 
-                                </tr>
-                                <tr>
-                                    <th style="border: 2px solid #272829;" colspan="2">
-                                        Product
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2"> 
-                                        Basic Amount
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="1"> 
-                                        VAT %
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2"> 
-                                        VAT Amount
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="1"> 
-                                        
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2"> 
-                                        
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2">
-                                        Total Amount
-                                    </th>
-                                </tr>
-
-                                <tr *ngFor="let data of vatSalesDetails; let i = index;">
-                                    <td style="border: 2px solid #272829;" colspan="2">
-                                        {{data.productName}}
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2"> 
-                                        {{data.basicAmount | number:'1.2-2'}}
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="1"> 
-                                    {{data.vat | number:'1.2-2'}} %
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2"> 
-                                        {{data.vatAmount | number:'1.2-2'}}
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="1"> 
-                                        
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2"> 
-                                        
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2">
-                                        {{data.totalAmount | number:'1.2-2'}}
-                                    </td>
-                                </tr>
-
-
-                                <tr>
-                                    <td style="border: 2px solid #272829;" colspan="2">
-                                    <b> SALE TOTAL </b>
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2"> 
-                                        
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="1"> 
-                                        
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2"> 
-                                        <b>{{salesTotal | number:'1.2-2'}}</b> 
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="1"> 
-                                        
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2"> 
-                                        
-                                    </td>
-                                    <td style="border: 2px solid #272829;" colspan="2">
-                                        
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th style="border: 2px solid #272829;" colspan="5">
-                                        <b>VAT PAYABLE</b>
-                                    </th> 
-                                    <th style="border: 2px solid #272829;" colspan="2"> 
-                                        <b>{{(salesTotal) - (purchaseTotal) | number:'1.2-2'}} </b> 
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="1"> 
-                                        
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2"> 
-                                        
-                                    </th>
-                                    <th style="border: 2px solid #272829;" colspan="2">
-                                        
-                                    </th>
-                                </tr>
-
-
-                            </thead>
-                            </table>
-                            </div>
-                        </div>
-                        </div>
                     </div>
                 </div>
-
-                </div>
-             </div>
             </div>
-        </div> 
+        </div>
     </div>
 </body>
+
 </html>

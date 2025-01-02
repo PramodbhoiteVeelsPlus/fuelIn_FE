@@ -518,27 +518,36 @@ export class ListsWidget5Component {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
-    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
-    var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
     this.accessGroup = element.accessGroupId;
     this.managerName = element.firstName + ' ' + element.lastName;
-    this.pumpCity = dealerData.city
     this.userId = element.userId;
     this.managerVPPersonId = element.veelsPlusId
     this.managerPersonId = element.personId
     this.keyPerson = element.firstName + ' ' + element.lastName;
-    this.companyName = dealerData.companyName
-    this.oilCompanyName = dealerData.brandName
-    this.brandName = dealerData.brandName
-    this.state = dealerData.state
-    this.pin = dealerData.pin
-    this.city = dealerData.city
-    this.phone1 = dealerData.hostPhone
     this.createdBy = element.firstName + ' ' + element.lastName
-    if (this.accessGroup == '14') {
+    
+    if (this.accessGroup == '12') {
+      var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+      this.companyName = dealerData.companyName
+      this.oilCompanyName = dealerData.brandName
+      this.brandName = dealerData.brandName
+      this.state = dealerData.state
+      this.pin = dealerData.pin
+      this.city = dealerData.city
+      this.phone1 = dealerData.hostPhone
       this.pumpCity = dealerData.city
+    }
+
+    if (this.accessGroup == '14') {
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
+      this.pumpCity = managerData.city
       this.city = managerData.city
       this.companyName = managerData.companyName
+      this.phone1 = managerData.hostPhone
+      this.oilCompanyName = managerData.brandName
+      this.brandName = managerData.brandName
+      this.state = managerData.state
+      this.pin = managerData.pin
     }
     if (this.post.setRoute == "Book") {
       this.addShiftForm.controls["date"].setValue(moment(this.post.setDate).format("DD-MM-YYYY"))

@@ -90,6 +90,8 @@ export class FeedsWidget9Component implements OnInit {
     private cd: ChangeDetectorRef,) { }
 
   ngOnInit(): void {   
+    var element = JSON.parse(localStorage.getItem('element')|| '');
+    this.accessGroupId = element.accessGroupId;  
     if(this.post.profitReportData){
       this.profitReportData = this.post.profitReportData
       this.month = this.profitReportData.profitReportMonth
@@ -102,9 +104,17 @@ export class FeedsWidget9Component implements OnInit {
       this.profitReportAdvAmt = this.profitReportData.profitReportAdvAmt
       this.profitReportExpenseAmt = this.profitReportData.profitReportExpenseAmt
       this.fuelDealerId = localStorage.getItem('dealerId');
-      var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');
-      this.dealerCompanyName = dealerData.companyName;
-      this.dealerCity = dealerData.city;
+      if(this.accessGroupId == '12'){
+        var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');
+        this.dealerCompanyName = dealerData.companyName;
+        this.dealerCity = dealerData.city;
+      } 
+      if(this.accessGroupId == '14'){
+        var managerData = JSON.parse(localStorage.getItem('managerData') || '');
+        this.dealerCompanyName = managerData.companyName;
+        this.dealerCity = managerData.city;
+      } 
+  
       this.cd.detectChanges();
       this.getAllProfitReport(this.fuelDealerId);
     }else{

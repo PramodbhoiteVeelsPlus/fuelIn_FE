@@ -283,18 +283,30 @@ export class TilesWidget5Component {
     config.outsideDays = 'hidden';
   }
   ngOnInit(): void {
-    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');
+    var element = JSON.parse(localStorage.getItem('element') || '');
     this.fuelDealerId = localStorage.getItem('dealerId');
     this.filterForm.controls["startDate"].setValue("01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear())
     this.filterForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
     this.selected = ("01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear()) + ' - ' + (moment(new Date()).format("DD-MM-YYYY"))
     this.closingDate = moment(new Date()).format("YYYY-MM-DD");
     this.openingDate = moment(new Date()).format("YYYY-MM-01");
+    
+    this.accessGroupId = element.accessGroupId;
+    if (this.accessGroupId == '12') {
+      var dealerData = JSON.parse(localStorage.getItem('dealerData') || '')
+      this.headerName1 = dealerData.companyName;
+      this.headerName2 = dealerData.address1 + ', ' + dealerData.address2 + ', ' + dealerData.city;
+      this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
+      this.oilBrandName = dealerData.brandName;
+    }
+    if (this.accessGroupId == '14') {
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '');
+      this.headerName1 = managerData.companyName;
+      this.headerName2 = managerData.address1 + ', ' + managerData.address2 + ', ' + managerData.city;
+      this.headerName3 = managerData.state + '-' + managerData.pin + '  ' + "GST: " + managerData.GSTNumber;
+      this.oilBrandName = managerData.brandName;
+    }
 
-    this.headerName1 = dealerData.companyName;
-    this.headerName2 = dealerData.address1 + ', ' + dealerData.address2 + ', ' + dealerData.city;
-    this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
-    this.oilBrandName = dealerData.brandName;
 
     this.getFuelTerminal(this.fuelDealerId);
     this.getOILCOMPANYDataInFuelExpense(this.fuelDealerId);

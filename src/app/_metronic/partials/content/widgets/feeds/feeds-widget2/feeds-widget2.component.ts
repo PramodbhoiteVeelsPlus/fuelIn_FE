@@ -125,11 +125,23 @@ export class FeedsWidget2Component implements OnInit {
   }
 
   ngOnInit(): void {
-    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');
+    var element = JSON.parse(localStorage.getItem('element') || '');
     this.fuelDealerId = localStorage.getItem('dealerId');
-    this.oilCompanyName = dealerData.brandName;
-    this.petrolPump = dealerData.companyName;
-    this.GSTNumber = dealerData.GSTNumber;
+    
+    this.accessGroupId = element.accessGroupId;
+    if (this.accessGroupId == '12') {
+      var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');
+      this.oilCompanyName = dealerData.brandName;
+      this.petrolPump = dealerData.companyName;
+      this.GSTNumber = dealerData.GSTNumber;
+    }
+    if (this.accessGroupId == '14') {
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '');
+      this.oilCompanyName = managerData.brandName;
+      this.petrolPump = managerData.companyName;
+      this.GSTNumber = managerData.GSTNumber;
+    }
+
     this.currentYear = new Date().getFullYear();
     this.lastYear = Number(this.currentYear) - 1;
     this.last2Year = Number(this.currentYear) - 2;

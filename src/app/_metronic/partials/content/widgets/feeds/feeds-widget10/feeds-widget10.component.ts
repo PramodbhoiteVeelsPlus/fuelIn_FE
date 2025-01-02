@@ -148,11 +148,21 @@ export class FeedsWidget10Component implements OnInit {
     private cd: ChangeDetectorRef,) { }
 
   ngOnInit(): void {
+    var element = JSON.parse(localStorage.getItem('element')|| '');
     this.fuelDealerId = localStorage.getItem('dealerId');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
-    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');
-    this.dealerCompanyName = dealerData.companyName;
-    this.dealerCity = dealerData.city;
+    this.accessGroupId = element.accessGroupId;  
+    if(this.accessGroupId == '12'){
+      var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');
+      this.dealerCompanyName = dealerData.companyName;
+      this.dealerCity = dealerData.city;
+    } 
+    if(this.accessGroupId == '14'){
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '');
+      this.dealerCompanyName = managerData.companyName;
+      this.dealerCity = managerData.city;
+    } 
+
     this.selectedDate = moment(new Date()).format("DD-MM-YYYY");
     this.getOpeningBalance(this.fuelDealerId);
     this.getDigitalTotalByDate(this.dealerCorporateId);
@@ -261,15 +271,24 @@ export class FeedsWidget10Component implements OnInit {
           this.meterSalesDetails = res.data;
           this.totalMeterSalesDetails = res.data1[0].meterSaleAmount;
           this.creditSalesProductwise = res.data2
-          console.log("len", this.meterSalesDetails.length)
+          // console.log("len", this.meterSalesDetails.length)
 
           this.totalCreditSalesAmount = Number(res.data3[0].totalCreditSales) + Number(res.data4[0].totalCreditSales)
           this.totalCreditWOCNGQuantity = Number(res.data3[0].totalCreditQuantity)
           this.totalCreditCNGQuantity = Number(res.data4[0].totalCreditQuantity)
           this.cashLubeDetails = res.data5
           this.crLubeDetails = res.data6
-          this.cashLubeAmt = res.data5[0].totalCashAmount;
-          this.crLubeAmt = res.data6[0].totalCreditAmount;
+          if(res.data5.length){
+            this.cashLubeAmt = res.data5[0].totalCashAmount;
+          } else {
+            this.cashLubeAmt = 0;
+          }
+
+          if(res.data6.length){
+            this.crLubeAmt = res.data6[0].totalCreditAmount;
+          } else {
+            this.crLubeAmt = 0;
+          }
 
           this.meterSalesDetails.map((shift: { fuelProductId: string; productName: string; meterSaleAmount: number; meterSaleQuantity: number; totalPumpTesting: number; }) => {
             const shiftDataJSON = {
@@ -619,7 +638,7 @@ export class FeedsWidget10Component implements OnInit {
     this.netTotal = 0
     this.netTotal = Number(this.openingBlc) + Number(this.totalAmountTally) + Number(this.totalLubeAmount) + Number(this.totalCrAmt)
     // this.netTotal = Number(this.openingBlc) + Number(this.totalAmountTally) + Number(this.totalLubeAmount) + Number(this.totalCrAmt) +  Number(this.totalCrBank)
-    console.log("Net ", this.openingBlc, '+', this.totalAmountTally, '+', this.totalLubeAmount, '+', this.totalCrAmt, Number(this.totalCrBank))
+    // console.log("Net ", this.openingBlc, '+', this.totalAmountTally, '+', this.totalLubeAmount, '+', this.totalCrAmt, Number(this.totalCrBank))
     this.clsAmt()
   }
 
@@ -627,7 +646,7 @@ export class FeedsWidget10Component implements OnInit {
     this.closingBlc = 0
     this.closingBlc = Number(this.netTotal) - Number(this.creditSales) - Number(this.totalLubeCrAmount) - Number(this.digitalTotalSales) - Number(this.totalExpenseAmt) - Number(this.shiftExpenseAmt) - Number(this.totalCrBank) - Number(this.shortAmtTotal) + Number(this.totalVariationAmt)
     // this.closingBlc = Number(this.netTotal) - Number(this.creditSales) - Number(this.totalLubeCrAmount) - Number(this.digitalTotalSales) - Number(this.totalExpenseAmt) - Number(this.shiftExpenseAmt) - Number(this.totalCrBank) - Number(this.shortAmtTotal) - Number(this.totalVariationAmt) - Number(this.totalCrAmtOther)
-    console.log("closingBlc ", this.closingBlc, '=', this.netTotal, '-', this.creditSales, '-', this.totalLubeCrAmount, '-', this.digitalTotalSales, '-', this.totalExpenseAmt, '-', this.shiftExpenseAmt, '-', this.totalCrBank, '-', this.shortAmtTotal, Number(this.totalVariationAmt), Number(this.totalCrAmtOther))
+    // console.log("closingBlc ", this.closingBlc, '=', this.netTotal, '-', this.creditSales, '-', this.totalLubeCrAmount, '-', this.digitalTotalSales, '-', this.totalExpenseAmt, '-', this.shiftExpenseAmt, '-', this.totalCrBank, '-', this.shortAmtTotal, Number(this.totalVariationAmt), Number(this.totalCrAmtOther))
   }
 
   getFuelCreditPaymentDetailsForPrevious(dealerCorporateId: any) {
@@ -778,7 +797,7 @@ export class FeedsWidget10Component implements OnInit {
             if (Number(res.data1[0].totalVariationAmt) < 0) {
               this.totalVariationPrevAmt = res.data1[0].totalVariationAmt;
             }
-            console.log("prevVariation", this.totalVariationPrevious, moment(this.reportDate).subtract(1, "day").format('YYYY-MM-DD'))
+            // console.log("prevVariation", this.totalVariationPrevious, moment(this.reportDate).subtract(1, "day").format('YYYY-MM-DD'))
           }
           this.spinner.hide()
           this.cd.detectChanges();

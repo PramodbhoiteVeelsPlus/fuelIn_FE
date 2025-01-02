@@ -82,6 +82,7 @@ export class TilesWidget8Component {
   isOilCo: boolean = false;
   off: any;
   corporateIdForVendor: any;
+  accessGroup: string;
 
   constructor(
     private modalService: NgbModal,
@@ -94,10 +95,19 @@ export class TilesWidget8Component {
 
 
   ngOnInit() {
+    var element = JSON.parse(localStorage.getItem('element') || '');
     this.fuelTerminalDataList = JSON.parse(localStorage.getItem('fuelTerminalDataList') || '{}');
-    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');
     this.fuelDealerId = localStorage.getItem('dealerId');
-    this.corporateIdForVendor = dealerData.corporateId;
+    this.accessGroup = element.accessGroupId;
+    if (this.accessGroup == '12') {
+      var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');
+      this.corporateIdForVendor = dealerData.corporateId;
+    }
+    if (this.accessGroup == '14') {
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '');
+      this.corporateIdForVendor = managerData.corporateId;
+    }
+
     if (!this.fuelTerminalDataList.length) {
       this.getFuelTerminal(this.fuelDealerId);
     } else {

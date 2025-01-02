@@ -112,20 +112,35 @@ export class ListsWidget8Component {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
-    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.accessGroup = element.accessGroupId;
     this.managerName = element.firstName + ' ' + element.lastName;
-    this.pumpCity = dealerData.city
     this.userId = element.userId;
     this.dealerLoginId = element.veelsPlusCorporateID;
-    this.companyName = dealerData.companyName
-    this.oilCompanyName = dealerData.brandName
-    this.brandName = dealerData.brandName
-    this.state = dealerData.state
-    this.pin = dealerData.pin
-    this.city = dealerData.city
-    this.phone1 = dealerData.hostPhone
     this.createdBy = element.firstName + ' ' + element.lastName
+    
+    if (this.accessGroup == '12') {
+      var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+      this.pumpCity = dealerData.city
+      this.companyName = dealerData.companyName
+      this.oilCompanyName = dealerData.brandName
+      this.brandName = dealerData.brandName
+      this.state = dealerData.state
+      this.pin = dealerData.pin
+      this.city = dealerData.city
+      this.phone1 = dealerData.hostPhone
+    }
+
+    if (this.accessGroup == '14') {
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
+      this.pumpCity = managerData.city
+      this.companyName = managerData.companyName
+      this.oilCompanyName = managerData.brandName
+      this.brandName = managerData.brandName
+      this.state = managerData.state
+      this.pin = managerData.pin
+      this.city = managerData.city
+      this.phone1 = managerData.hostPhone
+    }
     
     if (!this.fuelShiftTimeDetailsTime.length) {
       this.getShiftDetailsTime(this.fuelDealerId)

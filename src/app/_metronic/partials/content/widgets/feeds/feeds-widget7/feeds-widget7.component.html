@@ -97,7 +97,7 @@
 <body id="contentToConvert">
   <div id="page-wrap">
     <div class="col-md-12">
-      &nbsp; <button class="noprint" style="font-size: medium;" onclick="window.print()"> &nbsp;&nbsp;<i
+      &nbsp; <button class="noprint" style="font-size: medium;" printSectionId="sanjay" [useExistingCss]="true" ngxPrint> &nbsp;&nbsp;<i
           class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
       &nbsp;&nbsp;
       <button class="noprint" style="font-size: medium;" (click)="downloadReport()">Download </button>
@@ -201,7 +201,7 @@
             <div class="col-md-5">
               <div style="padding-left: 50px;">
                 <div class="fs-5">Calculation Details </div>
-                <table class="table table-hover table-striped table-nowrap">
+                <table class="table table-hover table-striped table-nowrap table-bordered">
                   <thead clss="table-light">
                     <tr>
                       <th style="text-align: center; border: 1px solid black"> Income </th>

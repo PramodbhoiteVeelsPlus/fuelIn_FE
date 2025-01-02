@@ -171,22 +171,39 @@ lastNameTransporter: any;
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
-    this.dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.accessGroup = element.accessGroupId;
     this.managerName = element.firstName + ' ' + element.lastName;
-    this.pumpCity = this.dealerData.city
     this.userId = element.userId;
     this.dealerLoginId = element.veelsPlusCorporateID;
-    this.companyName = this.dealerData.companyName
-    this.oilCompanyName = this.dealerData.brandName
-    this.brandName = this.dealerData.brandName
-    this.state = this.dealerData.state
-    this.pin = this.dealerData.pin
-    this.city = this.dealerData.city
-    this.phone1 = this.dealerData.hostPhone
     this.createdBy = element.firstName + ' ' + element.lastName
     this.vpPersonId = element.veelsPlusId
-    this.transporterCorpId = this.dealerData.corporateId
+    
+    if (this.accessGroup == '12') {
+      var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
+      this.transporterCorpId = dealerData.corporateId
+      this.companyName = dealerData.companyName
+      this.oilCompanyName = dealerData.brandName
+      this.brandName = dealerData.brandName
+      this.state = dealerData.state
+      this.pin = dealerData.pin
+      this.city = dealerData.city
+      this.phone1 = dealerData.hostPhone
+      this.pumpCity = dealerData.city
+    }
+
+    if (this.accessGroup == '14') {
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
+      this.transporterCorpId = managerData.corporateId
+      this.companyName = managerData.companyName
+      this.oilCompanyName = managerData.brandName
+      this.brandName = managerData.brandName
+      this.state = managerData.state
+      this.pin = managerData.pin
+      this.city = managerData.city
+      this.phone1 = managerData.hostPhone
+      this.pumpCity = managerData.city
+    }
+
     this.getShiftDetailsTime(this.fuelDealerId)
     this.getStaffDetails(this.fuelDealerId)
     this.cd.detectChanges()

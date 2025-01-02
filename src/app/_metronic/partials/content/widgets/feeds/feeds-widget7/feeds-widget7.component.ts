@@ -86,10 +86,20 @@ export class FeedsWidget7Component implements OnInit {
 
   ngOnInit(): void {
     this.dailyProfitId1 = this.post.dailyProfitId;
+    var element = JSON.parse(localStorage.getItem('element') || '');
     this.fuelDealerId = localStorage.getItem('dealerId');
-    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');
-    this.petrolPump = dealerData.companyName;
-    this.city = dealerData.city;
+    this.accessGroupId = element.accessGroupId;
+    if (this.accessGroupId == '12') {
+      var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');
+      this.petrolPump = dealerData.companyName;
+      this.city = dealerData.city;
+    }
+    if (this.accessGroupId == '14') {
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '');
+      this.petrolPump = managerData.companyName;
+      this.city = managerData.city;
+    }
+
     this.createdAt = new Date();
     this.getDailyReports();
   }

@@ -73,9 +73,9 @@ export class FeedsWidget3Component implements OnInit {
     startDate: new FormControl(),
     endDate: new FormControl(),
   })
-  
+
   // @ViewChild("excel") excel: TemplateRef<any>;
-  @ViewChild("excel",{static:true}) excel:ElementRef;
+  @ViewChild("excel", { static: true }) excel: ElementRef;
   allCorporateList: any = [];
   excelData: any = [];
   allCreditReqExcelListDetails: any = [];
@@ -97,146 +97,154 @@ export class FeedsWidget3Component implements OnInit {
   }
 
   ngOnInit(): void {
-    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');
+    var element = JSON.parse(localStorage.getItem('element') || '');
     this.fuelDealerId = localStorage.getItem('dealerId');
-    this.petrolPump = dealerData.companyName;
+    this.accessGroupId = element.accessGroupId;
+    if (this.accessGroupId == '12') {
+      var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');
+      this.petrolPump = dealerData.companyName;
+    }
+    if (this.accessGroupId == '14') {
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '');
+      this.petrolPump = managerData.companyName;
+    }
     this.downloadExcel(this.excel)
     this.getFuelCreditRequestCorporateByfuelDealerId(this.fuelDealerId)
   }
 
- downloadExcel(excel: any){ 
- this.modalReference = this.modalService.open(excel, {size: 'lg'})
- this.modalReference.result.then((result: any) => {
-   this.closeResult = `Closed with: ${result}`;
- }, (reason: any) => {
-   this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
- });
-}
-
-private getDismissReason(reason: any): string {
-  if (reason === ModalDismissReasons.ESC) {
-    return 'by pressing ESC';
-  } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-    return 'by clicking on a backdrop';
-  } else {
-    return `with: ${reason}`;
-  }
-}
-
-getFuelCreditRequestCorporateByfuelDealerId(fuelDealerId: any) {
-  let data = {
-    fuelDealerId: fuelDealerId
-  }
-  this.post.getFuelCreditRequestCorporateByfuelDealerIdPOST(data)
-    .subscribe(res => {
-      if (res.data.length) {
-        this.allCorporateList = res.data;
-        this.spinner.hide()
-      } else {
-        this.spinner.hide()
-      }
+  downloadExcel(excel: any) {
+    this.modalReference = this.modalService.open(excel, { size: 'lg' })
+    this.modalReference.result.then((result: any) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason: any) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
-}
-
-getExcel(){
-  if(this.filterForm.value.corporateId){
-    this.spinner.show()
-    let data = {
-    fuelDealerId: this.fuelDealerId,
-    fuelCorporateId: this.filterForm.value.corporateId,
-    startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
-    endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
   }
 
-  this.post.getFuelCreditRequestByfuelDealerIdAndFuelCorporateId1POST(data)
-  .subscribe(res => {
-    if(res.status == "OK" && res.data.length){
-      this.excelData = res.data;
-      this.downloadExcelForDealer();
-      this.spinner.hide();
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
     } else {
-      alert("Data Not Found..!");
-      this.excelData = [];
-      this.spinner.hide();
+      return `with: ${reason}`;
     }
-  })
-  } else {
-    this.spinner.show()
+  }
+
+  getFuelCreditRequestCorporateByfuelDealerId(fuelDealerId: any) {
     let data = {
-    fuelDealerId: this.fuelDealerId,
-    startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
-    endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
-  }
-  this.post.getFuelCreditRequestByfuelDealerIdPOST(data)
-  .subscribe(res => {
-    if(res.status == "OK" && res.data.length){
-      this.excelData = res.data;
-      this.downloadExcelForDealer();
-      this.spinner.hide();
-    } else {
-      alert("Data Not Found..!");
-      this.excelData = [];
-      this.spinner.hide();
+      fuelDealerId: fuelDealerId
     }
-  })
+    this.post.getFuelCreditRequestCorporateByfuelDealerIdPOST(data)
+      .subscribe(res => {
+        if (res.data.length) {
+          this.allCorporateList = res.data;
+          this.spinner.hide()
+        } else {
+          this.spinner.hide()
+        }
+      });
   }
-  
-}
+
+  getExcel() {
+    if (this.filterForm.value.corporateId) {
+      this.spinner.show()
+      let data = {
+        fuelDealerId: this.fuelDealerId,
+        fuelCorporateId: this.filterForm.value.corporateId,
+        startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+        endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+      }
+
+      this.post.getFuelCreditRequestByfuelDealerIdAndFuelCorporateId1POST(data)
+        .subscribe(res => {
+          if (res.status == "OK" && res.data.length) {
+            this.excelData = res.data;
+            this.downloadExcelForDealer();
+            this.spinner.hide();
+          } else {
+            alert("Data Not Found..!");
+            this.excelData = [];
+            this.spinner.hide();
+          }
+        })
+    } else {
+      this.spinner.show()
+      let data = {
+        fuelDealerId: this.fuelDealerId,
+        startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+        endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'),
+      }
+      this.post.getFuelCreditRequestByfuelDealerIdPOST(data)
+        .subscribe(res => {
+          if (res.status == "OK" && res.data.length) {
+            this.excelData = res.data;
+            this.downloadExcelForDealer();
+            this.spinner.hide();
+          } else {
+            alert("Data Not Found..!");
+            this.excelData = [];
+            this.spinner.hide();
+          }
+        })
+    }
+
+  }
 
   //downloadExcelForDealer()
   downloadExcelForDealer() {
     this.allCreditReqExcelListDetails.length = 0;
-    this.excelData.map((res:any) => {      
-      if(res.purpose == 'CREDIT'){
-        if(res.vehicleNumber == 'undefined'){
+    this.excelData.map((res: any) => {
+      if (res.purpose == 'CREDIT') {
+        if (res.vehicleNumber == 'undefined') {
           this.vehicle = ''
           this.productName = res.productName
-          if(res.productCategory == 'CNG'){
+          if (res.productCategory == 'CNG') {
             this.actualCreditQuantity = res.actualCreditQuantity
-          }else{
+          } else {
             this.actualCreditQuantity = res.actualCreditQuantity
           }
-        }else{
+        } else {
           this.vehicle = res.vehicleNumber
           this.productName = res.productName
-          if(res.productCategory == 'CNG'){
+          if (res.productCategory == 'CNG') {
             this.actualCreditQuantity = res.actualCreditQuantity
-          }else{
+          } else {
             this.actualCreditQuantity = res.actualCreditQuantity
-        }
-        }        
-      }else{
-        if(res.purpose == 'LUBE'){
-          if(res.vehicleNumber == 'undefined'){
-            this.vehicle = ''
-            this.productName = res.lubeName          
-            this.actualCreditQuantity = res.actualCreditQuantity
-          }else{
-            this.vehicle = res.vehicleNumber
-            this.productName = res.lubeName          
-            this.actualCreditQuantity = res.actualCreditQuantity
-          }        
-        }else{
-          if(res.purpose == 'LUBETAX'){
-            if(res.vehicleNumber == 'undefined'){
-              this.vehicle = ''
-              this.productName = res.lubeName         
-              this.actualCreditQuantity = res.actualCreditQuantity
-            }else{
-              this.vehicle = res.vehicleNumber
-              this.productName = res.lubeName          
-              this.actualCreditQuantity = res.actualCreditQuantity 
-            }          
-          }else{
-            this.vehicle = res.advName+' '+res.advMobile
-            this.productName = 'ADVANCE'         
-            this.actualCreditQuantity = ''        
           }
         }
-      }        
-      if(res.mappingPreviousStatus =='TRUE' ){
-        this.CustomerName = res.mappingCompanyName;                                         
-      }else{
+      } else {
+        if (res.purpose == 'LUBE') {
+          if (res.vehicleNumber == 'undefined') {
+            this.vehicle = ''
+            this.productName = res.lubeName
+            this.actualCreditQuantity = res.actualCreditQuantity
+          } else {
+            this.vehicle = res.vehicleNumber
+            this.productName = res.lubeName
+            this.actualCreditQuantity = res.actualCreditQuantity
+          }
+        } else {
+          if (res.purpose == 'LUBETAX') {
+            if (res.vehicleNumber == 'undefined') {
+              this.vehicle = ''
+              this.productName = res.lubeName
+              this.actualCreditQuantity = res.actualCreditQuantity
+            } else {
+              this.vehicle = res.vehicleNumber
+              this.productName = res.lubeName
+              this.actualCreditQuantity = res.actualCreditQuantity
+            }
+          } else {
+            this.vehicle = res.advName + ' ' + res.advMobile
+            this.productName = 'ADVANCE'
+            this.actualCreditQuantity = ''
+          }
+        }
+      }
+      if (res.mappingPreviousStatus == 'TRUE') {
+        this.CustomerName = res.mappingCompanyName;
+      } else {
         this.CustomerName = res.companyName
       }
       var json = {
@@ -245,7 +253,7 @@ getExcel(){
         KeyPersonName: res.hostName,
         customerPhone: res.hostPhone,
         Ref_Bill_No: res.manualCrNumber,
-        vehicleNo:this.vehicle,
+        vehicleNo: this.vehicle,
         product: this.productName,
         rate: res.productRate,
         creditAmount: Number(res.creditAmount).toFixed(2),

@@ -148,11 +148,21 @@ export class FeedsWidget11Component implements OnInit {
     private cd: ChangeDetectorRef,) { }
 
   ngOnInit(): void {
+    var element = JSON.parse(localStorage.getItem('element')|| '');
     this.fuelDealerId = localStorage.getItem('dealerId') ;
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
-    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');
-    this.dealerCompanyName = dealerData.companyName;
-    this.dealerCity = dealerData.city;
+    this.accessGroupId = element.accessGroupId;  
+    if(this.accessGroupId == '12'){
+      var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');
+      this.dealerCompanyName = dealerData.companyName;
+      this.dealerCity = dealerData.city;
+    } 
+    if(this.accessGroupId == '14'){
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '');
+      this.dealerCompanyName = managerData.companyName;
+      this.dealerCity = managerData.city;
+    } 
+
     this.startDate = moment(new Date()).format('YYYY-MM-01');
     this.endDate = moment(new Date()).format('YYYY-MM-31'); 
     this.month = moment(new Date()).format("MMM");
@@ -671,13 +681,13 @@ export class FeedsWidget11Component implements OnInit {
     this.post.getBankACwiseDetailsPOST(data)
     .subscribe(res => {
         if (res.status == 'OK') { 
-          console.log("110",this.openingAmtDate, this.startDate, this.totalCrBank)
+          // console.log("110",this.openingAmtDate, this.startDate, this.totalCrBank)
           if(res.data1[0].bankCrAmt){
           this.totalCrBank = res.data1[0].bankCrAmt;
           }
           this.bankoverallReportData = res.data;
           if(this.openingAmtDate < (this.startDate)){
-            console.log("110",this.openingAmtDate, this.startDate)
+            // console.log("110",this.openingAmtDate, this.startDate)
             this.netAmtForPrevious();           
           }else{
             this.netAmt();              
@@ -878,7 +888,7 @@ export class FeedsWidget11Component implements OnInit {
   netAmtForPrevious() {
     this.netTotalForPrevious = 0
     this.netTotalForPrevious = Number(this.openingAmt) + Number(this.totalAmountTallyForPrevious) + Number(this.totalLubeAmountPrevious) + Number(this.totalCrAmtForPrevious)
-    console.log("netPrv ", this.openingAmt, '+', this.totalAmountTallyForPrevious, '+', this.totalLubeAmountPrevious, '+', this.totalCrAmtForPrevious)
+    // console.log("netPrv ", this.openingAmt, '+', this.totalAmountTallyForPrevious, '+', this.totalLubeAmountPrevious, '+', this.totalCrAmtForPrevious)
     this.clsAmtForPrevious()
   }
 
@@ -887,14 +897,14 @@ export class FeedsWidget11Component implements OnInit {
     this.openingBlc = 0
     this.closingBlcForPrevious = Number(this.netTotalForPrevious) - Number(this.creditSalesForPrevious) - Number(this.totalLubeCrAmountPrevious) - Number(this.digitalTotalSalesForPrevious) - Number(this.totalExpenseAmtForPrevious) - Number(this.shiftExpenseAmtForPrevious) - Number(this.totalCrBankForPrevious) - Number(this.shortAmtTotalForPrevious) + Number(this.totalVariationPrevAmt)
     this.openingBlc = this.closingBlcForPrevious
-    console.log("openingBlc ",this.openingBlc, '=', this.netTotalForPrevious ,'-', this.creditSalesForPrevious ,'-', this.totalLubeCrAmountPrevious ,'-', this.digitalTotalSalesForPrevious ,'-', this.totalExpenseAmtForPrevious ,'-', this.shiftExpenseAmtForPrevious ,'-', this.totalCrBankForPrevious, '-', this.shortAmtTotalForPrevious , this.totalVariationPrevAmt)
+    // console.log("openingBlc ",this.openingBlc, '=', this.netTotalForPrevious ,'-', this.creditSalesForPrevious ,'-', this.totalLubeCrAmountPrevious ,'-', this.digitalTotalSalesForPrevious ,'-', this.totalExpenseAmtForPrevious ,'-', this.shiftExpenseAmtForPrevious ,'-', this.totalCrBankForPrevious, '-', this.shortAmtTotalForPrevious , this.totalVariationPrevAmt)
     this.netAmt()
   }
 
   netAmt() {
     this.netTotal = 0
     this.netTotal = Number(this.openingBlc) + Number(this.totalAmountTally) + Number(this.totalLubeAmount) + Number(this.totalCrAmt)
-    console.log("Net ", this.openingBlc, '+', this.totalAmountTally, '+', this.totalLubeAmount, '+', this.totalCrAmt)
+    // console.log("Net ", this.openingBlc, '+', this.totalAmountTally, '+', this.totalLubeAmount, '+', this.totalCrAmt)
     this.clsAmt()
   }
 
