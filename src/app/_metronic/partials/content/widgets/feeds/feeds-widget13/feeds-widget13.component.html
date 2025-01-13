@@ -230,53 +230,55 @@
                             </div>
                         </form>
                         <div class="mb-2 row">
-                            <div class="card-body table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th style="text-align: left;"> Date </th>
-                                            <th style="text-align: left;"> Transaction Type </th>
-                                            <th style="text-align: left;"> Details </th>
-                                            <th style="text-align: left;"> Paid From </th>
-                                            <th style="text-align: left;"> Paid To </th>
-                                            <th style="text-align: left;"> Amount</th>
-                                            <th style="text-align: left;"> action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody *ngFor="let data of accountingData;">
-                                        <tr>
-                                            <td style="text-align: left;">
-                                                <span *ngIf="data.accountingDate == '2022-01-01' ">
-                                                    1 Jan, 2022
-                                                </span>
-                                                <span *ngIf="data.accountingDate != '2022-01-01' ">
-                                                    {{data.accountingDate | date:"d MMM, yyyy"}}
-                                                </span>
-                                            </td>
-                                            <td style="text-align: left;"> {{data.accountingTransactionType}} </td>
-                                            <td style="text-align: left;"> {{data.accountingDetails}} </td>
-                                            <td style="text-align: left;"> {{data.paidFromAccountNumber}}
-                                                {{data.paidFromBankName}} <i>{{data.accountingFromInput}} </i> </td>
-                                            <td style="text-align: left;"> {{data.paidToAccountNumber}}
-                                                {{data.paidToBankName}} <i>{{data.accountingToInput}} </i> </td>
-                                            <td style="text-align: left;">
-                                                ₹ &nbsp; {{data.accountingAmout | number:"1.2-2" }} </td>
+                            <div class="col col-xl-12 col-lg-12" style="margin-top: 20px">
+                                <div class="card-body table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align: left;"> Date </th>
+                                                <th style="text-align: left;"> Transaction Type </th>
+                                                <th style="text-align: left;"> Details </th>
+                                                <th style="text-align: left;"> Paid From </th>
+                                                <th style="text-align: left;"> Paid To </th>
+                                                <th style="text-align: left;"> Amount</th>
+                                                <th style="text-align: left;"> Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngFor="let data of accountingData;">
+                                            <tr>
+                                                <td style="text-align: left;">
+                                                    <span *ngIf="data.accountingDate == '2022-01-01' ">
+                                                        1 Jan, 2022
+                                                    </span>
+                                                    <span *ngIf="data.accountingDate != '2022-01-01' ">
+                                                        {{data.accountingDate | date:"d MMM, yyyy"}}
+                                                    </span>
+                                                </td>
+                                                <td style="text-align: left;"> {{data.accountingTransactionType}} </td>
+                                                <td style="text-align: left;"> {{data.accountingDetails}} </td>
+                                                <td style="text-align: left;"> {{data.paidFromAccountNumber}}
+                                                    {{data.paidFromBankName}} <i>{{data.accountingFromInput}} </i> </td>
+                                                <td style="text-align: left;"> {{data.paidToAccountNumber}}
+                                                    {{data.paidToBankName}} <i>{{data.accountingToInput}} </i> </td>
+                                                <td style="text-align: left;">
+                                                    ₹ &nbsp; {{data.accountingAmout | number:"1.2-2" }} </td>
 
-                                            <td style="text-align: left;cursor: pointer;">
-                                                <div ngbDropdown placement="bottom-left">
-                                                    <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle
-                                                        data-toggle="dropdown" aria-expanded="true"></i>
-                                                    <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
-                                                        <a class="dropdown-item" href="javascript: void(0);"
-                                                            (click)="deleteAccounting(data.accountingId)">
-                                                            <i class="fas fa-ban" style="color: red;"></i> &nbsp;
-                                                            Remove</a>
+                                                <td style="text-align: left;cursor: pointer;">
+                                                    <div ngbDropdown placement="bottom-left">
+                                                        <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle
+                                                            data-toggle="dropdown" aria-expanded="true"></i>
+                                                        <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                                                            <a class="dropdown-item" href="javascript: void(0);"
+                                                                (click)="deleteAccounting(data.accountingId)">
+                                                                <i class="fas fa-ban" style="color: red;"></i> &nbsp;
+                                                                Remove</a>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

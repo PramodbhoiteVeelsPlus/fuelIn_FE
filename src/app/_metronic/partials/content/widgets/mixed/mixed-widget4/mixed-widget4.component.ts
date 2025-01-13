@@ -506,15 +506,19 @@ export class MixedWidget4Component {
                       this.post.addAccTransactionLogPayDetailPOST(data)
                         .subscribe(res => {
                           if (res) {
-                            alert("Payment to Update PAYMENT Details!")
                             this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
                             let dateCoin = moment(this.addPaymentForm.value.paymentDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD') + ' ' + moment(new Date()).format('HH:mm:ss')
                             this.addCoindetails(res.data.insertId, dateCoin)
                             this.resetPaymentForm();
                             this.clearAll()
+                            this.isSelected1 = false;
+                            alert("Payment to Update PAYMENT Details!")
+                            this.spinner.hide();
+                            this.cd.detectChanges()
                           } else {
                             alert("ERROR to Update PAYMENT Details!")
                             this.spinner.hide();
+                            this.cd.detectChanges()
                           }
                         })
                     }
@@ -551,9 +555,13 @@ export class MixedWidget4Component {
                             this.addCoindetails(res.data.insertId, dateCoin)
                             this.resetPaymentForm();
                             this.clearAll()
+                            this.isSelected1 = false;
+                            this.spinner.hide();
+                            this.cd.detectChanges()
                           } else {
                             alert("ERROR to Update PAYMENT Details!")
                             this.spinner.hide();
+                            this.cd.detectChanges()
                           }
                         })
                     }
@@ -591,9 +599,13 @@ export class MixedWidget4Component {
                           this.addCoindetails(res.data.insertId, dateCoin)
                           this.resetPaymentForm();
                           this.clearAll()
+                          this.isSelected1 = false;
+                          this.spinner.hide();
+                          this.cd.detectChanges()
                         } else {
                           alert("ERROR to Update PAYMENT Details!")
                           this.spinner.hide();
+                          this.cd.detectChanges()
                         }
                       })
 
@@ -697,9 +709,13 @@ export class MixedWidget4Component {
                               this.addCoindetails(res.data.insertId, dateCoin)
                               this.resetPaymentForm();
                               this.clearAll()
+                              this.isSelected1 = false;
+                              this.spinner.hide();
+                              this.cd.detectChanges()
                             } else {
                               alert("ERROR to Update PAYMENT Details!")
                               this.spinner.hide();
+                              this.cd.detectChanges()
                             }
                           })
                       }
@@ -739,9 +755,13 @@ export class MixedWidget4Component {
                               this.addCoindetails(res.data.insertId, dateCoin)
                               this.resetPaymentForm();
                               this.clearAll()
+                              this.isSelected1 = false;
+                              this.spinner.hide();
+                              this.cd.detectChanges()
                             } else {
                               alert("ERROR to Update PAYMENT Details!")
                               this.spinner.hide();
+                              this.cd.detectChanges()
                             }
                           })
                       }
@@ -782,9 +802,13 @@ export class MixedWidget4Component {
                             this.addCoindetails(res.data.insertId, dateCoin)
                             this.resetPaymentForm();
                             this.clearAll()
+                            this.isSelected1 = false;
+                            this.spinner.hide();
+                            this.cd.detectChanges()
                           } else {
                             alert("ERROR to Update PAYMENT Details!")
                             this.spinner.hide();
+                            this.cd.detectChanges()
                           }
                         })
 

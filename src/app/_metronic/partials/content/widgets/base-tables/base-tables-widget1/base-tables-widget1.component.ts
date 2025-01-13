@@ -197,6 +197,7 @@ export class BaseTablesWidget1Component implements OnInit {
   onlyDealerView: boolean = false;
   ownerName: string;
   isDisabled: boolean = true
+productCategory: any;
 
   constructor(
     private modalService: NgbModal,

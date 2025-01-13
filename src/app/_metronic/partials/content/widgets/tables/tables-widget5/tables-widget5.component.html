@@ -146,11 +146,12 @@
     <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
       <!-- begin::Table head -->
       <thead>
-        <tr class="fw-bolder text-muted">
+        <tr class="fw-bolder">
           <th class="min-w-50px">#</th>
           <th class="min-w-150px">POS Type</th>
           <th class="min-w-150px">POS Name</th>
           <th class="min-w-150px">Linked Bank</th>
+          <th class="min-w-150px">Mapping</th>
           <th class="min-w-100px text-center">Actions</th>
         </tr>
       </thead>
@@ -187,9 +188,6 @@
           </td>
 
           <td>
-            <div class="d-flex justify-content-center flex-shrink-0">
-              <div class="col-lg-1" style="padding: 15px;">
-                <!-- <app-keenicon name="switch" class="fs-3"></app-keenicon> -->
                 <label class="switch" *ngIf="data.terminalStatus == 'MAPPED'">
                   <input type="checkbox" checked="checked"
                     (change)="updateMappingPOS($event,data.fuelTerminalsId,data.terminalStatus)">
@@ -200,21 +198,20 @@
                     (change)="updateMappingPOS($event,data.fuelTerminalsId,data.terminalStatus)">
                   <span class="slider round"></span>
                 </label>
-              </div>
-              &nbsp;&nbsp;
-              &nbsp;&nbsp;
-              &nbsp;&nbsp;
-              <div class="col-lg-1" style="padding: 15px;">
-                <a class="btn btn-icon badge badge-light-warning"
+          </td>
+          <td>
+            <div ngbDropdown placement="bottom-left">
+              <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
+                aria-expanded="true"></i>
+              <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                <a class="dropdown-item" href="javascript: void(0);"
                   (click)="updatePOS(editPOS,data.fuelTerminalsId,data.terminalName,data.attachedAccountId,data.terminalType)">
-                  <app-keenicon name="pencil" class="fs-3"></app-keenicon>
+                  <i style="color:#138496;cursor:pointer;" class="fas fa-edit">
+                  </i> Edit
                 </a>
-              </div>
-              &nbsp;&nbsp;
-
-              <div class="col-lg-1" style="padding: 15px;">
-                <a class="btn btn-icon badge badge-light-danger" (click)="delete(data.fuelTerminalsId)">
-                  <app-keenicon name="trash" class="fs-3"></app-keenicon>
+                <a class="dropdown-item" href="javascript: void(0);" (click)="delete(data.fuelTerminalsId)">
+                  <i style="color:red" class="fa fa-ban">
+                  </i> Remove
                 </a>
               </div>
             </div>

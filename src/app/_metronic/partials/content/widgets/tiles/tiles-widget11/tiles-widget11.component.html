@@ -2,7 +2,7 @@
   <span *ngIf="accessGroup != '21'">
     <div class="row mb-2">
       <div class="col-sm-7">
-        ACCOUNTING STATUS 
+       <b> ACCOUNTING STATUS </b>
       </div>
     </div>
     <div class="row">
@@ -11,25 +11,25 @@
           <table class="table table-centered table-nowrap" style="border: solid 1px;">
             <thead>
               <tr>
-                <th style="text-align: left;border: solid 1px;"> Book / Account </th>
-                <th style="text-align: left;border: solid 1px;">
-                  Opening Balance <br>
+                <th style="text-align: center;border: solid 1px;"> <b>Book / Account </b></th>
+                <th style="text-align: center;border: solid 1px;">
+                 <b> Opening Balance </b><br>
                   ( as of {{openingDate | date:"mediumDate"}} )
                 </th>
-                <th style="text-align: left;border: solid 1px;"> Total Debit </th>
-                <th style="text-align: left;border: solid 1px;"> Total Credit </th>
-                <th style="text-align: left;border: solid 1px;">
-                  Closing Balance <br>
-                  ( as of {{closingDate | date:"mediumDate"}} )
+                <th style="text-align: center;border: solid 1px;"> <b>Total Debit </b></th>
+                <th style="text-align: center;border: solid 1px;"> <b>Total Credit </b></th>
+                <th style="text-align: center;border: solid 1px;">
+                  <b>Closing Balance <br>
+                  ( as of {{closingDate | date:"mediumDate"}} )</b>
                 </th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td style="text-align: left;border: solid 1px;">
+                <td style="text-align: center;border: solid 1px;">
                   Oil Company
                 </td>
-                <td *ngIf="oilCoStatus" style="text-align: left;border: solid 1px;">
+                <td *ngIf="oilCoStatus" style="text-align: center;border: solid 1px;">
                   <span *ngIf="oilCoAcTotalAmount1 < 0" style="color: red;">
                     {{ oilCoAcTotalAmount1 | number:'1.2-2'}}
                   </span>
@@ -37,16 +37,16 @@
                     {{ oilCoAcTotalAmount1 | number:'1.2-2'}}
                   </span>
                 </td>
-                <td *ngIf="!oilCoStatus" style="text-align: left;">
+                <td *ngIf="!oilCoStatus" style="text-align: center;">
                   -
                 </td>
-                <td style="text-align: left;border: solid 1px;">
+                <td style="text-align: center;border: solid 1px;">
                   {{totalOilCoACDebit | number:'1.2-2'}}
                 </td>
-                <td style="text-align: left;border: solid 1px;">
+                <td style="text-align: center;border: solid 1px;">
                   {{totalOilCoCredit | number:'1.2-2'}}
                 </td>
-                <td *ngIf="oilCoStatus" style="text-align: left;border: solid 1px;">
+                <td *ngIf="oilCoStatus" style="text-align: center;border: solid 1px;">
                   <span *ngIf="closingOilCoACBlc < 0" style="color: red;">
                     {{ closingOilCoACBlc | number:'1.2-2'}}
                   </span>
@@ -54,16 +54,16 @@
                     {{ closingOilCoACBlc | number:'1.2-2'}}
                   </span>
                 </td>
-                <td *ngIf="!oilCoStatus" style="text-align: left;border: solid 1px;">
+                <td *ngIf="!oilCoStatus" style="text-align: center;border: solid 1px;">
                   -
                 </td>
 
               </tr>
               <tr *ngFor="let data of bankWiseDetailsOPEN">
-                <td style="text-align: left;border: solid 1px;">
+                <td style="text-align: center;border: solid 1px;">
                   {{data.bankName}} {{data.accountNumber}}
                 </td>
-                <td *ngIf="data.status != 'FALSE' " style="text-align: left;border: solid 1px;">
+                <td *ngIf="data.status != 'FALSE' " style="text-align: center;border: solid 1px;">
                   <span *ngIf="data.accType == 'LOAN' ">
                     <span
                       *ngIf="(data.expenseAmount + data.totalOpeningDb - data.totalOpeningCr - data.totalOpeningCrPayment - data.totalOpeningCrPay) < 0"
@@ -91,16 +91,16 @@
                     </span>
                   </span>
                 </td>
-                <td *ngIf="data.status == 'FALSE' " style="text-align: left;border: solid 1px;">
+                <td *ngIf="data.status == 'FALSE' " style="text-align: center;border: solid 1px;">
                   -
                 </td>
-                <td style="text-align: left;border: solid 1px;">
+                <td style="text-align: center;border: solid 1px;">
                   {{ data.totalDebit | number:'1.2-2'}}
                 </td>
-                <td style="text-align: left;border: solid 1px;">
+                <td style="text-align: center;border: solid 1px;">
                   {{ data.totalCredit + data.totalCreditPayment + data.totalCreditPay | number:'1.2-2'}}
                 </td>
-                <td *ngIf="data.status != 'FALSE' " style="text-align: left;border: solid 1px;">
+                <td *ngIf="data.status != 'FALSE' " style="text-align: center;border: solid 1px;">
                   <span *ngIf="data.accType == 'LOAN' ">
                     <span
                       *ngIf="(data.expenseAmount + data.totalOpeningDb - data.totalOpeningCr - data.totalOpeningCrPayment + data.totalDebit - data.totalCredit - data.totalCreditPayment - data.totalOpeningCrPay) < 0"
@@ -132,15 +132,15 @@
                     </span>
                   </span>
                 </td>
-                <td *ngIf="data.status == 'FALSE' " style="text-align: left;border: solid 1px;">
+                <td *ngIf="data.status == 'FALSE' " style="text-align: center;border: solid 1px;">
                   -
                 </td>
               </tr>
               <tr>
-                <td style="text-align: left;border: solid 1px;">
+                <td style="text-align: center;border: solid 1px;">
                   Cash
                 </td>
-                <td *ngIf="cashStatus" style="text-align: left;border: solid 1px;">
+                <td *ngIf="cashStatus" style="text-align: center;border: solid 1px;">
                   <span *ngIf="cashAcTotalAmount1 < 0" style="color: red;">
                     {{ (cashAcTotalAmount1) | number:'1.2-2'}}
                   </span>
@@ -148,16 +148,16 @@
                     {{ cashAcTotalAmount1 | number:'1.2-2'}}
                   </span>
                 </td>
-                <td *ngIf="!cashStatus" style="text-align: left;border: solid 1px;">
+                <td *ngIf="!cashStatus" style="text-align: center;border: solid 1px;">
                   -
                 </td>
-                <td style="text-align: left;border: solid 1px;">
+                <td style="text-align: center;border: solid 1px;">
                   {{totalCashACDebit | number:'1.2-2'}}
                 </td>
-                <td style="text-align: left;border: solid 1px;">
+                <td style="text-align: center;border: solid 1px;">
                   {{totalCashACCredit | number:'1.2-2'}}
                 </td>
-                <td *ngIf="cashStatus" style="text-align: left;border: solid 1px;">
+                <td *ngIf="cashStatus" style="text-align: center;border: solid 1px;">
                   <span *ngIf="closingCashACBlc < 0" style="color: red;">
                     {{ closingCashACBlc | number:'1.2-2'}}
                   </span>
@@ -165,7 +165,7 @@
                     {{ closingCashACBlc | number:'1.2-2'}}
                   </span>
                 </td>
-                <td *ngIf="!cashStatus" style="text-align: left;border: solid 1px;">
+                <td *ngIf="!cashStatus" style="text-align: center;border: solid 1px;">
                   -
                 </td>
 

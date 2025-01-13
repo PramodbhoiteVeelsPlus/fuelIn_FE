@@ -476,6 +476,260 @@
       </div>
     </div>
 
+    <!-- DSR -->
+    <div *ngIf="isDSR" class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+      <span class="menu-link">
+        <span class="menu-icon">
+          <app-keenicon name="element-plus" class="fs-2"></app-keenicon>
+        </span>
+        <span class="menu-title">DSR
+        </span>
+        <span class="menu-arrow"></span>
+      </span>
+      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+        <div *ngIf="isDsr" class="menu-item menu-accordion">
+          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
+            routerLink="/dsr/dsrDetails">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title"> DSR
+              </span>
+            </span>
+          </div>
+          <div *ngIf="accessGroupId == '19'">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title" (click)="alert()"> DSR
+              </span>
+            </span>
+          </div>
+        </div>
+        <div *ngIf="isTankDsr" class="menu-item menu-accordion">
+          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
+            routerLink="/dsr/tkDSRDetails">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title"> Tank DSR
+              </span>
+            </span>
+          </div>
+          <div *ngIf="accessGroupId == '19'">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title" (click)="alert()"> Tank DSR
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Accounting -->
+    <div *ngIf="isACCOUNTING" class="menu-item menu-accordion" data-kt-menu-trigger="click"
+      routerLinkActive="here show">
+      <span class="menu-link">
+        <span class="menu-icon">
+          <app-keenicon name="profile-circle" class="fs-2"></app-keenicon>
+        </span>
+        <span class="menu-title">ACCOUNTING
+        </span>
+        <span class="menu-arrow"></span>
+      </span>
+      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+        <div *ngIf="isAddAccounting" class="menu-item menu-accordion">
+          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
+            routerLink="/accounting/addAccounting">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">Add Accounting
+              </span>
+            </span>
+          </div>
+          <div *ngIf="accessGroupId == '19'">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title" (click)="alert()">Add Accounting
+              </span>
+            </span>
+          </div>
+        </div>
+        <!-- </div> -->
+        <div *ngIf="isViewAccounting" class="menu-item menu-accordion">
+          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
+            routerLink="/accounting/viewAccounting">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">View Accounting
+              </span>
+            </span>
+          </div>
+          <div *ngIf="accessGroupId == '19'">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title" (click)="alert()">View Accounting
+              </span>
+            </span>
+          </div>
+        </div>
+        <div *ngIf="isAccBookLedger" class="menu-item menu-accordion">
+          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
+            routerLink="/accounting/book">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">Book/Ledger
+              </span>
+            </span>
+          </div>
+          <div *ngIf="accessGroupId == '19'">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title" (click)="alert()">Book/Ledger
+              </span>
+            </span>
+          </div>
+        </div>
+        <div *ngIf="isAddBank" class="menu-item menu-accordion">
+          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
+            routerLink="/accounting/addBank">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">Add Bank Account
+              </span>
+            </span>
+          </div>
+          <div *ngIf="accessGroupId == '19'">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title" (click)="alert()">Add Bank Account
+              </span>
+            </span>
+          </div>
+        </div>
+        <div *ngIf="isViewBank" class="menu-item menu-accordion">
+          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
+            routerLink="/accounting/viewBank">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">View Bank Account
+              </span>
+            </span>
+          </div>
+          <div *ngIf="accessGroupId == '19'">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title" (click)="alert()">View Bank Account
+              </span>
+            </span>
+          </div>
+        </div>
+        <div *ngIf="isPos" class="menu-item menu-accordion">
+          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
+            routerLink="/accounting/pos">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">POS
+              </span>
+            </span>
+          </div>
+          <div *ngIf="accessGroupId == '19'">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title" (click)="alert()">POS
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expense -->
+    <div *ngIf="isEXPENSE" class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+      <span class="menu-link">
+        <span class="menu-icon">
+          <app-keenicon name="element-plus" class="fs-2"></app-keenicon>
+        </span>
+        <span class="menu-title">EXPENSE
+        </span>
+        <span class="menu-arrow"></span>
+      </span>
+      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+        <div *ngIf="isExpenseAccounting" class="menu-item menu-accordion">
+          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
+            routerLink="/expense/expenseAccounting">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title"> Expense Accounting
+              </span>
+            </span>
+          </div>
+          <div *ngIf="accessGroupId == '19'">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title" (click)="alert()"> Expense Accounting
+              </span>
+            </span>
+          </div>
+        </div>
+        <div *ngIf="isDailyReportExpense" class="menu-item menu-accordion">
+          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
+            routerLink="/expense/dailyReportExpense">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title"> Daily Report Expense
+              </span>
+            </span>
+          </div>
+          <div *ngIf="accessGroupId == '19'">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title" (click)="alert()"> Daily Report Expense
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Inventory -->
     <div *ngIf="isINVENTORY" class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
       <span class="menu-link">
@@ -546,260 +800,6 @@
                 <span class="bullet bullet-dot"></span>
               </span>
               <span class="menu-title" (click)="alert()">Add Variation Percentage
-              </span>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Accounting -->
-    <div *ngIf="isACCOUNTING" class="menu-item menu-accordion" data-kt-menu-trigger="click"
-      routerLinkActive="here show">
-      <span class="menu-link">
-        <span class="menu-icon">
-          <app-keenicon name="profile-circle" class="fs-2"></app-keenicon>
-        </span>
-        <span class="menu-title">ACCOUNTING
-        </span>
-        <span class="menu-arrow"></span>
-      </span>
-      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-        <div *ngIf="isAddAccounting" class="menu-item menu-accordion">
-          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
-            routerLink="/accounting/addAccounting">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title">Add Accounting
-              </span>
-            </span>
-          </div>
-          <div *ngIf="accessGroupId == '19'">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title" (click)="alert()">Add Accounting
-              </span>
-            </span>
-          </div>
-        </div>
-      <!-- </div> -->
-      <div *ngIf="isViewAccounting" class="menu-item menu-accordion">
-        <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
-          routerLink="/accounting/viewAccounting">
-          <span class="menu-link">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title">View Accounting
-            </span>
-          </span>
-        </div>
-        <div *ngIf="accessGroupId == '19'">
-          <span class="menu-link">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title" (click)="alert()">View Accounting
-            </span>
-          </span>
-        </div>
-      </div>
-      <div *ngIf="isAccBookLedger" class="menu-item menu-accordion">
-        <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
-          routerLink="/accounting/book">
-          <span class="menu-link">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title">Book/Ledger
-            </span>
-          </span>
-        </div>
-        <div *ngIf="accessGroupId == '19'">
-          <span class="menu-link">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title" (click)="alert()">Book/Ledger
-            </span>
-          </span>
-        </div>
-      </div>
-      <div *ngIf="isAddBank" class="menu-item menu-accordion">
-        <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
-          routerLink="/accounting/addBank">
-          <span class="menu-link">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title">Add Bank Account
-            </span>
-          </span>
-        </div>
-        <div *ngIf="accessGroupId == '19'">
-          <span class="menu-link">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title" (click)="alert()">Add Bank Account
-            </span>
-          </span>
-        </div>
-      </div>
-      <div *ngIf="isViewBank" class="menu-item menu-accordion">
-        <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
-          routerLink="/accounting/viewBank">
-          <span class="menu-link">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title">View Bank Account
-            </span>
-          </span>
-        </div>
-        <div *ngIf="accessGroupId == '19'">
-          <span class="menu-link">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title" (click)="alert()">View Bank Account
-            </span>
-          </span>
-        </div>
-      </div>
-      <div *ngIf="isPos" class="menu-item menu-accordion">
-        <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
-          routerLink="/accounting/pos">
-          <span class="menu-link">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title">POS
-            </span>
-          </span>
-        </div>
-        <div *ngIf="accessGroupId == '19'">
-          <span class="menu-link">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title" (click)="alert()">POS
-            </span>
-          </span>
-        </div>
-      </div>
-    </div>
-    </div>
-
-    <!-- Expense -->
-    <div *ngIf="isEXPENSE" class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
-      <span class="menu-link">
-        <span class="menu-icon">
-          <app-keenicon name="element-plus" class="fs-2"></app-keenicon>
-        </span>
-        <span class="menu-title">EXPENSE
-        </span>
-        <span class="menu-arrow"></span>
-      </span>
-      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-        <div *ngIf="isExpenseAccounting" class="menu-item menu-accordion">
-          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
-            routerLink="/expense/expenseAccounting">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title"> Expense Accounting
-              </span>
-            </span>
-          </div>
-          <div *ngIf="accessGroupId == '19'">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title" (click)="alert()"> Expense Accounting
-              </span>
-            </span>
-          </div>
-        </div>
-        <div *ngIf="isDailyReportExpense" class="menu-item menu-accordion">
-          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
-            routerLink="/expense/dailyReportExpense">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title"> Daily Report Expense
-              </span>
-            </span>
-          </div>
-          <div *ngIf="accessGroupId == '19'">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title" (click)="alert()"> Daily Report Expense
-              </span>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- DSR -->
-    <div *ngIf="isDSR" class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
-      <span class="menu-link">
-        <span class="menu-icon">
-          <app-keenicon name="element-plus" class="fs-2"></app-keenicon>
-        </span>
-        <span class="menu-title">DSR
-        </span>
-        <span class="menu-arrow"></span>
-      </span>
-      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-        <div *ngIf="isDsr" class="menu-item menu-accordion">
-          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
-            routerLink="/dsr/dsrDetails">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title"> DSR
-              </span>
-            </span>
-          </div>
-          <div *ngIf="accessGroupId == '19'">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title" (click)="alert()"> DSR
-              </span>
-            </span>
-          </div>
-        </div>
-        <div *ngIf="isTankDsr" class="menu-item menu-accordion">
-          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
-            routerLink="/dsr/tkDSRDetails">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title"> Tank DSR
-              </span>
-            </span>
-          </div>
-          <div *ngIf="accessGroupId == '19'">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title" (click)="alert()"> Tank DSR
               </span>
             </span>
           </div>
@@ -1020,6 +1020,188 @@
           </div>
         </div>
 
+      </div>
+    </div>
+
+    <!-- Report -->
+    <div *ngIf="isREPORT" class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+      <span class="menu-link">
+        <span class="menu-icon">
+          <app-keenicon name="profile-circle" class="fs-2"></app-keenicon>
+        </span>
+        <span class="menu-title">REPORT
+        </span>
+        <span class="menu-arrow"></span>
+      </span>
+      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+        <div *ngIf="isDailyReportEntries" class="menu-item menu-accordion">
+          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
+            routerLink="/report/dailyReportEntries">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">Daily Report Entries
+              </span>
+            </span>
+          </div>
+          <div *ngIf="accessGroupId == '19'">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title" (click)="alert()">Daily Report Entries
+              </span>
+            </span>
+          </div>
+        </div>
+        <div *ngIf="isDailyReport" class="menu-item menu-accordion">
+          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
+            routerLink="/report/dailyReport">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">Daily Report
+              </span>
+            </span>
+          </div>
+          <div *ngIf="accessGroupId == '19'">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title" (click)="alert()">Daily Report
+              </span>
+            </span>
+          </div>
+        </div>
+        <div *ngIf="isMonthlyReport" class="menu-item menu-accordion">
+          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
+            routerLink="/report/monthlyReport">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">Monthly Report
+              </span>
+            </span>
+          </div>
+          <div *ngIf="accessGroupId == '19'">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title" (click)="alert()">Monthly Report
+              </span>
+            </span>
+          </div>
+        </div>
+        <div *ngIf="isVatBook" class="menu-item menu-accordion">
+          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
+            routerLink="/report/vatBook">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">VAT Book
+              </span>
+            </span>
+          </div>
+          <div *ngIf="accessGroupId == '19'">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title" (click)="alert()">VAT Book
+              </span>
+            </span>
+          </div>
+        </div>
+        <div *ngIf="isProfitReport" class="menu-item menu-accordion">
+          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
+            routerLink="/report/profitReport">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">Profit Report
+              </span>
+            </span>
+          </div>
+          <div *ngIf="accessGroupId == '19'">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title" (click)="alert()">Profit Report
+              </span>
+            </span>
+          </div>
+        </div>
+        <div *ngIf="isSummaryReport" class="menu-item menu-accordion">
+          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
+            routerLink="/report/summaryReport">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">Summary Report
+              </span>
+            </span>
+          </div>
+          <div *ngIf="accessGroupId == '19'">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title" (click)="alert()">Summary Report
+              </span>
+            </span>
+          </div>
+        </div>
+        <div *ngIf="isViswasaTxExcel" class="menu-item menu-accordion">
+          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
+            routerLink="/report/viswasaTxEcel">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">Viswasa Tx Excel
+              </span>
+            </span>
+          </div>
+          <div *ngIf="accessGroupId == '19'">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title" (click)="alert()">Viswasa Tx Excel
+              </span>
+            </span>
+          </div>
+        </div>
+        <div *ngIf="isSalesPurReport" class="menu-item menu-accordion">
+          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
+            routerLink="/report/salesPurchaseReport">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title"> Sales Purchase Report
+              </span>
+            </span>
+          </div>
+          <div *ngIf="accessGroupId == '19'">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title" (click)="alert()"> Sales Purchase Report
+              </span>
+            </span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1394,188 +1576,6 @@
                 </span>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Report -->
-    <div *ngIf="isREPORT" class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
-      <span class="menu-link">
-        <span class="menu-icon">
-          <app-keenicon name="profile-circle" class="fs-2"></app-keenicon>
-        </span>
-        <span class="menu-title">REPORT
-        </span>
-        <span class="menu-arrow"></span>
-      </span>
-      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-        <div *ngIf="isDailyReportEntries" class="menu-item menu-accordion">
-          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
-            routerLink="/report/dailyReportEntries">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title">Daily Report Entries
-              </span>
-            </span>
-          </div>
-          <div *ngIf="accessGroupId == '19'">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title" (click)="alert()">Daily Report Entries
-              </span>
-            </span>
-          </div>
-        </div>
-        <div *ngIf="isDailyReport" class="menu-item menu-accordion">
-          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
-            routerLink="/report/dailyReport">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title">Daily Report
-              </span>
-            </span>
-          </div>
-          <div *ngIf="accessGroupId == '19'">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title" (click)="alert()">Daily Report
-              </span>
-            </span>
-          </div>
-        </div>
-        <div *ngIf="isMonthlyReport" class="menu-item menu-accordion">
-          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
-            routerLink="/report/monthlyReport">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title">Monthly Report
-              </span>
-            </span>
-          </div>
-          <div *ngIf="accessGroupId == '19'">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title" (click)="alert()">Monthly Report
-              </span>
-            </span>
-          </div>
-        </div>
-        <div *ngIf="isVatBook" class="menu-item menu-accordion">
-          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
-            routerLink="/report/vatBook">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title">VAT Book
-              </span>
-            </span>
-          </div>
-          <div *ngIf="accessGroupId == '19'">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title" (click)="alert()">VAT Book
-              </span>
-            </span>
-          </div>
-        </div>
-        <div *ngIf="isProfitReport" class="menu-item menu-accordion">
-          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
-            routerLink="/report/profitReport">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title">Profit Report
-              </span>
-            </span>
-          </div>
-          <div *ngIf="accessGroupId == '19'">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title" (click)="alert()">Profit Report
-              </span>
-            </span>
-          </div>
-        </div>
-        <div *ngIf="isSummaryReport" class="menu-item menu-accordion">
-          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
-            routerLink="/report/summaryReport">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title">Summary Report
-              </span>
-            </span>
-          </div>
-          <div *ngIf="accessGroupId == '19'">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title" (click)="alert()">Summary Report
-              </span>
-            </span>
-          </div>
-        </div>
-        <div *ngIf="isViswasaTxExcel" class="menu-item menu-accordion">
-          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
-            routerLink="/report/viswasaTxEcel">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title">Viswasa Tx Excel
-              </span>
-            </span>
-          </div>
-          <div *ngIf="accessGroupId == '19'">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title" (click)="alert()">Viswasa Tx Excel
-              </span>
-            </span>
-          </div>
-        </div>
-        <div *ngIf="isSalesPurReport" class="menu-item menu-accordion">
-          <div *ngIf="accessGroupId != '19'" routerLinkActive="here show" data-kt-menu-trigger="click"
-            routerLink="/report/salesPurchaseReport">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title"> Sales Purchase Report
-              </span>
-            </span>
-          </div>
-          <div *ngIf="accessGroupId == '19'">
-            <span class="menu-link">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title" (click)="alert()"> Sales Purchase Report
-              </span>
-            </span>
           </div>
         </div>
       </div>
@@ -2081,7 +2081,7 @@
     </div>
 
     <!-- FuelIn -->
-    <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show" >
+    <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
       <span class="menu-link">
         <span class="menu-icon">
           <app-keenicon name="element-plus" class="fs-2"></app-keenicon>
@@ -2131,145 +2131,144 @@
     </div>
 
     <!-- Fastag -->
-    <div *ngIf="isFastag" class="menu-item menu-accordion" routerLinkActive="here show"
-    data-kt-menu-trigger="click">
-    <span class="menu-link">
-      <span class="menu-icon">
-        <app-keenicon name="element-plus" class="fs-2"></app-keenicon>
+    <div *ngIf="isFastag" class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click">
+      <span class="menu-link">
+        <span class="menu-icon">
+          <app-keenicon name="element-plus" class="fs-2"></app-keenicon>
+        </span>
+        <span class="menu-title">FASTAG
+        </span>
+        <span class="menu-arrow"></span>
       </span>
-      <span class="menu-title">FASTAG 
-      </span>
-      <span class="menu-arrow"></span>
-    </span>
-    <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-      <div *ngIf="isAccInfo" class="menu-item menu-accordion">
-        <div *ngIf="isFTActive != 'NO'" routerLinkActive="here show" data-kt-menu-trigger="click"
-          routerLink="/pump/ftAccountInfo">
-          <span class="menu-link">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
+      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+        <div *ngIf="isAccInfo" class="menu-item menu-accordion">
+          <div *ngIf="isFTActive != 'NO'" routerLinkActive="here show" data-kt-menu-trigger="click"
+            routerLink="/pump/ftAccountInfo">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">Account Info
+              </span>
             </span>
-            <span class="menu-title">Account Info
+          </div>
+          <div *ngIf="isFTActive == 'NO'" routerLinkActive="here show" data-kt-menu-trigger="click">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title" (click)="alertFt()">Account Info
+              </span>
             </span>
-          </span>
+          </div>
         </div>
-        <div *ngIf="isFTActive == 'NO'" routerLinkActive="here show" data-kt-menu-trigger="click">
-          <span class="menu-link">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
+        <div class="menu-item menu-accordion">
+          <div *ngIf="isFTActive != 'NO'" routerLinkActive="here show" data-kt-menu-trigger="click"
+            routerLink="/pump/ftAllTollTransaction">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">All Toll Transaction
+              </span>
             </span>
-            <span class="menu-title" (click)="alertFt()">Account Info
+          </div>
+          <div *ngIf="isFTActive == 'NO'">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title" (click)="alertFt()">All Toll Transaction
+              </span>
             </span>
-          </span>
+          </div>
         </div>
-      </div>
-      <div class="menu-item menu-accordion">
-        <div *ngIf="isFTActive != 'NO'" routerLinkActive="here show" data-kt-menu-trigger="click"
-          routerLink="/pump/ftAllTollTransaction">
-          <span class="menu-link">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
+        <div class="menu-item menu-accordion">
+          <div *ngIf="isFTActive != 'NO'" routerLinkActive="here show" data-kt-menu-trigger="click"
+            routerLink="/pump/ftActiveVehicle">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">Active Vehicle
+              </span>
             </span>
-            <span class="menu-title">All Toll Transaction
+          </div>
+          <div *ngIf="isFTActive == 'NO'">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title" (click)="alertFt()">Active Vehicle
+              </span>
             </span>
-          </span>
+          </div>
         </div>
-        <div *ngIf="isFTActive == 'NO'">
-          <span class="menu-link">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
+        <div class="menu-item menu-accordion">
+          <div *ngIf="isFTActive != 'NO'" routerLinkActive="here show" data-kt-menu-trigger="click"
+            routerLink="/pump/ftTollPlaza">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">Toll Plaza
+              </span>
             </span>
-            <span class="menu-title" (click)="alertFt()">All Toll Transaction
+          </div>
+          <div *ngIf="isFTActive == 'NO'">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title" (click)="alertFt()">Toll Plaza
+              </span>
             </span>
-          </span>
+          </div>
         </div>
-      </div>
-      <div class="menu-item menu-accordion">
-        <div *ngIf="isFTActive != 'NO'" routerLinkActive="here show" data-kt-menu-trigger="click"
-          routerLink="/pump/ftActiveVehicle">
-          <span class="menu-link">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
+        <div class="menu-item menu-accordion">
+          <div *ngIf="isFTActive != 'NO'" routerLinkActive="here show" data-kt-menu-trigger="click"
+            routerLink="/pump/ftTotalRecharge">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">Total Recharge
+              </span>
             </span>
-            <span class="menu-title">Active Vehicle
+          </div>
+          <div *ngIf="isFTActive == 'NO'">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title" (click)="alertFt()">Total Recharge
+              </span>
             </span>
-          </span>
+          </div>
         </div>
-        <div *ngIf="isFTActive == 'NO'">
-          <span class="menu-link">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
+        <div class="menu-item menu-accordion">
+          <div *ngIf="isFTActive != 'NO'" routerLinkActive="here show" data-kt-menu-trigger="click"
+            routerLink="/pump/ftVehicleSummary">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">Vehicle Summary
+              </span>
             </span>
-            <span class="menu-title" (click)="alertFt()">Active Vehicle
+          </div>
+          <div *ngIf="isFTActive == 'NO'">
+            <span class="menu-link">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title" (click)="alertFt()">Vehicle Summary
+              </span>
             </span>
-          </span>
-        </div>
-      </div>
-      <div class="menu-item menu-accordion">
-        <div *ngIf="isFTActive != 'NO'" routerLinkActive="here show" data-kt-menu-trigger="click"
-          routerLink="/pump/ftTollPlaza">
-          <span class="menu-link">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title">Toll Plaza
-            </span>
-          </span>
-        </div>
-        <div *ngIf="isFTActive == 'NO'">
-          <span class="menu-link">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title" (click)="alertFt()">Toll Plaza
-            </span>
-          </span>
-        </div>
-      </div>
-      <div class="menu-item menu-accordion">
-        <div *ngIf="isFTActive != 'NO'" routerLinkActive="here show" data-kt-menu-trigger="click"
-          routerLink="/pump/ftTotalRecharge">
-          <span class="menu-link">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title">Total Recharge
-            </span>
-          </span>
-        </div>
-        <div *ngIf="isFTActive == 'NO'">
-          <span class="menu-link">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title" (click)="alertFt()">Total Recharge
-            </span>
-          </span>
-        </div>
-      </div>
-      <div class="menu-item menu-accordion">
-        <div *ngIf="isFTActive != 'NO'" routerLinkActive="here show" data-kt-menu-trigger="click"
-          routerLink="/pump/ftVehicleSummary">
-          <span class="menu-link">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title">Vehicle Summary
-            </span>
-          </span>
-        </div>
-        <div *ngIf="isFTActive == 'NO'">
-          <span class="menu-link">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title" (click)="alertFt()">Vehicle Summary
-            </span>
-          </span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
 
     <br><br><br><br>
@@ -2285,7 +2284,7 @@
       </span>
     </div>
 
-    </div>
+  </div>
   <!--end::Menu-->
 </div>
 <!--end::Menu wrapper-->

@@ -156,6 +156,8 @@ export class TablesWidget30Component {
   addVehicleData: any = [];
   count: number = 1;
   addVehicle = new addVehicle();
+  crAmt: any;
+  crDays: string;
 
   constructor(
     private post: WidgetService,
@@ -257,10 +259,22 @@ export class TablesWidget30Component {
     var rows = [];
     for (var key in this.mappingAccData) {
 
-      if (this.mappingAccData[key].mappingGST != 'undefined') {
+      if (this.mappingAccData[key].mappingGST != 'undefined' || this.mappingAccData[key].mappingGST != null) {
         this.gst = this.mappingAccData[key].mappingGST
       } else {
         this.gst = ''
+      }
+
+      if(this.mappingAccData[key].maxCreditAmount == null){
+        this.crAmt = ''
+      } else {
+        this.crAmt = this.mappingAccData[key].maxCreditAmount
+      }
+      
+      if(this.mappingAccData[key].creditDayLimit == null){
+        this.crDays = ''
+      } else {
+        this.crDays = this.mappingAccData[key].creditDayLimit
       }
       var temp = [
         moment(this.mappingAccData[key].mappingCreatedDate).format("DD-MM-YYYY"),
@@ -268,8 +282,8 @@ export class TablesWidget30Component {
         this.mappingAccData[key].hostName,
         this.mappingAccData[key].hostPhone,
         this.gst,
-        this.mappingAccData[key].maxCreditAmount,
-        this.mappingAccData[key].creditDayLimit,
+        this.crAmt,
+        this.crDays,
 
       ];
       rows.push(temp);
@@ -313,14 +327,32 @@ export class TablesWidget30Component {
     this.mappingAccData.map((res: { mappingEmail: string; mappingGST: string; mappingCreatedDate: moment.MomentInput; companyName: any; hostName: any; hostPhone: any; maxCreditAmount: any; creditDayLimit: any; }) => {
       if (res.mappingEmail != 'undefined') {
         this.email = res.mappingEmail
-      } else {
+      } if(res.mappingEmail == 'null'){
+        this.email = ''
+      }else {
         this.email = ''
       }
+
       if (res.mappingGST != 'undefined') {
         this.gst = res.mappingGST
+      } if(res.mappingGST == 'null'){
+        this.gst = ''
       } else {
         this.gst = ''
       }
+      
+      if(res.maxCreditAmount == 'null'){
+        this.crAmt = ''
+      } else {
+        this.crAmt = ''
+      }
+      
+      if(res.creditDayLimit == 'null'){
+        this.crDays = ''
+      } else {
+        this.crDays = ''
+      }
+
       let json = {
         mappedDate: moment(res.mappingCreatedDate).format("DD-MM-YYYY"),
         CustomerName: res.companyName,
@@ -328,8 +360,8 @@ export class TablesWidget30Component {
         KeyPersonMobile: res.hostPhone,
         Email: this.email,
         GST: this.gst,
-        CrLimit: res.maxCreditAmount,
-        CrDayLimit: res.creditDayLimit,
+        CrLimit: this.crAmt,
+        CrDayLimit: this.crDays,
       };
       this.mappingAccDataExcel.push(json);
     });

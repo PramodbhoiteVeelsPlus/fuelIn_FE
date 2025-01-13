@@ -111,6 +111,7 @@ export class BaseTablesWidget3Component implements OnInit {
   headerName3: string;
   GSTNumber: string;
   transactionDataExcel: any =[];
+  description: string;
 
   constructor(
     private modalService: NgbModal,
@@ -337,12 +338,18 @@ export class BaseTablesWidget3Component implements OnInit {
           this.quantity = ' '
         }
 
+        if (this.transactionData[key].description == null) {
+          this.description = ''
+        } else {
+          this.description = this.transactionData[key].description
+        }
+
         var temp = [
           moment(this.transactionData[key].date).format("DD-MM-YYYY"),
           this.transactionData[key].companyName,
           this.transactionData[key].hostName,
           this.transactionData[key].hostPhone,
-          this.transactionData[key].description + ', ' + this.transactionData[key].product,
+          this.description + ', ' + this.transactionData[key].product,
           this.quantity,
           Number(this.transactionData[key].purchase).toFixed(2),
           Number(this.transactionData[key].payment).toFixed(2),
@@ -405,13 +412,18 @@ export class BaseTablesWidget3Component implements OnInit {
           this.quantity = ' '
         }
 
+        if (res.description == null) {
+          this.description = ''
+        } else {
+          this.description = res.description
+        }
 
         let json = {
           Date: moment(res.date).format("DD-MM-YYYY"),
           KhataName: res.companyName,
           KeyPersonName: res.hostName,
           KeyPersonMobile: res.hostPhone,
-          Description: res.description + ', ' + res.product,
+          Description: this.description + ', ' + res.product,
           Quantity: this.quantity,
           Debit_Purchase: Number(res.purchase).toFixed(2),
           Credit_Payment: Number(res.payment).toFixed(2),

@@ -35,7 +35,7 @@
       </div>
       <br>
       <div class="mb-3 row" *ngFor="let data of allProductPriceList">
-        <label for="example-text-input" class="col-md-5 col-form-label">{{data.productName}} </label>
+        <label for="example-text-input" class="col-md-5 col-form-label"><b>{{data.productName}} </b></label>
         <div class="col-md-6">
           <input class="form-control" type="number" [(ngModel)]="data.sellingPrice"
             onkeypress="return this.value.length < 6;" [ngModelOptions]="{standalone: true}" placeholder="Enter Price"
