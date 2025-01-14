@@ -58,6 +58,9 @@ export class TransTablesService {
   private PersonByIdURL = this.baseURL + 'person/getPersonById';
   private updateLogoURL = this.baseURL + 'corporate/updateLogo';
   private addDocDetailsURL = this.baseURL + 'documents/addDocDetails';
+  private getDealerStaffAccessByDealerIdURL = this.baseURL + "userAccess/getDealerStaffAccessByDealerId";
+  private getAccessByPersonIdURL = this.baseURL + "userAccess/getAccessByPersonId";
+  private updateDealerStaffAccessURL = this.baseURL + "userAccess/updateDealerStaffAccess";
 
 
 
@@ -432,6 +435,36 @@ export class TransTablesService {
     let headers = new HttpHeaders();
     headers = headers.set('authenticationToken', this.token);
     return this.http.post(this.addDocDetailsURL, body, {
+      headers: headers
+    })
+  }
+  
+  // getDealerStaffAccessByDealerIdURL
+  getDealerStaffAccessByDealerIdPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getDealerStaffAccessByDealerIdURL, body, {
+      headers: headers
+    })
+  }
+  
+  // getAccessByPersonIdURL
+  getAccessByPersonIdPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getAccessByPersonIdURL, body, {
+      headers: headers
+    })
+  }
+  
+  // updateDealerStaffAccessURL
+  updateDealerStaffAccessPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateDealerStaffAccessURL, body, {
       headers: headers
     })
   }

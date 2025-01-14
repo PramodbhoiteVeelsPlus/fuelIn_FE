@@ -8,9 +8,10 @@ import { FormsModule } from '@angular/forms';
 import { CustomerDetailsComponent } from './customerDetails.component';
 import { CustomerDetailComponent } from './customer-detail/customer-detail.component';
 import { CustomerDetailsEditComponent } from './customer-details-edit/customer-details-edit.component';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
-  declarations: [CustomerDetailComponent, CustomerDetailsEditComponent
+  declarations: [CustomerDetailComponent, CustomerDetailsEditComponent, SettingsComponent
   ],
   imports: [
     CommonModule,
@@ -27,6 +28,10 @@ import { CustomerDetailsEditComponent } from './customer-details-edit/customer-d
       {
         path: 'customerDetailsEdit/:id',
         component: CustomerDetailsEditComponent,
+      },
+      {
+        path: 'settings',
+        component: SettingsComponent,
       },
     ]),
     WidgetsModule,
