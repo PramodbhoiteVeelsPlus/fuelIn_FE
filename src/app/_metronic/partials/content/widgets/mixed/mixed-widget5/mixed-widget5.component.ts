@@ -87,6 +87,10 @@ export class MixedWidget5Component {
     dueDate: new FormControl('')
   })
 
+  unitForm = new FormGroup({
+    mobile: new FormControl('', Validators.required),
+  });
+
   customerName: string;
   allCorporateList: any = [];
   statementData: any = [];
@@ -102,6 +106,12 @@ export class MixedWidget5Component {
   p: number = 1;
   p1: number = 1;
   total: number = 0;
+  modalRef: any;
+  closeResult: string;
+  managerList: any;
+  managerMobile: any;
+  manualNumberStatus: any;
+  autoManualStatus: any;
 
   constructor(
     private post: MixedService,
@@ -119,15 +129,18 @@ export class MixedWidget5Component {
 
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
     // this.dealerLoginVPId = element.veelsPlusCorporateID;
     this.accessGroup = element.accessGroupId;
     this.managerVPPersonId = element.veelsPlusId
     this.managerPersonId = element.personId
+    this.manualNumberStatus = dealerData.manualNumberStatus;
+    this.autoManualStatus = dealerData.autoManualStatus;
     this.getFuelCreditRequestCorporateByfuelDealerId(this.fuelDealerId)
-    // this.getFuelTerminal(this.fuelDealerId)
-    // this.getBankDetailsByDealerId(this.fuelDealerId)
+    this.getManagersByfuelDealerId(this.fuelDealerId);
+    this.getManagerMobileByfuelDealerId(this.fuelDealerId)
     // this.getFlagStatusByCorpId(this.dealerCorporateId)
     this.cd.detectChanges()
   }
@@ -342,4 +355,153 @@ export class MixedWidget5Component {
     this.p = event;
     this.getCrStatement();
   }
+  
+  openSelectMobile(selectMobile: any) {
+    this.modalRef = this.modalService.open(selectMobile, { size: "sm" });
+    this.modalRef.result.then(
+        (result: any) => {
+            this.closeResult = `Closed with: ${result}`;
+        },
+        (reason: any) => {
+            this.closeResult = `Dismissed`;
+        }
+    );
+}
+
+getManagersByfuelDealerId(fuelDealerId: any) {
+  const data = {
+    fuelDealerId: fuelDealerId
+  };
+  this.post.getManagerDetailsByDealerIdPOST(data)
+    .subscribe(res => {
+      if (res.data.length) {
+        this.managerList = res.data;
+        this.cd.detectChanges()
+      } else {
+        this.managerList = [];
+        this.cd.detectChanges()
+      }
+    }
+    );
+}
+
+submitMobile(){
+  let data = {
+    mobile: this.unitForm.value.mobile,
+    fuelDealerId: this.fuelDealerId
+  }
+  this.post.addManagerMobileToDOCPOST(data)
+  .subscribe(res => {
+    if (res.status == 'OK') {
+      alert("Mobile added successfully..")
+      this.getManagerMobileByfuelDealerId(this.fuelDealerId)
+      this.modalRef.close('close')
+    } else {
+    }
+  });
+}
+
+getManagerMobileByfuelDealerId(fuelDealerId: any) {
+  const data = {
+    fuelDealerId: fuelDealerId,
+  };
+  this.post.getSelectedMobileNumberByDealerIdPOST(data)
+    .subscribe(res => {
+      if (res.data.length) {
+        this.managerMobile = res.data[0].mobile;
+        this.cd.detectChanges()
+      } else {
+        this.cd.detectChanges
+      }
+    }
+    );
+}
+
+updatemanualNumberStatus(status: any, mappingStatus: string) {
+  if (mappingStatus == "FALSE") {
+    if (status.target.checked) {
+      mappingStatus = "TRUE";
+
+      let data = {
+        manualNumberStatus: mappingStatus,
+        fuelDealerId: this.fuelDealerId,
+      }
+
+      this.post.updateCustManualNumberStatusPOST(data)
+        .subscribe(res => {
+          if (res) {
+            alert("manualNumber Status Updated to Active!")
+            // this.getfuelDealerIdByCorporateId()
+          }
+          else {
+            alert("Error to Update Mapping!")
+          }
+
+        })
+    }
+  } else {
+    mappingStatus = "FALSE";
+    let data = {
+      manualNumberStatus: mappingStatus,
+      fuelDealerId: this.fuelDealerId,
+    }
+
+    this.post.updateCustManualNumberStatusPOST(data)
+      .subscribe(res => {
+        if (res) {
+          alert("manualNumber Status Updated to Inactive!")
+          // this.getfuelDealerIdByCorporateId()
+        }
+        else {
+          alert("Error to Update Mapping!")
+        }
+
+      })
+  }
+
+}
+
+updatAutoNumberStatus(status: any, mappingStatus: any) {
+    
+  if (mappingStatus == "FALSE") {
+    if (status.target.checked) {
+      mappingStatus = "TRUE";
+
+      let data = {
+        autoManualStatus: mappingStatus,
+        fuelDealerId: this.fuelDealerId,
+      }
+
+      this.post.updateAutoManualNumberStatusPOST(data)
+        .subscribe(res => {
+          if (res) {
+            alert("manualNumber Status Updated to Active!")
+          }
+          else {
+            alert("Error to Update Mapping!")
+          }
+
+        })
+    }
+  } else {
+    mappingStatus = "FALSE";
+    let data = {
+      autoManualStatus: mappingStatus,
+      fuelDealerId: this.fuelDealerId,
+    }
+
+    this.post.updateAutoManualNumberStatusPOST(data)
+      .subscribe(res => {
+        if (res) {
+          alert("manualNumber Status Updated to Inactive!")
+        }
+        else {
+          alert("Error to Update Mapping!")
+        }
+
+      })
+  }
+
+}
+
 }

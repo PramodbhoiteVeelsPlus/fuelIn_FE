@@ -164,6 +164,7 @@ export class FeedsWidget10Component implements OnInit {
     } 
 
     this.selectedDate = moment(new Date()).format("DD-MM-YYYY");
+    this.reportDate = moment(this.selectedDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD")
     this.getOpeningBalance(this.fuelDealerId);
     this.getDigitalTotalByDate(this.dealerCorporateId);
     this.getFuelCreditPaymentByDate(this.dealerCorporateId);

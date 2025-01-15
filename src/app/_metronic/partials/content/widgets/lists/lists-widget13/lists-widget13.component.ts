@@ -395,4 +395,53 @@ export class ListsWidget13Component {
     this.router.navigate(['/shift/addShift']);
   }
 
+  exportPDF(){
+    var cols = [["Date", "shift_Sales(Rs)", "A_Credit(Rs)","B-Digital(Rs)", "C-Cash(1+2+3)","Shift_Tally_(A+B+C)","1-Cash_Handover(Rs)","2-Cash_Expenses(Rs)","3-Cash_Short/Diff(Rs)"]];
+    var rows = [];
+    for (var key in this.shiftWiseData) {
+    
+      var temp = [
+        moment(this.shiftWiseData[key].openDate).format("DD-MM-YYYY"),
+        Number(this.shiftWiseData[key].meterSaleAmount).toFixed(2),
+        Number(this.shiftWiseData[key].credit).toFixed(2),
+        Number(this.shiftWiseData[key].digital).toFixed(2),
+        Number(((this.shiftWiseData[key].cash)*1) + ((this.shiftWiseData[key].expenses)*1) + ((this.shiftWiseData[key].short)*1)).toFixed(2),
+        Number(this.shiftWiseData[key].shiftTally).toFixed(2),
+        Number(this.shiftWiseData[key].cash).toFixed(2),
+        Number(this.shiftWiseData[key].expenses).toFixed(2),
+        Number(this.shiftWiseData[key].short).toFixed(2),
+        
+        ];
+        rows.push(temp);
+    }
+  
+    var doc = new jsPDF('l', 'pt');
+  
+    doc.setFontSize(20);  
+    doc.text("shiftBook_shiftwise",350, 35 );  
+    doc.setFontSize(10);
+  
+     autoTable(doc, {
+      columnStyles: {
+        0: {cellWidth: 70},     // OnboardDate
+        1: {cellWidth: 70},    // CompanyId
+        2: {cellWidth: 70},     //FuelPartnerName
+        3: {cellWidth: 80},     //OnboardingStatus
+        4: {cellWidth: 90},     //PaymentStatus
+        5: {cellWidth: 100},     //WaiveOffAction
+        6: {cellWidth: 100},     //SMSReceiveStatus
+        7: {cellWidth: 80},     //SMSReceiveStatus
+  
+      },
+      
+      margin: {top: 50},
+      head: cols,
+      body: rows,
+      theme: 'grid',
+      didDrawCell: (data) => { },
+  });
+    // doc.output('dataurlnewwindow')
+    doc.save("shiftBook_Monthwise.pdf");
+          
+  }
 }

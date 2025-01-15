@@ -69,6 +69,10 @@ export class MixedService {
     private updateTotalInvPaidAmtURL = this.baseURL + 'fuelCreditInvoice/updateTotalInvPaidAmt';
     private getDetailsByMapIdURL = this.baseURL + 'fuelDealerCustMap/getDetailsByMapId'; 
     private addCoinDetailsURL = this.baseURL + 'coinConversion/addCoinDetails';
+    private getManagerDetailsByDealerIdURL = this.baseURL + 'fuelCreditInvoice/getManagerDetailsByDealerId'; 
+    private addManagerMobileToDOCURL = this.baseURL + 'fuelCreditInvoice/addManagerMobileToDOC';
+    private updateCustManualNumberStatusURL = this.baseURL + 'fuelDealerCustMap/updateCustManualNumberStatus';
+    private updateAutoManualNumberStatusURL = this.baseURL + 'fuelDealerCustMap/updateAutoManualNumberStatus';
 
 
     setHeader() {
@@ -473,6 +477,46 @@ export class MixedService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.addCoinDetailsURL, body, {
+            headers: headers
+        })
+    }
+
+    // getManagerDetailsByDealerIdURL
+    getManagerDetailsByDealerIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getManagerDetailsByDealerIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // addManagerMobileToDOCURL
+    addManagerMobileToDOCPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.addManagerMobileToDOCURL, body, {
+            headers: headers
+        })
+    }
+
+    // updateCustManualNumberStatusURL
+    updateCustManualNumberStatusPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateCustManualNumberStatusURL, body, {
+            headers: headers
+        })
+    }
+
+    // updateAutoManualNumberStatusURL
+    updateAutoManualNumberStatusPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.updateAutoManualNumberStatusURL, body, {
             headers: headers
         })
     }
