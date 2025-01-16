@@ -21,6 +21,7 @@ export class UserInnerComponent implements OnInit, OnDestroy {
   private unsubscribe: Subscription[] = [];
   veelsplusCorporate: any;
   customerId: any;
+  isAdmin: boolean = false;
 
   constructor(
     private auth: AuthService,
@@ -33,6 +34,9 @@ export class UserInnerComponent implements OnInit, OnDestroy {
     this.setLanguage(this.translationService.getSelectedLanguage());
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.veelsplusCorporate = element.veelsPlusCorporateID;
+    if(element.accessGroupId == '12'){
+      this.isAdmin = true;
+    }
     this.getCorporateById(this.veelsplusCorporate)
   }
 

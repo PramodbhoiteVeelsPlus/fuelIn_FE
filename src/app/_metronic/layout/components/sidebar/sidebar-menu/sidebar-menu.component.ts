@@ -142,8 +142,8 @@ export class SidebarMenuComponent implements OnInit {
           this.cd.detectChanges()
         } else if(element.accessGroupId == '14'){
           var managerData = JSON.parse(localStorage.getItem("managerData") || '{}');
-          this.dealerId = managerData.fuelDealerId;
-          // this.getCustomize(this.dealerId);
+          this.dealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
+          this.getCustomize(this.dealerId);
           this.cd.detectChanges()
       }
         // this.dealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');

@@ -193,7 +193,7 @@
     </a>
   </div>
 
-  <div class="menu-item px-5">
+  <div *ngIf="isAdmin" class="menu-item px-5">
     <a routerLink="/customerDetails/settings" class="menu-link px-5">
       Settings
     </a>
