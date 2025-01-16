@@ -101,7 +101,7 @@
         <div class="card-body">
           <div *ngIf="accessGroup == '12' || accessGroup == '14'">
             <div *ngIf = "accessGroup != '14' " class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
-              title="Click to add a user">
+              title="Click to add a user" style="margin-left: 950px;">
               <a (click)="openModal()" class="btn btn-sm btn-light-primary">
                 <app-keenicon name="plus" class="fs-3"></app-keenicon>
                 New Staff
@@ -115,14 +115,14 @@
                 <table class="table table-centered table-nowrap">
                   <thead class="table-light">
                     <tr>
-                      <th style="text-align: left;">#</th>
-                      <th style="text-align: left;">First Name</th>
-                      <th style="text-align: left;">Last Name</th>
-                      <th style="text-align: left;">Mobile No.</th>
-                      <th style="text-align: left;">Role</th>
-                      <th style="text-align: left;">Salary</th>
-                      <th *ngIf="accessGroup != '14' " style="text-align: left;">Mapping</th>
-                      <th *ngIf="accessGroup != '14' " style="text-align: left;">Action</th>
+                      <th style="text-align: left;"><b>#</b></th>
+                      <th style="text-align: left;"><b>First Name</b></th>
+                      <th style="text-align: left;"><b>Last Name</b></th>
+                      <th style="text-align: left;"><b>Mobile No.</b></th>
+                      <th style="text-align: left;"><b>Role</b></th>
+                      <th style="text-align: left;"><b>Salary</b></th>
+                      <th *ngIf="accessGroup != '14' " style="text-align: left;"><b>Mapping</b></th>
+                      <th *ngIf="accessGroup != '14' " style="text-align: left;"><b>Action</b></th>
                     </tr>
                   </thead>
                   <tbody *ngFor="let data of staffDetailsStaff; let i = index">

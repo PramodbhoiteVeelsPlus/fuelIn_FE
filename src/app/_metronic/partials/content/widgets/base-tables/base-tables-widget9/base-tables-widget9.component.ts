@@ -594,6 +594,8 @@ export class BaseTablesWidget9Component implements OnInit {
         this.active = 2;
         this.searchDiscountForm.reset();
         this.isNoRequest = false;
+        this.invoiceNo = "";
+        this.hsnCode = "";
         this.cd.detectChanges()
 
         // this.getFCInvoiceList();

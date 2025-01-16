@@ -130,13 +130,13 @@
                             <table class="table table-centered">
                                 <thead>
                                     <tr>
-                                        <th style="text-align: left;"> Date </th>
-                                        <th style="text-align: left;"> Rate </th>
+                                        <th style="text-align: left;"><b> Date </b></th>
+                                        <th style="text-align: left;"><b> Rate </b></th>
 
                                         <th *ngFor="let data of readingData" style="text-align: left;">
-                                            {{data.duNo}}{{data.nozNo}}
+                                           <b> {{data.duNo}}{{data.nozNo}}</b>
                                         </th>
-                                        <th style="text-align: left;"> Action </th>
+                                        <th style="text-align: left;"><b> Action </b></th>
                                     </tr>
                                 </thead>
                                 <tbody *ngIf="!dateNotRate">
@@ -300,15 +300,15 @@
                             <table *ngIf="isUpdateCol" id="excel-table" class="table table-centered table-nowrap">
                                 <thead>
                                     <tr>
-                                        <th style="text-align: left;"> Date </th>
-                                        <th style="text-align: left;"> Rate </th>
-                                        <th style="text-align: left;"> Meter sales (Qty) </th>
-                                        <th style="text-align: left;"> Meter sales (Rs) </th>
-                                        <th style="text-align: left;"> Actions </th>
+                                        <th style="text-align: left;"><b> Date </b></th>
+                                        <th style="text-align: left;"><b> Rate </b></th>
+                                        <th style="text-align: left;"><b> Meter sales (Qty) </b></th>
+                                        <th style="text-align: left;"><b> Meter sales (Rs) </b></th>
+                                        <th style="text-align: left;"><b> Actions </b></th>
                                         <th *ngFor="let data of nzData" style="text-align: left;">
-                                            {{data.duNz}}
+                                            <b>{{data.duNz}}
                                             <br>
-                                            MR | <span style="color: red;">PT</span>
+                                            MR | <span style="color: red;">PT</span></b>
                                         </th>
                                     </tr>
                                 </thead>
@@ -387,10 +387,10 @@
                                         <table class="table table-centered table-nowrap">
                                             <thead>
                                                 <tr>
-                                                    <th style="text-align: left;"> Pump Nozzle </th>
-                                                    <th style="text-align: left;"> Opening Meter Reading </th>
-                                                    <th style="text-align: left;"> Pump Testing </th>
-                                                    <th style="text-align: left;"> Action </th>
+                                                    <th style="text-align: left;"><b> Pump Nozzle </b></th>
+                                                    <th style="text-align: left;"><b> Opening Meter Reading </b></th>
+                                                    <th style="text-align: left;"><b> Pump Testing </b></th>
+                                                    <th style="text-align: left;"><b> Action </b></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -437,14 +437,14 @@
                             <table id="excel-table" *ngIf="!isUpdateCol" class="table table-centered table-nowrap">
                                 <thead>
                                     <tr>
-                                        <th style="text-align: left;"> Date </th>
-                                        <th style="text-align: left;"> Rate </th>
-                                        <th style="text-align: left;"> Meter sales (Qty) </th>
-                                        <th style="text-align: left;"> Meter sales (Rs) </th>
+                                        <th style="text-align: left;"><b> Date </b></th>
+                                        <th style="text-align: left;"><b> Rate </b></th>
+                                        <th style="text-align: left;"><b> Meter sales (Qty) </b></th>
+                                        <th style="text-align: left;"><b> Meter sales (Rs) </b></th>
 
                                         <th *ngFor="let data of nzData" style="text-align: left;">
-                                            {{data.duNz}}<br>
-                                            MR | <span style="color: red;">PT</span>
+                                           <b> {{data.duNz}}<br>
+                                            MR | <span style="color: red;">PT</span></b>
                                         </th>
                                     </tr>
                                 </thead>
@@ -502,12 +502,12 @@
                             <table class="table table-centered table-nowrap">
                                 <thead>
                                     <tr>
-                                        <th style="text-align: left;"> Date </th>
-                                        <th style="text-align: left;"> Rate </th>
+                                        <th style="text-align: left;"><b> Date </b></th>
+                                        <th style="text-align: left;"><b> Rate </b></th>
                                         <th *ngFor="let data of tkDetails" style="text-align: left;">
-                                            {{data.tankNo}}
+                                            <b>{{data.tankNo}}</b>
                                         </th>
-                                        <th style="text-align: left;"> Action </th>
+                                        <th style="text-align: left;"><b> Action </b></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -605,15 +605,15 @@
                             <table *ngIf="isUpdateCol1" class="table table-centered table-nowrap">
                                 <thead>
                                     <tr>
-                                        <th style="text-align: left;"> Date </th>
-                                        <th style="text-align: left;"> Rate </th>
-                                        <th style="text-align: left;"> Dip Sales (Qty) </th>
-                                        <th style="text-align: left;"> Dip Sales (Rs) </th>
-                                        <th style="text-align: left;"> Total Stock (Qty) </th>
-                                        <th style="text-align: left;"> Total Stock (Rs) </th>
+                                        <th style="text-align: left;"><b> Date </b></th>
+                                        <th style="text-align: left;"><b> Rate </b></th>
+                                        <th style="text-align: left;"><b> Dip Sales (Qty) </b></th>
+                                        <th style="text-align: left;"><b> Dip Sales (Rs) </b></th>
+                                        <th style="text-align: left;"><b> Total Stock (Qty) </b></th>
+                                        <th style="text-align: left;"><b> Total Stock (Rs) </b></th>
 
-                                        <th style="text-align: left;"> Receipts (Qty)</th>
-                                        <th style="text-align: left;"> Actions </th>
+                                        <th style="text-align: left;"><b> Receipts (Qty)</b></th>
+                                        <th style="text-align: left;"><b> Actions </b></th>
 
                                         <th *ngFor="let data of tkDSRData" style="text-align: left;">
                                             {{data.tank}} <br>

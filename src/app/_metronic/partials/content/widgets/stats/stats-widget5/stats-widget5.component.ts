@@ -67,7 +67,7 @@ export class StatsWidget5Component {
           } else if (this.title == "Credit Payment") {
             this.isOS = false;
             this.isSales = false;
-            this.isPayment = true;            
+            this.isPayment = true;
           }
           this.spinner.hide();
           this.cd.detectChanges()
@@ -98,7 +98,7 @@ export class StatsWidget5Component {
           } else if (this.title == "Credit Payment") {
             this.isOS = false;
             this.isSales = false;
-            this.isPayment = true;            
+            this.isPayment = true;
           }
           if (res.dataSales[0].totalPurchase) {
             this.thisMonthCrSale = res.dataSales[0].totalPurchase
@@ -111,14 +111,19 @@ export class StatsWidget5Component {
             this.thisMonthCrPayment = 0
           }
           this.totalOS = Number(res.outstanding).toFixed(2);
-          this.spinner.hide();
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 2000);
           this.cd.detectChanges()
         } else {
-          this.spinner.hide();
-          this.cd.detectChanges()
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 2000); this.cd.detectChanges()
         }
       })
   }
 
-  
+
 }

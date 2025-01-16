@@ -197,16 +197,16 @@
                     <table *ngIf="isUpdateCol" class="table table-centered table-nowrap">
                         <thead>
                             <tr>
-                                <th> Date </th>
-                                <th> Rate </th>
-                                <th> Stock </th>
-                                <th> Purchase </th>
-                                <th> Meter Sales(Qty) </th>
-                                <th> Meter Sales(Rs) </th>
-                                <th> Action </th>
+                                <th><b> Date </b></th>
+                                <th><b> Rate </b></th>
+                                <th><b> Stock </b></th>
+                                <th><b> Purchase </b></th>
+                                <th><b> Meter Sales(Qty) </b></th>
+                                <th><b> Meter Sales(Rs) </b></th>
+                                <th><b> Action </b></th>
                                 <th *ngFor="let data of tankData" style="text-align: left;">
-                                    {{data.tkNzDu}} <br>
-                                    MR | <span style="color: red;">PT</span>
+                                   <b> {{data.tkNzDu}} <br>
+                                    MR | <span style="color: red;">PT</span></b>
                                 </th>
                             </tr>
                         </thead>
@@ -247,15 +247,15 @@
                     <table id="excel-table" *ngIf="!isUpdateCol" class="table table-centered table-nowrap">
                         <thead>
                             <tr>
-                                <th style="text-align: left;"> Date </th>
-                                <th style="text-align: left;"> Rate </th>
-                                <th style="text-align: left;"> Stock </th>
-                                <th style="text-align: left;"> Purchase </th>
-                                <th> Meter Sales(Qty) </th>
-                                <th> Meter Sales(Rs) </th>
+                                <th style="text-align: left;"><b> Date </b></th>
+                                <th style="text-align: left;"><b> Rate </b></th>
+                                <th style="text-align: left;"><b> Stock </b></th>
+                                <th style="text-align: left;"><b> Purchase </b></th>
+                                <th><b> Meter Sales(Qty)</b> </th>
+                                <th><b> Meter Sales(Rs) </b></th>
                                 <th *ngFor="let data of tankData" style="text-align: left;">
-                                    {{data.tkNzDu}} <br>
-                                    MR | <span style="color: red;">PT</span>
+                                    <b>{{data.tkNzDu}} <br>
+                                    MR | <span style="color: red;">PT</span></b>
                                 </th>
                             </tr>
                         </thead>
@@ -312,10 +312,10 @@
                     <table class="table table-hover b">
                         <thead>
                             <tr>
-                                <th style="text-align: left;"> Pump Nozzles </th>
-                                <th style="text-align: left;"> Meter Reading </th>
-                                <th style="text-align: left;"> Pump Testing </th>
-                                <th style="text-align: left;"> Action </th>
+                                <th style="text-align: left;"><b> Pump Nozzles </b></th>
+                                <th style="text-align: left;"><b> Meter Reading </b></th>
+                                <th style="text-align: left;"><b> Pump Testing </b></th>
+                                <th style="text-align: left;"><b> Action </b></th>
                             </tr>
                         </thead>
                         <tbody *ngFor="let data of tkNzDSRUpdate; let i = index">
@@ -380,19 +380,19 @@
                         <table id="excel-table" class="table table-centered table-nowrap">
                             <thead>
                                 <tr>
-                                    <th style="text-align: left;"> Date </th>
-                                    <th style="text-align: left;"> Rate </th>
-                                    <th style="text-align: left;"> Opening Stock </th>
-                                    <th style="text-align: left;"> Receipts</th>
-                                    <th style="text-align: left;"> Total stock </th>
-                                    <th style="text-align: left;"> Meter Sales </th>
-                                    <th style="text-align: left;"> Pump Testing </th>
-                                    <th style="text-align: left;"> Net Meter Sales </th>
-                                    <th style="text-align: left;"> Net Dip Sales </th>
-                                    <th style="text-align: left;"> Variation </th>
-                                    <th style="text-align: left;"> MTD Meter Sales </th>
-                                    <th style="text-align: left;"> MTD Dip Sales </th>
-                                    <th style="text-align: left;"> MTD Variation </th>
+                                    <th style="text-align: left;"><b> Date </b></th>
+                                    <th style="text-align: left;"><b> Rate </b></th>
+                                    <th style="text-align: left;"><b> Opening Stock </b></th>
+                                    <th style="text-align: left;"><b> Receipts</b></th>
+                                    <th style="text-align: left;"><b> Total stock </b></th>
+                                    <th style="text-align: left;"><b> Meter Sales </b></th>
+                                    <th style="text-align: left;"><b> Pump Testing </b></th>
+                                    <th style="text-align: left;"><b> Net Meter Sales </b></th>
+                                    <th style="text-align: left;"><b> Net Dip Sales </b></th>
+                                    <th style="text-align: left;"><b> Variation </b></th>
+                                    <th style="text-align: left;"><b> MTD Meter Sales </b></th>
+                                    <th style="text-align: left;"><b> MTD Dip Sales </b></th>
+                                    <th style="text-align: left;"><b> MTD Variation </b></th>
                                 </tr>
                             </thead>
                             <tbody *ngFor="let data of tankDsrBookDetails">

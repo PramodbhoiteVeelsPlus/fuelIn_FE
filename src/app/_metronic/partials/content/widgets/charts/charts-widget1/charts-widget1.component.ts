@@ -42,7 +42,7 @@ export class ChartsWidget1Component implements OnInit {
   dealerId: any;
   dealerCorporateId: any;
 
-  constructor(private post: ChartsService, 
+  constructor(private post: ChartsService,
     private spinner: NgxSpinnerService,
     private cd: ChangeDetectorRef,) { }
 
@@ -66,82 +66,82 @@ export class ChartsWidget1Component implements OnInit {
       .subscribe(res => {
         if (res.status == 'OK') {
           //Months
-          if(res.data[0]){
+          if (res.data[0]) {
             this.month1 = res.data[0].month;
           }
-          if(res.data[1]){
+          if (res.data[1]) {
             this.month2 = res.data[1].month;
           }
-          if(res.data[2]){
+          if (res.data[2]) {
             this.month3 = res.data[2].month;
           }
-          if(res.data[3]){
+          if (res.data[3]) {
             this.month4 = res.data[3].month;
           }
-          if(res.data[4]){
+          if (res.data[4]) {
             this.month5 = res.data[4].month;
           }
-          if(res.data[5]){
+          if (res.data[5]) {
             this.month6 = res.data[5].month;
           }
-          
+
           // OS          
-          if(res.data[0]){
+          if (res.data[0]) {
             this.os1 = Number(res.data[0].balance).toFixed(0);
           }
-          if(res.data[1]){
+          if (res.data[1]) {
             this.os3 = Number(res.data[2].balance).toFixed(0);
           }
-          if(res.data[2]){
+          if (res.data[2]) {
             this.os2 = Number(res.data[1].balance).toFixed(0);
           }
-          if(res.data[3]){
+          if (res.data[3]) {
             this.os4 = Number(res.data[3].balance).toFixed(0);
           }
-          if(res.data[4]){
+          if (res.data[4]) {
             this.os5 = Number(res.data[4].balance).toFixed(0);
           }
-          if(res.data[5]){
+          if (res.data[5]) {
             this.os6 = Number(res.data[5].balance).toFixed(0);
           }
 
           // Purchase          
-          if(res.data[0]){
+          if (res.data[0]) {
             this.purchase1 = Number(res.data[0].purchase).toFixed(0);
           }
-          if(res.data[1]){
+          if (res.data[1]) {
             this.purchase2 = Number(res.data[1].purchase).toFixed(0);
           }
-          if(res.data[2]){
+          if (res.data[2]) {
             this.purchase3 = Number(res.data[2].purchase).toFixed(0);
           }
-          if(res.data[3]){
+          if (res.data[3]) {
             this.purchase4 = Number(res.data[3].purchase).toFixed(0);
           }
-          if(res.data[4]){
+          if (res.data[4]) {
             this.purchase5 = Number(res.data[4].purchase).toFixed(0);
           }
-          if(res.data[5]){
+          if (res.data[5]) {
             this.purchase6 = Number(res.data[5].purchase).toFixed(0);
           }
 
           // Payment          
-          if(res.data[0]){
+          if (res.data[0]) {
             this.payment1 = Number(res.data[0].payment).toFixed(0);
           }
-          if(res.data[1]){
+          if (res.data[1]) {
             this.payment2 = Number(res.data[1].payment).toFixed(0);
           }
-          if(res.data[2]){
+          if (res.data[2]) {
             this.payment3 = Number(res.data[2].payment).toFixed(0);
           }
-          if(res.data[3]){
+          if (res.data[3]) {
             this.payment4 = Number(res.data[3].payment).toFixed(0);
           }
-          if(res.data[4]){
+          if (res.data[4]) {
             this.payment5 = Number(res.data[4].payment).toFixed(0);
           }
-          if(res.data[5]){
+          if (res.data[5]) {
             this.payment6 = Number(res.data[5].payment).toFixed(0);
           }
 
@@ -151,10 +151,16 @@ export class ChartsWidget1Component implements OnInit {
           this.payment = [this.payment1, this.payment2, this.payment3, this.payment4, this.payment5, this.payment6];
 
           this.chartOptions = getChartOptions(350, this.months, this.os, this.purchase, this.payment);
-          this.spinner.hide();
-          // this.cd.detectChanges();
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 2000);
+          this.cd.detectChanges();
         } else {
-          this.spinner.hide();
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 2000);
         }
       })
   }

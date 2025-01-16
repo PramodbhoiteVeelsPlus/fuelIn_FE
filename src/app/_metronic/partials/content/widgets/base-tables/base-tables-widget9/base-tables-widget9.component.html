@@ -132,7 +132,7 @@
         <input class="form-control" placeholder="DD-MM-YYYY" name="dueDate" (click)="dueDate.toggle()"
           onkeydown="return false" formControlName="dueDate" ngbDatepicker #dueDate="ngbDatepicker" />
       </div>
-      <div *ngIf="isNoRequest == true || isNoRequestPayment == true" class="col-md-2">
+      <div *ngIf="isNoRequest == true || isNoRequestPayment == true" class="col-md-2" style="margin-top: 17px">
         <button class="btn btn-success" (click)="statementCreate()">
           Create Statement
         </button>
@@ -149,13 +149,13 @@
       <table class="table table-hover table-striped">
         <thead>
           <tr>
-            <th style="text-align: center">Sr No</th>
-            <th style="text-align: center">Date</th>
-            <th style="text-align: center">Bill / Ref Number</th>
-            <th style="text-align: center">Product</th>
-            <th style="text-align: center">Credit Amount</th>
-            <th style="text-align: center">Credit Quantity</th>
-            <th *ngIf="showPaymetCreditTable" style="text-align: center">Payment
+            <th style="text-align: center"><b>Sr No</b></th>
+            <th style="text-align: center"><b>Date</b></th>
+            <th style="text-align: center"><b>Bill / Ref Number</b></th>
+            <th style="text-align: center"><b>Product</b></th>
+            <th style="text-align: center"><b>Credit Amount</b></th>
+            <th style="text-align: center"><b>Credit Quantity</b></th>
+            <th *ngIf="showPaymetCreditTable" style="text-align: center"><b>Payment</b>
             </th>
           </tr>
         </thead>

@@ -235,7 +235,7 @@ export class TilesWidget9Component {
         this.startDate = moment(this.filterForm.value.year + '-' + this.filterForm.value.month + '-' + "01", ["YYYY-MMM-DD"]).format("DD-MM-YYYY")
         this.filterForm.controls["startDate"].setValue(this.startDate)
         this.filterForm.controls["startDate1"].setValue(this.startDate)
-        this.getRateReadingByDate()
+        // this.getRateReadingByDate()
         this.getRateByDate()
         this.getDSRMeterSales(this.fuelDealerId)
         this.cd.detectChanges();
@@ -255,7 +255,7 @@ export class TilesWidget9Component {
       
       this.filterForm.controls["startDate"].setValue(this.startDate)
       this.filterForm.controls["startDate1"].setValue(this.startDate)
-      this.getRateReadingByDate()
+      // this.getRateReadingByDate()
       this.getRateByDate()
       this.getDSRMeterSales(this.fuelDealerId)
       this.cd.detectChanges();
@@ -543,6 +543,7 @@ export class TilesWidget9Component {
               this.addDSRArray[0].date = moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("DD-MM-YYYY")
             }
             this.spinner.hide()
+            this.cd.detectChanges()
           } else {
             alert("You don't have rate for Selected date/Months's 1st day..! Please add Rate..!")
             this.dateNotRate = true;
@@ -551,6 +552,7 @@ export class TilesWidget9Component {
             this.addDSRArray[0].rateId = "";
             this.addDSRArray[0].rate = "";
             this.spinner.hide()
+            this.cd.detectChanges()
           }
         }
       })
@@ -1007,7 +1009,7 @@ export class TilesWidget9Component {
     this.filterForm.controls["startDate"].setValue(this.startDate)
     this.filterForm.controls["startDate1"].setValue(this.startDate)
     this.getProductWiseMeterSales(this.fuelDealerId)
-    this.getRateReadingByDate()
+    // this.getRateReadingByDate()
     this.getRateByDate()
     this.getDSRMeterSales(this.fuelDealerId)
 

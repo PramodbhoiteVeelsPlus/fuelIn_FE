@@ -147,11 +147,17 @@ export class TilesWidget11Component implements OnInit {
         if (res.data.length) {
           this.totalOilCOPurchase = res.data3[0].totalAmount
           this.getOilCoAcBalance1(this.fuelDealerId);
-          this.spinner.hide();
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 2000);
           this.cd.detectChanges()
         } else {
           this.getOilCoAcBalance1(this.fuelDealerId);
-          this.spinner.hide();
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 2000);
           this.cd.detectChanges()
         }
       })
@@ -212,11 +218,17 @@ export class TilesWidget11Component implements OnInit {
           } else {
             this.oilCoStatus = false;
           }
-          this.spinner.hide();
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 2000);
           this.cd.detectChanges()
         } else {
           alert("Error")
-          this.spinner.hide();
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 2000);
           this.cd.detectChanges()
         }
       })
@@ -244,11 +256,17 @@ export class TilesWidget11Component implements OnInit {
           this.totalDBBankWiseData = res.data3;
           this.totalCreditBankWiseData = res.dataPay;
           this.getBankAcBalanceOPEN(this.fuelDealerId)
-          this.spinner.hide();
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 2000);
           this.cd.detectChanges()
         } else {
           alert("Error")
-          this.spinner.hide();
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 2000);
           this.cd.detectChanges()
         }
       })
@@ -374,10 +392,16 @@ export class TilesWidget11Component implements OnInit {
             }
           })
 
-          this.spinner.hide();
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 2000);
           this.cd.detectChanges()
         } else {
-          this.spinner.hide();
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 2000);
           this.cd.detectChanges()
 
         }
@@ -419,11 +443,17 @@ export class TilesWidget11Component implements OnInit {
           } else {
             this.cashStatus = false;
           }
-          this.spinner.hide();
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 2000);
           this.cd.detectChanges()
         } else {
           alert("Error")
-          this.spinner.hide();
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 2000);
           this.cd.detectChanges()
         }
       })

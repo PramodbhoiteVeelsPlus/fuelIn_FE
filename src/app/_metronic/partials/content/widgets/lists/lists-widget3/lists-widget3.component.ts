@@ -31,10 +31,17 @@ export class ListsWidget3Component {
       .subscribe(res => {
         if (res.status == 'OK') {
           this.array = res.data;
-          this.spinner.hide();
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 2000);
           this.cd.detectChanges();
         } else {
-          this.spinner.hide();
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 2000);
+          this.cd.detectChanges()
         }
       })
   }

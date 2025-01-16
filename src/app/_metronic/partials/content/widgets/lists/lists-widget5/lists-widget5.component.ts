@@ -1604,14 +1604,17 @@ export class ListsWidget5Component {
                 this.CreditRequestDataArray1Update[i].openingMeterReading =
                   res.data1[0].closingReading;
                 this.spinner.hide()
+                this.cd.detectChanges()
               } else {
                 this.CreditRequestDataArray1Update[i].openingMeterReading = ''
                 this.spinner.hide()
+                this.cd.detectChanges()
               }
 
             } else {
               this.CreditRequestDataArray1Update[i].openingMeterReading = ''
               this.spinner.hide()
+              this.cd.detectChanges()
             }
 
 
@@ -1623,10 +1626,12 @@ export class ListsWidget5Component {
           }
         } else {
           this.spinner.hide()
+          this.cd.detectChanges()
         }
       });
     } else {
       this.spinner.hide()
+      this.cd.detectChanges()
     }
   }
 
@@ -2265,6 +2270,7 @@ export class ListsWidget5Component {
               this.pin = ' - ' + res.data[0].pin
             }
           }
+          console.log("add",this.address1 + this.address2 + this.city + this.state + this.pin)
           this.cashBillLubricantForm.controls["address"].setValue(this.address1 + this.address2 + this.city + this.state + this.pin)
           this.cashBillLubricantForm.controls["customerNumber"].setValue(res.data[0].phone1)
           this.digitalLubricantForm.controls["address"].setValue(this.address1 + this.address2 + this.city + this.state + this.pin)

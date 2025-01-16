@@ -23,7 +23,7 @@
               <div class="row noprint">
                   <div class="col-md-8"></div>
                   <div class="col-auto">
-                      <button class="btn btn-success" onclick="window.print()">print</button> 
+                      <button class="btn btn-success" printSectionId="sanjay" [useExistingCss]="true" ngxPrint>print</button> 
                   </div>
               </div>
   
@@ -76,7 +76,7 @@
                       </tr>
                       <tr> 
                           <td colspan="6"> 
-                                  <table class="table main-table" >
+                                  <table class="table main-table" style="border-collapse: collapse; border: 1px solid black;" >
                                       <thead class="table-light"> 
                                           <tr>
                                           <th style="text-align: left; border: 2px solid #272829;">Product</th>
