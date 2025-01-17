@@ -43,19 +43,19 @@
       
       <thead class="table-light">
           <tr>
-              <th > Transaction date</th>
-              <th > Khata name</th>     
-              <th > Details </th>
-              <th > Product </th>
-              <th > Sales Quantity </th>
-              <th > Sales Amount </th>
-              <th > Payment Amount </th>
-              <th > Balance  </th>
+              <th style="text-align: center"><b> Transaction date</b></th>
+              <th style="text-align: center"><b> Khata name</b></th>     
+              <th style="text-align: center"><b> Details </b></th>
+              <th style="text-align: center"><b> Product </b></th>
+              <th style="text-align: center"><b> Sales Quantity </b></th>
+              <th style="text-align: center"><b> Sales Amount </b></th>
+              <th style="text-align: center"><b> Payment Amount </b></th>
+              <th style="text-align: center"><b> Balance </b></th>
           </tr>
       </thead>
       <tbody *ngFor="let data of transactionData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
           <tr>
-              <td >    
+              <td style="text-align: center" >    
               <span *ngIf = "data.date == '2022-01-01' ">
                   1 Jan, 2022
               </span>
@@ -63,24 +63,24 @@
                   {{data.date | date:"d MMM, yyyy" }} 
               </span> 
               </td> 
-              <td > {{ data.companyName }} </td>
-              <td> {{ data.description }} </td>
-              <td> {{ data.product }} </td>
-              <td *ngIf="data.purpose == 'CREDIT'">
+              <td style="text-align: center" > {{ data.companyName }} </td>
+              <td style="text-align: center"> {{ data.description }} </td>
+              <td style="text-align: center"> {{ data.product }} </td>
+              <td style="text-align: center" *ngIf="data.purpose == 'CREDIT'">
                 {{ data.quantity }} Ltrs
               </td>
-              <td *ngIf="data.purpose != 'CREDIT'">
+              <td style="text-align: center" *ngIf="data.purpose != 'CREDIT'">
                 
               </td>
 
-              <td>  <i class="fa-solid fa-indian-rupee-sign"></i>
+              <td style="text-align: center">  <i class="fa-solid fa-indian-rupee-sign"></i>
                 {{ data.purchase | number:'1.2-2'}} 
               </td>
-              <td>  <i class="fa-solid fa-indian-rupee-sign"></i>
+              <td style="text-align: center">  <i class="fa-solid fa-indian-rupee-sign"></i>
                 {{ data.payment | number:'1.2-2'}} 
               </td>
 
-              <td> 
+              <td style="text-align: center"> 
                  <i class="fa-solid fa-indian-rupee-sign"></i>
                 <span *ngIf="data.balance < 0">
                   {{ data.balance * (-1) | number:'1.2-2'}} CR

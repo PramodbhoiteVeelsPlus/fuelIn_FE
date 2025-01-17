@@ -41,22 +41,22 @@
   <table id="excel-table" class="table table-hover b">
     <thead class="table-light">
       <tr>
-        <th> Month </th>
-        <th> Sales Amount </th>
-        <th> Payment Amount </th>
-        <th> Balance </th>
+        <th style="text-align: center"><b> Month </b></th>
+        <th style="text-align: center"><b> Sales Amount </b></th>
+        <th style="text-align: center"><b> Payment Amount </b></th>
+        <th style="text-align: center"><b> Balance </b></th>
       </tr>
     </thead>
     <tbody *ngFor="let data of yearWiseData">
       <tr>
-        <td> {{ data.month }} {{data.year}} </td>
-        <td> <i class="fa-solid fa-indian-rupee-sign"></i>
+        <td style="text-align: center"> {{ data.month }} {{data.year}} </td>
+        <td style="text-align: center"> <i class="fa-solid fa-indian-rupee-sign"></i>
           {{ data.purchase | number:'1.2-2'}}
         </td>
-        <td> <i class="fa-solid fa-indian-rupee-sign"></i>
+        <td style="text-align: center"> <i class="fa-solid fa-indian-rupee-sign"></i>
           {{ data.payment | number:'1.2-2'}}
         </td>
-        <td> <i class="fa-solid fa-indian-rupee-sign"></i>
+        <td style="text-align: center"> <i class="fa-solid fa-indian-rupee-sign"></i>
           <span *ngIf="data.balance < 0 ">
             {{(data.balance)*(-1) | number:"1.2-2"}} CR
           </span>

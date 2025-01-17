@@ -197,7 +197,10 @@ export class BaseTablesWidget1Component implements OnInit {
   onlyDealerView: boolean = false;
   ownerName: string;
   isDisabled: boolean = true
-productCategory: any;
+  productCategory: any;
+  estimatedRefuelDateForEdit: moment.MomentInput;
+  reqCreditAmount: any;
+  reqQuantity: any;
 
   constructor(
     private modalService: NgbModal,
@@ -990,6 +993,7 @@ productCategory: any;
     this.personIdForEdit = refuelForDriver;
     this.fuelProdIdForEdit = fuelProdId;
     this.manualCrNumber = manualCrNumber;
+    this.productCategory = productCategory;
     this.fuelDealerCustomerMapIdEdit = fuelDealerCustomerMapId;
     this.requestEditCr.controls["mobile"].setValue(phone1);
     this.requestEditCr.controls["productCategory"].setValue(productCategory);
@@ -1074,7 +1078,12 @@ productCategory: any;
     this.personIdForEdit = refuelForDriver;
     this.fuelProdIdForEdit = fuelProdId;
     this.manualCrNumber = manualCrNumber;
+    this.productCategory = productCategory;
+    this.productRate = productRate;
+    this.estimatedRefuelDateForEdit = estimatedRefuelDate
     this.fuelDealerCustomerMapIdEdit = fuelDealerCustomerMapId;
+    this.reqCreditAmount = reqCreditAmount
+    this.reqQuantity = reqQuantity;
     this.requestEditCr.controls["mobile"].setValue(phone1);
     this.requestEditCr.controls["productCategory"].setValue(productCategory);
     this.requestEditCr.controls["productRate"].setValue(productRate);

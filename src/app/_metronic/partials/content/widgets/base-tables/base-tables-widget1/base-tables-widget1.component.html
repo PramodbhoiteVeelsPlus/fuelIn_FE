@@ -561,7 +561,7 @@
                   <div class="col-md-4">
                   </div>
                   <div class="col-md-2">
-                    <button type="button" class="btn btn-outline-success my-2 my-sm-0" (click)="cancelFuelCreditReq()">
+                    <button type="button" class="btn btn-success my-2 my-sm-0" (click)="cancelFuelCreditReq()">
                       Yes</button>
                   </div>
                   <div class="col-md-2">
@@ -578,7 +578,7 @@
                 <h4 class="modal-title">
                   <strong>
                     &nbsp;&nbsp;&nbsp;
-                    Edit Credit </strong>
+                    Edit Credit1 </strong>
                 </h4>
               </div>
               <div class="modal-body">
@@ -590,7 +590,10 @@
                         Name:</label>
                     </div>
                     <div class="col-md-3">
-                      <input class="form-control" placeholder="Product" formControlName="productCategory" readonly />
+                      <input class="form-control" type="number" [(ngModel)]="productCategory"
+                            [ngModelOptions]="{standalone: true}" disabled>
+
+                      <input class="form-control" placeholder="Product" [(ngModel)]="productCategory" [ngModelOptions]="{standalone: true}" disabled>
                     </div>
                     <div class="col-md-2">
                       <label class="labelNewMargin">Product
@@ -1270,7 +1273,7 @@
                   <div class="col-md-4">
                   </div>
                   <div class="col-md-2">
-                    <button type="button" class="btn btn-outline-success my-2 my-sm-0" (click)="cancelFuelCreditReq()">
+                    <button type="button" class="btn btn-success my-2 my-sm-0" (click)="cancelFuelCreditReq()">
                       Yes</button>
                   </div>
                   <div class="col-md-2">
@@ -1287,7 +1290,7 @@
                 <h4 class="modal-title">
                   <strong>
                     &nbsp;&nbsp;&nbsp;
-                    Edit Credit </strong>
+                    Edit Credit2 </strong>
                 </h4>
               </div>
               <div class="modal-body">
@@ -1298,14 +1301,16 @@
                         Name:</label>
                     </div>
                     <div class="col-md-3">
-                      <input class="form-control" placeholder="Product" formControlName="productCategory" readonly>
+                      <input class="form-control" [(ngModel)]="productCategory"
+                            [ngModelOptions]="{standalone: true}" disabled>
                     </div>
                     <div class="col-md-2">
                       <label class="labelNewMargin">Product
                         Rate:</label>
                     </div>
                     <div class="col-md-3">
-                      <input class="form-control" placeholder="Product Rate" formControlName="productRate" readonly>
+                      <input class="form-control" [(ngModel)]="productRate"
+                      [ngModelOptions]="{standalone: true}" disabled>
                     </div>
                   </div>
                   <hr>
@@ -1315,8 +1320,8 @@
                         Transaction Date:</label>
                     </div>
                     <div class="col-md-3">
-                      <input class="form-control" placeholder="DD-MM-YYYY" name="startDate"
-                        formControlName="estimatedRefuelDateForEdit" readonly>
+                      <input class="form-control" [(ngModel)]="estimatedRefuelDateForEdit"
+                      [ngModelOptions]="{standalone: true}" disabled>
                     </div>
 
                     <div class="col-md-5">
@@ -1362,8 +1367,8 @@
                     </div>
                     <div class="col-md-3">
                       <span *ngIf="!isAMOUNT">
-                        <input class="form-control form-control-sm mr-1 w-40" formControlName="reqCreditAmount"
-                          style="font-size: 0.750rem;" placeholder="Amount" type="number" readonly>
+                        <input class="form-control form-control-sm mr-1 w-40" [(ngModel)]="reqCreditAmount"
+                        [ngModelOptions]="{standalone: true}" disabled>
                       </span>
                       <span *ngIf="isAMOUNT">
                         <input class="form-control form-control-sm mr-1 w-40" formControlName="reqCreditAmount"
@@ -1386,8 +1391,8 @@
                     </div>
                     <div class="col-md-3">
                       <span *ngIf="!isQUANTITY">
-                        <input class="form-control form-control-sm mr-1 w-40" formControlName="reqQuantity"
-                          style="font-size: 0.750rem;" placeholder=" Quantity" type="number" readonly>
+                        <input class="form-control form-control-sm mr-1 w-40" [(ngModel)]="reqQuantity"
+                        [ngModelOptions]="{standalone: true}" disabled>
                       </span>
                       <span *ngIf="isQUANTITY">
                         <input class="form-control form-control-sm mr-1 w-40" formControlName="reqQuantity"

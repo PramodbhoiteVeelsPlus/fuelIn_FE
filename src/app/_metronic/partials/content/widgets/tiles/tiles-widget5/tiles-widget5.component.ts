@@ -68,7 +68,7 @@ export class TilesWidget5Component {
   userId: any;
   userName: string;
   personId: any;
-  loginSQLCorporateId: any;
+  dealerCorporateId: any;
   petrolPumpName: any;
   fuelDealerId: any;
   oilCoAccountingBookData: any = [];
@@ -285,6 +285,7 @@ export class TilesWidget5Component {
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '');
     this.fuelDealerId = localStorage.getItem('dealerId');
+    this.dealerCorporateId = localStorage.getItem('dealerCorporateId');
     this.filterForm.controls["startDate"].setValue("01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear())
     this.filterForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
     this.selected = ("01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear()) + ' - ' + (moment(new Date()).format("DD-MM-YYYY"))
@@ -1147,7 +1148,7 @@ export class TilesWidget5Component {
       expenseCategory: "BALANCE OIL COMPANY A/C",
       startDate: this.openingDate,
       endDate: this.closingDate,
-      corporateId: this.loginSQLCorporateId,
+      corporateId: this.dealerCorporateId,
     }
     this.post.getBalanceByExpenseCategoryPOST(data)
       .subscribe(res => {
@@ -1208,7 +1209,7 @@ export class TilesWidget5Component {
     this.cashCRPaymentDetails = []
     let data = {
       fuelDealerId: this.fuelDealerId,
-      corporateId: this.loginSQLCorporateId,
+      corporateId: this.dealerCorporateId,
       expenseCategory: "BALANCE CASH A/C",
       startDate: this.openingDate,
       endDate: this.closingDate,
@@ -1277,7 +1278,7 @@ export class TilesWidget5Component {
 
       let data = {
         fuelDealerId: this.fuelDealerId,
-        corporateId: this.loginSQLCorporateId,
+        corporateId: this.dealerCorporateId,
         expenseCategory: "BALANCE BANK/LOAN A/C",
         startDate: this.openingDate,
         endDate: this.closingDate,
@@ -1347,7 +1348,7 @@ export class TilesWidget5Component {
       this.totalDBBankWiseData = [];
       let data = {
         fuelDealerId: this.fuelDealerId,
-        corporateId: this.loginSQLCorporateId,
+        corporateId: this.dealerCorporateId,
         expenseCategory: "BALANCE BANK/LOAN A/C",
         startDate: this.openingDate,
         endDate: this.closingDate,
@@ -1374,7 +1375,7 @@ export class TilesWidget5Component {
     this.bankWiseDetailsOPEN.length = 0
     let data = {
       dealerId: this.fuelDealerId,
-      corporateId: this.loginSQLCorporateId,
+      corporateId: this.dealerCorporateId,
       startDate: this.openingDate,
       endDate: this.closingDate,
       bankDetails: balanceBankData,
@@ -1475,6 +1476,7 @@ export class TilesWidget5Component {
           this.cd.detectChanges();
           this.spinner.hide();
         }
+        console.log("data", this.bankWiseDetailsOPEN)
       })
   }
 
@@ -1712,7 +1714,7 @@ export class TilesWidget5Component {
 
     let data = {
       dealerId: this.fuelDealerId,
-      corporateId: this.loginSQLCorporateId,
+      corporateId: this.dealerCorporateId,
       startDate: this.cashAcDate1,
       endDate: moment(startDate).subtract(1, 'day').format('YYYY-MM-DD'),
     }
