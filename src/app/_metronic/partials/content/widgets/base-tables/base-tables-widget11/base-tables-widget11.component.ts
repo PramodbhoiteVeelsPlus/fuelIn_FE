@@ -217,10 +217,16 @@ export class BaseTablesWidget11Component implements OnInit {
         if (res.data.length) {
           this.managerMobile = res.data[0].mobile;
           this.mobileStatus = true;
-          this.spinner.hide()
+
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 5000);
         } else {
           this.mobileStatus = false;
-          this.spinner.hide()
+
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 5000);
         }
       }
       );
@@ -249,9 +255,15 @@ export class BaseTablesWidget11Component implements OnInit {
             this.billedToGstNo = res.data[0].GSTNumber;
             this.billedToMobile = res.data[0].hostPhone;
           }
-          this.spinner.hide()
+
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 5000);
         } else {
-          this.spinner.hide()
+
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 5000);
         }
       }
       );
@@ -430,11 +442,22 @@ export class BaseTablesWidget11Component implements OnInit {
           }
           this.totalPendingoutstanding();
           this.getOutStandingNewFlowForSavedInvoice()
-          this.spinner.hide()
+          setTimeout(() => {
+
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 5000);;
+          }, 3000);
           this.cd.detectChanges()
 
         } else {
-          this.spinner.hide()
+          setTimeout(() => {
+
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 5000);;
+          }, 3000);
+          this.cd.detectChanges()
         }
       });
   }
@@ -447,7 +470,12 @@ export class BaseTablesWidget11Component implements OnInit {
     this.post.getFuelCorpIdByMapIdPOST(data).subscribe((res) => {
       if (res) {
         this.previousPendingOutstanding = Number(res.data[0].previousOutstand);
-        this.spinner.hide()
+        setTimeout(() => {
+
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 5000);;
+        }, 5000);
         this.cd.detectChanges()
       }
     });
@@ -469,7 +497,12 @@ export class BaseTablesWidget11Component implements OnInit {
           if (this.statementId = '5') {
             // this.transform(Math.round(((Number(this.creditAmountNew) - Number(this.discountcalNew)) + Number(this.lastOpOutstanding) - Number(this.totalTransactionAmountNew))));
           }
-          this.spinner.hide()
+          setTimeout(() => {
+
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 5000);;
+          }, 5000);
         }
         this.cd.detectChanges()
       });
@@ -509,9 +542,19 @@ export class BaseTablesWidget11Component implements OnInit {
 
           if (this.statementId == '6') {
           }
-          this.spinner.hide()
+          setTimeout(() => {
+
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 5000);;
+          }, 5000);
         } else {
-          this.spinner.hide()
+          setTimeout(() => {
+
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 5000);;
+          }, 5000);
         }
       });
   }
@@ -653,10 +696,16 @@ export class BaseTablesWidget11Component implements OnInit {
 
             this.creditPaymentCombineArrayDetails.push(dataJson);
           })
-          this.spinner.hide()
+
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 5000);
           this.cd.detectChanges()
         } else {
-          this.spinner.hide()
+
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 5000);
           this.cd.detectChanges()
         }
         this.totalPendingoutstanding();
@@ -743,9 +792,15 @@ export class BaseTablesWidget11Component implements OnInit {
 
           this.getLubricantTotal(this.totalCreditOutstanding);
           this.getCustomerDataByCorporateIdForSavedInvoice()
-          this.spinner.hide()
+
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 5000);
         } else {
-          this.spinner.hide()
+
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 5000);
         }
       });
   }
@@ -769,10 +824,16 @@ export class BaseTablesWidget11Component implements OnInit {
           } else {
             this.finalNETOutstanding = totalCreditOutstanding
           }
-          this.spinner.hide()
+
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 5000);
         } else {
           alert("Error to get Data..")
-          this.spinner.hide()
+
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 5000);
         }
       })
   }
@@ -788,7 +849,10 @@ export class BaseTablesWidget11Component implements OnInit {
       .subscribe(res => {
         if (res.data.length) {
           this.bankAccList = res.data1;
-          this.spinner.hide()
+
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 5000);
         }
       })
 
