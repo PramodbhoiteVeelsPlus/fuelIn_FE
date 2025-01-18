@@ -32,10 +32,10 @@ export class DashboardComponent {
      /** spinner starts on init */
     //  this.spinner.show();
 
-     setTimeout(() => {
-       /** spinner ends after 5 seconds */
-      //  this.spinner.hide();
-     }, 5000);
+    //  setTimeout(() => {
+    //    /** spinner ends after 5 seconds */
+    //   //  this.spinner.hide();
+    //  }, 5000);
    
     if (JSON.parse(localStorage.getItem('isLoggedin') || '{}') == true) {
       var element = JSON.parse(localStorage.getItem("element") || '{}');
@@ -55,10 +55,10 @@ export class DashboardComponent {
         this.isAdmin = false;
         this.isDealer = false;
         this.isTransporter = false;
-        this.router.navigate(['/auth/login']);
+        this.router.navigate(['/auth/home']);
       }
     } else {
-      this.router.navigate(['/auth/login'])
+      this.router.navigate(['/auth/home'])
     }
   }
 

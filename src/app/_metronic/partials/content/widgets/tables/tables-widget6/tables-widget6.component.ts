@@ -79,7 +79,7 @@ export class TablesWidget6Component implements OnInit {
     dismissButtonLabel: 'Submit',
     closeButtonLabel: 'Cancel'
   };
-  data: any;
+  data: any = [];
   fuelDealerId: any;
   modalReference: any;
   closeResult: string;
