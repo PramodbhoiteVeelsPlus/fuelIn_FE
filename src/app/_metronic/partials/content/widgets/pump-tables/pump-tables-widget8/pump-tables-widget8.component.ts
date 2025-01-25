@@ -129,6 +129,7 @@ export class PumpTablesWidget8Component implements OnInit {
   transporterCorpId: string | null;
   tollPaymentMonthWiseLQDetails: any;
   resultLQArray: { beneficiaryName: string; totalAmount: any; }[];
+  customerId: any;
 
   constructor(
     private modalService: NgbModal,
@@ -158,12 +159,16 @@ export class PumpTablesWidget8Component implements OnInit {
     this.hostPhone = dealerData.hostPhone
     this.userName = element.firstName + ' ' + element.lastName;
     this.acceesGroup = element.accessGroupId;
-    if (this.acceesGroup == '12') {
-      this.getFastagCorporateByCorpId(this.dealerCorporateId)
-    }
-    if (this.acceesGroup == '2') {
+    if(this.acceesGroup == '12'){
+      var dealerData = JSON.parse(localStorage.getItem("dealerData") || '{}');
+      this.customerId = dealerData.customerId;
+      this.getFastagCorporateByCorpId(this.customerId)
+    } 
+    if(this.acceesGroup == '2'){
       this.transporterCorpId = localStorage.getItem('transporterCorpId');
-      this.getFastagCorporateByCorpId(this.transporterCorpId)
+      var transporterData = JSON.parse(localStorage.getItem("transporterData") || '{}');
+      this.customerId = transporterData.customerId;
+      this.getFastagCorporateByCorpId(this.customerId)
     }
     this.cd.detectChanges()
   }

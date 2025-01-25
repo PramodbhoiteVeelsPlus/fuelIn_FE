@@ -90,12 +90,12 @@
                             ngbDatepicker #endDate="ngbDatepicker">
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-auto">
                         <button type="submit" class="btn btn-primary" (click)="getVehicleWiseFT()">View</button>
                     </div>
 
                     <div class="col-auto">
-                        <button type="submit" class="btn btn-outline-warning my-2 my-sm-0" (click)="goToPDF()">PDF
+                        <button type="submit" class="btn btn-warning my-2 my-sm-0" (click)="goToPDF()">PDF
                             View</button>
                     </div>
                 </div>
@@ -103,9 +103,34 @@
         </div>
 
         <br>
-        <div class="row">
+        <div *ngIf="isTable" class="row">
             <div class="table-responsive mb-0">
                 <table class="table table-centered">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="text-align: left;"> Openning Balance </th>
+                            <th style="text-align: left;"> Credit Amt </th>
+                            <th style="text-align: left;"> Debit Amt </th>
+                            <th style="text-align: left;"> Closing Balance </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr >
+                            <td style="text-align: left;"> {{openningBalance}} </td>
+                            <td style="text-align: left;"> {{totalCredit }} </td>
+                            <td style="text-align: left;"> {{totalDebit}} </td>
+                            <td style="text-align: left;"> {{closingBalance}} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="table-responsive mb-0">
+                <table class="table table-centered" style="border-collapse: collapse; border: 1px solid black;">
                     <thead class="table-light">
                         <tr>
                             <h6> Vehicle Summary </h6>
@@ -142,7 +167,7 @@
         <br>
         <div class="row">
             <div class="table-responsive mb-0">
-                <table class="table table-centered">
+                <table class="table table-centered" style="border-collapse: collapse; border: 1px solid black;">
                     <thead class="table-light">
                         <tr>
                             <h6> Transaction Details </h6>
@@ -238,12 +263,12 @@
                             ngbDatepicker #endDate="ngbDatepicker">
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-auto">
                         <button type="submit" class="btn btn-primary" (click)="getVehicleWiseFTLQ()">View</button>
                     </div>
 
                     <div class="col-auto">
-                        <button type="submit" class="btn btn-outline-warning my-2 my-sm-0" (click)="goToPDFLQ()">PDF
+                        <button type="submit" class="btn btn-warning my-2 my-sm-0" (click)="goToPDFLQ()">PDF
                             View</button>
                     </div>
                 </div>
@@ -252,36 +277,24 @@
         </div>
 
         <br>
-        <div class="row">
+        <div *ngIf="isTable" class="row">
             <div class="table-responsive mb-0">
                 <table class="table table-centered">
                     <thead class="table-light">
                         <tr>
-                            <h6> Vehicle Summary </h6>
-                        </tr>
-                        <tr>
-                            <th style="text-align: left;border: 2px solid #272829;"> Sr No </th>
-                            <th style="text-align: left;border: 2px solid #272829;"> Veels Id </th>
-                            <th style="text-align: left;border: 2px solid #272829;"> Vehicle Number </th>
-                            <th style="text-align: left;border: 2px solid #272829;"> Trip Count </th>
-                            <th style="text-align: left;border: 2px solid #272829;"> Total Amount </th>
+                            <th style="text-align: left;"> Openning Balance </th>
+                            <th style="text-align: left;"> Credit Amt </th>
+                            <th style="text-align: left;"> Debit Amt </th>
+                            <th style="text-align: left;"> Closing Balance </th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        <tr *ngFor="let data of FTLQData; let i = index">
-                            <td style="text-align: left;border: 2px solid #272829;"> {{i+1}} </td>
-                            <td style="text-align: left;border: 2px solid #272829;"> {{data.fastagTransactionEntityId}} </td>
-                            <td style="text-align: left;border: 2px solid #272829;"> {{data.fastagTransactionBusinessId}} </td>
-                            <td style="text-align: left;border: 2px solid #272829;"> {{data.count}} </td>
-                            <td style="text-align: left;border: 2px solid #272829;"> {{data.totalAmount | number:'1.2-2'}} </td>
-                        </tr>
-                        <tr *ngFor="let data of totalFTLQ;">
-                            <td style="text-align: left;border: 2px solid #272829;"> </td>
-                            <td style="text-align: left;border: 2px solid #272829;"> </td>
-                            <td style="text-align: left;border: 2px solid #272829;"> <b> Total </b></td>
-                            <td style="text-align: left;border: 2px solid #272829;"> <b> {{data.count}} </b> </td>
-                            <td style="text-align: left;border: 2px solid #272829;"> <b> {{data.totalAmount | number:'1.2-2'}} </b></td>
+                        <tr >
+                            <td style="text-align: left;"> {{openningBalanceLq}} </td>
+                            <td style="text-align: left;"> {{totalCreditLq }} </td>
+                            <td style="text-align: left;"> {{totalDebitLq}} </td>
+                            <td style="text-align: left;"> {{closingBalanceLq}} </td>
                         </tr>
                     </tbody>
                 </table>
@@ -291,7 +304,44 @@
         <br>
         <div class="row">
             <div class="table-responsive mb-0">
-                <table class="table table-centered">
+                <table class="table table-centered" style="border-collapse: collapse; border: 1px solid black;">
+                    <thead class="table-light">
+                        <tr>
+                            <h6> Vehicle Summary </h6>
+                        </tr>
+                        <tr>
+                            <th style="text-align: center;border: 2px solid #272829;"> Sr No </th>
+                            <th style="text-align: center;border: 2px solid #272829;"> Veels Id </th>
+                            <th style="text-align: center;border: 2px solid #272829;"> Vehicle Number </th>
+                            <th style="text-align: center;border: 2px solid #272829;"> Trip Count </th>
+                            <th style="text-align: center;border: 2px solid #272829;"> Total Amount </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let data of FTLQData; let i = index">
+                            <td style="text-align: center;border: 2px solid #272829;"> {{i+1}} </td>
+                            <td style="text-align: center;border: 2px solid #272829;"> {{data.fastagTransactionEntityId}} </td>
+                            <td style="text-align: center;border: 2px solid #272829;"> {{data.fastagTransactionBusinessId}} </td>
+                            <td style="text-align: center;border: 2px solid #272829;"> {{data.count}} </td>
+                            <td style="text-align: center;border: 2px solid #272829;"> {{data.totalAmount | number:'1.2-2'}} </td>
+                        </tr>
+                        <tr *ngFor="let data of totalFTLQ;">
+                            <td style="text-align: center;border: 2px solid #272829;"> </td>
+                            <td style="text-align: center;border: 2px solid #272829;"> </td>
+                            <td style="text-align: center;border: 2px solid #272829;"> <b> Total </b></td>
+                            <td style="text-align: center;border: 2px solid #272829;"> <b> {{data.count}} </b> </td>
+                            <td style="text-align: center;border: 2px solid #272829;"> <b> {{data.totalAmount | number:'1.2-2'}} </b></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="table-responsive mb-0">
+                <table class="table table-centered" style="border-collapse: collapse; border: 1px solid black;">
                     <thead class="table-light">
                         <tr>
                             <h6> Transaction Details </h6>

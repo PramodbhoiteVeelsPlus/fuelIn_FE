@@ -9,7 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class PumpTablesService {
     status: string;
-    dataArray: any;
+    dataArray: any = [];
     date1: string;
     date2: string;
     FT: string;
@@ -19,6 +19,11 @@ export class PumpTablesService {
     activeVehicleLQArray: any;
     dataFTArray: any;
     totalFT: any;
+    openningBalance: any;
+    debitAmt: any;
+    creditAmt: any;
+    closingBalance: any;
+    isTable: any;
     
     constructor(private http: HttpClient,
         private router: Router
@@ -290,15 +295,21 @@ export class PumpTablesService {
     this.date11 = date11;
     this.date22 = date22;
   }
-      
-  setRoutingWithVehicle(dataArray: any, dataFTArray: any, totalFT: any, date1: string, date2: string, FT: string) {
+    
+  setRoutingWithVehicle(dataArray: any, dataFTArray: any, totalFT: any, openningBalance: any, debitAmt: any, creditAmt: any, closingBalance: any, isTable: boolean, date1: string, date2: string, FT: string) {
     this.dataArray = dataArray;
     this.dataFTArray = dataFTArray;
     this.totalFT = totalFT;
+    this.openningBalance = openningBalance;
+    this.debitAmt = debitAmt;
+    this.creditAmt = creditAmt;
+    this.closingBalance = closingBalance;
+    this.isTable = isTable
     this.date1 = date1;
     this.date2 = date2;
     this.FT = FT;
   }
+  
     // getFastagTollMonthWiseURL
     getFastagTollMonthWisePOST(body: Object): Observable<any> {
         this.setHeader();

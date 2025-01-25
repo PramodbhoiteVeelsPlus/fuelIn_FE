@@ -94,13 +94,13 @@ export class PumpTablesWidget5Component implements OnInit {
   total: number = 0;
   avlBalance: any;
   balanceLQ: any;
-  FT: boolean;
+  FT: boolean = false;
   fastagId: any;
   thrLimit: any;
-  bothFT: boolean;
+  bothFT: boolean = false;
   fastagLQId: any;
   thrLimitLQ: any;
-  LQFT: boolean;
+  LQFT: boolean = false;
   corpWalletLQId: any;
   corpWalletAccNo: any;
   corpWalletIFSC: any;
@@ -127,6 +127,7 @@ export class PumpTablesWidget5Component implements OnInit {
   fastagLQLength: any = [];
   transporterCorpId: string | null;
   vehicleLQList: any;
+  customerId: any;
 
   constructor(
     private modalService: NgbModal,
@@ -154,11 +155,15 @@ export class PumpTablesWidget5Component implements OnInit {
     this.userName = element.firstName + ' ' + element.lastName;
     this.acceesGroup = element.accessGroupId;
     if(this.acceesGroup == '12'){
-      this.getFastagCorporateByCorpId(this.dealerCorporateId)
+      var dealerData = JSON.parse(localStorage.getItem("dealerData") || '{}');
+      this.customerId = dealerData.customerId;
+      this.getFastagCorporateByCorpId(this.customerId)
     } 
     if(this.acceesGroup == '2'){
       this.transporterCorpId = localStorage.getItem('transporterCorpId');
-      this.getFastagCorporateByCorpId(this.transporterCorpId)
+      var transporterData = JSON.parse(localStorage.getItem("transporterData") || '{}');
+      this.customerId = transporterData.customerId;
+      this.getFastagCorporateByCorpId(this.customerId)
     }
     this.cd.detectChanges()
   }

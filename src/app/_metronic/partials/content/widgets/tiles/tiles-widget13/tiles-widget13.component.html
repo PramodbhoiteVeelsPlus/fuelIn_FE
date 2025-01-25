@@ -1,26 +1,346 @@
-<!--begin::Tiles Widget 13-->
-<div
-  class="card card-custom bgi-no-repeat"
-  [ngClass]="cssClass"
-  [ngStyle]="{ height: widgetHeight }"
-  style="
-    background-color: #663259;
-    background-position: calc(100% + 0.5rem) 100%;
-    background-size: 100% auto;
-    background-image: url('./assets/media/svg/misc/taieri.svg');
-  "
->
-  <!--begin::Body-->
-  <div class="card-body d-flex align-items-center">
+<head>
+  <!-- <style>
+
+@media print {
+body {
+  margin: 0; /* Remove browser margins */
+  padding: 0; /* Remove browser padding */
+}
+
+.page {
+  margin-top: 10mm; /* Fixed top margin for each page */
+  /* margin-left: auto;
+  margin-right: auto; */
+  width: 100%;
+  page-break-after: always;
+}
+
+button {
+  display: none; /* Hide buttons while printing */
+}
+}
+  </style> -->
+
+  <style>
+    body {
+      margin: 0;
+      /* Remove browser's default margin */
+      padding: 0;
+      /* Remove browser's default padding */
+    }
+
+    .report-container {
+      width: 100%;
+    }
+
+    .page {
+      margin: 30mm auto 0;
+      /* Fixed top margin of 30mm */
+      width: 90%;
+      /* Adjust content width to fit A4 size */
+      page-break-after: always;
+      /* Ensure each page breaks properly */
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table th,
+    table td {
+      border: 1px solid #000;
+      padding: 8px;
+      text-align: left;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    @media print {
+
+      /* Override browser's default margin settings */
+      @page {
+        margin: 0;
+        /* Remove all default margins */
+      }
+
+      /* Add custom top margin for all pages */
+      body {
+        margin: 0;
+        /* Reset body margin for printing */
+        padding-top: 50px;
+        /* Add a custom top margin */
+      }
+
+      /* Ensure table headers repeat on new pages */
+      thead {
+        display: table-header-group;
+      }
+
+      /* Avoid splitting rows between pages */
+      tr {
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+
+<body id="contentToConvert">
+
+  <div id="page-wrap">
+
+
+    <div class="row">
+      <div class="col-md-1"></div>
+
+      <div class="col-md-10; noprint">
+
+        <!-- &nbsp; <button style="font-size: medium;" onclick="window.print()"> &nbsp;&nbsp;<i class="fa fa-print"
+                  aria-hidden="true"></i> &nbsp;</button> -->
+
+        <button class="btn btn-success" printSectionId="sanjay" [useExistingCss]="true" ngxPrint>print </button>
+      </div>
+
+    </div>
+
     <div>
-      <h3 class="text-white font-weight-bolder line-height-lg mb-5">
-        Create SaaS<br />Based Reports
-      </h3>
-      <a href="#" class="btn btn-success font-weight-bold px-6 py-3"
-        >Create Report</a
-      >
+      <div id="sanjay" class="container">
+
+
+        <div class="page col-12 mt-4 container border border-success" id="htmlData">
+
+          <!-- <div class="border border-success alert alert-secondary"> -->
+          <div>
+            <div class="row px-4 py-4">
+              <div class="col-8">
+                <h3> <b style="font-size: 100%;">FASTag summary</b> <br>
+                </h3>
+              </div>
+              <div class="col-4">
+                <p style="text-align: right;"><img src="../../../../assets/images/vplogo.png" alt="logo"
+                    style="height: 50%;width: 50%;"></p>
+              </div>
+              <!-- <div class="col-2">
+                              <p style="text-align: right;"><img src="../../../../../../assets/images/vplogo.png"
+                                  alt="logo" width="80" height="40"></p>
+                          </div> -->
+              <!-- <br> -->
+
+
+            </div>
+
+            <div class="row px-4">
+              <div class="col-6">
+                <h5><b>Customer Name: {{companyName}}</b></h5>
+              </div>
+
+              <div class="col-6">
+                <b>Address : {{address}}</b>
+              </div>
+
+              <div style="font-size: 100%;width: 60%;">
+                <b>Mobile Number: {{hostPhone}}</b><br>
+                <b *ngIf="FT">FASTag id: {{entityIdForCorp}}<br></b>
+                <b *ngIf="LQFT">FASTag id: {{entityIdForCorpLQ}}<br></b>
+                <b>Date Range: {{startDate | date:'mediumDate'}} - {{endDate |
+                  date:'mediumDate'}}</b><br>
+              </div>
+            </div>
+          </div>
+
+          <br>
+          <div *ngIf="isTable" class="row p-1">
+            <div class="col col-xl-12 col-lg-12">
+              <div class="table-responsive mb-0">
+                <table class="table table-centered" style="border-collapse: collapse; border: 1px solid black;">
+                  <thead class="table-light">
+                    <tr>
+                      <th style="text-align: center; font-size: 10px; border: 1px solid #272829;"> Openning Balance </th>
+                      <th style="text-align: center; font-size: 10px; border: 1px solid #272829;"> Credit Amt </th>
+                      <th style="text-align: center; font-size: 10px; border: 1px solid #272829;"> Debit Amt </th>
+                      <th style="text-align: center; font-size: 10px; border: 1px solid #272829;"> Closing Balance </th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr>
+                      <td style="text-align: center; font-size: 10px; border: 1px solid #272829;"> {{openningBalance}}
+                      </td>
+                      <td style="text-align: center; font-size: 10px; border: 1px solid #272829;"> {{creditAmt }} </td>
+                      <td style="text-align: center; font-size: 10px; border: 1px solid #272829;"> {{debitAmt}} </td>
+                      <td style="text-align: center; font-size: 10px; border: 1px solid #272829;"> {{closingBalance}}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- <br> -->
+          <div class="row p-1">
+            <div class="col col-md-12 col-md-12">
+              <div class="card-body table-responsive">
+                <table class="table table-hover table-striped p-1"
+                  style="border: 1px solid #272829; font-size: smaller; width: 100%;">
+                  <thead>
+                    <tr>
+                      <th
+                        style="background-color: #fcba03; border-top: 1px solid #272829;border-left: 1px solid #272829;">
+                        Vehicle Summary </th>
+                      <th style="background-color: #fcba03;border-top: 1px solid #272829;">
+                      </th>
+                      <th style="background-color: #fcba03;border-top: 1px solid #272829;">
+                      </th>
+                      <th style="background-color: #fcba03; border-top: 1px solid #272829;">
+                      </th>
+                      <th
+                        style="background-color: #fcba03; border-top: 1px solid #272829;border-right: 1px solid #272829;">
+                      </th>
+                    </tr>
+                    <tr>
+                      <th style="text-align: center;border: 1px solid #272829;background-color: lightblue;">
+                        Sr No </th>
+                      <th style="text-align: center;border: 1px solid #272829;background-color: lightblue;">
+                        Veels Id </th>
+                      <th style="text-align: center;border: 1px solid #272829;background-color: lightblue;">
+                        Vehicle Number </th>
+                      <th style="text-align: center;border: 1px solid #272829;background-color: lightblue;">
+                        Trip Count </th>
+                      <th style="text-align: center;border: 1px solid #272829;background-color: lightblue;">
+                        Total Amount </th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr *ngFor="let data of dataArray; let i = index">
+                      <td style="text-align: center;border: 1px solid #272829;"> {{i+1}}
+                      </td>
+                      <td style="text-align: center;border: 1px solid #272829;">
+                        {{data.fastagTransactionEntityId}} </td>
+                      <td style="text-align: center;border: 1px solid #272829;">
+                        {{data.fastagTransactionBusinessId}} </td>
+                      <td style="text-align: center;border: 1px solid #272829;">
+                        {{data.count}} </td>
+                      <td style="text-align: center;border: 1px solid #272829;">
+                        {{data.totalAmount | number:'1.2-2'}} </td>
+                    </tr>
+                    <tr *ngFor="let data of totalFT;">
+                      <td style="text-align: center;border: 1px solid #272829;"> </td>
+                      <td style="text-align: center;border: 1px solid #272829;"> </td>
+                      <td style="text-align: center;border: 1px solid #272829;">
+                        <b>Total</b>
+                      </td>
+                      <td style="text-align: center;border: 1px solid #272829;">
+                        <b>{{data.count}}</b>
+                      </td>
+                      <td style="text-align: center;border: 1px solid #272829;">
+                        <b>{{data.totalAmount | number:'1.2-2'}}</b>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="row p-1">
+            <div class="col col-lg-12">
+              <div class="card-body table-responsive">
+                <table class="table table-hover table-striped p-1"
+                  style="border: 1px solid #272829;font-size: smaller; ">
+                  <thead style="background-color: #fcba03;">
+                    <th colspan="3"
+                      style="background-color: #fcba03; border-top: 1px solid #272829;border-left:1px solid #272829;">
+                      Transaction(DEBIT) Details </th>
+                    <th style="background-color: #fcba03; border-top: 1px solid #272829;">
+                    </th>
+                    <!-- <th style="background-color: #fcba03; border-top: 1px solid #272829;">
+                                      </th> -->
+                    <!-- <th style="background-color: #fcba03; border-top: 1px solid #272829;">
+                                      </th> -->
+                    <!--                                         
+                                      <th style="background-color: #fcba03; border-top: 1px solid #272829;">
+                                      </th> -->
+                    <!-- <th style="background-color: #fcba03; border-top: 1px solid #272829;">
+                                      </th> -->
+                    <th style="background-color: #fcba03; border-top: 1px solid #272829;">
+                    </th>
+                    <th
+                      style="background-color: #fcba03; border-top: 1px solid #272829;border-right: 1px solid #272829;">
+                    </th>
+                    <tr>
+                      <th style="text-align: center;border: 1px solid #272829; background-color: lightblue; width:85px">
+                        Date
+                      </th>
+                      <!-- <th style="text-align: left;border: 1px solid #272829; background-color: lightblue; width:1px">
+                                              Time
+                                          </th> -->
+                      <th style="text-align: center;border: 1px solid #272829; background-color: lightblue;width:1px">
+                        Vehicle Number
+                      </th>
+                      <th
+                        style="text-align: center;border: 1px solid #272829; background-color: lightblue; width: 14px">
+                        Transaction Ref
+                      </th>
+                      <!-- <th style="text-align: center;border: 1px solid #272829; background-color: lightblue; width:2px">
+                                              Transaction Type
+                                          </th> -->
+                      <th style="text-align: center;border: 1px solid #272829; background-color: lightblue; width:90px">
+                        Toll Plaza
+                      </th>
+                      <th style="text-align: center;border: 1px solid #272829; background-color: lightblue;width:1px">
+                        Amount
+                      </th>
+                      <th style="text-align: center;border: 1px solid #272829; background-color: lightblue; width:1px">
+                        Closing Bal
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of dataFTArray; let i = index">
+                      <td style="text-align: center;border: 1px solid #272829; width: 85px; font-size: 7.5px">
+                        {{data.manualDate | date:'mediumDate'}}
+                        {{data.manualDate | date:'HH:mm:ss'}}
+                      </td>
+                      <!-- <td style="text-align: left;border: 1px solid #272829; width:1px; font-size: 8px">
+                                              {{data.manualDate | date:'HH:mm:ss'}}
+                                          </td> -->
+                      <td style="text-align: center;border: 1px solid #272829;width:1px; font-size: 8px">
+                        {{data.fastagTransactionBusinessId}}
+                      </td>
+                      <td style="text-align: center;border: 1px solid #272829; width: 14px; font-size: 8px">
+                        {{data.fastagtxRef}} </td>
+                      <!-- <td style="text-align: center;border: 1px solid #272829; width:3px; font-size: 8px"> {{data.fastagType}} </td> -->
+                      <td style="text-align: center;border: 1px solid #272829; width:90px; font-size: 7px;">
+                        {{data.fastagBeneficiaryName}} </td>
+                      <td style="text-align: center;border: 1px solid #272829; width:1px; font-size: 8px">
+                        {{data.fastagTransactionAmount |
+                        number:'1.2-2'}}
+                      </td>
+                      <td style="text-align: center;border: 1px solid #272829; width:1px; font-size: 8px">
+                        {{data.fastagTransactionBalance |
+                        number:'1.2-2'
+                        }}
+                      </td>
+                    </tr>
+
+                  </tbody>
+
+                </table>
+
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
-  <!--end::Body-->
-</div>
-<!--end::Tiles Widget 13-->
+</body>
+
+<!-- </html> -->

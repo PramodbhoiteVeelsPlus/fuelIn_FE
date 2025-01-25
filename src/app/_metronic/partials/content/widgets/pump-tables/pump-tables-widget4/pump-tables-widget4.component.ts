@@ -137,6 +137,7 @@ export class PumpTablesWidget4Component implements OnInit {
   searchTermRange1LQ: any = "";
   exceldata1LQ: any = [];
   transporterCorpId: string | null;
+  customerId: any;
 
   constructor(
     private modalService: NgbModal,
@@ -200,12 +201,20 @@ export class PumpTablesWidget4Component implements OnInit {
     this.managerPersonId = element.personId
     this.userName = element.firstName + ' ' + element.lastName;
     this.acceesGroup = element.accessGroupId;
+    let currentDate = moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
+    let previousDate = moment(new Date()).format("YYYY-MM-01 00:00:01");
+    this.filterForm.controls["startDate"].setValue(previousDate);
+    this.filterForm.controls["endDate"].setValue(currentDate);
     if(this.acceesGroup == '12'){
-      this.getFastagCorporateByCorpId(this.dealerCorporateId)
+      var dealerData = JSON.parse(localStorage.getItem("dealerData") || '{}');
+      this.customerId = dealerData.customerId;
+      this.getFastagCorporateByCorpId(this.customerId)
     } 
     if(this.acceesGroup == '2'){
       this.transporterCorpId = localStorage.getItem('transporterCorpId');
-      this.getFastagCorporateByCorpId(this.transporterCorpId)
+      var transporterData = JSON.parse(localStorage.getItem("transporterData") || '{}');
+      this.customerId = transporterData.customerId;
+      this.getFastagCorporateByCorpId(this.customerId)
     }
     this.cd.detectChanges()
   }
@@ -275,6 +284,7 @@ export class PumpTablesWidget4Component implements OnInit {
             this.fastagTransactionDataLength = res.data
 
             this.spinner.hide();
+            this.cd.detectChanges()
 
           } else {
             this.fastagTransactionData = []
@@ -282,6 +292,7 @@ export class PumpTablesWidget4Component implements OnInit {
             this.fastagTransactionDataLength = []
             alert("Data Not Found..!")
             this.spinner.hide();
+            this.cd.detectChanges()
           }
 
         })
@@ -305,6 +316,7 @@ export class PumpTablesWidget4Component implements OnInit {
 
             this.stausToll = true
             this.spinner.hide();
+            this.cd.detectChanges()
           } else {
             this.fastagTransactionData = []
             this.fastagTransaction = []
@@ -313,6 +325,7 @@ export class PumpTablesWidget4Component implements OnInit {
 
             this.stausToll = true
             this.spinner.hide();
+            this.cd.detectChanges()
 
           }
 
@@ -345,12 +358,14 @@ export class PumpTablesWidget4Component implements OnInit {
             this.fastagTransactionLQ = res.data
             this.fastagTransactionDataLengthLQ = res.data;
             this.spinner.hide();
+            this.cd.detectChanges()
           } else {
             this.fastagTransactionDataLQ = [];
             this.fastagTransactionLQ = []
             this.fastagTransactionDataLengthLQ = [];
             alert("Data Not Found..!")
             this.spinner.hide();
+            this.cd.detectChanges()
 
           }
         })
@@ -372,6 +387,7 @@ export class PumpTablesWidget4Component implements OnInit {
             this.fastagTransactionDataLengthLQ = res.data;
 
             this.spinner.hide();
+            this.cd.detectChanges()
           } else {
             this.fastagTransactionDataLQ = [];
             this.fastagTransactionLQ = []
@@ -379,6 +395,7 @@ export class PumpTablesWidget4Component implements OnInit {
             alert("Data Not Found..!")
 
             this.spinner.hide();
+            this.cd.detectChanges()
 
           }
 
@@ -446,9 +463,11 @@ export class PumpTablesWidget4Component implements OnInit {
               this.getFTLQTransactionDetails()
               alert(res.msg)
               this.spinner.hide();
+              this.cd.detectChanges()
             } else {
               this.spinner.hide();
               alert("No Data Found..!");
+              this.cd.detectChanges()
             }
           });
       } else {
@@ -456,6 +475,7 @@ export class PumpTablesWidget4Component implements OnInit {
         this.filterFormLQ.controls['startDate'].setValue('')
         this.filterFormLQ.controls['endDate'].setValue('')
         this.spinner.hide();
+        this.cd.detectChanges()
       }
     } else {
       alert("Please Select Date..")
@@ -492,8 +512,10 @@ export class PumpTablesWidget4Component implements OnInit {
           this.corpWalletIFSC = res.data[0].corpWalletIFSC;
           this.corpWalletUPI = res.data[0].corpWalletUPI;
           this.spinner.hide();
+          this.cd.detectChanges()
         } else {
           this.spinner.hide();
+          this.cd.detectChanges()
         }
       })
   }
@@ -546,9 +568,11 @@ export class PumpTablesWidget4Component implements OnInit {
               this.fastagLength = res.data.result
               alert(res.msg)
               this.spinner.hide();
+              this.cd.detectChanges()
             } else {
               this.spinner.hide();
               alert("Data Not Found..!");
+              this.cd.detectChanges()
             }
           });
       } else {
@@ -556,6 +580,7 @@ export class PumpTablesWidget4Component implements OnInit {
         this.filterForm.controls['startDate'].setValue('')
         this.filterForm.controls['endDate'].setValue('')
         this.spinner.hide();
+        this.cd.detectChanges()
       }
     } else {
       alert("Please Select Date..")
@@ -566,10 +591,10 @@ export class PumpTablesWidget4Component implements OnInit {
   goToPDF(status: string) {
     if (status == "current") {
       this.post.setRoutingWithDate('current', this.fastagData, moment(this.filterForm.value.startDate).format("YYYY-MM-DD"), moment(this.filterForm.value.endDate).format("YYYY-MM-DD"), "FT")
-      this.router.navigate(['../transporter/fastagRechargeTransactions']);
+      this.router.navigate(['/transporter/fastagRechargeTransactions']);
     } else {
       this.post.setRoutingWithDate('range', this.fastagTransactionData, moment(this.filterForm.value.startDate).format("YYYY-MM-DD"), moment(this.filterForm.value.endDate).format("YYYY-MM-DD"), "FT")
-      this.router.navigate(['../transporter/fastagRechargeTransactions']);
+      this.router.navigate(['/transporter/fastagRechargeTransactions']);
     }
   }
 
@@ -650,10 +675,10 @@ export class PumpTablesWidget4Component implements OnInit {
   goToPDFLQ(status: string) {
     if (status == "current") {
       this.post.setRoutingWithDate('current', this.fastagTransactionDataLQ, moment(this.filterFormLQ.value.startDate).format("YYYY-MM-DD"), moment(this.filterFormLQ.value.endDate).format("YYYY-MM-DD"), "LQ")
-      this.router.navigate(['../transporter/fastagRechargeTransactions']);
+      this.router.navigate(['/transporter/fastagRechargeTransactions']);
     } else {
       this.post.setRoutingWithDate('range', this.fastagTransactionDataLQ, moment(this.filterFormLQ.value.startDate).format("YYYY-MM-DD"), moment(this.filterFormLQ.value.endDate).format("YYYY-MM-DD"), "LQ")
-      this.router.navigate(['../transporter/fastagRechargeTransactions']);
+      this.router.navigate(['/transporter/fastagRechargeTransactions']);
     }
   }
 

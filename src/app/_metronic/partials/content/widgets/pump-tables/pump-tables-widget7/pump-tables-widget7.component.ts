@@ -106,6 +106,7 @@ export class PumpTablesWidget7Component implements OnInit {
   creditSumLQ: number;
   debitSumLQ: number;
   transporterCorpId: string | null;
+  customerId: any;
 
   constructor(
     private modalService: NgbModal,
@@ -160,11 +161,15 @@ export class PumpTablesWidget7Component implements OnInit {
       // console.log("showDateRange true = ", this.showDateRange)
     }
     if(this.acceesGroup == '12'){
-      this.getFastagCorporateByCorpId(this.dealerCorporateId)
+      var dealerData = JSON.parse(localStorage.getItem("dealerData") || '{}');
+      this.customerId = dealerData.customerId;
+      this.getFastagCorporateByCorpId(this.customerId)
     } 
     if(this.acceesGroup == '2'){
       this.transporterCorpId = localStorage.getItem('transporterCorpId');
-      this.getFastagCorporateByCorpId(this.transporterCorpId)
+      var transporterData = JSON.parse(localStorage.getItem("transporterData") || '{}');
+      this.customerId = transporterData.customerId;
+      this.getFastagCorporateByCorpId(this.customerId)
     }
     this.cd.detectChanges()
   }

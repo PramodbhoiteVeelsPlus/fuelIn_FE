@@ -22,6 +22,7 @@ import { ActiveVehicleLQPdfComponent } from './active-vehicle-lqpdf/active-vehic
 import { FtTollPlazaComponent } from './ft-toll-plaza/ft-toll-plaza.component';
 import { FtTotalRechargeComponent } from './ft-total-recharge/ft-total-recharge.component';
 import { FtVehicleSummaryComponent } from './ft-vehicle-summary/ft-vehicle-summary.component';
+import { VehicleSummaryReportComponent } from './vehicle-summary-report/vehicle-summary-report.component';
 
 @NgModule({
     declarations: [
@@ -39,7 +40,8 @@ import { FtVehicleSummaryComponent } from './ft-vehicle-summary/ft-vehicle-summa
         ActiveVehicleLQPdfComponent,
         FtTollPlazaComponent,
         FtTotalRechargeComponent,
-        FtVehicleSummaryComponent
+        FtVehicleSummaryComponent,
+        VehicleSummaryReportComponent
     ],
     imports: [
         CommonModule,
@@ -107,6 +109,10 @@ import { FtVehicleSummaryComponent } from './ft-vehicle-summary/ft-vehicle-summa
             {
                 path: 'ftVehicleSummary',
                 component: FtVehicleSummaryComponent,
+            },
+            {
+                path: 'vehicleSummaryReport',
+                component: VehicleSummaryReportComponent,
             },
         ]),
         WidgetsModule,

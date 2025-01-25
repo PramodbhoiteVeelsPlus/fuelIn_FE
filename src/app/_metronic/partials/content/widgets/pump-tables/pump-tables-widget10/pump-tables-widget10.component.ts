@@ -111,13 +111,23 @@ export class PumpTablesWidget10Component implements OnInit {
   FTDetails: any = [];
   fastagTransactionDetails: any = [];
   totalFT: any = [];
-  vehicleLQList: any  =[];
+  vehicleLQList: any = [];
   FTLQData: any = [];
   FTLQTransaction: any = [];
   FTLQDetails: any = [];
   FTLQTransactionDetails: any = [];
   totalFTLQ: any = [];
   transporterCorpId: string | null;
+  isTable: boolean = false;
+  openningBalance: any = 0;
+  totalDebit: any = 0;
+  totalCredit: any = 0;
+  closingBalance: any = 0;
+  openningBalanceLq: any = 0;
+  totalDebitLq: any = 0;
+  totalCreditLq: any = 0;
+  closingBalanceLq: any = 0;
+  customerId: any;
 
   constructor(
     private modalService: NgbModal,
@@ -136,7 +146,6 @@ export class PumpTablesWidget10Component implements OnInit {
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     var dealerData = JSON.parse(localStorage.getItem("dealerData") || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
-    this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
     this.userId = element.userId;
     this.acceesGroup = element.accessGroupId;
     this.dealerMobile = element.phone1;
@@ -145,37 +154,50 @@ export class PumpTablesWidget10Component implements OnInit {
     this.managerPersonId = element.personId
     this.userName = element.firstName + ' ' + element.lastName;
     this.acceesGroup = element.accessGroupId;
-    if(this.acceesGroup == '12'){
-      this.getFastagCorporateByCorpId(this.dealerCorporateId)
-    } 
-    if(this.acceesGroup == '2'){
+    let currentDate = moment(new Date()).subtract(1, 'day').format("DD-MM-YYYY")
+    let previousDate = moment(new Date()).format("01-MM-YYYY");
+    this.filterForm.controls["startDate"].setValue(previousDate);
+    this.filterForm.controls["endDate"].setValue(currentDate);
+    this.filterFormLQ.controls["startDate"].setValue(previousDate);
+    this.filterFormLQ.controls["endDate"].setValue(currentDate);
+    if (this.acceesGroup == '12') {
+      this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
+      var dealerData = JSON.parse(localStorage.getItem("dealerData") || '{}');
+      this.customerId = dealerData.customerId;
+      this.getFastagCorporateByCorpId(this.customerId)
+    }
+    if (this.acceesGroup == '2') {
       this.transporterCorpId = localStorage.getItem('transporterCorpId');
-      this.getFastagCorporateByCorpId(this.transporterCorpId)
+      var transporterData = JSON.parse(localStorage.getItem("transporterData") || '{}');
+      this.customerId = transporterData.customerId;
+      this.getFastagCorporateByCorpId(this.customerId)
     }
     this.getVehicleList()
     this.cd.detectChanges()
   }
 
-  getVehicleList(){
+  getVehicleList() {
     this.spinner.show()
-  let data = {
-    entityId: this.entityIdForCorp
-  } 
-
-  this.post.getFTVehicleListPOST(data).subscribe(res =>{
-    if(res.status == "OK"){
-      this.vehicleList = res.data;
-      this.spinner.hide()
-    } else {
-      this.vehicleList = [];
-      this.spinner.hide()
+    let data = {
+      entityId: this.entityIdForCorp
     }
-  })
-  } 
-  
+
+    this.post.getFTVehicleListPOST(data).subscribe(res => {
+      if (res.status == "OK") {
+        this.vehicleList = res.data;
+        this.spinner.hide()
+        this.cd.detectChanges()
+      } else {
+        this.vehicleList = [];
+        this.spinner.hide()
+        this.cd.detectChanges()
+      }
+    })
+  }
+
   getVehicleWiseFT() {
-    if(this.filterForm.value.startDate && this.filterForm.value.endDate){
-      if(this.filterForm.value.businessId){
+    if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
+      if (this.filterForm.value.businessId) {
         this.spinner.show()
         let data = {
           startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
@@ -183,7 +205,7 @@ export class PumpTablesWidget10Component implements OnInit {
           entityId: this.entityIdForCorp,
           businessId: this.filterForm.value.businessId
         }
-    
+
         this.post.getVehicleWiseFtTransactionsPOST(data).subscribe(res => {
           if (res.status == "OK") {
             this.FTData = res.data;
@@ -191,72 +213,87 @@ export class PumpTablesWidget10Component implements OnInit {
             this.FTDetails = res.data1;
             this.fastagTransactionDetails = res.data1;
             this.totalFT = res.data2;
+            this.isTable = false
             this.spinner.hide()
+            this.cd.detectChanges()
           } else {
             this.FTData = [];
             this.FTDetails = [];
             this.totalFT = [];
             this.spinner.hide()
+            this.cd.detectChanges()
           }
         })
       } else {
-      this.spinner.show()
-      let data = {
-        startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
-        endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
-        entityId: this.entityIdForCorp
-      }
-      console.log(this.filterForm.value.businessId)
-  
-      this.post.getVehicleWiseFtTransactionsPOST(data).subscribe(res => {
-        if (res.status == "OK") {
-          this.FTData = res.data;
-          this.fastagTransaction = res.data;
-          this.FTDetails = res.data1;
-          this.fastagTransactionDetails = res.data1;
-          this.totalFT = res.data2;
-          this.spinner.hide()
-        } else {
-          this.FTData = [];
-          this.FTDetails = [];
-          this.totalFT = [];
-          this.spinner.hide()
+        this.spinner.show()
+        let data = {
+          startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+          endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+          entityId: this.entityIdForCorp
         }
-      })
-    }
+        console.log(this.filterForm.value.businessId)
+
+        this.post.getVehicleWiseFtTransactionsPOST(data).subscribe(res => {
+          if (res.status == "OK") {
+            this.FTData = res.data;
+            this.fastagTransaction = res.data;
+            this.FTDetails = res.data1;
+            this.fastagTransactionDetails = res.data1;
+            this.totalFT = res.data2;
+            this.isTable = true
+            if (res.data3.length) {
+              this.openningBalance = Number(res.data3[0].fastagTransactionBalance).toFixed(2)
+            } else {
+              this.openningBalance = 0
+            }
+            this.totalDebit = Number(res.data2[0].totalAmount).toFixed(2)
+            this.totalCredit = Number(res.data4[0].totalAmount).toFixed(2)
+            this.closingBalance = Number(Number(this.openningBalance) + Number(this.totalCredit) - Number(this.totalDebit)).toFixed(2)
+            // console.log("openning", this.openningBalance, this.totalDebit, this.totalCredit, this.closingBalance)
+            this.spinner.hide()
+            this.cd.detectChanges()
+          } else {
+            this.FTData = [];
+            this.FTDetails = [];
+            this.totalFT = [];
+            this.spinner.hide()
+            this.cd.detectChanges()
+          }
+        })
+      }
     }
   }
 
   getFastagCorporateByCorpId(dealerCorporateId: any) {
     const data = {
-        corporateId: dealerCorporateId,
+      corporateId: dealerCorporateId,
     };
     this.post.getFastagCorporateByCorpIdPOST(data).subscribe((res) => {
-    if (res.status == 'OK') {
-        if(res.data.length){
-        this.FT = true 
-        // this.LQFT = true  
-        this.entityIdForCorp = res.data[0].entityId
-        // this.entityIdForCorpLQ = res.data1[0].entityId
-        this.thrLimit = res.data[0].thrLimit
-        this.getVehicleList();
-        this.getVehicleListLQ()
-        this.getVehicleWiseFT()
-        this.getVehicleTransactionData(this.entityIdForCorp)
-        if(res.data1.length){
-          this.bothFT = true
-          this.LQFT = true 
-          this.entityIdForCorpLQ = res.data1[0].entityId
+      if (res.status == 'OK') {
+        if (res.data.length) {
+          this.FT = true
+          // this.LQFT = true  
+          this.entityIdForCorp = res.data[0].entityId
+          // this.entityIdForCorpLQ = res.data1[0].entityId
+          this.thrLimit = res.data[0].thrLimit
           this.getVehicleList();
           this.getVehicleListLQ()
           this.getVehicleWiseFT()
-          this.getVehicleWiseFTLQ()
-          this.getVehicleTransactionLQ(this.entityIdForCorpLQ)
-        }
-        } else {
-          if(res.data1.length){
+          this.getVehicleTransactionData(this.entityIdForCorp)
+          if (res.data1.length) {
+            this.bothFT = true
             this.LQFT = true
-            this.LQ = true  
+            this.entityIdForCorpLQ = res.data1[0].entityId
+            this.getVehicleList();
+            this.getVehicleListLQ()
+            this.getVehicleWiseFT()
+            this.getVehicleWiseFTLQ()
+            this.getVehicleTransactionLQ(this.entityIdForCorpLQ)
+          }
+        } else {
+          if (res.data1.length) {
+            this.LQFT = true
+            this.LQ = true
             this.entityIdForCorpLQ = res.data1[0].entityId
             this.getVehicleList();
             this.getVehicleListLQ()
@@ -264,52 +301,54 @@ export class PumpTablesWidget10Component implements OnInit {
             this.getVehicleTransactionLQ(this.entityIdForCorpLQ)
           }
         }
-    } else {
-      this.LQFT = false;
-      this.FT = false;
-    }
+      } else {
+        this.LQFT = false;
+        this.FT = false;
+      }
     });
   }
-  
+
   goToPDF() {
-    this.post.setRoutingWithVehicle(this.FTData, this.FTDetails, this.totalFT, moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"), moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"), "FT")
+    this.post.setRoutingWithVehicle(this.FTData, this.FTDetails, this.totalFT, this.openningBalance, this.totalDebit, this.totalCredit, this.closingBalance, this.isTable, moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"), moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"), "FT")
     this.router.navigate(['/pump/vehicleSummaryReport']);
   }
 
-  getVehicleListLQ(){
+  getVehicleListLQ() {
     this.spinner.show()
     let data = {
       entityId: this.entityIdForCorpLQ
-    } 
+    }
 
-    this.post.getFTVehicleListLQPOST(data).subscribe(res =>{
-      if(res.status == "OK"){
+    this.post.getFTVehicleListLQPOST(data).subscribe(res => {
+      if (res.status == "OK") {
         this.vehicleLQList = res.data;
         this.spinner.hide()
+        this.cd.detectChanges()
       } else {
         this.vehicleLQList = [];
         this.spinner.hide()
+        this.cd.detectChanges()
       }
     })
   }
-  
+
   getVehicleTransactionData(id: any) {
     const data = {
-      fastagTransactionEntityId: id, 
-      startDate:moment(this.filterForm.value.startDate).format('YYYY-MM-DD') + ' 00:00:01',
-      endDate:moment(this.filterForm.value.endDate).format('YYYY-MM-DD') + ' 23:59:59',     
+      fastagTransactionEntityId: id,
+      startDate: moment(this.filterForm.value.startDate).format('YYYY-MM-DD') + ' 00:00:01',
+      endDate: moment(this.filterForm.value.endDate).format('YYYY-MM-DD') + ' 23:59:59',
     };
     this.post.getRechargeFastagByDatePOST(data).subscribe((res) => {
-    if (res.status == 'OK') {
-      
+      if (res.status == 'OK') {
+
         this.fastagData = res.data
         this.fastagLength = res.data
-      
-    } else {
-    }
+
+      } else {
+      }
     });
-    }
-     
+  }
+
   getVehicleWiseFTLQ() {
     if (this.filterFormLQ.value.startDate && this.filterFormLQ.value.endDate) {
       if (this.filterFormLQ.value.businessId) {
@@ -329,12 +368,15 @@ export class PumpTablesWidget10Component implements OnInit {
             this.FTLQDetails = res.data1;
             this.FTLQTransactionDetails = res.data1;
             this.totalFTLQ = res.data2;
+            this.isTable = false
             this.spinner.hide()
+            this.cd.detectChanges()
           } else {
             this.FTLQData = [];
             this.FTLQDetails = [];
             this.totalFTLQ = [];
             this.spinner.hide()
+            this.cd.detectChanges()
           }
         })
       } else {
@@ -352,12 +394,24 @@ export class PumpTablesWidget10Component implements OnInit {
             this.FTLQDetails = res.data1;
             this.FTLQTransactionDetails = res.data1;
             this.totalFTLQ = res.data2;
+            this.isTable = true
+            if (res.data3.length) {
+              this.openningBalanceLq = Number(res.data3[0].fastagTransactionBalance).toFixed(2)
+            } else {
+              this.openningBalanceLq = 0
+            }
+            this.totalDebitLq = Number(res.data2[0].totalAmount).toFixed(2)
+            this.totalCreditLq = Number(res.data4[0].totalAmount).toFixed(2)
+            this.closingBalanceLq = Number(Number(this.openningBalanceLq) + Number(this.totalCreditLq) - Number(this.totalDebitLq)).toFixed(2)
+            // console.log("openning", this.isTable,this.openningBalanceLq, this.totalDebitLq, this.totalCreditLq, this.closingBalanceLq)
             this.spinner.hide()
+            this.cd.detectChanges()
           } else {
             this.FTLQData = [];
             this.FTLQDetails = [];
             this.totalFTLQ = [];
             this.spinner.hide()
+            this.cd.detectChanges()
           }
         })
       }
@@ -366,38 +420,38 @@ export class PumpTablesWidget10Component implements OnInit {
 
   getVehicleTransactionLQ(id: any) {
     const data = {
-      fastagTransactionEntityId: id, 
-      startDate:moment(this.filterFormLQ.value.startDate).format('YYYY-MM-DD') + ' 00:00:01',
-      endDate:moment(this.filterFormLQ.value.endDate).format('YYYY-MM-DD') + ' 23:59:59',     
+      fastagTransactionEntityId: id,
+      startDate: moment(this.filterFormLQ.value.startDate).format('YYYY-MM-DD') + ' 00:00:01',
+      endDate: moment(this.filterFormLQ.value.endDate).format('YYYY-MM-DD') + ' 23:59:59',
     };
     this.post.getRechargeFastagByDateLQPOST(data).subscribe((res) => {
-    if (res.status == 'OK') {
-      
+      if (res.status == 'OK') {
+
         this.fastagLQData = res.data
         this.fastagLQLength = res.data
-      
-    } else {
-    }
+
+      } else {
+      }
     });
-    } 
-    
+  }
+
   submitRechargeData() {
     const data = {
-      fastagTransactionEntityId: this.entityIdForCorp,  
-      startDate:moment(this.filterForm.value.startDate).format('YYYY-MM-DD') + ' 00:00:01',
-      endDate:moment(this.filterForm.value.endDate).format('YYYY-MM-DD') + ' 23:59:59',   
+      fastagTransactionEntityId: this.entityIdForCorp,
+      startDate: moment(this.filterForm.value.startDate).format('YYYY-MM-DD') + ' 00:00:01',
+      endDate: moment(this.filterForm.value.endDate).format('YYYY-MM-DD') + ' 23:59:59',
     };
     this.post.getRechargeFastagByDatePOST(data).subscribe((res) => {
-    if (res.status == 'OK') {
-      this.fastagData = res.data
-      this.fastagLength = res.data
-    } else {
-    }
+      if (res.status == 'OK') {
+        this.fastagData = res.data
+        this.fastagLength = res.data
+      } else {
+      }
     });
-    }
-    
+  }
+
   goToPDFLQ() {
-    this.post.setRoutingWithVehicle(this.FTLQData, this.FTLQDetails, this.totalFTLQ, moment(this.filterFormLQ.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"), moment(this.filterFormLQ.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"), "FT")
+    this.post.setRoutingWithVehicle(this.FTLQData, this.FTLQDetails, this.totalFTLQ, this.openningBalanceLq, this.totalDebitLq, this.totalCreditLq, this.closingBalanceLq, this.isTable, moment(this.filterFormLQ.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"), moment(this.filterFormLQ.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"), "FT")
     this.router.navigate(['/pump/vehicleSummaryReport']);
   }
 
@@ -405,20 +459,20 @@ export class PumpTablesWidget10Component implements OnInit {
     this.p = event;
     // this.getLubePurchase(this.fuelDealerId)
   }
-  
+
   submitRechargeLQ() {
     const data = {
-      fastagTransactionEntityId: this.entityIdForCorpLQ,  
-      startDate:moment(this.filterFormLQ.value.startDate).format('YYYY-MM-DD') + ' 00:00:01',
-      endDate:moment(this.filterFormLQ.value.endDate).format('YYYY-MM-DD') + ' 23:59:59',   
+      fastagTransactionEntityId: this.entityIdForCorpLQ,
+      startDate: moment(this.filterFormLQ.value.startDate).format('YYYY-MM-DD') + ' 00:00:01',
+      endDate: moment(this.filterFormLQ.value.endDate).format('YYYY-MM-DD') + ' 23:59:59',
     };
     this.post.getRechargeFastagByDateLQPOST(data).subscribe((res) => {
-    if (res.status == 'OK') {
-      this.fastagLQData = res.data
-      this.fastagLQLength = res.data
-    } else {
-    }
+      if (res.status == 'OK') {
+        this.fastagLQData = res.data
+        this.fastagLQLength = res.data
+      } else {
+      }
     });
-    }
+  }
 }
 

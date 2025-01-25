@@ -96,6 +96,7 @@ export class PumpTablesWidget3Component implements OnInit {
   corpWalletUPI: any;
   yesbankltd: any = '@yesbankltd'
   transporterCorpId: string | null;
+  customerId: any;
 
   constructor(
     private modalService: NgbModal,
@@ -121,18 +122,22 @@ export class PumpTablesWidget3Component implements OnInit {
     this.managerPersonId = element.personId
     this.userName = element.firstName + ' ' + element.lastName;
     if(this.acceesGroup == '12'){
-      this.getFastagCorporateByCorpId(this.dealerCorporateId)
+      var dealerData = JSON.parse(localStorage.getItem("dealerData") || '{}');
+      this.customerId = dealerData.customerId;
+      this.getFastagCorporateByCorpId(this.customerId)
     } 
     if(this.acceesGroup == '2'){
       this.transporterCorpId = localStorage.getItem('transporterCorpId');
-      this.getFastagCorporateByCorpId(this.transporterCorpId)
+      var transporterData = JSON.parse(localStorage.getItem("transporterData") || '{}');
+      this.customerId = transporterData.customerId;
+      this.getFastagCorporateByCorpId(this.customerId)
     }
     this.cd.detectChanges()
   }
 
-  getFastagCorporateByCorpId(dealerCorporateId: any) {
+  getFastagCorporateByCorpId(customerId: any) {
     const data = {
-        corporateId: dealerCorporateId,
+        corporateId: customerId,
     };
     this.post.getFastagCorporateByCorpIdPOST(data).subscribe((res) => {
         if (res.status == 'OK') {
@@ -207,8 +212,10 @@ getCorpDetailsByEntity(corpWalletEntityId: any){
       this.corpWalletIFSC = res.data[0].corpWalletIFSC;
       this.corpWalletUPI = res.data[0].corpWalletUPI;
       this.spinner.hide();
+      this.cd.detectChanges()
     }else{
       this.spinner.hide();
+      this.cd.detectChanges()
     }
   })
 }

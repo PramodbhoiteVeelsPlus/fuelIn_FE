@@ -11,6 +11,7 @@ export class TilesService {
     header: any;
     user: any;
     token: any = "";
+  FT: string;
 
     constructor(private http: HttpClient,
         private router: Router

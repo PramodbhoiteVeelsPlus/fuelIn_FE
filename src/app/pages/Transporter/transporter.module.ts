@@ -12,6 +12,7 @@ import { ViewPetrolPumpComponent } from './view-petrol-pump/view-petrol-pump.com
 import { ViewCreditPurchaseComponent } from './view-credit-purchase/view-credit-purchase.component';
 import { ViewCreditPaymentComponent } from './view-credit-payment/view-credit-payment.component';
 import { FuelLedgerComponent } from './fuel-ledger/fuel-ledger.component';
+import { FastagRechargeTransactionComponent } from './fastag-recharge-transaction/fastag-recharge-transaction.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { FuelLedgerComponent } from './fuel-ledger/fuel-ledger.component';
     ViewPetrolPumpComponent,
     ViewCreditPurchaseComponent,
     ViewCreditPaymentComponent,
-    FuelLedgerComponent
+    FuelLedgerComponent,
+    FastagRechargeTransactionComponent
   ],
   imports: [
     CommonModule,
@@ -47,6 +49,10 @@ import { FuelLedgerComponent } from './fuel-ledger/fuel-ledger.component';
       {
         path: 'fuelLedger',
         component: FuelLedgerComponent,
+      },
+      {
+        path: 'fastagRechargeTransactions',
+        component: FastagRechargeTransactionComponent,
       },
     ]),
     WidgetsModule,
