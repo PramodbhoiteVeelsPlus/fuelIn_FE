@@ -264,9 +264,9 @@ export class PumpTablesWidget10Component implements OnInit {
     }
   }
 
-  getFastagCorporateByCorpId(dealerCorporateId: any) {
+  getFastagCorporateByCorpId(id: any) {
     const data = {
-      corporateId: dealerCorporateId,
+      corporateId: id,
     };
     this.post.getFastagCorporateByCorpIdPOST(data).subscribe((res) => {
       if (res.status == 'OK') {

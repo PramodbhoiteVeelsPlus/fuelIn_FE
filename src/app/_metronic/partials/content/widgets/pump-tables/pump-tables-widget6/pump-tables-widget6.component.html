@@ -22,7 +22,7 @@
 
 
         <div class="row">
-            <div class="col-md-1"></div>
+            <!-- <div class="col-md-1"></div> -->
 
             <div class="col-md-10">
 
@@ -119,29 +119,29 @@
                                     <thead style="background-color: #fcba03;">
                                         <tr>
 
-                                            <th style="text-align: center;border: 2px solid #272829; "> Date </th>
-                                            <th style="text-align: center;border: 2px solid #272829; "> Time </th>
-                                            <th style="text-align: center;border: 2px solid #272829; "> Vehicle No </th>
-                                            <th style="text-align: center;border: 2px solid #272829; "> Tag Id </th>
-                                            <th style="text-align: center;border: 2px solid #272829; "> Toll Plaza/Name
+                                            <th style="text-align: center;border: 1px solid #272829; "> Date </th>
+                                            <th style="text-align: center;border: 1px solid #272829; "> Time </th>
+                                            <th style="text-align: center;border: 1px solid #272829; "> Vehicle No </th>
+                                            <th style="text-align: center;border: 1px solid #272829; "> Tag Id </th>
+                                            <th style="text-align: center;border: 1px solid #272829; "> Toll Plaza/Name
                                             </th>
-                                            <th style="text-align: center;border: 2px solid #272829; "> Txn Type </th>
-                                            <th style="text-align: center;border: 2px solid #272829; "> Amount </th>
+                                            <th style="text-align: center;border: 1px solid #272829; "> Txn Type </th>
+                                            <th style="text-align: center;border: 1px solid #272829; "> Amount </th>
 
                                         </tr>
                                     </thead>
                                     <tbody *ngFor="let data of activeVehicleArray; let i = index">
 
                                         <!-- <td style="text-align: left;"> {{i+1}} </td> -->
-                                        <td style="text-align: left;"> {{data.fastagTransactionTime }}</td>
-                                        <td style="text-align: left;"> {{data.fastagTransactionTime }}
+                                        <td style="text-align: center; border: 1px solid black;"> {{data.fastagTransactionTime }}</td>
+                                        <td style="text-align: center; border: 1px solid black;"> {{data.fastagTransactionTime }}
                                         </td>
-                                        <td style="text-align: left;"> {{data.fastagTransactionBusinessId}} </td>
-                                        <td style="text-align: left;"> {{data.fastagTransactionKitNo}} </td>
-                                        <td style="text-align: left;"> {{data.fastagBeneficiaryName}} </td>
+                                        <td style="text-align: center; border: 1px solid black;"> {{data.fastagTransactionBusinessId}} </td>
+                                        <td style="text-align: center; border: 1px solid black;"> {{data.fastagTransactionKitNo}} </td>
+                                        <td style="text-align: center; border: 1px solid black;"> {{data.fastagBeneficiaryName}} </td>
                                         <!-- <td style="text-align: left;"> {{data.fastagTransactionType}} </td> -->
-                                        <td style="text-align: left;"> {{data.fastagType}} </td>
-                                        <td style="text-align: left;"> {{data.fastagTransactionAmount }}
+                                        <td style="text-align:center; border: 1px solid black;"> {{data.fastagType}} </td>
+                                        <td style="text-align: center; border: 1px solid black;"> {{data.fastagTransactionAmount }}
                                         </td>
 
 

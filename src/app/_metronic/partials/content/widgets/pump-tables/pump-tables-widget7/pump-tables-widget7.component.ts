@@ -103,8 +103,8 @@ export class PumpTablesWidget7Component implements OnInit {
   LQFT: boolean = false;
   LQ: boolean = false;
   activeVehicleLQArray: any = [];
-  creditSumLQ: number;
-  debitSumLQ: number;
+  creditSumLQ: number = 0;
+  debitSumLQ: number = 0;
   transporterCorpId: string | null;
   customerId: any;
 
@@ -176,9 +176,9 @@ export class PumpTablesWidget7Component implements OnInit {
 
  
   //getFastagCorporateByCorpId
-  getFastagCorporateByCorpId(dealerCorporateId: any) {
+  getFastagCorporateByCorpId(id: any) {
     const data = {
-      corporateId: dealerCorporateId,
+      corporateId: id,
     };
     this.post.getFastagCorporateByCorpIdPOST(data).subscribe((res) => {
       if (res.status == 'OK') {

@@ -69,11 +69,11 @@ export class TransTablesWidget2Component implements OnInit {
   isPurchasePayment: boolean = false;
   crData: any = [];
   currentMonth: any;
-  currentMonthPurchase: any;
-  currentMonthPayment: any;
+  currentMonthPurchase: any = 0;
+  currentMonthPayment: any = 0;
   lastMon: any;
-  lastMonthPurchase: any;
-  lastMonthPayment: any;
+  lastMonthPurchase: any = 0;
+  lastMonthPayment: any = 0;
   last2Mon: string;
 
   constructor(private cd: ChangeDetectorRef,

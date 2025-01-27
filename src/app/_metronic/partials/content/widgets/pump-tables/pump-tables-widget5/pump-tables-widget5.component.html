@@ -161,7 +161,7 @@
                                                     <label for="example-text-input"
                                                         class="col-auto col-form-label">Vehicle Number</label>
 
-                                                    <div class="col-md-2">
+                                                    <div class="col-auto">
 
                                                         <select class="form-control" [(ngModel)]="dropVehicleNumber"
                                                             [ngModelOptions]="{standalone: true}">
@@ -195,9 +195,9 @@
                                                             (click)="submitVehicleTransactionData()">View</button>
                                                     </div>
 
-                                                    <div class="col-auto">
+                                                    <div class="col-auto" style="margin-left: 90%;">
                                                         <button type="submit"
-                                                            class="btn btn-outline-warning my-2 my-sm-0"
+                                                            class="btn btn-warning my-2 my-sm-0"
                                                             (click)="goToPDF()">PDF View</button>
                                                     </div>
 
@@ -208,19 +208,19 @@
 
                                             <div class="row">
                                                 <div class="table-responsive mb-0">
-                                                    <table class="table table-centered">
+                                                    <table class="table table-centered" style="border-collapse: collapse; border: 1px solid black;">
 
                                                         <thead class="table-light">
                                                             <tr>
-                                                                <th style="text-align: left;">Sr No</th>
-                                                                <th style="text-align: left;">Date</th>
-                                                                <th style="text-align: left;">Time</th>
-                                                                <th style="text-align: left;">Vehicle No</th>
-                                                                <th style="text-align: left;">Tag Id</th>
-                                                                <th style="text-align: left;">Toll Plaza/Name</th>
-                                                                <th style="text-align: left;">Transaction Type</th>
-                                                                <th style="text-align: left;">Debit/Credit</th>
-                                                                <th style="text-align: left;">Amount</th>
+                                                                <th style="text-align: left; border: 1px solid black;">Sr No</th>
+                                                                <th style="text-align: left; border: 1px solid black;">Date</th>
+                                                                <th style="text-align: left; border: 1px solid black;">Time</th>
+                                                                <th style="text-align: left; border: 1px solid black;">Vehicle No</th>
+                                                                <th style="text-align: left; border: 1px solid black;">Tag Id</th>
+                                                                <th style="text-align: left; border: 1px solid black;">Toll Plaza/Name</th>
+                                                                <th style="text-align: left; border: 1px solid black;">Transaction Type</th>
+                                                                <th style="text-align: left; border: 1px solid black;">Debit/Credit</th>
+                                                                <th style="text-align: left; border: 1px solid black;">Amount</th>
                                                                 <!-- <th style="text-align: left;">Balance</th> -->
 
                                                             </tr>
@@ -230,23 +230,23 @@
                                                             *ngFor="let data of fastagData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
 
                                                             <tr>
-                                                                <td style="text-align: left;"> {{i+1}} </td>
-                                                                <td style="text-align: left;">
+                                                                <td style="text-align: left; border: 1px solid black;"> {{i+1}} </td>
+                                                                <td style="text-align: left; border: 1px solid black;">
                                                                     {{data.manualDate | date:'mediumDate'}}
                                                                 </td>
-                                                                <td style="text-align: left;">
+                                                                <td style="text-align: left; border: 1px solid black;">
                                                                     {{data.manualDate | date:'HH:mm:ss'}}
                                                                 </td>
-                                                                <td style="text-align: left;">
+                                                                <td style="text-align: left; border: 1px solid black;">
                                                                     {{data.fastagTransactionBusinessId}} </td>
-                                                                <td style="text-align: left;">
+                                                                <td style="text-align: left; border: 1px solid black;">
                                                                     {{data.fastagTransactionKitNo}} </td>
-                                                                <td style="text-align: left;">
+                                                                <td style="text-align: left; border: 1px solid black;">
                                                                     {{data.fastagBeneficiaryName}} </td>
-                                                                <td style="text-align: left;">
+                                                                <td style="text-align: left; border: 1px solid black;">
                                                                     {{data.fastagTransactionType}} </td>
-                                                                <td style="text-align: left;"> {{data.fastagType}} </td>
-                                                                <td style="text-align: left;">
+                                                                <td style="text-align: left; border: 1px solid black;"> {{data.fastagType}} </td>
+                                                                <td style="text-align: left; border: 1px solid black;">
                                                                     {{data.fastagTransactionAmount | number:'1.2-2'}}
                                                                 </td>
                                                                 <!-- <td style="text-align: left;"> {{data.fastagTransactionBalance | number:'1.2-2' }} </td> -->
@@ -364,7 +364,7 @@
                                                     <label for="example-text-input"
                                                         class="col-auto col-form-label">Vehicle Number</label>
 
-                                                    <div class="col-md-2">
+                                                    <div class="col-auto">
 
                                                         <select class="form-control" [(ngModel)]="dropVehicleNumber"
                                                             [ngModelOptions]="{standalone: true}">
@@ -398,10 +398,10 @@
                                                         <button type="submit" class="btn btn-primary"
                                                             (click)="submitVehicleTransactionLQData()">View</button>
                                                     </div>
-
-                                                    <div class="col-auto">
+                                                    <br>
+                                                    <div class="col-auto" style="margin-left: 90%;">
                                                         <button type="submit"
-                                                            class="btn btn-outline-warning my-2 my-sm-0"
+                                                            class="btn btn-warning my-2 my-sm-0"
                                                             (click)="goToPDFLQ()">PDF
                                                             View</button>
                                                     </div>
@@ -412,19 +412,19 @@
 
                                             <div class="row">
                                                 <div class="table-responsive mb-0">
-                                                    <table class="table table-centered">
+                                                    <table class="table table-centered" style="border-collapse: collapse; border: 1px solid black;">
 
                                                         <thead class="table-light">
                                                             <tr>
-                                                                <th style="text-align: left;">Sr No</th>
-                                                                <th style="text-align: left;">Date</th>
-                                                                <th style="text-align: left;">Time</th>
-                                                                <th style="text-align: left;">Vehicle No</th>
-                                                                <th style="text-align: left;">Tag Id</th>
-                                                                <th style="text-align: left;">Toll Plaza/Name</th>
-                                                                <th style="text-align: left;">Transaction Type</th>
-                                                                <th style="text-align: left;">Debit/Credit</th>
-                                                                <th style="text-align: left;">Amount</th>
+                                                                <th style="text-align: left; border: 1px solid black;">Sr No</th>
+                                                                <th style="text-align: left; border: 1px solid black;">Date</th>
+                                                                <th style="text-align: left; border: 1px solid black;">Time</th>
+                                                                <th style="text-align: left; border: 1px solid black;">Vehicle No</th>
+                                                                <th style="text-align: left; border: 1px solid black;">Tag Id</th>
+                                                                <th style="text-align: left; border: 1px solid black;">Toll Plaza/Name</th>
+                                                                <th style="text-align: left; border: 1px solid black;">Transaction Type</th>
+                                                                <th style="text-align: left; border: 1px solid black;">Debit/Credit</th>
+                                                                <th style="text-align: left; border: 1px solid black;">Amount</th>
                                                             </tr>
                                                         </thead>
 
@@ -432,23 +432,23 @@
                                                             *ngFor="let data of fastagLQData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
 
                                                             <tr>
-                                                                <td style="text-align: left;"> {{i+1}} </td>
-                                                                <td style="text-align: left;">
+                                                                <td style="text-align: left; border: 1px solid black;"> {{i+1}} </td>
+                                                                <td style="text-align: left; border: 1px solid black;">
                                                                     {{data.manualDate | date:'mediumDate'}}
                                                                 </td>
-                                                                <td style="text-align: left;">
+                                                                <td style="text-align: left; border: 1px solid black;">
                                                                     {{data.manualDate | date:'HH:mm:ss'}}
                                                                 </td>
-                                                                <td style="text-align: left;">
+                                                                <td style="text-align: left; border: 1px solid black;">
                                                                     {{data.fastagTransactionBusinessId}} </td>
-                                                                <td style="text-align: left;">
+                                                                <td style="text-align: left; border: 1px solid black;">
                                                                     {{data.fastagTransactionKitNo}} </td>
-                                                                <td style="text-align: left;">
+                                                                <td style="text-align: left; border: 1px solid black;">
                                                                     {{data.fastagBeneficiaryName}} </td>
-                                                                <td style="text-align: left;">
+                                                                <td style="text-align: left; border: 1px solid black;">
                                                                     {{data.fastagTransactionType}} </td>
-                                                                <td style="text-align: left;"> {{data.fastagType}} </td>
-                                                                <td style="text-align: left;">
+                                                                <td style="text-align: left; border: 1px solid black;"> {{data.fastagType}} </td>
+                                                                <td style="text-align: left; border: 1px solid black;">
                                                                     {{data.fastagTransactionAmount | number:'1.2-2'}}
                                                                 </td>
                                                             </tr>

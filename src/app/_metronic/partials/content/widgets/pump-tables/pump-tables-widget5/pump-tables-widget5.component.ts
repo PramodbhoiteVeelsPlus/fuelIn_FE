@@ -192,6 +192,7 @@ export class PumpTablesWidget5Component implements OnInit {
             this.thrLimitLQ = res.data1[0].thrLimit
             this.getVehicleTransactionLQData(this.entityIdForCorpLQ)
             this.getVehicleLQAllData(this.entityIdForCorpLQ)
+            this.cd.detectChanges()
           }
         } else {
           if (res.data1.length) {
@@ -201,6 +202,7 @@ export class PumpTablesWidget5Component implements OnInit {
             this.thrLimitLQ = res.data1[0].thrLimit
             this.getVehicleTransactionLQData(this.entityIdForCorpLQ)
             this.getVehicleLQAllData(this.entityIdForCorpLQ)
+            this.cd.detectChanges()
           }
         }
       } else {
@@ -229,6 +231,7 @@ export class PumpTablesWidget5Component implements OnInit {
         this.fastagMonthWiseDatavehicleData = res.vehicleData
 
         this.getCombine();
+        this.cd.detectChanges()
 
       } else {
       }
@@ -261,6 +264,7 @@ export class PumpTablesWidget5Component implements OnInit {
       })
       this.combineVehicleData.push(previousJson)
       //  console.log("2323211111===>",this.combineVehicleData);
+        this.cd.detectChanges()
 
     })
 
@@ -279,6 +283,7 @@ export class PumpTablesWidget5Component implements OnInit {
       .subscribe(res => {
         this.fastagData = res.data
         this.fastagLength = res.data
+        this.cd.detectChanges()
       })
 
   }
@@ -290,7 +295,9 @@ export class PumpTablesWidget5Component implements OnInit {
     this.post.getAllVehicleNumberPOST(data).subscribe((res) => {
       if (res.status == 'OK') {
         this.vehicleList = res.data
+        this.cd.detectChanges()
       } else {
+        this.cd.detectChanges()
       }
     });
   }
@@ -306,7 +313,9 @@ export class PumpTablesWidget5Component implements OnInit {
       if (res.status == 'OK') {
         this.fastagData = res.data
         this.fastagLength = res.data
+        this.cd.detectChanges()
       } else {
+        this.cd.detectChanges()
       }
     });
   }
@@ -333,8 +342,10 @@ export class PumpTablesWidget5Component implements OnInit {
         this.fastagMonthWiseDatavehicleLQData = res.vehicleData
 
         this.getCombineLQ();
+        this.cd.detectChanges()
 
       } else {
+        this.cd.detectChanges()
       }
     });
   }
@@ -365,6 +376,7 @@ export class PumpTablesWidget5Component implements OnInit {
 
       })
       this.combineVehicleLQData.push(previousJson)
+      this.cd.detectChanges()
 
     })
 
@@ -385,9 +397,11 @@ export class PumpTablesWidget5Component implements OnInit {
         if (res.status == "OK") {
           this.fastagLQData = res.data
           this.fastagLQLength = res.data
+          this.cd.detectChanges()
         } else {
           this.fastagLQData = []
           this.fastagLQLength = []
+          this.cd.detectChanges()
 
         }
       })
@@ -405,7 +419,9 @@ export class PumpTablesWidget5Component implements OnInit {
       if (res.status == 'OK') {
         this.fastagLQData = res.data
         this.fastagLQLength = res.data
+        this.cd.detectChanges()
       } else {
+        this.cd.detectChanges()
       }
     });
   }
@@ -422,7 +438,9 @@ export class PumpTablesWidget5Component implements OnInit {
     this.post.getAllVehicleNumberLQPOST(data).subscribe((res) => {
     if (res.status == 'OK') {
       this.vehicleLQList = res.data
+      this.cd.detectChanges()
     } else {
+      this.cd.detectChanges()
     }
     });
     }

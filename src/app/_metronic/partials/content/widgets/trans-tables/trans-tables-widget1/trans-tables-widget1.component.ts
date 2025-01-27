@@ -71,10 +71,10 @@ export class TransTablesWidget1Component implements OnInit {
   isPurchasePayment: boolean = false;
   crData: any = [];
   currentMonth: any;
-  currentMonthPurchase: any;
+  currentMonthPurchase: any = 0;
   currentMonthPayment: any;
   lastMon: any;
-  lastMonthPurchase: any;
+  lastMonthPurchase: any = 0;
   lastMonthPayment: any;
   FT: boolean = false;
   fastagId: any;
@@ -84,23 +84,23 @@ export class TransTablesWidget1Component implements OnInit {
   LQFT: boolean = false;
   LQ: boolean = false;
   customerId: any;
-  sumAllprevious: any;
-  sumAllcurrent: any;
+  sumAllprevious: any = 0;
+  sumAllcurrent: any = 0;
   sumAllpreviousRecharge: any;
   sumAllcurrentRecharge: any;
-  liquikPrevPayment: any;
+  liquikPrevPayment: any = 0;
   livquikPrevRecharge: any;
-  livquikPayment: any;
+  livquikPayment: any = 0;
   livquikRecharge: any;
-  thisMonthBillPayment: any;
-  lastMonthBillPayment: any;
-  lastMonthCrSale: number;
+  thisMonthBillPayment: any = 0;
+  lastMonthBillPayment: any = 0;
+  lastMonthCrSale: any = 0 ;
   lastMonthCrPayment: number;
-  thisMonthCrSale: number;
+  thisMonthCrSale: any = 0;
   thisMonthCrPayment: number;
   totalPurchase: number;
   totalPayment: number;
-  totalOutstanding: any;
+  totalOutstanding: any = 0;
   avlBalanceLQ: any;
   avlBalance: any;
   last2Mon: string;
@@ -121,7 +121,7 @@ export class TransTablesWidget1Component implements OnInit {
 
   ngOnInit(): void {
     var element = JSON.parse(localStorage.getItem('element') || '');
-    var transporterData = JSON.parse(localStorage.getItem('transporterData') || '');
+    var transporterData = JSON.parse(localStorage.getItem('transporterData') || '{}');
     this.transporterCorpId = localStorage.getItem('transporterCorpId');
     this.customerId = transporterData.customerId
     this.hostPhone = transporterData.phone1;

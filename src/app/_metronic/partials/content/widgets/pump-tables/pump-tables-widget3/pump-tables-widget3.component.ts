@@ -135,9 +135,9 @@ export class PumpTablesWidget3Component implements OnInit {
     this.cd.detectChanges()
   }
 
-  getFastagCorporateByCorpId(customerId: any) {
+  getFastagCorporateByCorpId(id: any) {
     const data = {
-        corporateId: customerId,
+        corporateId: id,
     };
     this.post.getFastagCorporateByCorpIdPOST(data).subscribe((res) => {
         if (res.status == 'OK') {

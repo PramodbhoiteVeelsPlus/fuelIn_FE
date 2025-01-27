@@ -233,9 +233,9 @@ export class PumpTablesWidget8Component implements OnInit {
   }
 
   //getFastagCorporateByCorpId
-  getFastagCorporateByCorpId(dealerCorporateId: any) {
+  getFastagCorporateByCorpId(id: any) {
     const data = {
-      corporateId: dealerCorporateId,
+      corporateId: id,
     };
     this.post.getFastagCorporateByCorpIdPOST(data).subscribe((res) => {
       if (res.status == 'OK') {
@@ -251,6 +251,7 @@ export class PumpTablesWidget8Component implements OnInit {
             this.thrLimitLQ = res.data1[0].thrLimit
             this.getFastagTollPaymentMonthWiseLQ(this.entityIdForCorpLQ)
           }
+          this.cd.detectChanges()
         } else {
           if (res.data1.length) {
             this.LQFT = true;
@@ -258,6 +259,7 @@ export class PumpTablesWidget8Component implements OnInit {
             this.entityIdForCorpLQ = res.data1[0].entityId
             this.getFastagTollPaymentMonthWiseLQ(this.entityIdForCorpLQ)
           }
+          this.cd.detectChanges()
         }
       } else {
         this.LQFT = false;
@@ -288,6 +290,7 @@ export class PumpTablesWidget8Component implements OnInit {
         //  this.getLocation()
         this.fastagData = res.data
         this.fastagLength = res.data
+        this.cd.detectChanges()
       })
   }
 
@@ -352,8 +355,10 @@ export class PumpTablesWidget8Component implements OnInit {
         this.fastagMonthWiseDatavehicleLQData = res.tollData
 
         this.getCombineLQ();
+        this.cd.detectChanges()
 
       } else {
+        this.cd.detectChanges()
       }
     });
   }
@@ -388,6 +393,7 @@ export class PumpTablesWidget8Component implements OnInit {
       })
 
       this.combineVehicleLQData.push(previousJson)
+      this.cd.detectChanges()
 
     })
   }
@@ -408,6 +414,7 @@ export class PumpTablesWidget8Component implements OnInit {
         //  this.getLocation()
         this.fastagLQData = res.data
         this.fastagLQLength = res.data
+        this.cd.detectChanges()
       })
 
 
@@ -452,8 +459,10 @@ export class PumpTablesWidget8Component implements OnInit {
         } else {
         }
       });
+      this.cd.detectChanges()
     } else {
       alert("Select Toll & Date..!")
+      this.cd.detectChanges()
     }
 
   }
@@ -487,9 +496,11 @@ export class PumpTablesWidget8Component implements OnInit {
           beneficiaryName: beneficiaryName,
           totalAmount: totalsLQByTransactionType[beneficiaryName]
         }));
+        this.cd.detectChanges()
 
         console.log("Toll Plaza", this.tollPaymentMonthWiseLQDetails, this.resultLQArray)
       } else {
+        this.cd.detectChanges()
       }
     });
   }

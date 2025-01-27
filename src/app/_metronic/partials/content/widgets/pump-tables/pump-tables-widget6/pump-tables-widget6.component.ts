@@ -96,8 +96,8 @@ export class PumpTablesWidget6Component implements OnInit {
   startDate: string;
   endDate: string;
   activeVehicleArray: any = [];
-  creditSum: number;
-  debitSum: number;
+  creditSum: any = 0;
+  debitSum: any = 0;
   showDateRange: boolean = false;
   transporterCorpId: string | null;
   customerId: any;
@@ -167,9 +167,9 @@ export class PumpTablesWidget6Component implements OnInit {
     this.cd.detectChanges()
   }
 
-  getFastagCorporateByCorpId(dealerCorporateId: any) {
+  getFastagCorporateByCorpId(id: any) {
     const data = {
-      corporateId: dealerCorporateId,
+      corporateId: id,
     };
     this.post.getFastagCorporateByCorpIdPOST(data).subscribe((res) => {
       if (res.status == 'OK') {

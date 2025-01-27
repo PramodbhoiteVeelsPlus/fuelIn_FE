@@ -224,11 +224,15 @@ getGraphDataByDealerId(transporterCorpId: any) {
         this.payment = [this.payment1, this.payment2, this.payment3, this.payment4, this.payment5, this.payment6];
 
         this.chartOptions = getChartOptions(350, this.months, this.os, this.purchase, this.payment);
-        this.spinner.hide();
-        console.log("this",)
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 5000);
         this.cd.detectChanges();
       } else {
-        this.spinner.hide();
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 5000);
+        this.cd.detectChanges();
       }
     })
 }

@@ -103,7 +103,7 @@ export class PumpTablesWidget9Component implements OnInit {
   fastagData: any = [];
   fastagLQData: any = [];
   fastagLQLength: any = [];
-  transporterCorpId: string | null;
+  transporterCorpId: any;
   customerId: any;
 
   constructor(
@@ -132,6 +132,10 @@ export class PumpTablesWidget9Component implements OnInit {
     this.managerPersonId = element.personId
     this.userName = element.firstName + ' ' + element.lastName;
     this.acceesGroup = element.accessGroupId;
+    this.filterForm.controls["startDate"].setValue(moment(new Date()).format("YYYY-MM-01"))
+    this.filterForm.controls["endDate"].setValue(moment(new Date()).format("YYYY-MM-DD"))
+    this.filterFormLQ.controls["startDate"].setValue(moment(new Date()).format("YYYY-MM-01"))
+    this.filterFormLQ.controls["endDate"].setValue(moment(new Date()).format("YYYY-MM-DD"))
     if(this.acceesGroup == '12'){
       var dealerData = JSON.parse(localStorage.getItem("dealerData") || '{}');
       this.customerId = dealerData.customerId;
@@ -146,9 +150,9 @@ export class PumpTablesWidget9Component implements OnInit {
     this.cd.detectChanges()
   }
 
-  getFastagCorporateByCorpId(dealerCorporateId: any) {
+  getFastagCorporateByCorpId(id: any) {
     const data = {
-        corporateId: dealerCorporateId,
+        corporateId: id,
     };
     this.post.getFastagCorporateByCorpIdPOST(data).subscribe((res) => {
     if (res.status == 'OK') {
@@ -165,6 +169,7 @@ export class PumpTablesWidget9Component implements OnInit {
           this.entityIdForCorpLQ = res.data1[0].entityId
           this.getVehicleTransactionLQ(this.entityIdForCorpLQ)
         }
+        this.cd.detectChanges()
         } else {
           if(res.data1.length){
             this.LQFT = true
@@ -172,6 +177,7 @@ export class PumpTablesWidget9Component implements OnInit {
             this.entityIdForCorpLQ = res.data1[0].entityId
             this.getVehicleTransactionLQ(this.entityIdForCorpLQ)
           }
+          this.cd.detectChanges()
         }
     } else {
       this.LQFT = false;
@@ -191,8 +197,10 @@ export class PumpTablesWidget9Component implements OnInit {
       
         this.fastagData = res.data
         this.fastagLength = res.data
+        this.cd.detectChanges()
       
     } else {
+      this.cd.detectChanges()
     }
     });
     }
@@ -208,8 +216,10 @@ export class PumpTablesWidget9Component implements OnInit {
       
         this.fastagLQData = res.data
         this.fastagLQLength = res.data
+        this.cd.detectChanges()
       
     } else {
+      this.cd.detectChanges()
     }
     });
     } 
@@ -224,7 +234,9 @@ export class PumpTablesWidget9Component implements OnInit {
     if (res.status == 'OK') {
       this.fastagData = res.data
       this.fastagLength = res.data
+      this.cd.detectChanges()
     } else {
+      this.cd.detectChanges()
     }
     });
     }
@@ -244,7 +256,9 @@ export class PumpTablesWidget9Component implements OnInit {
     if (res.status == 'OK') {
       this.fastagLQData = res.data
       this.fastagLQLength = res.data
+      this.cd.detectChanges()
     } else {
+      this.cd.detectChanges()
     }
     });
     }

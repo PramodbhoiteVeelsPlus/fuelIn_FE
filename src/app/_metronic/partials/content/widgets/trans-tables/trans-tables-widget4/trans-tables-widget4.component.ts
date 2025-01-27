@@ -73,14 +73,16 @@ export class TransTablesWidget4Component implements OnInit {
   bothFT: boolean = false;
   LQFT: boolean = false;
   LQ: boolean = false;
-  sumAllprevious: any;
-  sumAllcurrent: any;
-  sumAllpreviousRecharge: any;
-  sumAllcurrentRecharge: any;
-  liquikPrevPayment: any;
-  livquikPrevRecharge: any;
-  livquikPayment: any;
-  livquikRecharge: any;
+  sumAllprevious: any = 0;
+  sumAllcurrent: any = 0;
+  sumAllpreviousRecharge: any = 0;
+  sumAllcurrentRecharge: any = 0;
+  liquikPrevPayment: any = 0;
+  livquikPrevRecharge: any = 0;
+  livquikPayment: any = 0;
+  livquikRecharge: any = 0;
+  dealerCorporateId: any;
+  customerId: any;
 
   constructor(private cd: ChangeDetectorRef,
     private post: TransTablesService,
@@ -98,13 +100,18 @@ export class TransTablesWidget4Component implements OnInit {
     var element = JSON.parse(localStorage.getItem('element') || '');
     this.transporterCorpId = localStorage.getItem('transporterCorpId');
     this.accessGroup = element.accessGroupId
-    this.getFastagCorporateByCorpId(this.transporterCorpId)
+    if (this.accessGroup == '2') {
+      this.transporterCorpId = localStorage.getItem('transporterCorpId');
+      var transporterData = JSON.parse(localStorage.getItem("transporterData") || '{}');
+      this.customerId = transporterData.customerId;
+      this.getFastagCorporateByCorpId(this.customerId)
+    }
     this.cd.detectChanges()
   }
 
-  getFastagCorporateByCorpId(transporterCorpId: any) {
+  getFastagCorporateByCorpId(id: any) {
     const data = {
-      corporateId: transporterCorpId,
+      corporateId: id,
     };
     this.post.getFastagCorporateByCorpIdPOST(data).subscribe((res) => {
       if (res.status == 'OK') {
