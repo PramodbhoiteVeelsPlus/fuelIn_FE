@@ -115,7 +115,8 @@ export class ListsWidget13Component {
     private post: ListWidgetService,
     config: NgbDatepickerConfig,
     public cd: ChangeDetectorRef,
-    private router: Router,) {
+    private router: Router,
+    private spinner: NgxSpinnerService,) {
     const currentDate = new Date();
     config.minDate = { year: 2018, month: 1, day: 1 };
     config.maxDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
@@ -295,6 +296,7 @@ export class ListsWidget13Component {
   getShiftWiseBookDetails(fuelDealerId: any) {
     this.shiftWiseData.length = 0;
     this.shiftWiseQuantityData.length = 0;
+    this.spinner.show()
     const data = {
       dealerId: fuelDealerId,
       startDate: moment(this.shiftForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),  //startDate,
@@ -336,8 +338,10 @@ export class ListsWidget13Component {
           })
           this.shiftWiseData.push(dataPAYJson);
         })
+        this.spinner.hide()
         this.cd.detectChanges()
       } else {
+        this.spinner.hide()
         this.cd.detectChanges()
       }
     });
@@ -376,14 +380,17 @@ export class ListsWidget13Component {
                 }
               })
               this.shiftWiseQuantityData.push(dataJson);
+              this.spinner.hide()
               this.cd.detectChanges()
             })
           } else {
             this.shiftWiseQuantityData = res.data;
+            this.spinner.hide()
             this.cd.detectChanges()
           }
         } else {
           this.shiftWiseQuantityData = []
+          this.spinner.hide()
           this.cd.detectChanges()
         }
       }

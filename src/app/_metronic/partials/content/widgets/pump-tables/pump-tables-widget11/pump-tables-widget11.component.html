@@ -23,7 +23,7 @@
                     <button class="btn btn-success" printSectionId="sanjay" [useExistingCss]="true" ngxPrint>print</button>
                 </div>
                 <div class="col-auto">
-                    <button class="btn btn-outline-secondary my-2 my-sm-0 noprint" (click)="back()"> back </button>
+                    <button class="btn btn-outline-secondary my-2 my-sm-0 noprint" (click)="back()"> Back </button>
                 </div>
             </div>
 
@@ -499,141 +499,132 @@
                                 </tr>
                             </table>
 
-                            <table *ngIf="shiftNzDetails.length" style="font-size: x-small;">
+                            <table style="width: 90%;" *ngIf="shiftNzDetails.length">
                                 <tr>
-                                    <th colspan="12">
-                                        All-in-One Shift Sales Summary
-                                    </th>
+                                  <td colspan="12">
+                                    <h5>All-in-One Shift Sales Summary</h5>
+                                  </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="6">
-                                        <table class="table main-table"
-                                            style="border-collapse: collapse; border: 1px solid black;">
-                                            <thead class="table-light">
-                                                <tr>
-                                                    <th colspan="1"
-                                                        style="text-align: left; border: 2px solid #272829;">Shift</th>
-                                                    <th colspan="1"
-                                                        style="text-align: left; border: 2px solid #272829;">Staff Name
-                                                    </th>
-                                                    <th colspan="1"
-                                                        style="text-align: left; border: 2px solid #272829;">Nozzle
-                                                        Number</th>
-                                                    <th colspan="1"
-                                                        style="text-align: left; border: 2px solid #272829;">Product
-                                                    </th>
-                                                    <th colspan="1"
-                                                        style="text-align: left; border: 2px solid #272829;">Rate</th>
-                                                    <th colspan="1"
-                                                        style="text-align: left; border: 2px solid #272829;">Opening
-                                                        Meter Reading</th>
-                                                    <th colspan="1"
-                                                        style="text-align: left; border: 2px solid #272829;">Closing
-                                                        Meter Reading</th>
-                                                    <th colspan="1"
-                                                        style="text-align: left; border: 2px solid #272829;">Meter Sales
-                                                        (Rs)</th>
-                                                    <th colspan="1"
-                                                        style="text-align: left; border: 2px solid #272829;">Meter Sales
-                                                        (Qty)</th>
-                                                    <th colspan="1"
-                                                        style="text-align: left; border: 2px solid #272829;">Testing
-                                                        (Qty)</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody *ngFor="let data of shiftNzDetails">
-                                                <tr>
-                                                    <td style="text-align: left; border: 2px solid #272829;">
-                                                        <span
-                                                            *ngIf="data.fuelShiftTimeShiftName != ''">{{data.fuelShiftTimeShiftName}}</span>
-                                                        <span
-                                                            *ngIf="data.fuelShiftTimeShiftName == ''">{{data.fuelShiftTimeDetails}}</span>
-                                                    </td>
-                                                    <td style="text-align: left; border: 2px solid #272829;">
-                                                        {{data.firstName}} {{data.lastName}} </td>
-                                                    <td style="text-align: left; border: 2px solid #272829;">
-                                                        {{data.duNo}}-{{data.nozNo}} </td>
-                                                    <td style="text-align: left; border: 2px solid #272829;">
-                                                        {{data.productName}} </td>
-                                                    <td style="text-align: left; border: 2px solid #272829;">
-                                                        {{data.fuelPrice | number:'1.2-2'}} </td>
-                                                    <td style="text-align: left; border: 2px solid #272829;">
-                                                        {{data.openMeter | number:'1.2-2'}} </td>
-                                                    <td style="text-align: left; border: 2px solid #272829;">
-                                                        {{data.closingReading | number:'1.2-2'}} </td>
-                                                    <td style="text-align: left; border: 2px solid #272829;">
-                                                        {{data.meterSaleAmount | number:'1.2-2'}} </td>
-                                                    <td style="text-align: left; border: 2px solid #272829;">
-                                                        {{data.meterSaleQuantity | number:'1.2-2'}} </td>
-                                                    <td style="text-align: left; border: 2px solid #272829;">
-                                                        {{data.pumpTesting | number:'1.2-2'}} </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                            <br>
-                            <br>
-                            <table *ngIf="totalLubeCash.length" class="table  table-centered table-nowrap"
-                                style="border-collapse: collapse; border: 1px solid black;" style="width: 90%;">
-                                <tr>
-                                    <th colspan="12">
-                                        All-in-One(Lube) Shift Sales Summary
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <td colspan="6">
+                                  <td colspan="12">
+                                    <div class="table-responsive mb-0">
+                                      <table class="table  table-centered table-nowrap"
+                                        style="border-collapse: collapse; border: 1px solid black;">
                                         <thead class="table-light">
-                                            <tr>
-                                                <th style="text-align: left; border: 2px solid #272829;">Shift</th>
-                                                <th style="text-align: left; border: 2px solid #272829;">Staff Name</th>
-                                                <th style="text-align: left; border: 2px solid #272829;">Product</th>
-                                                <th style="text-align: left; border: 2px solid #272829;">Amount</th>
-                                                <th style="text-align: left; border: 2px solid #272829;">Quantity</th>
-                                            </tr>
+                                          <tr>
+                                            <th style="text-align: center; border: 2px solid #272829;">Shift</th>
+                                            <th style="text-align: center; border: 2px solid #272829;">Staff Name</th>
+                                            <th style="text-align: center; border: 2px solid #272829;">Nozzle Number</th>
+                                            <th style="text-align: center; border: 2px solid #272829;">Product</th>
+                                            <th style="text-align: center; border: 2px solid #272829;">Rate</th>
+                                            <th style="text-align: center; border: 2px solid #272829;">Opening Meter Reading</th>
+                                            <th style="text-align: center; border: 2px solid #272829;">Closing Meter Reading</th>
+                                            <th style="text-align: center; border: 2px solid #272829;">Meter Sales (Rs)</th>
+                                            <th style="text-align: center; border: 2px solid #272829;">Meter Sales (Qty)</th>
+                                            <th style="text-align: center; border: 2px solid #272829;">Testing (Qty)</th>
+                                          </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr *ngFor="let data of totalLubeCash">
-                                                <td style="text-align: left; border: 2px solid #272829;">
-                                                    {{data.fuelShiftTimeShiftName}} </td>
-                                                <td style="text-align: left; border: 2px solid #272829;">
-                                                    {{data.firstName}} {{data.lastName}} </td>
-                                                <td style="text-align: left; border: 2px solid #272829;">
-                                                    {{data.cashBillProduct}}(cash) </td>
-                                                <td style="text-align: left; border: 2px solid #272829;">
-                                                    {{data.cashBillAmount | number:'1.2-2'}} </td>
-                                                <td style="text-align: left; border: 2px solid #272829;">
-                                                    {{data.cashBillQuantity}} </td>
-                                            </tr>
-                                            <tr *ngFor="let data of totalLubeCredit">
-                                                <td style="text-align: left; border: 2px solid #272829;">
-                                                    {{data.fuelShiftTimeShiftName}} </td>
-                                                <td style="text-align: left; border: 2px solid #272829;">
-                                                    {{data.firstName}} {{data.lastName}} </td>
-                                                <td style="text-align: left; border: 2px solid #272829;">
-                                                    {{data.lubeName}}(Credit) </td>
-                                                <td style="text-align: left; border: 2px solid #272829;">
-                                                    {{data.creditAmount | number:'1.2-2'}} </td>
-                                                <td style="text-align: left; border: 2px solid #272829;">
-                                                    {{data.actualCreditQuantity}} </td>
-                                            </tr>
-                                            <tr *ngFor="let data of totalLubeDigital">
-                                                <td style="text-align: left; border: 2px solid #272829;">
-                                                    {{data.fuelShiftTimeShiftName}} </td>
-                                                <td style="text-align: left; border: 2px solid #272829;">
-                                                    {{data.firstName}} {{data.lastName}} </td>
-                                                <td style="text-align: left; border: 2px solid #272829;">
-                                                    {{data.paymentProduct}}(Digital) </td>
-                                                <td style="text-align: left; border: 2px solid #272829;">
-                                                    {{data.totalDigitalSales | number:'1.2-2'}} </td>
-                                                <td style="text-align: left; border: 2px solid #272829;">
-                                                    {{data.totalQuantity}} </td>
-                                            </tr>
+                                        <tbody *ngFor="let data of shiftNzDetails">
+                                          <tr>
+                                            <td style="text-align: center; border: 2px solid #272829;">
+                                              <span *ngIf="data.fuelShiftTimeShiftName != ''">{{data.fuelShiftTimeShiftName}}</span>
+                                              <span *ngIf="data.fuelShiftTimeShiftName == ''">{{data.fuelShiftTimeDetails}}</span>
+                                            </td>
+                                            <td style="text-align: center; border: 2px solid #272829;"> {{data.firstName}}
+                                              {{data.lastName}}
+                                            </td>
+                                            <td style="text-align: center; border: 2px solid #272829;"> {{data.duNo}}-{{data.nozNo}}
+                                            </td>
+                                            <td style="text-align: center; border: 2px solid #272829;"> {{data.productName}} </td>
+                                            <td style="text-align: center; border: 2px solid #272829;"> {{data.fuelPrice |
+                                              number:'1.2-2'}}
+                                            </td>
+                                            <td style="text-align: center; border: 2px solid #272829;"> {{data.openMeter |
+                                              number:'1.2-2'}}
+                                            </td>
+                                            <td style="text-align: center; border: 2px solid #272829;"> {{data.closingReading |
+                                              number:'1.2-2'}} </td>
+                                            <td style="text-align: center; border: 2px solid #272829;"> {{data.meterSaleAmount |
+                                              number:'1.2-2'}} </td>
+                                            <td style="text-align: center; border: 2px solid #272829;"> {{data.meterSaleQuantity |
+                                              number:'1.2-2'}} </td>
+                                            <td style="text-align: center; border: 2px solid #272829;"> {{data.pumpTesting |
+                                              number:'1.2-2'}} </td>
+                                          </tr>
                                         </tbody>
-                                    </td>
+                                      </table>
+                                    </div>
+                                  </td>
                                 </tr>
-                            </table>
+                                <br>
+                              </table>
+                              <br>
+                              <table *ngIf="totalLubeCash.length">
+                                <tr>
+                                  <th colspan="12">
+                                    <h5>All-in-One(Lube) Shift Sales Summary</h5>
+                                  </th>
+                                </tr>
+                                <tr>
+                                  <td colspan="6">
+                                    <div class="table-responsive mb-0">
+                                      <table class="table  table-centered table-nowrap"
+                                        style="border-collapse: collapse; border: 1px solid black;">
+                                        <thead class="table-light" style="border-collapse: collapse; border: 1px solid black;">
+                                          <tr>
+                                            <th style="text-align: center; border: 2px solid #272829;">Shift</th>
+                                            <th style="text-align: center; border: 2px solid #272829;">Staff Name</th>
+                                            <th style="text-align: center; border: 2px solid #272829;">Product</th>
+                                            <th style="text-align: center; border: 2px solid #272829;">Amount</th>
+                                            <th style="text-align: center; border: 2px solid #272829;">Quantity</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody style="border-collapse: collapse; border: 1px solid black;">
+                                          <tr *ngFor="let data of totalLubeCash">
+                                            <td style="text-align: center; border: 2px solid #272829;"> {{data.fuelShiftTimeShiftName}}
+                                            </td>
+                                            <td style="text-align: center; border: 2px solid #272829;"> {{data.firstName}}
+                                              {{data.lastName}}
+                                            </td>
+                                            <td style="text-align: center; border: 2px solid #272829;"> {{data.cashBillProduct}}(cash)
+                                            </td>
+                                            <td style="text-align: center; border: 2px solid #272829;"> {{data.cashBillAmount |
+                                              number:'1.2-2'}}
+                                            </td>
+                                            <td style="text-align: center; border: 2px solid #272829;"> {{data.cashBillQuantity}} </td>
+                                          </tr>
+                                          <tr *ngFor="let data of totalLubeCredit">
+                                            <td style="text-align: center; border: 2px solid #272829;"> {{data.fuelShiftTimeShiftName}}
+                                            </td>
+                                            <td style="text-align: center; border: 2px solid #272829;"> {{data.firstName}}
+                                              {{data.lastName}}
+                                            </td>
+                                            <td style="text-align: center; border: 2px solid #272829;"> {{data.lubeName}}(Credit) </td>
+                                            <td style="text-align: center; border: 2px solid #272829;"> {{data.creditAmount |
+                                              number:'1.2-2'}}
+                                            </td>
+                                            <td style="text-align: center; border: 2px solid #272829;"> {{data.actualCreditQuantity}}
+                                            </td>
+                                          </tr>
+                                          <tr *ngFor="let data of totalLubeDigital">
+                                            <td style="text-align: center; border: 2px solid #272829;"> {{data.fuelShiftTimeShiftName}}
+                                            </td>
+                                            <td style="text-align: center; border: 2px solid #272829;"> {{data.firstName}}
+                                              {{data.lastName}}
+                                            </td>
+                                            <td style="text-align: center; border: 2px solid #272829;"> {{data.paymentProduct}}(Digital)
+                                            </td>
+                                            <td style="text-align: center; border: 2px solid #272829;"> {{data.totalDigitalSales |
+                                              number:'1.2-2'}} </td>
+                                            <td style="text-align: center; border: 2px solid #272829;"> {{data.totalQuantity}} </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                
+                                  </td>
+                                </tr>
+                              </table>
 
                             <!-- <table *ngIf="totalLubeCredit" class="table  table-centered table-nowrap" >
                         <thead class="table-light">

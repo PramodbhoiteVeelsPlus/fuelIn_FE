@@ -126,6 +126,10 @@ export class CustloginComponent {
             localStorage.setItem('fastagData', JSON.stringify([]));
             localStorage.setItem('fastagCustData', JSON.stringify([]));
             localStorage.setItem('allEntityIdLQList', JSON.stringify([]));
+            localStorage.setItem('mappingAccData', JSON.stringify([]));
+            localStorage.setItem('crPaymentDetails', JSON.stringify([]));
+            localStorage.setItem('transactionData', JSON.stringify([]));
+            localStorage.setItem('operatorWiseData', JSON.stringify([]));
 
             if (res.element.accessGroupId == 12 || res.element.accessGroupId == 14 || res.element.accessGroupId == 19 || res.element.accessGroupId == 21 || res.element.accessGroupId == 17 || res.element.accessGroupId == 18) {
               var element = JSON.parse(localStorage.getItem("element") || '{}');

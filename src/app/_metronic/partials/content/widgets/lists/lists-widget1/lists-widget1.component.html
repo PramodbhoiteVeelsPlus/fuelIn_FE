@@ -211,7 +211,7 @@
 
                 <td>
                   <input type="text" class="form-control" [(ngModel)]="charges.vehicleNumberLube"
-                    oninput=";this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                    oninput=";this.value=this.value.toUpperCase();"
                     [ngModelOptions]="{standalone: true}" placeholder="Enter vehicle no./ barrel"
                     (blur)="setVehicleNumberLube()" />
                 </td>

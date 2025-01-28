@@ -326,6 +326,7 @@ export class MixedWidget2Component implements OnInit {
       .subscribe(res => {
         if (res.status == "OK") {
           this.calOutstanding = Number(res.data[0].netOS)
+          this.cd.detectChanges()
         }
       })
   }
@@ -539,6 +540,9 @@ export class MixedWidget2Component implements OnInit {
                           if (res.status == "OK") {
                             alert("Credit Added Sccessfully!");
                             this.isBalance1 = false;
+                            this.isSelected1 = false;
+                            this.CreditRequestDataLube = [];
+                            this.closeModal()
                             this.spinner.hide();
                             if (this.autoManualStatus == 'TRUE') {
                               this.myInputField.nativeElement.focus();
@@ -658,6 +662,9 @@ export class MixedWidget2Component implements OnInit {
                             if (res.status == "OK") {
                               alert("Credit Added Sccessfully!");
                               this.isBalance1 = false;
+                              this.isSelected1 = false;
+                              this.CreditRequestDataLube = [];
+                              this.closeModal()
                               this.spinner.hide();
                               if (this.autoManualStatus == 'TRUE') {
                                 this.myInputField.nativeElement.focus();

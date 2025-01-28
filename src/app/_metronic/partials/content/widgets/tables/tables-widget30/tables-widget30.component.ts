@@ -240,7 +240,7 @@ export class TablesWidget30Component {
         if (res.status == "OK") {
           this.mappingAccData = res.data;
           this.mappingAccSearchData = res.data;
-          localStorage.setItem('mappingAccData', JSON.stringify([]));
+          localStorage.setItem('mappingAccData', JSON.stringify(res.data));
           this.spinner.hide();
           this.cd.detectChanges()
         } else {
@@ -259,10 +259,10 @@ export class TablesWidget30Component {
     var rows = [];
     for (var key in this.mappingAccData) {
 
-      if (this.mappingAccData[key].mappingGST != 'undefined' || this.mappingAccData[key].mappingGST != null) {
-        this.gst = this.mappingAccData[key].mappingGST
-      } else {
+      if (this.mappingAccData[key].mappingGST == 'undefined' || this.mappingAccData[key].mappingGST == 'null') {
         this.gst = ''
+      } else {
+        this.gst = this.mappingAccData[key].mappingGST
       }
 
       if(this.mappingAccData[key].maxCreditAmount == null){
@@ -325,32 +325,28 @@ export class TablesWidget30Component {
   allCustomerExcelDownload() {
     this.mappingAccDataExcel = []
     this.mappingAccData.map((res: { mappingEmail: string; mappingGST: string; mappingCreatedDate: moment.MomentInput; companyName: any; hostName: any; hostPhone: any; maxCreditAmount: any; creditDayLimit: any; }) => {
-      if (res.mappingEmail != 'undefined') {
+      if (res.mappingEmail == 'undefined' || res.mappingEmail == 'null') {
+        this.email = '1111111'
+      } else {
         this.email = res.mappingEmail
-      } if(res.mappingEmail == 'null'){
-        this.email = ''
-      }else {
-        this.email = ''
       }
 
-      if (res.mappingGST != 'undefined') {
-        this.gst = res.mappingGST
-      } if(res.mappingGST == 'null'){
+      if (res.mappingGST == 'undefined' || res.mappingGST == 'null') {
         this.gst = ''
       } else {
-        this.gst = ''
+        this.gst = res.mappingGST
       }
       
       if(res.maxCreditAmount == 'null'){
         this.crAmt = ''
       } else {
-        this.crAmt = ''
+        this.crAmt = res.maxCreditAmount
       }
       
       if(res.creditDayLimit == 'null'){
         this.crDays = ''
       } else {
-        this.crDays = ''
+        this.crDays = res.creditDayLimit
       }
 
       let json = {

@@ -74,7 +74,6 @@ export class BaseTablesWidget1Component implements OnInit {
   managerPersonId: any;
   managerName: any;
   acceesGroup: any;
-  requestTransporter: any;
 
   selectCorporate = new FormGroup({
     selectCorporateId: new FormControl('', [Validators.required]),
@@ -92,6 +91,24 @@ export class BaseTablesWidget1Component implements OnInit {
 
   filterForm = new FormGroup({
     transactionType: new FormControl('', [Validators.required]),
+  });
+  
+  requestTransporter = new FormGroup({
+    productName: new FormControl('', [Validators.required]),
+    reqQuantity: new FormControl(),
+    reqCreditAmount: new FormControl(),
+    estimatedRefuelDate: new FormControl(),
+    actualCreditAmount: new FormControl(),
+    actualCreditQuantity: new FormControl(),
+    requestType: new FormControl(),
+    requestTypeCR: new FormControl(),
+    mobile: new FormControl(),
+    vehicleNumber: new FormControl(),
+    productPrice: new FormControl('', [Validators.required]),
+    priceDate: new FormControl(),
+    selectPersonId: new FormControl('', [Validators.required]),
+    manualCrNumber: new FormControl(),
+    productName1: new FormControl(),
   });
 
   requestEditCr = new FormGroup({
@@ -1205,6 +1222,7 @@ export class BaseTablesWidget1Component implements OnInit {
         fuelDealerCustomerMapId: this.fuelDealerCustomerMapIdEdit,
         manualCrNumber: this.manualCrNumber
       }
+      console.log("data", data)
       this.post.updateCreditReqByDealerPOST(data)
         .subscribe(res => {
           if (res) {
