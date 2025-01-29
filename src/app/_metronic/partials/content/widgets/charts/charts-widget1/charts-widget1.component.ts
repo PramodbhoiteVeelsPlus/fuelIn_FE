@@ -48,7 +48,11 @@ export class ChartsWidget1Component implements OnInit {
     private cd: ChangeDetectorRef,) { }
 
   ngOnInit(): void {
-    // this.spinner.show();
+    // this.spinner.show(); 
+    setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 5000);
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
@@ -70,22 +74,22 @@ export class ChartsWidget1Component implements OnInit {
           if (res.data.length > 5) {
             //Months
             if (this.graphData[5]) {
-              this.month1 = this.graphData[5].month;
+              this.month1 = this.graphData[5].month + ' ' + this.graphData[5].year;
             }
             if (this.graphData[4]) {
-              this.month2 = this.graphData[4].month;
+              this.month2 = this.graphData[4].month + ' ' + this.graphData[4].year;
             }
             if (this.graphData[3]) {
-              this.month3 = this.graphData[3].month;
+              this.month3 = this.graphData[3].month + ' ' + this.graphData[3].year;
             }
             if (this.graphData[2]) {
-              this.month4 = this.graphData[2].month;
+              this.month4 = this.graphData[2].month + ' ' + this.graphData[2].year;
             }
             if (this.graphData[1]) {
-              this.month5 = this.graphData[1].month;
+              this.month5 = this.graphData[1].month + ' ' + this.graphData[1].year;
             }
             if (this.graphData[0]) {
-              this.month6 = this.graphData[0].month;
+              this.month6 = this.graphData[0].month + ' ' + this.graphData[0].year;
             }
 
             // OS          
@@ -156,19 +160,19 @@ export class ChartsWidget1Component implements OnInit {
           } else if (res.data.length == 5) {
             //Months
             if (this.graphData[4]) {
-              this.month1 = this.graphData[4].month;
+              this.month1 = this.graphData[4].month + ' ' + this.graphData[4].year;
             }
             if (this.graphData[3]) {
-              this.month2 = this.graphData[3].month;
+              this.month2 = this.graphData[3].month + ' ' + this.graphData[3].year;
             }
             if (this.graphData[2]) {
-              this.month3 = this.graphData[2].month;
+              this.month3 = this.graphData[2].month + ' ' + this.graphData[2].year;
             }
             if (this.graphData[1]) {
-              this.month4 = this.graphData[1].month;
+              this.month4 = this.graphData[1].month + ' ' + this.graphData[1].year;
             }
             if (this.graphData[0]) {
-              this.month5 = this.graphData[0].month;
+              this.month5 = this.graphData[0].month + ' ' + this.graphData[0].year;
             }
 
             // OS          
@@ -229,16 +233,16 @@ export class ChartsWidget1Component implements OnInit {
           } else if (res.data.length == 4) {
             //Months
             if (this.graphData[3]) {
-              this.month1 = this.graphData[3].month;
+              this.month1 = this.graphData[3].month + ' ' + this.graphData[3].year;
             }
             if (this.graphData[2]) {
-              this.month2 = this.graphData[2].month;
+              this.month2 = this.graphData[2].month + ' ' + this.graphData[2].year;
             }
             if (this.graphData[1]) {
-              this.month3 = this.graphData[1].month;
+              this.month3 = this.graphData[1].month + ' ' + this.graphData[1].year;
             }
             if (this.graphData[0]) {
-              this.month4 = this.graphData[0].month;
+              this.month4 = this.graphData[0].month + ' ' + this.graphData[0].year;
             }
 
             // OS          
@@ -290,13 +294,13 @@ export class ChartsWidget1Component implements OnInit {
           } else if (res.data.length == 3) {
             //Months
             if (this.graphData[2]) {
-              this.month1 = this.graphData[2].month;
+              this.month1 = this.graphData[2].month + ' ' + this.graphData[2].year;
             }
             if (this.graphData[1]) {
-              this.month2 = this.graphData[1].month;
+              this.month2 = this.graphData[1].month + ' ' + this.graphData[1].year;
             }
             if (this.graphData[0]) {
-              this.month3 = this.graphData[0].month;
+              this.month3 = this.graphData[0].month + ' ' + this.graphData[0].year;
             }
 
             // OS          
@@ -339,10 +343,10 @@ export class ChartsWidget1Component implements OnInit {
           } else if (res.data.length == 2) {
             //Months
             if (this.graphData[1]) {
-              this.month1 = this.graphData[1].month;
+              this.month1 = this.graphData[1].month + ' ' + this.graphData[1].year;
             }
             if (this.graphData[0]) {
-              this.month2 = this.graphData[0].month;
+              this.month2 = this.graphData[0].month + ' ' + this.graphData[0].year;
             }
 
             // OS          
@@ -409,13 +413,13 @@ export class ChartsWidget1Component implements OnInit {
           setTimeout(() => {
             /** spinner ends after 5 seconds */
             this.spinner.hide();
-          }, 2000);
+          }, 5000);
           this.cd.detectChanges();
         } else {
           setTimeout(() => {
             /** spinner ends after 5 seconds */
             this.spinner.hide();
-          }, 2000);
+          }, 5000);
         }
       })
   }

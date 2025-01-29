@@ -43,6 +43,10 @@ export class StatsWidget5Component {
     console.log("dealerId", this.fuelDealerId)
     // this.getDealerIdByPhone(this.dealerMobile);
     this.getCreditDetailsByDealerId(this.fuelDealerId);
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+    }, 5000);
     this.cd.detectChanges()
   }
 
@@ -114,13 +118,13 @@ export class StatsWidget5Component {
           setTimeout(() => {
             /** spinner ends after 5 seconds */
             this.spinner.hide();
-          }, 2000);
+          }, 5000);
           this.cd.detectChanges()
         } else {
           setTimeout(() => {
             /** spinner ends after 5 seconds */
             this.spinner.hide();
-          }, 2000); this.cd.detectChanges()
+          }, 5000); this.cd.detectChanges()
         }
       })
   }

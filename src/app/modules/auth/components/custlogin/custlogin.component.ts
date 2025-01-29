@@ -130,6 +130,11 @@ export class CustloginComponent {
             localStorage.setItem('crPaymentDetails', JSON.stringify([]));
             localStorage.setItem('transactionData', JSON.stringify([]));
             localStorage.setItem('operatorWiseData', JSON.stringify([]));
+            localStorage.setItem('dayWiseData', JSON.stringify([]));
+            localStorage.setItem('oilCompanyDetails', JSON.stringify([]));
+            localStorage.setItem('lubeCashBillList', JSON.stringify([]));
+            localStorage.setItem('getFuelPriceData', JSON.stringify([]));
+            localStorage.setItem('allCreditReq', JSON.stringify([]));
 
             if (res.element.accessGroupId == 12 || res.element.accessGroupId == 14 || res.element.accessGroupId == 19 || res.element.accessGroupId == 21 || res.element.accessGroupId == 17 || res.element.accessGroupId == 18) {
               var element = JSON.parse(localStorage.getItem("element") || '{}');
@@ -219,9 +224,9 @@ export class CustloginComponent {
         localStorage.setItem('dealerData', JSON.stringify(this.dealerData));
         localStorage.setItem('dealerId', this.fuelDealerSQLId);
         localStorage.setItem('dealerCorporateId', this.fuelDealerCorporateId);
-        this.router.navigate(['/dashboard']);
+        // this.router.navigate(['/dashboard']);
       } else {
-        this.router.navigate(['/dashboard']);
+        // this.router.navigate(['/dashboard']);
       }
     });
   }

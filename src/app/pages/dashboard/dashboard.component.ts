@@ -30,12 +30,12 @@ export class DashboardComponent {
 
   ngOnInit() {
      /** spinner starts on init */
-    //  this.spinner.show();
+     this.spinner.show();
 
-    //  setTimeout(() => {
-    //    /** spinner ends after 5 seconds */
-    //   //  this.spinner.hide();
-    //  }, 5000);
+     setTimeout(() => {
+       /** spinner ends after 5 seconds */
+       this.spinner.hide();
+     }, 5000);
    
     if (JSON.parse(localStorage.getItem('isLoggedin') || '{}') == true) {
       var element = JSON.parse(localStorage.getItem("element") || '{}');

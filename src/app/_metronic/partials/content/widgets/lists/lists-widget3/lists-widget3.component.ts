@@ -19,6 +19,10 @@ export class ListsWidget3Component {
     this.spinner.show();
     this.fuelDealerId = localStorage.getItem("dealerId");
     this.getGraphDataByDealerId(this.fuelDealerId)
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+    }, 5000);
   }
 
 
@@ -34,13 +38,13 @@ export class ListsWidget3Component {
           setTimeout(() => {
             /** spinner ends after 5 seconds */
             this.spinner.hide();
-          }, 2000);
+          }, 5000);
           this.cd.detectChanges();
         } else {
           setTimeout(() => {
             /** spinner ends after 5 seconds */
             this.spinner.hide();
-          }, 2000);
+          }, 5000);
           this.cd.detectChanges()
         }
       })

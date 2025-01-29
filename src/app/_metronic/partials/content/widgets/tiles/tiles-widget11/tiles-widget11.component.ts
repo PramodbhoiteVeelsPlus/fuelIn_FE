@@ -132,6 +132,10 @@ export class TilesWidget11Component implements OnInit {
     this.getOILCOMPANYDataInFuelExpense(this.fuelDealerId)
     this.getBankAcBalance1(this.fuelDealerId)
     this.getCashAcBalance1(this.fuelDealerId)
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+    }, 5000);
     this.cd.detectChanges()
   }
 
@@ -150,14 +154,14 @@ export class TilesWidget11Component implements OnInit {
           setTimeout(() => {
             /** spinner ends after 5 seconds */
             this.spinner.hide();
-          }, 2000);
+          }, 5000);
           this.cd.detectChanges()
         } else {
           this.getOilCoAcBalance1(this.fuelDealerId);
           setTimeout(() => {
             /** spinner ends after 5 seconds */
             this.spinner.hide();
-          }, 2000);
+          }, 5000);
           this.cd.detectChanges()
         }
       })
@@ -221,14 +225,14 @@ export class TilesWidget11Component implements OnInit {
           setTimeout(() => {
             /** spinner ends after 5 seconds */
             this.spinner.hide();
-          }, 2000);
+          }, 5000);
           this.cd.detectChanges()
         } else {
           alert("Error")
           setTimeout(() => {
             /** spinner ends after 5 seconds */
             this.spinner.hide();
-          }, 2000);
+          }, 5000);
           this.cd.detectChanges()
         }
       })
@@ -259,14 +263,14 @@ export class TilesWidget11Component implements OnInit {
           setTimeout(() => {
             /** spinner ends after 5 seconds */
             this.spinner.hide();
-          }, 2000);
+          }, 5000);
           this.cd.detectChanges()
         } else {
           alert("Error")
           setTimeout(() => {
             /** spinner ends after 5 seconds */
             this.spinner.hide();
-          }, 2000);
+          }, 5000);
           this.cd.detectChanges()
         }
       })
@@ -395,13 +399,13 @@ export class TilesWidget11Component implements OnInit {
           setTimeout(() => {
             /** spinner ends after 5 seconds */
             this.spinner.hide();
-          }, 2000);
+          }, 5000);
           this.cd.detectChanges()
         } else {
           setTimeout(() => {
             /** spinner ends after 5 seconds */
             this.spinner.hide();
-          }, 2000);
+          }, 5000);
           this.cd.detectChanges()
 
         }
@@ -446,14 +450,14 @@ export class TilesWidget11Component implements OnInit {
           setTimeout(() => {
             /** spinner ends after 5 seconds */
             this.spinner.hide();
-          }, 2000);
+          }, 5000);
           this.cd.detectChanges()
         } else {
           alert("Error")
           setTimeout(() => {
             /** spinner ends after 5 seconds */
             this.spinner.hide();
-          }, 2000);
+          }, 5000);
           this.cd.detectChanges()
         }
       })
