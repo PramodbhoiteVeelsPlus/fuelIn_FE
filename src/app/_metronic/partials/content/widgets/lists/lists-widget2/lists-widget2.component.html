@@ -1,13 +1,14 @@
 <br>
 <form [formGroup]="filterForm">
   <div class="row">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <div class="col-auto">
       <input class="form-control mr-sm-2" type="text" placeholder="search"
         oninput="let p=this.selectionStart;this.setSelectionRange(p, p);" [formControl]="searchCustName"
         aria-label="Search">
     </div>
     <div class="col-auto">
-      <label for="example-text-input" class="col-auto col-form-label">Date Range :</label>
+      <label for="example-text-input" class="col-auto col-form-label"><b>Date Range :</b></label>
     </div>
     <div class="col-auto">
       <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" onkeydown="return false"

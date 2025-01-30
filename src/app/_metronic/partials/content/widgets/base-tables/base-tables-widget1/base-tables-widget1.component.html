@@ -38,15 +38,23 @@
   <div class="card-header border-0 pt-5">
     <form [formGroup]="selectCorporate">
       <div class="row">
-        <label for="example-text-input" class="col-auto col-form-label">Khata</label>
-        <div class="col-md-3">
+        <div class="col-md-4">
+        <label for="example-text-input" class="col-auto col-form-label"><b>Khata</b></label>
+      </div>
+      <div class="col-md-3">
+        <label for="example-text-input" class="col-auto col-form-label"><b>Date Range</b></label>
+      </div>
+      </div>
+      <div class="row">
+        <!-- <label for="example-text-input" class="col-auto col-form-label">Khata</label> -->
+        <div class="col-md-4">
           <input class="form-control" type="text" list="allCorporateList" placeholder="All Khata"
             formControlName="selectCorporateId">
           <datalist id="allCorporateList">
             <option *ngFor="let data of allCorporateList" [value]="data.companyName">
           </datalist>
         </div>
-        <label for="example-text-input" class="col-auto col-form-label">Date Range</label>
+        <!-- <label for="example-text-input" class="col-auto col-form-label">Date Range</label> -->
         <div class="col-md-2">
           <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
             name="startDate" ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker
@@ -108,10 +116,10 @@
     </div>
 
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-4">
         <div class="search-box">
           <div class="position-relative">
-            <input class="form-control " type="text" placeholder="search" style="width: 150px"
+            <input class="form-control " type="text" placeholder="search" style="width: 289px"
               oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
               [(ngModel)]="searchData" [ngModelOptions]="{standalone: true}" (input)="onSearch()">
             <i class="bx bx-search-alt search-icon"></i>

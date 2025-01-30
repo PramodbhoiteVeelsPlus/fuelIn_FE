@@ -171,6 +171,7 @@ export class StatsWidget17Component {
     this.personIdLoginUser = element.personId
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     this.veelsplususerId = element.veelsPlusId;
+    this.corporateMappingForm.controls["state"].setValue("")
     // this.getDealerIdByPhone(this.dealerMobile);
     this.cd.detectChanges()
   }

@@ -13,7 +13,7 @@
                 <div class="col-sm-12">
                   <br>
                   <div class="mb-3 row">
-                    <label for="example-text-input" class="col-md-2 col-form-label">Date</label>
+                    <label for="example-text-input" class="col-md-2 col-form-label"><b>Date</b></label>
                     <div class="col-md-10">
                       <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
                         name="startDate" (click)="endDate.toggle()" formControlName="paymentDate" ngbDatepicker
@@ -22,7 +22,7 @@
                   </div>
                   <br>
                   <div class="mb-3 row">
-                    <label for="example-text-input" class="col-md-2 col-form-label">Khata</label>
+                    <label for="example-text-input" class="col-md-2 col-form-label"><b>Khata</b></label>
                     <div class="col-sm-10">
                       <input #myinput class="form-control" type="text" list="corporateList" placeholder="Select"
                         formControlName="selectedCorp" (change)="getDetailsByfuelDealerCustomerMapIdId($event)">
@@ -38,19 +38,19 @@
                         <table class="table table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
                           <thead style="border-width: 1px; border-color: black;">
                             <tr>
-                              <th style="border-width: 1px; border-color: #000;">Khata Name</th>
-                              <th style="border-width: 1px; border-color: #000;">Key Person Name</th>
-                              <th style="border-width: 1px; border-color: #000;">Key Person Mobile</th>
-                              <th style="border-width: 1px; border-color: #000;">Outstanding</th>
-                              <th style="border-width: 1px; border-color: #000;">Alert</th>
+                              <th style="border-width: 1px; border-color: #000; text-align: center;"><b>Khata Name</b></th>
+                              <th style="border-width: 1px; border-color: #000; text-align: center"><b>Key Person Name</b></th>
+                              <th style="border-width: 1px; border-color: #000; text-align: center"><b>Key Person Mobile</b></th>
+                              <th style="border-width: 1px; border-color: #000; text-align: center"><b>Outstanding</b></th>
+                              <th style="border-width: 1px; border-color: #000; text-align: center"><b>Alert</b></th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
-                              <td style="border: 1px solid black;"> {{dealerName}} </td>
-                              <td style="border: 1px solid black;"> {{personName}} </td>
-                              <td style="border: 1px solid black;"> {{personPhone1}} </td>
-                              <td style="border: 1px solid black;"> <span style="color:red"
+                              <td style="border: 1px solid black; text-align: center"> {{dealerName}} </td>
+                              <td style="border: 1px solid black; text-align: center"> {{personName}} </td>
+                              <td style="border: 1px solid black; text-align: center"> {{personPhone1}} </td>
+                              <td style="border: 1px solid black; text-align: center"> <span style="color:red"
                                   *ngIf="calOutstanding < 0">
                                   <li class="fas fa-rupee-sign"></li> {{(calOutstanding)*(-1) | number:'1.2-2'}} CR
                                 </span>
@@ -109,7 +109,7 @@
                   </div>
                   <br>
                   <div class="mb-3 row">
-                    <label for="example-text-input" class="col-md-2 col-form-label">Payment Mode</label>
+                    <label for="example-text-input" class="col-md-2 col-form-label"><b>Payment Mode</b></label>
                     <div class="col-sm-10">
                       <span *ngIf="!isPos">
                         <select class="form-select" (change)="getBankAcc1($event)" formControlName="paymentMethod"
@@ -141,7 +141,7 @@
                   </div>
                   <br>
                   <div class="mb-3 row" *ngIf="isPos">
-                    <label for="example-text-input" class="col-md-2 col-form-label">POS</label>
+                    <label for="example-text-input" class="col-md-2 col-form-label"><b>POS</b></label>
                     <div class="col-sm-10">
                       <select class="form-select" (change)="getBankAcc1POS($event)" formControlName="pos" required>
                         <option value="">Select </option>
@@ -153,7 +153,7 @@
                   </div>
                   <br>
                   <div class="mb-3 row">
-                    <label for="example-text-input" class="col-md-2 col-form-label">Account</label>
+                    <label for="example-text-input" class="col-md-2 col-form-label"><b>Account</b></label>
                     <div class="col-sm-10">
                       <span *ngIf="!isCash">
                         <span *ngIf="isPos">
@@ -186,7 +186,7 @@
                   </div>
                   <br>
                   <div class="mb-3 row">
-                    <label for="example-text-input" class="col-md-2 col-form-label">Payment Details</label>
+                    <label for="example-text-input" class="col-md-2 col-form-label"><b>Payment Details</b></label>
                     <div class="col-sm-10">
                       <input (blur)="checkSubmit()" class="form-control" formControlName="paymentTransactionNo"
                         placeholder="Enter Payment Details">
@@ -194,7 +194,7 @@
                   </div>
                   <br>
                   <div class="mb-3 row">
-                    <label for="example-text-input" class="col-md-2 col-form-label">Amount</label>
+                    <label for="example-text-input" class="col-md-2 col-form-label"><b>Amount</b></label>
                     <div class="col-sm-10">
                       <input type="number"  class="form-control" (input)="onSearchChange($event)"
                         formControlName="paymentAmount" placeholder="Enter Amount">
@@ -203,14 +203,14 @@
                   <br>
                   <div class="mb-3 row" *ngIf="isCalculate">
                     <!-- Amt in word -->
-                    <label for="example-text-input" class="col-md-2 col-form-label">Amt In Word</label>
+                    <label for="example-text-input" class="col-md-2 col-form-label"><b>Amt In Word</b></label>
                     <div class="col-sm-10">
                       <label for="example-text-input" class="col-md-8 col-form-label"> {{ amountInWords }} </label>
 
                     </div>
                   </div>
                   <div class="mb-3 row" *ngIf="isCalculate">
-                    <label for="example-text-input" class="col-md-2 col-form-label">Current Outstanding</label>
+                    <label for="example-text-input" class="col-md-2 col-form-label"><b>Current Outstanding</b></label>
                     <div class="col-sm-10">
                       <label for="example-text-input" class="col-md-8 col-form-label" *ngIf="outstandingAmt < 0">
                         <li class="fas fa-rupee-sign"></li> {{(outstandingAmt)*(-1) | number:'1.2-2'}} CR

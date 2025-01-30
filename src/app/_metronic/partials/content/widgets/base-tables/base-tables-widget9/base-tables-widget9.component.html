@@ -2,8 +2,9 @@
 <form [formGroup]="selectCorporate">
   <form [formGroup]="searchDiscountForm">
     <div class="row">
-      <label for="example-text-input" class="col-auto col-form-label">
-        Customer Name
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <label for="example-text-input" class="col-auto col-form-label"><b>
+        Customer Name</b>
       </label>
       <div class="col-md-2">
         <select class="form-control" formControlName="selectCorporateMapId"
@@ -15,7 +16,7 @@
         </select>
       </div>
 
-      <label for="example-text-input" class="col-auto col-form-label">Date Range
+      <label for="example-text-input" class="col-auto col-form-label"><b>Date Range</b>
       </label>
 
       <div class="col-md-2">
@@ -28,9 +29,9 @@
           onkeydown="return false" formControlName="endDate" ngbDatepicker #endDate="ngbDatepicker" />
       </div>
 
-      <label for="example-text-input" class="col-auto col-form-label">
+      <label for="example-text-input" class="col-auto col-form-label"><b>
         Type
-      </label>
+      </b></label>
 
       <div class="col-md-1">
 
@@ -56,7 +57,7 @@
         </label>
 
         &nbsp;
-        <button class="btn btn-outline-success my-2 my-sm-0 btn-sm" (click)="openSelectMobile(selectMobile)">
+        <button class="btn btn-outline-success my-2 my-sm-0 btn-sm" style="margin-left: 50px;" (click)="openSelectMobile(selectMobile)">
           +
         </button>
 
@@ -113,21 +114,22 @@
     <br>
 
     <div class="row">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <div class="col-md-3">
-        <label for="example-text-input">Manual Statement Number
+        <label for="example-text-input"><b>Manual Statement Number</b>
         </label>
         <input class="form-control" type="text" [(ngModel)]="invoiceNo" placeholder="Enter Statement Number"
           [ngModelOptions]="{ standalone: true }" />
       </div>
 
       <div class="col-md-2">
-        <label for="example-text-input">HSN Code
+        <label for="example-text-input"><b>HSN Code</b>
         </label>
         <input class="form-control" type="text" [(ngModel)]="hsnCode" placeholder="Enter HSN Code"
           [ngModelOptions]="{ standalone: true }" />
       </div>
       <div class="col-md-2">
-        <label for="example-text-input">Due Date
+        <label for="example-text-input"><b>Due Date</b>
         </label>
         <input class="form-control" placeholder="DD-MM-YYYY" name="dueDate" (click)="dueDate.toggle()"
           onkeydown="return false" formControlName="dueDate" ngbDatepicker #dueDate="ngbDatepicker" />

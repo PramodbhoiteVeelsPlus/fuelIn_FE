@@ -1,9 +1,12 @@
 <br>
 <form [formGroup]="savedInvoice">
   <div class="row">
-    <label for="example-text-input" class="col-auto col-form-label">
-      Customer Name
-    </label>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label for="example-text-input" class="col-lg-3 col-form-label"><b>Customer Select </b></label>
+    <label for="example-text-input" class="col-md-2 col-form-label"><b>Date Range </b></label>
+  </div>
+  <div class="row">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
     <div class="col-md-2">
 
@@ -15,9 +18,6 @@
         </option>
       </select>
     </div>
-
-    <label for="example-text-input" class="col-auto col-form-label">Date Range
-    </label>
 
     <div class="col-md-2">
       <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" (click)="startDate.toggle()"
@@ -38,18 +38,19 @@
   <br><br>
   <form [formGroup]="addForm">
     <div class="row">
-      <div class="col-md-4">
-        <label>Add Manual Statement Number</label>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <div class="col-md-3">
+        <label><b>Add Manual Statement Number</b></label>
         <input type="text" class="form-control" [(ngModel)]="manualSno" [ngModelOptions]="{standalone: true}"
           placeholder="Enter Manual Statement Number" />
       </div>
-      <div class="col-md-4">
-        <label>Add HSN Code</label>
+      <div class="col-md-3">
+        <label><b>Add HSN Code</b></label>
         <input type="text" class="form-control" [(ngModel)]="hsnCode" [ngModelOptions]="{standalone: true}"
           placeholder="Enter HSN Code" />
       </div>
-      <div class="col-md-4">
-        <label>Add Due Date</label>
+      <div class="col-md-3">
+        <label><b>Add Due Date</b></label>
         <input class="form-control" placeholder="DD-MM-YYYY" style="background-color: #ffffff;" name="dueDate"
           ngbTooltip="Due Date" (click)="dueDate.toggle()" ngbDatepicker #dueDate="ngbDatepicker"
           formControlName="dueDate">
@@ -70,14 +71,14 @@
   <table class="table table-responsive table-hover">
       <thead>
           <tr>
-              <th style="text-align: center"> Sr. No </th>
-              <th style="text-align: center"> Date </th>
-              <th style="text-align: center"> Bill No. </th>
-              <th style="text-align: center"> Product </th>
-              <th style="text-align: center"> Rate </th>
-              <th style="text-align: center"> Vehicle Number </th>
-              <th style="text-align: center"> Amount </th>
-              <th style="text-align: center"> Quantity </th>
+              <th style="text-align: center"><b> Sr. No </b></th>
+              <th style="text-align: center"><b> Date </b></th>
+              <th style="text-align: center"><b> Bill No. </b></th>
+              <th style="text-align: center"><b> Product </b></th>
+              <th style="text-align: center"><b> Rate </b></th>
+              <th style="text-align: center"><b> Vehicle Number </b></th>
+              <th style="text-align: center"><b> Amount </b></th>
+              <th style="text-align: center"><b> Quantity </b></th>
           </tr>
       </thead>
       <tbody *ngFor="let data of savedInvoiceData; let i = index">

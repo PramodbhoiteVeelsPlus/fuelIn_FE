@@ -1,8 +1,9 @@
 <br>
 <form [formGroup]="addShiftForm">
   <div class="row">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <div class="col-lg-2">
-      <label for="example-text-input">Date</label>
+      <label for="example-text-input"><b>Date</b></label>
     </div>
     <div class="col-md-6">
       <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;" name="startDate"
@@ -16,24 +17,25 @@
 </form>
 <br>
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <div class="col col-xl-12 col-lg-12">
   <div class="table-responsive mb-0">
     <table class="table table-centered table-nowrap">
       <thead class="table-light">
         <tr>
-          <th style="text-align: left;"><b>Shift </b></th>
-          <th style="text-align: left;"><b>Staff Name</b></th>
-          <th style="text-align: left;"><b>Status</b></th>
-          <th style="text-align: left;"><b>View Details</b></th>
-          <th style="text-align: left;"><b>Actions</b></th>
+          <th style="text-align: center;"><b>Shift </b></th>
+          <th style="text-align: center;"><b>Staff Name</b></th>
+          <th style="text-align: center;"><b>Status</b></th>
+          <th style="text-align: center;"><b>View Details</b></th>
+          <th style="text-align: center;"><b>Actions</b></th>
         </tr>
       </thead>
       <tbody
         *ngFor="let data of allShift | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
         <tr>
-          <td style="text-align: left;"> {{ data.fuelShiftTimeDetails }} {{data.fuelShiftTimeShiftName}} </td>
-          <td style="text-align: left;"> {{data.firstName}} {{data.lastName}}</td>
-          <td style="text-align: left;">
+          <td style="text-align: center;"> {{ data.fuelShiftTimeDetails }} {{data.fuelShiftTimeShiftName}} </td>
+          <td style="text-align: center;"> {{data.firstName}} {{data.lastName}}</td>
+          <td style="text-align: center;">
             <span *ngIf="data.performStatus == 'OPEN'">
               {{data.performStatus}}
             </span>
@@ -42,14 +44,14 @@
             </span>
           </td>
 
-          <td style="text-align: left;cursor: pointer;">
+          <td style="text-align: center;cursor: pointer;">
             <button type="button" class="btn btn-primary btn-sm btn-rounded"
               (click)="getShiftDetailsByShiftIdUpdate(data.idfuelShiftDetails,'VIEW')">
               View Details
             </button>
           </td>
-          <td style="text-align: left;cursor: pointer;">
-            <div ngbDropdown placement="bottom-left">
+          <td style="text-align: center;cursor: pointer;">
+            <div ngbDropdown placement="bottom-center">
               <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
                 aria-expanded="true"></i>
               <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
@@ -543,7 +545,7 @@
                               number:'1.2-2'}}</td>
                             <td style="text-align: center; border: 2px solid #272829;"> {{cashSales | number:'1.2-2'}}
                             </td>
-                            <!-- <td style="text-align: left; border: 2px solid #272829;"> {{cashHandover | number:'1.2-2'}}</td> -->
+                            <!-- <td style="text-align: center; border: 2px solid #272829;"> {{cashHandover | number:'1.2-2'}}</td> -->
                             <td style="text-align: center; border: 2px solid #272829;"> {{data.expenseAmt |
                               number:'1.2-2'}}
                             </td>
@@ -1375,20 +1377,20 @@
             <table class="table table-centered table-nowrap">
               <thead class="table-light">
                 <tr>
-                  <th style="text-align: left;"> Nozzle Number</th>
-                  <th style="text-align: left;"> Product </th>
-                  <th style="text-align: left;"> Rate </th>
-                  <th style="text-align: left;"> Opening Meter Reading </th>
-                  <th style="text-align: left;"> Closing Meter Reading</th>
-                  <th style="text-align: left;"> Pump Testing</th>
-                  <th style="text-align: left;"> Meter Sales (Rs)</th>
-                  <th style="text-align: left;"> Meter Sales (Qty)</th>
-                  <th style="text-align: left;"> Actions</th>
+                  <th style="text-align: center;"><b> Nozzle Number</b></th>
+                  <th style="text-align: center;"><b> Product </b></th>
+                  <th style="text-align: center;"><b> Rate </b></th>
+                  <th style="text-align: center;"><b> Opening Reading </b></th>
+                  <th style="text-align: center;"><b> Closing Reading</b></th>
+                  <th style="text-align: center;"><b> Pump Testing</b></th>
+                  <th style="text-align: center;"><b> Meter Sales (Rs)</b></th>
+                  <th style="text-align: center;"><b> Meter Sales (Qty)</b></th>
+                  <th style="text-align: center;"><b> Actions</b></th>
                 </tr>
               </thead>
               <tbody *ngFor="let charges of CreditRequestDataArrayUpdate; let i = index;">
                 <tr>
-                  <td style="text-align: left;">
+                  <td style="text-align: center;">
                     <select class="form-control" disabled [(ngModel)]="charges.pumpNzId"
                       [ngModelOptions]="{standalone: true}" aria-readonly="true">
                       <option *ngFor="let data of pumpNzDetails" [value]="data.fuelInfraMapId">
@@ -1397,45 +1399,45 @@
                     </select>
                   </td>
 
-                  <td style="text-align: left;">
-                    <input type="text" class="form-control" [(ngModel)]="charges.productName" style="text-align: left;"
+                  <td style="text-align: center;">
+                    <input type="text" class="form-control" [(ngModel)]="charges.productName" style="text-align: center;"
                       [ngModelOptions]="{standalone: true}" placeholder="Product" disabled />
                   </td>
 
-                  <td style="text-align: left;">
-                    <input type="text" class="form-control" [(ngModel)]="charges.fuelPrice" style="text-align: left;"
+                  <td style="text-align: center;">
+                    <input type="text" class="form-control" [(ngModel)]="charges.fuelPrice" style="text-align: center;"
                       [ngModelOptions]="{standalone: true}" placeholder="Rate" (change)="getMeterSales(i)" />
                   </td>
 
-                  <td style="text-align: left;">
+                  <td style="text-align: center;">
                     <input type="number" class="form-control" [(ngModel)]="charges.openMeter"
                       [ngModelOptions]="{standalone: true}" placeholder="Meter Reading" min="0"
                       (change)="getMeterSalesUpdate(i)" />
                   </td>
 
-                  <td style="text-align: left;">
+                  <td style="text-align: center;">
                     <input type="number" class="form-control" [(ngModel)]="charges.closingReading"
                       [ngModelOptions]="{standalone: true}" placeholder="Meter Reading"
                       (change)="getMeterSalesUpdate(i)" min="0" />
                   </td>
 
-                  <td style="text-align: left;">
+                  <td style="text-align: center;">
                     <input type="number" class="form-control" [(ngModel)]="charges.pumpTesting"
                       [ngModelOptions]="{standalone: true}" placeholder="Testing" (blur)="getMeterSales1Update(i)"
                       min="0" />
                   </td>
-                  <td style="text-align: left;">
+                  <td style="text-align: center;">
                     <input type="number" class="form-control" [(ngModel)]="charges.meterSaleAmount"
                       [ngModelOptions]="{standalone: true}" placeholder="Meter Sales Rs" disabled />
                   </td>
 
-                  <td style="text-align: left;">
+                  <td style="text-align: center;">
                     <input type="number" class="form-control" [(ngModel)]="charges.meterSaleQuantity"
                       [ngModelOptions]="{standalone: true}" placeholder="Meter SalesL tr" disabled />
                   </td>
 
-                  <td style="text-align: left;cursor: pointer;">
-                    <div ngbDropdown placement="bottom-left">
+                  <td style="text-align: center;cursor: pointer;">
+                    <div ngbDropdown placement="bottom-center">
                       <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
                         aria-expanded="true"></i>
                       <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
@@ -1453,7 +1455,7 @@
               </tbody>
               <tbody *ngIf="!pumpInfraUpdate">
                 <tr>
-                  <td style="text-align: left;" colspan="9">
+                  <td style="text-align: center;" colspan="9">
                     <i> This Shift Don't have any Pump Nozzle Entry.. you can add nozzle entry by clicking Add Nozzle
                       Button..</i>
                   </td>
@@ -1466,6 +1468,7 @@
       </div>
 
       <div class="row" *ngIf="!isAddNozzleUpdate">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <div class="col-lg-2">
           <button type="button" class="btn btn-success" (click)="addNozzleUpdate()">Add Nozzles </button>
         </div>
@@ -1473,25 +1476,26 @@
 
       <div *ngIf="isAddNozzleUpdate">
         <div class="row">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <div class="col col-xl-12 col-lg-12">
             <div class="table-responsive mb-0">
               <table class="table table-centered table-nowrap">
                 <thead class="table-light">
                   <tr>
-                    <th style="text-align: left;"> Nozzle Number</th>
-                    <th style="text-align: left;"> Product </th>
-                    <th style="text-align: left;"> Rate </th>
-                    <th style="text-align: left;"> Opening Meter Reading </th>
-                    <th style="text-align: left;"> Closing Meter Reading</th>
-                    <th style="text-align: left;"> Pump Testing</th>
-                    <th style="text-align: left;">Meter Sales (Rs)</th>
-                    <th style="text-align: left;"> Meter Sales (Qty) </th>
-                    <th style="text-align: left;"> Actions</th>
+                    <th style="text-align: center;"><b> Nozzle Number</b></th>
+                    <th style="text-align: center;"><b> Product</b> </th>
+                    <th style="text-align: center;"><b> Rate </b></th>
+                    <th style="text-align: center;"><b> Opening Reading </b></th>
+                    <th style="text-align: center;"><b> Closing  Reading</b></th>
+                    <th style="text-align: center;"><b> Pump Testing</b></th>
+                    <th style="text-align: center;"><b>Meter Sales (Rs)</b></th>
+                    <th style="text-align: center;"><b> Meter Sales (Qty) </b></th>
+                    <th style="text-align: center;"><b> Actions</b></th>
                   </tr>
                 </thead>
                 <tbody *ngFor="let charges of CreditRequestDataArray1Update; let i = index;">
                   <tr>
-                    <td style="text-align: left;">
+                    <td style="text-align: center;">
                       <select class="form-select" [(ngModel)]="charges.pumpNozzle" [ngModelOptions]="{standalone: true}"
                         (change)="getProductByInfraMapIdUpdate($event,i,setFuelPrice)">
                         <option value="">Select</option>
@@ -1501,12 +1505,12 @@
                       </select>
                     </td>
 
-                    <td style="text-align: left;">
-                      <input type="text" class="form-control" [(ngModel)]="charges.product" style="text-align: left;"
+                    <td style="text-align: center;">
+                      <input type="text" class="form-control" [(ngModel)]="charges.product" style="text-align: center;"
                         [ngModelOptions]="{standalone: true}" placeholder="Product" disabled />
                     </td>
 
-                    <td style="text-align: left;">
+                    <td style="text-align: center;">
                       <select class="form-select" placeholder="select rate" style=" width: 80px;"
                         [(ngModel)]="charges.rate" [ngModelOptions]="{standalone: true}"
                         (change)="setRateUpdate($event,i)">
@@ -1517,28 +1521,28 @@
                       </select>
                     </td>
 
-                    <td style="text-align: left;">
+                    <td style="text-align: center;">
                       <input type="number" class="form-control" [(ngModel)]="charges.openingMeterReading"
                         [ngModelOptions]="{standalone: true}" placeholder="Meter Reading" min="0" />
                     </td>
 
-                    <td style="text-align: left;">
+                    <td style="text-align: center;">
                       <input type="number" class="form-control" [(ngModel)]="charges.closingMeterReading"
                         [ngModelOptions]="{standalone: true}" placeholder="Meter Reading" (change)="getMeterSalesAdd(i)"
                         min="0" />
                     </td>
 
-                    <td style="text-align: left;">
+                    <td style="text-align: center;">
                       <input type="number" class="form-control" [(ngModel)]="charges.pumpTesting"
                         [ngModelOptions]="{standalone: true}" placeholder="Testing" (blur)="getMeterSales1Add(i)"
                         min="0" />
                     </td>
-                    <td style="text-align: left;">
+                    <td style="text-align: center;">
                       <input type="number" class="form-control" [(ngModel)]="charges.meterSalesRs"
                         [ngModelOptions]="{standalone: true}" placeholder="Meter Sales Rs" disabled />
                     </td>
 
-                    <td style="text-align: left;">
+                    <td style="text-align: center;">
                       <input type="number" class="form-control" [(ngModel)]="charges.meterSalesLtr"
                         [ngModelOptions]="{standalone: true}" placeholder="Meter SalesL tr" disabled />
                     </td>
@@ -1681,22 +1685,22 @@
                 <tr>
                   <td style="text-align: center;">
 
-                    <input type="text" class="form-control" [(ngModel)]="data.terminalName" style="text-align: left;"
+                    <input type="text" class="form-control" [(ngModel)]="data.terminalName" style="text-align: center;"
                       [ngModelOptions]="{standalone: true}" placeholder="terminalName" disabled>
 
                   </td>
                   <td style="text-align: center;">
 
-                    <input type="text" class="form-control" [(ngModel)]="data.transacId" style="text-align: left;"
+                    <input type="text" class="form-control" [(ngModel)]="data.transacId" style="text-align: center;"
                       [ngModelOptions]="{standalone: true}" placeholder="transacId" />
                   </td>
                   <td style="text-align: center;">
                     <input type="text" class="form-control" [(ngModel)]="data.paytmTotalAmount"
-                      style="text-align: left;" [ngModelOptions]="{standalone: true}" placeholder="paytmTotalAmount" />
+                      style="text-align: center;" [ngModelOptions]="{standalone: true}" placeholder="paytmTotalAmount" />
 
                   </td>
-                  <td style="text-align: left;cursor: pointer;">
-                    <div ngbDropdown placement="bottom-left">
+                  <td style="text-align: center;cursor: pointer;">
+                    <div ngbDropdown placement="bottom-center">
                       <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
                         aria-expanded="true"></i>
                       <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
@@ -1756,8 +1760,8 @@
                   <td style="text-align: center;"> {{data.paymentQuantityInPieces }} </td>
                   <td style="text-align: center;"> {{data.paymentQuantity}} {{data.paymentProdUnit}} </td>
                   <td style="text-align: center;"> {{data.paytmTotalAmount | number:'1.2-2'}} </td>
-                  <td style="text-align: left;cursor: pointer;">
-                    <div ngbDropdown placement="bottom-left">
+                  <td style="text-align: center;cursor: pointer;">
+                    <div ngbDropdown placement="bottom-center">
                       <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
                         aria-expanded="true"></i>
                       <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
@@ -1843,7 +1847,7 @@
                             formControlName="digitalTransitionAmount" placeholder="Transaction Amount">
 
                         </td>
-                        <td style="text-align: left;cursor: pointer;">
+                        <td style="text-align: center;cursor: pointer;">
                           <button type="submit" class="btn btn-success"
                             (click)="submitDigitalTotalUpdate()">Submit</button>
                         </td>
@@ -2124,20 +2128,20 @@
             <table class="table table-centered table-nowrap">
               <thead class="table-light">
                 <tr>
-                  <th style="text-align: left;">Amount (Rs)</th>
-                  <th style="text-align: left;">Actions</th>
+                  <th style="text-align: center;">Amount (Rs)</th>
+                  <th style="text-align: center;">Actions</th>
 
                 </tr>
               </thead>
               <tbody *ngFor="let data of cashDetails; let i = index">
                 <tr>
-                  <td style="text-align: left;">
+                  <td style="text-align: center;">
                     <input type="text" class="form-control" [(ngModel)]="data.grandTotalAmount"
-                      style="text-align: left;" [ngModelOptions]="{standalone: true}" placeholder="grandTotalAmount">
+                      style="text-align: center;" [ngModelOptions]="{standalone: true}" placeholder="grandTotalAmount">
                   </td>
 
-                  <td style="text-align: left;cursor: pointer;">
-                    <div ngbDropdown placement="bottom-left">
+                  <td style="text-align: center;cursor: pointer;">
+                    <div ngbDropdown placement="bottom-center">
                       <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
                         aria-expanded="true"></i>
                       <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
@@ -2218,8 +2222,8 @@
                   <td style="text-align: center;"> {{data.cashBillAmount | number:'1.2-2'}} </td>
 
 
-                  <td style="text-align: left;cursor: pointer;">
-                    <div ngbDropdown placement="bottom-left">
+                  <td style="text-align: center;cursor: pointer;">
+                    <div ngbDropdown placement="bottom-center">
                       <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
                         aria-expanded="true"></i>
                       <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
@@ -2289,19 +2293,19 @@
                   <table class="table table-centered table-nowrap">
                     <thead class="table-light">
                       <tr>
-                        <th style="text-align: left;">Amount (Rs)</th>
-                        <th style="text-align: left;">Actions</th>
+                        <th style="text-align: center;">Amount (Rs)</th>
+                        <th style="text-align: center;">Actions</th>
 
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td style="text-align: left;">
+                        <td style="text-align: center;">
                           <input type="text" class="form-control" formControlName="totalAmount"
                             placeholder="grandTotalAmount">
                         </td>
 
-                        <td style="text-align: left;cursor: pointer;">
+                        <td style="text-align: center;cursor: pointer;">
                           <button type="submit" class="btn btn-success" (click)="submitCashHandoverUpdate()">
                             Submit
                           </button>
@@ -2630,10 +2634,10 @@
                       <table class="table table-hover table-striped">
                         <thead>
                           <tr>
-                            <th align=left>Date Of Alert</th>
-                            <th align=left>Petrol Pump Name</th>
-                            <th align=left>City</th>
-                            <th align=left>Remarks</th>
+                            <th align=center>Date Of Alert</th>
+                            <th align=center>Petrol Pump Name</th>
+                            <th align=center>City</th>
+                            <th align=center>Remarks</th>
                           </tr>
                         </thead>
                         <tbody *ngFor="let charges of viewCorpFlag; let i = index;">
@@ -2877,10 +2881,10 @@
                     <table class="table table-hover table-striped">
                       <thead>
                         <tr>
-                          <th align=left>Date Of Alert</th>
-                          <th align=left>Petrol Pump Name</th>
-                          <th align=left>City</th>
-                          <th align=left>Remarks</th>
+                          <th align=center>Date Of Alert</th>
+                          <th align=center>Petrol Pump Name</th>
+                          <th align=center>City</th>
+                          <th align=center>Remarks</th>
                         </tr>
                       </thead>
                       <tbody *ngFor="let charges of viewCorpFlag; let i = index;">
@@ -2971,14 +2975,14 @@
                       <table class="table table-hover table-striped">
                         <tbody *ngFor="let charges of CreditRequestDataLube; let i = index;">
                           <tr>
-                            <th align=left>Lubricant Name</th>
-                            <th align=left>Tax</th>
-                            <th align=left>taxDetails</th>
-                            <th align=left>Bill / Ref Number</th>
-                            <th align=left>Vehicle No./ Barrel</th>
-                            <th align=left>Credit Amount</th>
-                            <th align=left>Quantity In Pieces</th>
-                            <th align=left>Credit Quantity</th>
+                            <th align=center>Lubricant Name</th>
+                            <th align=center>Tax</th>
+                            <th align=center>taxDetails</th>
+                            <th align=center>Bill / Ref Number</th>
+                            <th align=center>Vehicle No./ Barrel</th>
+                            <th align=center>Credit Amount</th>
+                            <th align=center>Quantity In Pieces</th>
+                            <th align=center>Credit Quantity</th>
                           </tr>
                           <tr>
                             <td>
@@ -3039,12 +3043,12 @@
                           </tr>
 
                           <tr>
-                            <th align=left>HSN/SAC Number</th>
-                            <th align=left>Tax</th>
-                            <th align=left>Basic Amount</th>
-                            <th align=left>Actual Amount</th>
-                            <th align=left>Units</th>
-                            <th align=left>Action</th>
+                            <th align=center>HSN/SAC Number</th>
+                            <th align=center>Tax</th>
+                            <th align=center>Basic Amount</th>
+                            <th align=center>Actual Amount</th>
+                            <th align=center>Units</th>
+                            <th align=center>Action</th>
 
                           </tr>
                           <tr>
@@ -3371,53 +3375,53 @@
             <table class="table table-centered table-nowrap">
               <thead class="table-light">
                 <tr>
-                  <th style="text-align: left;"> Nozzle Number</th>
-                  <th style="text-align: left;"> Product </th>
-                  <th style="text-align: left;"> Rate </th>
-                  <th style="text-align: left;"> Opening Meter Reading </th>
-                  <th style="text-align: left;"> Closing Meter Reading</th>
-                  <th style="text-align: left;"> Pump Testing</th>
-                  <th style="text-align: left;"> Meter Sales (Rs)</th>
-                  <th style="text-align: left;">Meter Sales (Qty)</th>
+                  <th style="text-align: center;"> Nozzle Number</th>
+                  <th style="text-align: center;"> Product </th>
+                  <th style="text-align: center;"> Rate </th>
+                  <th style="text-align: center;"> Opening Meter Reading </th>
+                  <th style="text-align: center;"> Closing Meter Reading</th>
+                  <th style="text-align: center;"> Pump Testing</th>
+                  <th style="text-align: center;"> Meter Sales (Rs)</th>
+                  <th style="text-align: center;">Meter Sales (Qty)</th>
                 </tr>
               </thead>
               <tbody *ngFor="let charges of CreditRequestDataArrayUpdate; let i = index;">
                 <tr>
-                  <td style="text-align: left;">
+                  <td style="text-align: center;">
                     {{charges.duNo}}-{{charges.nozNo}}
 
                   </td>
 
-                  <td style="text-align: left;">
+                  <td style="text-align: center;">
                     {{charges.productName}}
                   </td>
 
-                  <td style="text-align: left;">
+                  <td style="text-align: center;">
                     {{charges.fuelPrice}}
                   </td>
 
-                  <td style="text-align: left;">
+                  <td style="text-align: center;">
                     {{charges.openMeter}}
                   </td>
 
-                  <td style="text-align: left;">
+                  <td style="text-align: center;">
                     {{charges.closingReading}}
                   </td>
-                  <td style="text-align: left;">
+                  <td style="text-align: center;">
                     {{charges.pumpTesting}}
                   </td>
-                  <td style="text-align: left;">
+                  <td style="text-align: center;">
                     {{charges.meterSaleAmount}}
                   </td>
 
-                  <td style="text-align: left;">
+                  <td style="text-align: center;">
                     {{charges.meterSaleQuantity}}
                   </td>
                 </tr>
               </tbody>
               <tbody *ngIf="!pumpInfraUpdate">
                 <tr>
-                  <td style="text-align: left;" colspan="9">
+                  <td style="text-align: center;" colspan="9">
                     <i> This Shift Don't have any Pump Nozzle Entry.. </i>
                   </td>
                 </tr>
@@ -3485,12 +3489,12 @@
         <table class="table table-centered table-nowrap">
           <thead class="table-light">
             <tr>
-              <th style="text-align: left;">Amount (Rs)</th>
+              <th style="text-align: center;">Amount (Rs)</th>
             </tr>
           </thead>
           <tbody *ngFor="let data of cashDetails; let i = index">
             <tr>
-              <td style="text-align: left;"> {{data.grandTotalAmount | number:'1.2-2'}} </td>
+              <td style="text-align: center;"> {{data.grandTotalAmount | number:'1.2-2'}} </td>
             </tr>
           </tbody>
         </table>
@@ -3500,22 +3504,22 @@
         <table class="table table-centered table-nowrap">
           <thead class="table-light">
             <tr>
-              <th style="text-align: left;">Khata Name</th>
-              <th style="text-align: left;">Bill Number</th>
-              <th style="text-align: left;">Vehicle Number</th>
-              <th style="text-align: left;">Lube</th>
-              <th style="text-align: left;">Quantity In Piece</th>
-              <th style="text-align: left;">Quantity</th>
-              <th style="text-align: left;">Amount</th>
+              <th style="text-align: center;">Khata Name</th>
+              <th style="text-align: center;">Bill Number</th>
+              <th style="text-align: center;">Vehicle Number</th>
+              <th style="text-align: center;">Lube</th>
+              <th style="text-align: center;">Quantity In Piece</th>
+              <th style="text-align: center;">Quantity</th>
+              <th style="text-align: center;">Amount</th>
 
             </tr>
           </thead>
           <tbody *ngFor="let data of cashLubeData; let i = index">
 
             <tr>
-              <td style="text-align: left;"> {{data.cashBillCustName}} </td>
+              <td style="text-align: center;"> {{data.cashBillCustName}} </td>
 
-              <td style="text-align: left;">
+              <td style="text-align: center;">
                 <span *ngIf="data.cashBillNumber">
                   VEELS{{data.cashBillSystemNumber}} / {{data.cashBillNumber}}
                 </span>
@@ -3525,15 +3529,15 @@
 
               </td>
 
-              <td style="text-align: left;"> {{data.cashBillVehicleNumber}} </td>
+              <td style="text-align: center;"> {{data.cashBillVehicleNumber}} </td>
 
-              <td style="text-align: left;"> {{data.cashBillProduct}} </td>
+              <td style="text-align: center;"> {{data.cashBillProduct}} </td>
 
-              <td style="text-align: left;"> {{data.quantityInPiece | number:'1.2-2'}} </td>
+              <td style="text-align: center;"> {{data.quantityInPiece | number:'1.2-2'}} </td>
 
-              <td style="text-align: left;"> {{data.cashBillQuantity | number:'1.2-2'}} </td>
+              <td style="text-align: center;"> {{data.cashBillQuantity | number:'1.2-2'}} </td>
 
-              <td style="text-align: left;"> {{data.cashBillAmount | number:'1.2-2'}} </td>
+              <td style="text-align: center;"> {{data.cashBillAmount | number:'1.2-2'}} </td>
 
             </tr>
 
@@ -3691,27 +3695,27 @@
       <table class="table  table-centered table-nowrap">
         <thead class="table-light">
           <tr>
-            <th style="text-align: left; border: 2px solid #272829;">Shift</th>
-            <th style="text-align: left; border: 2px solid #272829;">Khata Name</th>
-            <th style="text-align: left; border: 2px solid #272829;">Bill No.</th>
-            <th style="text-align: left; border: 2px solid #272829;">Product</th>
-            <th style="text-align: left; border: 2px solid #272829;">Rate</th>
-            <th style="text-align: left; border: 2px solid #272829;">Vehicle No.</th>
-            <th style="text-align: left; border: 2px solid #272829;">Total Amount</th>
-            <th style="text-align: left; border: 2px solid #272829;">Total Quantity</th>
+            <th style="text-align: center; border: 2px solid #272829;">Shift</th>
+            <th style="text-align: center; border: 2px solid #272829;">Khata Name</th>
+            <th style="text-align: center; border: 2px solid #272829;">Bill No.</th>
+            <th style="text-align: center; border: 2px solid #272829;">Product</th>
+            <th style="text-align: center; border: 2px solid #272829;">Rate</th>
+            <th style="text-align: center; border: 2px solid #272829;">Vehicle No.</th>
+            <th style="text-align: center; border: 2px solid #272829;">Total Amount</th>
+            <th style="text-align: center; border: 2px solid #272829;">Total Quantity</th>
 
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let data of totalCreditSalesByStaff">
-            <td style="text-align: left; border: 2px solid #272829;"> {{data.fuelShiftTimeShiftName}} </td>
-            <td style="text-align: left; border: 2px solid #272829;"> {{data.companyName}} </td>
-            <td style="text-align: left; border: 2px solid #272829;"> {{data.manualCrNumber}} </td>
-            <td style="text-align: left; border: 2px solid #272829;"> {{data.productName}} </td>
-            <td style="text-align: left; border: 2px solid #272829;"> {{data.productRate | number:'1.2-2'}} </td>
-            <td style="text-align: left; border: 2px solid #272829;"> {{data.vehicleNumber}} </td>
-            <td style="text-align: left; border: 2px solid #272829;"> {{data.creditAmount | number:'1.2-2'}} (Rs)</td>
-            <td style="text-align: left; border: 2px solid #272829;"> {{data.actualCreditQuantity | number:'1.2-2'}}
+            <td style="text-align: center; border: 2px solid #272829;"> {{data.fuelShiftTimeShiftName}} </td>
+            <td style="text-align: center; border: 2px solid #272829;"> {{data.companyName}} </td>
+            <td style="text-align: center; border: 2px solid #272829;"> {{data.manualCrNumber}} </td>
+            <td style="text-align: center; border: 2px solid #272829;"> {{data.productName}} </td>
+            <td style="text-align: center; border: 2px solid #272829;"> {{data.productRate | number:'1.2-2'}} </td>
+            <td style="text-align: center; border: 2px solid #272829;"> {{data.vehicleNumber}} </td>
+            <td style="text-align: center; border: 2px solid #272829;"> {{data.creditAmount | number:'1.2-2'}} (Rs)</td>
+            <td style="text-align: center; border: 2px solid #272829;"> {{data.actualCreditQuantity | number:'1.2-2'}}
               <span *ngIf="data.productName == 'CNG' ">kg</span>
               <span *ngIf="data.productName != 'CNG' ">Ltr</span>
             </td>

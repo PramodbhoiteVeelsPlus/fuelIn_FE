@@ -47,6 +47,12 @@
   .slider.round:before {
     border-radius: 50%;
   }
+  
+  .btn-outline-success {
+    border: 1px solid #28a745 !important;
+    color: #28a745 !important;
+    background-color: transparent !important;
+}
 </style>
 
 
@@ -54,10 +60,10 @@
   <div class="flex-grow-1">
     <form [formGroup]="searchDiscountForm">
       <div class="row">
-        <div class="col-md-9"></div>
-        <div class="col-md-3">
+        <div class="col-md-10"></div>
+        <div class="col-md-2">
           <button class="btn btn-success my-2 my-sm-0 btn-sm" (click)="openSelectMobile(selectMobile)"
-            title="click on  [+] to mention pump's contact number on statement">
+            style="margin-left:130px" title="click on  [+] to mention pump's contact number on statement">
             +
           </button>
         </div>
@@ -161,9 +167,15 @@
 
       </div>
 
-      <br>
       <div class="row">
-        <label for="example-text-input" class="col-auto col-form-label">Customer Select </label>
+        <div class="col-md-3">
+          <label for="example-text-input" class="col-auto col-form-label"><b>Customer Select </b></label>
+        </div>
+        <div class="col-md-3">
+          <label for="example-text-input" class="col-auto col-form-label"><b>Date Range </b></label>
+        </div>
+      </div>
+      <div class="row">
         <div class="col-lg-3">
           <input class="form-control" type="text" list="allCorporateList" placeholder="select customer"
             formControlName="customerName" (change)="getDetailsByCustomerName($event)">
@@ -172,7 +184,7 @@
           </datalist>
         </div>
 
-        <label for="example-text-input" class="col-auto col-form-label">Date Range </label>
+        <!-- <label for="example-text-input" class="col-auto col-form-label">Date Range </label> -->
         <div class="col-md-2">
           <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
             name="startDate" ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker
@@ -197,10 +209,10 @@
     <table class="table table-centered table-nowrap table-bordered" style="border: 1px solid black;">
       <thead class="">
         <tr>
-          <th style="text-align: left;">Opening Outstanding</th>
-          <th style="text-align: left;">Total Purchase</th>
-          <th style="text-align: left;">Total Payment</th>
-          <th style="text-align: left;">Net Outstanding</th>
+          <th style="text-align: left;"><b>Opening Outstanding</b></th>
+          <th style="text-align: left;"><b>Total Purchase</b></th>
+          <th style="text-align: left;"><b>Total Payment</b></th>
+          <th style="text-align: left;"><b>Net Outstanding</b></th>
         </tr>
       </thead>
       <tbody *ngFor="let data of statementData">
@@ -249,18 +261,18 @@
   <br>
   <form [formGroup]="addForm">
     <div class="row">
-      <div class="col-md-4">
-        <label>Add Manual Statement Number</label>
+      <div class="col-md-3">
+        <label><b>Add Manual Statement Number</b></label>
         <input type="text" class="form-control" [(ngModel)]="manualSno" [ngModelOptions]="{standalone: true}"
           placeholder="Enter Manual Statement Number" />
       </div>
-      <div class="col-md-4">
-        <label>Add HSN Code</label>
+      <div class="col-md-3">
+        <label><b>Add HSN Code</b></label>
         <input type="text" class="form-control" [(ngModel)]="hsnCode" [ngModelOptions]="{standalone: true}"
           placeholder="Enter HSN Code" />
       </div>
-      <div class="col-md-4">
-        <label>Add Due Date</label>
+      <div class="col-md-3">
+        <label><b>Add Due Date</b></label>
         <input class="form-control" placeholder="DD-MM-YYYY" style="background-color: #ffffff;" name="dueDate"
           ngbTooltip="Due Date" (click)="dueDate.toggle()" ngbDatepicker #dueDate="ngbDatepicker"
           formControlName="dueDate">
@@ -333,11 +345,11 @@
     <table class="table table-centered table-nowrap">
       <thead class="table-light">
         <tr>
-          <th style="text-align: left;">sr no</th>
-          <th style="text-align: left;">Date</th>
-          <th style="text-align: left;">bill / ref number</th>
-          <th style="text-align: left;">vehicle no / other details</th>
-          <th style="text-align: left;">credit amount</th>
+          <th style="text-align: left;"><b>Sr.No</b>>
+          <th style="text-align: left;"><b>Date</b>>
+          <th style="text-align: left;"><b>Bill / ref number</b>>
+          <th style="text-align: left;"><b>Vehicle no / other details</b></th>
+          <th style="text-align: left;"><b>Credit Amount</b>>
         </tr>
       </thead>
       <tbody

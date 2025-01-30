@@ -439,15 +439,15 @@ export class TablesWidget30Component {
     this.mappingAddress1 = mappingAddress1
     this.mappingAddress2 = mappingAddress2
     this.mappingCity = mappingCity
-    if (GSTNumber != 'undefined') {
-      this.updateGST = GSTNumber
-    } else {
+    if (GSTNumber == 'undefined' || GSTNumber == 'null') {
       this.updateGST = ''
-    }
-    if (mappingEmail != 'undefined') {
-      this.updateMail = mappingEmail
     } else {
+      this.updateGST = GSTNumber
+    }
+    if (mappingEmail == 'undefined' || mappingEmail == 'null') {
       this.updateMail = ''
+    } else {
+      this.updateMail = mappingEmail
     }
 
     this.updateMaxCRLimit = maxCreditAmount
@@ -459,6 +459,7 @@ export class TablesWidget30Component {
     }, (reason: any) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+
   }
 
   private getDismissReason(reason: any): string {

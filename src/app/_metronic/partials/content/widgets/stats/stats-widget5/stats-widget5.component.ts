@@ -17,8 +17,8 @@ export class StatsWidget5Component {
   @Input() title = '';
   dealerMobile: any;
   fuelDealerId: any;
-  thisMonthCrSale: any;
-  thisMonthCrPayment: any;
+  thisMonthCrSale: any = 0;
+  thisMonthCrPayment: any = 0;
   totalOS: any;
   isOS: boolean;
   isSales: boolean;
@@ -41,8 +41,8 @@ export class StatsWidget5Component {
     this.dealerMobile = element.phone1;
     this.accessGroupId = element.accessGroupId;
     console.log("dealerId", this.fuelDealerId)
-    // this.getDealerIdByPhone(this.dealerMobile);
-    this.getCreditDetailsByDealerId(this.fuelDealerId);
+    this.getDealerIdByPhone(this.dealerMobile);
+    // this.getCreditDetailsByDealerId(this.fuelDealerId);
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
@@ -59,19 +59,22 @@ export class StatsWidget5Component {
       .subscribe(res => {
         if (res.status = "OK") {
           this.fuelDealerId = res.data[0].fuelDealerId;
-          this.getCreditDetailsByDealerId(this.fuelDealerId);
+          // this.getCreditDetailsByDealerId(this.fuelDealerId);
           if (this.title == "Credit O/s") {
             this.isOS = true;
             this.isSales = false;
             this.isPayment = false;
+            this.getCreditOsByDealerId(this.fuelDealerId)
           } else if (this.title == "Credit Sales") {
             this.isOS = false;
             this.isSales = true;
             this.isPayment = false;
+            this.getCreditSalesDetailsByDealerId(this.fuelDealerId)
           } else if (this.title == "Credit Payment") {
             this.isOS = false;
             this.isSales = false;
             this.isPayment = true;
+            this.getCreditPaymentDetailsByDealerId(this.fuelDealerId)
           }
           this.spinner.hide();
           this.cd.detectChanges()
@@ -129,5 +132,99 @@ export class StatsWidget5Component {
       })
   }
 
+  getCreditSalesDetailsByDealerId(fuelDealerId: any) {
+    this.spinner.show()
+    let data = {
+      fuelDealerId: fuelDealerId
+    }
 
+    this.post.getCreditSalesDetailsByDealerIdPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          if (this.title == "Credit Sales") {
+            this.isOS = false;
+            this.isSales = true;
+            this.isPayment = false;
+          }
+          if (res.dataSales[0].totalPurchase) {
+            this.thisMonthCrSale = res.dataSales[0].totalPurchase
+          } 
+
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 5000);
+          this.cd.detectChanges()
+        } else {
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 5000); this.cd.detectChanges()
+        }
+      })
+  }
+
+  getCreditPaymentDetailsByDealerId(fuelDealerId: any) {
+    this.spinner.show()
+    let data = {
+      fuelDealerId: fuelDealerId
+    }
+
+    this.post.getCreditPaymentDetailsByDealerIdPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+           if (this.title == "Credit Payment") {
+            this.isOS = false;
+            this.isSales = false;
+            this.isPayment = true;
+          }
+
+        
+          if (res.dataPayment[0].totalPayment) {
+            this.thisMonthCrPayment = res.dataPayment[0].totalPayment
+          }
+          
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 5000);
+          this.cd.detectChanges()
+        } else {
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 5000); this.cd.detectChanges()
+        }
+      })
+  }
+
+  getCreditOsByDealerId(fuelDealerId: any) {
+    this.spinner.show()
+    let data = {
+      fuelDealerId: fuelDealerId
+    }
+
+    this.post.getCreditOsByDealerIdPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          if (this.title == "Credit O/s") {
+            this.isOS = true;
+            this.isSales = false;
+            this.isPayment = false;
+          }
+          
+          this.totalOS = Number(res.outstanding).toFixed(2);
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 5000);
+          this.cd.detectChanges()
+        } else {
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 5000); this.cd.detectChanges()
+        }
+      })
+  }
 }

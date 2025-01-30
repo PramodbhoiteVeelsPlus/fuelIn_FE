@@ -1,7 +1,8 @@
 <br>
 <form [formGroup]="filterForm">
   <div class="mb-3 row">
-    <label for="example-text-input" class="col-auto col-form-label">Khata</label>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label for="example-text-input" class="col-auto col-form-label"><b>Khata</b></label>
     <div class="col-md-3">
       <input class="form-control" type="text" list="allCorporateList" placeholder="all khata"
         (change)="getDetailsByCustomerMapName($event)" formControlName="customerName">
@@ -10,7 +11,7 @@
       </datalist>
     </div>
     <div class="col-md-1"></div>
-    <label for="example-text-input" class="col-auto col-form-label">Year</label>
+    <label for="example-text-input" class="col-auto col-form-label"><b>Year</b></label>
     <div class="col-md-3">
       <select class="form-control" formControlName="fiscalyear" required>
         <option value={{fiscalyear1}}> {{fiscalyear1}} </option>

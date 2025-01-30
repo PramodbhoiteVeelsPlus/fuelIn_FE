@@ -26,7 +26,7 @@
     body {
       margin: 0;
       padding: 0;
-      -webkit-print-color-adjust: exact;
+      /* -webkit-print-color-adjust: exact; */
     }
     .A4 {
       box-shadow: none;
@@ -244,50 +244,50 @@
                                                                 </tr>
 
                                                                 <tr>
-                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                    <th style="border: 2px solid #272829;text-align: center;" colspan="2">
                                                                         Product
                                                                     </th>
-                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                    <th style="border: 2px solid #272829;text-align: center;" colspan="2">
                                                                         Basic Amount
                                                                     </th>
-                                                                    <th style="border: 2px solid #272829;" colspan="1">
+                                                                    <th style="border: 2px solid #272829;text-align: center;" colspan="1">
                                                                         VAT %
                                                                     </th>
-                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                    <th style="border: 2px solid #272829;text-align: center;" colspan="2">
                                                                         VAT Amount
                                                                     </th>
-                                                                    <th style="border: 2px solid #272829;" colspan="1">
+                                                                    <th style="border: 2px solid #272829;text-align: center;" colspan="1">
                                                                         Cess Amount
                                                                     </th>
-                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                    <th style="border: 2px solid #272829;text-align: center;" colspan="2">
                                                                         Other Components
                                                                     </th>
-                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                    <th style="border: 2px solid #272829;text-align: center;" colspan="2">
                                                                         Total Amount
                                                                     </th>
                                                                 </tr>
 
                                                                 <tr
                                                                     *ngFor="let data of productPurchaseDetails; let i = index;">
-                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                    <td style="border: 2px solid #272829;text-align: center;" colspan="2">
                                                                         {{data.productName}}
                                                                     </td>
-                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                    <td style="border: 2px solid #272829;text-align: center;" colspan="2">
                                                                         {{data.basicAmt | number:'1.2-2'}}
                                                                     </td>
-                                                                    <td style="border: 2px solid #272829;" colspan="1">
+                                                                    <td style="border: 2px solid #272829;text-align: center;" colspan="1">
                                                                         {{data.vatPercent | number:'1.2-2'}} %
                                                                     </td>
-                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                    <td style="border: 2px solid #272829;text-align: center;" colspan="2">
                                                                         {{data.vatAmt | number:'1.2-2'}}
                                                                     </td>
-                                                                    <td style="border: 2px solid #272829;" colspan="1">
+                                                                    <td style="border: 2px solid #272829;text-align: center;" colspan="1">
                                                                         {{data.cessAmt | number:'1.2-2'}}
                                                                     </td>
-                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                    <td style="border: 2px solid #272829;text-align: center;" colspan="2">
                                                                         {{data.components | number:'1.2-2'}}
                                                                     </td>
-                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                    <td style="border: 2px solid #272829;text-align: center;" colspan="2">
                                                                         {{data.totalAmount | number:'1.2-2'}}
                                                                     </td>
                                                                 </tr>
@@ -295,7 +295,7 @@
 
 
                                                                 <tr>
-                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                    <td style="border: 2px solid #272829;text-align: center;" colspan="2">
                                                                         <b> PURCHASE TOTAL </b>
                                                                     </td>
                                                                     <td style="border: 2px solid #272829;" colspan="2">
@@ -304,7 +304,7 @@
                                                                     <td style="border: 2px solid #272829;" colspan="1">
 
                                                                     </td>
-                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                    <td style="border: 2px solid #272829;text-align: center;" colspan="2">
                                                                         <b>{{purchaseTotal | number:'1.2-2'}}</b>
                                                                     </td>
                                                                     <td style="border: 2px solid #272829;" colspan="1">
@@ -326,50 +326,50 @@
                                                                 </tr>
 
                                                                 <tr>
-                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                    <th style="border: 2px solid #272829;text-align: center;" colspan="2">
                                                                         Product
                                                                     </th>
-                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                    <th style="border: 2px solid #272829;text-align: center;" colspan="2">
                                                                         Basic Amount
                                                                     </th>
-                                                                    <th style="border: 2px solid #272829;" colspan="1">
+                                                                    <th style="border: 2px solid #272829;text-align: center;" colspan="1">
                                                                         VAT %
                                                                     </th>
-                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                    <th style="border: 2px solid #272829;text-align: center;" colspan="2">
                                                                         VAT Amount
                                                                     </th>
-                                                                    <th style="border: 2px solid #272829;" colspan="1">
+                                                                    <th style="border: 2px solid #272829;text-align: center;" colspan="1">
 
                                                                     </th>
-                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                    <th style="border: 2px solid #272829;text-align: center;" colspan="2">
 
                                                                     </th>
-                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                    <th style="border: 2px solid #272829;text-align: center;" colspan="2">
                                                                         Total Amount
                                                                     </th>
                                                                 </tr>
 
                                                                 <tr
                                                                     *ngFor="let data of vatSalesDetails; let i = index;">
-                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                    <td style="border: 2px solid #272829;text-align: center;" colspan="2">
                                                                         {{data.productName}}
                                                                     </td>
-                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                    <td style="border: 2px solid #272829;text-align: center;" colspan="2">
                                                                         {{data.basicAmount | number:'1.2-2'}}
                                                                     </td>
-                                                                    <td style="border: 2px solid #272829;" colspan="1">
+                                                                    <td style="border: 2px solid #272829;text-align: center;" colspan="1">
                                                                         {{data.vat | number:'1.2-2'}} %
                                                                     </td>
-                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                    <td style="border: 2px solid #272829;text-align: center;" colspan="2">
                                                                         {{data.vatAmount | number:'1.2-2'}}
                                                                     </td>
-                                                                    <td style="border: 2px solid #272829;" colspan="1">
+                                                                    <td style="border: 2px solid #272829;text-align: center;" colspan="1">
 
                                                                     </td>
-                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                    <td style="border: 2px solid #272829;text-align: center;" colspan="2">
 
                                                                     </td>
-                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                    <td style="border: 2px solid #272829;text-align: center;" colspan="2">
                                                                         {{data.totalAmount | number:'1.2-2'}}
                                                                     </td>
                                                                 </tr>
@@ -377,7 +377,7 @@
 
 
                                                                 <tr>
-                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                    <td style="border: 2px solid #272829;text-align: center;" colspan="2">
                                                                         <b> SALE TOTAL </b>
                                                                     </td>
                                                                     <td style="border: 2px solid #272829;" colspan="2">
@@ -386,7 +386,7 @@
                                                                     <td style="border: 2px solid #272829;" colspan="1">
 
                                                                     </td>
-                                                                    <td style="border: 2px solid #272829;" colspan="2">
+                                                                    <td style="border: 2px solid #272829;text-align: center;" colspan="2">
                                                                         <b>{{salesTotal | number:'1.2-2'}}</b>
                                                                     </td>
                                                                     <td style="border: 2px solid #272829;" colspan="1">
@@ -425,10 +425,10 @@
                                                                 </tr>
 
                                                                 <tr>
-                                                                    <th style="border: 2px solid #272829;" colspan="5">
+                                                                    <th style="border: 2px solid #272829;text-align: center;" colspan="5">
                                                                         <b>VAT PAYABLE</b>
                                                                     </th>
-                                                                    <th style="border: 2px solid #272829;" colspan="2">
+                                                                    <th style="border: 2px solid #272829;text-align: center;" colspan="2">
                                                                         <b>{{(salesTotal) - (purchaseTotal) |
                                                                             number:'1.2-2'}} </b>
                                                                     </th>

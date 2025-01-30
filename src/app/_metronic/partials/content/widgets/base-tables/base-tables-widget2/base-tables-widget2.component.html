@@ -3,8 +3,18 @@
 <div class="card card-custom">
   <!-- Header -->
   <form [formGroup]="filterForm">
-    <div class="mb-3 row">
-      <label for="example-text-input" class="col-auto col-form-label">Khata</label>
+    <div class="row">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <div class="col-md-4">
+      <label for="example-text-input" class="col-auto col-form-label"><b>Khata</b></label>
+    </div>
+    <div class="col-md-3">
+      <label for="example-text-input" class="col-auto col-form-label"><b>Date Range</b></label>
+    </div>
+    </div>
+    <div class="row">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <!-- <label for="example-text-input" class="col-auto col-form-label">Khata</label> -->
       <div class="col-md-3">
         <input class="form-control" type="text" list="allCorporateList" placeholder="all khata"
           (change)="getCorporateInfoByfuelDealerCustomerMapId($event)" formControlName="selectCorporateName">
@@ -13,7 +23,7 @@
         </datalist>
       </div>
 
-      <label for="example-text-input" class="col-auto col-form-label">Date Range</label>
+      <!-- <label for="example-text-input" class="col-auto col-form-label">Date Range</label> -->
 
       <div class="col-md-2">
         <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
@@ -44,10 +54,11 @@
   </form>
 
   <div class="row mb-2">
-    <div class="col-sm-4">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="col-md-4">
       <div class="search-box me-2 mb-2 d-inline-block">
         <div class="position-relative">
-          <input class="form-control mr-sm-4" type="text" placeholder="search"
+          <input class="form-control mr-sm-4" type="text" placeholder="search" style="width: 289px;"
             oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
             [(ngModel)]="searchData" [ngModelOptions]="{standalone: true}" (input)="onSearch()">
           <i class="bx bx-search-alt search-icon"></i>

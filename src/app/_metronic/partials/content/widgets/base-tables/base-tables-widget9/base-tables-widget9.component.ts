@@ -605,7 +605,7 @@ export class BaseTablesWidget9Component implements OnInit {
 
   pageChangeEvent(event: number) {
     this.p = event;
-    this.showAlldiscountedCR();
+    this.getTransactionDetails();
   }
 
 }

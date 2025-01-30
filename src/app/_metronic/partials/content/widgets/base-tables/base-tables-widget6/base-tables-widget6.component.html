@@ -1,7 +1,8 @@
 <br>
 <form [formGroup]="filterForm">
   <div class="mb-3 row">
-    <label for="example-text-input" class="col-auto col-form-label">Khata</label>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label for="example-text-input" class="col-auto col-form-label"><b>Khata</b></label>
     <div class="col-md-3">
       <input class="form-control" type="text" list="allCorporateList" placeholder="all khata"
         formControlName="customerName" (change)="getDetailsByCustomerMapName($event)">
@@ -10,7 +11,7 @@
       </datalist>
     </div>
 
-    <label for="example-text-input" class="col-auto col-form-label">Date Range</label>
+    <label for="example-text-input" class="col-auto col-form-label"><b>Date Range</b></label>
     <div class="col-md-2">
       <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;" name="startDate"
         ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker #startDate="ngbDatepicker"

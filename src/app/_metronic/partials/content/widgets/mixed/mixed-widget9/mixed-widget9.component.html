@@ -1,11 +1,13 @@
 <br>
 <form [formGroup]="searchDiscountForm">
   <div class="row">
-    <label for="example-text-input" class="col-lg-3 col-form-label">Customer Select </label>
-    <label for="example-text-input" class="col-lg-3 col-form-label">Vehicle Select </label>
-    <label for="example-text-input" class="col-md-2 col-form-label">Date Range </label>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label for="example-text-input" class="col-lg-3 col-form-label"><b>Customer Select </b></label>
+    <label for="example-text-input" class="col-lg-3 col-form-label"><b>Vehicle Select </b></label>
+    <label for="example-text-input" class="col-md-2 col-form-label"><b>Date Range </b></label>
   </div>
   <div class="row">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <div class="col-lg-3">
       <input class="form-control" type="text" list="allCorporateList" placeholder="select customer"
         formControlName="customerName" (change)="getDetailsByCustomerName($event)">
@@ -43,18 +45,19 @@
 <br>
 <form [formGroup]="addForm">
   <div class="row">
-    <div class="col-md-4">
-      <label>Add Manual Statement Number</label>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="col-md-3">
+      <label><b>Add Manual Statement Number</b></label>
       <input type="text" class="form-control" [(ngModel)]="manualSno" [ngModelOptions]="{standalone: true}"
         placeholder="Enter Manual Statement Number" />
     </div>
-    <div class="col-md-4">
-      <label>Add HSN Code</label>
+    <div class="col-md-3">
+      <label><b>Add HSN Code</b></label>
       <input type="text" class="form-control" [(ngModel)]="hsnCode" [ngModelOptions]="{standalone: true}"
         placeholder="Enter HSN Code" />
     </div>
-    <div class="col-md-4">
-      <label>Add Due Date</label>
+    <div class="col-md-3">
+      <label><b>Add Due Date</b></label>
       <input class="form-control" placeholder="DD-MM-YYYY" style="background-color: #ffffff;" name="dueDate"
         ngbTooltip="Due Date" (click)="dueDate.toggle()" ngbDatepicker #dueDate="ngbDatepicker"
         formControlName="dueDate">
@@ -64,6 +67,7 @@
 <br>
 
 <div class="row">
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <div class="col-md-4">
     <div class="row justify-content-center">
       <div class="input-group bg-light rounded" (click)="gotoVehicleWiseStatement()">
@@ -84,11 +88,11 @@
   <table class="table table-centered table-nowrap">
     <thead class="table-light">
       <tr>
-        <th style="text-align: left;">sr no</th>
-        <th style="text-align: left;">date</th>
-        <th style="text-align: left;">billed to</th>
-        <th style="text-align: left;">bill / ref number</th>
-        <th style="text-align: left;">credit amount</th>
+        <th style="text-align: left;"><b>Sr.No</b></th>
+        <th style="text-align: left;"><b>Date</b></th>
+        <th style="text-align: left;"><b>Billed To</b></th>
+        <th style="text-align: left;"><b>Bill / ref number</b></th>
+        <th style="text-align: left;"><b>Credit Amount</b></th>
       </tr>
     </thead>
     <tbody

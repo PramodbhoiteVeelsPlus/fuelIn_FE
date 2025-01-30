@@ -5,20 +5,22 @@
       <div class="col-lg-12">
         <form [formGroup]="requestVehicle">
           <div class="row">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <div class="col-lg-2">
-              <label for="example-text-input" class="col-form-label">Date</label>
+              <label for="example-text-input" class="col-form-label"><b>Date</b></label>
             </div>
-            <div class="col-lg-10">
+            <div class="col-lg-8">
               <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" (click)="endDate.toggle()" readonly
                 style="background-color: #ffffff;" formControlName="priceDate" ngbDatepicker #endDate="ngbDatepicker">
             </div>
           </div>
           <br>
           <div class="row">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <div class="col-lg-2">
-              <label for="example-text-input" class="col-form-label">Product</label>
+              <label for="example-text-input" class="col-form-label"><b>Product</b></label>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-8">
               <select class="form-control" formControlName="productName" (change)="getPriceVehicle($event,setFuelPrice)"
                 required>
                 <option value="">Select Product </option>
@@ -30,10 +32,11 @@
           </div>
           <br>
           <div class="row">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <div class="col-lg-2">
-              <label for="example-text-input" class="col-form-label">Rate</label>
+              <label for="example-text-input" class="col-form-label"><b>Rate</b></label>
             </div>
-            <div class="col-lg-10">
+            <div class="col-lg-8">
               <select class="form-control" formControlName="productPrice" (change)="setPrice($event)" required>
                 <option value="">Select </option>
                 <option *ngFor="let data of productPriceDetails" [value]="data.productSellingPrice">
@@ -98,10 +101,11 @@
 
           <br>
           <div class="row">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <div class="col-lg-2">
-              <label for="example-text-input" class="col-form-label">Vehicle Number</label>
+              <label for="example-text-input" class="col-form-label"><b>Vehicle Number</b></label>
             </div>
-            <div class="col-lg-10">
+            <div class="col-lg-8">
               <input class="form-control" type="text" list="allVehicleData" placeholder="select vehicle"
                 formControlName="vehicleNumber" #myinput
                 (change)="getDetailsOfVehicleByfuelDealerCustomerMapIdId($event)">
@@ -164,10 +168,10 @@
                     <table class="table table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
                       <thead style="border-width: 1px; border-color: #000;">
                         <tr>
-                          <th style="border-width: 1px; border-color: #000;">Khata </th>
-                          <th style="border-width: 1px; border-color: #000;">Person Name</th>
-                          <th style="border-width: 1px; border-color: #000;">Phone Number</th>
-                          <th style="border-width: 1px; border-color: #000;">Bill Nos. Set</th>
+                          <th style="border-width: 1px; border-color: #000;"><b>Khata </b></th>
+                          <th style="border-width: 1px; border-color: #000;"><b>Person Name</b></th>
+                          <th style="border-width: 1px; border-color: #000;"><b>Phone Number</b></th>
+                          <th style="border-width: 1px; border-color: #000;"><b>Bill Nos. Set</b></th>
 
                         </tr>
                       </thead>
@@ -221,10 +225,11 @@
           <br>
 
           <div class="row">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <div class="col-lg-2">
-              <label for="example-text-input" class="col-form-label">Type</label>
+              <label for="example-text-input" class="col-form-label"><b>Type</b></label>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-8">
               <input type="radio" value="showamount" checked name="requestType" formControlName="requestType"
                 (change)="changeVehicleAmountToQuantity()">
               &nbsp; <label class="labelNewMargin">Amount</label>
@@ -236,17 +241,18 @@
           </div>
 
           <div class="row">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <div class="col col-xl-12 col-lg-12">
               <div class="card-body table-responsive">
                 <table class="table table-hover table-striped">
                   <thead>
                     <tr>
-                      <th>Khata</th>
-                      <th>Bill Number</th>
-                      <th *ngIf="vehicleAmtType">Amount</th>
-                      <th *ngIf="!vehicleAmtType">Quantity</th>
-                      <th *ngIf="!vehicleAmtType">Amount</th>
-                      <th *ngIf="vehicleAmtType">Quantity</th>
+                      <th><b>Khata</b></th>
+                      <th><b>Bill Number</b></th>
+                      <th *ngIf="vehicleAmtType"><b>Amount</b></th>
+                      <th *ngIf="!vehicleAmtType"><b>Quantity</b></th>
+                      <th *ngIf="!vehicleAmtType"><b>Amount</b></th>
+                      <th *ngIf="vehicleAmtType"><b>Quantity</b></th>
                       <th></th>
 
                     </tr>
@@ -332,7 +338,8 @@
         </form>
 
         <div class="row">
-          <div class="col-md-4">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <div class="col-auto">
             <button type="submit" class="btn btn-primary" (click)="submitByDealerForVehicle()">Submit</button>
             &nbsp;
             <button type="submit" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
@@ -358,6 +365,7 @@
         </button>
       </div>
     </ng-template>
+    <br><br>
     <!-- end::Balance -->
   <!-- end::Header -->
 </div>
