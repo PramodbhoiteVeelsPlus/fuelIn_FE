@@ -68,12 +68,12 @@
               <table class="table table-centered table-nowrap">
                 <thead class="table-light">
                   <tr>
-                    <th style="text-align: left;">#</th>
-                    <th style="text-align: left;"> Shift Name </th>
-                    <th style="text-align: left;"> Start Time</th>
-                    <th style="text-align: left;"> End Time </th>
-                    <th style="text-align: left;"> Created At</th>
-                    <th style="text-align: left;"> Action </th>
+                    <th style="text-align: left;"><b>#</b></th>
+                    <th style="text-align: left;"><b> Shift Name </b></th>
+                    <th style="text-align: left;"><b> Start Time</b></th>
+                    <th style="text-align: left;"><b> End Time </b></th>
+                    <th style="text-align: left;"><b> Created At</b></th>
+                    <th style="text-align: left;"><b> Action </b></th>
                   </tr>
                 </thead>
                 <tbody *ngFor="let data of fuelShiftTimeDetailsTime; let i = index;">
@@ -198,8 +198,8 @@
               <div class="modal-body">
                 <div class="row">
                   <div class="col-md-6">
-                    <label for="numberOfEmployee">Mobile Number
-                      <span class="red" style="color: red;">*</span>:</label>
+                    <label for="numberOfEmployee"><b>Mobile Number
+                      <span class="red" style="color: red;">*</span>:</b></label>
                     <input type="number" class="form-control" formControlName="phoneNumber"
                        placeholder="Enter Mobile Number"
                       (blur)="checkuserPhoneNumber()" onkeypress="return this.value.length < 10;"
@@ -216,16 +216,16 @@
                 <br>
                 <div class="row">
                   <div class="col-md-6">
-                    <label for="address1">First Name
-                      <span class="red" style="color: red;">*</span>:</label>
+                    <label for="address1"><b>First Name
+                      <span class="red" style="color: red;">*</span>:</b></label>
                     <input class="form-control" formControlName="firstName" placeholder="Enter First Name"
                       oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
                       required>
 
                   </div>
                   <div class="col-md-6">
-                    <label for="address2">Last Name
-                      <span class="red" style="color: red;">*</span> :</label>
+                    <label for="address2"><b>Last Name
+                      <span class="red" style="color: red;">*</span> :</b></label>
                     <input class="form-control" formControlName="lastName" placeholder="Enter Last Name"
                       oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
 
@@ -235,7 +235,7 @@
                 <div class="row">
 
                   <div class="col-md-6">
-                    <label for="state">Role <span class="red" style="color: red;">*</span>:</label>
+                    <label for="state"><b>Role <span class="red" style="color: red;">*</span>:</b></label>
                     <select class="form-control" formControlName="role" style="color: #9EA79E;">
                       <option value="">Select Role</option>
                       <option value="13">OPERATOR</option>
@@ -260,8 +260,8 @@
                 <div class="row">
 
                   <div class="col-md-6">
-                    <label for="numberOfEmployee">Mobile Number
-                      <span class="red" style="color: red;">*</span>:</label>
+                    <label for="numberOfEmployee"><b>Mobile Number
+                      <span class="red" style="color: red;">*</span>:</b></label>
                     <input type="number" class="form-control" formControlName="mobileNumber"
                        placeholder="Enter Mobile Number"
                       onkeypress="return this.value.length < 10;" oninput="if(this.value.length=10)">
@@ -282,16 +282,16 @@
                 <hr>
                 <div class="row">
                   <div class="col-md-6">
-                    <label for="address1">First Name
-                      : </label>
+                    <label for="address1"><b>First Name
+                      : </b></label>
                     <input class="form-control" formControlName="firstName" placeholder="First Name" readonly
                       oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
                       required>
 
                   </div>
                   <div class="col-md-6">
-                    <label for="address2">Last Name
-                      : </label>
+                    <label for="address2"><b>Last Name
+                      : </b></label>
                     <input class="form-control" formControlName="lastName" placeholder="Last Name" readonly
                       oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
 
@@ -301,8 +301,8 @@
 
                 <div class="row">
                   <div class="col-md-6">
-                    <label for="state">Role :
-                    </label>
+                    <label for="state"><b>Role :
+                    </b></label>
                     <input class="form-control" formControlName="role" placeholder="Role" readonly
                       oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
                   </div>
@@ -329,8 +329,8 @@
               <div class="modal-body">
                 <div class="row">
                   <div class="col-md-6">
-                    <label for="numberOfEmployee">Mobile Number
-                      <span class="red" style="color: red;">*</span>:</label>
+                    <label for="numberOfEmployee"><b>Mobile Number
+                      <span class="red" style="color: red;">*</span>:</b></label>
                     <input type="number" class="form-control" formControlName="mobileNumber"
                        placeholder="Enter Mobile Number"
                       (blur)="checkStaffDetails()" onkeypress="return this.value.length < 10;"
@@ -350,16 +350,16 @@
                 <hr>
                 <div class="row">
                   <div class="col-md-6">
-                    <label for="address1">First Name
-                      : </label>
+                    <label for="address1"><b>First Name
+                      : </b></label>
                     <input class="form-control" formControlName="firstName" placeholder="First Name" readonly
                       oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
                       required>
 
                   </div>
                   <div class="col-md-6">
-                    <label for="address2">Last Name
-                      : </label>
+                    <label for="address2"><b>Last Name
+                      : </b></label>
                     <input class="form-control" formControlName="lastName" placeholder="Last Name" readonly
                       oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
 
@@ -369,7 +369,7 @@
 
                 <div class="row">
                   <div class="col-md-6">
-                    <label for="hostPhone">Email Address :</label>
+                    <label for="hostPhone"><b>Email Address :</b></label>
                     <input type="email" class="form-control" readonly
                       formControlName="email"
                       placeholder="Enter Email Address">
@@ -380,8 +380,8 @@
                     </div> -->
                   </div>
                   <div class="col-md-6">
-                    <label for="state">Role :
-                    </label>
+                    <label for="state"><b>Role :
+                    </b></label>
                     <input class="form-control" formControlName="role" placeholder="Role" readonly
                       oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
                   </div>
@@ -402,14 +402,14 @@
             <table class="table table-centered table-nowrap">
               <thead class="table-light">
                 <tr>
-                  <th style="text-align: left;">#</th>
-                  <th style="text-align: left;">First Name</th>
-                  <th style="text-align: left;">Last Name</th>
-                  <th style="text-align: left;">Mobile No.</th>
-                  <th style="text-align: left;">Role</th>
-                  <th style="text-align: left;">Salary</th>
-                  <th *ngIf="accessGroup != '14' " style="text-align: left;">Mapping</th>
-                  <th *ngIf="accessGroup != '14' " style="text-align: left;">Action</th>
+                  <th style="text-align: left;"><b>#</b></th>
+                  <th style="text-align: left;"><b>First Name</b></th>
+                  <th style="text-align: left;"><b>Last Name</b></th>
+                  <th style="text-align: left;"><b>Mobile No.</b></th>
+                  <th style="text-align: left;"><b>Role</b></th>
+                  <th style="text-align: left;"><b>Salary</b></th>
+                  <th *ngIf="accessGroup != '14' " style="text-align: left;"><b>Mapping</b></th>
+                  <th *ngIf="accessGroup != '14' " style="text-align: left;"><b>Action</b></th>
 
 
                 </tr>
