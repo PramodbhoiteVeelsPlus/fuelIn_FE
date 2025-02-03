@@ -60,10 +60,11 @@
           </div>
         </div>
       </div>
-      <label for="example-text-input" class="col-auto col-form-label">Pending New Requests:</label>
+      <label for="example-text-input" class="col-md-4 col-form-label"><b>Pending New Requests:</b></label>
       <div class="col-md-3">
         <input class="form-control mr-sm-2" type="number" placeholder="Count of Pending New Requests" disabled>
       </div>
+      <!-- <div class="col-md-1"></div> -->
       <div class="col-md-2">
         <a class="
         nav-link
@@ -83,14 +84,14 @@
       <thead class="table-light">
         <tr>
           <th></th>
-          <th>Veels ID</th>
-          <th>Mapped Date</th>
-          <th>Owner Name</th>
-          <th>Contact Number</th>
-          <th>Company Name</th>
-          <th>Status</th>
-          <th>Accept</th>
-          <th>Decline</th>
+          <th><b>Veels ID</b></th>
+          <th><b>Mapped Date</b></th>
+          <th><b>Owner Name</b></th>
+          <th><b>Contact Number</b></th>
+          <th><b>Company Name</b></th>
+          <th><b>Status</b></th>
+          <th><b>Accept</b></th>
+          <th><b>Decline</b></th>
         </tr>
       </thead>
       <tbody *ngFor="let kyc of kycData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
@@ -128,11 +129,11 @@
               <thead class="table-light"> </thead>
               <tbody>
                 <tr>
-                  <th>Email</th>
-                  <th>Payment Status</th>
-                  <th>Waive Off Action</th>
-                  <th>SMS Status</th>
-                  <th>Mail Status</th>
+                  <th><b>Email</b></th>
+                  <th><b>Payment Status</b></th>
+                  <th><b>Waive Off Action</b></th>
+                  <th><b>SMS Status</b></th>
+                  <th><b>Mail Status</b></th>
                 </tr>
                 <tr>
                   <td>{{kyc.email1}}</td>

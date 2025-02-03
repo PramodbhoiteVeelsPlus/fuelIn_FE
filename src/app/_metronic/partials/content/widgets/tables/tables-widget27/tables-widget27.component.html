@@ -6,8 +6,8 @@
                     <form [formGroup]="filterForm">
                         <div class="row">
                             <div class="col-auto">
-                                <label for="example-text-input">Select Petrol
-                                    Pump</label>
+                                <label for="example-text-input"><b>Select Petrol
+                                    Pump</b></label>
                                 <input class="form-control" type="text" list="allDealerList"
                                     placeholder="Select Pump Name" (change)="getDealerId($event)">
                                 <datalist id="allDealerList">
@@ -15,7 +15,7 @@
                                 </datalist>
                             </div>
                             <div class="col-auto">
-                                <label for="example-text-input">Select Status</label>
+                                <label for="example-text-input"><b>Select Status</b></label>
                                 <select class="form-control" formControlName="status" style="width: 180px;"
                                     placeholder="Status" required>
                                     <option value=""> Select </option>
@@ -25,13 +25,13 @@
                                 </select>
                             </div>
                             <div class="col-auto">
-                                <label> Start Date</label>
+                                <label><b> Start Date</b></label>
                                 <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" readonly
                                     style="background-color: #ffffff;" (click)="startDate.toggle()"
                                     formControlName="startDate" ngbDatepicker #startDate="ngbDatepicker">
                             </div>
                             <div class="col-auto">
-                                <label> End Date</label>
+                                <label><b> End Date</b></label>
                                 <input class="form-control" placeholder="DD-MM-YYYY" name="endDate" readonly
                                     style="background-color: #ffffff;" (click)="endDate.toggle()"
                                     formControlName="endDate" ngbDatepicker #endDate="ngbDatepicker">
@@ -73,17 +73,17 @@
                         <table id="excel-table" class="table table-hover table-striped">
                             <thead class="table-light">
                                 <tr>
-                                    <th style="text-align: left;"> Sr.No </th>
-                                    <th style="text-align: left;"> Dealer VFId </th>
-                                    <th style="text-align: left;"> Petrol Pump </th>
-                                    <th style="text-align: left;"> Dealer Name </th>
-                                    <th style="text-align: left;"> Dealer Number </th>
-                                    <th style="text-align: left;"> Referral Date </th>
-                                    <th style="text-align: left;"> Owner Name </th>
-                                    <th style="text-align: left;"> Mobile Number </th>
-                                    <th style="text-align: left;"> Company Name </th>
-                                    <th style="text-align: left;"> Status </th>
-                                    <th style="text-align: left;"> Action</th>
+                                    <th style="text-align: left;"><b> Sr.No </b></th>
+                                    <th style="text-align: left;"><b> Dealer VFId </b></th>
+                                    <th style="text-align: left;"><b> Petrol Pump </b></th>
+                                    <th style="text-align: left;"><b> Dealer Name </b></th>
+                                    <th style="text-align: left;"><b> Dealer Number </b></th>
+                                    <th style="text-align: left;"><b> Referral Date </b></th>
+                                    <th style="text-align: left;"><b> Owner Name </b></th>
+                                    <th style="text-align: left;"><b> Mobile Number </b></th>
+                                    <th style="text-align: left;"><b> Company Name </b></th>
+                                    <th style="text-align: left;"><b> Status </b></th>
+                                    <th style="text-align: left;"><b> Action</b></th>
                                 </tr>
                             </thead>
 
@@ -144,7 +144,7 @@
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <label class="labelNewMargin">Status :</label>
+                                        <label class="labelNewMargin"><b>Status :</b></label>
                                     </div>
                                     <div class="col-md-6">
                                         <select class="form-control" [(ngModel)]="updatestatus"
@@ -158,7 +158,7 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <label class="labelNewMargin">Remark:</label>
+                                        <label class="labelNewMargin"><b>Remark:</b></label>
                                     </div>
                                     <div class="col-md-6">
                                         <input class="form-control" max="15"
@@ -195,7 +195,7 @@
                                 <form [formGroup]="referForm">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <label class="labelNewMargin"> Date:</label>
+                                            <label class="labelNewMargin"><b> Date:</b></label>
                                         </div>
                                         <div class="col-md-6">
                                             <input class="form-control" placeholder="DD-MM-YYYY" name="date" readonly
@@ -206,7 +206,7 @@
                                     <br>
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <label class="labelNewMargin">Details:</label>
+                                            <label class="labelNewMargin"><b>Details:</b></label>
                                         </div>
                                         <div class="col-md-6">
                                             <input class="form-control" formControlName="details">
@@ -221,7 +221,7 @@
                                         <button type="submit" class="btn btn-primary"
                                             (click)="addReferralDetails()">Submit</button>
                                     </div>
-                                    <div class="col-md-1"></div>
+                                    <!-- <div class="col-md-1"></div> -->
                                     <div class="col-md-2">
                                         <button type="submit" class="btn btn-danger" (click)="cancel()">Cancel</button>
                                     </div>
@@ -232,10 +232,10 @@
                                     <table id="excel-table" class="table table-hover table-striped">
                                         <thead class="table-light">
                                             <tr>
-                                                <th style="text-align: center;"> Sr.No </th>
-                                                <th style="text-align: center;"> Date </th>
-                                                <th style="text-align: center;"> Details </th>
-                                                <th style="text-align: center;"> Action </th>
+                                                <th style="text-align: center;"><b> Sr.No </b></th>
+                                                <th style="text-align: center;"><b> Date </b></th>
+                                                <th style="text-align: center;"><b> Details </b></th>
+                                                <th style="text-align: center;"><b> Action </b></th>
                                             </tr>
                                         </thead>
 
@@ -283,7 +283,7 @@
                                     <div class="modal-body">
                                         <div class="row">
                                             <div class="col-md-3">
-                                                <label class="labelNewMargin">Date :</label>
+                                                <label class="labelNewMargin"><b>Date :</b></label>
                                             </div>
                                             <!-- <div class="col-md-6">
                                                 <input class="form-control" placeholder="DD-MM-YYYY" [(ngModel)]="date" [ngModelOptions]="{standalone: true}"
@@ -293,7 +293,7 @@
                                         <br>
                                         <div class="row">
                                             <div class="col-md-3">
-                                                <label class="labelNewMargin">Details:</label>
+                                                <label class="labelNewMargin"><b>Details:</b></label>
                                             </div>
                                             <div class="col-md-6">
                                                 <input class="form-control" [(ngModel)]="details"
