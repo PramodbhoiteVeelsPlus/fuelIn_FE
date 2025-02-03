@@ -7,7 +7,7 @@
           <form [formGroup]="filterForm">
             <div class="row">
               <div class="col-md-2"></div>
-              <label for="example-text-input" class="col-auto col-form-label">Month</label>
+              <label for="example-text-input" class="col-auto col-form-label"><b>Month</b></label>
               <div class="col-md-1" style="width: 120px;">
                 <select class="form-select" formControlName="month" required>
                   <option value="Jan"> Jan </option>
@@ -25,7 +25,7 @@
                 </select>
               </div>
 
-              <label for="example-text-input" class="col-auto col-form-label">Year</label>
+              <label for="example-text-input" class="col-auto col-form-label"><b>Year</b></label>
               <div class="col-md-1" style="width: 120px;">
                 <select class="form-select" formControlName="year" required>
                   <option value={{currentYear}}> {{currentYear}} </option>
@@ -94,11 +94,11 @@
               <table class="table table-centered table-nowrap">
                 <thead class="table-light">
                   <tr>
-                    <th style="text-align: center"> Sr.No </th>
-                    <th style="text-align: center"> Product </th>
-                    <th style="text-align: center"> Quantity </th>
-                    <th style="text-align: center"> Amount </th>
-                    <th style="text-align: center"> Variation Percentage </th>
+                    <th style="text-align: center"><b> Sr.No </b></th>
+                    <th style="text-align: center"><b> Product </b></th>
+                    <th style="text-align: center"><b> Quantity </b></th>
+                    <th style="text-align: center"><b> Amount </b></th>
+                    <th style="text-align: center"><b> Variation Percentage </b></th>
                     <th> </th>
                   </tr>
                 </thead>

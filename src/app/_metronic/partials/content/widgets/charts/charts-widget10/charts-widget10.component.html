@@ -29,19 +29,19 @@
       <table class="table table-centered table-nowrap">
         <thead>
           <tr>
-            <th align=left><b>Sr. No.</b></th>
-            <th align=left><b>Tank</b></th>
-            <th align=left><b>Product</b></th>
-            <th align=left><b>Volume</b></th>
-            <th align=left><b>Pump</b></th>
-            <th align=left><b>Nozzle</b></th>
-            <th align=left><b>Action</b></th>
+            <th style="text-align: center;"><b>Sr. No.</b></th>
+            <th style="text-align: center;"><b>Tank</b></th>
+            <th style="text-align: center;"><b>Product</b></th>
+            <th style="text-align: center;"><b>Volume</b></th>
+            <th style="text-align: center;"><b>Pump</b></th>
+            <th style="text-align: center;"><b>Nozzle</b></th>
+            <th style="text-align: center;"><b>Action</b></th>
           </tr>
         </thead>
         <tbody *ngFor="let nozzle of SetNozzelData; let i = index;">
           <tr>
-            <td>{{i+1}}</td>
-            <td>
+            <td style="text-align: center;">{{i+1}}</td>
+            <td style="text-align: center;">
 
               <select class="form-control" style="color: #9EA79E;" [(ngModel)]="nozzle.tank"
                 [ngModelOptions]="{standalone: true}" (blur)="setNozzelForTankNo(i)">
@@ -54,18 +54,18 @@
 
             </td>
 
-            <td>
+            <td style="text-align: center;">
               <input type="text" class="form-control" [(ngModel)]="nozzle.product"
                 oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
                 [ngModelOptions]="{standalone: true}" placeholder="Enter Product" disabled />
             </td>
 
-            <td>
+            <td style="text-align: center;">
               <input type="text" class="form-control" [(ngModel)]="nozzle.tankVolume"
                 [ngModelOptions]="{standalone: true}" placeholder="Enter volume" disabled />
             </td>
 
-            <td>
+            <td style="text-align: center;">
 
               <select class="form-control" style="color: #9EA79E;" [(ngModel)]="nozzle.pump"
                 [ngModelOptions]="{standalone: true}" (blur)="setDuNo()">
@@ -94,7 +94,7 @@
 
 
             </td>
-            <td>
+            <td style="text-align: center;">
               <select class="form-control" style="color: #9EA79E;" [(ngModel)]="nozzle.nozzel"
                 [ngModelOptions]="{standalone: true}" (blur)="setNozzel()">
                 <option value="">select nozzle</option>
@@ -123,7 +123,7 @@
             </td>
 
 
-            <td>&nbsp;
+            <td style="text-align: center;">&nbsp;
 
               <button type="submit" class="btn btn-success" (click)="validateSetupNozzlesForm(i)">
                 Add
@@ -158,23 +158,23 @@
       <table class="table table-centered table-nowrap">
         <thead>
           <tr>
-            <th style="text-align: left;"><b>Sr. No.</b></th>
-            <th style="text-align: left;"><b>Tank</b></th>
-            <th style="text-align: left;"><b>Pump</b></th>
-            <th style="text-align: left;"><b>Nozzle</b></th>
-            <th style="text-align: left;"><b>Volume</b></th>
-            <th style="text-align: left;"><b>Product</b></th>
+            <th style="text-align: center;"><b>Sr. No.</b></th>
+            <th style="text-align: center;"><b>Tank</b></th>
+            <th style="text-align: center;"><b>Pump</b></th>
+            <th style="text-align: center;"><b>Nozzle</b></th>
+            <th style="text-align: center;"><b>Volume</b></th>
+            <th style="text-align: center;"><b>Product</b></th>
           </tr>
         </thead>
         <tbody *ngFor="let data of pumpInfraDetails.data  ; let i = index">
 
           <tr>
-            <td style="text-align: left;"> {{i+1}} </td>
-            <td style="text-align: left;"> {{data.tankNo | titlecase }} </td>
-            <td style="text-align: left;"> {{data.duNo | titlecase }} </td>
-            <td style="text-align: left;"> {{data.nozNo | titlecase }} </td>
-            <td style="text-align: left;"> {{data.tankVolume}} </td>
-            <td style="text-align: left;"> {{data.productName }}</td>
+            <td style="text-align: center;"> {{i+1}} </td>
+            <td style="text-align: center;"> {{data.tankNo | titlecase }} </td>
+            <td style="text-align: center;"> {{data.duNo | titlecase }} </td>
+            <td style="text-align: center;"> {{data.nozNo | titlecase }} </td>
+            <td style="text-align: center;"> {{data.tankVolume}} </td>
+            <td style="text-align: center;"> {{data.productName }}</td>
 
           </tr>
         </tbody>

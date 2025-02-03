@@ -75,13 +75,13 @@
                       <table class="table table-hover table-striped">
                         <tbody *ngFor="let data of addLubePurchaseArray; let i = index;">
                           <tr>
-                            <th>Product</th>
-                            <th>Quantity</th>
-                            <th>Unit</th>
-                            <th>Quantity In Pieces</th>
-                            <th>Taxable Amount</th>
-                            <th>Tax %</th>
-                            <th>GST Amount</th>
+                            <th><b>Product</b></th>
+                            <th><b>Quantity</b></th>
+                            <th><b>Unit</b></th>
+                            <th><b>Quantity In Pieces</b></th>
+                            <th><b>Taxable Amount</b></th>
+                            <th><b>Tax %</b></th>
+                            <th><b>GST Amount</b></th>
                           </tr>
                           <tr>
                             <td>
@@ -130,12 +130,12 @@
                             </td>
                           </tr>
                           <tr>
-                            <th>HSN/SAC Number</th>
-                            <th>CGST</th>
-                            <th>SGST</th>
-                            <th>IGST</th>
-                            <th>Total Amount</th>
-                            <th colspan="2" style="text-align: center;">Action</th>
+                            <th><b>HSN/SAC Number</b></th>
+                            <th><b>CGST</b></th>
+                            <th><b>SGST</b></th>
+                            <th><b>IGST</b></th>
+                            <th><b>Total Amount</b></th>
+                            <th colspan="2" style="text-align: center;"><b>Action</b></th>
                           </tr>
                           <tr>
                             <td>
@@ -158,8 +158,8 @@
                               <input type="number" class="form-control" [(ngModel)]="data.totalAmt"
                                 [ngModelOptions]="{standalone: true}" placeholder="Total Amount" disabled />
                             </td>
-                            <td style="text-align: right;">
-                              <button type="submit" class="btn btn-success" (click)="addLubePurchaseRows(i)"> &nbsp; Add
+                            <td style="text-align: center;">
+                              <button type="submit" class="btn btn-success" (click)="addLubePurchaseRows(i)"> Add
                                 &nbsp;
                               </button>
                             </td>

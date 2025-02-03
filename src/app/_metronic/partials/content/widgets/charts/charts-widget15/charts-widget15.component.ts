@@ -211,6 +211,8 @@ export class ChartsWidget15Component implements OnInit {
       this.headerName3 = this.state + '-' + this.pin + '  ' + "GST: " + this.GSTNumber;
 
     }
+    this.cashBillLubricantForm.controls['gst'].setValue("")
+    this.cashBillLubricantForm.controls['taxDetails'].setValue("INCLUDE")
     this.getProductsByDealerId(this.fuelDealerId);
     this.getCorporateMappedListByDealerId(this.fuelDealerId);
     this.getLubricants(this.fuelDealerId);

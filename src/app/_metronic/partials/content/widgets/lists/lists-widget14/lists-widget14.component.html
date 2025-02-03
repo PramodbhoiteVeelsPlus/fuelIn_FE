@@ -6,7 +6,7 @@
         <div class="card-body">
           <form [formGroup]="shiftForm">
             <div class="row">
-              <label for="example-text-input" class="col-auto col-form-label">Select Shift</label>
+              <label for="example-text-input" class="col-auto col-form-label"><b>Select Shift</b></label>
               <div class="col-md-3">
                 <select class="form-control" formControlName="shiftTimeId" required>
                   <option value=""> Select Shift </option>
@@ -16,7 +16,7 @@
                   </option>
                 </select>
               </div>
-              <label for="example-text-input" class="col-auto col-form-label">Date</label>
+              <label for="example-text-input" class="col-auto col-form-label"><b>Date</b></label>
 
               <div class="col-auto">
                 <input class="form-control" placeholder="DD-MM-YYYY" name="endDate" readonly
@@ -143,7 +143,7 @@
   <br>
   <form [formGroup]="shiftForm">
     <div class="row">
-      <label for="example-text-input" class="col-auto col-form-label">Select Product</label>
+      <label for="example-text-input" class="col-auto col-form-label"><b>Select Product</b></label>
 
       <div class="col-md-2">
         <select class="form-control" formControlName="productName" (change)="getByProduct($event)" required>

@@ -43,7 +43,7 @@
           <br><br>
           <form [formGroup]="filterForm">
             <div class="mb-3 row">
-              <label for="example-text-input" class="col-auto col-form-label">Date Range</label>
+              <label for="example-text-input" class="col-auto col-form-label"><b>Date Range</b></label>
               <div class="col-md-2">
                 <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
                   name="startDate" ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker
@@ -56,7 +56,7 @@
               </div>
               <div class="col-md-2">
                 <button type="button" class="btn btn-primary" name="button" (click)="getDetailsByFilter()">
-                  submit
+                  Submit
                 </button>
               </div>
               <div class="col-md-2"></div>
@@ -74,7 +74,7 @@
             <div class="col-sm-4">
               <div class="search-box me-2 mb-2 d-inline-block">
                 <div class="position-relative">
-                  <input class="form-control mr-md-4" type="text" placeholder="search"
+                  <input class="form-control mr-md-4" type="text" placeholder="search" style="margin-left: 94px"
                     oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
                     [(ngModel)]="searchData" [ngModelOptions]="{standalone: true}" (input)="onSearch()">
                   <i class="bx bx-search-alt search-icon"></i>
@@ -138,11 +138,11 @@
                       <thead class="table-light">
                         <tr>
                           <th></th>
-                          <th style="text-align: left;">HSN/SAC Number</th>
-                          <th style="text-align: left;">CGST</th>
-                          <th style="text-align: left;">SGST</th>
-                          <th style="text-align: left;">IGST</th>
-                          <th style="text-align: left;">Created By</th>
+                          <th style="text-align: left;"><b>HSN/SAC Number</b></th>
+                          <th style="text-align: left;"><b>CGST</b></th>
+                          <th style="text-align: left;"><b>SGST</b></th>
+                          <th style="text-align: left;"><b>IGST</b></th>
+                          <th style="text-align: left;"><b>Created By</b></th>
                         </tr>
                       </thead>
                       <tbody>

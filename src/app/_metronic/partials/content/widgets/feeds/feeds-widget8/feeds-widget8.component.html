@@ -7,7 +7,7 @@
 
         <div class="mb-3 row">
           <div class="col-md-2"></div>
-          <label for="example-text-input" class="col-auto col-form-label">Month</label>
+          <label for="example-text-input" class="col-auto col-form-label"><b>Month</b></label>
           <div class="col-auto">
             <select [(ngModel)]="month" [ngModelOptions]="{standalone: true}" class="form-select" required>
               <option value="Jan"> Jan </option>
@@ -25,7 +25,7 @@
             </select>
           </div>
 
-          <label for="example-text-input" class="col-auto col-form-label">Year</label>
+          <label for="example-text-input" class="col-auto col-form-label"><b>Year</b></label>
           <div class="col-auto">
             <select class="form-select" [(ngModel)]="year" [ngModelOptions]="{standalone: true}" required>
               <option value={{currentYear}}> {{currentYear}} </option>
@@ -51,7 +51,7 @@
         <br><br>
 
         <div *ngIf="allProfitReportDetails.length" class="table-responsive mb-0">
-          <table class="table table-centered table-nowrap">
+          <table class="table table-centered">
             <thead class="table-light">
               <tr>
                 <th><b> Month </b></th>

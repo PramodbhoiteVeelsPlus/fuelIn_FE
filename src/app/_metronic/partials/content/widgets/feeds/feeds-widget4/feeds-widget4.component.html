@@ -16,7 +16,7 @@
       <form [formGroup]="filterForm">
         <div class="row">
           <div class="col-md-1"></div>
-          <label for="example-text-input" class="col-auto col-form-label">Date Range </label>
+          <label for="example-text-input" class="col-auto col-form-label"><b>Date Range </b></label>
           <div class="col-md-2">
             <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
               name="startDate" ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker
@@ -85,7 +85,7 @@
         </div>
         <div class="modal-body">
           <div class="row">
-            <label for="example-text-input" class="col-md-3 col-form-label">Date </label>
+            <label for="example-text-input" class="col-md-6 col-form-label"><b>Date </b></label>
             <div class="col-md-6">
               <input class="form-control" placeholder="DD/MM/YYYY" name="date" (click)="startDate.toggle()" readonly
                 style="background-color: #ffffff;" [(ngModel)]="date" [ngModelOptions]="{standalone: true}"
@@ -94,7 +94,7 @@
           </div>
           <br><br>
           <div class="row">
-            <label for="example-text-input" class="col-md-3 col-form-label">Opening Balance </label>
+            <label for="example-text-input" class="col-md-6 col-form-label"><b>Opening Balance </b></label>
             <div class="col-md-6">
               <input class="form-control" type="number" [(ngModel)]="balance" [ngModelOptions]="{standalone: true}"
                 placeholder="Enter Amount">

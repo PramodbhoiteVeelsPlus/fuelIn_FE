@@ -28,17 +28,17 @@
       <table class="table table-centered table-nowrap">
         <thead>
           <tr>
-            <th><b>Sr. No.</b></th>
-            <th><b>Tank</b></th>
-            <th><b>Volume</b></th>
-            <th><b>Product</b></th>
-            <th><b>Action</b></th>
+            <th style="text-align: center;"><b>Sr. No.</b></th>
+            <th style="text-align: center;"><b>Tank</b></th>
+            <th style="text-align: center;"><b>Volume</b></th>
+            <th style="text-align: center;"><b>Product</b></th>
+            <th style="text-align: center;"><b>Action</b></th>
           </tr>
         </thead>
         <tbody *ngFor="let charges of setTankData; let i = index;">
           <tr>
-            <td>{{i+1}}</td>
-            <td>
+            <td style="text-align: center;">{{i+1}}</td>
+            <td style="text-align: center;">
               <select class="form-control" style="color: #9EA79E;" [(ngModel)]="charges.tank"
                 [ngModelOptions]="{standalone: true}" (blur)="setTankNo(i)">
                 <option value="">Select Tank</option>
@@ -66,12 +66,12 @@
 
             </td>
 
-            <td>
+            <td style="text-align: center;">
               <input type="number" class="form-control" [(ngModel)]="charges.volume"
                 oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
                 [ngModelOptions]="{standalone: true}" placeholder="Enter volume" (blur)="setvolume()" />
             </td>
-            <td>
+            <td style="text-align: center;">
 
               <select class="form-control" style="color: #9EA79E;" [(ngModel)]="charges.product"
                 [ngModelOptions]="{standalone: true}" (blur)="setproductName()">
@@ -84,7 +84,7 @@
             </td>
 
 
-            <td>&nbsp;
+            <td style="text-align: center;">&nbsp;
               <button type="submit" class="btn btn-success" (click)="validateSetupTankForm(i)">
                 Add
               </button>
@@ -117,19 +117,19 @@
       <table class="table table-centered table-nowrap">
         <thead>
           <tr>
-            <th><b>Sr. No.</b></th>
-            <th><b>Tank</b></th>
-            <th><b>Volume</b></th>
-            <th><b>Product</b></th>
+            <th style="text-align: center;"><b>Sr. No.</b></th>
+            <th style="text-align: center;"><b>Tank</b></th>
+            <th style="text-align: center;"><b>Volume</b></th>
+            <th style="text-align: center;"><b>Product</b></th>
           </tr>
         </thead>
         <tbody *ngFor="let data of allTankDetails.data  ; let i = index">
 
           <tr>
-            <td style="text-align: left;"> {{i+1}} </td>
-            <td style="text-align: left;"> {{data.tankNo | titlecase }} </td>
-            <td style="text-align: left;"> {{data.tankVolume}} </td>
-            <td style="text-align: left;"> {{data.productName}} </td>
+            <td style="text-align: center;"> {{i+1}} </td>
+            <td style="text-align: center;"> {{data.tankNo | titlecase }} </td>
+            <td style="text-align: center;"> {{data.tankVolume}} </td>
+            <td style="text-align: center;"> {{data.productName}} </td>
 
           </tr>
         </tbody>

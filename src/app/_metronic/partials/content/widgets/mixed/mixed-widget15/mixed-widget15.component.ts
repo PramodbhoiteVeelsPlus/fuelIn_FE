@@ -519,15 +519,15 @@ export class MixedWidget15Component implements OnInit {
   }
   
   getPosDetails(fuelDealerId: any) {
-    this.spinner.show()
     this.posData.length = 0;
+    this.spinner.show()
     const data = {
       fuelDealerId: fuelDealerId,
       startDate: moment(this.shiftForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
       endDate: moment(this.shiftForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
     };
     this.post.getPosDetailsPOST(data).subscribe((res) => {
-      if (res.status == 'OK') {
+      if (res.status == 'OK' && res.data.length) {
         this.posDetails = res.data;
 
         this.posDetails.map((shift: { openDate: moment.MomentInput; firstName: string; lastName: string; fuelShiftTimeDetails: string; fuelShiftTimeShiftName: string; terminalName: string; paytmTotalAmount: number; transacId: string; }) => {
@@ -555,6 +555,7 @@ export class MixedWidget15Component implements OnInit {
         })
 
       } else {
+        alert("Data Not Found..!")
         this.spinner.hide();
         this.cd.detectChanges()
 

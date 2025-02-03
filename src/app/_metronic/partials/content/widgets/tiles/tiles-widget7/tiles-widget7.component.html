@@ -72,15 +72,15 @@
         <table class="table table-centered table-nowrap">
           <thead class="table-light">
             <tr>
-              <th style="text-align: left;"><b>Sr. No.</b></th>
-              <th style="text-align: left;"><b>Account Number</b></th>
-              <th style="text-align: left;"><b>Mobile Number</b></th>
-              <th style="text-align: left;"><b>IFSC</b></th>
-              <th style="text-align: left;"><b>Account Type</b></th>
-              <th style="text-align: left;"><b>Bank Name</b></th>
-              <th style="text-align: left;"><b>UPI Id</b></th>
-              <th style="text-align: left;"><b>Default Account</b></th>
-              <th style="text-align: left;"><b>Action</b></th>
+              <th style="text-align: center;"><b>Sr. No.</b></th>
+              <th style="text-align: center;"><b>Account Number</b></th>
+              <th style="text-align: center;"><b>Mobile Number</b></th>
+              <th style="text-align: center;"><b>IFSC</b></th>
+              <th style="text-align: center;"><b>Account Type</b></th>
+              <th style="text-align: center;"><b>Bank Name</b></th>
+              <th style="text-align: center;"><b>UPI Id</b></th>
+              <th style="text-align: center;"><b>Default Account</b></th>
+              <th style="text-align: center;"><b>Action</b></th>
             </tr>
           </thead>
           <tbody *ngFor="let data of bankAccList; let i = index">
@@ -143,7 +143,7 @@
                   <div class="row">
                     <div class="col-md-1"></div>
                     <div class="col-md-2">
-                      <label class="labelNewMargin">Account Number <span style="color: red;">*</span></label>
+                      <label class="labelNewMargin"><b>Account Number </b><span style="color: red;">*</span></label>
                     </div>
                     <div class="col-md-3">
                       <input class="form-control form-control-sm mr-1 w-40" type="number"
@@ -151,7 +151,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-2">
-                      <label class="labelNewMargin">Bank Name</label>
+                      <label class="labelNewMargin"><b>Bank Name</b></label>
                     </div>
                     <div class="col-md-3">
                       <input class="form-control form-control-sm mr-1 w-40"
@@ -163,7 +163,7 @@
                   <div class="row">
                     <div class="col-md-1"></div>
                     <div class="col-md-2">
-                      <label class="labelNewMargin">Mobile Number<span style="color: red;">*</span></label>
+                      <label class="labelNewMargin"><b>Mobile Number</b><span style="color: red;">*</span></label>
                     </div>
                     <div class="col-md-3">
                       <input class="form-control form-control-sm mr-1 w-40" type="number" formControlName="phone"
@@ -172,7 +172,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-2">
-                      <label class="labelNewMargin">Account Holder</label>
+                      <label class="labelNewMargin"><b>Account Holder</b></label>
                     </div>
                     <div class="col-md-3">
                       <input class="form-control form-control-sm mr-1 w-40"
@@ -184,7 +184,7 @@
                   <div class="row">
                     <div class="col-md-1"></div>
                     <div class="col-md-2">
-                      <label class="labelNewMargin">IFSC <span style="color: red;">*</span></label>
+                      <label class="labelNewMargin"><b>IFSC </b><span style="color: red;">*</span></label>
                     </div>
                     <div class="col-md-3">
                       <input class="form-control form-control-sm mr-1 w-40" formControlName="ifsc"
@@ -193,7 +193,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-2">
-                      <label class="labelNewMargin"> Branch Name</label>
+                      <label class="labelNewMargin"><b> Branch Name</b></label>
                     </div>
                     <div class="col-md-3">
                       <input class="form-control form-control-sm mr-1 w-40"
@@ -205,7 +205,7 @@
                   <div class="row">
                     <div class="col-md-1"></div>
                     <div class="col-md-2">
-                      <label class="labelNewMargin">UPI</label>
+                      <label class="labelNewMargin"><b>UPI</b></label>
                     </div>
                     <div class="col-md-3">
                       <input class="form-control form-control-sm mr-1 w-40" type="text" formControlName="upiId"

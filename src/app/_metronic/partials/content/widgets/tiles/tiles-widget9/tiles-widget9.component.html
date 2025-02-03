@@ -2,7 +2,7 @@
     <div class="card-body">
         <form [formGroup]="filterForm">
             <div class="mb-3 row">
-                <label for="example-text-input" class="col-md-2 col-form-label">Year</label>
+                <label for="example-text-input" class="col-md-2 col-form-label"><b>Year</b></label>
                 <div class="col-md-10">
                     <select formControlName="year" class="form-select" required (change)="selectYear($event)">
                         <option value={{currentYear}}> {{currentYear}} </option>
@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col-md-2">
                     <br><br>
-                    <label> Month </label>
+                    <label><b> Month </b></label>
                 </div>
                 <div class="col-md-10">
                     <div class="p-3">
@@ -29,7 +29,7 @@
             <br> <br>
 
             <div class="mb-3 row">
-                <label for="example-text-input" class="col-md-2 col-form-label">Product</label>
+                <label for="example-text-input" class="col-md-2 col-form-label"><b>Product</b></label>
                 <div class="col-md-10">
                     <select formControlName="product" class="form-select" (change)="getRateByProduct($event)" required>
                         <option value=""> Select Product </option>
@@ -46,16 +46,16 @@
                             <thead>
                                 <tr>
                                     <th style="text-align: center;border: 1px solid #272829; ">
-                                        Product
+                                       <b> Product</b>
                                     </th>
                                     <th style="text-align: left;border: 1px solid #272829; ">
-                                        Meter Sales (Qty)
+                                       <b> Meter Sales (Qty)</b>
                                     </th>
                                     <th style="text-align: left;border: 1px solid #272829; ">
-                                        Meter Sales (Rs)
+                                       <b> Meter Sales (Rs)</b>
                                     </th>
                                     <th style="text-align: left;border: 1px solid #272829; ">
-                                        Total Stock (Qty)
+                                        <b>Total Stock (Qty)</b>
                                     </th>
                                 </tr>
                             </thead>
@@ -745,13 +745,13 @@
                             <table id="excel-table" *ngIf="!isUpdateCol1" class="table table-centered table-nowrap">
                                 <thead>
                                     <tr>
-                                        <th style="text-align: left;"> Date </th>
-                                        <th style="text-align: left;"> Rate </th>
-                                        <th style="text-align: left;"> Dip Sales (Qty) </th>
-                                        <th style="text-align: left;"> Dip Sales (Rs) </th>
-                                        <th style="text-align: left;"> Total Stock (Qty) </th>
-                                        <th style="text-align: left;"> Total Stock (Rs) </th>
-                                        <th style="text-align: left;"> Receipts (Qty)</th>
+                                        <th style="text-align: left;"><b> Date </b></th>
+                                        <th style="text-align: left;"><b> Rate </b></th>
+                                        <th style="text-align: left;"><b> Dip Sales (Qty) </b></th>
+                                        <th style="text-align: left;"><b> Dip Sales (Rs) </b></th>
+                                        <th style="text-align: left;"><b> Total Stock (Qty) </b></th>
+                                        <th style="text-align: left;"><b> Total Stock (Rs) </b></th>
+                                        <th style="text-align: left;"><b> Receipts (Qty)</b></th>
 
                                         <th *ngFor="let data of tkDSRData" style="text-align: left;">
                                             {{data.tank}} <br>
@@ -843,19 +843,19 @@
                             <table id="excel-table" class="table table-centered table-nowrap">
                                 <thead>
                                     <tr>
-                                        <th style="text-align: left;"> Date </th>
-                                        <th style="text-align: left;"> Rate </th>
-                                        <th style="text-align: left;"> Opening Stock </th>
-                                        <th style="text-align: left;"> Receipts</th>
-                                        <th style="text-align: left;"> Total stock </th>
-                                        <th style="text-align: left;"> Meter Sales </th>
-                                        <th style="text-align: left;"> Pump Testing </th>
-                                        <th style="text-align: left;"> Net Meter Sales </th>
-                                        <th style="text-align: left;"> Net Dip Sales </th>
-                                        <th style="text-align: left;"> Variation </th>
-                                        <th style="text-align: left;"> MTD Meter Sales </th>
-                                        <th style="text-align: left;"> MTD Dip Sales </th>
-                                        <th style="text-align: left;"> MTD Variation </th>
+                                        <th style="text-align: left;"><b> Date </b></th>
+                                        <th style="text-align: left;"><b> Rate </b></th>
+                                        <th style="text-align: left;"><b> Opening Stock </b></th>
+                                        <th style="text-align: left;"><b> Receipts</b></th>
+                                        <th style="text-align: left;"><b> Total stock </b></th>
+                                        <th style="text-align: left;"><b> Meter Sales </b></th>
+                                        <th style="text-align: left;"><b> Pump Testing </b></th>
+                                        <th style="text-align: left;"><b> Net Meter Sales </b></th>
+                                        <th style="text-align: left;"><b> Net Dip Sales </b></th>
+                                        <th style="text-align: left;"><b> Variation </b></th>
+                                        <th style="text-align: left;"><b> MTD Meter Sales </b></th>
+                                        <th style="text-align: left;"><b> MTD Dip Sales</b> </th>
+                                        <th style="text-align: left;"><b> MTD Variation </b></th>
 
                                     </tr>
                                 </thead>

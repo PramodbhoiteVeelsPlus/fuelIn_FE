@@ -158,6 +158,7 @@ export class TablesWidget30Component {
   addVehicle = new addVehicle();
   crAmt: any;
   crDays: string;
+  addressId: any
 
   constructor(
     private post: WidgetService,
@@ -432,13 +433,14 @@ export class TablesWidget30Component {
       })
   }
 
-  updateName(editName: any, fuelDealerCustomerMapId: any, companyName: any, mappingCustomerName: any, GSTNumber: string, mappingEmail: string, maxCreditAmount: any, creditDayLimit: any, mappingAddress1: any, mappingAddress2: any, mappingCity: any) {
+  updateName(editName: any, fuelDealerCustomerMapId: any, companyName: any, mappingCustomerName: any, GSTNumber: string, mappingEmail: string, maxCreditAmount: any, creditDayLimit: any, mappingAddress1: any, mappingAddress2: any, mappingCity: any, addressId: any) {
     this.updateId = fuelDealerCustomerMapId
     this.updateCompanyName = companyName
     this.updatePersonName = mappingCustomerName
     this.mappingAddress1 = mappingAddress1
     this.mappingAddress2 = mappingAddress2
     this.mappingCity = mappingCity
+    this.addressId = addressId
     if (GSTNumber == 'undefined' || GSTNumber == 'null') {
       this.updateGST = ''
     } else {
@@ -476,7 +478,7 @@ export class TablesWidget30Component {
     this.spinner.show();
     let data = {
       customerMapId: fuelDealerCustomerMapId,
-    };
+    }; 
 
     this.post.checkCustomerPreviousOutstandingIsAddedOrNotPOST(data)
       .subscribe(res => {
@@ -734,8 +736,9 @@ export class TablesWidget30Component {
           mappingAddress1: this.mappingAddress1,
           mappingAddress2: this.mappingAddress2,
           mappingCity: this.mappingCity,
+          addressId: this.addressId,
         }
-        this.post.updateMappingCompanyNamePost(data)
+        this.post.updateCompanyNameAddressPOST(data)
           .subscribe(res => {
             if (res.status == 'OK') {
               alert("Update Successfully..")

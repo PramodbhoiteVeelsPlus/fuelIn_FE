@@ -136,11 +136,11 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <th style="text-align: center;">Tax %</th>
-                    <th style="text-align: center;">Tax Amount</th>
-                    <th style="text-align: center;">Product HSN/SAC No</th>
-                    <th style="text-align: left;">Key Person Mobile</th>
-                    <th *ngIf="accessGroup == '12' " style="text-align: center;">Created By</th>
+                    <th style="text-align: center;"><b>Tax %</b></th>
+                    <th style="text-align: center;"><b>Tax Amount</b></th>
+                    <th style="text-align: center;"><b>Product HSN/SAC No</b></th>
+                    <th style="text-align: center;"><b>Key Person Mobile</b></th>
+                    <th *ngIf="accessGroup == '12' " style="text-align: center;"><b>Created By</b></th>
                     <th>&nbsp;</th>
                     <th>&nbsp;</th>
                     <th>&nbsp;</th>
@@ -149,8 +149,8 @@
                     <td style="text-align: center;"> {{data.fuelcreditGST}} % </td>
                     <td style="text-align: center;"> {{data.fuelcreditGSTAmount | number:'1.2-2'}} </td>
                     <td style="text-align: center;"> {{data.fuelcreditHsnSacNumber}}</td>
-                    <td style="text-align: left;"> {{data.hostPhone}} </td>
-                    <td *ngIf="accessGroup == '12' " style="text-align: left;">
+                    <td style="text-align: center;"> {{data.hostPhone}} </td>
+                    <td *ngIf="accessGroup == '12' " style="text-align: center;">
                       <!-- {{ firstName1 }} -->
                     </td>
                     <td>&nbsp;</td>

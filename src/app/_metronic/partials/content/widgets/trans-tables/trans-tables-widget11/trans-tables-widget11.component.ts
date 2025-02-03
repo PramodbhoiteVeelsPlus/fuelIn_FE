@@ -96,6 +96,7 @@ export class TransTablesWidget11Component implements OnInit {
     // var managerData = JSON.parse(localStorage.getItem('managerData') || '');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.accessGroup = element.accessGroupId
+    this.dropPersonId = ""
     this.getAccessByDealerId(this.fuelDealerId)
     this.cd.detectChanges()
   }

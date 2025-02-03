@@ -97,7 +97,7 @@
 
     <ng-template #amount><br>
         <div class="row">
-            <div class="col-md-9"></div>
+            <div class="col-md-10"></div>
         
             <div class="col-md-1">
                 <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF" (click)="exportToPDF31()"><i
@@ -115,16 +115,16 @@
         <table class="table table-centered">
             <thead class="table-light">
                 <tr>
-                    <th style="text-align: center;"><b>date</b></th>
-                    <th style="text-align: center;"><b>meter sales</b></th>
-                    <th style="text-align: center;"><b>credit (a)</b></th>
-                    <th style="text-align: center;"><b>digital (b)</b></th>
-                    <th style="text-align: center;"><b>cash (c)</b></th>
-                    <th style="text-align: center;"><b>expenses</b></th>
-                    <th style="text-align: center;"><b>short</b></th>
-                    <th style="text-align: center;"><b>total tally (a+b+c)</b></th>
+                    <th style="text-align: center;"><b>Date</b></th>
+                    <th style="text-align: center;"><b>Meter Sales</b></th>
+                    <th style="text-align: center;"><b>Credit (a)</b></th>
+                    <th style="text-align: center;"><b>Digital (b)</b></th>
+                    <th style="text-align: center;"><b>Cash (c)</b></th>
+                    <th style="text-align: center;"><b>Expenses</b></th>
+                    <th style="text-align: center;"><b>Short</b></th>
+                    <th style="text-align: center;"><b>Total Tally (a+b+c)</b></th>
                     
-                    <th style="text-align: center;" colspan="2"><b>view</b></th>
+                    <th style="text-align: center;" colspan="2"><b>View</b></th>
 
                 </tr>
             </thead>
@@ -1948,7 +1948,7 @@
         <br>
         <form [formGroup]="shiftForm">
         <div class="row">
-        <label for="example-text-input" class="col-auto col-form-label">Select Product</label>
+        <label for="example-text-input" class="col-auto col-form-label"><b>Select Product</b></label>
 
         <div class="col-md-2">
             <select class="form-control" 
@@ -1980,15 +1980,15 @@
                     <thead class="table-light">
                
                     <tr>
-                        <th style="text-align: center;"><b> date </b></th> 
-                        <th style="text-align: center;"><b> product </b></th>
-                        <th style="text-align: center;"><b> credit (quantity) 
+                        <th style="text-align: center;"><b> Date </b></th> 
+                        <th style="text-align: center;"><b> Product </b></th>
+                        <th style="text-align: center;"><b> Credit (quantity) 
                             <br> Ltr/kg </b> 
                         </th>
-                        <th style="text-align: center;"><b> meter sales (quantity) 
+                        <th style="text-align: center;"><b> Meter Sales (quantity) 
                                                         <br> Ltr/kg </b>
                         </th>
-                        <th style="text-align: center;"><b> meter sales (amount) 
+                        <th style="text-align: center;"><b> Meter Sales (amount) 
                                                         <br> Rs </b>
                         </th>
                     </tr>

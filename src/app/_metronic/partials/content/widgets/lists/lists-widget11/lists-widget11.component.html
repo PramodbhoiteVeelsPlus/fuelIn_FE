@@ -105,7 +105,7 @@
 
 <ng-template #amount><br>
   <div class="row">
-      <div class="col-md-9"></div>
+      <div class="col-md-10"></div>
 
           <div class="col-md-1">
               <span style="font-size: 35px;cursor: pointer;" (click)="exportPDFamount()"
@@ -128,16 +128,16 @@
       <table class="table table-centered table-nowrap" id="excel-table">
           <thead class="table-light">
               <tr>
-                  <th style="text-align: left;"><b> date </b></th>
-                  <th style="text-align: left;"><b> shift </b></th>
-                  <th style="text-align: left;"><b> operator name </b></th>
-                  <th style="text-align: left;"><b> meter sales </b></th>
-                  <th style="text-align: left;"><b> credit (a) </b></th>
-                  <th style="text-align: left;"><b> digital (b) </b></th>
-                  <th style="text-align: left;"><b> cash (c) </b></th>
-                  <th style="text-align: left;"><b> expenses </b></th>
-                  <th style="text-align: left;"><b> short </b></th>
-                  <th style="text-align: left;"><b> shift tally (a+b+c) </b></th>
+                  <th style="text-align: left;"><b> Date </b></th>
+                  <th style="text-align: left;"><b> Shift </b></th>
+                  <th style="text-align: left;"><b> Operator Name </b></th>
+                  <th style="text-align: left;"><b> Meter Sales </b></th>
+                  <th style="text-align: left;"><b> Credit (a) </b></th>
+                  <th style="text-align: left;"><b> Digital (b) </b></th>
+                  <th style="text-align: left;"><b> Cash (c) </b></th>
+                  <th style="text-align: left;"><b> Expenses </b></th>
+                  <th style="text-align: left;"><b> Short </b></th>
+                  <th style="text-align: left;"><b> Shift Tally (a+b+c) </b></th>
               </tr>
           </thead>
 
@@ -179,7 +179,7 @@
   <form [formGroup]="shiftForm">
 
       <div class="row">
-          <label for="example-text-input" class="col-auto col-form-label">Select Product</label>
+          <label for="example-text-input" class="col-auto col-form-label"><b>Select Product</b></label>
 
           <div class="col-md-2">
               <select class="form-control" formControlName="productName" (change)="getByProduct($event)" required>
@@ -212,18 +212,18 @@
           <table class="table table-centered table-nowrap" id="excel-table">
               <thead class="table-light">
                   <tr>
-                      <th style="text-align: left;"> Date </th>
-                      <th style="text-align: left;"> Shift </th>
-                      <th style="text-align: left;"> Operator Name </th>
-                      <th style="text-align: left;"> Product </th>
-                      <th style="text-align: left;"> Credit (Quantity)
-                          <br> Ltr/Kg
+                      <th style="text-align: left;"><b> Date </b></th>
+                      <th style="text-align: left;"><b> Shift </b></th>
+                      <th style="text-align: left;"><b> Operator Name </b></th>
+                      <th style="text-align: left;"><b> Product </b></th>
+                      <th style="text-align: left;"><b> Credit (Quantity)
+                          <br> Ltr/Kg</b>
                       </th>
-                      <th style="text-align: left;"> Meter Sales (Quantity)
-                          <br> Ltr/Kg
+                      <th style="text-align: left;"><b> Meter Sales (Quantity)
+                          <br> Ltr/Kg</b>
                       </th>
-                      <th style="text-align: left;"> Meter Sales (Amount)
-                          <br> Rs
+                      <th style="text-align: left;"><b> Meter Sales (Amount)
+                          <br> Rs</b>
                       </th>
                   </tr>
               </thead>

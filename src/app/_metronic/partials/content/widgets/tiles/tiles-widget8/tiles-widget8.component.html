@@ -87,7 +87,7 @@
             <div class="row">
               <div class="col-md-1"></div>
               <div class="col-md-5">
-                <label class="labelNewMargin">Terminal Type:</label>
+                <label class="labelNewMargin"><b>Terminal Type:</b></label>
               </div>
               <div class="col-md-6">
                 <select class="form-control" (change)="getAccountByType($event)" formControlName="terminalType"
@@ -106,7 +106,7 @@
             <div class="row">
               <div class="col-md-1"></div>
               <div class="col-md-5">
-                <label class="labelNewMargin">Terminal Name:</label>
+                <label class="labelNewMargin"><b>Terminal Name:</b></label>
               </div>
               <div class="col-md-6">
                 <input class="form-control  mr-1 w-40"
@@ -118,7 +118,7 @@
             <div class="row">
               <div class="col-md-1"></div>
               <div class="col-md-5">
-                <label class="labelNewMargin"> Select Account :</label>
+                <label class="labelNewMargin"><b> Select Account :</b></label>
               </div>
               <div class="col-md-6">
                 <span *ngIf="isOilCo">
@@ -220,7 +220,7 @@
                   <div class="row">
                     <div class="col-md-1"></div>
                     <div class="col-md-5">
-                      <label class="labelNewMargin">Terminal Name:</label>
+                      <label class="labelNewMargin"><b>Terminal Name:</b></label>
                     </div>
                     <div class="col-md-6">
                       <input class="form-control  mr-1 w-40"
@@ -232,7 +232,7 @@
                   <div class="row">
                     <div class="col-md-1"></div>
                     <div class="col-md-5">
-                      <label class="labelNewMargin">Select Account:</label>
+                      <label class="labelNewMargin"><b>Select Account:</b></label>
                     </div>
                     <div class="col-md-6">
                       <span *ngIf="isOILCOUpdate">
@@ -256,7 +256,8 @@
                     <div class="col-md-4"></div>
                     <div class="col-md-2">
                       <button type="submit" class="btn btn-success" (click)="updatePOSName()">Update</button>
-                    </div>&nbsp;&nbsp;
+                    </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <div class="col-md-2">
                       <button type="submit" class="btn btn-secondary" (click)="d('Cross click')">Cancel</button>
                     </div>

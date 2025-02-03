@@ -1,7 +1,8 @@
 <br>
 <form [formGroup]="filterForm">
   <div class="row">
-    <label for="example-text-input" class="col-auto col-form-label">Date Range </label>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label for="example-text-input" class="col-auto col-form-label"><b>Date Range </b></label>
     <div class="col-md-2">
       <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;" name="startDate"
         ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker #startDate="ngbDatepicker"
@@ -29,25 +30,26 @@
   </div>
   <br>
   <div class="row">
-    <label for="example-text-input" class="col-lg-1 col-form-label">Khata</label>
-    <div class="col-lg-6">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label for="example-text-input" class="col-lg-1 col-form-label"><b>Khata</b></label>
+    <div class="col-md-6">
       <input #myinput class="form-control" type="text" list="mappingAccData" placeholder="Select"
         formControlName="selectedCorp" (change)="getDetailsByfuelDealerCustomerMapIdId($event)">
       <datalist id="mappingAccData">
         <option *ngFor="let data of mappingAccData" [value]="data.companyName">
       </datalist>
     </div>
-    <div class="col-lg-1">
+    <div class="col-md-1">
       <button type="button" class="btn btn-primary" name="button" (click)="getPurchaseDetailsTx()">
         Submit
       </button>
     </div>
-    <div class="col-lg-1">
+    <div class="col-md-1">
       <button type="submit" class="btn btn-secondary" name="button" (click)="clearFilterForm()">
         Cancel
       </button>
     </div>
-    <div class="col-lg-2"></div>
+    <div class="col-md-1"></div>
     <div class="col-md-1">
       <button class="btn btn-success" type="button" (click)=" printPdfTx()">
         Print
@@ -56,8 +58,9 @@
   </div>
   <br>
   <div class="row">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <div class="col-md-4">
-      <label>Add Statement Number</label>
+      <label><b>Add Statement Number</b></label>
       <input type="text" class="form-control" formControlName="manualNo" placeholder="Enter Statement Number" />
     </div>
   </div>

@@ -47,6 +47,7 @@
             <table class="table table-hover table-striped table-nowrap">
               <thead class="table-light">
                 <tr>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <th style="text-align: left;"><b> Date </b></th>
                   <th style="text-align: left;"><b> Book </b></th>
                   <th style="text-align: left;"><b> Transaction Type </b></th>
@@ -59,6 +60,7 @@
               </thead>
               <tbody *ngFor="let data of addAccountingArray; let i = index;">
                 <tr>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <td>
                     <input class="form-control" placeholder="DD/MM/YYYY" name="date" (click)="startDate.toggle()"
                       readonly style="background-color: #ffffff;" [(ngModel)]="data.date"

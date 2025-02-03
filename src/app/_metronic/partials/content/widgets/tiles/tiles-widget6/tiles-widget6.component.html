@@ -19,16 +19,16 @@
             <div class="row">
               <div class="col-md-1"></div>
               <div class="col-md-3">
-                <label for="accountNumber">Account Number <span style="color: red;">*</span> </label>
+                <label for="accountNumber"><b>Account Number </b><span style="color: red;">*</span> </label>
                 <input type="number" class="form-control" formControlName="accountNumber" placeholder="Enter Here">
               </div>
               <div class="col-md-3">
-                <label for="AccPhoneNumber">Mobile Number <span style="color: red;">*</span> </label>
+                <label for="AccPhoneNumber"><b>Mobile Number </b><span style="color: red;">*</span> </label>
                 <input type="number" class="form-control" formControlName="AccPhoneNumber" placeholder="Enter Here"
                   onkeypress="return this.value.length < 10;" oninput="if(this.value.length=10)">
               </div>
               <div class="col-md-3">
-                <label for="ifsc">IFSC <span style="color: red;">*</span> </label>
+                <label for="ifsc"><b>IFSC </b><span style="color: red;">*</span> </label>
                 <input class="form-control" formControlName="ifsc" placeholder="Enter Here"
                   oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
               </div>
@@ -37,17 +37,17 @@
             <div class="row">
               <div class="col-md-1"></div>
               <div class="col-md-3">
-                <label for="accountHolderName">Account Holder Name </label>
+                <label for="accountHolderName"><b>Account Holder Name </b></label>
                 <input class="form-control" formControlName="accountHolderName" placeholder="Enter Here"
                   oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
               </div>
               <div class="col-md-3">
-                <label for="bankName">Bank Name </label>
+                <label for="bankName"><b>Bank Name </b></label>
                 <input class="form-control" formControlName="bankName" placeholder="Enter Here"
                   oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
               </div>
               <div class="col-md-3">
-                <label for="branchName">Branch Name </label>
+                <label for="branchName"><b>Branch Name </b></label>
                 <input class="form-control" formControlName="branchName" placeholder="Enter Here"
                   oninput="this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
               </div>
@@ -56,11 +56,11 @@
             <div class="row">
               <div class="col-md-1"></div>
               <div class="col-md-3">
-                <label for="upiId">UPI ID </label>
+                <label for="upiId"><b>UPI ID </b></label>
                 <input class="form-control" formControlName="upiId" placeholder="Enter Here">
               </div>
               <div class="col-md-3">
-                <label for="upiId">Account Type </label>
+                <label for="upiId"><b>Account Type </b></label>
                 <select class="form-select" formControlName="accountType" required>
                   <option value="SAVING">SAVING</option>
                   <option value="LOAN">LOAN</option>

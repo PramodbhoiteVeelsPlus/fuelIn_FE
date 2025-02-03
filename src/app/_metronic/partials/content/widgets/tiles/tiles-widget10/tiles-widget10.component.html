@@ -2,7 +2,7 @@
     <div class="card-body">
         <form [formGroup]="filterForm">
             <div class="mb-3 row">
-                <label for="example-text-input" class="col-md-2 col-form-label">Year</label>
+                <label for="example-text-input" class="col-md-2 col-form-label"><b>Year</b></label>
                 <div class="col-md-10">
                     <select formControlName="year" class="form-select" required (change)="getTankDSR()">
                         <option value={{currentYear}}> {{currentYear}} </option>
@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col-md-2">
                     <br><br>
-                    <label> Month </label>
+                    <label><b> Month </b></label>
                 </div>
                 <div class="col-md-10">
                     <div class="p-3">
@@ -28,7 +28,7 @@
             </div>
             <br><br>
             <div class="mb-3 row">
-                <label for="example-text-input" class="col-md-2 col-form-label">Tank</label>
+                <label for="example-text-input" class="col-md-2 col-form-label"><b>Tank</b></label>
                 <div class="col-md-3">
                     <select class="form-select" required formControlName="tankId" (change)="getTankDetailsById($event)">
                         <option value=""> Select Tank </option>
@@ -47,7 +47,7 @@
             </div>
             <br><br>
             <div class="mb-3 row" *ngIf="isAdd">
-                <label for="example-text-input" class="col-md-2 col-form-label">Date</label>
+                <label for="example-text-input" class="col-md-2 col-form-label"><b>Date</b></label>
                 <div class="col-md-3">
                     <input class="form-control" formControlName="date" placeholder="DD-MM-YYYY" name="date"
                         (click)="startDate.toggle()" style="background-color: #ffffff;" ngbDatepicker
@@ -150,9 +150,9 @@
                             <thead>
                                 <tr>
                                     <th *ngFor="let data of tankData" style="text-align: center;">
-                                        {{data.tkNzDu}}
+                                        <b>{{data.tkNzDu}}</b>
                                     </th>
-                                    <th style="text-align: center;"> Action </th>
+                                    <th style="text-align: center;"><b> Action </b></th>
                                 </tr>
                             </thead>
                             <tbody>

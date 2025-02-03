@@ -71,10 +71,10 @@
   </div>
   <br>
   <div class="table-responsive mb-0">
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <table id="excel-table" class="table table-centered table-nowrap">
       <thead class="table-light">
         <tr>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <th style="text-align: left;"><b> Date </b></th>
           <th style="text-align: left;"><b> Shift </b></th>
           <th style="text-align: left;"><b> Operator Name </b></th>
@@ -85,6 +85,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let data of posData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <td style="text-align: left;"> {{ data.openDate | date:"d MMM y"}} </td>
           <td style="text-align: left;"> {{ data.shift }} </td>
           <td style="text-align: left;"> {{ data.name }} </td>

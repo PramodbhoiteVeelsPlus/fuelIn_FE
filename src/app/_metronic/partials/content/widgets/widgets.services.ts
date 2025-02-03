@@ -150,6 +150,7 @@ export class WidgetService {
   private checkVehicleByfuelDealerIdURL = this.baseURL + 'fuelVehicleDetails/checkVehicleByfuelDealerId';
   private addFuelVehicleDetailsURL = this.baseURL + 'fuelVehicleDetails/addFuelVehicleDetails';
   private updateTotalInvCreditAmtURL = this.baseURL + 'fuelCreditInvoice/updateTotalCreditAmt'; 
+  private updateCompanyNameAddressURL = this.baseURL + 'fuelDealerCustMap/updateCompanyNameAddress'; 
 
 
   setHeader() {
@@ -1312,6 +1313,16 @@ export class WidgetService {
     let headers = new HttpHeaders();
     headers = headers.set('authenticationToken', this.token);
     return this.http.post(this.getBankAccByBankIdURL, body, {
+      headers: headers
+    })
+  }
+
+  // updateCompanyNameAddressURL
+  updateCompanyNameAddressPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.updateCompanyNameAddressURL, body, {
       headers: headers
     })
   }

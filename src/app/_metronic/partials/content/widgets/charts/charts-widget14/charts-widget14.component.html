@@ -1,7 +1,7 @@
 <br>
 <form [formGroup]="filterForm">
   <div class="row">
-    <label for="example-text-input" class="col-auto col-form-label">Select Bill :</label>
+    <label for="example-text-input" class="col-auto col-form-label"><b>Select Bill :</b></label>
 
     <div class="col-md-2">
       <select class="form-control" formControlName="purpose" required>
@@ -9,7 +9,7 @@
         <option value="CANCEL">Cancelled Bills</option>
       </select>
     </div>
-    <label for="example-text-input" class="col-auto col-form-label">Date Range :</label>
+    <label for="example-text-input" class="col-auto col-form-label"><b>Date Range :</b></label>
     <div class="col-md-2">
       <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" onkeydown="return false"
         (click)="startDate.toggle()" formControlName="startDate" ngbDatepicker #startDate="ngbDatepicker">

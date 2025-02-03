@@ -90,6 +90,12 @@
     .slider.round:before {
       border-radius: 50%;
     }
+
+  .btn-outline-success {
+    border: 1px solid #28a745 !important;
+    color: #28a745 !important;
+    background-color: transparent !important;
+}
   </style>
 </head>
 
@@ -100,7 +106,7 @@
       <table class="table table-centered table-nowrap">
         <thead>
           <tr>
-            <th style="text-align: left;"><b>Sr No</b></th>
+            <th style="text-align: center;"><b>Sr No</b></th>
             <th style="text-align: left;"><b>Tank</b></th>
             <th style="text-align: left;"><b>Pump</b></th>
             <th style="text-align: left;"><b>Nozzle</b></th>
@@ -113,7 +119,7 @@
         <tbody *ngFor="let data of pumpInfraDetails.data  ; let i = index">
 
           <tr>
-            <td style="text-align: left;"> {{i+1}} </td>
+            <td style="text-align: center;"> {{i+1}} </td>
             <td style="text-align: left;"> {{data.tankNo | titlecase }} </td>
             <td style="text-align: left;"> {{data.duNo | titlecase }} </td>
             <td style="text-align: left;"> {{data.nozNo | titlecase }} </td>
@@ -157,7 +163,7 @@
             <form [formGroup]="stampForm">
               <div class="mb-3 row">
                 <div class="col-md-1"></div>
-                <label for="example-text-input" class="col-md-3 col-form-label">Select Date</label>
+                <label for="example-text-input" class="col-md-3 col-form-label"><b>Select Date</b></label>
                 <div class="col-md-5">
                   <input class="form-control" formControlName="stampingDate" ngbDatepicker #startDate="ngbDatepicker"
                     placeholder="Select Date" readonly style="background-color: #ffffff;" (click)="startDate.toggle()">
@@ -166,7 +172,7 @@
               <br>
               <div class="mb-3 row">
                 <div class="col-md-1"></div>
-                <label for="example-text-input" class="col-md-3 col-form-label">Reading</label>
+                <label for="example-text-input" class="col-md-3 col-form-label"><b>Reading</b></label>
                 <div class="col-md-5">
                   <input class="form-control" type="number" formControlName="stampingReading"
                     placeholder="Enter Reading">
@@ -188,11 +194,11 @@
             <table *ngIf="nzStampingDetails.length" class="table table-centered table-nowrap">
               <thead>
                 <tr>
-                  <th style="text-align: left;">Sr No</th>
-                  <th style="text-align: left;">Date</th>
-                  <th style="text-align: left;">Reading</th>
-                  <th style="text-align: left;">Added By</th>
-                  <th style="text-align: left;">Action</th>
+                  <th style="text-align: left;"><b>Sr No</b></th>
+                  <th style="text-align: left;"><b>Date</b></th>
+                  <th style="text-align: left;"><b>Reading</b></th>
+                  <th style="text-align: left;"><b>Added By</b></th>
+                  <th style="text-align: left;"><b>Action</b></th>
                 </tr>
               </thead>
               <tbody *ngFor="let data of nzStampingDetails; let i = index">

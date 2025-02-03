@@ -25,12 +25,12 @@
       <table class="table table-centered">
         <!-- begin::Table head -->
         <thead>
-          <tr class="fw-bolder text-muted bg-light">
-            <th class="min-w-125px">Month</th>
-            <th class="min-w-125px">Cr Sales</th>
-            <th class="min-w-125px">Cr Payments</th>
-            <th class="min-w-125px">Active Customer Count</th>
-            <th class="min-w-125px">Active Vehicle Count</th>
+          <tr class="fw-bolder bg-light">
+            <th class="min-w-125px"><b>Month</b></th>
+            <th class="min-w-125px"><b>Cr Sales</b></th>
+            <th class="min-w-125px"><b>Cr Payments</b></th>
+            <th class="min-w-125px"><b>Active Customer Count</b></th>
+            <th class="min-w-125px"><b>Active Vehicle Count</b></th>
           </tr>
         </thead>
         <!-- end::Table head -->
@@ -67,17 +67,17 @@
             <table class="table table-centered">
               <!-- begin::Table head -->
               <thead>
-                <tr class="fw-bolder text-muted bg-light">
-                  <th class="min-w-125px">Sr.no</th>
-                  <th class="min-w-125px">Customer Name</th>
+                <tr class="fw-bolder bg-light">
+                  <th class="min-w-125px" style="text-align: center"><b>Sr.no</b></th>
+                  <th class="min-w-125px" style="text-align: center"><b>Customer Name</b></th>
                 </tr>
               </thead>
               <!-- end::Table head -->
               <!-- begin::Table body -->
               <tbody *ngFor="let data of dataCustList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
                 <tr>
-                  <td class="min-w-125px">{{i+1}} </td>
-                  <td class="min-w-125px">{{data.hostName}}</td>
+                  <td class="min-w-125px" style="text-align: center">{{i+1}} </td>
+                  <td class="min-w-125px" style="text-align: center">{{data.hostName}}</td>
                 </tr>
       
               </tbody>
@@ -111,17 +111,17 @@
             <table class="table table-centered">
               <!-- begin::Table head -->
               <thead>
-                <tr class="fw-bolder text-muted bg-light">
-                  <th class="min-w-125px">Sr.no</th>
-                  <th class="min-w-125px">Vehicle Number</th>
+                <tr class="fw-bolder bg-light">
+                  <th class="min-w-125px" style="text-align: center"><b>Sr.no</b></th>
+                  <th class="min-w-125px" style="text-align: center"><b>Vehicle Number</b></th>
                 </tr>
               </thead>
               <!-- end::Table head -->
               <!-- begin::Table body -->
               <tbody *ngFor="let data of dataVehList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
                 <tr>
-                  <td class="min-w-125px">{{i+1}} </td>
-                  <td class="min-w-125px">{{data.vehicleNumber}}</td>
+                  <td class="min-w-125px" style="text-align: center">{{i+1}} </td>
+                  <td class="min-w-125px" style="text-align: center">{{data.vehicleNumber}}</td>
                 </tr>
       
               </tbody>
