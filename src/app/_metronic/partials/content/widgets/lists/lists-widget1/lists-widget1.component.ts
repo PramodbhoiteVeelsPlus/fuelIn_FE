@@ -501,7 +501,7 @@ export class ListsWidget1Component {
     this.requestTransporterLubeTax.controls["vehicleNumber"].setValue(this.CreditRequetLubeTax.vehicleNumberLube)
   }
 
-  getQuantityByPieces(i: string | number) {
+  getQuantityByPieces(i: any) {
     if (this.isQuantityRatio) {
       this.CreditRequestDataLubeTax[i].creditQuantityLube = Number(this.quantityRatio) * Number(this.CreditRequestDataLubeTax[i].quantityInPieces)
     }
@@ -562,7 +562,9 @@ export class ListsWidget1Component {
                               this.spinner.hide();
                               this.isCRQUANTITY = false;
                               this.isQUANTITY = false;
+                              this.isSelected1 = false
                               this.CreditRequestDataLubeTax = [];
+                              this.CreditRequestDataLubeTax.length = 0;
                               this.countLube = 1;
                               this.checkDates(this.fuelDealerCorpMapIdNew, moment(this.requestTransporterLubeTax.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
                               this.requestTransporterLubeTax.controls["requestType"].setValue("AMOUNT");
@@ -675,7 +677,9 @@ export class ListsWidget1Component {
                               this.checkDates(this.fuelDealerCorpMapIdNew, moment(this.requestTransporterLubeTax.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
                               this.isCRQUANTITY = false;
                               this.isQUANTITY = false;
-                              this.CreditRequestDataLube = [];
+                              this.isSelected1 = false
+                              this.CreditRequestDataLubeTax = [];
+                              this.CreditRequestDataLubeTax.length = 0;
                               this.countLube = 1;
                               this.requestTransporterLubeTax.controls["requestType"].setValue("AMOUNT");
                               this.requestTransporterLubeTax.controls["requestTypeCR"].setValue("AMOUNT");

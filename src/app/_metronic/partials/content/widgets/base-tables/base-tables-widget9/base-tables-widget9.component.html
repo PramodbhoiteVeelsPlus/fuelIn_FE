@@ -1,11 +1,32 @@
+<style>
+  .btn-outline-success {
+    border: 1px solid #28a745 !important;
+    color: #28a745 !important;
+    background-color: transparent !important;
+}
+</style>
+
 <br>
 <form [formGroup]="selectCorporate">
   <form [formGroup]="searchDiscountForm">
     <div class="row">
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <label for="example-text-input" class="col-auto col-form-label"><b>
+      <label for="example-text-input" class="col-md-2 col-form-label"><b>
         Customer Name</b>
       </label>
+      
+
+      <label for="example-text-input" class="col-md-4 col-form-label"><b>Date Range</b>
+      </label>
+
+      <label for="example-text-input" class="col-md-2 col-form-label"><b>
+        Type
+      </b></label>
+
+    </div>
+
+    <div class="row">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <div class="col-md-2">
         <select class="form-control" formControlName="selectCorporateMapId"
           (change)="getDetailsByCorpForStatementforDiscount($event)" (change)="getCustomerPreviousOutstanding()">
@@ -16,8 +37,8 @@
         </select>
       </div>
 
-      <label for="example-text-input" class="col-auto col-form-label"><b>Date Range</b>
-      </label>
+      <!-- <label for="example-text-input" class="col-auto col-form-label"><b>Date Range</b>
+      </label> -->
 
       <div class="col-md-2">
         <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" (click)="startDate.toggle()"
@@ -29,9 +50,6 @@
           onkeydown="return false" formControlName="endDate" ngbDatepicker #endDate="ngbDatepicker" />
       </div>
 
-      <label for="example-text-input" class="col-auto col-form-label"><b>
-        Type
-      </b></label>
 
       <div class="col-md-1">
 
@@ -52,7 +70,7 @@
     <div class="row">
       <div class="col-md-2"></div>
       <div class="col-md-10" style="text-align: center">
-        <label for="example-text-input" class="col-auto col-form-label">
+        <label for="example-text-input" class="col-auto col-form-label" style="margin-left: 380px;">
           click on [+] to mention pump's contact number on statement
         </label>
 
@@ -75,6 +93,7 @@
                 <div class="col-auto">
                   <b>Select</b>
                 </div>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <div class="col-auto">
                   <select class="form-control" formControlName="mobile" required>
                     <option value="">Select</option>
@@ -89,11 +108,13 @@
               <br />
               <div class="row">
                 <div class="col-md-2"></div>
-                <div class="col-md-8">
-                  <button class="btn btn-outline-success my-2 my-sm-0" type="button" (click)="submitMobile()">
+                <div class="col-md-3">
+                  <button class="btn btn-outline-success" type="button" (click)="submitMobile()">
                     Select
                   </button>
-                  &nbsp;&nbsp;
+                  </div>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <div class="col-md-3">
                   <button class="btn btn-danger" type="button" (click)="d('Cross click')">
                     Cancel
                   </button>

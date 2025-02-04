@@ -420,6 +420,7 @@ export class ChartsWidget1Component implements OnInit {
             /** spinner ends after 5 seconds */
             this.spinner.hide();
           }, 5000);
+          this.cd.detectChanges();
         }
       })
   }

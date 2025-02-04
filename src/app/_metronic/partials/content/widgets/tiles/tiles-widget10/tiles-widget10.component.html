@@ -1,4 +1,12 @@
-<div class="card">
+<style>  
+    .btn-outline-success {
+      border: 1px solid #28a745 !important;
+      color: #28a745 !important;
+      background-color: transparent !important;
+  }
+  </style>
+  
+  <div class="card">
     <div class="card-body">
         <form [formGroup]="filterForm">
             <div class="mb-3 row">
@@ -183,7 +191,7 @@
                                     <td style="text-align: left; ">
                                         <button type="submit" style="margin-top: 45px;" class="btn btn-outline-success "
                                             (click)="addDsr()">
-                                            submit
+                                            Submit
                                         </button>
                                     </td>
                                 </tr>

@@ -320,7 +320,7 @@
 
     <div class="row">
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <div class="col-md-10">
+      <div class="col-md-12">
         <form [formGroup]="requestTransporter">
           <div class="card-body table-responsive">
             <table class="table table-hover table-striped">
@@ -393,9 +393,9 @@
                     </span>
                   </td>
                   <td>
-                    <button *ngIf="isVehSelect" type="submit" class="btn btn-success my-2 my-sm-0"
+                    <button *ngIf="isVehSelect" type="submit" class="btn btn-success"
                       (click)="addFormRequest()">
-                      Add
+                      Add1
                     </button>
                     <button *ngIf="!isVehSelect" type="submit" class="btn btn-success" (click)="selectVehicle()">
                       Add

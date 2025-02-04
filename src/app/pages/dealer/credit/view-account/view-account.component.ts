@@ -105,7 +105,7 @@ export class ViewAccountComponent {
     } else {
       this.router.navigate(['/auth/login'])
     }
-    this.cd.detectChanges()
+    // this.cd.detectChanges()
   }
 
   getCorporateById() {
