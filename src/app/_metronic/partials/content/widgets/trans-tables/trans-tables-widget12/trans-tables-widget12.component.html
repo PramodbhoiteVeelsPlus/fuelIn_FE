@@ -1,0 +1,181 @@
+<style>
+    @media print {
+        .page-break {
+            display: block;
+            page-break-before: always;
+
+            size: A4 portrait;
+        }
+    }
+
+    @media print {
+        body {
+            margin: 0;
+            padding: 0;
+            /* -webkit-print-color-adjust: exact; */
+        }
+
+        .A4 {
+            box-shadow: none;
+            margin: 0;
+            width: auto;
+            height: auto;
+        }
+
+        .noprint {
+            display: none;
+        }
+
+        .print {
+            display: block;
+        }
+    }
+</style>
+
+<div class="card">
+    <div class="card-body">
+        <div class="modal-body">
+            <br><br>
+            <!-- <form [formGroup]="addBankDetailsForm"> -->
+            <!-- <div class="row" id="sanjay" style="padding: 20px; background: white;">
+            <br><br>
+            <br><br>
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+                  <label style="font-size: 15px;"><b>Dealer Name </b></label>
+                </div>
+                <div class="col-md-3">
+                  <label style="font-size: 15px;"><b>Dealer Code </b></label>
+                </div>
+                <div class="col-md-3">
+                  <label style="font-size: 15px;"><b>Date </b></label>
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+                  <label style="font-size: 15px;">Tejaswini </label>
+                </div>
+                <div class="col-md-3">
+                  <label style="font-size: 15px;">142452 </label>
+                </div>
+                <div class="col-md-3">
+                  <label style="font-size: 15px;">05 Feb,2025 </label>
+                </div>
+              </div>
+              <br>
+
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+                  <label style="font-size: 15px;"><b>Credit Sale </b></label>
+                </div>
+                <div class="col-md-3">
+                  <label style="font-size: 15px;"><b>Amount </b></label>
+                </div>
+                <div class="col-md-3">
+                  <label style="font-size: 15px;"><b>Payment Received </b></label>
+                </div>
+              </div>
+            
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+                  <label style="font-size: 15px;">5000 </label>
+                </div>
+                <div class="col-md-3">
+                  <label style="font-size: 15px;">1500 </label>
+                </div>
+                <div class="col-md-3">
+                  <label style="font-size: 15px;">2000 </label>
+                </div>
+              </div>
+              <br>
+
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+                  <label style="font-size: 15px;"><b>Transaction ID </b></label>
+                </div>
+              </div>
+          
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+                  <label style="font-size: 15px;">12032588710 </label>
+                </div>
+              </div>
+              <br>
+
+            </div>
+          </div> -->
+
+
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary" (click)="download()">Download</button>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-success" printSectionId="sanjay" [useExistingCss]="true"
+                        ngxPrint>Print</button>
+                </div>
+            </div>
+            <!-- </form> -->
+
+
+            <div class="row" id="sanjay" style="padding: 20px; background: white;">
+                <div class="col-md-12">
+                    <table class="table table-hover table-striped">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="text-align: center;"><b> Dealer Name </b></th>
+                                <th style="text-align: center;"><b> Dealer Code </b></th>
+                                <th style="text-align: center;"><b> Date </b></th>
+                                <th style="text-align: center;"><b> Credit Sale </b></th>
+                                <th style="text-align: center;"><b> Amount </b></th>
+                                <th style="text-align: center;"><b> Payment Received </b></th>
+                                <th style="text-align: center;"><b> Transaction ID </b></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center;"> Tejaswini </td>
+                                <td style="text-align: center;"> 120452 </td>
+                                <td style="text-align: center;"> 01 Feb, 2025</td>
+                                <td style="text-align: center;"> 5000 </td>
+                                <td style="text-align: center;"> 1500 </td>
+                                <td style="text-align: center;"> 2000 </td>
+                                <td style="text-align: center;"> 102489856222 </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;"> Tejaswini </td>
+                                <td style="text-align: center;"> 120452 </td>
+                                <td style="text-align: center;"> 02 Feb, 2025</td>
+                                <td style="text-align: center;"> 4000 </td>
+                                <td style="text-align: center;"> 500 </td>
+                                <td style="text-align: center;"> 2500 </td>
+                                <td style="text-align: center;"> 1532300544500 </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;"> Tejaswini </td>
+                                <td style="text-align: center;"> 120452 </td>
+                                <td style="text-align: center;"> 04 Feb, 2025</td>
+                                <td style="text-align: center;"> 5000 </td>
+                                <td style="text-align: center;"> 300 </td>
+                                <td style="text-align: center;"> 3000 </td>
+                                <td style="text-align: center;"> 10248956633347 </td>
+                            </tr>
+                        </tbody>
+                        <br>
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

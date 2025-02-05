@@ -118,48 +118,48 @@
 <div class="card-header border-0 pt-5">
     <h3 class="card-title align-items-start flex-column">
         <div class="row">
-            <div class="col-lg-10">
+            <div class="col-md-12">
                 <form [formGroup]="filterForm">
                     <div class="row">
                         <label for="example-text-input" style="margin-top: -10px; font-size: smaller" class="col-auto col-form-label"><b>Date Range</b> </label>
-                        <div class="col-lg-2">
+                        <div class="col-md-2">
                             <input class="form-control" placeholder="DD-MM-YYYY" readonly
                                 style="background-color: #ffffff;" name="startDate" ngbTooltip="Start Date"
                                 (click)="startDate.toggle()" ngbDatepicker #startDate="ngbDatepicker"
                                 formControlName="startDate">
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-md-2">
                             <input class="form-control" placeholder="DD-MM-YYYY" readonly
                                 style="background-color: #ffffff;" name="endDate" ngbTooltip="End Date"
                                 (click)="endDate.toggle()" ngbDatepicker #endDate="ngbDatepicker"
                                 formControlName="endDate">
                         </div>
-                        <div class="col-lg-1">
+                        <div class="col-md-1">
                             <button type="button" class="btn btn-primary" name="button"
                                 (click)="getMapAccountOSDetailsByDate()">
                                 Submit
                             </button>
                         </div>
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        <div class="col-lg-1">
+                        <div class="col-md-1">
                             <button type="submit" class="btn btn-secondary" name="button" (click)="clearFilterForm()">
                                 Cancel
                             </button>
                         </div>
                         <div class="col-md-1"></div>
 
-                        <div class="col-lg-1">
+                        <div class="col-md-1">
                             <span style="font-size: 25px;cursor: pointer;" (click)="downloadPDF()"
                                 ngbTooltip="Download PDF" placement="bottom"><i class="fas fa-file-pdf" style="font-size: 30px;"></i>
                             </span>
                         </div>
-                        <div class="col-lg-1">
+                        <div class="col-md-1">
                             <span style="font-size: 25px;cursor: pointer;" (click)="downloadExcel()"
                                 ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv" style="font-size: 30px;"></i>
                             </span>
                         </div>
 
-                        <div class="col-lg-1">
+                        <div class="col-auto">
                             <button class="btn btn-success" type="button" (click)=" printPdf()">
                                 Print
                             </button>

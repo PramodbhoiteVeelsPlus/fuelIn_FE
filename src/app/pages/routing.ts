@@ -112,6 +112,10 @@ const Routing: Routes = [
     loadChildren: () => import('./Transporter/transporter.module').then((m) => m.TransporterModule),
   },
   {
+    path: 'ubi',
+    loadChildren: () => import('./ubi/ubi.module').then((m) => m.UbiModule),
+  },
+  {
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full',
