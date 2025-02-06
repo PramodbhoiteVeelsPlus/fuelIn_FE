@@ -11,6 +11,19 @@
       </datalist>
     </div>
 
+    <label for="example-text-input" class="col-auto col-form-label"><b>Product</b></label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" list="productsData" placeholder="All Khata"
+        formControlName="productNameDAY" (change)="getPrice($event)">
+      <datalist id="productsData">
+        <option *ngFor="let data of productsData" [value]="data.fuelProductsId">
+        <option *ngFor="let data of products" [value]="data.fuelProductsId">
+          {{data.productName}}
+        </option>
+
+      </datalist>
+    </div>
+
     <label for="example-text-input" class="col-auto col-form-label"><b>Month</b></label>
     <div class="col-md-2">
       <select class="form-control" formControlName="monthDAY" required>
@@ -25,7 +38,7 @@
       </button>
     </div>
 
-    
+
     <div class="col-md-2"></div>
     <div class="col-md-1">
       <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF" placement="bottom"
@@ -48,9 +61,9 @@
         <thead class="table-light">
           <tr>
             <th style="text-align: center"><b> Date </b></th>
-            <th style="text-align: center"><b> Product </b></th>
-            <th style="text-align: center"><b> Amount </b></th>
-            <th style="text-align: center"><b> Quantity </b></th>
+            <th><b> Product </b></th>
+            <th><b> Amount </b></th>
+            <th><b> Quantity </b></th>
             <th style="text-align: center"><b> Sales Amount </b></th>
             <th style="text-align: center"><b> Payment Amount </b></th>
             <th style="text-align: center"><b> Balance </b></th>
@@ -62,11 +75,11 @@
 
             <td colspan="3">
           <tr *ngFor="let dataCr of data.crData">
-            <td style="text-align: center" class="p-0" [style.min-width]="'100px'">{{dataCr.product}}</td>
-            <td style="text-align: center" class="p-0" [style.min-width]="'100px'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i
+            <td class="p-0" [style.min-width]="'100px'">{{dataCr.product}}</td>
+            <td class="p-0" [style.min-width]="'100px'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i
                 class="fa-solid fa-indian-rupee-sign"></i>
               {{dataCr.purchase | number:'1.2-2'}}</td>
-            <td style="text-align: center" class="p-0" [style.min-width]="'100px'">
+            <td class="p-0" [style.min-width]="'100px'">
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               {{dataCr.quantity | number:'1.2-2'}}
               <span *ngIf="dataCr.product == 'CNG'">

@@ -8,6 +8,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import moment from 'moment';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable'
+import { ListWidgetService } from '../../lists/listWidget.services';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<any> {
@@ -117,6 +118,12 @@ export class BaseTablesWidget7Component implements OnInit {
   ficMonths: any = [];
   dayWiseQtyData: any = [];
   currentYear: string;
+  productsData: any = [];
+  products = [
+    { fuelProductsId: 25, productName: 'LUBRICANTS' },
+    // Add more products as needed
+  ];
+  productId: any;
 
   constructor(
     private modalService: NgbModal,
@@ -126,6 +133,7 @@ export class BaseTablesWidget7Component implements OnInit {
     private excelService: ExcelService,
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
+    private post1: ListWidgetService,
     private router: Router) {
   }
 
@@ -161,6 +169,7 @@ export class BaseTablesWidget7Component implements OnInit {
     this.filterForm.controls["monthDAY"].setValue(this.currentYear)
     this.getFuelCreditCorporateByfuelDealerId(this.fuelDealerId)
     this.getFCYear()
+    this.getProductsByDealerId(this.fuelDealerId)
     if (!this.dayWiseQtyData.length) {
       this.getDayWiseQty();
     } else {
@@ -407,5 +416,26 @@ export class BaseTablesWidget7Component implements OnInit {
   pageChangeEvent(event: number) {
     this.p = event;
     this.getDayWiseQty();
+  }
+  
+  getProductsByDealerId(fuelDealerId: any) {
+    this.productsData = [];
+    let data = {
+      fuelDealerId: fuelDealerId
+    }
+    this.post1.getFuelProductIdByDealerIdPOST(data).subscribe(res => {
+      if (res.status == "OK") {
+        this.productsData = res.data;
+        this.spinner.hide();
+        this.cd.detectChanges()
+      } else {
+        this.spinner.hide();
+        this.cd.detectChanges()
+      }
+    })
+  }
+
+  getPrice(id: any){
+    this.productId = id.target.value;
   }
 }

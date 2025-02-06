@@ -76,6 +76,7 @@ export class BaseTablesService {
     private getStaffDetailsURL = this.baseURL + 'fuelStaff/getStaffDetails';
     private updateMapStatusforStaffURL = this.baseURL + 'fuelStaff/updateMapStatusforStaff'; 
     private UpdateDealerStaffDetailsURL = this.baseURL + 'fuelStaff/UpdateDealerStaffDetails';
+    private getDayWiseLedgerQtyNewURL = this.baseURL + 'crCustomers/getDayWiseLedgerQtyNew';
 
 
 
@@ -588,5 +589,15 @@ export class BaseTablesService {
         this.activeStartDate = startDate;
         this.activeEndDate = endDate;
         this.isCustomer = isCustomer;
+    }
+
+    // getDayWiseLedgerQtyNewURL
+    getDayWiseLedgerQtyNewPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getDayWiseLedgerQtyNewURL, body, {
+            headers: headers
+        })
     }
 }
