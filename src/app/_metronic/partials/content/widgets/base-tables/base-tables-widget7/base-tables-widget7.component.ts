@@ -167,6 +167,7 @@ export class BaseTablesWidget7Component implements OnInit {
     this.filterForm.controls["startDate"].setValue("01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear())
     this.filterForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
     this.filterForm.controls["monthDAY"].setValue(this.currentYear)
+    this.filterForm.controls["productNameDAY"].setValue("")
     this.getFuelCreditCorporateByfuelDealerId(this.fuelDealerId)
     this.getFCYear()
     this.getProductsByDealerId(this.fuelDealerId)
@@ -289,7 +290,32 @@ export class BaseTablesWidget7Component implements OnInit {
   }
 
   getDayWiseQty() {
-    if (this.fuelDealerCorpMapId) {
+    if (this.fuelDealerCorpMapId && this.productId) {
+
+      this.dayWiseQtyData = []
+      this.spinner.show()
+      let data = {
+        fuelDealerCustomerMapId: this.fuelDealerCorpMapId,
+        month: moment(this.filterForm.value.monthDAY, ["MM YYYY"]).format("MM"),
+        year: moment(this.filterForm.value.monthDAY, ["MM YYYY"]).format("YYYY"),
+        prodId: this.productId
+      }
+
+      this.post.getDayWiseLedgerQtyNewPOST(data)
+
+        .subscribe(res => {
+          if (res.status == "OK" && res.data.length) {
+            this.dayWiseQtyData = res.data;
+            this.spinner.hide();
+            this.cd.detectChanges();
+
+          } else {
+            alert("Data Not Found..!")
+            this.spinner.hide();
+            this.cd.detectChanges();
+          }
+        })
+    } else if (this.fuelDealerCorpMapId) {
 
       this.dayWiseQtyData = []
       this.spinner.show()
@@ -299,7 +325,32 @@ export class BaseTablesWidget7Component implements OnInit {
         year: moment(this.filterForm.value.monthDAY, ["MM YYYY"]).format("YYYY"),
       }
 
-      this.post.getDayWiseLedgerQtyPOST(data)
+      this.post.getDayWiseLedgerQtyNewPOST(data)
+
+        .subscribe(res => {
+          if (res.status == "OK" && res.data.length) {
+            this.dayWiseQtyData = res.data;
+            this.spinner.hide();
+            this.cd.detectChanges();
+
+          } else {
+            alert("Data Not Found..!")
+            this.spinner.hide();
+            this.cd.detectChanges();
+          }
+        })
+    } else if (this.productId) {
+
+      this.dayWiseQtyData = []
+      this.spinner.show()
+      let data = {
+        prodId: this.productId,
+        fuelDealerId: this.fuelDealerId,
+        month: moment(this.filterForm.value.monthDAY, ["MM YYYY"]).format("MM"),
+        year: moment(this.filterForm.value.monthDAY, ["MM YYYY"]).format("YYYY"),
+      }
+      //getDayWiseLedgerQtyPOST
+      this.post.getDayWiseLedgerQtyNewPOST(data)
 
         .subscribe(res => {
           if (res.status == "OK" && res.data.length) {
@@ -323,7 +374,7 @@ export class BaseTablesWidget7Component implements OnInit {
         year: moment(this.filterForm.value.monthDAY, ["MM YYYY"]).format("YYYY"),
       }
 
-      this.post.getDayWiseLedgerQtyPOST(data)
+      this.post.getDayWiseLedgerQtyNewPOST(data)
         .subscribe(res => {
           if (res.status == "OK" && res.data.length) {
             this.dayWiseQtyData = res.data;

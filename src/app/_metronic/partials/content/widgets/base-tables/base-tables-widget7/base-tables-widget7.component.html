@@ -13,15 +13,14 @@
 
     <label for="example-text-input" class="col-auto col-form-label"><b>Product</b></label>
     <div class="col-md-2">
-      <input class="form-control" type="text" list="productsData" placeholder="All Khata"
-        formControlName="productNameDAY" (change)="getPrice($event)">
-      <datalist id="productsData">
+      <select class="form-control" formControlName="productNameDAY" (change)="getPrice($event)" required>
+        <option value="">Select Product </option>
         <option *ngFor="let data of productsData" [value]="data.fuelProductsId">
+          {{data.productName}}
         <option *ngFor="let data of products" [value]="data.fuelProductsId">
           {{data.productName}}
         </option>
-
-      </datalist>
+      </select>
     </div>
 
     <label for="example-text-input" class="col-auto col-form-label"><b>Month</b></label>
@@ -39,7 +38,7 @@
     </div>
 
 
-    <div class="col-md-2"></div>
+    <!-- <div class="col-md-2"></div> -->
     <div class="col-md-1">
       <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF" placement="bottom"
         (click)="exportToPDFDAYQty()"><i class="fas fa-file-pdf" style="font-size: 30px;"></i></span>
@@ -70,7 +69,7 @@
           </tr>
         </thead>
         <tbody *ngFor="let data of dayWiseQtyData">
-          <tr>
+          <tr *ngIf="data.crData.length">
             <td style="text-align: center"> {{ data.date | date:"d MMM, yyyy"}} </td>
 
             <td colspan="3">
