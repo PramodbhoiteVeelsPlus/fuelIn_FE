@@ -10,7 +10,20 @@
         <option *ngFor="let data of allCorporateList" [value]="data.companyName">
       </datalist>
     </div>
-    <div class="col-md-1"></div>
+
+    <label for="example-text-input" class="col-auto col-form-label"><b>Product</b></label>
+    <div class="col-md-2">
+      <select class="form-control" formControlName="productNameDAY" (change)="getPrice($event)" required>
+        <option value="">Select Product </option>
+        <option *ngFor="let data of productsData" [value]="data.fuelProductsId">
+          {{data.productName}}
+        <option *ngFor="let data of products" [value]="data.fuelProductsId">
+          {{data.productName}}
+        </option>
+      </select>
+    </div>
+
+    <!-- <div class="col-md-1"></div> -->
     <label for="example-text-input" class="col-auto col-form-label"><b>Year</b></label>
     <div class="col-md-3">
       <select class="form-control" formControlName="fiscalyear" required>
@@ -23,8 +36,8 @@
         View
       </button>
     </div>
-    <div class="col-md-1"></div>
-    <div class="col-md-1 text-sm-end">
+    <!-- <div class="col-md-1"></div> -->
+    <div class="col-md-1">
       <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF" placement="bottom"
         (click)="exportToPDFMONTHQty()"><i class="fas fa-file-pdf" style="font-size: 30px;"></i></span>
     </div>
@@ -53,7 +66,7 @@
           </tr>
         </thead>
         <tbody *ngFor="let data of yearWiseQtyData">
-          <tr>
+          <tr *ngIf="data.crData.length">
             <td style="text-align: center"> {{ data.month }} {{data.year}} </td>
             <td colspan="3">
           <tr *ngFor="let dataCr of data.crData">

@@ -8,6 +8,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import moment from 'moment';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable'
+import { ListWidgetService } from '../../lists/listWidget.services';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<any> {
@@ -86,11 +87,18 @@ export class BaseTablesWidget8Component implements OnInit {
   headerName1: any;
   headerName3: string;
   GSTNumber: string;
+  productsData: any = [];
+  products = [
+    { fuelProductsId: 25, productName: 'LUBRICANTS' },
+    // Add more products as needed
+  ];
+  productId: any;
 
 
   filterForm = new FormGroup({
     customerName: new FormControl(''),
-    fiscalyear: new FormControl([], Validators.required)
+    fiscalyear: new FormControl([], Validators.required),
+    productNameDAY: new FormControl(''),
   });
 
   fuelDealerCorpMapId: string;
@@ -128,6 +136,7 @@ export class BaseTablesWidget8Component implements OnInit {
     private excelService: ExcelService,
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
+    private post1: ListWidgetService,
     private router: Router) {
   }
 
@@ -173,7 +182,9 @@ export class BaseTablesWidget8Component implements OnInit {
     }
     this.currentMonth = new Date().getMonth() + 1
     this.filterForm.controls['fiscalyear'].setValue(this.fiscalyear1);
+    this.filterForm.controls["productNameDAY"].setValue("")
     this.getFuelCreditCorporateByfuelDealerId(this.fuelDealerId)
+    this.getProductsByDealerId(this.fuelDealerId)
     if (!this.yearWiseQtyData.length) {
       this.getYearQtyWise();
     } else {
@@ -262,16 +273,17 @@ export class BaseTablesWidget8Component implements OnInit {
 
     }
 
-    if (this.fuelDealerCorpMapId) {
+    if(this.fuelDealerCorpMapId && this.productId){
       this.yearWiseQtyData = []
       this.spinner.show()
       let data = {
         fuelDealerCustomerMapId: this.fuelDealerCorpMapId,
         startDate: moment(this.startDate, ["YYYY"]).format("YYYY-04-01"),
-        endDate: moment(this.endDate, ["YYYY"]).format("YYYY-03-31")
+        endDate: moment(this.endDate, ["YYYY"]).format("YYYY-03-31"),
+        prodId: this.productId
       }
 
-      this.post.getMonthlyCrDetailsQtyPOST(data)
+      this.post.getMonthlyCrDetailsQtyNewPOST(data)
         .subscribe(res => {
           if (res.status == "OK" && res.data.length) {
             this.yearWiseQtyData = res.data;
@@ -284,6 +296,53 @@ export class BaseTablesWidget8Component implements OnInit {
             this.cd.detectChanges()
           }
         })
+    } else if (this.fuelDealerCorpMapId) {
+      this.yearWiseQtyData = []
+      this.spinner.show()
+      let data = {
+        fuelDealerCustomerMapId: this.fuelDealerCorpMapId,
+        startDate: moment(this.startDate, ["YYYY"]).format("YYYY-04-01"),
+        endDate: moment(this.endDate, ["YYYY"]).format("YYYY-03-31")
+      }
+
+      this.post.getMonthlyCrDetailsQtyNewPOST(data)
+        .subscribe(res => {
+          if (res.status == "OK" && res.data.length) {
+            this.yearWiseQtyData = res.data;
+            this.spinner.hide();
+            this.cd.detectChanges()
+
+          } else {
+            alert("Data Not Found..!")
+            this.spinner.hide();
+            this.cd.detectChanges()
+          }
+        })
+    } else if(this.productId){
+      this.yearWiseQtyData = []
+      this.spinner.show()
+      let data = {
+        fuelDealerId: this.fuelDealerId,
+        prodId: this.productId,
+        startDate: moment(this.startDate, ["YYYY"]).format("YYYY-04-01"),
+        endDate: moment(this.endDate, ["YYYY"]).format("YYYY-03-31")
+      }
+
+      //getMonthlyCrDetailsQtyPOST OLd api
+      this.post.getMonthlyCrDetailsQtyNewPOST(data)
+        .subscribe(res => {
+          if (res.status == "OK" && res.data.length) {
+            this.yearWiseQtyData = res.data;
+            this.spinner.hide();
+            this.cd.detectChanges()
+
+          } else {
+            alert("Data Not Found..!")
+            this.spinner.hide();
+            this.cd.detectChanges()
+          }
+        })
+
     } else {
       this.yearWiseQtyData = []
       this.spinner.show()
@@ -293,7 +352,7 @@ export class BaseTablesWidget8Component implements OnInit {
         endDate: moment(this.endDate, ["YYYY"]).format("YYYY-03-31")
       }
 
-      this.post.getMonthlyCrDetailsQtyPOST(data)
+      this.post.getMonthlyCrDetailsQtyNewPOST(data)
         .subscribe(res => {
           if (res.status == "OK" && res.data.length) {
             this.yearWiseQtyData = res.data;
@@ -411,5 +470,25 @@ export class BaseTablesWidget8Component implements OnInit {
   pageChangeEvent(event: number) {
     this.p = event;
     this.getYearQtyWise();
+  }
+  getProductsByDealerId(fuelDealerId: any) {
+    this.productsData = [];
+    let data = {
+      fuelDealerId: fuelDealerId
+    }
+    this.post1.getFuelProductIdByDealerIdPOST(data).subscribe(res => {
+      if (res.status == "OK") {
+        this.productsData = res.data;
+        this.spinner.hide();
+        this.cd.detectChanges()
+      } else {
+        this.spinner.hide();
+        this.cd.detectChanges()
+      }
+    })
+  }
+
+  getPrice(id: any){
+    this.productId = id.target.value;
   }
 }
