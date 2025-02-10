@@ -174,7 +174,7 @@ export class FeedsWidget11Component implements OnInit {
     this.getOpeningBalance(this.fuelDealerId);
     // this.getDigitalTotalByDate(this.dealerCorporateId);
     // this.getSalesDetailsProductWise(this.fuelDealerId);
-    // this.getoverallReportData(this.fuelDealerId);
+    this.getoverallReportData(this.fuelDealerId);
     // this.getPreviousVariation(this.fuelDealerId);
     this.cd.detectChanges();
   }
@@ -313,7 +313,7 @@ export class FeedsWidget11Component implements OnInit {
     this.getOpeningBalance(this.fuelDealerId);
     // this.getDigitalTotalByDate(this.dealerCorporateId);
     // this.getSalesDetailsProductWise(this.fuelDealerId);
-    // this.getoverallReportData(this.fuelDealerId);
+    this.getoverallReportData(this.fuelDealerId);
     // this.getPreviousVariation(this.fuelDealerId);
     this.cd.detectChanges();
   }

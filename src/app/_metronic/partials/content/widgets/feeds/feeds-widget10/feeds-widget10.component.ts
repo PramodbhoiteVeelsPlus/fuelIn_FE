@@ -178,7 +178,7 @@ export class FeedsWidget10Component implements OnInit {
     // this.getNzWise(this.fuelDealerId);
     // this.getSalesDetailsProductWise(this.fuelDealerId);
     // this.getFuelCreditByDate(this.fuelDealerId);
-    // this.getoverallReportData(this.fuelDealerId);
+    this.getoverallReportData(this.fuelDealerId);
     // this.getPreviousVariation(this.fuelDealerId);
     this.cd.detectChanges();
   }
@@ -218,7 +218,7 @@ export class FeedsWidget10Component implements OnInit {
     // this.getNzWise(this.fuelDealerId);
     // this.getSalesDetailsProductWise(this.fuelDealerId);
     // this.getFuelCreditByDate(this.fuelDealerId);
-    // this.getoverallReportData(this.fuelDealerId);
+    this.getoverallReportData(this.fuelDealerId);
     // this.getPreviousVariation(this.fuelDealerId);
     this.cd.detectChanges();
   }
@@ -634,7 +634,8 @@ export class FeedsWidget10Component implements OnInit {
           if (res.data5[0].totalLubeCrAmount) {
             this.totalLubeCrAmt = res.data5[0].totalLubeCrAmount;
           }
-          this.totalLubeAmount = this.totalLubeCashAmount + this.totalLubeCrAmount
+          this.totalLubeAmount = Number(this.totalLubeCashAmount) + Number(this.totalLubeCrAmount)
+          console.log("ff", this.totalLubeAmount, this.totalLubeCashAmount , this.totalLubeCrAmount)
 
           if (res.data3.length) {
             this.lubeWiseDetails = res.data3;
