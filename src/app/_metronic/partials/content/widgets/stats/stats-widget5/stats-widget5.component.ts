@@ -41,7 +41,24 @@ export class StatsWidget5Component {
     this.dealerMobile = element.phone1;
     this.accessGroupId = element.accessGroupId;
     console.log("dealerId", this.fuelDealerId)
-    this.getDealerIdByPhone(this.dealerMobile);
+    
+    if (this.title == "Credit O/s") {
+      this.isOS = true;
+      this.isSales = false;
+      this.isPayment = false;
+      this.getCreditOsByDealerId(this.fuelDealerId)
+    } else if (this.title == "Credit Sales") {
+      this.isOS = false;
+      this.isSales = true;
+      this.isPayment = false;
+      this.getCreditSalesDetailsByDealerId(this.fuelDealerId)
+    } else if (this.title == "Credit Payment") {
+      this.isOS = false;
+      this.isSales = false;
+      this.isPayment = true;
+      this.getCreditPaymentDetailsByDealerId(this.fuelDealerId)
+    }
+
     // this.getCreditDetailsByDealerId(this.fuelDealerId);
     setTimeout(() => {
       /** spinner ends after 5 seconds */

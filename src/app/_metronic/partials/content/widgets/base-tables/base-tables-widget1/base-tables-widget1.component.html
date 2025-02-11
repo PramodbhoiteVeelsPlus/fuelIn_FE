@@ -1,4 +1,9 @@
 <style>
+  .btn-outline-success {
+    border: 1px solid #28a745 !important;
+    color: #28a745 !important;
+    background-color: transparent !important;
+  }
 
   @media print {
     .page-break {
@@ -39,11 +44,11 @@
     <form [formGroup]="selectCorporate">
       <div class="row">
         <div class="col-md-4">
-        <label for="example-text-input" class="col-auto col-form-label"><b>Khata</b></label>
-      </div>
-      <div class="col-md-3">
-        <label for="example-text-input" class="col-auto col-form-label"><b>Date Range</b></label>
-      </div>
+          <label for="example-text-input" class="col-auto col-form-label"><b>Khata</b></label>
+        </div>
+        <div class="col-md-3">
+          <label for="example-text-input" class="col-auto col-form-label"><b>Date Range</b></label>
+        </div>
       </div>
       <div class="row">
         <!-- <label for="example-text-input" class="col-auto col-form-label">Khata</label> -->
@@ -79,54 +84,54 @@
             placement="bottom"><i class="fas fa-file-csv" style="font-size: 30px;"></i></span><br>
         </div>
       </div>
-    </form>
-
-    <div class="row">
-      <div class="col-md-1"></div>
-      <div class="col-auto">
-        <div class="table-responsive mb-0">
-          <table class="table table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
-            <thead>
-              <tr>
-                <th *ngFor="let data of productWiseCRAmt" style="text-align: left; border: 2px solid #272829;">
-                  <span *ngIf="data.purpose == 'AdvAmt' ">
-                    ADVANCE
-                  </span>
-                  <span *ngIf="data.purpose == 'LUBETAX' ">
-                    LUBRICANTS-TAX
-                  </span>
-                  <span *ngIf="data.purpose != 'AdvAmt' && data.purpose != 'LUBETAX'">
-                    {{data.productName}}
-                  </span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td *ngFor="let data of productWiseCRAmt" style="text-align: left; border: 2px solid #272829;">
-                  <b>
-                    ₹ {{data.totalCreditAmount | number:'1.2-2'}}
-                  </b>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-4">
-        <div class="search-box">
-          <div class="position-relative">
-            <input class="form-control " type="text" placeholder="search" style="width: 289px"
-              oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
-              [(ngModel)]="searchData" [ngModelOptions]="{standalone: true}" (input)="onSearch()">
-            <i class="bx bx-search-alt search-icon"></i>
+      <div class="row">
+        <div class="col-auto">
+          <div class="table-responsive mb-0">
+            <table class="table table-centered table-nowrap"
+              style="border-collapse: collapse; border: 1px solid black;">
+              <thead>
+                <tr>
+                  <th *ngFor="let data of productWiseCRAmt" style="text-align: center; border: 2px solid #272829;">
+                    <span *ngIf="data.purpose == 'AdvAmt' ">
+                      ADVANCE
+                    </span>
+                    <span *ngIf="data.purpose == 'LUBETAX' ">
+                      LUBRICANTS-TAX
+                    </span>
+                    <span *ngIf="data.purpose != 'AdvAmt' && data.purpose != 'LUBETAX'">
+                      {{data.productName}}
+                    </span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td *ngFor="let data of productWiseCRAmt" style="text-align: center; border: 2px solid #272829;">
+                    <b>
+                      ₹ {{data.totalCreditAmount | number:'1.2-2'}}
+                    </b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-    </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="search-box">
+            <div class="position-relative">
+              <input class="form-control " type="text" placeholder="search" style="width: 289px"
+                oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                [(ngModel)]="searchData" [ngModelOptions]="{standalone: true}" (input)="onSearch()">
+              <i class="bx bx-search-alt search-icon"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
 
   </div>
   <br>
@@ -599,16 +604,18 @@
                     </div>
                     <div class="col-md-3">
                       <input class="form-control" type="number" [(ngModel)]="productCategory"
-                            [ngModelOptions]="{standalone: true}" disabled>
+                        [ngModelOptions]="{standalone: true}" disabled>
 
-                      <input class="form-control" placeholder="Product" [(ngModel)]="productCategory" [ngModelOptions]="{standalone: true}" disabled>
+                      <input class="form-control" placeholder="Product" [(ngModel)]="productCategory"
+                        [ngModelOptions]="{standalone: true}" disabled>
                     </div>
                     <div class="col-md-2">
                       <label class="labelNewMargin">Product
                         Rate:</label>
                     </div>
                     <div class="col-md-3">
-                      <input class="form-control" placeholder="Product Rate" formControlName="productRate" [disabled]="true">
+                      <input class="form-control" placeholder="Product Rate" formControlName="productRate"
+                        [disabled]="true">
                     </div>
                   </div>
                   <hr>
@@ -726,7 +733,8 @@
                 <div class="row noprint">
                   <div class="col-md-8"></div>
                   <div class="col-md-2">
-                    <button class="btn btn-success" printSectionId="sanjay" [useExistingCss]="true" ngxPrint>print</button>
+                    <button class="btn btn-success" printSectionId="sanjay" [useExistingCss]="true"
+                      ngxPrint>print</button>
                   </div>
                 </div>
                 <div id="sanjay">
@@ -1309,16 +1317,16 @@
                         Name:</label>
                     </div>
                     <div class="col-md-3">
-                      <input class="form-control" [(ngModel)]="productCategory"
-                            [ngModelOptions]="{standalone: true}" disabled>
+                      <input class="form-control" [(ngModel)]="productCategory" [ngModelOptions]="{standalone: true}"
+                        disabled>
                     </div>
                     <div class="col-md-2">
                       <label class="labelNewMargin">Product
                         Rate:</label>
                     </div>
                     <div class="col-md-3">
-                      <input class="form-control" [(ngModel)]="productRate"
-                      [ngModelOptions]="{standalone: true}" disabled>
+                      <input class="form-control" [(ngModel)]="productRate" [ngModelOptions]="{standalone: true}"
+                        disabled>
                     </div>
                   </div>
                   <hr>
@@ -1329,7 +1337,7 @@
                     </div>
                     <div class="col-md-3">
                       <input class="form-control" [(ngModel)]="estimatedRefuelDateForEdit"
-                      [ngModelOptions]="{standalone: true}" disabled>
+                        [ngModelOptions]="{standalone: true}" disabled>
                     </div>
 
                     <div class="col-md-5">
@@ -1376,7 +1384,7 @@
                     <div class="col-md-3">
                       <span *ngIf="!isAMOUNT">
                         <input class="form-control form-control-sm mr-1 w-40" [(ngModel)]="reqCreditAmount"
-                        [ngModelOptions]="{standalone: true}" disabled>
+                          [ngModelOptions]="{standalone: true}" disabled>
                       </span>
                       <span *ngIf="isAMOUNT">
                         <input class="form-control form-control-sm mr-1 w-40" formControlName="reqCreditAmount"
@@ -1400,7 +1408,7 @@
                     <div class="col-md-3">
                       <span *ngIf="!isQUANTITY">
                         <input class="form-control form-control-sm mr-1 w-40" [(ngModel)]="reqQuantity"
-                        [ngModelOptions]="{standalone: true}" disabled>
+                          [ngModelOptions]="{standalone: true}" disabled>
                       </span>
                       <span *ngIf="isQUANTITY">
                         <input class="form-control form-control-sm mr-1 w-40" formControlName="reqQuantity"
@@ -1467,7 +1475,7 @@
                     <h6>
                       Dear Customer, You added this Credit entry to Shift Or Saved Invoice, if you delete or edit this
                       entry it will
-                      affect the shift tally Or Saved Invoice. 
+                      affect the shift tally Or Saved Invoice.
                     </h6>
                   </label>
                 </h4>

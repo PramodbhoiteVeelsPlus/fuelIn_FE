@@ -90,13 +90,19 @@
         </div>
       </form>
     </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-success" (click)="submitTerminal()">
-        Submit
-      </button>
-      <button type="button" class="btn btn-danger" (click)="close()">
-        Cancel
-      </button>
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-auto">
+        <button type="button" class="btn btn-success" (click)="submitTerminal()">
+          Submit
+        </button>
+      </div>
+      <div class="col-auto">
+        <button type="button" class="btn btn-danger" (click)="close()">
+          Cancel
+        </button>
+      </div>
     </div>
+    <br>
   </div>
 </ng-template>

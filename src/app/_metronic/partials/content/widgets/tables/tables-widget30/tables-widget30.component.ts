@@ -159,6 +159,7 @@ export class TablesWidget30Component {
   crAmt: any;
   crDays: string;
   addressId: any
+  customerId: any;
 
   constructor(
     private post: WidgetService,
@@ -181,19 +182,24 @@ export class TablesWidget30Component {
     this.isDisableEmail = element.isEmail;
     this.fuelDealerId = localStorage.getItem('dealerId');
     this.dealerCorporateId = localStorage.getItem('dealerCorporateId');
-    this.headerName1 = dealerData.companyName;
-    this.headerName2 = dealerData.address1 + ', ' + dealerData.address2 + ', ' + dealerData.city;
-    this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     if (element.accessGroupId == 12 || element.accessGroupId == 14 || element.accessGroupId == 19 || element.accessGroupId == 21) {
       this.dealerAccess = true
+      if(element.accessGroupId == '12'){
+        this.customerId = dealerData.customerId;
+      } 
+      if(element.accessGroupId == '14'){
+        var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
+        this.customerId = managerData.customerId;
+        this.searchDealerBycustomerId(this.customerId)
+      }
       if (element.accessGroupId == 19 || element.accessGroupId == 21) {
         this.liteAccess = true
       }
     }
-    if(!this.mappingAccData.length){
+    if (!this.mappingAccData.length) {
       this.getMappingAccount(this.fuelDealerId);
-    }else{
+    } else {
       this.getMappingAccount1(this.fuelDealerId);
     }
     this.cd.detectChanges()
@@ -207,6 +213,23 @@ export class TablesWidget30Component {
     this.p = event;
     this.getMappingAccount(this.fuelDealerId);
   }
+
+  searchDealerBycustomerId(customerId: any) {    
+    let data = {
+      customerId: customerId,
+    };
+    this.post.getCustomerByCustomerIdPOST(data)
+      .subscribe(res => {
+        if (res.data.length) {         
+          this.headerName1 = res.data[0].companyName;
+          this.headerName2 = res.data[0].address1 + ', ' + res.data[0].address2 + ', ' + res.data[0].city;
+          this.headerName3 = res.data[0].state + '-' + res.data[0].pin + '  ' + "GST: " + res.data[0].GSTNumber;         
+          
+        } else {
+          this.spinner.hide();
+        }
+      });
+}
 
   getMappingAccount(fuelDealerId: any) {
     this.spinner.show();
@@ -252,7 +275,7 @@ export class TablesWidget30Component {
         }
       })
   }
-  
+
   allCustomerPDFDownload() {
 
     // "Pending days",
@@ -266,13 +289,13 @@ export class TablesWidget30Component {
         this.gst = this.mappingAccData[key].mappingGST
       }
 
-      if(this.mappingAccData[key].maxCreditAmount == null){
+      if (this.mappingAccData[key].maxCreditAmount == null) {
         this.crAmt = ''
       } else {
         this.crAmt = this.mappingAccData[key].maxCreditAmount
       }
-      
-      if(this.mappingAccData[key].creditDayLimit == null){
+
+      if (this.mappingAccData[key].creditDayLimit == null) {
         this.crDays = ''
       } else {
         this.crDays = this.mappingAccData[key].creditDayLimit
@@ -337,14 +360,14 @@ export class TablesWidget30Component {
       } else {
         this.gst = res.mappingGST
       }
-      
-      if(res.maxCreditAmount == 'null'){
+
+      if (res.maxCreditAmount == 'null') {
         this.crAmt = ''
       } else {
         this.crAmt = res.maxCreditAmount
       }
-      
-      if(res.creditDayLimit == 'null'){
+
+      if (res.creditDayLimit == 'null') {
         this.crDays = ''
       } else {
         this.crDays = res.creditDayLimit
@@ -478,7 +501,7 @@ export class TablesWidget30Component {
     this.spinner.show();
     let data = {
       customerMapId: fuelDealerCustomerMapId,
-    }; 
+    };
 
     this.post.checkCustomerPreviousOutstandingIsAddedOrNotPOST(data)
       .subscribe(res => {

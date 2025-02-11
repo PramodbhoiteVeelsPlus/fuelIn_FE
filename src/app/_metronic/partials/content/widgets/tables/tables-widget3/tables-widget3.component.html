@@ -121,18 +121,17 @@
   <!-- begin::Table container -->
   <div class="table-responsive">
     <!-- begin::Table -->
-    <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
-      <!-- begin::Table head -->
-      <thead>
-        <tr class="fw-bolder">
-          <th class="min-w-50px">#</th>
-          <th class="min-w-150px">First Name</th>
-          <th class="min-w-150px">Last Name</th>
-          <th class="min-w-120px">Mobile</th>
-          <th class="min-w-120px">Role</th>
-          <th class="min-w-120px">Salary</th>
-          <th *ngIf = "accessGroupId != '14' " class="min-w-120px">Mapping</th>
-          <th *ngIf = "accessGroupId != '14' " class="min-w-100px text-left">Actions</th>
+    <table class="table table-hover table-striped">
+      <thead class="table-light">
+        <tr>
+          <th style="text-align: left;"><b>#</b></th>
+          <th style="text-align: left;"><b>First Name</b></th>
+          <th style="text-align: left;"><b>Last Name</b></th>
+          <th style="text-align: left;"><b>Mobile</b></th>
+          <th style="text-align: left;"><b>Role</b></th>
+          <th  style="text-align: left;"><b>Salary</b></th>
+          <th *ngIf = "accessGroupId != '14'" style="text-align: left;"><b>Mapping</b></th>
+          <th *ngIf = "accessGroupId != '14'" style="text-align: left;"><b>Actions</b></th>
         </tr>
       </thead>
       <!-- end::Table head -->

@@ -124,12 +124,19 @@ export class TablesWidget31Component {
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.fuelDealerId = localStorage.getItem('dealerId');
     this.dealerCorporateId = localStorage.getItem('dealerCorporateId');
-    this.customerId = dealerData.customerId;
+    
     this.headerName1 = dealerData.companyName;
     this.headerName2 = dealerData.address1 + ', ' + dealerData.address2 + ', ' + dealerData.city;
     this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     if (element.accessGroupId == 12 || element.accessGroupId == 14 || element.accessGroupId == 19 || element.accessGroupId == 21) {
+      if(element.accessGroupId == '12'){
+        this.customerId = dealerData.customerId;
+      } 
+      if(element.accessGroupId == '14'){
+        var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
+        this.customerId = managerData.customerId;
+      }
       this.dealerAccess = true
       if (element.accessGroupId == 19 || element.accessGroupId == 21) {
         this.liteAccess = true
@@ -164,7 +171,10 @@ export class TablesWidget31Component {
       .subscribe(res => {
         if (res.data.length) {                      
           this.dealerName = res.data[0].companyName;
-          this.city = res.data[0].city;            
+          this.city = res.data[0].city;   
+          this.headerName1 = res.data[0].companyName;
+          this.headerName2 = res.data[0].address1 + ', ' + res.data[0].address2 + ', ' + res.data[0].city;
+          this.headerName3 = res.data[0].state + '-' + res.data[0].pin + '  ' + "GST: " + res.data[0].GSTNumber;         
           
         } else {
           this.spinner.hide();

@@ -223,5 +223,13 @@ export class Modal3Component {
       }
     }
 
+    clear(){
+      this.addBankDetailsForm.reset()
+      this.addBankDetailsForm.controls['accountHolderName'].setValue("") 
+      this.addBankDetailsForm.controls['bankName'].setValue("")
+      this.addBankDetailsForm.controls['branchName'].setValue("")
+      this.addBankDetailsForm.controls['upiId'].setValue("") 
+      this.addBankDetailsForm.controls['accountType'].setValue("SAVING")
+    }
 
 }

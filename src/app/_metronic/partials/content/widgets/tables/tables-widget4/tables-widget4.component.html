@@ -119,18 +119,17 @@
   <!-- begin::Table container -->
   <div class="table-responsive">
     <!-- begin::Table -->
-    <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
-      <!-- begin::Table head -->
-      <thead>
+    <table class="table table-hover table-striped">
+      <thead class="table-light">
         <tr class="fw-bolder">
-          <th class="min-w-50px">#</th>
-          <th class="min-w-100px">Account Type</th>
-          <th class="min-w-120px">Account Number</th>
-          <th class="min-w-100px">IFSC Code</th>
-          <th class="min-w-120px">UPI</th>
-          <th class="min-w-120px">Bank</th>
-          <th class="min-w-120px">Default Account</th>
-          <th class="min-w-100px text-left">Actions</th>
+          <th style="text-align: left;"><b>#</b></th>
+          <th style="text-align: left;"><b>Account Type</b></th>
+          <th style="text-align: left;"><b>Account Number</b></th>
+          <th style="text-align: left;"><b>IFSC Code</b></th>
+          <th style="text-align: left;"><b>UPI</b></th>
+          <th style="text-align: left;"><b>Bank</b></th>
+          <th style="text-align: left;"><b>Default Account</b></th>
+          <th style="text-align: left;"><b>Actions</b></th>
         </tr>
       </thead>
       <!-- end::Table head -->
@@ -197,14 +196,14 @@
               <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-2">
-                  <label class="labelNewMargin">Account Number <span style="color: red;">*</span></label>
+                  <label class="labelNewMargin"><b>Account Number </b><span style="color: red;">*</span></label>
                 </div>
                 <div class="col-md-3">
                   <input class="form-control" formControlName="accountNumber" placeholder="Account Number">
                 </div>
                 <div class="col-md-1"></div>
                 <div class="col-md-2">
-                  <label class="labelNewMargin">Bank Name</label>
+                  <label class="labelNewMargin"><b>Bank Name</b></label>
                 </div>
                 <div class="col-md-3">
                   <input class="form-control"
@@ -217,7 +216,7 @@
               <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-2">
-                  <label class="labelNewMargin">Mobile Number<span style="color: red;">*</span></label>
+                  <label class="labelNewMargin"><b>Mobile Number</b><span style="color: red;">*</span></label>
                 </div>
                 <div class="col-md-3">
                   <input class="form-control" type="number" formControlName="phone"
@@ -226,7 +225,7 @@
                 </div>
                 <div class="col-md-1"></div>
                 <div class="col-md-2">
-                  <label class="labelNewMargin">Account Holder</label>
+                  <label class="labelNewMargin"><b>Account Holder</b></label>
                 </div>
                 <div class="col-md-3">
                   <input class="form-control"
@@ -240,7 +239,7 @@
               <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-2">
-                  <label class="labelNewMargin">IFSC <span style="color: red;">*</span></label>
+                  <label class="labelNewMargin"><b>IFSC </b><span style="color: red;">*</span></label>
                 </div>
                 <div class="col-md-3">
                   <input class="form-control" formControlName="ifsc"
@@ -249,7 +248,7 @@
                 </div>
                 <div class="col-md-1"></div>
                 <div class="col-md-2">
-                  <label class="labelNewMargin"> Branch Name</label>
+                  <label class="labelNewMargin"><b> Branch Name</b></label>
                 </div>
                 <div class="col-md-3">
                   <input class="form-control"
@@ -261,7 +260,7 @@
               <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-2">
-                  <label class="labelNewMargin">UPI</label>
+                  <label class="labelNewMargin"><b>UPI</b></label>
                 </div>
                 <div class="col-md-3">
                   <input class="form-control" type="text" formControlName="upiId" placeholder="UPI">

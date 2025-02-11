@@ -763,6 +763,7 @@ export class MixedWidget1Component {
                           this.checkDates(this.vehicleMapId, moment(this.requestVehicle.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
                           this.isCRQUANTITY = false;
                           this.isQUANTITY = false;
+                          this.CreditVehicleRequestDataArray = [];
                           this.countVehicle = 1;
                           if (this.autoManualStatus == 'TRUE') {
 

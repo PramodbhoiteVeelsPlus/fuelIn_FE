@@ -8,7 +8,7 @@
                     <form [formGroup]="searchDiscountForm">
 
                         <div class="row">
-                            <div class="col-md-1"></div>
+                            <!-- <div class="col-md-1"></div> -->
                             <label for="example-text-input" class="col-auto col-form-label"><b>Khata</b></label>
                             <div class="col-md-3">
                                 <input class="form-control" type="text" list="allCorporateList" placeholder="Khata"
@@ -17,7 +17,7 @@
                                     <option *ngFor="let data of allCorporateList" [value]="data.companyName">
                                 </datalist>
                             </div>
-                            <label for="example-text-input" class="col-auto col-form-label"><b>>Date Range </b></label>
+                            <label for="example-text-input" class="col-auto col-form-label"><b>Date Range </b></label>
                             <div class="col-md-2">
                                 <input class="form-control" placeholder="DD-MM-YYYY" readonly
                                     style="background-color: #ffffff;" name="startDate" ngbTooltip="Start Date"

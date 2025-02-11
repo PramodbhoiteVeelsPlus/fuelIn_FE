@@ -6,6 +6,12 @@
       transition: background-color 0.3s, color 0.3s;
       /* Smooth transition */
     }
+
+    .btn-outline-success {
+      border: 1px solid #28a745 !important;
+      color: #28a745 !important;
+      background-color: transparent !important;
+    }
   </style>
 </head>
 <ng-template #modal>
@@ -57,7 +63,7 @@
               </a>
               <span class="badge badge-light-warningfs-6 fw-bolder">
                 <input placeholder="IFSC" class="form-control" formControlName="ifsc"
-                oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"   >
+                  oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
               </span>
             </div>
 
@@ -73,7 +79,7 @@
               </a>
               <span class="badge badge-light-success fs-6 fw-bolder">
                 <input type="text" placeholder="Account Holder Name" class="form-control"
-                formControlName="accountHolderName">
+                  formControlName="accountHolderName">
               </span>
             </div>
 
@@ -129,13 +135,15 @@
       </form>
 
     </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-success" (click)="addBankDetails()">
-        Submit
-      </button>
-      <button type="button" class="btn btn-danger" (click)="close()">
-        Cancel
-      </button>
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-auto">
+        <button class="btn btn-outline-success my-2 my-sm-0" (click)="addBankDetails()">Submit</button>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-danger" (click)="clear()">Cancel</button>
+      </div>
     </div>
+    <br>
   </div>
 </ng-template>

@@ -1008,6 +1008,8 @@ export class StatsWidget16Component {
                               this.requestTransporter.controls["reqCreditAmount"].setValue("");
                               this.requestTransporter.controls["reqQuantity"].setValue("");
                               this.requestTransporter.controls["vehicleNumber"].setValue("");
+                              this.requestTransporter.controls["productPrice"].setValue('');
+                              this.requestTransporter.controls["productName"].setValue('');
                             } else {
                               // this.getFuelCreditRequestByfuelDealerId(this.fuelDealerId);
                               this.isCRQUANTITY = false;
@@ -1025,6 +1027,8 @@ export class StatsWidget16Component {
                               this.requestTransporter.controls["reqCreditAmount"].setValue("");
                               this.requestTransporter.controls["reqQuantity"].setValue("");
                               this.requestTransporter.controls["vehicleNumber"].setValue("");
+                              this.requestTransporter.controls["productPrice"].setValue('');
+                              this.requestTransporter.controls["productName"].setValue('');
                             }
                           }
 

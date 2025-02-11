@@ -130,11 +130,17 @@ export class TablesWidget32Component {
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.fuelDealerId = localStorage.getItem('dealerId');
     this.dealerCorporateId = localStorage.getItem('dealerCorporateId');
-    this.headerName1 = dealerData.companyName;
-    this.customerId = dealerData.customerId;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     if (element.accessGroupId == 12 || element.accessGroupId == 14 || element.accessGroupId == 19 || element.accessGroupId == 21) {
       this.dealerAccess = true
+      if(element.accessGroupId == '12'){
+        this.customerId = dealerData.customerId;
+        this.headerName1 = dealerData.companyName;
+      } 
+      if(element.accessGroupId == '14'){
+        var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
+        this.customerId = managerData.customerId;
+      }
       if (element.accessGroupId == 19 || element.accessGroupId == 21) {
         this.liteAccess = true
       }
@@ -226,6 +232,7 @@ export class TablesWidget32Component {
           this.mobile = res.data[0].hostPhone;
           this.kycId = res.data[0].kycId;
           this.pin = res.data[0].pin;
+          this.headerName1 = res.data[0].companyName;
           // this.logo = this.imageURL + res.data[0].companyLogoLink;
           console.log("this.companyName", this.companyName)
           this.cd.detectChanges()

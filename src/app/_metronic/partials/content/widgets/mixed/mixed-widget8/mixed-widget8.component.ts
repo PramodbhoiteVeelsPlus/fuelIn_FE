@@ -6,6 +6,7 @@ import { StatsService } from '../../stats/stats.services';
 import { MixedService } from '../mixed.services';
 import moment from 'moment';
 import numWords from 'num-words';
+import { WidgetService } from '../../widgets.services';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -115,10 +116,12 @@ export class MixedWidget8Component implements OnInit {
   GSTNumber: any;
   address1: any;
   address2: any;
+  customerId: any;
 
   constructor(
     private post: MixedService,
     private post1: StatsService,
+    private post2: WidgetService,
     private spinner: NgxSpinnerService,
     config: NgbDatepickerConfig,
     public cd: ChangeDetectorRef,
@@ -157,6 +160,11 @@ export class MixedWidget8Component implements OnInit {
     if (this.accessGroup == 12 || this.accessGroup == 14 || this.accessGroup == 19 || this.accessGroup == 21) {
       // this.getVBCorporateById(this.veelsplusCorporate);
       this.getCredit();
+    }
+    if(this.accessGroup == '14'){
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
+      this.customerId = managerData.customerId;
+      this.searchDealerBycustomerId(this.customerId)
     }
     this.getBankDetailsByDealerId(this.fuelDealerId)
     this.getManagerMobileByfuelDealerId(this.fuelDealerId)
@@ -299,4 +307,26 @@ export class MixedWidget8Component implements OnInit {
       }
       );
   }
+  
+  searchDealerBycustomerId(customerId: any) {    
+    let data = {
+      customerId: customerId,
+    };
+    this.post1.getCustomerByCustomerIdPOST(data)
+      .subscribe(res => {
+        if (res.data.length) {         
+          this.companyName = res.data[0].companyName;
+          this.oilCompanyName = res.data[0].brandName;
+          this.address1 = res.data[0].address1;
+          this.address2 = res.data[0].address2;
+          this.city = res.data[0].city;
+          this.state = res.data[0].state;
+          this.pin = res.data[0].pin;
+          this.GSTNumber = res.data[0].GSTNumber;         
+          
+        } else {
+          this.spinner.hide();
+        }
+      });
+}
 }

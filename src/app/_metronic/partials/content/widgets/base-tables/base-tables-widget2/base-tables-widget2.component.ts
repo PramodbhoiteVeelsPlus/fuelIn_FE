@@ -8,6 +8,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import moment from 'moment';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable'
+import { WidgetService } from '../../widgets.services';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<any> {
@@ -124,6 +125,7 @@ export class BaseTablesWidget2Component implements OnInit {
   headerName1: any;
   headerName2: string;
   headerName3: string;
+  customerId: any;
 
   constructor(
     private modalService: NgbModal,
@@ -133,6 +135,7 @@ export class BaseTablesWidget2Component implements OnInit {
     private excelService: ExcelService,
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
+    private post1: WidgetService,
     private router: Router) {
   }
 
@@ -147,6 +150,9 @@ export class BaseTablesWidget2Component implements OnInit {
     if (this.acceesGroup == 12 || this.acceesGroup == 19) {
       this.dealerView = true;
       this.ownerName = element.firstName + ' ' + element.lastName
+      this.headerName1 = dealerData.companyName;
+      this.headerName2 = dealerData.address1 + ', ' + dealerData.address2 + ', ' + dealerData.city;
+      this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
     }
     this.dealerMobile = element.phone1;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
@@ -154,13 +160,15 @@ export class BaseTablesWidget2Component implements OnInit {
     this.managerPersonId = element.personId
     this.managerName = element.firstName + ' ' + element.lastName
     this.acceesGroup = element.accessGroupId;
-    this.headerName1 = dealerData.companyName;
-    this.headerName2 = dealerData.address1 + ', ' + dealerData.address2 + ', ' + dealerData.city;
-    this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
     if (!this.crPaymentDetails.length) {
       this.getCRPayment(this.dealerCorporateId);
     } else {
       this.getCRPayment1(this.dealerCorporateId);
+    }
+    if(element.accessGroupId == '14'){
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
+      this.customerId = managerData.customerId;
+      this.searchDealerBycustomerId(this.customerId)
     }
     this.getFuelCreditRequestCorporateByfuelDealerId(this.fuelDealerId)
     this.cd.detectChanges()
@@ -809,6 +817,7 @@ export class BaseTablesWidget2Component implements OnInit {
       .subscribe(res => {
         if (res.status == "OK") {
           alert("Delete Successfully!");
+          this.modalRefCancel.close('close');
           this.updateAmountStatusByTranslogId(this.editPaymentForm.value.accountTransacLogId)
           this.getCRPayment(this.dealerCorporateId);
           this.spinner.hide();
@@ -832,4 +841,22 @@ export class BaseTablesWidget2Component implements OnInit {
     this.post.updateAmountStatusByTranslogIdPOST(data)
       .subscribe(res => { })
   }
+  
+  searchDealerBycustomerId(customerId: any) {    
+    let data = {
+      customerId: customerId,
+    };
+    this.post1.getCustomerByCustomerIdPOST(data)
+      .subscribe(res => {
+        if (res.data.length) {         
+          this.headerName1 = res.data[0].companyName;
+          this.headerName2 = res.data[0].address1 + ', ' + res.data[0].address2 + ', ' + res.data[0].city;
+          this.headerName3 = res.data[0].state + '-' + res.data[0].pin + '  ' + "GST: " + res.data[0].GSTNumber;         
+          
+        } else {
+          this.spinner.hide();
+        }
+      });
+}
+
 }
