@@ -163,8 +163,12 @@
                   <td style="text-align: left;"> {{data.accountingDetails}} </td>
                   <td style="text-align: left;"> {{data.paidFromAccountNumber}} {{data.paidFromBankName}}
                     <i>{{data.accountingFromInput}} </i> </td>
-                  <td style="text-align: left;"> {{data.paidToAccountNumber}} {{data.paidToBankName}}
-                    <i>{{data.accountingToInput}} </i> </td>
+                  <td style="text-align: left;"> 
+                    <span *ngIf= "data.accountingToInput != 'null'">{{data.paidToAccountNumber}} {{data.paidToBankName}}
+                      <i>{{data.accountingToInput}} </i>
+                    </span> 
+                    <span *ngIf= "data.accountingToInput == 'null'"> </span> 
+                  </td>
                   <td style="text-align: left;">
                     ₹ &nbsp; {{data.accountingAmout | number:"1.2-2" }} </td>
                   <td style="text-align: left;"> {{data.accountingCreatedBy}} </td>

@@ -687,12 +687,12 @@ export class ListsWidget5Component {
           this.updateShiftForm.controls["closeDate"].setValue(res.data[0].closeDate)
         }
         this.updateShiftForm.controls["operatorStaffId"].setValue(res.data[0].firstName + ' ' + res.data[0].lastName)
-        this.operatorName = res.data[0].firstName + '' + res.data[0].lastName
+        this.operatorName = res.data[0].firstName + ' ' + res.data[0].lastName
 
         this.performStatus = res.data[0].performStatus
         this.staffId = res.data[0].fuelDealerStaffId
 
-        console.log("op", this.operatorName, this.updateShiftForm.value.shiftTimeId, res.data[0].firstName + ' ' + res.data[0].lastName)
+        // console.log("op", this.operatorName, this.updateShiftForm.value.shiftTimeId, res.data[0].firstName + ' ' + res.data[0].lastName)
         this.getOperatorVPId(this.staffId);
         this.getAllFuelCreditByStaffIdDate(this.staffId)
         if (res.data1.length) {

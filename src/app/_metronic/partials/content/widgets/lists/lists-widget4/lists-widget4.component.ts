@@ -173,7 +173,9 @@ export class ListsWidget4Component {
       this.getLubeTaxDetailsPost(this.cashBillId)
       this.lubeTaxBill = true;
     }
-    this.getCustomerAllDataById(dealerData.customerId)
+    if(this.accessGroup == '12'){
+      this.getCustomerAllDataById(dealerData.customerId)
+    }
 
     if(this.accessGroup == '14'){
       this.getCustomerAllDataById(managerData.customerId)
@@ -188,7 +190,7 @@ export class ListsWidget4Component {
     }
     this.post.getCashBillPOST(data)
     .subscribe(res => {
-      if (res.status == 'OK') {
+      if (res.status == 'OK' && res.data.length) {
            this.cashBillDate = res.data[0].cashBillDate;
            this.cashBillProduct = res.data[0].cashBillProduct;
            this.cashBillAmount = res.data[0].cashBillAmount;

@@ -683,7 +683,7 @@ export class ListsWidget1Component {
                               this.countLube = 1;
                               this.requestTransporterLubeTax.controls["requestType"].setValue("AMOUNT");
                               this.requestTransporterLubeTax.controls["requestTypeCR"].setValue("AMOUNT");
-                              this.closeRequestForm.controls["requestTypeClose"].setValue("AMOUNT");
+                              this.addFormRequestLubeTax()
                               this.requestTransporterLubeTax.controls["priceDate"].setValue(this.todayDate);
                               this.requestTransporterLubeTax.controls["manualCrNumber"].setValue("");
                               this.requestTransporterLubeTax.controls["creditQuantity"].setValue("");

@@ -10,6 +10,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import moment from 'moment';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable'
+import { WidgetService } from '../../widgets.services';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<any> {
@@ -121,6 +122,7 @@ export class ChartsWidget3Component implements OnInit {
   createdBy1: any;
   rowNumber: any;
   show: boolean = false;
+  customerId: any;
 
   constructor(
     private post: ChartsService,
@@ -130,6 +132,7 @@ export class ChartsWidget3Component implements OnInit {
     public cd: ChangeDetectorRef,
     private modalService: NgbModal,
     private excelService: ExcelService,
+    private post2: WidgetService,
     private router: Router,) {
     const currentDate = new Date();
     config.minDate = { year: 2018, month: 1, day: 1 };
@@ -163,14 +166,8 @@ export class ChartsWidget3Component implements OnInit {
       }
       if (this.accessGroup == '14') {
         var managerData = JSON.parse(localStorage.getItem('managerData') || '');
-        this.pumpCity = managerData.city
-        this.companyName = managerData.companyName
-        this.oilCompanyName = managerData.brandName
-        this.brandName = managerData.brandName
-        this.state = managerData.state
-        this.pin = managerData.pin
-        this.city = managerData.city
-        this.phone1 = managerData.hostPhone
+        this.customerId = managerData.customerId;
+        this.searchDealerBycustomerId(this.customerId)
       }
 
       if (element.accessGroupId == 12 || element.accessGroupId == 14) {
@@ -562,4 +559,20 @@ export class ChartsWidget3Component implements OnInit {
     }
   }
 
+  searchDealerBycustomerId(customerId: any) {    
+    let data = {
+      customerId: customerId,
+    };
+    this.post2.getCustomerByCustomerIdPOST(data)
+      .subscribe(res => {
+        if (res.data.length) {         
+          this.headerName1 = res.data[0].companyName;
+          this.headerName2 = res.data[0].address1 + ', ' + res.data[0].address2 + ', ' + res.data[0].city;
+          this.headerName3 = res.data[0].state + '-' + res.data[0].pin + '  ' + "GST: " + res.data[0].GSTNumber;         
+          
+        } else {
+          this.spinner.hide();
+        }
+      });
+}
 }

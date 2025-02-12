@@ -9,6 +9,7 @@ import moment from 'moment';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable'
 import { ListWidgetService } from '../../lists/listWidget.services';
+import { WidgetService } from '../../widgets.services';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<any> {
@@ -127,6 +128,7 @@ export class BaseTablesWidget8Component implements OnInit {
   startDate: number;
   endDate: number;
   headerName2: string;
+  customerId: any;
 
   constructor(
     private modalService: NgbModal,
@@ -137,7 +139,8 @@ export class BaseTablesWidget8Component implements OnInit {
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
     private post1: ListWidgetService,
-    private router: Router) {
+    private router: Router,
+    private post2: WidgetService,) {
   }
 
   ngOnInit(): void {
@@ -150,6 +153,15 @@ export class BaseTablesWidget8Component implements OnInit {
     if (this.acceesGroup == 12 || this.acceesGroup == 19) {
       this.dealerView = true;
       this.ownerName = element.firstName + ' ' + element.lastName
+      this.companyName = dealerData.companyName
+      this.oilCompanyName = dealerData.brandName
+      this.state = dealerData.state
+      this.pin = dealerData.pin
+      this.city = dealerData.city
+      this.phone1 = dealerData.hostPhone
+      this.headerName1 = dealerData.companyName;
+      this.headerName2 = dealerData.address1+', '+dealerData.address2+', '+dealerData.city;
+      this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
     }
     this.dealerMobile = element.phone1;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
@@ -157,15 +169,6 @@ export class BaseTablesWidget8Component implements OnInit {
     this.managerPersonId = element.personId
     this.managerName = element.firstName + ' ' + element.lastName
     this.acceesGroup = element.accessGroupId;
-    this.companyName = dealerData.companyName
-    this.oilCompanyName = dealerData.brandName
-    this.state = dealerData.state
-    this.pin = dealerData.pin
-    this.city = dealerData.city
-    this.phone1 = dealerData.hostPhone
-    this.headerName1 = dealerData.companyName;
-    this.headerName2 = dealerData.address1+', '+dealerData.address2+', '+dealerData.city;
-    this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
     this.year = moment(new Date()).format("YYYY");
     this.month = moment(new Date()).format("MMM");
 
@@ -189,6 +192,12 @@ export class BaseTablesWidget8Component implements OnInit {
       this.getYearQtyWise();
     } else {
       this.getYearQtyWise1();
+    }
+    
+    if(element.accessGroupId == '14'){
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
+      this.customerId = managerData.customerId;
+      this.searchDealerBycustomerId(this.customerId)
     }
     this.cd.detectChanges()
   }
@@ -470,7 +479,9 @@ export class BaseTablesWidget8Component implements OnInit {
   pageChangeEvent(event: number) {
     this.p = event;
     this.getYearQtyWise();
+    this.cd.detectChanges();
   }
+
   getProductsByDealerId(fuelDealerId: any) {
     this.productsData = [];
     let data = {
@@ -491,4 +502,21 @@ export class BaseTablesWidget8Component implements OnInit {
   getPrice(id: any){
     this.productId = id.target.value;
   }
+  
+  searchDealerBycustomerId(customerId: any) {    
+    let data = {
+      customerId: customerId,
+    };
+    this.post2.getCustomerByCustomerIdPOST(data)
+      .subscribe(res => {
+        if (res.data.length) {         
+          this.headerName1 = res.data[0].companyName;
+          this.headerName2 = res.data[0].address1 + ', ' + res.data[0].address2 + ', ' + res.data[0].city;
+          this.headerName3 = res.data[0].state + '-' + res.data[0].pin + '  ' + "GST: " + res.data[0].GSTNumber;         
+          
+        } else {
+          this.spinner.hide();
+        }
+      });
+}
 }

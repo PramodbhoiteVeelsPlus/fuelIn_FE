@@ -6,6 +6,7 @@ import { ExcelService } from 'src/app/pages/excel.service';
 import { ListWidgetService } from '../../lists/listWidget.services';
 import { ChartsService } from '../charts.services';
 import moment from 'moment';
+import { WidgetService } from '../../widgets.services';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<any> {
@@ -110,6 +111,7 @@ export class ChartsWidget6Component implements OnInit {
   address1: any;
   GSTNumber: any;
   address2: any;
+  customerId: any
 
   constructor(
     private post: ChartsService,
@@ -119,7 +121,8 @@ export class ChartsWidget6Component implements OnInit {
     public cd: ChangeDetectorRef,
     private modalService: NgbModal,
     private excelService: ExcelService,
-    private router: Router,) {
+    private router: Router,
+    private post2: WidgetService) {
     const currentDate = new Date();
     config.minDate = { year: 2018, month: 1, day: 1 };
     config.maxDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
@@ -156,6 +159,11 @@ export class ChartsWidget6Component implements OnInit {
         this.dealerAccess = true
       }
 
+      if (element.accessGroupId == 14) {
+        var managerData = JSON.parse(localStorage.getItem('managerData') || '');
+        this.customerId = managerData.customerId;
+        this.searchDealerBycustomerId(this.customerId)
+      }
       this.headerName1 = this.companyName;
 
     }
@@ -492,4 +500,29 @@ export class ChartsWidget6Component implements OnInit {
 
   }
 
+  searchDealerBycustomerId(customerId: any) {    
+    let data = {
+      customerId: customerId,
+    };
+    this.post2.getCustomerByCustomerIdPOST(data)
+      .subscribe(res => {
+        if (res.data.length) {         
+          this.headerName1 = res.data[0].companyName;
+          this.companyName = res.data[0].companyName
+          this.oilCompanyName = res.data[0].brandName
+          this.brandName = res.data[0].brandName
+          this.state = res.data[0].state
+          this.pin = res.data[0].pin
+          this.city = res.data[0].city
+          this.address1 = res.data[0].address1
+          this.address2 = res.data[0].address2
+          this.GSTNumber = res.data[0].GSTNumber
+          this.phone1 = res.data[0].hostPhone 
+          this.pumpCity = res.data[0].city       
+          
+        } else {
+          this.spinner.hide();
+        }
+      });
+}
 }

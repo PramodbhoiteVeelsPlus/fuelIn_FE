@@ -9,6 +9,7 @@ import moment from 'moment';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable'
 import * as XLSX from 'xlsx';
+import { WidgetService } from '../../widgets.services';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<any> {
@@ -116,10 +117,12 @@ export class BaseTablesWidget4Component implements OnInit {
   dayWiseData: any = [];
   headerName2: string;
   currentYear: string;
+  customerId: any;
 
   constructor(
     private modalService: NgbModal,
     private post: BaseTablesService,
+    private post1: WidgetService,
     private spinner: NgxSpinnerService,
     config: NgbDatepickerConfig,
     private excelService: ExcelService,
@@ -138,6 +141,15 @@ export class BaseTablesWidget4Component implements OnInit {
     if (this.acceesGroup == 12 || this.acceesGroup == 19) {
       this.dealerView = true;
       this.ownerName = element.firstName + ' ' + element.lastName
+      this.companyName = dealerData.companyName
+      this.oilCompanyName = dealerData.brandName
+      this.state = dealerData.state
+      this.pin = dealerData.pin
+      this.city = dealerData.city
+      this.phone1 = dealerData.hostPhone
+      this.headerName1 = dealerData.companyName;
+      this.headerName2 = dealerData.address1+', '+dealerData.address2+', '+dealerData.city;
+      this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
     }
     this.dealerMobile = element.phone1;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
@@ -145,15 +157,6 @@ export class BaseTablesWidget4Component implements OnInit {
     this.managerPersonId = element.personId
     this.managerName = element.firstName + ' ' + element.lastName
     this.acceesGroup = element.accessGroupId;
-    this.companyName = dealerData.companyName
-    this.oilCompanyName = dealerData.brandName
-    this.state = dealerData.state
-    this.pin = dealerData.pin
-    this.city = dealerData.city
-    this.phone1 = dealerData.hostPhone
-    this.headerName1 = dealerData.companyName;
-    this.headerName2 = dealerData.address1+', '+dealerData.address2+', '+dealerData.city;
-    this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
     this.currentYear = moment(new Date()).format("MM YYYY");
     this.filterForm.controls["startDate"].setValue( "01" + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear() )
     this.filterForm.controls["endDate"].setValue(moment(new Date()).format("DD-MM-YYYY"))
@@ -164,6 +167,12 @@ export class BaseTablesWidget4Component implements OnInit {
       this.getDayWise();
     } else {
       this.getDayWise1();
+    }
+    
+    if(element.accessGroupId == '14'){
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
+      this.customerId = managerData.customerId;
+      this.searchDealerBycustomerId(this.customerId)
     }
     this.cd.detectChanges()
   }
@@ -421,5 +430,26 @@ exportexcel(): void
   pageChangeEvent(event: number) {
     this.p = event;
     this.getDayWise();
+    this.cd.detectChanges();
   }
+  
+  searchDealerBycustomerId(customerId: any) {    
+    let data = {
+      customerId: customerId,
+    };
+    this.post1.getCustomerByCustomerIdPOST(data)
+      .subscribe(res => {
+        if (res.data.length) {         
+          this.headerName1 = res.data[0].companyName;
+          this.headerName2 = res.data[0].address1 + ', ' + res.data[0].address2 + ', ' + res.data[0].city;
+          this.headerName3 = res.data[0].state + '-' + res.data[0].pin + '  ' + "GST: " + res.data[0].GSTNumber; 
+          this.spinner.hide();
+          this.cd.detectChanges();        
+          
+        } else {
+          this.spinner.hide();
+          this.cd.detectChanges();
+        }
+      });
+}
 }

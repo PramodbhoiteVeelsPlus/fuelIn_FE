@@ -140,10 +140,12 @@ export class ListsWidget2Component {
   pageChangeEvent(event: number) {
     this.p = event;
     this.getLubeTaxDetailsByDealerIdPost();
+    this.cd.detectChanges()
   }
 
   getLubeTaxDetailsByDealerIdPost() {
     if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
+      this.spinner.show()
       this.lubeDetailsList.length = 0;
       let data = {
         fuelDealerId: this.fuelDealerId,
@@ -155,13 +157,16 @@ export class ListsWidget2Component {
         if (res.data.length) {
           this.lubeDetailsList = res.data;
           this.TotalAmount = Number(res.data[0].fuelcreditBeforeTax) + Number(res.data[0].fuelcreditGSTAmount)
+          this.spinner.hide()
           this.cd.detectChanges()
         } else {
           alert("Data Not Found..!")
+          this.spinner.hide()
           this.cd.detectChanges()
         }
       });
     } else {
+      this.spinner.show()
       this.lubeDetailsList.length = 0;
       let data = {
         fuelDealerId: this.fuelDealerId,
@@ -225,10 +230,12 @@ export class ListsWidget2Component {
             dataJson.totalAmount2 = Number(dataJson.fuelcreditBeforeTax) + Number(dataJson.fuelcreditGSTAmount);
 
             this.lubeDetailsList.push(dataJson);
+            this.spinner.hide()
             this.cd.detectChanges()
           })
         } else {
           alert("Data Not Found..!")
+          this.spinner.hide()
           this.cd.detectChanges()
         }
       });

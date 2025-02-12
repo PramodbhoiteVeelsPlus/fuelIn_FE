@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { TilesService } from '../tiles.services';
 import { ListWidgetService } from '../../lists/listWidget.services';
 import moment from 'moment';
+import { WidgetService } from '../../widgets.services';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -87,6 +88,7 @@ export class TilesWidget12Component implements OnInit {
   meterSalesQuantitySum: any;
   digitalDetails: any = [];
   digitalTotalSales: any;
+  customerId: any;
 
   constructor(
     private modalService: NgbModal,
@@ -94,7 +96,8 @@ export class TilesWidget12Component implements OnInit {
     private post: TilesService,
     private post1: ListWidgetService,
     private cd: ChangeDetectorRef,
-    config: NgbDatepickerConfig,) {
+    config: NgbDatepickerConfig,
+    private post2: WidgetService,) {
     const currentDate = new Date();
 
     config.minDate = { year: 2018, month: 1, day: 1 };
@@ -104,19 +107,28 @@ export class TilesWidget12Component implements OnInit {
 
   ngOnInit() {
     var element = JSON.parse(localStorage.getItem('element') || '');
-    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');
     this.userName = element.firstName + ' ' + element.lastName;
     this.accessGroup = element.accessGroupId;
     this.fuelDealerId = localStorage.getItem('dealerId');
     this.dealerCorporateId = localStorage.getItem('dealerCorporateId');
     console.log("id", this.dealerCorporateId)
-    this.companyName = dealerData.companyName;
-    this.brandName = dealerData.brandName;
-    this.city = dealerData.city;
     this.routeView =  this.post1.address;
     this.shiftTimeId =  this.post1.shiftTimeId;
     this.endDate =  this.post1.endDate;
     this.startDate =  this.post1.startDate;
+
+    if(this.accessGroup == '12'){
+      var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');
+      this.companyName = dealerData.companyName;
+      this.brandName = dealerData.brandName;
+      this.city = dealerData.city;
+    } 
+
+    if(this.accessGroup == '14'){
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
+      this.customerId = managerData.customerId;
+      this.searchDealerBycustomerId(this.customerId)
+    }
     this.getfuelShiftDetailById(this.shiftTimeId)
     if (this.routeView == "ShiftBook") {
       this.shiftTimeId = this.shiftTimeId
@@ -267,4 +279,23 @@ getDigitalTotalByDate(shiftTimeId: any,dealerCorporateId: any) {
     });
 }
 
+searchDealerBycustomerId(customerId: any) {    
+  let data = {
+    customerId: customerId,
+  };
+  this.post2.getCustomerByCustomerIdPOST(data)
+    .subscribe(res => {
+      if (res.data.length) {         
+        this.companyName = res.data[0].companyName;
+        this.brandName = res.data[0].brandName;
+        this.city = res.data[0].city;
+        this.spinner.hide();
+        this.cd.detectChanges();        
+        
+      } else {
+        this.spinner.hide();
+        this.cd.detectChanges();
+      }
+    });
+}
 }

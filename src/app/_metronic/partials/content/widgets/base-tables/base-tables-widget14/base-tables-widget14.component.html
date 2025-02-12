@@ -14,6 +14,54 @@
   <script type='text/javascript' src='../../../../../../assets/EditableInvoice/js/jquery-1.3.2.min1.js'></script>
   <script type='text/javascript' src='../../../../../../assets/EditableInvoice/js/example1.js'></script>
 
+  <style>
+    .A4 {
+      background: white;
+      width: 23cm;
+      height: 40.7cm;
+      display: block;
+      margin: 0 auto;
+      padding: 1px 1px;
+      margin-bottom: 0.5cm;
+      box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+
+      box-sizing: border-box;
+      font-size: 12pt;
+      /* //line-height:normal; */
+    }
+
+    @media print {
+      .page-break {
+        display: block;
+        page-break-before: always;
+
+        size: A4 portrait;
+      }
+    }
+
+    @media print {
+      body {
+        margin: 0;
+        padding: 0;
+        /* -webkit-print-color-adjust: exact; */
+      }
+
+      .A4 {
+        box-shadow: none;
+        margin: 0;
+        width: auto;
+        height: auto;
+      }
+
+      .noprint {
+        display: none;
+      }
+
+      .enable-print {
+        display: block;
+      }
+    }
+  </style>
 </head>
 
 <body *ngIf="statementInvoice" id="contentToConvert">
@@ -26,15 +74,15 @@
                 <button *ngIf="isSetPath == 'Individual'" class="btn btn-outline-success my-2 my-sm-0 btn-sm "(click) = "goToBack()">Back</button>
                 </span> -->
 
-      &nbsp; <button class="noprint" style="font-size: medium;" printSectionId="sanjay" [useExistingCss]="true" ngxPrint> &nbsp;&nbsp;<i
-          class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
+      &nbsp; <button class="noprint" style="font-size: medium;" printSectionId="sanjay" [useExistingCss]="true"
+        ngxPrint> &nbsp;&nbsp;<i class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
     </div>
 
 
     <div id="sanjay">
       <div class="container">
 
-        <div class="col-12 mr-2 px-1 py-1 container border-black" id="htmlData" *ngIf="isCustomer == 'TRUE' ">
+        <div class="col-md-12 mr-2 px-1 py-1 container border-black" id="htmlData" *ngIf="isCustomer == 'TRUE' ">
           <div>
             <div>
               <div class="row px-4 py-4">
@@ -391,15 +439,15 @@
                     <button *ngIf="isSetPath == 'Individual'" class="btn btn-outline-success my-2 my-sm-0 btn-sm "(click) = "goToBack()">Back</button>
                     </span> -->
 
-      &nbsp; <button class="noprint" style="font-size: medium;" printSectionId="sanjay" [useExistingCss]="true" ngxPrint> &nbsp;&nbsp;<i
-          class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
+      &nbsp; <button class="noprint" style="font-size: medium;" printSectionId="sanjay" [useExistingCss]="true"
+        ngxPrint> &nbsp;&nbsp;<i class="fa fa-print" aria-hidden="true"></i> &nbsp;</button>
     </div>
 
 
     <div id="sanjay">
       <div class="container">
 
-        <div class="col-12 mr-2 px-1 py-1 container border-black" id="htmlData">
+        <div class="col-md-12 mr-2 px-1 py-1 container border-black" id="htmlData">
           <div>
             <div>
               <div class="row px-4 py-4">

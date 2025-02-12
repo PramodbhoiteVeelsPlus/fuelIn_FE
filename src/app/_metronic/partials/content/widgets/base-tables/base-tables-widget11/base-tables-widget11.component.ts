@@ -9,6 +9,7 @@ import moment from 'moment';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable'
 import numWords from 'num-words';
+import { WidgetService } from '../../widgets.services';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<any> {
@@ -137,6 +138,7 @@ export class BaseTablesWidget11Component implements OnInit {
   paisaWrd: any;
   amountInWords: any;
   amountInWords1: string;
+  customerId: any;
 
   constructor(
     private post: BaseTablesService,
@@ -145,7 +147,8 @@ export class BaseTablesWidget11Component implements OnInit {
     private modalService: NgbModal,
     private excelService: ExcelService,
     private router: Router,
-    private route: ActivatedRoute,) {
+    private route: ActivatedRoute,
+    private post1: WidgetService,) {
   }
 
   ngOnInit(): void {
@@ -163,16 +166,6 @@ export class BaseTablesWidget11Component implements OnInit {
     this.phone1 = dealerData.hostPhone
     this.address1 = dealerData.address1
     this.address2 = dealerData.address2
-    if (this.accessGroup == '14') {
-      this.companyName = managerData.companyName
-      this.oilCompanyName = managerData.brandName
-      this.state = managerData.state
-      this.pin = managerData.pin
-      this.city = managerData.city
-      this.phone1 = managerData.hostPhone
-      this.address1 = managerData.address1
-      this.address2 = managerData.address2
-    }
     // this.getFCInvoiceList()
     const id = this.route.snapshot.paramMap.get('id');
     const id1 = this.route.snapshot.paramMap.get('id1');
@@ -199,6 +192,12 @@ export class BaseTablesWidget11Component implements OnInit {
       this.getTotalTransactionCreditPaymentForFuelInvoice()
     } else {
       this.showStatement7 = true;
+    }
+    
+    if(element.accessGroupId == '14'){
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
+      this.customerId = managerData.customerId;
+      this.searchDealerBycustomerId(this.customerId)
     }
     this.getBankDetailsByDealerId(this.fuelDealerId)
     this.getManagerMobileByfuelDealerId(this.fuelDealerId)
@@ -857,4 +856,29 @@ export class BaseTablesWidget11Component implements OnInit {
       })
 
   }
+  
+  searchDealerBycustomerId(customerId: any) {    
+    let data = {
+      customerId: customerId,
+    };
+    this.post1.getCustomerByCustomerIdPOST(data)
+      .subscribe(res => {
+        if (res.data.length) {         
+          this.companyName = res.data[0].companyName;
+          this.oilCompanyName = res.data[0].brandName;
+          this.address1 = res.data[0].address1;
+          this.address2 = res.data[0].address2;
+          this.city = res.data[0].city;
+          this.state = res.data[0].state;
+          this.pin = res.data[0].pin;
+          this.GSTNumber = res.data[0].GSTNumber; 
+          this.spinner.hide();
+          this.cd.detectChanges();        
+          
+        } else {
+          this.spinner.hide();
+          this.cd.detectChanges();
+        }
+      });
+}
 }

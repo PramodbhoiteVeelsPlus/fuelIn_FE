@@ -8,6 +8,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import moment from 'moment';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable'
+import { WidgetService } from '../../widgets.services';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<any> {
@@ -109,12 +110,14 @@ export class BaseTablesWidget14Component implements OnInit {
   netTotal: any = 0;
   advance: any = 0;
   netOut: any = 0;
+  customerId: any;
 
 
   constructor(
     private post: BaseTablesService,
     private spinner: NgxSpinnerService,
     private cd: ChangeDetectorRef,
+    private post1: WidgetService,
     private modalService: NgbModal,
     private excelService: ExcelService,
     private router: Router,) {
@@ -193,6 +196,12 @@ export class BaseTablesWidget14Component implements OnInit {
     this.headerName1 = dealerData.companyName;
     // this.headerName2 = res.data[0].address1+', '+res.data[0].address2+', '+res.data[0].city;
     this.headerName3 = this.state + '-' + this.pin + '  ' + "GST: " + this.GSTNumber;
+    
+    if(element.accessGroupId == '14'){
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
+      this.customerId = managerData.customerId;
+      this.searchDealerBycustomerId(this.customerId)
+    }
     this.cd.detectChanges()
   }
 
@@ -211,4 +220,26 @@ export class BaseTablesWidget14Component implements OnInit {
     })
   }
 
+  searchDealerBycustomerId(customerId: any) {    
+    let data = {
+      customerId: customerId,
+    };
+    this.post1.getCustomerByCustomerIdPOST(data)
+      .subscribe(res => {
+        if (res.data.length) {         
+          this.companyName = res.data[0].companyName;
+          this.oilCompanyName = res.data[0].brandName;
+          this.address1 = res.data[0].address1;
+          this.address2 = res.data[0].address2;
+          this.city = res.data[0].city;
+          this.state = res.data[0].state;
+          this.pin = res.data[0].pin;
+          this.GSTNumber = res.data[0].GSTNumber; 
+          this.mobile = res.data[0].hostPhone;        
+          
+        } else {
+          this.spinner.hide();
+        }
+      });
+}
 }

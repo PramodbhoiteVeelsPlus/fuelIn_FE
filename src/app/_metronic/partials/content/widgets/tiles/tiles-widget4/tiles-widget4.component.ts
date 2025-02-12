@@ -7,6 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { ExcelService } from 'src/app/pages/excel.service';
+import { WidgetService } from '../../widgets.services';
 
 
 @Injectable()
@@ -90,6 +91,7 @@ export class TilesWidget4Component {
   headerName2: string;
   headerName3: string;
   searchBox: FormControl = new FormControl();
+  customerId: any;
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -97,7 +99,8 @@ export class TilesWidget4Component {
     private spinner: NgxSpinnerService,
     config: NgbDatepickerConfig,
     private cd: ChangeDetectorRef,
-    private excelService: ExcelService,) {
+    private excelService: ExcelService,
+    private post1: WidgetService) {
     const currentDate = new Date();
     config.minDate = { year: 2018, month: 1, day: 1 };
     config.maxDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
@@ -120,9 +123,8 @@ export class TilesWidget4Component {
     }
     if (this.accessGroupId == '14') {
       var managerData = JSON.parse(localStorage.getItem('managerData') || '');
-      this.headerName1 = managerData.companyName;
-      this.headerName2 = managerData.address1 + ', ' + managerData.address2 + ', ' + managerData.city;
-      this.headerName3 = managerData.state + '-' + managerData.pin + '  ' + "GST: " + managerData.GSTNumber;
+      this.customerId = managerData.customerId;
+      this.searchDealerBycustomerId(this.customerId)
     }
 
     this.getBankDetailsByDealerId(this.fuelDealerId);
@@ -490,4 +492,20 @@ export class TilesWidget4Component {
   }
 
 
+  searchDealerBycustomerId(customerId: any) {    
+    let data = {
+      customerId: customerId,
+    };
+    this.post1.getCustomerByCustomerIdPOST(data)
+      .subscribe(res => {
+        if (res.data.length) {         
+          this.headerName1 = res.data[0].companyName;
+          this.headerName2 = res.data[0].address1 + ', ' + res.data[0].address2 + ', ' + res.data[0].city;
+          this.headerName3 = res.data[0].state + '-' + res.data[0].pin + '  ' + "GST: " + res.data[0].GSTNumber;         
+          
+        } else {
+          this.spinner.hide();
+        }
+      });
+}
 }

@@ -1,3 +1,11 @@
+<style>
+  .btn-outline-success {
+    border: 1px solid #28a745 !important;
+    color: #28a745 !important;
+    background-color: transparent !important;
+  }
+</style>
+
 <br>
 
 <form [formGroup]="selectCorporate">
@@ -5,7 +13,7 @@
     <div class="row">
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <label for="example-text-input" class="col-auto col-form-label"><b>
-        Select Customers</b>
+          Select Customers</b>
       </label>
       <div class="col-md-2">
         <select class="form-control" formControlName="selectCorporateMapId">
@@ -59,18 +67,18 @@
       <i class="bx bx-search-alt search-icon"></i>
 
     </div>
-    <div class="col-md-4"></div>
-    <div class="col-lg-1">
+    <div class="col-md-5"></div>
+    <div class="col-md-1">
       <span style="font-size: 35px; cursor: pointer;" (click)="excelDownload()" ngbTooltip="CSV Download"
         placement="bottom"><i class="fas fa-file-csv" style="font-size: 30px;"></i></span>
 
     </div>
-    <div class="col-lg-1">
+    <div class="col-md-1">
       <span style="font-size: 35px; cursor: pointer;" (click)="exportToPDF()" ngbTooltip="PDF Download"
         placement="bottom"><i class="fas fa-file-pdf" style="font-size: 30px;"></i></span>
 
     </div>
-    <div class="col-lg-1">
+    <div class="col-md-1">
       <button class="btn btn-success" type="button" (click)=" printPdf()">
         Print
       </button>
@@ -84,7 +92,7 @@
               <tr>
                 <th style="text-align: left"><b>Invoice No.</b></th>
                 <th style="text-align: left; width: 102px">
-                 <b> Generated Date</b>
+                  <b> Generated Date</b>
                 </th>
                 <th style="text-align: left"><b>Manual No.</b></th>
                 <th style="text-align: left"><b>Build To Name</b></th>
@@ -181,7 +189,7 @@
                     number: "1.2-2"}}
                   </span>
                 </td>
-                
+
                 <td style="text-align: left"
                   *ngIf="data.totalAmount - data.fuelInvoicTotalPaymentAmount ++ data.fuelInvoicePreviousStatement <0">
                   <span *ngIf="data.invoiceOf == 'LUBE TAX'">₹
@@ -280,6 +288,7 @@
     </div>
     <br />
   </div>
+  <br>
 </ng-template>
 
 <ng-template #cancelReq let-c="close" let-d="dismiss">
@@ -311,5 +320,6 @@
         </button>
       </div>
     </div>
+    <br>
   </div>
 </ng-template>

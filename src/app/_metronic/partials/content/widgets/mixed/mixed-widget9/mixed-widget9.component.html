@@ -9,7 +9,7 @@
   <div class="row">
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <div class="col-lg-3">
-      <input class="form-control" type="text" list="allCorporateList" placeholder="select customer"
+      <input class="form-control" type="text" list="allCorporateList" placeholder="Select Customer"
         formControlName="customerName" (change)="getDetailsByCustomerName($event)">
       <datalist id="allCorporateList">
         <option *ngFor="let data of allCorporateList" [value]="data.companyName">
@@ -17,7 +17,7 @@
     </div>
 
     <div class="col-lg-3">
-      <input class="form-control" type="text" list="allVehicleList" placeholder="select Vehicle"
+      <input class="form-control" type="text" list="allVehicleList" placeholder="Select Vehicle"
         formControlName="vehicleNumber">
       <datalist id="allVehicleList">
         <option *ngFor="let data of allVehicleList" [value]="data.vehicleNumber">

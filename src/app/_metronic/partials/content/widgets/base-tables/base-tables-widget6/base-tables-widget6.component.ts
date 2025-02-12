@@ -8,6 +8,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import moment from 'moment';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable'
+import { WidgetService } from '../../widgets.services';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<any> {
@@ -112,6 +113,7 @@ export class BaseTablesWidget6Component implements OnInit {
   p1: number = 1;
   total: number = 0;
   description: string;
+  customerId: any;
 
   constructor(
     private modalService: NgbModal,
@@ -121,7 +123,8 @@ export class BaseTablesWidget6Component implements OnInit {
     private excelService: ExcelService,
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    private post1: WidgetService,) {
   }
 
   ngOnInit(): void {
@@ -157,6 +160,12 @@ export class BaseTablesWidget6Component implements OnInit {
       this.getTransaction();
     } else {
       this.getTransaction1();
+    }
+    
+    if(element.accessGroupId == '14'){
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
+      this.customerId = managerData.customerId;
+      this.searchDealerBycustomerId(this.customerId)
     }
     this.cd.detectChanges()
   }
@@ -485,5 +494,26 @@ export class BaseTablesWidget6Component implements OnInit {
   pageChangeEvent(event: number) {
     this.p = event;
     this.getTransaction();
+    this.cd.detectChanges();
   }
+  
+  searchDealerBycustomerId(customerId: any) {    
+    let data = {
+      customerId: customerId,
+    };
+    this.post1.getCustomerByCustomerIdPOST(data)
+      .subscribe(res => {
+        if (res.data.length) {         
+          this.headerName1 = res.data[0].companyName;
+          this.headerName2 = res.data[0].address1 + ', ' + res.data[0].address2 + ', ' + res.data[0].city;
+          this.headerName3 = res.data[0].state + '-' + res.data[0].pin + '  ' + "GST: " + res.data[0].GSTNumber;
+          this.spinner.hide();
+          this.cd.detectChanges();         
+          
+        } else {
+          this.spinner.hide();
+          this.cd.detectChanges();
+        }
+      });
+}
 }

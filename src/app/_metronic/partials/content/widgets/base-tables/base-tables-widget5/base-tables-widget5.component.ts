@@ -9,6 +9,7 @@ import moment from 'moment';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable'
 import * as XLSX from 'xlsx';
+import { WidgetService } from '../../widgets.services';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<any> {
@@ -119,6 +120,7 @@ export class BaseTablesWidget5Component implements OnInit {
   yearWiseData: any = [];
   yearWiseDataExcel: any = [];
   headerName2: string;
+  customerId: any;
 
   constructor(
     private modalService: NgbModal,
@@ -128,7 +130,8 @@ export class BaseTablesWidget5Component implements OnInit {
     private excelService: ExcelService,
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    private post1: WidgetService,) {
   }
 
   ngOnInit(): void {
@@ -141,6 +144,15 @@ export class BaseTablesWidget5Component implements OnInit {
     if (this.acceesGroup == 12 || this.acceesGroup == 19) {
       this.dealerView = true;
       this.ownerName = element.firstName + ' ' + element.lastName
+      this.companyName = dealerData.companyName
+      this.oilCompanyName = dealerData.brandName
+      this.state = dealerData.state
+      this.pin = dealerData.pin
+      this.city = dealerData.city
+      this.phone1 = dealerData.hostPhone
+      this.headerName1 = dealerData.companyName;
+      this.headerName2 = dealerData.address1 + ', ' + dealerData.address2 + ', ' + dealerData.city;
+      this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
     }
     this.dealerMobile = element.phone1;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
@@ -148,26 +160,17 @@ export class BaseTablesWidget5Component implements OnInit {
     this.managerPersonId = element.personId
     this.managerName = element.firstName + ' ' + element.lastName
     this.acceesGroup = element.accessGroupId;
-    this.companyName = dealerData.companyName
-    this.oilCompanyName = dealerData.brandName
-    this.state = dealerData.state
-    this.pin = dealerData.pin
-    this.city = dealerData.city
-    this.phone1 = dealerData.hostPhone
-    this.headerName1 = dealerData.companyName;
-    this.headerName2 = dealerData.address1+', '+dealerData.address2+', '+dealerData.city;
-    this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
     this.year = moment(new Date()).format("YYYY");
     this.month = moment(new Date()).format("MMM");
 
     this.financialYear = "Apr " + (new Date().getFullYear())
     this.financialYear2 = "Apr " + (new Date().getFullYear())
     if (Number(moment(this.financialYear).format("MM")) > Number(moment(this.month).format("MM"))) {
-      this.fiscalyear1 = "Apr " +(new Date().getFullYear() - 1) + " - " + "Mar "+ (new Date().getFullYear())
+      this.fiscalyear1 = "Apr " + (new Date().getFullYear() - 1) + " - " + "Mar " + (new Date().getFullYear())
       this.fiscalyear2 = "Apr " + (new Date().getFullYear()) + " - " + "Mar " + (new Date().getFullYear() + 1)
       console.log(" ,", this.fiscalyear1, this.fiscalyear2)
     } else {
-      this.fiscalyear1 = "Apr " +(new Date().getFullYear() - 1) + " - " + "Mar "+ (new Date().getFullYear())
+      this.fiscalyear1 = "Apr " + (new Date().getFullYear() - 1) + " - " + "Mar " + (new Date().getFullYear())
       this.fiscalyear2 = "Apr " + (new Date().getFullYear()) + " - " + "Mar " + (new Date().getFullYear() + 1)
       console.log("11 ,", this.fiscalyear1, this.fiscalyear2)
     }
@@ -179,6 +182,12 @@ export class BaseTablesWidget5Component implements OnInit {
       this.getYearWise();
     } else {
       this.getYearWise1();
+    }
+
+    if (element.accessGroupId == '14') {
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
+      this.customerId = managerData.customerId;
+      this.searchDealerBycustomerId(this.customerId)
     }
     this.cd.detectChanges()
   }
@@ -296,9 +305,9 @@ export class BaseTablesWidget5Component implements OnInit {
     console.log("years", this.filterForm.value.fiscalyear, this.fiscalyear1, this.fiscalyear2)
     if (this.filterForm.value.fiscalyear == this.fiscalyear1) {
       this.startDate = new Date().getFullYear() - 1
-      this.endDate = new Date().getFullYear() 
+      this.endDate = new Date().getFullYear()
     } else if (this.filterForm.value.fiscalyear == this.fiscalyear2) {
-      this.startDate = new Date().getFullYear() 
+      this.startDate = new Date().getFullYear()
       this.endDate = new Date().getFullYear() + 1
     } else {
 
@@ -358,9 +367,9 @@ export class BaseTablesWidget5Component implements OnInit {
   getYearWise1() {
     if (this.filterForm.value.fiscalyear == this.fiscalyear1) {
       this.startDate = new Date().getFullYear() - 1
-      this.endDate = new Date().getFullYear() 
+      this.endDate = new Date().getFullYear()
     } else if (this.filterForm.value.fiscalyear == this.fiscalyear2) {
-      this.startDate = new Date().getFullYear() 
+      this.startDate = new Date().getFullYear()
       this.endDate = new Date().getFullYear() + 1
     } else {
 
@@ -421,7 +430,7 @@ export class BaseTablesWidget5Component implements OnInit {
     doc.setFontSize(12);
     doc.text(this.headerName1, 40, 25);
     doc.setFontSize(8);
-    doc.text(this.headerName2,40, 40 );   
+    doc.text(this.headerName2, 40, 40);
     doc.text(this.headerName3, 40, 55);
     doc.setFontSize(12);
     doc.text("Credit Book (month-wise)", 350, 35);
@@ -465,5 +474,26 @@ export class BaseTablesWidget5Component implements OnInit {
   pageChangeEvent(event: number) {
     this.p = event;
     this.getYearWise();
+    this.cd.detectChanges();
+  }
+
+  searchDealerBycustomerId(customerId: any) {
+    let data = {
+      customerId: customerId,
+    };
+    this.post1.getCustomerByCustomerIdPOST(data)
+      .subscribe(res => {
+        if (res.data.length) {
+          this.headerName1 = res.data[0].companyName;
+          this.headerName2 = res.data[0].address1 + ', ' + res.data[0].address2 + ', ' + res.data[0].city;
+          this.headerName3 = res.data[0].state + '-' + res.data[0].pin + '  ' + "GST: " + res.data[0].GSTNumber;
+          this.spinner.hide();
+          this.cd.detectChanges();
+
+        } else {
+          this.spinner.hide();
+          this.cd.detectChanges();
+        }
+      });
   }
 }
