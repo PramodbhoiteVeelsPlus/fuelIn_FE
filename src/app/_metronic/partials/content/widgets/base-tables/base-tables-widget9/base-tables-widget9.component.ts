@@ -183,7 +183,7 @@ export class BaseTablesWidget9Component implements OnInit {
     var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
     this.accessGroup = element.accessGroupId;
-    if (this.acceesGroup == 12 || this.acceesGroup == 19) {
+    if (this.accessGroup == 12 || this.accessGroup == 19) {
       this.dealerView = true;
       this.ownerName = element.firstName + ' ' + element.lastName
     }
@@ -202,7 +202,7 @@ export class BaseTablesWidget9Component implements OnInit {
     this.phone1 = dealerData.hostPhone
     this.fromGSTNo = dealerData.GSTNumber
     this.fromAddress = dealerData.address1
-    if(this.acceesGroup == '14'){
+    if(this.accessGroup == '14'){
       this.fromName = managerData.companyName
       this.fromState = managerData.state
       this.fromAddress = managerData.address1
@@ -606,6 +606,8 @@ export class BaseTablesWidget9Component implements OnInit {
   pageChangeEvent(event: number) {
     this.p = event;
     this.getTransactionDetails();
+    console.log("this.p", this.p, this.showPaymetCreditTable)
+    this.cd.detectChanges()
   }
 
 }

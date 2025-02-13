@@ -135,6 +135,7 @@ export class CustloginComponent {
             localStorage.setItem('lubeCashBillList', JSON.stringify([]));
             localStorage.setItem('getFuelPriceData', JSON.stringify([]));
             localStorage.setItem('allCreditReq', JSON.stringify([]));
+            localStorage.setItem('fuelCashBillList', JSON.stringify([]));
 
             if (res.element.accessGroupId == 12 || res.element.accessGroupId == 14 || res.element.accessGroupId == 19 || res.element.accessGroupId == 21 || res.element.accessGroupId == 17 || res.element.accessGroupId == 18) {
               var element = JSON.parse(localStorage.getItem("element") || '{}');

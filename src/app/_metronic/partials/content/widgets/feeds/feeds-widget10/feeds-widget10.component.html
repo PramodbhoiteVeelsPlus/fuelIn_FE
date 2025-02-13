@@ -1,4 +1,3 @@
-
 <!DOCTYPE html
   PUBLIC "-//W3C//Dth XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/Dth/xhtml1-transitional.dth">
 <html xmlns="https://www.w3.org/1999/xhtml">
@@ -21,44 +20,49 @@
       padding: 1px 1px;
       margin-bottom: 0.5cm;
       box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
-      
+
       box-sizing: border-box;
       font-size: 12pt;
       /* //line-height:normal; */
     }
-    
+
     @media print {
       .page-break {
         display: block;
         page-break-before: always;
-      
-      size: A4 portrait;}
+
+        size: A4 portrait;
+      }
     }
-    
+
     @media print {
       #print-section {
         overflow-y: scroll;
         position: relative;
       }
+
       body {
         margin: 0;
         padding: 0;
         print-color-adjust: exact;
       }
+
       .A4 {
         box-shadow: none;
         margin: 0;
         width: auto;
         height: auto;
       }
+
       .noprint {
         display: none;
       }
+
       .print {
         display: block;
       }
     }
-    </style>
+  </style>
 </head>
 
 <body id="contentToConvert">
@@ -194,7 +198,7 @@
 
                             </tr>
                           </thead>
-                    <tbody  style="border-collapse: collapse; border: 1px solid black;">
+                    <tbody style="border-collapse: collapse; border: 1px solid black;">
                       <tr *ngFor="let data of meterSalesDetails; let i = index">
                         <td colspan="2" style="text-align: center; border: 1px solid #272829;"> {{i+1}} </td>
                         <td colspan="2" style="text-align: center; border: 1px solid #272829;"> {{data.productName}}
@@ -349,7 +353,8 @@
                               Shift Tally (A+B+C) (Rs)</th>
                           </tr>
                         </thead>
-                        <tbody *ngIf="totalSalesDetails.length" style="border-collapse: collapse; border: 1px solid black;">
+                        <tbody *ngIf="totalSalesDetails.length"
+                          style="border-collapse: collapse; border: 1px solid black;">
                           <tr *ngFor="let data of totalSalesDetails; let i = index">
                             <td colspan="2" style="text-align: center; border: 1px solid #272829;">
                               {{(totalMeterSalesDetails) + (cashLubeAmt) + (crLubeAmt) | number:'1.2-2'}} </td>
@@ -431,7 +436,8 @@
                               Account</th>
                           </tr>
                         </thead>
-                        <tbody *ngFor="let data of creditPaymentDetails" style="border-collapse: collapse; border: 1px solid black;">
+                        <tbody *ngFor="let data of creditPaymentDetails"
+                          style="border-collapse: collapse; border: 1px solid black;">
                           <tr>
                             <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{data.companyName}}
                             </td>
@@ -465,7 +471,8 @@
                               Sales (Pieces)</th>
                           </tr>
                         </thead>
-                        <tbody *ngFor="let data of lubeWiseDetails" style="border-collapse: collapse; border: 1px solid black;">
+                        <tbody *ngFor="let data of lubeWiseDetails"
+                          style="border-collapse: collapse; border: 1px solid black;">
                           <tr>
                             <td colspan="4" style="text-align: center; border: 1px solid #272829;"> {{data.lubeName}}
                             </td>
@@ -566,7 +573,8 @@
                               Amount</th>
                           </tr>
                         </thead>
-                        <tbody *ngFor="let data of bankoverallReportData; let i = index" style="border-collapse: collapse; border: 1px solid black;">
+                        <tbody *ngFor="let data of bankoverallReportData; let i = index"
+                          style="border-collapse: collapse; border: 1px solid black;">
                           <tr>
                             <td colspan="2" style="text-align: center; border: 1px solid #272829;">
                               <span *ngIf="data.overallReportDataDate == '2022-01-01' ">
@@ -627,7 +635,8 @@
                               Amount</th>
                           </tr>
                         </thead>
-                        <tbody *ngFor="let data of overallReportDataData; let i = index" style="border-collapse: collapse; border: 1px solid black;">
+                        <tbody *ngFor="let data of overallReportDataData; let i = index"
+                          style="border-collapse: collapse; border: 1px solid black;">
                           <tr>
                             <td colspan="2" style="text-align: center; border: 1px solid #272829;">
                               <span *ngIf="data.overallReportDataDate == '2022-01-01' ">
@@ -657,128 +666,144 @@
                         </tbody>
                       </td>
                     </tr>
-                    <tr>
 
-                      <td colspan="6" *ngIf="variationData.length">
-                        <thead>
-                          <tr>
-                            <th colspan="9"
-                              style="text-align: center; border: 1px solid #272829; border-top: 2px solid #272829; border-bottom: 1px solid #272829;  background-color: rgb(178, 217, 233);">
-                              <h6><b>Variation</b></h6>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody style="border-collapse: collapse; border: 1px solid black;">
-                          <tr>
-                            <th colspan="3" style="text-align: center; border: 1px solid #272829;"> Product </th>
-                            <th colspan="3" style="text-align: center; border: 1px solid #272829;"> Quantity </th>
-                            <th colspan="3" style="text-align: center; border: 1px solid #272829;"> Amount </th>
-                          </tr>
-                          <tr *ngFor="let data of variationData">
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{data.productName}}
-                            </td>
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{data.variation |
-                              number: '1.2-2'}} </td>
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{data.variationAmt
-                              |
-                              number: '1.2-2'}} </td>
-                          </tr>
-                        </tbody>
+                    <tr *ngIf="variationData.length">
+                      <td colspan="6">
+                        <table style="width: 100%; border-collapse: collapse; border-bottom: 1px solid #272829;">
+                          <thead>
+                            <tr>
+                              <th colspan="9"
+                                style="text-align: center; border: 1px solid #272829; border-top: 2px solid #272829; border-bottom: 1px solid #272829;  background-color: rgb(178, 217, 233);">
+                                <h6><b>Variation</b></h6>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th colspan="3" style="text-align: center; border: 1px solid #272829;"> Product </th>
+                              <th colspan="3" style="text-align: center; border: 1px solid #272829;"> Quantity </th>
+                              <th colspan="3"
+                                style="text-align: center; border: 1px solid #272829; border-bottom: 1px solid #272829;">
+                                Amount </th>
+                            </tr>
+                            <tr *ngFor="let data of variationData">
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;">
+                                {{data.productName}}
+                              </td>
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{data.variation |
+                                number: '1.2-2'}} </td>
+                              <td colspan="3"
+                                style="text-align: center; border: 1px solid #272829; border-bottom: 1px solid #272829;">
+                                {{data.variationAmt
+                                |
+                                number: '1.2-2'}} </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </td>
                     </tr>
+
                     <tr>
                       <td colspan="6">
-                        <thead>
-                          <tr>
-                            <th colspan="6"
-                              style="text-align: center; border: 1px solid #272829; border-top: 2px solid #272829; border-bottom: 1px solid #272829;  background-color: rgb(178, 217, 233);">
-                              <h6><b>Overall Transactions</b></h6>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody style="border-collapse: collapse; border: 1px solid black;">
-                          <tr style="text-align: right;">
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"><b> Opening Balance
-                              </b></td>
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"><b> {{ openingBlc |
-                                number:'1.2-2'}} </b></td>
-                          </tr>
-                          <tr style="text-align: right;">
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Sale (cash)
-                            </td>
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;">
-                              {{(cashSales)+(totalLubeCashAmount) | number:'1.2-2'}} </td>
-                          </tr>
-                          <tr style="text-align: right;">
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's
-                              Sale(Digital)
-                            </td>
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{ digitalSales |
-                              number:'1.2-2'}} </td>
-                          </tr>
-                          <tr style="text-align: right;">
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Sale(Credit)
-                            </td>
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{(creditSales) +
-                              (totalLubeCrAmount) | number:'1.2-2'}} </td>
-                          </tr>
-                          <tr style="text-align: right;">
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Payment
-                              received from customer (Cash) </td>
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{totalCrAmtCash |
-                              number:'1.2-2'}} </td>
-                          </tr>
-                          <tr style="text-align: right;">
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Payment
-                              received from customer (Other) </td>
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{totalCrAmtOther |
-                              number:'1.2-2'}} </td>
-                          </tr>
-                          <tr style="text-align: right;">
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Bank AC
-                              (Credit) </td>
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{totalCrBank |
-                              number:'1.2-2'}} </td>
-                          </tr>
-                          <tr style="text-align: right;">
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Misc Exp
-                            </td>
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;">
-                              {{totalExpenseOtherAmt
-                              | number:'1.2-2'}} </td>
-                          </tr>
-                          <tr style="text-align: right;">
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Other Cash Expenses
-                            </td>
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;">
-                              {{(totalExpenseCASHAmt) + (shiftExpenseAmt) | number:'1.2-2'}} </td>
-                          </tr>
-                          <tr style="text-align: right;">
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Short Amount
-                            </td>
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{(shortAmtTotal) |
-                              number:'1.2-2'}} </td>
-                          </tr>
-                          <tr style="text-align: right;">
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Variation
-                              Amt
-                            </td>
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;">
-                              {{(totalVariationAmt)
-                              | number:'1.2-2'}} </td>
-                          </tr>
-                          <tr style="text-align: right;">
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Net Total </td>
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{netTotal |
-                              number:'1.2-2'}} </td>
-                          </tr>
-                          <tr style="text-align: right;">
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Closing
-                            </td>
-                            <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{closingBlc |
-                              number:'1.2-2'}} </td>
-                          </tr>
-                        </tbody>
+                        <table style="width: 100%; border-collapse: collapse; border-bottom: 1px solid #272829;">
+                          <thead>
+                            <tr>
+                              <th colspan="6"
+                                style="text-align: center; border: 1px solid #272829; border-top: 2px solid #272829; border-bottom: 1px solid #272829;  background-color: rgb(178, 217, 233);">
+                                <h6><b>Overall Transactions</b></h6>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody style="border-collapse: collapse; border: 1px solid black;">
+                            <tr style="text-align: right;">
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;"><b> Opening Balance
+                                </b></td>
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;"><b> {{ openingBlc |
+                                  number:'1.2-2'}} </b></td>
+                            </tr>
+                            <tr style="text-align: right;">
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Sale
+                                (cash)
+                              </td>
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;">
+                                {{(cashSales)+(totalLubeCashAmount) | number:'1.2-2'}} </td>
+                            </tr>
+                            <tr style="text-align: right;">
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's
+                                Sale(Digital)
+                              </td>
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{ digitalSales |
+                                number:'1.2-2'}} </td>
+                            </tr>
+                            <tr style="text-align: right;">
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's
+                                Sale(Credit)
+                              </td>
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{(creditSales) +
+                                (totalLubeCrAmount) | number:'1.2-2'}} </td>
+                            </tr>
+                            <tr style="text-align: right;">
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Payment
+                                received from customer (Cash) </td>
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{totalCrAmtCash |
+                                number:'1.2-2'}} </td>
+                            </tr>
+                            <tr style="text-align: right;">
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Payment
+                                received from customer (Other) </td>
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{totalCrAmtOther
+                                |
+                                number:'1.2-2'}} </td>
+                            </tr>
+                            <tr style="text-align: right;">
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Bank AC
+                                (Credit) </td>
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{totalCrBank |
+                                number:'1.2-2'}} </td>
+                            </tr>
+                            <tr style="text-align: right;">
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Misc Exp
+                              </td>
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;">
+                                {{totalExpenseOtherAmt
+                                | number:'1.2-2'}} </td>
+                            </tr>
+                            <tr style="text-align: right;">
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Other Cash
+                                Expenses
+                              </td>
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;">
+                                {{(totalExpenseCASHAmt) + (shiftExpenseAmt) | number:'1.2-2'}} </td>
+                            </tr>
+                            <tr style="text-align: right;">
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Short
+                                Amount
+                              </td>
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{(shortAmtTotal)
+                                |
+                                number:'1.2-2'}} </td>
+                            </tr>
+                            <tr style="text-align: right;">
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Variation
+                                Amt
+                              </td>
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;">
+                                {{(totalVariationAmt)
+                                | number:'1.2-2'}} </td>
+                            </tr>
+                            <tr style="text-align: right;">
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Net Total </td>
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{netTotal |
+                                number:'1.2-2'}} </td>
+                            </tr>
+                            <tr style="text-align: right;">
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;"> Today's Closing
+                              </td>
+                              <td colspan="3" style="text-align: center; border: 1px solid #272829;"> {{closingBlc |
+                                number:'1.2-2'}} </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </td>
                     </tr>
 

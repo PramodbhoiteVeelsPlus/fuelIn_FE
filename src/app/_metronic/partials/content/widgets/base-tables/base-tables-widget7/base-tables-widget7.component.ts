@@ -147,7 +147,7 @@ export class BaseTablesWidget7Component implements OnInit {
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
     this.accessGroup = element.accessGroupId;
-    if (this.acceesGroup == 12 || this.acceesGroup == 19) {
+    if (this.accessGroup == 12 || this.accessGroup == 19) {
       this.dealerView = true;
       this.ownerName = element.firstName + ' ' + element.lastName
       this.companyName = dealerData.companyName
