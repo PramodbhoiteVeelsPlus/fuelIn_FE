@@ -224,8 +224,8 @@ export class TransTablesWidget8Component implements OnInit {
           fuelDealerId: this.fuelDealerId,
           corporateId: this.transporterCorpId,
           customerName: this.filterForm.value.selectCorporateName,
-          startDate: moment(this.filterForm.value.startDate, ["MM-DD-YYYY"]).format("YYYY-MM-DD"),
-          endDate: moment(this.filterForm.value.endDate, ["MM-DD-YYYY"]).format("YYYY-MM-DD"),
+          startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+          endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
         }
 
         this.post.getAllCRPaymentByCustNameCorporatePOST(data)
@@ -251,8 +251,8 @@ export class TransTablesWidget8Component implements OnInit {
       else {
         let data = {
           corporateId: this.transporterCorpId,
-          startDate: moment(this.filterForm.value.startDate, ["MM-DD-YYYY"]).format("YYYY-MM-DD"),
-          endDate: moment(this.filterForm.value.endDate, ["MM-DD-YYYY"]).format("YYYY-MM-DD"),
+          startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+          endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
         }
 
         this.post.getAllCRPaymentByCorporatePOST(data)

@@ -199,6 +199,11 @@
     </a>
   </div>
 
+  <div class="menu-item px-5">
+    <a *ngIf="!emailVerification" class="menu-link px-5" (click)="openVerifyEmail(verifyEmail)">
+       Verify Email
+    </a>
+  </div>
   <div
     class="menu-item px-5"
     data-kt-menu-trigger="hover"
@@ -213,4 +218,106 @@
       Sign Out
     </a>
   </div>
+  
+  <ng-template #verifyEmail let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="text-center">
+        Please Verify Your Email
+      </h4>
+      <button type="button" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div *ngIf="!isOTP" class="modal-body">
+      <form [formGroup]="emailForm">
+        <div class="row" *ngIf="!isUpdateMail">
+          <div class="col-md-3">
+            <label class="labelNewMargin"><b>Email</b></label>
+          </div>
+          <div class="col-md-8">
+            <input class="form-control" [(ngModel)]="email" [ngModelOptions]="{standalone: true}"
+              placeholder="Enter Email Address" disabled>
+          </div>
+          <div class="col-md-1" style="padding: 6px;">
+            <i class="fas fa-edit" style="color: #4e9b4e;cursor: pointer;" ngbTooltip="Update"
+              (click)="editEmail()"></i>
+          </div>
+        </div>
+        <div class="row" *ngIf="isUpdateMail">
+          <div class="col-md-3">
+            <label class="labelNewMargin"><b>Email</b></label>
+          </div>
+          <div class="col-md-8">
+            <input type="email" class="form-control" placeholder="Enter Email" formControlName="email">
+            <!-- <small *ngIf="primEmailUser.errors?.pattern" class="text-danger"> -->
+              Please provide a valid email address
+            <!-- </small> -->
+          </div>
+          <div class="col-md-1" style="padding: 6px;">
+            <i class="fas fa-ban" style="color: red;cursor: pointer;" ngbTooltip="Cancel" (click)="editEmail()"></i>
+          </div>
+        </div>
+        <br>
+        <div class="row" *ngIf="isUpdateMail">
+          <div class="col-md-5"></div>
+          <div class="col-md-3">
+            <button class="btn btn-success" type="submit" (click)="updateEmailById()">Submit</button>
+          </div>
+        </div>
+        <br>
+        <div class="row" *ngIf="!isUpdateMail">
+          <div class="col-md-5"></div>
+          <div class="col-md-3">
+            <button class="btn btn-success" type="submit" (click)="verifyEmailById()">Send</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div *ngIf="isOTP" class="modal-body">
+      <div class="row" *ngIf="!isUpdateMail">
+        <div class="col-md-3">
+          <label class="labelNewMargin"><b>Email</b></label>
+        </div>
+        <div class="col-md-8">
+          <input class="form-control" [(ngModel)]="email" [ngModelOptions]="{standalone: true}"
+            placeholder="Enter Email Address" readonly>
+        </div>
+        <div class="col-md-1" style="padding: 6px;">
+          <i class="fas fa-edit" style="color: #4e9b4e;cursor: pointer;" ngbTooltip="This is not Your Email then change"
+            (click)="editEmail()"></i>
+        </div>
+      </div>
+      <br><br>
+      <div class="row">
+        <div class="col-md-3">
+          <label class="labelNewMargin"><b>OTP</b></label>
+        </div>
+        <div class="col-md-8" *ngIf="!isView">
+          <input class="form-control" type="password" maxlength="4" [(ngModel)]="emailOTP"
+            [ngModelOptions]="{standalone: true}" placeholder="Enter OTP">
+        </div>
+        <div class="col-md-8" *ngIf="isView">
+          <input class="form-control" maxlength="4" [(ngModel)]="emailOTP" [ngModelOptions]="{standalone: true}"
+            placeholder="Enter OTP">
+        </div>
+        <div class="col-md-1" *ngIf="!isView" style="padding: 6px;">
+          <i class="fas fa-eye" style="cursor: pointer;" ngbTooltip="View" (click)="viewOTP()"></i>
+        </div>
+        <div class="col-md-1" *ngIf="isView" style="padding: 6px;">
+          <i class="fas fa-eye" style="cursor: pointer;" ngbTooltip="Hide" (click)="viewOTP()"></i>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-4">
+          <button class="btn btn-success" type="submit" (click)="submitOTP()">Verify</button>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-warning" type="submit" (click)="verifyEmailById()">Resend</button>
+        </div>
+      </div>
+      <br>
+    </div>
+  </ng-template>
 </ng-container>

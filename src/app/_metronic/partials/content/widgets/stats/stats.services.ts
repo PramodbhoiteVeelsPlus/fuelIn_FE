@@ -165,6 +165,9 @@ export class StatsService {
     private getCreditSalesDetailsByDealerIdURL = this.baseURL + 'dealerDashboard/getCreditSalesDetailsByDealerId'; 
     private getCreditPaymentDetailsByDealerIdURL = this.baseURL + 'dealerDashboard/getCreditPaymentDetailsByDealerId';
     private getCreditOsByDealerIdURL = this.baseURL + 'dealerDashboard/getCreditOsByDealerId';
+    private getPersonByPhoneURL = this.baseURL + 'person/getPersonByPhone';
+    private sendOTPEmailURL = this.baseURL + 'person/sendOTPEmail'; 
+    private checkOTPEmailURL = this.baseURL + 'person/checkOTPEmail';
 
 
 
@@ -1467,6 +1470,36 @@ export class StatsService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.getCreditOsByDealerIdURL, body, {
+            headers: headers
+        })
+    }
+
+    // getPersonByPhoneURL
+    getPersonByPhonePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getPersonByPhoneURL, body, {
+            headers: headers
+        })
+    }
+
+    // sendOTPEmailURL
+    sendOTPEmailPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.sendOTPEmailURL, body, {
+            headers: headers
+        })
+    }
+
+    // checkOTPEmailURL
+    checkOTPEmailPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.checkOTPEmailURL, body, {
             headers: headers
         })
     }

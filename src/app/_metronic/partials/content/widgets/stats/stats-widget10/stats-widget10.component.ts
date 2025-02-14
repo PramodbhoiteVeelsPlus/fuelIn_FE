@@ -108,6 +108,19 @@ export class StatsWidget10Component {
     file4: new FormControl(""),
   })
 
+  transporterDetails = new FormGroup({
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
+    address1: new FormControl(''),
+    address2: new FormControl(''),
+    city: new FormControl(''),
+    state: new FormControl(''),
+    GSTNumber: new FormControl(''),
+    phone1: new FormControl(''),
+    email1: new FormControl(''),
+    companyName: new FormControl(''),
+  });
+
   veelsPlusBranchID: any;
   reqDescription: any;
   createdBy: string;
@@ -245,6 +258,9 @@ export class StatsWidget10Component {
   isSummaryReport: boolean = true;
   isViswasaTxExcel: boolean = true;
   isSalesPurReport: boolean = true;
+  isAdmin: boolean = false;
+  isDealer: boolean = false;
+  isTransporter: boolean = false;
 
   constructor(
     private post: StatsService,
@@ -268,13 +284,42 @@ export class StatsWidget10Component {
     this.createdBy = element.firstName + ' ' + element.lastName
 
     let id = this.route.snapshot.paramMap.get('id');
-    console.log(id)
     let data = {
       customerId: id
     };
 
     this.customerId = id
     this.getCustomerAllDataById(this.customerId);
+    
+    if (element.accessGroupId == '7') {
+      this.isAdmin = true;
+      this.isDealer = false;
+      this.isTransporter = false;
+    }else if (element.accessGroupId == '2') {
+      this.isTransporter = true;
+      this.isAdmin = false;
+      this.isDealer = false;
+    }else if (element.accessGroupId == '12' || element.accessGroupId == '14' || element.accessGroupId == '19') {
+      this.isDealer = true;
+      this.isAdmin = false;
+      this.isTransporter = false;
+    }else{
+      this.isAdmin = false;
+      this.isDealer = false;
+      this.isTransporter = false;
+      this.router.navigate(['/auth/login']);
+    }
+    this.transporterDetails.controls['firstName'].disable();
+    this.transporterDetails.controls['lastName'].disable();
+    this.transporterDetails.controls['phone1'].disable();
+    this.transporterDetails.controls['email1'].disable();
+    this.transporterDetails.controls['GSTNumber'].disable();
+    this.transporterDetails.controls['companyName'].disable();
+    this.transporterDetails.controls['address1'].disable();
+    this.transporterDetails.controls['address2'].disable();
+    this.transporterDetails.controls['city'].disable();
+    this.transporterDetails.controls['state'].disable();
+    
     this.cd.detectChanges();
 
   }
@@ -314,6 +359,16 @@ export class StatsWidget10Component {
           this.country = res.data[0].country;
           this.pin = res.data[0].pin;
           this.businessType = res.data[0].businessType
+          this.transporterDetails.controls["firstName"].setValue(res.data[0].firstName);
+          this.transporterDetails.controls["lastName"].setValue(res.data[0].lastName);
+          this.transporterDetails.controls["phone1"].setValue(res.data[0].phone1);
+          this.transporterDetails.controls["email1"].setValue(res.data[0].email1);
+          this.transporterDetails.controls["GSTNumber"].setValue(res.data[0].GSTNumber);
+          this.transporterDetails.controls["companyName"].setValue(res.data[0].companyName);
+          this.transporterDetails.controls["address1"].setValue(res.data[0].address1);
+          this.transporterDetails.controls["address2"].setValue(res.data[0].address2);
+          this.transporterDetails.controls["city"].setValue(res.data[0].city);
+          this.transporterDetails.controls["state"].setValue(res.data[0].state);
           this.getDealerIdByPhone(this.phone1)
           localStorage.setItem('kycId', this.kycId);
           this.kycForm.controls["transporterBusinessType"].setValue(res.data[0].businessType)
