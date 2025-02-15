@@ -1962,6 +1962,25 @@
         </div>
         <hr>
         <!-- REPORT Menu End -->
+         
+        <!-- UBI Menu Start -->
+        <div class="row">
+            <div class="col-lg-3">
+                <label class="labelMargin"><b>UBI Credit</b></label>
+            </div>
+            <div class="col-lg-1" style="padding: 15px;">
+                <label class="switch" *ngIf="!isUBI">
+                    <input type="checkbox" [checked]="waive" (change)="changeCustomizeStatus('UBI', 'UBI', 'ON')">
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="isUBI">
+                    <input type="checkbox" checked="checked"
+                        (change)="changeCustomizeStatus('UBI', 'UBI', 'OFF')">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <!-- UBI Menu End -->
 
     </ng-template>
 </div>

@@ -68,20 +68,20 @@ export class FeedsWidget9Component implements OnInit {
   dealerCompanyName: any;
   dealerCity: any;
   createdDate: any;
-  profitReportFuelPurchase: any;
-  profitReportLubePurchase: any;
-  profitReportFuelSales: any;
-  profitReportLubeSales: any;
-  profitReportAdvAmt: any;
-  profitReportExpenseAmt: any;
+  profitReportFuelPurchase: any = 0;
+  profitReportLubePurchase: any = 0;
+  profitReportFuelSales: any = 0;
+  profitReportLubeSales: any = 0;
+  profitReportAdvAmt: any = 0;
+  profitReportExpenseAmt: any = 0;
   cashBillLubeData: any = [];
   variationData: any = [];
   totalVariation: any = 0;
   totalVariationAmt: any = 0;
   totalVariationAmt1: any = 0;
   monthlyVariationData: any = [];
-  totalVariationQuantity: any;
-  totalMonthVariationAmt: any;
+  totalVariationQuantity: any = 0;
+  totalMonthVariationAmt: any = 0;
   monthVariationData: any = [];
 
   constructor(private post: FeedsService,
@@ -181,6 +181,8 @@ export class FeedsWidget9Component implements OnInit {
       }else{
         this.spinner.hide()
       }
+      console.log("au",this.profitReportFuelSales , this.profitReportLubeSales ,this.profitReportFuelPurchase ,
+      this.profitReportLubePurchase , this.totalVariationAmt1 , this.totalMonthVariationAmt)
     })
   }
 

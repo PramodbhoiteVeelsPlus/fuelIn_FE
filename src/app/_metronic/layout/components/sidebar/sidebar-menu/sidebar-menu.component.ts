@@ -110,6 +110,8 @@ export class SidebarMenuComponent implements OnInit {
   accessGroupId: any;
   customerId: any;
   isFTActive: any = "NO"; 
+  ubiData: any = [];
+  isUBI: boolean = true;
 
   constructor(private router: Router,
     private post: StatsService,
@@ -440,6 +442,18 @@ export class SidebarMenuComponent implements OnInit {
             this.isREPORT = true;
           }
 
+          //UBI MENU
+          if (res.data[10].dataUBI.length) {
+            this.ubiData = res.data[10].dataUBI;
+            this.ubiData.map((res: any) => {
+              if (res.customizeSubMenu == "UBI") {
+                this.isUBI = false;
+              } 
+              this.cd.detectChanges();
+            })
+          } else {
+            this.isUBI = true;
+          }
 
 
           this.cd.detectChanges();

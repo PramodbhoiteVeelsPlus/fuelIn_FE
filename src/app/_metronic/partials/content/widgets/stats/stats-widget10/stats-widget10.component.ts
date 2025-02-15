@@ -261,6 +261,8 @@ export class StatsWidget10Component {
   isAdmin: boolean = false;
   isDealer: boolean = false;
   isTransporter: boolean = false;
+  ubiData: any = [];
+  isUBI: boolean = true;
 
   constructor(
     private post: StatsService,
@@ -1047,6 +1049,23 @@ export class StatsWidget10Component {
             this.isSummaryReport = true;
             this.isViswasaTxExcel = true;
             this.isSalesPurReport = true;
+          }
+
+          //UBI MENU
+          if (res.data[10].dataUBI.length) {
+            this.ubiData = [];
+            this.isUBI = true;
+
+            this.ubiData = res.data[10].dataUBI;
+            this.ubiData.map((res: any) => {
+              if (res.customizeSubMenu == "UBI") {
+                this.isUBI = false;
+              } 
+              this.cd.detectChanges();
+            })
+          } else {
+            this.ubiData = [];
+            this.isUBI = true;
           }
 
           this.cd.detectChanges();

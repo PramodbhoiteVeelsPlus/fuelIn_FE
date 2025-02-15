@@ -414,25 +414,25 @@
                     <tr>
                       <td colspan="4">
                         <span
-                          *ngIf="((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) + (profitReportLubePurchase)) + (totalVariationAmt) > 0">
+                          *ngIf="((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) + (profitReportLubePurchase)) - ((totalVariationAmt1) + (totalMonthVariationAmt)) > 0">
                           <b> Gross Profit </b>
                         </span>
                         <span
-                          *ngIf="((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) + (profitReportLubePurchase)) + (totalVariationAmt) <= 0">
+                          *ngIf="((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) + (profitReportLubePurchase)) - ((totalVariationAmt1) + (totalMonthVariationAmt)) <= 0">
                           <b> Gross Loss </b>
                         </span>
                       </td>
 
                       <td>
                         <span
-                          *ngIf="((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) + (profitReportLubePurchase)) + (totalVariationAmt) > 0">
+                          *ngIf="((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) + (profitReportLubePurchase)) - ((totalVariationAmt1) + (totalMonthVariationAmt)) > 0">
                           <b> {{ ((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) +
-                            (profitReportLubePurchase)) + (totalVariationAmt) | number:'1.2-2'}} </b>
+                            (profitReportLubePurchase)) - ((totalVariationAmt1) + (totalMonthVariationAmt)) | number:'1.2-2'}} </b>
                         </span>
                         <span style="color: red;"
-                          *ngIf="((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) + (profitReportLubePurchase)) + (totalVariationAmt) <= 0">
+                          *ngIf="((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) + (profitReportLubePurchase)) - ((totalVariationAmt1) + (totalMonthVariationAmt)) <= 0">
                           <b> {{ ((((profitReportFuelSales) + (profitReportLubeSales) ) - ((profitReportFuelPurchase) +
-                            (profitReportLubePurchase)) + (totalVariationAmt)) * (-1)) | number:'1.2-2'}} </b>
+                            (profitReportLubePurchase)) - ((totalVariationAmt1) + (totalMonthVariationAmt))) * (-1)) | number:'1.2-2'}} </b>
                         </span>
                       </td>
                     </tr>
