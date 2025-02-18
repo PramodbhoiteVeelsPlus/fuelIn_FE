@@ -1777,7 +1777,14 @@
                   <td style="text-align: center;"> {{data.paymentCust }} </td>
                   <td style="text-align: center;"> {{data.paymentManualNumber}} </td>
                   <td style="text-align: center;"> {{data.terminalName }} </td>
-                  <td style="text-align: center;"> {{data.transacId}} </td>
+                  <td style="text-align: center;"> 
+                    <span *ngIf="data.transacId != 'null'">
+                      {{data.transacId}} 
+                    </span> 
+                    <span *ngIf="data.transacId == 'null'">
+                      
+                    </span> 
+                  </td>
                   <td style="text-align: center;"> {{data.idfuelCreditVehicle }} </td>
                   <td style="text-align: center;"> {{data.PaymentProduct}} </td>
                   <td style="text-align: center;"> {{data.paymentQuantityInPieces }} </td>
