@@ -187,6 +187,9 @@ export class TablesWidget30Component {
       this.dealerAccess = true
       if(element.accessGroupId == '12'){
         this.customerId = dealerData.customerId;
+        this.headerName1 = dealerData.companyName;
+        this.headerName2 = dealerData.address1+', '+dealerData.address2+', '+dealerData.city;
+        this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
       } 
       if(element.accessGroupId == '14'){
         var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
