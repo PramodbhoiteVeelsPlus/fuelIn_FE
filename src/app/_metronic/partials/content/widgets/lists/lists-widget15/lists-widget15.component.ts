@@ -162,7 +162,6 @@ export class ListsWidget15Component {
       this.getOperatorWiseDetails1()
     }
 
-      this.cd.detectChanges()
     }
 
   }
@@ -174,24 +173,31 @@ export class ListsWidget15Component {
 
 
   getAllAttendantsByDid(fuelDealerId: any) {
+    this.spinner.show()
     const data = {
       fuelDealerId: fuelDealerId,
     };
     this.post.getAllAttendantsByDidPOST(data).subscribe((res) => {
       if (res.status == 'OK') {
         this.staffDetails = res.data;
+        this.spinner.hide();
+        this.cd.detectChanges()
       } else {
+        this.spinner.hide();
+        this.cd.detectChanges()
       }
     });
   }
 
   getProductsByDealerId(fuelDealerId: any) {
+    this.spinner.show()
     let data = {
       fuelDealerId: fuelDealerId
     }
     this.post.getFuelProductIdByDealerIdPOST(data).subscribe(res => {
       if (res.status = 'OK') {
         this.productsList = res.data;
+        this.spinner.hide();
         this.cd.detectChanges()
       }
     })

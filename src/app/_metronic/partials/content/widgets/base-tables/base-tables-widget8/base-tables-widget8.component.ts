@@ -199,7 +199,6 @@ export class BaseTablesWidget8Component implements OnInit {
       this.customerId = managerData.customerId;
       this.searchDealerBycustomerId(this.customerId)
     }
-    this.cd.detectChanges()
   }
 
 
@@ -257,6 +256,7 @@ export class BaseTablesWidget8Component implements OnInit {
 
 
   getFuelCreditCorporateByfuelDealerId(fuelDealerId: any) {
+    this.spinner.show()
     this.allCorporateList = []
     let data = {
       fuelDealerId: fuelDealerId
@@ -265,8 +265,11 @@ export class BaseTablesWidget8Component implements OnInit {
       .subscribe(res => {
         if (res.status == 'OK') {
           this.allCorporateList = res.data;
+          this.spinner.hide();
           this.cd.detectChanges()
         } else {
+          this.spinner.hide();
+          this.cd.detectChanges()
         }
       });
   }
@@ -483,6 +486,7 @@ export class BaseTablesWidget8Component implements OnInit {
   }
 
   getProductsByDealerId(fuelDealerId: any) {
+    this.spinner.show()
     this.productsData = [];
     let data = {
       fuelDealerId: fuelDealerId
@@ -503,7 +507,8 @@ export class BaseTablesWidget8Component implements OnInit {
     this.productId = id.target.value;
   }
   
-  searchDealerBycustomerId(customerId: any) {    
+  searchDealerBycustomerId(customerId: any) {  
+    this.spinner.show()  
     let data = {
       customerId: customerId,
     };
@@ -512,10 +517,13 @@ export class BaseTablesWidget8Component implements OnInit {
         if (res.data.length) {         
           this.headerName1 = res.data[0].companyName;
           this.headerName2 = res.data[0].address1 + ', ' + res.data[0].address2 + ', ' + res.data[0].city;
-          this.headerName3 = res.data[0].state + '-' + res.data[0].pin + '  ' + "GST: " + res.data[0].GSTNumber;         
+          this.headerName3 = res.data[0].state + '-' + res.data[0].pin + '  ' + "GST: " + res.data[0].GSTNumber; 
+          this.spinner.hide();
+          this.cd.detectChanges()        
           
         } else {
           this.spinner.hide();
+          this.cd.detectChanges()
         }
       });
 }

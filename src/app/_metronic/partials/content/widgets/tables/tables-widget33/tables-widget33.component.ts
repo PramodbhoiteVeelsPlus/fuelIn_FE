@@ -152,7 +152,6 @@ export class TablesWidget33Component {
       }
     }
     this.getfuelDealerIdByCorporateId(this.dealerCorporateId);
-    this.cd.detectChanges()
   }
 
   async openModal() {
@@ -160,14 +159,19 @@ export class TablesWidget33Component {
   }
 
   getAccessByPersonId(personId: any) {
+    this.spinner.show()
     let data = {
       personId: personId,
     };
     this.post.getAccessByPersonIdPOST(data).subscribe((res) => {
       if (res.data[0].fuelStatement == 'TRUE') {
         this.isFuelStatement = true;
+        this.spinner.hide();
+        this.cd.detectChanges()
       } else {
         this.isFuelStatement = false;
+        this.spinner.hide();
+        this.cd.detectChanges()
       }
     });
   }

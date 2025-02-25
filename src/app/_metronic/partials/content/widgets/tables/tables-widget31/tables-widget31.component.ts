@@ -150,7 +150,6 @@ export class TablesWidget31Component {
     }
     this.searchDealerBycustomerId(this.customerId)
     // this.getCorporateById(this.dealerLoginVPId);
-    this.cd.detectChanges()
   }
 
   async openModal() {
@@ -163,6 +162,7 @@ export class TablesWidget31Component {
   }
   
   searchDealerBycustomerId(customerId: any) {    
+    this.spinner.show()
 
     let data = {
       customerId: customerId,
@@ -174,10 +174,13 @@ export class TablesWidget31Component {
           this.city = res.data[0].city;   
           this.headerName1 = res.data[0].companyName;
           this.headerName2 = res.data[0].address1 + ', ' + res.data[0].address2 + ', ' + res.data[0].city;
-          this.headerName3 = res.data[0].state + '-' + res.data[0].pin + '  ' + "GST: " + res.data[0].GSTNumber;         
+          this.headerName3 = res.data[0].state + '-' + res.data[0].pin + '  ' + "GST: " + res.data[0].GSTNumber;   
+          this.spinner.hide();
+          this.cd.detectChanges()      
           
         } else {
           this.spinner.hide();
+          this.cd.detectChanges()
         }
       });
 }

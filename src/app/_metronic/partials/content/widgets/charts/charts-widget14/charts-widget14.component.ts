@@ -183,7 +183,6 @@ export class ChartsWidget14Component implements OnInit {
     } else {
       this.getCashBillDetails1();
     }
-    this.cd.detectChanges()
   }
 
 

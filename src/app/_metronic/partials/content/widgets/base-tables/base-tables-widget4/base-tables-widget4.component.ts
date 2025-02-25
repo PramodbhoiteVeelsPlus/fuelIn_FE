@@ -174,7 +174,6 @@ export class BaseTablesWidget4Component implements OnInit {
       this.customerId = managerData.customerId;
       this.searchDealerBycustomerId(this.customerId)
     }
-    this.cd.detectChanges()
   }
 
   getFCYear(){
@@ -271,6 +270,7 @@ export class BaseTablesWidget4Component implements OnInit {
   }
 
   getFuelCreditCorporateByfuelDealerId(fuelDealerId: any) {
+    this.spinner.show()
     this.allCorporateList = []
     let data = {
       fuelDealerId: fuelDealerId
@@ -279,8 +279,11 @@ export class BaseTablesWidget4Component implements OnInit {
       .subscribe(res => {
         if (res.status == 'OK') {
           this.allCorporateList = res.data;
+          this.spinner.hide();
           this.cd.detectChanges()
         } else {
+          this.spinner.hide();
+          this.cd.detectChanges()
         }
       });
   }
@@ -434,6 +437,7 @@ exportexcel(): void
   }
   
   searchDealerBycustomerId(customerId: any) {    
+    this.spinner.show()
     let data = {
       customerId: customerId,
     };

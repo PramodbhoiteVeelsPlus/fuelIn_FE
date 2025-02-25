@@ -171,7 +171,6 @@ export class BaseTablesWidget2Component implements OnInit {
       this.searchDealerBycustomerId(this.customerId)
     }
     this.getFuelCreditRequestCorporateByfuelDealerId(this.fuelDealerId)
-    this.cd.detectChanges()
   }
 
 
@@ -186,8 +185,10 @@ export class BaseTablesWidget2Component implements OnInit {
           this.allCorporateList = res.data;
           // this.allCorporateListData = res;
           this.spinner.hide()
+          this.cd.detectChanges();
         } else {
           this.spinner.hide()
+          this.cd.detectChanges();
         }
       });
   }
@@ -319,14 +320,14 @@ export class BaseTablesWidget2Component implements OnInit {
                   this.crPaymentDetails = res.data;
                   this.crPaymentDetailsData = res.data;
                   this.showHeading = true;
-                  this.cd.detectChanges();
                   this.spinner.hide()
+                  this.cd.detectChanges();
                 }
                 else {
                   alert("Don't have any Credit Payment in this Month!")
                   this.showHeading = false;
-                  this.cd.detectChanges();
                   this.spinner.hide()
+                  this.cd.detectChanges();
                 }
               }
               else {
@@ -843,6 +844,7 @@ export class BaseTablesWidget2Component implements OnInit {
   }
   
   searchDealerBycustomerId(customerId: any) {    
+    this.spinner.show()
     let data = {
       customerId: customerId,
     };
@@ -851,10 +853,13 @@ export class BaseTablesWidget2Component implements OnInit {
         if (res.data.length) {         
           this.headerName1 = res.data[0].companyName;
           this.headerName2 = res.data[0].address1 + ', ' + res.data[0].address2 + ', ' + res.data[0].city;
-          this.headerName3 = res.data[0].state + '-' + res.data[0].pin + '  ' + "GST: " + res.data[0].GSTNumber;         
+          this.headerName3 = res.data[0].state + '-' + res.data[0].pin + '  ' + "GST: " + res.data[0].GSTNumber;   
+          this.spinner.hide();
+          this.cd.detectChanges()      
           
         } else {
           this.spinner.hide();
+          this.cd.detectChanges();
         }
       });
 }

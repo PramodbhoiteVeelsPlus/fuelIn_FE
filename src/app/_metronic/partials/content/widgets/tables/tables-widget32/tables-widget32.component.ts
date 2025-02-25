@@ -147,7 +147,6 @@ export class TablesWidget32Component {
     }
     this.getfuelDealerIdByCorporateId(this.dealerCorporateId);
     this.getCustomerAllDataById(this.customerId);
-    this.cd.detectChanges()
   }
 
   async openModal() {

@@ -194,8 +194,7 @@ isHovered(date: NgbDate) {
     } else {
       this.getFuelPriceByDealer1(this.fuelDealerId);
     }  
-    this.getProductsByDealerId(this.fuelDealerId);    
-    this.cd.detectChanges()
+    this.getProductsByDealerId(this.fuelDealerId); 
   }
 
 
@@ -299,6 +298,7 @@ isHovered(date: NgbDate) {
   }
   
   getProductsByDealerId(fuelDealerId: any) {
+    this.spinner.show()
     let data = {
       fuelDealerId:fuelDealerId
     }
@@ -310,6 +310,7 @@ isHovered(date: NgbDate) {
           this.productsList = res.data;
           this.allProductPriceList = res.data;
           this.getProductDetails(res.data);
+          this.spinner.hide();
           this.cd.detectChanges()
         }
     })

@@ -131,7 +131,6 @@ export class BaseTablesWidget13Component implements OnInit {
       this.getStaffDetails1(this.fuelDealerId)
     }
     this.getStaffDetails(this.fuelDealerId)
-    this.cd.detectChanges()
   }
 
 

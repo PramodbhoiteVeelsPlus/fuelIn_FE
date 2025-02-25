@@ -185,7 +185,6 @@ export class BaseTablesWidget7Component implements OnInit {
       this.customerId = managerData.customerId;
       this.searchDealerBycustomerId(this.customerId)
     }
-    this.cd.detectChanges()
   }
 
 
@@ -243,6 +242,7 @@ export class BaseTablesWidget7Component implements OnInit {
 
 
   getFuelCreditCorporateByfuelDealerId(fuelDealerId: any) {
+    this.spinner.show()
     this.allCorporateList = []
     let data = {
       fuelDealerId: fuelDealerId
@@ -251,8 +251,11 @@ export class BaseTablesWidget7Component implements OnInit {
       .subscribe(res => {
         if (res.status == 'OK') {
           this.allCorporateList = res.data;
+          this.spinner.hide();
           this.cd.detectChanges()
         } else {
+          this.spinner.hide();
+          this.cd.detectChanges()
         }
       });
   }
@@ -480,6 +483,7 @@ export class BaseTablesWidget7Component implements OnInit {
   }
   
   getProductsByDealerId(fuelDealerId: any) {
+    this.spinner.show()
     this.productsData = [];
     let data = {
       fuelDealerId: fuelDealerId
@@ -501,6 +505,7 @@ export class BaseTablesWidget7Component implements OnInit {
   }
   
   searchDealerBycustomerId(customerId: any) {    
+    this.spinner.show()
     let data = {
       customerId: customerId,
     };
