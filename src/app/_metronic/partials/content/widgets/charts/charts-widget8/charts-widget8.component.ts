@@ -271,7 +271,7 @@ export class ChartsWidget8Component implements OnInit {
       .subscribe(res => {
         if (res.status == "OK") {
           this.mappingAccData = res.data;
-          this.getPurchaseDetailsTx();
+          // this.getPurchaseDetailsTx();
           this.cd.detectChanges()
         } else {
           this.mappingAccData = [];

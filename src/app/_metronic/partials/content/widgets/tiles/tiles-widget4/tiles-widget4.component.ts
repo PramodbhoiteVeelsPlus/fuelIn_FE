@@ -92,6 +92,7 @@ export class TilesWidget4Component {
   headerName3: string;
   searchBox: FormControl = new FormControl();
   customerId: any;
+  accountingToInput: string;
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -410,12 +411,18 @@ export class TilesWidget4Component {
         Created_By: '',
       };
 
+      if(res1.accountingToInput == 'null'){
+        this.accountingToInput = ' '
+      } else {
+        this.accountingToInput = res1.accountingToInput
+      }
+
       dataJson.Date = moment(res1.accountingDate).format("DD-MM-YYYY");
       dataJson.Book = res1.accountingBook;
       dataJson.Transaction_Type = res1.accountingTransactionType;
       dataJson.Details = res1.accountingDetails;
       dataJson.Paid_From = res1.paidFromAccountNumber + ' ' + res1.paidFromBankName + ' ' + res1.accountingFromInput;
-      dataJson.Paid_To = res1.paidToAccountNumber + ' ' + res1.paidToBankName + ' ' + res1.accountingToInput;
+      dataJson.Paid_To = res1.paidToAccountNumber + ' ' + res1.paidToBankName + ' ' + this.accountingToInput;
       dataJson.Amount = Number(res1.accountingAmout);
       dataJson.Created_By = res1.accountingCreatedBy;
 
@@ -431,13 +438,20 @@ export class TilesWidget4Component {
     var cols = [["Date", "Book", "Transaction Type", "Details", "Paid From", "Paid To", "Amount", "Created By"]];
     var rows = [];
     for (var key in this.accountingData) {
+
+      if(this.accountingData[key].accountingToInput == 'null'){
+        this.accountingToInput = ' '
+      } else {
+        this.accountingToInput = this.accountingData[key].accountingToInput
+      }
+
       var temp = [
         moment(this.accountingData[key].accountingDate).format("DD-MM-YYYY"),
         this.accountingData[key].accountingBook,
         this.accountingData[key].accountingTransactionType,
         this.accountingData[key].accountingDetails,
         this.accountingData[key].paidFromAccountNumber + ' ' + this.accountingData[key].paidFromBankName + ' ' + this.accountingData[key].accountingFromInput,
-        this.accountingData[key].paidToAccountNumber + ' ' + this.accountingData[key].paidToBankName + ' ' + this.accountingData[key].accountingToInput,
+        this.accountingData[key].paidToAccountNumber + ' ' + this.accountingData[key].paidToBankName + ' ' + this.accountingToInput,
         Number(this.accountingData[key].accountingAmout).toFixed(2),
         this.accountingData[key].accountingCreatedBy,
       ];

@@ -395,7 +395,7 @@
                   <td>
                     <button *ngIf="isVehSelect" type="submit" class="btn btn-success"
                       (click)="addFormRequest()">
-                      Add1
+                      Add
                     </button>
                     <button *ngIf="!isVehSelect" type="submit" class="btn btn-success" (click)="selectVehicle()">
                       Add
@@ -414,14 +414,15 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-1">
-      <div class="col-md-10">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <div class="col-auto">
         <button *ngIf="isVehSelect" type="submit" class="btn btn-primary"
           (click)="submitByDealerNEW1()">Submit</button>&nbsp;&nbsp;
         <button *ngIf="!isVehSelect" type="submit" class="btn btn-primary"
           (click)="selectVehicle()">Submit</button>&nbsp;&nbsp;
         <button type="submit" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
       </div>
+      <br>
       <ng-template #removeTable let-c="close" let-d="dismiss">
 
         <div class="modal-body">
@@ -439,7 +440,6 @@
           </button>
         </div>
       </ng-template>
-    </div>
 
   </div>
 </div>

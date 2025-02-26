@@ -118,10 +118,10 @@ export class TilesWidget2Component {
             this.loginSQLStaffId = res.data[0].fuelDealerStaffId;
             this.cd.detectChanges();
           }
-          else {
-            alert("Getting Error..! Please Logout & Login again..!")
-            this.cd.detectChanges();
-          }
+        }
+        else {
+          alert("Getting Error..! Please Logout & Login again..!")
+          this.cd.detectChanges();
         }
       })
   }

@@ -190,7 +190,7 @@ this.post.getMappingAccByFuelDealerIdPOST(data)
 .subscribe(res => {
   if(res.status == "OK"){
     this.mappingAccData = res.data;
-    this.getPurchaseDetailsTx();
+    // this.getPurchaseDetailsTx();
   } else{
     this.mappingAccData = [];
     this.spinner.hide();
