@@ -59,7 +59,7 @@
             <div class="row">
               <div class="col-12">
                 <div class="row mb-3">
-                  <label class="col-md-3 col-form-label"><b>Mobile Number</b><span style="color: red;">*</span></label>
+                  <label class="col-md-3 col-form-label"><b>Mobile Number:</b><span style="color: red;">*</span></label>
                   <div class="col-md-9">
                     <input type="number" class="form-control" formControlName="phoneNumber"
                       (blur)="searchCorporateByPhone()" placeholder="Enter Mobile Number"
@@ -68,7 +68,7 @@
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label class="col-md-3 col-form-label"><b>Khata Name</b><span style="color: red;">*</span></label>
+                  <label class="col-md-3 col-form-label"><b>Khata Name:</b><span style="color: red;">*</span></label>
                   <div class="col-md-9">
                     <input class="form-control" name="khataName" type="text" placeholder="Enter Khata Name"
                       formControlName="carrierName"
@@ -76,7 +76,7 @@
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label class="col-md-3 col-form-label"><b>GST</b></label>
+                  <label class="col-md-3 col-form-label"><b>GST:</b></label>
                   <div class="col-md-9">
                     <input class="form-control" name="GST" type="text" placeholder="Enter GST" formControlName="gstNo"
                       oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
@@ -84,14 +84,14 @@
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label class="col-md-3 col-form-label"><b>Cr. Limit Amount</b><span style="color: red;">*</span></label>
+                  <label class="col-md-3 col-form-label"><b>Cr. Limit Amount:</b><span style="color: red;">*</span></label>
                   <div class="col-md-9">
                     <input class="form-control" name="creditLimitAmount" type="number"
                       placeholder="Enter Credit Limit Amount" formControlName="maxCreditAmount">
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label class="col-md-3 col-form-label"><b>Cr. Limit Days</b><span style="color: red;">*</span></label>
+                  <label class="col-md-3 col-form-label"><b>Cr. Limit Days:</b><span style="color: red;">*</span></label>
                   <div class="col-md-9">
                     <input class="form-control" name="creditLimitDays" min="0" type="number"
                       placeholder="Enter Credit Limit Days" formControlName="creditDayLimit" (change)="disableError()">
@@ -114,7 +114,7 @@
             <div class="row">
               <div class="col-12">
                 <div class="row mb-3">
-                  <label class="col-md-3 col-form-label"><b>First name</b><span style="color: red;">*</span></label>
+                  <label class="col-md-3 col-form-label"><b>First name:</b><span style="color: red;">*</span></label>
                   <div class="col-md-9">
                     <input class="form-control" name="firstName" type="text" placeholder="Enter First name"
                       formControlName="firstName"
@@ -122,7 +122,7 @@
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label class="col-md-3 col-form-label"><b>Last name</b><span style="color: red;">*</span></label>
+                  <label class="col-md-3 col-form-label"><b>Last name:</b><span style="color: red;">*</span></label>
                   <div class="col-md-9">
                     <input class="form-control" name="lastName" type="text" placeholder="Enter lastName"
                       formControlName="lastName"
@@ -130,7 +130,7 @@
                   </div>
                 </div>
                 <div *ngIf="!isCarrierFound" class="row mb-3">
-                  <label class="col-md-3 col-form-label"><b>Email</b></label>
+                  <label class="col-md-3 col-form-label"><b>Email:</b></label>
                   <div class="col-md-9">
                     <input class="form-control" name="Email" type="text" placeholder="Enter Email"
                       formControlName="carrierEmail" placeholder="Enter Email Address">
@@ -142,7 +142,7 @@
                 </div>
 
                 <div *ngIf="!isCarrierFound" class="row mb-3">
-                  <label class="col-md-3 col-form-label"><b>Address Line 1</b></label>
+                  <label class="col-md-3 col-form-label"><b>Address Line 1:</b></label>
                   <div class="col-md-9">
                     <input class="form-control" name="addressLine1" type="text" placeholder="Enter Address Line 1"
                       formControlName="address1"
@@ -151,7 +151,7 @@
                 </div>
 
                 <div *ngIf="!isCarrierFound" class="row mb-3">
-                  <label class="col-md-3 col-form-label"><b>Address Line 2</b></label>
+                  <label class="col-md-3 col-form-label"><b>Address Line 2:</b></label>
                   <div class="col-md-9">
                     <input class="form-control" name="addressLine2" type="text" placeholder="Enter Address Line 2"
                       formControlName="address2"
@@ -161,14 +161,14 @@
 
 
                 <div *ngIf="!isCarrierFound" class="row mb-3">
-                  <label class="col-md-3 col-form-label"><b>City</b><span style="color: red;">*</span></label>
+                  <label class="col-md-3 col-form-label"><b>City:</b><span style="color: red;">*</span></label>
                   <div class="col-md-9">
                     <input class="form-control" name="city" type="text" placeholder="Enter City" formControlName="city"
                       oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
                   </div>
                 </div>
                 <div *ngIf="!isCarrierFound" class="row mb-3">
-                  <label class="col-md-3 col-form-label"><b>State</b><span style="color: red;">*</span></label>
+                  <label class="col-md-3 col-form-label"><b>State:</b><span style="color: red;">*</span></label>
                   <div class="col-md-9">
                     <input *ngIf="isCarrierFound" class="form-control" name="state" type="text"
                       placeholder="Enter State" formControlName="state">
@@ -218,7 +218,7 @@
 
 
                 <div *ngIf="isCarrierFound" class="row mb-3">
-                  <label class="col-md-3 col-form-label"><b>Email</b></label>
+                  <label class="col-md-3 col-form-label"><b>Email:</b></label>
                   <div class="col-md-9">
                     <input class="form-control" name="Email" type="text" placeholder="Enter Email"
                       formControlName="carrierEmail" placeholder="Email Address">
@@ -227,7 +227,7 @@
                 </div>
 
                 <div *ngIf="isCarrierFound" class="row mb-3">
-                  <label class="col-md-3 col-form-label"><b>Address Line 1</b></label>
+                  <label class="col-md-3 col-form-label"><b>Address Line 1:</b></label>
                   <div class="col-md-9">
                     <input class="form-control" name="addressLine1" type="text" placeholder="Enter Address Line 1"
                       formControlName="address1"
@@ -236,7 +236,7 @@
                 </div>
 
                 <div *ngIf="isCarrierFound" class="row mb-3">
-                  <label class="col-md-3 col-form-label"><b>Address Line 2</b></label>
+                  <label class="col-md-3 col-form-label"><b>Address Line 2:</b></label>
                   <div class="col-md-9">
                     <input class="form-control" name="addressLine2" type="text" placeholder="Enter Address Line 2"
                       formControlName="address2"
@@ -246,14 +246,14 @@
 
 
                 <div *ngIf="isCarrierFound" class="row mb-3">
-                  <label class="col-md-3 col-form-label"><b>City</b><span style="color: red;">*</span></label>
+                  <label class="col-md-3 col-form-label"><b>City:</b><span style="color: red;">*</span></label>
                   <div class="col-md-9">
                     <input class="form-control" name="city" type="text" placeholder="Enter City" formControlName="city"
                       oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);">
                   </div>
                 </div>
                 <div *ngIf="isCarrierFound" class="row mb-3">
-                  <label class="col-md-3 col-form-label"><b>State</b><span style="color: red;">*</span></label>
+                  <label class="col-md-3 col-form-label"><b>State:</b><span style="color: red;">*</span></label>
                   <div class="col-md-9">
                     <input *ngIf="isCarrierFound" class="form-control" name="state" type="text"
                       placeholder="Enter State" formControlName="state">

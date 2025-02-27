@@ -438,7 +438,10 @@ export class PumpTablesWidget11Component implements OnInit {
     let data = {
       fuelDealerId: fuelDealerId,
       date: moment(this.addShiftForm.value.date, ['DD-MM-YYYY']).format('YYYY-MM-DD'),
+      corporateId: this.dealerCorporateId,
+      date1: moment(this.addShiftForm.value.date, ['DD-MM-YYYY']).format('YYYY-MM-DD'),
     };
+
     this.post2.getMETERSALESTotalDSRPOST(data)
       .subscribe((res) => {
         if (res.status == "OK") {

@@ -305,9 +305,11 @@ export class PumpTablesWidget1Component implements OnInit {
             alert("Lubricant Stock Details Added Successfully..!");
             this.clearLubePurchase();
             this.spinner.hide();
+            this.cd.detectChanges()
           } else {
             alert("Error to Add Details..!");
             this.spinner.hide();
+            this.cd.detectChanges()
           }
         })
     } else {

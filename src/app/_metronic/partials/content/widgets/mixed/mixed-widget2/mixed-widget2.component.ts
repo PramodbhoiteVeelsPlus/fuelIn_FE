@@ -546,6 +546,7 @@ export class MixedWidget2Component implements OnInit {
                             this.count = 1;
                             this.closeModal()
                             this.spinner.hide();
+                            this.cd.detectChanges()
                             if (this.autoManualStatus == 'TRUE') {
                               this.myInputField.nativeElement.focus();
                               this.updateAssignedAutoManualNumber('LUBE', res.count)
@@ -583,43 +584,52 @@ export class MixedWidget2Component implements OnInit {
                             alert("Error to Created Request!")
                             this.isBalance1 = false;
                             this.spinner.hide();
+                            this.cd.detectChanges()
                           }
                         });
                     }
                     else {
                       alert("Please select unit!")
                       this.spinner.hide();
+                      this.cd.detectChanges()
                     }
                   } else {
                     alert("Please Enter Bill / Ref Number!")
                     this.spinner.hide();
+                    this.cd.detectChanges()
                   }
                 } else {
                   alert("Please enter lubricant name!")
                   this.spinner.hide();
+                  this.cd.detectChanges()
                 }
               } else {
                 this.spinner.hide();
+                this.cd.detectChanges()
               }
             }
             else {
               alert("Please Enter Quantity!")
               this.spinner.hide();
+              this.cd.detectChanges()
             }
           }
           else {
             alert("Please Select customer!")
             this.spinner.hide();
+            this.cd.detectChanges()
           }
         }
         else {
           alert("Please Enter Amount or Quantity!")
           this.spinner.hide();
+          this.cd.detectChanges()
         }
       }
       else {
         alert("Please Select Date!")
         this.spinner.hide();
+        this.cd.detectChanges()
       }
     } else {
       if (this.acceesGroup == 14 || this.acceesGroup == 21) {
@@ -670,6 +680,7 @@ export class MixedWidget2Component implements OnInit {
                               this.count = 1;
                               this.closeModal()
                               this.spinner.hide();
+                              this.cd.detectChanges()
                               if (this.autoManualStatus == 'TRUE') {
                                 this.myInputField.nativeElement.focus();
                                 this.updateAssignedAutoManualNumber('LUBE',res.count)
@@ -706,43 +717,52 @@ export class MixedWidget2Component implements OnInit {
                               alert("Error to Created Request!")
                               this.isBalance1 = false;
                               this.spinner.hide();
+                            this.cd.detectChanges()
                             }
                           })
                       } else {
                         alert("Please select unit!")
                         this.spinner.hide();
+                        this.cd.detectChanges()
                       }
                     } else {
                       alert("Please Enter Bill / Ref Number!")
                       this.spinner.hide();
+                      this.cd.detectChanges()
                     }
                   } else {
                     alert("Please enter lubricant name!")
                     this.spinner.hide();
+                    this.cd.detectChanges()
                   }
                 }
                 else {
                   this.spinner.hide();
+                  this.cd.detectChanges()
                 }
               }
               else {
                 alert("Please Enter Amount or Quantity!")
                 this.spinner.hide();
+                this.cd.detectChanges()
               }
             }
             else {
               alert("Please Select Customer!")
               this.spinner.hide();
+              this.cd.detectChanges()
             }
           }
           else {
             alert("Please Enter Amount or Quantity!")
             this.spinner.hide();
+            this.cd.detectChanges()
           }
         }
         else {
           alert("Please Select Date!")
           this.spinner.hide();
+          this.cd.detectChanges()
         }
       }
     }

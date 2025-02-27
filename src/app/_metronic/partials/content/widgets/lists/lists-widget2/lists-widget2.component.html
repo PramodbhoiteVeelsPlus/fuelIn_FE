@@ -80,7 +80,7 @@
 
             <td style="text-align: center;"> {{data.vehicleNumber}} </td>
             <td style="text-align: center;"> {{data.lubeName}} </td>
-            <td style="text-align: center;"> {{data.actualCreditQuantity}} </td>
+            <td style="text-align: center;"> {{data.actualCreditQuantity| number:'1.2-2'}} </td>
             <td style="text-align: center;"> {{data.fuelcreditBeforeTax | number:'1.2-2'}} </td>
             <td style="text-align: center;">
               <p *ngIf="data.fuelcreditCGST == '' "> - </p>

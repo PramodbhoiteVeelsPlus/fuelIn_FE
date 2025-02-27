@@ -68,7 +68,7 @@
             <th style="text-align: center"><b> Balance </b></th>
           </tr>
         </thead>
-        <tbody *ngFor="let data of dayWiseQtyData">
+        <tbody *ngFor="let data of dayWiseQtyData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
           <tr *ngIf="data.crData.length">
             <td style="text-align: center"> {{ data.date | date:"d MMM, yyyy"}} </td>
 

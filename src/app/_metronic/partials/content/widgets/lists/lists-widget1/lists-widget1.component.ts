@@ -575,10 +575,13 @@ export class ListsWidget1Component {
                               this.requestTransporterLubeTax.controls["creditQuantity"].setValue("");
                               this.requestTransporterLubeTax.controls["creditAmount"].setValue("");
                               this.requestTransporterLubeTax.controls["vehicleNumber"].setValue("");
+                              this.spinner.hide();
+                              this.cd.detectChanges()
                             } else {
                               alert("Error to Created Request!")
                               this.isBalance1 = false;
                               this.spinner.hide();
+                              this.cd.detectChanges()
                             }
                           });
 
@@ -689,10 +692,13 @@ export class ListsWidget1Component {
                               this.requestTransporterLubeTax.controls["creditQuantity"].setValue("");
                               this.requestTransporterLubeTax.controls["creditAmount"].setValue("");
                               this.requestTransporterLubeTax.controls["vehicleNumber"].setValue("");
+                              this.spinner.hide();
+                              this.cd.detectChanges()
                             } else {
                               alert("Error to Created Request!")
                               this.isBalance1 = false;
                               this.spinner.hide();
+                              this.cd.detectChanges()
                             }
                           })
                       } else {

@@ -2054,6 +2054,7 @@ export class ListsWidget5Component {
           this.getDigitalEntryDetailsByShiftId(this.shiftIdUpdate);
           this.getCASHDetailsByShiftId(this.shiftIdUpdate);
           this.getDigitalLubeByShiftId(this.shiftIdUpdate)
+          this.getAllFuelCreditByStaffIdDate(this.staffId);
         } else {
           alert("Error to delete")
           this.getDigitalEntryDetailsByShiftId(this.shiftIdUpdate);
@@ -2598,11 +2599,14 @@ export class ListsWidget5Component {
             this.closeModalLubeDigital()
             this.isAddPOSUpdate = false;
             this.getDigitalLubeByShiftId(this.shiftIdUpdate)
+            this.getAllFuelCreditByStaffIdDate(this.staffId);
             this.spinner.hide();
+            this.cd.detectChanges()
           } else {
             alert(res.msg)
             this.closeModalLubeDigital()
             this.spinner.hide()
+            this.cd.detectChanges()
           }
         })
     } else {
