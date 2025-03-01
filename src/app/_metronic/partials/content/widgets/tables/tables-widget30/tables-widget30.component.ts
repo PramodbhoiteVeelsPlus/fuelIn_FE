@@ -261,6 +261,7 @@ export class TablesWidget30Component {
   }
 
   getMappingAccount1(fuelDealerId: any) {
+    this.spinner.show();
     let data = {
       fuelDealerId: fuelDealerId
     }

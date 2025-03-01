@@ -270,6 +270,7 @@ export class TablesWidget33Component {
 
 
   getTransactionDetails() {
+    this.spinner.show();
     this.totalCr = 0;
     this.paymentTotal = 0;
     this.endDate = this.searchDiscountForm.value.endDate;
@@ -287,6 +288,7 @@ export class TablesWidget33Component {
           this.totalCr = res.data1[0].creditQuantityTotal;
           // this.calpayment(res.data)
           this.totalPendingoutstanding()
+          this.spinner.hide();
           this.cd.detectChanges()
 
         } else {

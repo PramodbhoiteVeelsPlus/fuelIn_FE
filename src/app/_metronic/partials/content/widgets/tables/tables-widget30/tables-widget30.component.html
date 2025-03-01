@@ -1,5 +1,10 @@
 <head>
   <style>
+  .table td {
+    white-space: normal;
+    word-wrap: break-word;
+  }
+
     .btn.btn-icon.badge.badge-light-success {
       background-color: #DFFFEA;
       color: #DFFFEA;
@@ -146,8 +151,8 @@
 <!-- begin::Body -->
 <div class="card-body py-3">
   <!-- begin::Table container -->
-  <div class="table-responsive mb-0">
-    <table class="table table-centered table-nowrap">
+  <div class="table mb-0">
+    <table class="table table-centered table-responsive">
       <thead class="table-light">
         <tr>
           <th></th>
@@ -200,14 +205,15 @@
               ★ ★ ★ ★ ★
             </span>
           </td>
-          <td (click)="getVehicleByCustMapId(viewVehicle,data.fuelDealerCustomerMapId, data.companyName)">
+          <td style="cursor:pointer;" 
+          (click)="getVehicleByCustMapId(viewVehicle,data.fuelDealerCustomerMapId, data.companyName)">
             {{ data.totalVehicleNumber }} </td>
           <td>
             <div ngbDropdown placement="bottom-left">
               <i class="fa-solid fa-ellipsis-vertical" ngbDropdownToggle data-toggle="dropdown"
                 aria-expanded="true"></i>
               <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
-                <a class="dropdown-item" href="javascript: void(0);"
+                <a class="dropdown-item" href="javascript: void(0);" style="font-size: 12px;"
                   (click)="updateName(editName, data.fuelDealerCustomerMapId, data.companyName, data.hostName, data.mappingGST, data.mappingEmail, data.maxCreditAmount, data.creditDayLimit, data.mappingAddress1, data.mappingAddress2, data.mappingCity, data.addressId)">
                   &nbsp; Edit</a>
                 <span>
@@ -277,7 +283,8 @@
               ★ ★ ★ ★ ★
             </span>
           </td>
-          <td (click)="getVehicleByCustMapId(viewVehicle,data.fuelDealerCustomerMapId, data.companyName)">
+          <td style="cursor:pointer;" 
+          (click)="getVehicleByCustMapId(viewVehicle,data.fuelDealerCustomerMapId, data.companyName)">
             {{data.totalVehicleNumber}}</td>
           <td style="text-align: left;cursor: pointer;">
             <div ngbDropdown placement="bottom-left">

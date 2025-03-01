@@ -54,6 +54,7 @@ export class HeaderMenuComponent implements OnInit {
   ngOnInit(): void {
     if (JSON.parse(localStorage.getItem('isLoggedin') || '{}') == true) {
       var element = JSON.parse(localStorage.getItem("element") || '{}');
+      var dealerData = JSON.parse(localStorage.getItem("dealerData") || '{}');
       this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
       this.veelsplusCorporate = element.veelsPlusCorporateID;
       this.accessGroup = element.accessGroupId;
@@ -65,8 +66,11 @@ export class HeaderMenuComponent implements OnInit {
       this.email = element.email1;
       this.state = element.state;
       this.brandName = element.brandName;
-      this.userName = element.firstName +' '+element.lastName;
-      this.getCorporateById(this.veelsplusCorporate)
+      this.userName = element.firstName +' '+ element.lastName;
+      this.city = dealerData.city;
+      this.companyName = dealerData.companyName;
+      this.phone1 = dealerData.hostPhone;
+      // this.getCorporateById(this.veelsplusCorporate)
       if (element.accessGroupId == '7') {
         this.isAdmin = true;
         this.isDealer = false;

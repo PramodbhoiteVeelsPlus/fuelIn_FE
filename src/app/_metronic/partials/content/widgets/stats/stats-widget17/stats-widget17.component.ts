@@ -1073,7 +1073,7 @@ export class StatsWidget17Component {
   }
 
   nextStep() {
-    if (this.corporateMappingForm.value.phoneNumber && this.corporateMappingForm.value.carrierName && this.corporateMappingForm.value.gstNo && this.corporateMappingForm.value.maxCreditAmount && this.corporateMappingForm.value.creditDayLimit) {
+    if (this.corporateMappingForm.value.phoneNumber && this.corporateMappingForm.value.carrierName && this.corporateMappingForm.value.maxCreditAmount && this.corporateMappingForm.value.creditDayLimit) {
       this.isForm1 = false
       this.isForm2 = true
     } else {

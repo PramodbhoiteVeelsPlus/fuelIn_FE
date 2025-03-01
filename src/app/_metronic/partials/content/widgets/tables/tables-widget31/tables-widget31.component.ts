@@ -219,6 +219,7 @@ export class TablesWidget31Component {
   }
 
   getMappingAccount1(fuelDealerId: any) {
+    this.spinner.show();
     this.mappingAccData2 = []
     this.mappingAccSearchData2 = []
     this.crOutstanding2 = 0
