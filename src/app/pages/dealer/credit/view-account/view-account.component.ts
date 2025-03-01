@@ -68,6 +68,7 @@ export class ViewAccountComponent {
   isAdmin: boolean = false;
   isDealer: boolean = false;
   isTransporter: boolean = false;
+  dealerCorporateId: string | null;
 
   constructor(
     private post: WidgetService,
@@ -80,10 +81,14 @@ export class ViewAccountComponent {
   ngOnInit(): void {
     if (JSON.parse(localStorage.getItem('isLoggedin') || '{}') == true) {
       var element = JSON.parse(localStorage.getItem("element") || '{}');
+      this.fuelDealerId = localStorage.getItem("dealerId");
+      this.dealerCorporateId = localStorage.getItem('dealerCorporateId');
       this.dealerMobile = element.phone1;
       this.dealerLoginVPId = element.veelsPlusCorporateID;
       this.acceesGroup = element.accessGroupId;
-      this.getCorporateById();
+      // this.getCorporateById();
+      this.getMappingAccount(this.fuelDealerId)
+      this.getfuelDealerIdByCorporateId(this.dealerCorporateId);
       if (element.accessGroupId == '7') {
         this.isAdmin = true;
         this.isDealer = false;
@@ -120,7 +125,6 @@ export class ViewAccountComponent {
           this.kycId = res.data[0].kycId;
           if (this.acceesGroup == 12 || this.acceesGroup == 14 || this.acceesGroup == 19 || this.acceesGroup == 21) {
             // this.searchDealerBycustomerId(this.customerId)
-            this.getfuelDealerIdByCorporateId(this.loginCorporateId);
           } else {
 
           }
@@ -131,15 +135,15 @@ export class ViewAccountComponent {
       })
   }
 
-  getfuelDealerIdByCorporateId(loginCorporateId: any) {
+  getfuelDealerIdByCorporateId(dealerCorporateId: any) {
     let data = {
-      corporateId: loginCorporateId
+      corporateId: dealerCorporateId
     }
     this.post.getfuelDealerIdByCorporateIdPOST(data)
       .subscribe(res => {
         if (res.status == "OK") {
           this.fuelDealerId = res.data[0].fuelDealerId;
-          this.getMappingAccount(this.fuelDealerId)
+          // this.getMappingAccount(this.fuelDealerId)
           this.cd.detectChanges()
           // this.getFuelCreditRequestCorporateByfuelDealerId(this.fuelDealerId);
         }

@@ -60,13 +60,25 @@ export class HeaderMenuComponent implements OnInit {
       this.accessGroup = element.accessGroupId;
       this.primeDealerStatus = element.primeDealerStatus;
       this.personId = element.personId;
-      this.firstName  = element.firstName
-      this.lastName = element.lastName
+      // this.firstName  = element.firstName
+      // this.lastName = element.lastName
       this.mobileNumber = element.phone1;
       this.email = element.email1;
       this.state = element.state;
       this.brandName = element.brandName;
-      this.userName = element.firstName +' '+ element.lastName;
+      if(element.firstName == null){
+        this.firstName = ''
+      } else{
+        this.firstName = element.firstName
+      }
+      
+      if(element.lastName == null){
+        this.lastName = ''
+      } else{
+        this.lastName = element.lastName
+      }
+
+      this.userName = this.firstName +' '+ this.lastName;
       this.city = dealerData.city;
       this.companyName = dealerData.companyName;
       this.phone1 = dealerData.hostPhone;

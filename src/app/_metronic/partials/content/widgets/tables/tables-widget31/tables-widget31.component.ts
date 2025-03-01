@@ -207,13 +207,19 @@ export class TablesWidget31Component {
             }
           })
           localStorage.setItem('mappingAccData2', JSON.stringify(res.data));
-          this.spinner.hide();
           this.cd.detectChanges()
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 5000);
         } else {
           this.mappingAccData2 = [];
           localStorage.setItem('mappingAccData2', JSON.stringify([]));
-          this.spinner.hide();
           this.cd.detectChanges()
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 5000);
         }
       })
   }
@@ -240,13 +246,19 @@ export class TablesWidget31Component {
             }
           })
           localStorage.setItem('mappingAccData2', JSON.stringify(res.data));
-          this.spinner.hide();
           this.cd.detectChanges()
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 5000);
         } else {
           this.mappingAccData2 = [];
           localStorage.setItem('mappingAccData2', JSON.stringify([]));
-          this.spinner.hide();
           this.cd.detectChanges()
+          setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+          }, 5000);
         }
       })
   }
@@ -269,7 +281,6 @@ export class TablesWidget31Component {
           if (res.status == "OK") {
             this.mappingAccData2 = res.data;
             this.mappingAccSearchData2 = res.data;
-            this.spinner.hide();
             res.data.map((res: { netOS: any; }) => {
               this.crOutstanding2 = this.crOutstanding2 + (Number(res.netOS))
               if ((Number(res.netOS)) < 0) {
@@ -277,9 +288,10 @@ export class TablesWidget31Component {
               }
             })
             this.cd.detectChanges()
-          } else {
             this.spinner.hide();
+          } else {
             this.cd.detectChanges()
+            this.spinner.hide();
           }
         })
     } else {

@@ -316,6 +316,7 @@ export class TablesWidget33Component {
 
   allCrAndPaymentForInterval() {
     if (Number(this.creditDayLimit) > 0) {
+      this.spinner.show()
       const data = {
         CorporateMapId: this.searchDiscountForm.value.selectCorporateMapId,
         startDate: moment(this.searchDiscountForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
@@ -329,6 +330,7 @@ export class TablesWidget33Component {
 
           this.getCombineCreditPayment(this.allCrForInterval, this.furlPaymentInterval)
           this.cd.detectChanges()
+          this.spinner.hide();
         }
       });
     } else {
