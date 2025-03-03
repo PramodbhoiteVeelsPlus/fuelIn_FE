@@ -19,7 +19,7 @@ export class StatsWidget5Component {
   fuelDealerId: any;
   thisMonthCrSale: any = 0;
   thisMonthCrPayment: any = 0;
-  totalOS: any;
+  totalOS: any = 0;
   isOS: boolean;
   isSales: boolean;
   isPayment: boolean;
@@ -38,32 +38,46 @@ export class StatsWidget5Component {
     var element = JSON.parse(localStorage.getItem("element") || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
+    this.totalOS = JSON.parse(localStorage.getItem("totalOS") || '{}');
+    this.thisMonthCrSale = JSON.parse(localStorage.getItem("thisMonthCrSale") || '{}');
+    this.thisMonthCrPayment = JSON.parse(localStorage.getItem("thisMonthCrPayment") || '{}');
     this.dealerMobile = element.phone1;
     this.accessGroupId = element.accessGroupId;
-    console.log("dealerId", this.fuelDealerId)
-    
+
     if (this.title == "Credit O/s") {
       this.isOS = true;
       this.isSales = false;
       this.isPayment = false;
-      this.getCreditOsByDealerId(this.fuelDealerId)
+      if (this.totalOS) {
+        this.getCreditOsByDealerId1(this.fuelDealerId)
+      } else {
+        this.getCreditOsByDealerId(this.fuelDealerId)
+      }
     } else if (this.title == "Credit Sales") {
       this.isOS = false;
       this.isSales = true;
       this.isPayment = false;
-      this.getCreditSalesDetailsByDealerId(this.fuelDealerId)
+      if (this.thisMonthCrSale) {
+        this.getCreditSalesDetailsByDealerId1(this.fuelDealerId)
+      } else {
+        this.getCreditSalesDetailsByDealerId(this.fuelDealerId)
+      }
     } else if (this.title == "Credit Payment") {
       this.isOS = false;
       this.isSales = false;
       this.isPayment = true;
-      this.getCreditPaymentDetailsByDealerId(this.fuelDealerId)
+      if (this.thisMonthCrPayment) {
+        this.getCreditPaymentDetailsByDealerId1(this.fuelDealerId)
+      } else {
+        this.getCreditPaymentDetailsByDealerId(this.fuelDealerId)
+      }
     }
 
     // this.getCreditDetailsByDealerId(this.fuelDealerId);
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
-      this.spinner.hide();
-    }, 5000);
+    // setTimeout(() => {
+    //   /** spinner ends after 5 seconds */
+    //   this.spinner.hide();
+    // }, 5000);
     this.cd.detectChanges()
   }
 
@@ -93,11 +107,11 @@ export class StatsWidget5Component {
             this.isPayment = true;
             this.getCreditPaymentDetailsByDealerId(this.fuelDealerId)
           }
-          this.spinner.hide();
+          // this.spinner.hide();
           this.cd.detectChanges()
         } else {
         }
-        this.spinner.hide();
+        // this.spinner.hide();
         this.cd.detectChanges()
       });
   }
@@ -135,16 +149,17 @@ export class StatsWidget5Component {
             this.thisMonthCrPayment = 0
           }
           this.totalOS = Number(res.outstanding).toFixed(2);
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 5000);
+          // setTimeout(() => {
+          //   /** spinner ends after 5 seconds */
+          //   this.spinner.hide();
+          // }, 5000);
           this.cd.detectChanges()
         } else {
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 5000); this.cd.detectChanges()
+          // setTimeout(() => {
+          //   /** spinner ends after 5 seconds */
+          //   this.spinner.hide();
+          // }, 5000); 
+          this.cd.detectChanges()
         }
       })
   }
@@ -165,18 +180,53 @@ export class StatsWidget5Component {
           }
           if (res.dataSales[0].totalPurchase) {
             this.thisMonthCrSale = res.dataSales[0].totalPurchase
-          } 
+            localStorage.setItem('thisMonthCrSale', this.thisMonthCrSale);
+          } else {
+            this.thisMonthCrSale = 0
+            localStorage.setItem('thisMonthCrSale', '');
+          }
 
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 5000);
+          // setTimeout(() => {
+          //   /** spinner ends after 5 seconds */
+          //   this.spinner.hide();
+          // }, 5000);
           this.cd.detectChanges()
         } else {
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 5000); this.cd.detectChanges()
+          // setTimeout(() => {
+          //   /** spinner ends after 5 seconds */
+          //   this.spinner.hide();
+          // }, 5000);
+           this.cd.detectChanges()
+        }
+      })
+  }
+
+  getCreditSalesDetailsByDealerId1(fuelDealerId: any) {
+    let data = {
+      fuelDealerId: fuelDealerId
+    }
+
+    this.post.getCreditSalesDetailsByDealerIdPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          if (this.title == "Credit Sales") {
+            this.isOS = false;
+            this.isSales = true;
+            this.isPayment = false;
+          }
+          if (res.dataSales[0].totalPurchase) {
+            this.thisMonthCrSale = res.dataSales[0].totalPurchase
+            localStorage.setItem('thisMonthCrSale', this.thisMonthCrSale);
+          } else {
+            this.thisMonthCrSale = 0
+            localStorage.setItem('thisMonthCrSale', '');
+          }
+
+          // this.spinner.hide();
+          this.cd.detectChanges()
+        } else {
+          // this.spinner.hide();
+          this.cd.detectChanges()
         }
       })
   }
@@ -190,27 +240,63 @@ export class StatsWidget5Component {
     this.post.getCreditPaymentDetailsByDealerIdPOST(data)
       .subscribe(res => {
         if (res.status == "OK") {
-           if (this.title == "Credit Payment") {
+          if (this.title == "Credit Payment") {
             this.isOS = false;
             this.isSales = false;
             this.isPayment = true;
           }
 
-        
+
           if (res.dataPayment[0].totalPayment) {
             this.thisMonthCrPayment = res.dataPayment[0].totalPayment
+            localStorage.setItem('thisMonthCrPayment', this.thisMonthCrPayment);
+          } else {
+            this.thisMonthCrPayment = 0
+            localStorage.setItem('thisMonthCrPayment', '');
           }
-          
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 5000);
+
+          // setTimeout(() => {
+          //   /** spinner ends after 5 seconds */
+          //   this.spinner.hide();
+          // }, 5000);
           this.cd.detectChanges()
         } else {
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 5000); this.cd.detectChanges()
+          // setTimeout(() => {
+          //   /** spinner ends after 5 seconds */
+          //   this.spinner.hide();
+          // }, 5000); 
+          this.cd.detectChanges()
+        }
+      })
+  }
+
+  getCreditPaymentDetailsByDealerId1(fuelDealerId: any) {
+    let data = {
+      fuelDealerId: fuelDealerId
+    }
+
+    this.post.getCreditPaymentDetailsByDealerIdPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          if (this.title == "Credit Payment") {
+            this.isOS = false;
+            this.isSales = false;
+            this.isPayment = true;
+          }
+
+
+          if (res.dataPayment[0].totalPayment) {
+            this.thisMonthCrPayment = res.dataPayment[0].totalPayment
+            localStorage.setItem('thisMonthCrPayment', this.thisMonthCrPayment);
+          } else {
+            this.thisMonthCrPayment = 0
+            localStorage.setItem('thisMonthCrPayment', '');
+          }
+          // this.spinner.hide();
+          this.cd.detectChanges()
+        } else {
+          // this.spinner.hide();
+          this.cd.detectChanges()
         }
       })
   }
@@ -229,8 +315,9 @@ export class StatsWidget5Component {
             this.isSales = false;
             this.isPayment = false;
           }
-          
+
           this.totalOS = Number(res.outstanding).toFixed(2);
+          localStorage.setItem('totalOS', this.totalOS);
           setTimeout(() => {
             /** spinner ends after 5 seconds */
             this.spinner.hide();
@@ -240,8 +327,36 @@ export class StatsWidget5Component {
           setTimeout(() => {
             /** spinner ends after 5 seconds */
             this.spinner.hide();
-          }, 5000); this.cd.detectChanges()
+          }, 5000); 
+          this.cd.detectChanges()
         }
       })
   }
+
+  getCreditOsByDealerId1(fuelDealerId: any) {
+    this.spinner.show()
+    let data = {
+      fuelDealerId: fuelDealerId
+    }
+
+    this.post.getCreditOsByDealerIdPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          if (this.title == "Credit O/s") {
+            this.isOS = true;
+            this.isSales = false;
+            this.isPayment = false;
+          }
+
+          this.totalOS = Number(res.outstanding).toFixed(2);
+          localStorage.setItem('totalOS', this.totalOS);
+          this.spinner.hide();
+          this.cd.detectChanges()
+        } else {
+          this.spinner.hide();
+          this.cd.detectChanges()
+        }
+      })
+  }
+
 }

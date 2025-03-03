@@ -198,7 +198,6 @@ export class TablesWidget31Component {
     this.post.getMappingAccByFuelDealerIdPOST(data)
       .subscribe(res => {
         if (res.status == "OK") {
-          this.mappingAccData2 = res.data;
           this.mappingAccSearchData2 = res.data;
           res.data.map((res: { netOS: any; }) => {
             this.crOutstanding2 = this.crOutstanding2 + (Number(res.netOS))
@@ -207,26 +206,19 @@ export class TablesWidget31Component {
             }
           })
           localStorage.setItem('mappingAccData2', JSON.stringify(res.data));
+          this.spinner.hide();
           this.cd.detectChanges()
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 5000);
         } else {
           this.mappingAccData2 = [];
           localStorage.setItem('mappingAccData2', JSON.stringify([]));
+          this.spinner.hide();
           this.cd.detectChanges()
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 5000);
         }
       })
   }
 
   getMappingAccount1(fuelDealerId: any) {
     this.spinner.show();
-    this.mappingAccData2 = []
     this.mappingAccSearchData2 = []
     this.crOutstanding2 = 0
     this.advanceAmt = 0
@@ -246,19 +238,13 @@ export class TablesWidget31Component {
             }
           })
           localStorage.setItem('mappingAccData2', JSON.stringify(res.data));
+          this.spinner.hide();
           this.cd.detectChanges()
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 5000);
         } else {
           this.mappingAccData2 = [];
           localStorage.setItem('mappingAccData2', JSON.stringify([]));
+          this.spinner.hide();
           this.cd.detectChanges()
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 5000);
         }
       })
   }
@@ -287,11 +273,11 @@ export class TablesWidget31Component {
                 this.advanceAmt = this.advanceAmt + (Number(res.netOS))
               }
             })
-            this.cd.detectChanges()
             this.spinner.hide();
+            this.cd.detectChanges()
           } else {
-            this.cd.detectChanges()
             this.spinner.hide();
+            this.cd.detectChanges()
           }
         })
     } else {

@@ -163,7 +163,7 @@ export class SidebarMenuComponent implements OnInit {
 
   getCustomize(dealerId: any) {
     this.creditData = [];
-    // this.spinner.show();
+    this.spinner.show();
     const data = {
       customizeDealerId: dealerId,
     };

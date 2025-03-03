@@ -505,14 +505,14 @@ export class MixedWidget4Component {
                       }
                       this.post.addAccTransactionLogPayDetailPOST(data)
                         .subscribe(res => {
-                          if (res) {
+                          if (res.status == "OK") {
+                            alert("Payment to Update PAYMENT Details!")
                             this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
                             let dateCoin = moment(this.addPaymentForm.value.paymentDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD') + ' ' + moment(new Date()).format('HH:mm:ss')
                             this.addCoindetails(res.data.insertId, dateCoin)
                             this.resetPaymentForm();
                             this.clearAll()
                             this.isSelected1 = false;
-                            alert("Payment to Update PAYMENT Details!")
                             this.spinner.hide();
                             this.cd.detectChanges()
                           } else {
@@ -549,7 +549,7 @@ export class MixedWidget4Component {
                       }
                       this.post.addAccTransactionLogPayDetailPOST(data)
                         .subscribe(res => {
-                          if (res) {
+                          if (res.status == "OK") {
                             this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
                             let dateCoin = moment(this.addPaymentForm.value.paymentDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD') + ' ' + moment(new Date()).format('HH:mm:ss')
                             this.addCoindetails(res.data.insertId, dateCoin)
@@ -898,6 +898,7 @@ export class MixedWidget4Component {
   }
 
   updatePaymentInFuelDealerCustomerMap(fuelDealerCustomMapId: any) {
+    this.spinner.show()
 
     let data = {
       fuelDealerCustomerMapId: fuelDealerCustomMapId,
@@ -920,6 +921,7 @@ export class MixedWidget4Component {
   }
 
   updatelastDateCR(fuelDealerCustomMapId: any) {
+    this.spinner.show()
 
     let data1 = {
       mapId: fuelDealerCustomMapId
