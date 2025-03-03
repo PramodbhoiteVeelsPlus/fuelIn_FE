@@ -196,7 +196,7 @@ export class StatsWidget5Component {
           //   /** spinner ends after 5 seconds */
           //   this.spinner.hide();
           // }, 5000);
-           this.cd.detectChanges()
+          this.cd.detectChanges()
         }
       })
   }
@@ -327,7 +327,7 @@ export class StatsWidget5Component {
           setTimeout(() => {
             /** spinner ends after 5 seconds */
             this.spinner.hide();
-          }, 5000); 
+          }, 5000);
           this.cd.detectChanges()
         }
       })

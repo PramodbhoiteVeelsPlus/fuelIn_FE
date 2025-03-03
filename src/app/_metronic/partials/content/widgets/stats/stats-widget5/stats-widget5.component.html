@@ -4,7 +4,12 @@
     {{ title }}
   </div>
   <div *ngIf="isOS" [ngClass]="'text-inverse-' + color" class="fw-bold text-white me-2 lh-1 ls-n2">
+   <span *ngIf="!totalOS">
+    ₹ 0
+   </span>
+   <span *ngIf="totalOS">
     ₹ {{ totalOS }}
+   </span>
   </div>
   <div *ngIf="isSales" [ngClass]="'text-inverse-' + color" class="fw-bold text-white me-2 lh-1 ls-n2">
     ₹ {{ thisMonthCrSale }}
