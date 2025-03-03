@@ -166,6 +166,7 @@ export class BaseTablesWidget11Component implements OnInit {
     this.phone1 = dealerData.hostPhone
     this.address1 = dealerData.address1
     this.address2 = dealerData.address2
+    this.GSTNumber = dealerData.GSTNumber
     // this.getFCInvoiceList()
     const id = this.route.snapshot.paramMap.get('id');
     const id1 = this.route.snapshot.paramMap.get('id1');
@@ -735,11 +736,11 @@ export class BaseTablesWidget11Component implements OnInit {
           if (res.data[0].dueDate) {
             this.dueDate = moment(res.data[0].dueDate).format("D MMM y");
           }
-          this.GSTNumber = res.data[0].fromGSTNo;
+          // this.GSTNumber = res.data[0].fromGSTNo;
           this.custMapId = res.data[0].custMapId;
-          this.address1 = res.data[0].fromAddress;
-          this.address2 = res.data[0].address2;
-          this.state = res.data[0].fromState;
+          // this.address1 = res.data[0].fromAddress;
+          // this.address2 = res.data[0].address2;
+          // this.state = res.data[0].fromState;
           this.invoiceCode = res.data[0].invoiceCode;
           this.manualInvoiceNumber = res.data[0].invoiceNo
           if (res.data[0].hsnCode && res.data[0].hsnCode != "undefined") {
