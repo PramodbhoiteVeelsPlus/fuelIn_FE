@@ -186,6 +186,8 @@ export class StatsWidget16Component {
     this.managerPersonId = element.personId
     this.managerName = element.firstName + ' ' + element.lastName
     this.acceesGroup = element.accessGroupId;
+    this.autoManualNumber = dealerData.assignedAutoManualNumber;
+    this.autoManualStatus = dealerData.autoManualStatus;
     this.requestTransporter.controls["requestType"].setValue("showamount");
     this.requestTransporter.controls["requestType"].setValue("showamount");
     this.requestTransporter.controls["estimatedRefuelDate"].setValue(this.todayDate);
@@ -859,6 +861,7 @@ export class StatsWidget16Component {
                             this.isQUANTITY = false;
                             this.CreditRequestDataArray = [];
                             this.count = 1;
+                            this.closeModal()
                             this.requestTransporter.controls["requestType"].setValue("showamount");
                             this.requestTransporter.controls["requestTypeCR"].setValue("showamount");
                             // this.closeRequestForm.controls["requestTypeClose"].setValue("showamount");
@@ -998,6 +1001,7 @@ export class StatsWidget16Component {
                               this.isQUANTITY = false;
                               this.CreditRequestDataArray = [];
                               this.count = 1;
+                              this.closeModal()
                               this.requestTransporter.controls["requestType"].setValue("showamount");
                               this.requestTransporter.controls["requestTypeCR"].setValue("showamount");
                               // this.closeRequestForm.controls["requestTypeClose"].setValue("showamount");

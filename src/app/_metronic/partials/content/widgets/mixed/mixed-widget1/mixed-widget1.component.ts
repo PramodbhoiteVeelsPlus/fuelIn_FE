@@ -175,6 +175,8 @@ export class MixedWidget1Component {
     this.managerVPPersonId = element.veelsPlusId
     this.managerPersonId = element.personId
     this.managerName = element.firstName + ' ' + element.lastName
+    this.autoManualNumberAdvance = dealerData.assignedAutoManualNumberAdvance;
+    this.autoManualStatus = dealerData.autoManualStatus;
     if (element.accessGroupId == 12 || element.accessGroupId == 14 || element.accessGroupId == 19 || element.accessGroupId == 21) {
       this.dealerAccess = true
       if (element.accessGroupId == 19 || element.accessGroupId == 21) {
@@ -634,7 +636,7 @@ export class MixedWidget1Component {
       if (this.requestVehicle.value.estimatedRefuelDate) {
         if (this.requestVehicle.value.actualCreditAmount || this.requestVehicle.value.reqQuantity) {
           if (this.vehicleMapId) {
-            if (this.requestVehicle.value.manualCrNumber) {
+            // if (this.requestVehicle.value.manualCrNumber) {
 
               let data = {
                 idfuelCreditVehicle: this.idfuelCreditVehicle,
@@ -673,6 +675,7 @@ export class MixedWidget1Component {
                     this.isQUANTITY = false;
                     this.CreditVehicleRequestDataArray = [];
                     this.countVehicle = 1;
+                    this.closeModal()
                     if (this.autoManualStatus == 'TRUE') {
 
                       this.updateAssignedAutoManualNumber('VEHICLE', res.count)
@@ -697,10 +700,10 @@ export class MixedWidget1Component {
                     this.spinner.hide();
                   }
                 });
-            } else {
-              alert("Please Enter Bill / Ref Number!")
-              this.spinner.hide();
-            }
+            // } else {
+            //   alert("Please Enter Bill / Ref Number!")
+            //   this.spinner.hide();
+            // }
           }
           else {
             alert("Please Select customer!")
@@ -765,6 +768,7 @@ export class MixedWidget1Component {
                           this.isQUANTITY = false;
                           this.CreditVehicleRequestDataArray = [];
                           this.countVehicle = 1;
+                          this.closeModal()
                           if (this.autoManualStatus == 'TRUE') {
 
                             this.updateAssignedAutoManualNumber('VEHICLE', res.count)
@@ -846,6 +850,8 @@ export class MixedWidget1Component {
     this.productPriceDetails.length = 0;
     this.isSelected2 = false;
     this.isVehicleViewed = false
+    this.countVehicle = 1;
+    this.CreditVehicleRequestDataArray.length = 0;
     this.requestVehicle.controls["vehicleNumber"].setValue('');
     this.requestVehicle.controls["productPrice"].setValue('');
     this.requestVehicle.controls["productName"].setValue('');

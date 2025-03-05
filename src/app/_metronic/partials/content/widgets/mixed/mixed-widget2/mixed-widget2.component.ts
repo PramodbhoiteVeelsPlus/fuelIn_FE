@@ -131,7 +131,7 @@ export class MixedWidget2Component implements OnInit {
   closeResult: string;
   autoManualStatus: any = 'FALSE';
   countLube: any = 1;
-  count: number;
+  count: any = 1;
   CreditRequestLube = new CreditRequestLube()
   autoManualNumberLube: any;
   CreditRequestDataLube: any = [];
@@ -168,11 +168,14 @@ export class MixedWidget2Component implements OnInit {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     this.acceesGroup = element.accessGroupId;
     this.managerVPPersonId = element.veelsPlusId
     this.managerPersonId = element.personId
     this.managerName = element.firstName + ' ' + element.lastName
+    this.autoManualStatus = dealerData.autoManualStatus;
+    this.autoManualNumberLube = dealerData.assignedAutoManualNumberLube;
     if (element.accessGroupId == 12 || element.accessGroupId == 14 || element.accessGroupId == 19 || element.accessGroupId == 21) {
       this.dealerAccess = true
       if (element.accessGroupId == 19 || element.accessGroupId == 21) {
@@ -541,8 +544,8 @@ export class MixedWidget2Component implements OnInit {
                             alert("Credit Added Sccessfully!");
                             this.isBalance1 = false;
                             this.isSelected1 = false;
-                            this.CreditRequestDataLube = [];
-                            // this.CreditRequestDataLube.length = 0;
+                            // this.CreditRequestDataLube = [];
+                            this.CreditRequestDataLube.length = 0;
                             this.count = 1;
                             this.closeModal()
                             this.spinner.hide();

@@ -339,7 +339,7 @@
                 <tr>
                   <td>
                     <span *ngIf="autoManualStatus == 'TRUE'"> <input type="text" class="form-control"
-                        placeholder="Bill Number Automation Active" readonly />
+                        placeholder="Bill Number Automation Active" disabled />
                     </span>
                     <span *ngIf="autoManualStatus != 'TRUE'"> <input type="text" class="form-control"
                         [(ngModel)]="charges.manualNumber" [ngModelOptions]="{standalone: true}"
