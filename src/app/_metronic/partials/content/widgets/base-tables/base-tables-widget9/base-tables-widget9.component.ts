@@ -130,7 +130,7 @@ export class BaseTablesWidget9Component implements OnInit {
   allPaymentData: any = [];
   combineCreditAndPaymentDetails: any = [];
   endDate: string;
-  allDiscountedData: any;
+  allDiscountedData: any = [];
   pageLength1: any;
   countunpaidDiscount: any;
   withoutDiscountData: any;
@@ -173,7 +173,8 @@ export class BaseTablesWidget9Component implements OnInit {
     private post: BaseTablesService,
     private spinner: NgxSpinnerService,
     private cd: ChangeDetectorRef,
-    private modalService: NgbModal,) {
+    private modalService: NgbModal,
+    private router: Router,) {
   }
 
   ngOnInit(): void {
@@ -596,6 +597,8 @@ export class BaseTablesWidget9Component implements OnInit {
         this.isNoRequest = false;
         this.invoiceNo = "";
         this.hsnCode = "";
+        window.location.reload()
+        
         this.cd.detectChanges()
 
         // this.getFCInvoiceList();
@@ -606,7 +609,6 @@ export class BaseTablesWidget9Component implements OnInit {
   pageChangeEvent(event: number) {
     this.p = event;
     this.getTransactionDetails();
-    console.log("this.p", this.p, this.showPaymetCreditTable)
     this.cd.detectChanges()
   }
 

@@ -266,10 +266,13 @@ createInvoiceByCrDays(){
         this.searchDiscountForm.reset();
         // this.getFCInvoiceList();
         this.customerDetails = [];
+        window.location.reload()
         this.spinner.hide();
+        this.cd.detectChanges()
       }else{
         alert(res.msg);
         this.spinner.hide();
+        this.cd.detectChanges()
       }
     })
   }
