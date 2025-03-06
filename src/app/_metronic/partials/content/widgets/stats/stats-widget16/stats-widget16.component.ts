@@ -186,8 +186,16 @@ export class StatsWidget16Component {
     this.managerPersonId = element.personId
     this.managerName = element.firstName + ' ' + element.lastName
     this.acceesGroup = element.accessGroupId;
-    this.autoManualNumber = dealerData.assignedAutoManualNumber;
-    this.autoManualStatus = dealerData.autoManualStatus;
+    if(element.accessGroupId == '12'){
+      this.autoManualNumber = dealerData.assignedAutoManualNumber;
+      this.autoManualStatus = dealerData.autoManualStatus;
+    } 
+    
+    if(element.accessGroupId == '14'){
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
+      this.autoManualNumber = managerData.assignedAutoManualNumber;
+      this.autoManualStatus = managerData.autoManualStatus;
+    } 
     this.requestTransporter.controls["requestType"].setValue("showamount");
     this.requestTransporter.controls["requestType"].setValue("showamount");
     this.requestTransporter.controls["estimatedRefuelDate"].setValue(this.todayDate);

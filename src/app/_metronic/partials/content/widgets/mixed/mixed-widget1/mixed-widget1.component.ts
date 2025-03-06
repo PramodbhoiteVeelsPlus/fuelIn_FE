@@ -175,14 +175,23 @@ export class MixedWidget1Component {
     this.managerVPPersonId = element.veelsPlusId
     this.managerPersonId = element.personId
     this.managerName = element.firstName + ' ' + element.lastName
-    this.autoManualNumberAdvance = dealerData.assignedAutoManualNumberAdvance;
-    this.autoManualStatus = dealerData.autoManualStatus;
     if (element.accessGroupId == 12 || element.accessGroupId == 14 || element.accessGroupId == 19 || element.accessGroupId == 21) {
       this.dealerAccess = true
       if (element.accessGroupId == 19 || element.accessGroupId == 21) {
         this.liteAccess = true
       }
     }
+
+    if(element.accessGroupId == '12'){
+      this.autoManualNumber = dealerData.assignedAutoManualNumber;
+      this.autoManualStatus = dealerData.autoManualStatus;
+    } 
+    
+    if(element.accessGroupId == '14'){
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
+      this.autoManualNumber = managerData.assignedAutoManualNumber;
+      this.autoManualStatus = managerData.autoManualStatus;
+    } 
     this.requestVehicle.controls["requestType"].setValue("showamount");
     this.requestVehicle.controls["requestType"].setValue("showamount");
     this.requestVehicle.controls["estimatedRefuelDate"].setValue(this.todayDate);
@@ -332,7 +341,7 @@ export class MixedWidget1Component {
     if (this.autoManualStatus == 'TRUE') {
       this.countVehicle = this.countVehicle + 1;
       this.CreditVehicleRequest = new CreditVehicleRequest();
-      this.CreditVehicleRequest.manualNumber = this.autoManualNumberAdvance
+      this.CreditVehicleRequest.manualNumber = this.autoManualNumber
       this.CreditVehicleRequestDataArray.push(this.CreditVehicleRequest);
       this.cd.detectChanges()
     } else {

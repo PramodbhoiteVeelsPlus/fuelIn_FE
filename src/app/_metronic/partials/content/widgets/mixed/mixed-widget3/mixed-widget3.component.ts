@@ -172,6 +172,17 @@ export class MixedWidget3Component implements OnInit {
       }
     }
 
+    if(element.accessGroupId == '12'){
+      this.autoManualStatus = dealerData.autoManualStatus;
+      this.autoManualNumberAdvance = dealerData.assignedAutoManualNumberAdvance;
+    } 
+    
+    if(element.accessGroupId == '14'){
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
+      this.autoManualStatus = managerData.autoManualStatus;
+      this.autoManualNumberAdvance = managerData.assignedAutoManualNumberAdvance;
+    } 
+
     this.requestTransporterAdvance.controls["estimatedRefuelDate"].setValue(this.todayDate);
     this.getCorporateMappedListByDealerId(this.fuelDealerId);
     this.addFormRequestAdvance();

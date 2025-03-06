@@ -174,14 +174,23 @@ export class MixedWidget2Component implements OnInit {
     this.managerVPPersonId = element.veelsPlusId
     this.managerPersonId = element.personId
     this.managerName = element.firstName + ' ' + element.lastName
-    this.autoManualStatus = dealerData.autoManualStatus;
-    this.autoManualNumberLube = dealerData.assignedAutoManualNumberLube;
     if (element.accessGroupId == 12 || element.accessGroupId == 14 || element.accessGroupId == 19 || element.accessGroupId == 21) {
       this.dealerAccess = true
       if (element.accessGroupId == 19 || element.accessGroupId == 21) {
         this.liteAccess = true
       }
     }
+
+    if(element.accessGroupId == '12'){
+      this.autoManualStatus = dealerData.autoManualStatus;
+      this.autoManualNumberLube = dealerData.assignedAutoManualNumberLube;
+    } 
+    
+    if(element.accessGroupId == '14'){
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
+      this.autoManualNumberLube = managerData.assignedAutoManualNumberLube;
+      this.autoManualStatus = managerData.autoManualStatus;
+    } 
     this.requestTransporterLube.controls["estimatedRefuelDate"].setValue(this.todayDate);
     this.getCorporateMappedListByDealerId(this.fuelDealerId);
     this.getLubricants(this.fuelDealerId)
