@@ -961,7 +961,7 @@ export class BaseTablesWidget1Component implements OnInit {
     this.actualCreditQuantityShow = actualCreditQuantity;
     this.creditAmountShow = creditAmount;
 
-
+      console.log("gyggw", this.vehicleNumberShow, this.manualCrNumberShow)
     this.modalRefShow = this.modalService.open(viewBill)    //, { size: 'lg' }
     this.modalRefShow.result.then((result: any) => {
       this.closeResult = `Closed with: ${result}`;

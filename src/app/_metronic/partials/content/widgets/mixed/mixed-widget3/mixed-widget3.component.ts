@@ -124,7 +124,7 @@ export class MixedWidget3Component implements OnInit {
   CreditRequestAdvance = new CreditRequestAdvance()
   CreditRequestDataAdvance: any = [];
   autoManualNumberAdvance: any;
-  count: number;
+  count: any = 1;
   isVehSelectLube: boolean = false;
   combineManualNumber: string;
   indexFuelAdvance: number;
@@ -157,11 +157,14 @@ export class MixedWidget3Component implements OnInit {
     var element = JSON.parse(localStorage.getItem('element') || '{}');
     this.fuelDealerId = JSON.parse(localStorage.getItem('dealerId') || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
+    var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     this.acceesGroup = element.accessGroupId;
     this.managerVPPersonId = element.veelsPlusId
     this.managerPersonId = element.personId
     this.managerName = element.firstName + ' ' + element.lastName
+    this.autoManualStatus = dealerData.autoManualStatus;
+    this.autoManualNumberAdvance = dealerData.assignedAutoManualNumberAdvance;
     if (element.accessGroupId == 12 || element.accessGroupId == 14 || element.accessGroupId == 19 || element.accessGroupId == 21) {
       this.dealerAccess = true
       if (element.accessGroupId == 19 || element.accessGroupId == 21) {
@@ -180,6 +183,7 @@ export class MixedWidget3Component implements OnInit {
     if (id.target.value) {
       this.fuelDealerCustomerMapId = id.target.value;
       this.getCorporateInfoByfuelDealerCustomerMapId(this.fuelDealerCustomerMapId);
+      this.cd.detectChanges()
     }
     else {
       alert("Please select customer")
@@ -244,7 +248,9 @@ export class MixedWidget3Component implements OnInit {
           this.requestTransporter1.controls["personName"].setValue(res.data[0].firstName + ' ' + res.data[0].lastName);
           this.requestTransporter1.controls["personPhone1"].setValue(res.data[0].phone1);
           this.personId = res.data[0].personId;
+          this.cd.detectChanges()
         } else {
+          this.cd.detectChanges()
         }
       });
 
@@ -297,6 +303,7 @@ getOutstandingBuCustMapId(fuelDealerCustomerMapId: any){
   .subscribe(res=>{
     if(res.status=="OK"){
       this.calOutstanding = Number(res.data[0].netOS)
+      this.cd.detectChanges()
     }
   })
 }
@@ -481,6 +488,7 @@ submitByDealerForAdvance() {
                     this.isQUANTITY = false;
                     this.CreditRequestDataAdvance = [];
                     this.countAdvance = 1;
+                    this.closeModal()
                     if(this.autoManualStatus == 'TRUE'){
 
                       this.updateAssignedAutoManualNumber('ADVANCE',res.count)
@@ -558,6 +566,7 @@ submitByDealerForAdvance() {
                       this.isQUANTITY = false;
                       this.CreditRequestDataAdvance = [];
                       this.countAdvance = 1;
+                      this.closeModal()
                       if(this.autoManualStatus == 'TRUE'){
 
                         this.updateAssignedAutoManualNumber('ADVANCE',res.count)
@@ -733,7 +742,7 @@ closeModal() {
   this.requestTransporter1.controls["selectedCorp"].setValue('');
   this.CreditRequestDataAdvance.length = 0;
 
-  this.count = 1;
+  this.countAdvance = 1;
   this.isSelected1 = false;
   this.addFormRequestAdvance();
   this.isTable = false;

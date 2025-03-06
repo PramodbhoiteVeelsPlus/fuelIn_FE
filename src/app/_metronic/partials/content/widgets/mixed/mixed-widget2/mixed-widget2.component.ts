@@ -361,7 +361,7 @@ export class MixedWidget2Component implements OnInit {
         this.CreditRequestDataLube.push(this.CreditRequestLube);
       }
       else {
-        this.count = 11;
+        this.countLube = 11;
         alert("Please save 10 credit entries, before adding more credit entries for a customer (max entries allowed per submit is currently capped at 5)")
       }
     }
@@ -546,7 +546,7 @@ export class MixedWidget2Component implements OnInit {
                             this.isSelected1 = false;
                             // this.CreditRequestDataLube = [];
                             this.CreditRequestDataLube.length = 0;
-                            this.count = 1;
+                            this.countLube = 1;
                             this.closeModal()
                             this.spinner.hide();
                             this.cd.detectChanges()
@@ -680,7 +680,7 @@ export class MixedWidget2Component implements OnInit {
                               this.isSelected1 = false;
                               this.CreditRequestDataLube = [];
                               // this.CreditRequestDataLube.length = 0;
-                              this.count = 1;
+                              this.countLube = 1;
                               this.closeModal()
                               this.spinner.hide();
                               this.cd.detectChanges()
@@ -785,7 +785,7 @@ export class MixedWidget2Component implements OnInit {
     this.CreditRequestLube.unitLube = '';
 
     this.CreditRequestDataLube.length = 0;
-    this.count = 1;
+    this.countLube = 1;
     this.isSelected1 = false;
     this.addFormRequestLube();
   }

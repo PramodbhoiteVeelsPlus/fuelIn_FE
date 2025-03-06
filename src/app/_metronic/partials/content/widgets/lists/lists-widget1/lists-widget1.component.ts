@@ -190,6 +190,7 @@ export class ListsWidget1Component {
     if (id.target.value) {
       this.fuelDealerCustomerMapId = id.target.value;
       this.getCorporateInfoByfuelDealerCustomerMapId(this.fuelDealerCustomerMapId);
+      this.cd.detectChanges()
     }
     else {
       alert("Please select customer")
@@ -265,6 +266,7 @@ export class ListsWidget1Component {
           this.requestTransporter1.controls["personName"].setValue(res.data[0].firstName + ' ' + res.data[0].lastName);
           this.requestTransporter1.controls["personPhone1"].setValue(res.data[0].phone1);
           this.personId = res.data[0].personId;
+          this.cd.detectChanges()
         } else {
         }
       });
@@ -279,7 +281,9 @@ export class ListsWidget1Component {
       .subscribe(res => {
         if (res) {
           this.viewCorpFlag = res.data
+          this.cd.detectChanges()
         } else {
+          this.cd.detectChanges()
         }
       });
   }
@@ -521,9 +525,9 @@ export class ListsWidget1Component {
       this.spinner.show()
       if (this.requestTransporterLubeTax.value.estimatedRefuelDate) {
         if (this.requestTransporterLubeTax.value.gst) {
-          if (this.requestTransporterLubeTax.value.creditAmount || this.requestTransporterLubeTax.value.creditQuantity) {
+          if (this.requestTransporterLubeTax.value.creditAmount || this.CreditRequetLubeTax.creditQuantityLube) {
             if (this.fuelDealerCorpMapIdNew) {
-              if (this.requestTransporterLubeTax.value.creditQuantity) {
+              if (this.CreditRequetLubeTax.creditQuantityLube) {
                 if (this.personId) {
                   if (this.requestTransporterLubeTax.value.nameLube) {
                     if (this.requestTransporterLubeTax.value.manualCrNumber) {
