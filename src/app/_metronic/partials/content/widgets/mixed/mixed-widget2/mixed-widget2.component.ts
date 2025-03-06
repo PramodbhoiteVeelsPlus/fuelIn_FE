@@ -545,7 +545,7 @@ export class MixedWidget2Component implements OnInit {
                             this.isBalance1 = false;
                             this.isSelected1 = false;
                             // this.CreditRequestDataLube = [];
-                            this.CreditRequestDataLube.length = 0;
+                            this.CreditRequestDataLube = [];
                             this.countLube = 1;
                             this.closeModal()
                             this.spinner.hide();

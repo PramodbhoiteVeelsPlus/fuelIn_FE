@@ -668,14 +668,14 @@ export class MixedWidget1Component {
                   if (res.status == "OK") {
                     alert("Credit Added Sccessfully!");
                     this.isBalance1 = false;
-                    this.spinner.hide();
-                    this.myInputField.nativeElement.focus();
-                    this.checkDates(this.vehicleMapId, moment(this.requestVehicle.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
                     this.isCRQUANTITY = false;
                     this.isQUANTITY = false;
                     this.CreditVehicleRequestDataArray = [];
                     this.countVehicle = 1;
                     this.closeModal()
+                    this.spinner.hide();
+                    this.myInputField.nativeElement.focus();
+                    this.checkDates(this.vehicleMapId, moment(this.requestVehicle.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
                     if (this.autoManualStatus == 'TRUE') {
 
                       this.updateAssignedAutoManualNumber('VEHICLE', res.count)
@@ -852,6 +852,7 @@ export class MixedWidget1Component {
     this.isVehicleViewed = false
     this.countVehicle = 1;
     this.CreditVehicleRequestDataArray.length = 0;
+    this.addFormVehicleRequest()
     this.requestVehicle.controls["vehicleNumber"].setValue('');
     this.requestVehicle.controls["productPrice"].setValue('');
     this.requestVehicle.controls["productName"].setValue('');

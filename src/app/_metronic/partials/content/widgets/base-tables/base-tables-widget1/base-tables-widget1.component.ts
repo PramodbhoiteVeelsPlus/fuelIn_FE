@@ -475,16 +475,16 @@ export class BaseTablesWidget1Component implements OnInit {
           this.allCreditReqExcel = this.allCreditReq;
           this.showHeading = true;
           localStorage.setItem('allCreditReq', JSON.stringify(this.allCreditReq));
-          this.spinner.hide()
           this.cd.detectChanges()
+          this.spinner.hide()
         } else {
           this.showHeading = false;
           this.selectCorporate.controls["startDate"].setValue("");
           this.selectCorporate.controls["endDate"].setValue("");
           localStorage.setItem('mappingAccData', JSON.stringify([]));
           alert("Data not found!")
-          this.spinner.hide()
           this.cd.detectChanges()
+          this.spinner.hide()
         }
       }
       );
@@ -510,16 +510,16 @@ export class BaseTablesWidget1Component implements OnInit {
           this.allCreditReqExcel = this.allCreditReq;
           this.showHeading = true;
           localStorage.setItem('allCreditReq', JSON.stringify(this.allCreditReq));
-          this.spinner.hide()
           this.cd.detectChanges()
+          this.spinner.hide()
         } else {
           this.showHeading = false;
           this.selectCorporate.controls["startDate"].setValue("");
           this.selectCorporate.controls["endDate"].setValue("");
           localStorage.setItem('mappingAccData', JSON.stringify([]));
           alert("Data not found!")
-          this.spinner.hide()
           this.cd.detectChanges()
+          this.spinner.hide()
         }
       }
       );
