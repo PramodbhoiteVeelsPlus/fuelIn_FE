@@ -301,20 +301,20 @@
                         style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Product</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Shift Sales (Rs)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Shift Sales (Qty)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Total Testing (Qty)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Total Sales (Qty)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Product</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Shift Sales (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Shift Sales (Qty)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Total Testing (Qty)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Total Sales (Qty)</b></th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr *ngFor="let data of meterSalesDetails">
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.productName}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;">
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.productName}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;">
                               <span> {{(data.meterSaleAmount) | number:'1.2-2'}} </span>
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;">
+                            <td style="text-align: center; border: 1px solid #272829;">
                               <span>
                                 <span *ngIf="data.productName == 'CNG' ">
                                   {{data.meterSaleQuantity | number:'1.2-2'}} Kg
@@ -324,7 +324,7 @@
                                 </span>
                               </span>
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;">
+                            <td style="text-align: center; border: 1px solid #272829;">
                               <span *ngIf="data.totalPumpTesting">
                                 <span *ngIf="data.productName == 'CNG' ">
                                   {{data.totalPumpTesting | number:'1.2-2'}} Kg
@@ -334,7 +334,7 @@
                                 </span>
                               </span>
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;">
+                            <td style="text-align: center; border: 1px solid #272829;">
                               <span>
                                 <span *ngIf="data.productName == 'CNG' ">
                                   {{ (data.meterSaleQuantity) + (data.totalPumpTesting) | number:'1.2-2'}} Kg
@@ -347,38 +347,38 @@
                           </tr>
 
                           <tr *ngFor="let data of totalCashLubeDetails">
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.cashBillProduct}}(Cash)
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.cashBillProduct}}(Cash)
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{(data.totalCashAmount) |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{(data.totalCashAmount) |
                               number:'1.2-2'}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.totalQuantity |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.totalQuantity |
                               number:'1.2-2'}} Ltrs </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{ data.totalQuantity |
+                            <td style="text-align: center; border: 1px solid #272829;"> </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{ data.totalQuantity |
                               number:'1.2-2'}} </td>
 
                           </tr>
                           <tr *ngFor="let data of totalCreditLubeDetails">
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.lubeName}}(Credit) </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{(data.totalCreditAmount) |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.lubeName}}(Credit) </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{(data.totalCreditAmount) |
                               number:'1.2-2'}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.totalQuantity |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.totalQuantity |
                               number:'1.2-2'}} Ltrs </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{ data.totalQuantity |
+                            <td style="text-align: center; border: 1px solid #272829;"> </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{ data.totalQuantity |
                               number:'1.2-2'}} </td>
 
                           </tr>
 
                           <tr *ngFor="let data of totalDigitalLubeDetails">
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.paymentProduct}}(Digital)
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.paymentProduct}}(Digital)
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{(data.totalDigitalSales) |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{(data.totalDigitalSales) |
                               number:'1.2-2'}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.totalQuantity |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.totalQuantity |
                               number:'1.2-2'}} {{data.paymentProdUnit}}</td>
-                            <td style="text-align: center; border: 2px solid #272829;"> </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{ data.totalQuantity |
+                            <td style="text-align: center; border: 1px solid #272829;"> </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{ data.totalQuantity |
                               number:'1.2-2'}} </td>
                           </tr>
                         </tbody>
@@ -401,20 +401,20 @@
                         style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Product</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Shift Sales (Rs)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Shift Sales (Qty)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Credit Sales (Rs) as per <br>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Product</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Shift Sales (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Shift Sales (Qty)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Credit Sales (Rs) as per <br>
                                 Add
                                 Credit Sales</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Credit Sales (Qty) as per <br>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Credit Sales (Qty) as per <br>
                                 Add
                                 Credit Sales</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Credit Sales (Rs) Share <br>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Credit Sales (Rs) Share <br>
                                 as
                                 per
                                 Add Credit Sales</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Credit Sales (Qty) Share <br>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Credit Sales (Qty) Share <br>
                                 as
                                 per
                                 Add Credit Sales</b></th>
@@ -423,31 +423,31 @@
                         </thead>
                         <tbody>
                           <tr *ngFor="let data of productWiseCreditData">
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.productName}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.meterSaleAmount |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.productName}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.meterSaleAmount |
                               number:'1.2-2'}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.meterSaleQuantity |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.meterSaleQuantity |
                               number:'1.2-2'}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.totalCreditSales |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.totalCreditSales |
                               number:'1.2-2'}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.totalCreditQuantity |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.totalCreditQuantity |
                               number:'1.2-2'}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.creditSaleShare |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.creditSaleShare |
                               number:'1.2-2'}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.creditQuantityShare |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.creditQuantityShare |
                               number:'1.2-2'}} </td>
 
                           </tr>
                           <tr *ngFor="let data of totalCreditLubeDetails">
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.lubeName}}(Credit) </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{(data.totalCreditAmount) |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.lubeName}}(Credit) </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{(data.totalCreditAmount) |
                               number:'1.2-2'}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.totalQuantity |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.totalQuantity |
                               number:'1.2-2'}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> </td>
 
                           </tr>
                         </tbody>
@@ -471,25 +471,25 @@
                         style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Shift Sales (Rs)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Shift Tally (Rs)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Difference (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Shift Sales (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Shift Tally (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Difference (Rs)</b></th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr>
-                            <td style="text-align: center; border: 2px solid #272829;">
+                            <td style="text-align: center; border: 1px solid #272829;">
                               <span *ngIf="totalMeterSalesDetails">
                                 {{totalMeterSalesDetails | number:'1.2-2'}}
                               </span>
                             </td>
 
-                            <td style="text-align: center; border: 2px solid #272829;">
+                            <td style="text-align: center; border: 1px solid #272829;">
                               <span *ngIf="totalAmountTally">
                                 {{totalAmountTally | number:'1.2-2'}}
                               </span>
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;">
+                            <td style="text-align: center; border: 1px solid #272829;">
                               <span *ngIf="totalMeterSalesDetails && totalAmountTally">
                                 {{(totalAmountTally)-(totalMeterSalesDetails) | number:'1.2-2'}}
                               </span>
@@ -508,28 +508,28 @@
                         style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Shift Sales (Rs)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>A-Credit (Rs)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>B-Digital (Rs)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>C-Cash (Rs)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Shift Tally (A+B+C) (Rs)</b>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Shift Sales (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>A-Credit (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>B-Digital (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>C-Cash (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Shift Tally (A+B+C) (Rs)</b>
                             </th>
                           </tr>
                         </thead>
                         <tbody *ngFor="let data of totalSalesDetails">
                           <tr>
-                            <td style="text-align: center; border: 2px solid #272829;">
+                            <td style="text-align: center; border: 1px solid #272829;">
                               <span *ngIf="totalMeterSalesDetails">
                                 {{totalMeterSalesDetails | number:'1.2-2'}}
                               </span>
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.creditTally |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.creditTally |
                               number:'1.2-2'}}</td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{(data.paytmTotal) |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{(data.paytmTotal) |
                               number:'1.2-2'}}</td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.cashTallyAmt |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.cashTallyAmt |
                               number:'1.2-2'}}</td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{(data.totalAmountTally |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{(data.totalAmountTally |
                               number:'1.2-2')}}</td>
                           </tr>
                         </tbody>
@@ -545,24 +545,24 @@
                         style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>C-Cash (1+2+3) (Rs)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>1-Cash Handover (Rs)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>2-Cash Expenses (Rs)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>3-Cash Short/Diff (Rs)</b>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>C-Cash (1+2+3) (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>1-Cash Handover (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>2-Cash Expenses (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>3-Cash Short/Diff (Rs)</b>
                             </th>
                           </tr>
                         </thead>
                         <tbody *ngFor="let data of totalSalesDetails">
                           <tr>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.cashTallyAmt |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.cashTallyAmt |
                               number:'1.2-2'}}</td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{cashSales | number:'1.2-2'}}
+                            <td style="text-align: center; border: 1px solid #272829;"> {{cashSales | number:'1.2-2'}}
                             </td>
                             <!-- <td style="text-align: center; border: 2px solid #272829;"> {{cashHandover | number:'1.2-2'}}</td> -->
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.expenseAmt |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.expenseAmt |
                               number:'1.2-2'}}
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.shortAmt |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.shortAmt |
                               number:'1.2-2'}}
                             </td>
                           </tr>
@@ -587,23 +587,23 @@
                         style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Shift</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Staff Name</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Shift Sales (Rs)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Shift Tally (Rs)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Difference (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Shift</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Staff Name</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Shift Sales (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Shift Tally (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Difference (Rs)</b></th>
                           </tr>
                         </thead>
                         <tbody *ngFor="let data of shiftWiseData">
                           <tr>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.shiftTime}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.name}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{(data.meterSaleAmount) |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.shiftTime}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.name}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{(data.meterSaleAmount) |
                               number:'1.2-2'}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.shiftTally |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.shiftTally |
                               number:'1.2-2'}}
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{(data.differnece) |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{(data.differnece) |
                               number:'1.2-2'}} </td>
                           </tr>
                         </tbody>
@@ -619,30 +619,30 @@
                         style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Shift</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Staff Name</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Shift Sales (Rs)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>A-Credit (Rs)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>B-Digital (Rs)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>C-Cash (Rs)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Shift Tally (A+B+C) (Rs)</b>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Shift</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Staff Name</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Shift Sales (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>A-Credit (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>B-Digital (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>C-Cash (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Shift Tally (A+B+C) (Rs)</b>
                             </th>
                           </tr>
                         </thead>
                         <tbody *ngFor="let data of shiftWiseData">
                           <tr>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.shiftTime}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.name}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{(data.meterSaleAmount) |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.shiftTime}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.name}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{(data.meterSaleAmount) |
                               number:'1.2-2'}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.credit | number:'1.2-2'}}
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.credit | number:'1.2-2'}}
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.digital |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.digital |
                               number:'1.2-2'}}
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.cash | number:'1.2-2'}}
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.cash | number:'1.2-2'}}
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.shiftTally |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.shiftTally |
                               number:'1.2-2'}}
                             </td>
                           </tr>
@@ -659,30 +659,30 @@
                         style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Shift</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Staff Name</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>C-Cash (1+2+3) (Rs)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>1-Cash Handover (Rs)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>2-Cash Expenses (Rs)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>3-Cash Short/Diff (Rs)</b>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Shift</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Staff Name</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>C-Cash (1+2+3) (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>1-Cash Handover (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>2-Cash Expenses (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>3-Cash Short/Diff (Rs)</b>
                             </th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Cash Expenses Details</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Cash Expenses Details</b></th>
                           </tr>
                         </thead>
                         <tbody *ngFor="let data of shiftWiseData">
                           <tr>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.shiftTime}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.name}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.cash | number:'1.2-2'}}
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.shiftTime}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.name}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.cash | number:'1.2-2'}}
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.cashHandOver |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.cashHandOver |
                               number:'1.2-2'}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.expenses |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.expenses |
                               number:'1.2-2'}}
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.short | number:'1.2-2'}}
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.short | number:'1.2-2'}}
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.expenseAmtDetails}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.expenseAmtDetails}} </td>
                           </tr>
                         </tbody>
                       </table>
@@ -705,43 +705,43 @@
                         style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Shift</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Staff Name</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Nozzle Number</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Product</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Rate</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Opening Meter Reading</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Closing Meter Reading</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Meter Sales (Rs)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Meter Sales (Qty)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Testing (Qty)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Shift</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Staff Name</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Nozzle Number</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Product</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Rate</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Opening Meter Reading</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Closing Meter Reading</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Meter Sales (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Meter Sales (Qty)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Testing (Qty)</b></th>
                           </tr>
                         </thead>
                         <tbody *ngFor="let data of shiftNzDetails">
                           <tr>
-                            <td style="text-align: center; border: 2px solid #272829;">
+                            <td style="text-align: center; border: 1px solid #272829;">
                               <span *ngIf="data.fuelShiftTimeShiftName != ''">{{data.fuelShiftTimeShiftName}}</span>
                               <span *ngIf="data.fuelShiftTimeShiftName == ''">{{data.fuelShiftTimeDetails}}</span>
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.firstName}}
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.firstName}}
                               {{data.lastName}}
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.duNo}}-{{data.nozNo}}
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.duNo}}-{{data.nozNo}}
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.productName}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.fuelPrice |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.productName}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.fuelPrice |
                               number:'1.2-2'}}
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.openMeter |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.openMeter |
                               number:'1.2-2'}}
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.closingReading |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.closingReading |
                               number:'1.2-2'}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.meterSaleAmount |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.meterSaleAmount |
                               number:'1.2-2'}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.meterSaleQuantity |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.meterSaleQuantity |
                               number:'1.2-2'}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.pumpTesting |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.pumpTesting |
                               number:'1.2-2'}} </td>
                           </tr>
                         </tbody>
@@ -765,51 +765,51 @@
                         style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light" style="border-collapse: collapse; border: 1px solid black;">
                           <tr>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Shift</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Staff Name</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Product</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Amount</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Quantity</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Shift</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Staff Name</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Product</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Amount</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Quantity</b></th>
                           </tr>
                         </thead>
                         <tbody style="border-collapse: collapse; border: 1px solid black;">
                           <tr *ngFor="let data of totalLubeCash">
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.fuelShiftTimeShiftName}}
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.fuelShiftTimeShiftName}}
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.firstName}}
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.firstName}}
                               {{data.lastName}}
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.cashBillProduct}}(cash)
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.cashBillProduct}}(cash)
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.cashBillAmount |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.cashBillAmount |
                               number:'1.2-2'}}
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.cashBillQuantity}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.cashBillQuantity}} </td>
                           </tr>
                           <tr *ngFor="let data of totalLubeCredit">
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.fuelShiftTimeShiftName}}
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.fuelShiftTimeShiftName}}
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.firstName}}
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.firstName}}
                               {{data.lastName}}
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.lubeName}}(Credit) </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.creditAmount |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.lubeName}}(Credit) </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.creditAmount |
                               number:'1.2-2'}}
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.actualCreditQuantity}}
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.actualCreditQuantity}}
                             </td>
                           </tr>
                           <tr *ngFor="let data of totalLubeDigital">
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.fuelShiftTimeShiftName}}
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.fuelShiftTimeShiftName}}
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.firstName}}
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.firstName}}
                               {{data.lastName}}
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.paymentProduct}}(Digital)
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.paymentProduct}}(Digital)
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.totalDigitalSales |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.totalDigitalSales |
                               number:'1.2-2'}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.totalQuantity}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.totalQuantity}} </td>
                           </tr>
                         </tbody>
                       </table>
@@ -832,25 +832,25 @@
                         style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Digital POS</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Details</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Amount (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Digital POS</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Details</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Amount (Rs)</b></th>
                           </tr>
                         </thead>
                         <tbody *ngFor="let data of digitalDetails">
                           <tr>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.terminalName}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.transacId}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.paytmTotalAmount |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.terminalName}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.transacId}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.paytmTotalAmount |
                               number:'1.2-2'}} </td>
                           </tr>
                         </tbody>
                         <tbody>
                           <tr>
-                            <td style="text-align: center; border: 2px solid #272829;" colspan="2">
+                            <td style="text-align: center; border: 1px solid #272829;" colspan="2">
                               <b> Total </b>
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;">
+                            <td style="text-align: center; border: 1px solid #272829;">
                               <b> {{digitalTotalSales | number:'1.2-2'}} </b>
                             </td>
                           </tr>
@@ -875,39 +875,39 @@
                         style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Sr No</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Khata Name</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Bill No.</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Product</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Vehicle No.</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Total Amount</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Total Quantity</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Sr No</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Khata Name</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Bill No.</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Product</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Vehicle No.</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Total Amount</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Total Quantity</b></th>
                           </tr>
                         </thead>
                         <tbody *ngFor="let data of digitalLubeData; let i = index">
                           <tr>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{i+1}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.paymentCust}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.paymentManualNumber}}
+                            <td style="text-align: center; border: 1px solid #272829;"> {{i+1}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.paymentCust}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.paymentManualNumber}}
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.PaymentProduct}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.idfuelCreditVehicle}}
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.PaymentProduct}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.idfuelCreditVehicle}}
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.grandTotalAmount |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.grandTotalAmount |
                               number:'1.2-2'}}(Rs) </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.paymentQuantity |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.paymentQuantity |
                               number:'1.2-2'}} {{data.paymentProdUnit}} </td>
                           </tr>
                         </tbody>
                         <tbody>
                           <tr>
-                            <td style="text-align: center; border: 2px solid #272829;" colspan="5">
+                            <td style="text-align: center; border: 1px solid #272829;" colspan="5">
                               <b> Total </b>
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;">
+                            <td style="text-align: center; border: 1px solid #272829;">
                               <b> {{digitalLubeTotalAmt | number:'1.2-2'}} </b> (Rs)
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;">
+                            <td style="text-align: center; border: 1px solid #272829;">
                               <b> {{digitalLubeTotalQuantity | number:'1.2-2'}} Ltr/Kg </b>
                             </td>
                           </tr>
@@ -932,23 +932,23 @@
                         style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>A-Shift Sales (Rs)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>B-Credit Sales (Rs) as per
+                            <th style="text-align: center; border: 1px solid #272829;"><b>A-Shift Sales (Rs)</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>B-Credit Sales (Rs) as per
                                 <br>
                                 Add
                                 Credit Sales</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>C-Credit Sales (Rs) as per
+                            <th style="text-align: center; border: 1px solid #272829;"><b>C-Credit Sales (Rs) as per
                                 <br>
                                 Add
                                 Shift</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>D-Credit Sales (Rs) <br>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>D-Credit Sales (Rs) <br>
                                 difference
                                 (C-B)</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Credit Sales (Rs) Share (C/A)
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Credit Sales (Rs) Share (C/A)
                                 <br>
                                 as
                                 per Add Shift</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Credit Payments (Rs) as per
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Credit Payments (Rs) as per
                                 <br>
                                 Add
                                 Credit Payments</b></th>
@@ -957,19 +957,19 @@
                         </thead>
                         <tbody>
                           <tr>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{totalMeterSalesDetails
+                            <td style="text-align: center; border: 1px solid #272829;"> {{totalMeterSalesDetails
                               |number:'1.2-2'}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{totalCreditSales
+                            <td style="text-align: center; border: 1px solid #272829;"> {{totalCreditSales
                               |number:'1.2-2'}}
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{creditSales |number:'1.2-2'}}
+                            <td style="text-align: center; border: 1px solid #272829;"> {{creditSales |number:'1.2-2'}}
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{(creditSales) -
+                            <td style="text-align: center; border: 1px solid #272829;"> {{(creditSales) -
                               (totalCreditSales)
                               |number:'1.2-2'}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{(creditSales) /
+                            <td style="text-align: center; border: 1px solid #272829;"> {{(creditSales) /
                               (totalMeterSalesDetails) |number:'1.2-2'}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{totalCreditPayment
+                            <td style="text-align: center; border: 1px solid #272829;"> {{totalCreditPayment
                               |number:'1.2-2'}} </td>
 
                           </tr>
@@ -994,47 +994,47 @@
                         style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Sr No</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Khata Name</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Bill No.</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Product</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Rate</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Vehicle No.</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Total Amount</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Total Quantity</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Created By</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Sr No</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Khata Name</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Bill No.</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Product</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Rate</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Vehicle No.</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Total Amount</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Total Quantity</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Created By</b></th>
 
                           </tr>
                         </thead>
                         <tbody>
                           <tr *ngFor="let data of creditDetails; let i = index">
-                            <td style="text-align: center; border: 2px solid #272829;"> {{i+1}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.companyName}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.manualCrNumber}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.productName}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.productRate |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{i+1}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.companyName}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.manualCrNumber}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.productName}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.productRate |
                               number:'1.2-2'}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.vehicleNumber}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.creditAmount |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.vehicleNumber}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.creditAmount |
                               number:'1.2-2'}} (Rs)</td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.actualCreditQuantity |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.actualCreditQuantity |
                               number:'1.2-2'}}
                               <span *ngIf="data.productName == 'CNG' ">kg</span>
                               <span *ngIf="data.productName != 'CNG' ">Ltr</span>
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.firstName}}
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.firstName}}
                               {{data.lastName}}
                             </td>
                           </tr>
                           <tr>
-                            <td style="text-align: center; border: 2px solid #272829;" colspan="6"><b>Total</b> </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> <b>{{totalCreditSalesAmount |
+                            <td style="text-align: center; border: 1px solid #272829;" colspan="6"><b>Total</b> </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> <b>{{totalCreditSalesAmount |
                                 number:'1.2-2'}}</b> (Rs)</td>
-                            <td style="text-align: center; border: 2px solid #272829;"> <span
+                            <td style="text-align: center; border: 1px solid #272829;"> <span
                                 *ngIf="totalCreditWOCNGQuantity"><b>{{totalCreditWOCNGQuantity | number:'1.2-2'}}</b>
                                 (Ltr)</span> <span *ngIf="totalCreditCNGQuantity"> + <b>{{totalCreditCNGQuantity |
                                   number:'1.2-2'}}</b> (kg)</span></td>
-                            <td style="text-align: center; border: 2px solid #272829;"> </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> </td>
 
                           </tr>
                         </tbody>
@@ -1058,25 +1058,25 @@
                         style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Khata Name</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Payment Mode</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Total Amount</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Account</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Payment Score</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Pending Days</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Created By</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Khata Name</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Payment Mode</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Total Amount</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Account</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Payment Score</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Pending Days</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Created By</b></th>
 
                           </tr>
                         </thead>
                         <tbody *ngFor="let data of creditPaymentDetails">
                           <tr>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.companyName}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.paymentMethod}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.grandTotalAmount |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.companyName}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.paymentMethod}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.grandTotalAmount |
                               number:'1.2-2'}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.bankName}}
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.bankName}}
                               {{data.accountNumber}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> <svg width="25" height="25"
+                            <td style="text-align: center; border: 1px solid #272829;"> <svg width="25" height="25"
                                 viewBox="0 0 25 25" aria-label="clap">
                                 <g fill-rule="evenodd">
                                   <path
@@ -1086,8 +1086,8 @@
                               </svg>
                               <span>{{data.avgPayment| number: '1.0-0'}}</span>
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.pendingDays}}</td>
-                            <td style="text-align: center; border: 2px solid #272829;">
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.pendingDays}}</td>
+                            <td style="text-align: center; border: 1px solid #272829;">
                               <span *ngIf="data.byManager == 'TRUE' ">
                                 {{data.managerName}}
                               </span>
@@ -1117,40 +1117,40 @@
                         style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Sr No</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Khata Name</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Bill No.</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Product</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Vehicle No.</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Total Amount</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Total Quantity</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Created By</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Sr No</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Khata Name</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Bill No.</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Product</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Vehicle No.</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Total Amount</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Total Quantity</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Created By</b></th>
 
                           </tr>
                         </thead>
                         <tbody>
                           <tr *ngFor="let data of lubeCrDetails; let i = index">
-                            <td style="text-align: center; border: 2px solid #272829;"> {{i+1}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.companyName}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.manualCrNumber}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.lubeName}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.vehicleNumber}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.creditAmount |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{i+1}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.companyName}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.manualCrNumber}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.lubeName}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.vehicleNumber}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.creditAmount |
                               number:'1.2-2'}} (Rs)</td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.actualCreditQuantity |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.actualCreditQuantity |
                               number:'1.2-2'}} {{data.lubeUnit}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.firstName}}
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.firstName}}
                               {{data.lastName}}
                             </td>
                           </tr>
                           <tr>
-                            <td style="text-align: center; border: 2px solid #272829;" colspan="5"><b>Total</b> </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> <b>{{totalLubeAmt |
+                            <td style="text-align: center; border: 1px solid #272829;" colspan="5"><b>Total</b> </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> <b>{{totalLubeAmt |
                                 number:'1.2-2'}}</b> (Rs)</td>
-                            <td style="text-align: center; border: 2px solid #272829;"> <span><b>{{totalLubeLtrQuantity
+                            <td style="text-align: center; border: 1px solid #272829;"> <span><b>{{totalLubeLtrQuantity
                                   |
                                   number:'1.2-2'}}</b> </span></td>
-                            <td style="text-align: center; border: 2px solid #272829;"> </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> </td>
 
                           </tr>
                         </tbody>
@@ -1173,49 +1173,49 @@
                         style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Sr No</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Khata Name</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Bill No.</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Product</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Vehicle No.</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Total Amount</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Total Quantity</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Total Quantity In Pieces</b>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Sr No</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Khata Name</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Bill No.</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Product</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Vehicle No.</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Total Amount</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Total Quantity</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Total Quantity In Pieces</b>
                             </th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Created By</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Created By</b></th>
 
                           </tr>
                         </thead>
                         <tbody>
                           <tr *ngFor="let data of lubeDetails; let i = index">
-                            <td style="text-align: center; border: 2px solid #272829;"> {{i+1}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.companyName}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.manualCrNumber}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.lubeName}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.vehicleNumber}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.creditAmount |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{i+1}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.companyName}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.manualCrNumber}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.lubeName}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.vehicleNumber}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.creditAmount |
                               number:'1.2-2'}} (Rs)</td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.actualCreditQuantity |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.actualCreditQuantity |
                               number:'1.2-2'}} {{data.lubeUnit}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.quantityInPieces |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.quantityInPieces |
                               number:'1.2-2'}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.firstName}}
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.firstName}}
                               {{data.lastName}}
                             </td>
                           </tr>
                           <tr>
-                            <td style="text-align: center; border: 2px solid #272829;" colspan="5"><b>Total</b> </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> <b>{{totalLubeAmt |
+                            <td style="text-align: center; border: 1px solid #272829;" colspan="5"><b>Total</b> </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> <b>{{totalLubeAmt |
                                 number:'1.2-2'}}</b> (Rs)</td>
-                            <td style="text-align: center; border: 2px solid #272829;">
+                            <td style="text-align: center; border: 1px solid #272829;">
                               <span *ngIf="totalLubeLtrQuantity"><b>{{totalLubeLtrQuantity | number:'1.2-2'}}</b>
                                 (Ltr)</span>
                               <span *ngIf="totalLubeKgQuantity"> <b>{{totalLubeKgQuantity | number:'1.2-2'}}</b>
                                 (kg)</span>
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{totalLubeQuantityInPiece|
+                            <td style="text-align: center; border: 1px solid #272829;"> {{totalLubeQuantityInPiece|
                               number:'1.2-2'}}</td>
-                            <td style="text-align: center; border: 2px solid #272829;"> </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> </td>
 
                           </tr>
                         </tbody>
@@ -1240,22 +1240,22 @@
                         style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Sr No</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Khata Name</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Bill No.</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Product</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Vehicle No.</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Total Amount</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b> Quantity</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b> Quantity In Piece</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Sr No</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Khata Name</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Bill No.</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Product</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Vehicle No.</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Total Amount</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b> Quantity</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b> Quantity In Piece</b></th>
 
                           </tr>
                         </thead>
                         <tbody>
                           <tr *ngFor="let data of lubeCashDetails; let i = index">
-                            <td style="text-align: center; border: 2px solid #272829;"> {{i+1}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.cashBillCustName}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;">
+                            <td style="text-align: center; border: 1px solid #272829;"> {{i+1}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.cashBillCustName}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;">
                               <span *ngIf="data.cashBillNumber">
                                 VEELS{{data.cashBillSystemNumber}} / {{data.cashBillNumber}}
                               </span>
@@ -1263,8 +1263,8 @@
                                 VEELS{{data.cashBillSystemNumber}}
                               </span>
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.cashBillProduct}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;">
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.cashBillProduct}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;">
                               <span *ngIf="data.cashBillVehicleNumber == 'null'">
                                 -
                               </span>
@@ -1272,21 +1272,21 @@
                                 {{data.cashBillVehicleNumber}}
                               </span>
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.cashBillAmount |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.cashBillAmount |
                               number:'1.2-2'}} (Rs)</td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.cashBillQuantity |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.cashBillQuantity |
                               number:'1.2-2'}} {{data.cashBillUnit}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.quantityInPiece|
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.quantityInPiece|
                               number:'1.2-2'}} </td>
                           </tr>
                           <tr>
-                            <td style="text-align: center; border: 2px solid #272829;" colspan="5"><b>Total</b> </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> <b>{{lubeCashTotalAmt |
+                            <td style="text-align: center; border: 1px solid #272829;" colspan="5"><b>Total</b> </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> <b>{{lubeCashTotalAmt |
                                 number:'1.2-2'}}</b> (Rs)</td>
-                            <td style="text-align: center; border: 2px solid #272829;">
+                            <td style="text-align: center; border: 1px solid #272829;">
                               <b>{{lubeCashTotalQuan | number:'1.2-2'}}(Ltr/Kg)</b>
                             </td>
-                            <td style="text-align: center; border: 2px solid #272829;">
+                            <td style="text-align: center; border: 1px solid #272829;">
                               <b>{{totalLubeCashQuantityInPiece
                                 |
                                 number:'1.2-2'}}</b>
@@ -1314,30 +1314,30 @@
                         style="border-collapse: collapse; border: 1px solid black;">
                         <thead class="table-light">
                           <tr>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Khata Name</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Bill No.</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Details</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Total Amount</b></th>
-                            <th style="text-align: center; border: 2px solid #272829;"><b>Created By</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Khata Name</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Bill No.</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Details</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Total Amount</b></th>
+                            <th style="text-align: center; border: 1px solid #272829;"><b>Created By</b></th>
 
                           </tr>
                         </thead>
                         <tbody>
                           <tr *ngFor="let data of advAmtDetails">
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.companyName}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.manualCrNumber}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.advName}} </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.creditAmount |
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.companyName}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.manualCrNumber}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.advName}} </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.creditAmount |
                               number:'1.2-2'}} (Rs)</td>
-                            <td style="text-align: center; border: 2px solid #272829;"> {{data.firstName}}
+                            <td style="text-align: center; border: 1px solid #272829;"> {{data.firstName}}
                               {{data.lastName}}
                             </td>
                           </tr>
                           <tr>
-                            <td style="text-align: center; border: 2px solid #272829;" colspan="3"><b>Total</b> </td>
-                            <td style="text-align: center; border: 2px solid #272829;"> <b>{{totalAdvAmt |
+                            <td style="text-align: center; border: 1px solid #272829;" colspan="3"><b>Total</b> </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> <b>{{totalAdvAmt |
                                 number:'1.2-2'}}</b> (Rs)</td>
-                            <td style="text-align: center; border: 2px solid #272829;"> </td>
+                            <td style="text-align: center; border: 1px solid #272829;"> </td>
                           </tr>
                         </tbody>
                       </table>
@@ -1355,7 +1355,7 @@
     <div class="row noprint">
       <div class="col-md-10"></div>
       <div class="col-auto">
-        <button class="btn btn-success" (click)="shiftReportPage()">print</button>
+        <button class="btn btn-success" (click)="shiftReportPage()">Print</button>
       </div>
 
     </div>
@@ -3410,51 +3410,52 @@
       <hr>
 
       <div class="row">
+        <h6>Meter Sales</h6>
         <div class="col col-xl-12 col-lg-12">
           <div class="table-responsive mb-0">
-            <table class="table table-centered table-nowrap">
+            <table class="table table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
               <thead class="table-light">
                 <tr>
-                  <th style="text-align: center;"><b> Nozzle Number</b></th>
-                  <th style="text-align: center;"><b> Product </b></th>
-                  <th style="text-align: center;"><b> Rate </b></th>
-                  <th style="text-align: center;"><b> Opening Meter Reading </b></th>
-                  <th style="text-align: center;"><b> Closing Meter Reading</b></th>
-                  <th style="text-align: center;"><b> Pump Testing</b></th>
-                  <th style="text-align: center;"><b> Meter Sales (Rs)</b></th>
-                  <th style="text-align: center;"><b> Meter Sales (Qty)</b></th>
+                  <th style="text-align: center; border: 1px solid #272829;"><b> Nozzle Number</b></th>
+                  <th style="text-align: center; border: 1px solid #272829;"><b> Product </b></th>
+                  <th style="text-align: center; border: 1px solid #272829;"><b> Rate </b></th>
+                  <th style="text-align: center; border: 1px solid #272829;"><b> Opening Meter Reading </b></th>
+                  <th style="text-align: center; border: 1px solid #272829;"><b> Closing Meter Reading</b></th>
+                  <th style="text-align: center; border: 1px solid #272829;"><b> Pump Testing</b></th>
+                  <th style="text-align: center; border: 1px solid #272829;"><b> Meter Sales (Rs)</b></th>
+                  <th style="text-align: center; border: 1px solid #272829;"><b> Meter Sales (Qty)</b></th>
                 </tr>
               </thead>
               <tbody *ngFor="let charges of CreditRequestDataArrayUpdate; let i = index;">
                 <tr>
-                  <td style="text-align: center;">
+                  <td style="text-align: center; border: 1px solid #272829;">
                     {{charges.duNo}}-{{charges.nozNo}}
 
                   </td>
 
-                  <td style="text-align: center;">
+                  <td style="text-align: center; border: 1px solid #272829;">
                     {{charges.productName}}
                   </td>
 
-                  <td style="text-align: center;">
+                  <td style="text-align: center; border: 1px solid #272829;">
                     {{charges.fuelPrice}}
                   </td>
 
-                  <td style="text-align: center;">
+                  <td style="text-align: center; border: 1px solid #272829;">
                     {{charges.openMeter}}
                   </td>
 
-                  <td style="text-align: center;">
+                  <td style="text-align: center; border: 1px solid #272829;">
                     {{charges.closingReading}}
                   </td>
-                  <td style="text-align: center;">
+                  <td style="text-align: center; border: 1px solid #272829;">
                     {{charges.pumpTesting}}
                   </td>
-                  <td style="text-align: center;">
+                  <td style="text-align: center; border: 1px solid #272829;">
                     {{charges.meterSaleAmount}}
                   </td>
 
-                  <td style="text-align: center;">
+                  <td style="text-align: center; border: 1px solid #272829;">
                     {{charges.meterSaleQuantity}}
                   </td>
                 </tr>
@@ -3471,95 +3472,114 @@
         </div>
       </div>
       <br>
+      <hr>
+      <div class="row">
+      <h6>Digital(Fuel)</h6>
       <div class="table-responsive mb-0" *ngIf="digitalSalesDetails">
-        <table class="table table-centered table-nowrap">
+        <table class="table table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
           <thead class="table-light">
             <tr>
-              <th style="text-align: center;"><b>Digital POS</b></th>
-              <th style="text-align: center;"><b>Details</b></th>
-              <th style="text-align: center;"><b>Amount (Rs)</b></th>
+              <th style="text-align: center; border: 1px solid #272829;"><b>Digital POS</b></th>
+              <th style="text-align: center; border: 1px solid #272829;"><b>Details</b></th>
+              <th style="text-align: center; border: 1px solid #272829;"><b>Amount (Rs)</b></th>
             </tr>
           </thead>
           <tbody *ngFor="let data of digitalSalesDetails; let i = index">
             <tr>
-              <td style="text-align: center;"> {{data.terminalName }} </td>
-              <td style="text-align: center;"> {{data.transacId}} </td>
-              <td style="text-align: center;"> {{data.paytmTotalAmount | number:'1.2-2'}} </td>
+              <td style="text-align: center; border: 1px solid #272829;"> {{data.terminalName }} </td>
+              <td style="text-align: center; border: 1px solid #272829;"> {{data.transacId}} </td>
+              <td style="text-align: center; border: 1px solid #272829;"> {{data.paytmTotalAmount | number:'1.2-2'}} </td>
 
             </tr>
           </tbody>
         </table>
       </div>
+      </div>
       <br>
 
+      <div class="row">
+        <h6>Digital(Lube)</h6>
       <div class="table-responsive mb-0" *ngIf="digitalLubeDetails">
-        <table class="table table-centered table-nowrap">
+        <table class="table table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
           <thead class="table-light">
             <tr>
-              <th style="text-align: center;"><b>Khata Name</b></th>
-              <th style="text-align: center;"><b>Bill Number</b></th>
-              <th style="text-align: center;"><b>Digital POS</b></th>
-              <th style="text-align: center;"><b>Details</b></th>
-              <th style="text-align: center;"><b>Vehicle Number</b></th>
-              <th style="text-align: center;"><b>Lube</b></th>
-              <th style="text-align: center;"><b>Quantity In Piece</b></th>
-              <th style="text-align: center;"><b>Quantity</b></th>
-              <th style="text-align: center;"><b>Amount</b></th>
+              <th style="text-align: center; border: 1px solid #272829;"><b>Khata Name</b></th>
+              <th style="text-align: center; border: 1px solid #272829;"><b>Bill Number</b></th>
+              <th style="text-align: center; border: 1px solid #272829;"><b>Digital POS</b></th>
+              <th style="text-align: center; border: 1px solid #272829;"><b>Details</b></th>
+              <th style="text-align: center; border: 1px solid #272829;"><b>Vehicle Number</b></th>
+              <th style="text-align: center; border: 1px solid #272829;"><b>Lube</b></th>
+              <th style="text-align: center; border: 1px solid #272829;"><b>Quantity In Piece</b></th>
+              <th style="text-align: center; border: 1px solid #272829;"><b>Quantity</b></th>
+              <th style="text-align: center; border: 1px solid #272829;"><b>Amount</b></th>
             </tr>
           </thead>
           <tbody *ngFor="let data of digitalLubeDetails; let i = index">
             <tr>
-              <td style="text-align: center;"> {{data.paymentCust }} </td>
-              <td style="text-align: center;"> {{data.paymentManualNumber}} </td>
-              <td style="text-align: center;"> {{data.terminalName }} </td>
-              <td style="text-align: center;"> {{data.transacId}} </td>
-              <td style="text-align: center;"> {{data.idfuelCreditVehicle }} </td>
-              <td style="text-align: center;"> {{data.PaymentProduct}} </td>
-              <td style="text-align: center;"> {{data.paymentQuantityInPieces }} </td>
-              <td style="text-align: center;"> {{data.paymentQuantity}} {{data.paymentProdUnit}} </td>
-              <td style="text-align: center;"> {{data.paytmTotalAmount | number:'1.2-2'}} </td>
+              <td style="text-align: center; border: 1px solid #272829;"> {{data.paymentCust }} </td>
+              <td style="text-align: center; border: 1px solid #272829;"> {{data.paymentManualNumber}} </td>
+              <td style="text-align: center; border: 1px solid #272829;"> {{data.terminalName }} </td>
+              <td style="text-align: center; border: 1px solid #272829;"> 
+                <span *ngIf="data.transacId == 'null'">
+                  
+                </span> 
+                <span *ngIf="data.transacId != 'null'">
+                  {{data.transacId}} 
+                </span> 
+              </td>
+              <td style="text-align: center; border: 1px solid #272829;"> {{data.idfuelCreditVehicle }} </td>
+              <td style="text-align: center; border: 1px solid #272829;"> {{data.PaymentProduct}} </td>
+              <td style="text-align: center; border: 1px solid #272829;"> {{data.paymentQuantityInPieces }} </td>
+              <td style="text-align: center; border: 1px solid #272829;"> {{data.paymentQuantity}} {{data.paymentProdUnit}} </td>
+              <td style="text-align: center; border: 1px solid #272829;"> {{data.paytmTotalAmount | number:'1.2-2'}} </td>
 
             </tr>
           </tbody>
         </table>
       </div>
+      </div>
 
       <hr>
+      <div class="row">
+      <h6>Cash(Fuel)</h6>
       <div class="table-responsive mb-0">
-        <table class="table table-centered table-nowrap">
+        <table class="table table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
           <thead class="table-light">
             <tr>
-              <th style="text-align: center;">Amount (Rs)</th>
+              <th style="text-align: center; border: 1px solid #272829;"><b>Amount (Rs)</b></th>
             </tr>
           </thead>
           <tbody *ngFor="let data of cashDetails; let i = index">
             <tr>
-              <td style="text-align: center;"> {{data.grandTotalAmount | number:'1.2-2'}} </td>
+              <td style="text-align: center; border: 1px solid #272829;"> {{data.grandTotalAmount | number:'1.2-2'}} </td>
             </tr>
           </tbody>
         </table>
       </div>
+      </div>
 
+      <div class="row">
+        <h6>Cash(Lube)</h6>
       <div class="table-responsive mb-0">
-        <table class="table table-centered table-nowrap">
+        <table class="table table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
           <thead class="table-light">
             <tr>
-              <th style="text-align: center;"><b>Khata Name</b></th>
-              <th style="text-align: center;"><b>Bill Number</b></th>
-              <th style="text-align: center;"><b>Vehicle Number</b></th>
-              <th style="text-align: center;"><b>Lube</b></th>
-              <th style="text-align: center;"><b>Quantity In Piece</b></th>
-              <th style="text-align: center;"><b>Quantity</b></th>
-              <th style="text-align: center;"><b>Amount</b></th>
+              <th style="text-align: center; border: 1px solid #272829;"><b>Khata Name</b></th>
+              <th style="text-align: center; border: 1px solid #272829;"><b>Bill Number</b></th>
+              <th style="text-align: center; border: 1px solid #272829;"><b>Vehicle Number</b></th>
+              <th style="text-align: center; border: 1px solid #272829;"><b>Lube</b></th>
+              <th style="text-align: center; border: 1px solid #272829;"><b>Quantity In Piece</b></th>
+              <th style="text-align: center; border: 1px solid #272829;"><b>Quantity</b></th>
+              <th style="text-align: center; border: 1px solid #272829;"><b>Amount</b></th>
 
             </tr>
           </thead>
           <tbody *ngFor="let data of cashLubeData; let i = index">
 
             <tr>
-              <td style="text-align: center;"> {{data.cashBillCustName}} </td>
+              <td style="text-align: center; border: 1px solid #272829;"> {{data.cashBillCustName}} </td>
 
-              <td style="text-align: center;">
+              <td style="text-align: center; border: 1px solid #272829;">
                 <span *ngIf="data.cashBillNumber">
                   VEELS{{data.cashBillSystemNumber}} / {{data.cashBillNumber}}
                 </span>
@@ -3569,22 +3589,23 @@
 
               </td>
 
-              <td style="text-align: center;"> {{data.cashBillVehicleNumber}} </td>
+              <td style="text-align: center; border: 1px solid #272829;"> {{data.cashBillVehicleNumber}} </td>
 
-              <td style="text-align: center;"> {{data.cashBillProduct}} </td>
+              <td style="text-align: center; border: 1px solid #272829;"> {{data.cashBillProduct}} </td>
 
-              <td style="text-align: center;"> {{data.quantityInPiece | number:'1.2-2'}} </td>
+              <td style="text-align: center; border: 1px solid #272829;"> {{data.quantityInPiece | number:'1.2-2'}} </td>
 
-              <td style="text-align: center;"> {{data.cashBillQuantity | number:'1.2-2'}} </td>
+              <td style="text-align: center; border: 1px solid #272829;"> {{data.cashBillQuantity | number:'1.2-2'}} </td>
 
-              <td style="text-align: center;"> {{data.cashBillAmount | number:'1.2-2'}} </td>
+              <td style="text-align: center; border: 1px solid #272829;"> {{data.cashBillAmount | number:'1.2-2'}} </td>
 
             </tr>
 
           </tbody>
         </table>
       </div>
-
+      </div>
+      <hr>
       <div class="row">
         <div class="col-lg-3">
           <div class="card mini-stats-wid">
@@ -3638,6 +3659,7 @@
           </div>
         </div>
       </div>
+      <br>
       <div class="row">
         <div class="col-lg-3"><b>A-Credit (Rs)</b></div>
         <div class="col-lg-3"><b>B-Digital (Rs)</b></div>
@@ -3732,30 +3754,30 @@
         <div class="col-lg-3"></div>
       </div>
       <br>
-      <table class="table  table-centered table-nowrap">
+      <table class="table  table-centered table-nowrap" style="border-collapse: collapse; border: 1px solid black;">
         <thead class="table-light">
           <tr>
-            <th style="text-align: center; border: 2px solid #272829;"><b>Shift</b></th>
-            <th style="text-align: center; border: 2px solid #272829;"><b>Khata Name</b></th>
-            <th style="text-align: center; border: 2px solid #272829;"><b>Bill No.</b></th>
-            <th style="text-align: center; border: 2px solid #272829;"><b>Product</b></th>
-            <th style="text-align: center; border: 2px solid #272829;"><b>Rate</b></th>
-            <th style="text-align: center; border: 2px solid #272829;"><b>Vehicle No.</b></th>
-            <th style="text-align: center; border: 2px solid #272829;"><b>Total Amount</b></th>
-            <th style="text-align: center; border: 2px solid #272829;"><b>Total Quantity</b></th>
+            <th style="text-align: center; border: 1px solid #272829;"><b>Shift</b></th>
+            <th style="text-align: center; border: 1px solid #272829;"><b>Khata Name</b></th>
+            <th style="text-align: center; border: 1px solid #272829;"><b>Bill No.</b></th>
+            <th style="text-align: center; border: 1px solid #272829;"><b>Product</b></th>
+            <th style="text-align: center; border: 1px solid #272829;"><b>Rate</b></th>
+            <th style="text-align: center; border: 1px solid #272829;"><b>Vehicle No.</b></th>
+            <th style="text-align: center; border: 1px solid #272829;"><b>Total Amount</b></th>
+            <th style="text-align: center; border: 1px solid #272829;"><b>Total Quantity</b></th>
 
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let data of totalCreditSalesByStaff">
-            <td style="text-align: center; border: 2px solid #272829;"> {{data.fuelShiftTimeShiftName}} </td>
-            <td style="text-align: center; border: 2px solid #272829;"> {{data.companyName}} </td>
-            <td style="text-align: center; border: 2px solid #272829;"> {{data.manualCrNumber}} </td>
-            <td style="text-align: center; border: 2px solid #272829;"> {{data.productName}} </td>
-            <td style="text-align: center; border: 2px solid #272829;"> {{data.productRate | number:'1.2-2'}} </td>
-            <td style="text-align: center; border: 2px solid #272829;"> {{data.vehicleNumber}} </td>
-            <td style="text-align: center; border: 2px solid #272829;"> {{data.creditAmount | number:'1.2-2'}} (Rs)</td>
-            <td style="text-align: center; border: 2px solid #272829;"> {{data.actualCreditQuantity | number:'1.2-2'}}
+            <td style="text-align: center; border: 1px solid #272829;"> {{data.fuelShiftTimeShiftName}} </td>
+            <td style="text-align: center; border: 1px solid #272829;"> {{data.companyName}} </td>
+            <td style="text-align: center; border: 1px solid #272829;"> {{data.manualCrNumber}} </td>
+            <td style="text-align: center; border: 1px solid #272829;"> {{data.productName}} </td>
+            <td style="text-align: center; border: 1px solid #272829;"> {{data.productRate | number:'1.2-2'}} </td>
+            <td style="text-align: center; border: 1px solid #272829;"> {{data.vehicleNumber}} </td>
+            <td style="text-align: center; border: 1px solid #272829;"> {{data.creditAmount | number:'1.2-2'}} (Rs)</td>
+            <td style="text-align: center; border: 1px solid #272829;"> {{data.actualCreditQuantity | number:'1.2-2'}}
               <span *ngIf="data.productName == 'CNG' ">kg</span>
               <span *ngIf="data.productName != 'CNG' ">Ltr</span>
             </td>

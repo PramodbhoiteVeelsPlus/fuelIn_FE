@@ -558,7 +558,7 @@ export class MixedWidget2Component implements OnInit {
                             this.countLube = 1;
                             this.closeModal()
                             this.spinner.hide();
-                            this.cd.detectChanges()
+                            // this.cd.detectChanges()
                             if (this.autoManualStatus == 'TRUE') {
                               this.myInputField.nativeElement.focus();
                               this.updateAssignedAutoManualNumber('LUBE', res.count)
@@ -692,7 +692,7 @@ export class MixedWidget2Component implements OnInit {
                               this.countLube = 1;
                               this.closeModal()
                               this.spinner.hide();
-                              this.cd.detectChanges()
+                              // this.cd.detectChanges()
                               if (this.autoManualStatus == 'TRUE') {
                                 this.myInputField.nativeElement.focus();
                                 this.updateAssignedAutoManualNumber('LUBE',res.count)
