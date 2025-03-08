@@ -553,7 +553,6 @@ export class MixedWidget2Component implements OnInit {
                             alert("Credit Added Sccessfully!");
                             this.isBalance1 = false;
                             this.isSelected1 = false;
-                            // this.CreditRequestDataLube = [];
                             this.CreditRequestDataLube = [];
                             this.countLube = 1;
                             this.closeModal()
@@ -566,6 +565,8 @@ export class MixedWidget2Component implements OnInit {
                               this.isQUANTITY = false;
                               this.CreditRequestDataLube = [];
                               this.countLube = 1;
+                              this.addFormRequestLube()
+                              this.closeModal()
                               this.checkDates(this.fuelDealerCorpMapIdNew, moment(this.requestTransporterLube.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
                               this.requestTransporterLube.controls["requestType"].setValue("showamount");
                               this.requestTransporterLube.controls["requestTypeCR"].setValue("showamount");
