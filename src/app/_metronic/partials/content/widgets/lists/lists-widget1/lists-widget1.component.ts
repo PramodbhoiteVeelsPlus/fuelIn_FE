@@ -641,7 +641,7 @@ export class ListsWidget1Component {
         this.spinner.show()
 
         if (this.requestTransporterLubeTax.value.estimatedRefuelDate) {
-          if (this.requestTransporterLubeTax.value.creditAmount || this.requestTransporterLubeTax.value.creditQuantity) {
+          if (this.requestTransporterLubeTax.value.creditAmount || this.CreditRequetLubeTax.creditQuantityLube) {
             if (this.fuelDealerCorpMapIdNew) {
               if (this.requestTransporterLubeTax.value.creditQuantity) {
                 if (this.personId) {

@@ -702,6 +702,8 @@ export class MixedWidget2Component implements OnInit {
                                 this.isQUANTITY = false;
                                 this.CreditRequestDataLube = [];
                                 this.countLube = 1;
+                                this.addFormRequestLube()
+                                this.closeModal()
                                 this.requestTransporterLube.controls["requestType"].setValue("showamount");
                                 this.requestTransporterLube.controls["requestTypeCR"].setValue("showamount");
                                 // this.closeRequestForm.controls["requestTypeClose"].setValue("showamount");
