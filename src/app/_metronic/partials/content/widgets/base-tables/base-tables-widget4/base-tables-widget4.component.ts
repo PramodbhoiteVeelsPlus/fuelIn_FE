@@ -314,9 +314,8 @@ export class BaseTablesWidget4Component implements OnInit {
       }
     })
     } else {
-      
+      this.spinner.show()
     this.dayWiseData = []
-    this.spinner.show()
     let data ={
     fuelDealerId: this.fuelDealerId,
     month: moment(this.filterForm.value.monthDAY, ["MM YYYY"]).format("MM"),
@@ -366,7 +365,7 @@ export class BaseTablesWidget4Component implements OnInit {
       }
     })
     } else {
-      
+      this.spinner.show()
     this.dayWiseData = []
     let data ={
     fuelDealerId: this.fuelDealerId,

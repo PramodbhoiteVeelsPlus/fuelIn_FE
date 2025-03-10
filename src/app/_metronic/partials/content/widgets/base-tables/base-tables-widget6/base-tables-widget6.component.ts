@@ -267,9 +267,8 @@ export class BaseTablesWidget6Component implements OnInit {
           }
         })
     } else {
-
-      this.transactionData.length = 0
       this.spinner.show()
+      this.transactionData.length = 0
       let data = {
         fuelDealerId: this.fuelDealerId,
         startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
@@ -319,7 +318,7 @@ export class BaseTablesWidget6Component implements OnInit {
           }
         })
     } else {
-
+      this.spinner.show()
       this.transactionData.length = 0
       let data = {
         fuelDealerId: this.fuelDealerId,

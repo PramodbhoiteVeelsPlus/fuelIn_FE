@@ -643,7 +643,7 @@ export class ListsWidget1Component {
         if (this.requestTransporterLubeTax.value.estimatedRefuelDate) {
           if (this.requestTransporterLubeTax.value.creditAmount || this.CreditRequetLubeTax.creditQuantityLube) {
             if (this.fuelDealerCorpMapIdNew) {
-              if (this.requestTransporterLubeTax.value.creditQuantity) {
+              if (this.CreditRequetLubeTax.creditQuantityLube) {
                 if (this.personId) {
                   if (this.requestTransporterLubeTax.value.nameLube) {
                     if (this.requestTransporterLubeTax.value.manualCrNumber) {
@@ -723,7 +723,7 @@ export class ListsWidget1Component {
                 }
               }
               else {
-                alert("Please Enter Amount or Quantity!")
+                alert("Please Enter Quantity!")
                 this.spinner.hide();
               }
             }

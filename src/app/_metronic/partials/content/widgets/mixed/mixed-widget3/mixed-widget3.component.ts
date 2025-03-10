@@ -492,6 +492,7 @@ submitByDealerForAdvance() {
                   if (res.status == "OK") {
                     alert("Credit Added Sccessfully!");
                     this.isBalance1 = false;
+                    this.closeModal()
                     this.spinner.hide();
                     this.myInputField.nativeElement.focus();
                     this.checkDates(this.fuelDealerCorpMapIdNew,moment(this.requestTransporterAdvance.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
@@ -499,7 +500,6 @@ submitByDealerForAdvance() {
                     this.isQUANTITY = false;
                     this.CreditRequestDataAdvance = [];
                     this.countAdvance = 1;
-                    this.closeModal()
                     if(this.autoManualStatus == 'TRUE'){
 
                       this.updateAssignedAutoManualNumber('ADVANCE',res.count)
@@ -570,6 +570,7 @@ submitByDealerForAdvance() {
                     if (res.status == "OK") {
                       alert("Credit Added Sccessfully!");
                       this.isBalance1 = false;
+                      this.closeModal()
                       this.spinner.hide();
                       this.myInputField.nativeElement.focus();
                       this.checkDates(this.fuelDealerCorpMapIdNew,moment(this.requestTransporterAdvance.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
@@ -577,7 +578,6 @@ submitByDealerForAdvance() {
                       this.isQUANTITY = false;
                       this.CreditRequestDataAdvance = [];
                       this.countAdvance = 1;
-                      this.closeModal()
                       if(this.autoManualStatus == 'TRUE'){
 
                         this.updateAssignedAutoManualNumber('ADVANCE',res.count)

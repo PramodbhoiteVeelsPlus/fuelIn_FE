@@ -110,6 +110,7 @@ export class TablesWidget32Component {
   netOut: any;
   dealerCorporateId: any;
   headerName1: any;
+  dates: any = [];
 
   constructor(
     private post: WidgetService,
@@ -145,6 +146,51 @@ export class TablesWidget32Component {
         this.liteAccess = true
       }
     }
+    
+    if (this.post.setRouteForActiveArray.length) {
+      if (this.post.setRouteForActiveArray[0].activeRoute == 'activeCustomer') {
+        this.dates = this.post.setRouteForActiveArray.reverse()
+        this.isActiveCustomer = true;
+        this.startDate = this.dates[0].activeStartDate;
+        this.endDate = this.dates[0].activeEndDate;
+        this.finalTotal = this.post.setRouteForActiveArray[0].crOutstanding2;
+        this.advanceCust = this.post.setRouteForActiveArray[0].advance;
+        console.log("Array1", this.post.setRouteForActiveArray, this.startDate, this.endDate)
+
+        this.allActiveCreditAccByDealer = this.post.setRouteForActiveArray[0].allActiveCreditAccByDealer
+
+        this.allActiveCreditAccByDealer.map((purCal: { totalPurchaseAmt: any; totalPaymentAmt: any; netOS: any; totalOutstanding: any; }) => {
+          this.totalpurchase = this.totalpurchase + Number(purCal.totalPurchaseAmt)
+          this.totalpayment = this.totalpayment + Number(purCal.totalPaymentAmt)
+          this.netTotal = this.netTotal + Number(purCal.netOS)
+          if (Number(purCal.netOS) < 0) {
+            this.advance = this.advance + Number(purCal.netOS)
+
+          }
+          if ((Number(purCal.totalOutstanding)) >= 0) {
+            this.netOut = this.netOut + (Number(purCal.totalOutstanding))
+          }
+        })
+        this.cd.detectChanges()
+
+      } else {
+        this.isActiveCustomer = false;
+        this.allActiveCreditAccByDealer = this.post.setRouteForActiveArray[0].allActiveCreditAccByDealer
+
+        this.allActiveCreditAccByDealer.map((purCal: { totalPurchaseAmt: any; totalPaymentAmt: any; totalCRAmt: any; totalDiscount: any; totalInvPaidAmt: any; previousOutstand: any; }) => {
+          this.totalpurchase = this.totalpurchase + Number(purCal.totalPurchaseAmt)
+          this.totalpayment = this.totalpayment + Number(purCal.totalPaymentAmt)
+          console.log("total", this.totalpurchase = this.totalpurchase + Number(purCal.totalPurchaseAmt), this.allActiveCreditAccByDealer)
+
+          if (((Number(purCal.totalCRAmt) - Number(purCal.totalDiscount) - Number(purCal.totalInvPaidAmt)) + Number(purCal.previousOutstand)) >= 0) {
+
+            this.netOut = this.netOut + ((Number(purCal.totalCRAmt) - Number(purCal.totalDiscount) - Number(purCal.totalInvPaidAmt)) + Number(purCal.previousOutstand))
+          }
+        })
+        this.cd.detectChanges()
+      }
+
+    }
     this.getfuelDealerIdByCorporateId(this.dealerCorporateId);
     this.getCustomerAllDataById(this.customerId);
   }
@@ -164,49 +210,49 @@ export class TablesWidget32Component {
         if (res.status == "OK") {
           this.fuelDealerId = res.data[0].fuelDealerId;
           this.oilCompanyName = res.data[0].brandName;
-          if (this.post.setRouteForActiveArray.length) {
-            console.log("Array", this.post.setRouteForActiveArray)
-            if (this.post.setRouteForActiveArray[0].activeRoute == 'activeCustomer') {
-              this.isActiveCustomer = true;
-              this.startDate = this.post.setRouteForActiveArray[0].activeStartDate;
-              this.endDate = this.post.setRouteForActiveArray[0].activeEndDate;
-              this.finalTotal = this.post.setRouteForActiveArray[0].crOutstanding2;
-              this.advanceCust = this.post.setRouteForActiveArray[0].advance;
+          // if (this.post.setRouteForActiveArray.length) {
+          //   console.log("Array", this.post.setRouteForActiveArray)
+          //   if (this.post.setRouteForActiveArray[0].activeRoute == 'activeCustomer') {
+          //     this.isActiveCustomer = true;
+          //     this.startDate = this.post.setRouteForActiveArray[0].activeStartDate;
+          //     this.endDate = this.post.setRouteForActiveArray[0].activeEndDate;
+          //     this.finalTotal = this.post.setRouteForActiveArray[0].crOutstanding2;
+          //     this.advanceCust = this.post.setRouteForActiveArray[0].advance;
 
-              this.allActiveCreditAccByDealer = this.post.setRouteForActiveArray[0].allActiveCreditAccByDealer
+          //     this.allActiveCreditAccByDealer = this.post.setRouteForActiveArray[0].allActiveCreditAccByDealer
 
-              this.allActiveCreditAccByDealer.map((purCal: { totalPurchaseAmt: any; totalPaymentAmt: any; netOS: any; totalOutstanding: any; }) => {
-                this.totalpurchase = this.totalpurchase + Number(purCal.totalPurchaseAmt)
-                this.totalpayment = this.totalpayment + Number(purCal.totalPaymentAmt)
-                this.netTotal = this.netTotal + Number(purCal.netOS)
-                if (Number(purCal.netOS) < 0) {
-                  this.advance = this.advance + Number(purCal.netOS)
+          //     this.allActiveCreditAccByDealer.map((purCal: { totalPurchaseAmt: any; totalPaymentAmt: any; netOS: any; totalOutstanding: any; }) => {
+          //       this.totalpurchase = this.totalpurchase + Number(purCal.totalPurchaseAmt)
+          //       this.totalpayment = this.totalpayment + Number(purCal.totalPaymentAmt)
+          //       this.netTotal = this.netTotal + Number(purCal.netOS)
+          //       if (Number(purCal.netOS) < 0) {
+          //         this.advance = this.advance + Number(purCal.netOS)
 
-                }
-                if ((Number(purCal.totalOutstanding)) >= 0) {
-                  this.netOut = this.netOut + (Number(purCal.totalOutstanding))
-                }
-              })
-              this.cd.detectChanges()
+          //       }
+          //       if ((Number(purCal.totalOutstanding)) >= 0) {
+          //         this.netOut = this.netOut + (Number(purCal.totalOutstanding))
+          //       }
+          //     })
+          //     this.cd.detectChanges()
 
-            } else {
-              this.isActiveCustomer = false;
-              this.allActiveCreditAccByDealer = this.post.setRouteForActiveArray[0].allActiveCreditAccByDealer
+          //   } else {
+          //     this.isActiveCustomer = false;
+          //     this.allActiveCreditAccByDealer = this.post.setRouteForActiveArray[0].allActiveCreditAccByDealer
 
-              this.allActiveCreditAccByDealer.map((purCal: { totalPurchaseAmt: any; totalPaymentAmt: any; totalCRAmt: any; totalDiscount: any; totalInvPaidAmt: any; previousOutstand: any; }) => {
-                this.totalpurchase = this.totalpurchase + Number(purCal.totalPurchaseAmt)
-                this.totalpayment = this.totalpayment + Number(purCal.totalPaymentAmt)
-                console.log("total", this.totalpurchase = this.totalpurchase + Number(purCal.totalPurchaseAmt), this.allActiveCreditAccByDealer)
+          //     this.allActiveCreditAccByDealer.map((purCal: { totalPurchaseAmt: any; totalPaymentAmt: any; totalCRAmt: any; totalDiscount: any; totalInvPaidAmt: any; previousOutstand: any; }) => {
+          //       this.totalpurchase = this.totalpurchase + Number(purCal.totalPurchaseAmt)
+          //       this.totalpayment = this.totalpayment + Number(purCal.totalPaymentAmt)
+          //       console.log("total", this.totalpurchase = this.totalpurchase + Number(purCal.totalPurchaseAmt), this.allActiveCreditAccByDealer)
 
-                if (((Number(purCal.totalCRAmt) - Number(purCal.totalDiscount) - Number(purCal.totalInvPaidAmt)) + Number(purCal.previousOutstand)) >= 0) {
+          //       if (((Number(purCal.totalCRAmt) - Number(purCal.totalDiscount) - Number(purCal.totalInvPaidAmt)) + Number(purCal.previousOutstand)) >= 0) {
 
-                  this.netOut = this.netOut + ((Number(purCal.totalCRAmt) - Number(purCal.totalDiscount) - Number(purCal.totalInvPaidAmt)) + Number(purCal.previousOutstand))
-                }
-              })
-              this.cd.detectChanges()
-            }
+          //         this.netOut = this.netOut + ((Number(purCal.totalCRAmt) - Number(purCal.totalDiscount) - Number(purCal.totalInvPaidAmt)) + Number(purCal.previousOutstand))
+          //       }
+          //     })
+          //     this.cd.detectChanges()
+          //   }
 
-          }
+          // }
           this.cd.detectChanges()
         }
         else {

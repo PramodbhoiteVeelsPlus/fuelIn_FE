@@ -356,8 +356,8 @@ export class BaseTablesWidget8Component implements OnInit {
         })
 
     } else {
-      this.yearWiseQtyData = []
       this.spinner.show()
+      this.yearWiseQtyData = []
       let data = {
         fuelDealerId: this.fuelDealerId,
         startDate: moment(this.startDate, ["YYYY"]).format("YYYY-04-01"),
@@ -415,6 +415,7 @@ export class BaseTablesWidget8Component implements OnInit {
           }
         })
     } else {
+      this.spinner.show()
       this.yearWiseQtyData = []
       let data = {
         fuelDealerId: this.fuelDealerId,

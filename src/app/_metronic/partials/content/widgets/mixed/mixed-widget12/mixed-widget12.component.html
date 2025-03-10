@@ -189,7 +189,7 @@
                         -
                       </span>
                     </td>
-                    <td class="border-gray"> {{ data.actualCreditQuantity }} </td>
+                    <td class="border-gray"> {{ data.actualCreditQuantity | number:'1.2-2' }} </td>
                     <td class="border-gray"> {{ data.fuelcreditBeforeTax | number:'1.2-2' }} </td>
                     <td class="border-gray"> {{ data.fuelcreditGST }} %, <br>
                       <i class="fas fa-rupee-sign" style="font-size: 10Px;"></i> {{ data.fuelcreditGSTAmount |

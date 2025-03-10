@@ -553,8 +553,8 @@ export class MixedWidget2Component implements OnInit {
                             alert("Credit Added Sccessfully!");
                             this.isBalance1 = false;
                             this.isSelected1 = false;
-                            this.CreditRequestDataLube = [];
-                            this.countLube = 1;
+                            // this.CreditRequestDataLube = [];
+                            // this.countLube = 1;
                             this.closeModal()
                             this.spinner.hide();
                             // this.cd.detectChanges()

@@ -812,11 +812,13 @@ export class TablesWidget30Component {
         if (res) {
           alert("Outstanding Added Successfully..!")
           this.modalRef2.close('close');
-          this.spinner.hide();
           this.pendingOutstanding = 0;
           this.getMappingAccount(this.fuelDealerId);
+          this.cd.detectChanges()
+          this.spinner.hide();
         }
         else {
+          this.cd.detectChanges()
           this.spinner.hide();
         }
       });
@@ -843,6 +845,7 @@ export class TablesWidget30Component {
   }
 
   updateManualNumber() {
+    this.spinner.show()
     let data = {
       fuelDealerCustomerMapId: this.fuelDealerCustomerMapId,
       manualNumberStart: this.manualNumberStart,
@@ -854,6 +857,8 @@ export class TablesWidget30Component {
           alert(res.msg)
           this.getMappingAccount(this.fuelDealerId);
           this.modalRef2.close('close')
+          this.cd.detectChanges()
+          this.spinner.hide();
         }
       })
   }

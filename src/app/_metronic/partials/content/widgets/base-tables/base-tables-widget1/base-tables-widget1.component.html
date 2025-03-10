@@ -18,7 +18,7 @@
     body {
       margin: 0;
       padding: 0;
-      -webkit-print-color-adjust: exact;
+      /* -webkit-print-color-adjust: exact; */
     }
 
     .A4 {
@@ -185,10 +185,20 @@
             <td style="text-align: left;">
               <span *ngIf="data.purpose == 'CREDIT'">
                 <span *ngIf="data.vehicleNumber == 'undefined'">
-                  {{data.manualCrNumber}}
+                  <span *ngIf="data.manualCrNumber != 'undefined'">
+                    {{data.manualCrNumber}}
+                  </span>
+                  <span *ngIf="data.manualCrNumber == 'undefined'">
+
+                  </span>
                 </span>
                 <span *ngIf="data.vehicleNumber != 'undefined'">
-                  {{data.manualCrNumber}}
+                  <span *ngIf="data.manualCrNumber != 'undefined'">
+                    {{data.manualCrNumber}}
+                  </span>
+                  <span *ngIf="data.manualCrNumber == 'undefined'">
+
+                  </span>
                 </span>
               </span>
               <span *ngIf="data.purpose == 'LUBE'">
@@ -803,12 +813,22 @@
                                     <td> BILL/REF NO.</td>
                                     <td>&nbsp;&nbsp;:&nbsp;
                                       <!-- <span *ngIf="purposeShow == 'CREDIT'"> -->
-                                        <span *ngIf="vehicleNumberShow == 'undefined'">
+                                      <span *ngIf="vehicleNumberShow == 'undefined'">
+                                        <span *ngIf="manualCrNumberShow != 'undefined'">
                                           {{manualCrNumberShow}}
                                         </span>
-                                        <span *ngIf="vehicleNumberShow != 'undefined'">
+                                        <span *ngIf="manualCrNumberShow == 'undefined'">
+                                          
+                                        </span>
+                                      </span>
+                                      <span *ngIf="vehicleNumberShow != 'undefined'">
+                                        <span *ngIf="manualCrNumberShow != 'undefined'">
                                           {{manualCrNumberShow}}
                                         </span>
+                                        <span *ngIf="manualCrNumberShow == 'undefined'">
+                                          
+                                        </span>
+                                      </span>
                                       <!-- </span> -->
                                     </td>
                                   </tr>
@@ -817,12 +837,12 @@
                                     <td>&nbsp;&nbsp;:&nbsp;
 
                                       <!-- <span *ngIf="purposeShow == 'CREDIT'"> -->
-                                        <span *ngIf="vehicleNumberShow == 'undefined'">
+                                      <span *ngIf="vehicleNumberShow == 'undefined'">
 
-                                        </span>
-                                        <span *ngIf="vehicleNumberShow != 'undefined'">
-                                          {{vehicleNumberShow}}
-                                        </span>
+                                      </span>
+                                      <span *ngIf="vehicleNumberShow != 'undefined'">
+                                        {{vehicleNumberShow}}
+                                      </span>
                                       <!-- </span> -->
                                     </td>
                                   </tr>
@@ -866,23 +886,23 @@
                                     <td>QUANTITY</td>
                                     <td>&nbsp;&nbsp;:&nbsp;
                                       <!-- <span *ngIf="purposeShow == 'CREDIT'"> -->
-                                        <span *ngIf="transactionStatusShow == 'CANCEL'">
-                                          CANCELLED
-                                        </span>
-                                        <span *ngIf="transactionStatusShow != 'CANCEL'">
-                                          <span *ngIf="transactionStatusShow != 'PENDING'">
-                                            <span *ngIf="productCategoryShow == 'CNG'">
-                                              {{actualCreditQuantityShow | number:'1.2-2'}} Kg
-                                            </span>
-                                            <span *ngIf="productCategoryShow != 'CNG'">
-                                              {{actualCreditQuantityShow | number:'1.2-2'}} Ltrs
-                                            </span>
+                                      <span *ngIf="transactionStatusShow == 'CANCEL'">
+                                        CANCELLED
+                                      </span>
+                                      <span *ngIf="transactionStatusShow != 'CANCEL'">
+                                        <span *ngIf="transactionStatusShow != 'PENDING'">
+                                          <span *ngIf="productCategoryShow == 'CNG'">
+                                            {{actualCreditQuantityShow | number:'1.2-2'}} Kg
+                                          </span>
+                                          <span *ngIf="productCategoryShow != 'CNG'">
+                                            {{actualCreditQuantityShow | number:'1.2-2'}} Ltrs
+                                          </span>
 
-                                          </span>
-                                          <span *ngIf="transactionStatusShow == 'PENDING'">
-                                            PENDING
-                                          </span>
                                         </span>
+                                        <span *ngIf="transactionStatusShow == 'PENDING'">
+                                          PENDING
+                                        </span>
+                                      </span>
                                       <!-- </span> -->
 
                                     </td>
@@ -1651,12 +1671,22 @@
                               <td> BILL/REF NO.</td>
                               <td>&nbsp;&nbsp;:&nbsp;
                                 <!-- <span *ngIf="purposeShow == 'CREDIT'"> -->
-                                  <span *ngIf="vehicleNumberShow == 'undefined'">
+                                <span *ngIf="vehicleNumberShow == 'undefined'">
+                                  <span *ngIf="manualCrNumberShow != 'undefined'">
                                     {{manualCrNumberShow}}
                                   </span>
-                                  <span *ngIf="vehicleNumberShow != 'undefined'">
+                                  <span *ngIf="manualCrNumberShow == 'undefined'">
+                                    
+                                  </span>
+                                </span>
+                                <span *ngIf="vehicleNumberShow != 'undefined'">
+                                  <span *ngIf="manualCrNumberShow != 'undefined'">
                                     {{manualCrNumberShow}}
                                   </span>
+                                  <span *ngIf="manualCrNumberShow == 'undefined'">
+                                    
+                                  </span>
+                                </span>
                                 <!-- </span> -->
                               </td>
                             </tr>
@@ -1665,12 +1695,12 @@
                               <td>&nbsp;&nbsp;:&nbsp;
 
                                 <!-- <span *ngIf="purposeShow == 'CREDIT'"> -->
-                                  <span *ngIf="vehicleNumberShow == 'undefined'">
+                                <span *ngIf="vehicleNumberShow == 'undefined'">
 
-                                  </span>
-                                  <span *ngIf="vehicleNumberShow != 'undefined'">
-                                    {{vehicleNumberShow}}
-                                  </span>
+                                </span>
+                                <span *ngIf="vehicleNumberShow != 'undefined'">
+                                  {{vehicleNumberShow}}
+                                </span>
                                 <!-- </span> -->
                               </td>
                             </tr>
@@ -1711,23 +1741,23 @@
                               <td>QUANTITY</td>
                               <td>&nbsp;&nbsp;:&nbsp;
                                 <!-- <span *ngIf="purposeShow == 'CREDIT'"> -->
-                                  <span *ngIf="transactionStatusShow == 'CANCEL'">
-                                    CANCELLED
-                                  </span>
-                                  <span *ngIf="transactionStatusShow != 'CANCEL'">
-                                    <span *ngIf="transactionStatusShow != 'PENDING'">
-                                      <span *ngIf="productCategoryShow == 'CNG'">
-                                        {{actualCreditQuantityShow | number:'1.2-2'}} Kg
-                                      </span>
-                                      <span *ngIf="productCategoryShow != 'CNG'">
-                                        {{actualCreditQuantityShow | number:'1.2-2'}} Ltrs
-                                      </span>
+                                <span *ngIf="transactionStatusShow == 'CANCEL'">
+                                  CANCELLED
+                                </span>
+                                <span *ngIf="transactionStatusShow != 'CANCEL'">
+                                  <span *ngIf="transactionStatusShow != 'PENDING'">
+                                    <span *ngIf="productCategoryShow == 'CNG'">
+                                      {{actualCreditQuantityShow | number:'1.2-2'}} Kg
+                                    </span>
+                                    <span *ngIf="productCategoryShow != 'CNG'">
+                                      {{actualCreditQuantityShow | number:'1.2-2'}} Ltrs
+                                    </span>
 
-                                    </span>
-                                    <span *ngIf="transactionStatusShow == 'PENDING'">
-                                      PENDING
-                                    </span>
                                   </span>
+                                  <span *ngIf="transactionStatusShow == 'PENDING'">
+                                    PENDING
+                                  </span>
+                                </span>
                                 <!-- </span> -->
 
                               </td>
