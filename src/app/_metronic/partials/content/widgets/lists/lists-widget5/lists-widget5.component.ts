@@ -2747,6 +2747,7 @@ export class ListsWidget5Component {
           this.closeModalLubeCash()
           this.isCashHandover = false;
           this.getCASHDetailsByShiftId(this.shiftIdUpdate)
+          this.getAllFuelCreditByStaffIdDate(this.staffId);
           this.spinner.hide();
         } else {
           alert(res.msg)

@@ -1213,8 +1213,8 @@
                               <span *ngIf="totalLubeKgQuantity"> <b>{{totalLubeKgQuantity | number:'1.2-2'}}</b>
                                 (kg)</span>
                             </td>
-                            <td style="text-align: center; border: 1px solid #272829;"> {{totalLubeQuantityInPiece|
-                              number:'1.2-2'}}</td>
+                            <td style="text-align: center; border: 1px solid #272829;"><b> {{totalLubeQuantityInPiece|
+                              number:'1.2-2'}}</b></td>
                             <td style="text-align: center; border: 1px solid #272829;"> </td>
 
                           </tr>
@@ -1571,12 +1571,11 @@
 
 
 
-                    <td>&nbsp;
-                      <button type="submit" class="btn btn-outline-success my-2 my-sm-0"
+                    <td>
+                      <button type="submit" class="btn btn-outline-success"
                         (click)="addFormRequest1Update(i)">
                         Add
                       </button>
-                      &nbsp;&nbsp;
                       <button *ngIf="i != 0 " type="cancel" class="btn btn-danger"
                         (click)="removeFormRequestUpdate(i)">Delete</button>
                     </td>
@@ -1804,7 +1803,14 @@
 
                 </tr>
               </tbody>
+              <br><br>
             </table>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-lg-2">
+              <button type="button" class="btn btn-success" (click)="addPOSUpdate()">Add Digital </button>
+            </div>
           </div>
         </div>
       </ng-template>
