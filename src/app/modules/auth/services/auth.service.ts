@@ -55,6 +55,9 @@ export class AuthService implements OnDestroy {
   private searchDealerByMobileURL = this.baseURL + 'fuelDealerCustMap/getDealerDetailsByDealerPhoneNumber'
   private findPhoneNumberURL = this.baseURL + 'register/findPhoneNumber';
   private addReferralURL = this.baseURL + 'referral/addReferral';
+  private sendOTPsmsURL = this.baseURL + 'register/sendOTPsms' ;
+  private compareOTPURL = this.baseURL + 'register/compareOTP' ;
+  private updatepasswordURL = this.baseURL + 'register/updatePassword';
 
 
   setHeader() {
@@ -83,7 +86,7 @@ export class AuthService implements OnDestroy {
   findPhone(body: Object): Observable<any> {
     this.setHeader();
     let headers = new HttpHeaders();
-    headers = headers.set('authenticationToken', this.token);
+    headers = headers.set('authenticationToken', '' + this.token);
     return this.http.post(this.findPhoneNumberURL, body, {
       headers: headers
     })
@@ -99,6 +102,35 @@ export class AuthService implements OnDestroy {
     })
   }
 
+  //sendOTPsmsURL
+  sendOTPsmsPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', '' +  this.token);
+    return this.http.post(this.sendOTPsmsURL, body, {
+      headers: headers
+    })
+  }
+
+  //compareOTPURL
+  compareOTPPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', '' +  this.token);
+    return this.http.post(this.compareOTPURL, body, {
+      headers: headers
+    })
+  }
+
+  //updatepasswordURL
+  updatepasswordPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', '' +  this.token);
+    return this.http.post(this.updatepasswordURL, body, {
+      headers: headers
+    })
+  }
 
 
 
