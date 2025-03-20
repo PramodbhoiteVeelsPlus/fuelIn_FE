@@ -220,6 +220,8 @@ export class BaseTablesWidget1Component implements OnInit {
   reqCreditAmount: any;
   reqQuantity: any;
   customerId: any;
+  searchBox:FormControl = new FormControl();
+  searchTermm: any = "";
 
   constructor(
     private modalService: NgbModal,
@@ -1295,5 +1297,93 @@ export class BaseTablesWidget1Component implements OnInit {
           this.cd.detectChanges()
         }
       });
+}
+
+searchInTable(){ 
+  this.searchBox.valueChanges
+  .subscribe((dataList) => {
+    this.searchTermm = dataList;
+    this.search1();
+  })
+}
+
+search1() {
+  let quantity=false;
+  let termm = this.searchTermm;
+  this.allCreditReq = this.allCreditReqDataa.filter(function (res: { manualCrNumber: string | any[]; }) {
+    return res.manualCrNumber.indexOf(termm) >= 0;
+  });
+
+  if(this.allCreditReq.length == 0){
+    termm = this.searchTermm;
+    this.allCreditReq = this.allCreditReqDataa.filter(function (res: { mappingPreviousStatus: string; mappingCompanyName: string | any[]; companyName: string | any[]; }) {
+      if(res.mappingPreviousStatus =='TRUE'){
+        return res.mappingCompanyName.indexOf(termm) >= 0;
+      }
+      if(res.mappingPreviousStatus =='FALSE'){
+        return res.companyName.indexOf(termm) >= 0;
+      }
+    });
+  } 
+  
+  if(this.allCreditReq.length == 0){
+    termm = this.searchTermm;
+    this.allCreditReq = this.allCreditReqDataa.filter(function (res: { manualCrNumber: string | any[]; }) {
+      return res.manualCrNumber.indexOf(termm) >= 0;
+    });
+  }
+
+
+  if(this.allCreditReq.length == 0){
+    termm = this.searchTermm;
+    this.allCreditReq = this.allCreditReqDataa.filter(function (res: { productName: string | any[]; }) {
+      return res.productName.indexOf(termm) >= 0;
+    });
+  }
+
+
+  if(this.allCreditReq.length == 0){
+    termm = this.searchTermm;
+    this.allCreditReq = this.allCreditReqDataa.filter(function (res: { vehicleNumber: string | any[]; }) {
+      return res.vehicleNumber.indexOf(termm) >= 0;
+    });
+  }
+
+
+  if(this.allCreditReq.length == 0){
+    termm = this.searchTermm;
+    this.allCreditReq = this.allCreditReqDataa.filter(function (res: { creditAmount: string | any[]; }) {
+      return res.creditAmount.indexOf(termm) >= 0;
+    });
+  }
+
+  
+  if(this.allCreditReq.length == 0){
+    termm = this.searchTermm;
+    this.allCreditReq = this.allCreditReqDataa.filter(function (res: { transactionStatus: string | any[]; }) {
+      return res.transactionStatus.indexOf(termm) >= 0;
+    });
+  }
+
+
+  if(this.allCreditReq.length == 0){
+    termm = this.searchTermm;
+    this.allCreditReq = this.allCreditReqDataa.filter(function (res: { mappingPreviousStatus: string; mappingCustomerName: string | any[]; hostName: string | any[]; }) {
+      if(res.mappingPreviousStatus =='TRUE'){
+        return res.mappingCustomerName.indexOf(termm) >= 0;
+      }
+      if(res.mappingPreviousStatus =='FALSE'){
+        return res.hostName.indexOf(termm) >= 0;
+      }
+    });
+  } 
+
+  if(this.allCreditReq.length == 0){
+    termm = this.searchTermm;
+    this.allCreditReq = this.allCreditReqDataa.filter(function (res: { hostPhone: string | any[]; }) {
+      return res.hostPhone.indexOf(termm) >= 0;
+    });
+  }
+
 }
 }

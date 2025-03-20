@@ -8,7 +8,7 @@
         <div class="col-md-2">
           <label for="example-text-input" class="col-form-label"><b>Date</b></label>
         </div>
-        <div class="col-md-8">
+        <div class="col-sm-9">
           <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" (click)="endDate.toggle()" readonly
             style="background-color: #ffffff;" formControlName="priceDate" ngbDatepicker #endDate="ngbDatepicker"
             (dateSelect)="logValue()">
@@ -21,7 +21,7 @@
         <div class="col-md-2">
           <label for="example-text-input" class="col-form-label"><b>Product</b></label>
         </div>
-        <div class="col-md-8">
+        <div class="col-sm-9">
           <select class="form-control" formControlName="productName" (change)="getPrice($event,setFuelPrice)" required>
             <option value="">Select Product </option>
             <option *ngFor="let data of productInfo" [value]="data.fuelProductsId">
@@ -37,7 +37,7 @@
         <div class="col-md-2">
           <label for="example-text-input" class="col-form-label"><b>Rate</b></label>
         </div>
-        <div class="col-md-8">
+        <div class="col-sm-9">
           <select class="form-control" formControlName="productPrice" (change)="setPrice($event)" required>
             <option value="">Select </option>
             <option *ngFor="let data of productPriceDetails" [value]="data.productSellingPrice">
@@ -104,7 +104,7 @@
           <label for="example-text-input" class="col-form-label"><b>Khata</b></label>
         </div>
 
-        <div class="col-md-8">
+        <div class="col-sm-9">
           <input class="form-control" type="text" list="corporateList" #myinput placeholder="Select Khata"
             formControlName="selectedCorp" (change)="getDetailsByfuelDealerCustomerMapIdId($event)">
           <datalist id="corporateList">
@@ -393,8 +393,7 @@
                     </span>
                   </td>
                   <td>
-                    <button *ngIf="isVehSelect" type="submit" class="btn btn-success"
-                      (click)="addFormRequest()">
+                    <button *ngIf="isVehSelect" type="submit" class="btn btn-success" (click)="addFormRequest()">
                       Add
                     </button>
                     <button *ngIf="!isVehSelect" type="submit" class="btn btn-success" (click)="selectVehicle()">
@@ -441,5 +440,5 @@
         </div>
       </ng-template>
 
+    </div>
   </div>
-</div>

@@ -121,11 +121,16 @@
       <div class="row">
         <div class="col-md-4">
           <div class="search-box">
-            <div class="position-relative">
-              <input class="form-control " type="text" placeholder="search" style="width: 289px"
-                oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+            <!-- <div class="position-relative"> -->
+              <!-- <input class="form-control " type="text" placeholder="search" style="width: 289px"
                 [(ngModel)]="searchData" [ngModelOptions]="{standalone: true}" (input)="onSearch()">
-              <i class="bx bx-search-alt search-icon"></i>
+              <i class="bx bx-search-alt search-icon"></i> -->
+              <div class="position-relative">
+                  <input class="form-control mr-sm-4" type="text" placeholder="search" 
+                  oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                  [formControl]="searchBox" aria-label="Search" (click) = "searchInTable()">
+                <i class="bx bx-search-alt search-icon"></i>
+              <!-- </div> -->
             </div>
           </div>
         </div>
@@ -137,8 +142,8 @@
   <br>
   <!-- Body -->
   <div class="card-body pt-2 pb-0 mt-n3">
-    <div class="table-responsive mb-0">
-      <table class="table table-centered table-nowrap">
+    <div class="table-responsive mb-0" style="overflow: visible;">
+      <table class="table table-centered">
         <thead class="table-light">
           <tr>
             <th></th>

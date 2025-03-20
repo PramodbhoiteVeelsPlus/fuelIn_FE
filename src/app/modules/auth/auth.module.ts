@@ -11,6 +11,7 @@ import { AuthComponent } from './auth.component';
 import { TranslationModule } from '../i18n/translation.module';
 import { CustloginComponent } from './components/custlogin/custlogin.component';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
     LogoutComponent,
     AuthComponent,
     CustloginComponent,
+    HomeComponent
   ],
   imports: [
     CommonModule,

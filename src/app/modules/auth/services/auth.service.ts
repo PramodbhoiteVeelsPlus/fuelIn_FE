@@ -58,6 +58,7 @@ export class AuthService implements OnDestroy {
   private sendOTPsmsURL = this.baseURL + 'register/sendOTPsms' ;
   private compareOTPURL = this.baseURL + 'register/compareOTP' ;
   private updatepasswordURL = this.baseURL + 'register/updatePassword';
+  private contactUsSendMessageURL = this.baseURL + 'register/contactUsSendMessage';
 
 
   setHeader() {
@@ -128,6 +129,16 @@ export class AuthService implements OnDestroy {
     let headers = new HttpHeaders();
     headers = headers.set('authenticationToken', '' +  this.token);
     return this.http.post(this.updatepasswordURL, body, {
+      headers: headers
+    })
+  }
+
+  //contactUsSendMessageURL
+  contactUsSendMessagePOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', '' +  this.token);
+    return this.http.post(this.contactUsSendMessageURL, body, {
       headers: headers
     })
   }

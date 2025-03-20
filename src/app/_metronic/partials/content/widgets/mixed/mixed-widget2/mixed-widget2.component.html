@@ -9,7 +9,7 @@
           <div class="col-lg-2">
             <label for="example-text-input" class="col-form-label"><b>Date</b></label>
           </div>
-          <div class="col-md-8">
+          <div class="col-sm-9">
             <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" (click)="endDate.toggle()" readonly
               style="background-color: #ffffff;" #myinput formControlName="estimatedRefuelDate" ngbDatepicker
               #endDate="ngbDatepicker">
@@ -21,7 +21,7 @@
           <div class="col-lg-2">
             <label for="example-text-input" class="col-form-label"><b>Product</b></label>
           </div>
-          <div class="col-lg-8">
+          <div class="col-sm-9">
             <label for="example-text-input" class="col-form-label">Lubricants</label>
           </div>
         </div>
@@ -66,7 +66,7 @@
               <label for="example-text-input" class="col-form-label"><b>Khata</b></label>
             </div>
 
-            <div class="col-md-8">
+            <div class="col-sm-9">
               <input class="form-control" type="text" list="corporateList" placeholder="Select Khata"
                 formControlName="selectedCorp" (change)="getDetailsByfuelDealerCustomerMapIdId($event)">
               <datalist id="corporateList">

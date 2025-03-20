@@ -9,7 +9,7 @@
             <div class="col-lg-2">
               <label for="example-text-input" class="col-form-label"><b>Date</b></label>
             </div>
-            <div class="col-lg-8">
+            <div class="col-sm-9">
               <input class="form-control" placeholder="DD-MM-YYYY" name="startDate" (click)="endDate.toggle()" readonly
                 style="background-color: #ffffff;" formControlName="priceDate" ngbDatepicker #endDate="ngbDatepicker">
             </div>
@@ -20,7 +20,7 @@
             <div class="col-lg-2">
               <label for="example-text-input" class="col-form-label"><b>Product</b></label>
             </div>
-            <div class="col-md-8">
+            <div class="col-sm-9">
               <select class="form-control" formControlName="productName" (change)="getPriceVehicle($event,setFuelPrice)"
                 required>
                 <option value="">Select Product </option>
@@ -36,7 +36,7 @@
             <div class="col-lg-2">
               <label for="example-text-input" class="col-form-label"><b>Rate</b></label>
             </div>
-            <div class="col-lg-8">
+            <div class="col-sm-9">
               <select class="form-control" formControlName="productPrice" (change)="setPrice($event)" required>
                 <option value="">Select </option>
                 <option *ngFor="let data of productPriceDetails" [value]="data.productSellingPrice">
@@ -105,8 +105,8 @@
             <div class="col-lg-2">
               <label for="example-text-input" class="col-form-label"><b>Vehicle Number</b></label>
             </div>
-            <div class="col-lg-8">
-              <input class="form-control" type="text" list="allVehicleData" placeholder="select vehicle"
+            <div class="col-sm-9">
+              <input class="form-control" type="text" list="allVehicleData" placeholder="Select Vehicle"
                 formControlName="vehicleNumber" #myinput
                 (change)="getDetailsOfVehicleByfuelDealerCustomerMapIdId($event)">
               <datalist id="allVehicleData">
@@ -136,10 +136,10 @@
                 <table class="table table-hover table-striped">
                   <thead>
                     <tr>
-                      <th>Date Of Alert</th>
-                      <th>Petrol Pump Name</th>
-                      <th>City</th>
-                      <th>Remarks</th>
+                      <th><b>Date Of Alert</b></th>
+                      <th><b>Petrol Pump Name</b></th>
+                      <th><b>City</b></th>
+                      <th><b>Remarks</b></th>
 
                     </tr>
                   </thead>
