@@ -12,10 +12,10 @@
    </span>
   </div>
   <div *ngIf="isSales" [ngClass]="'text-inverse-' + color" class="fw-bold text-white me-2 lh-1 ls-n2">
-    ₹ {{ thisMonthCrSale }}
+    ₹ {{ thisMonthCrSale | number: "1.2-2" }}
   </div>
   <div *ngIf="isPayment" [ngClass]="'text-inverse-' + color" class="fw-bold text-white me-2 lh-1 ls-n2">
-    ₹ {{ thisMonthCrPayment }}
+    ₹ {{ thisMonthCrPayment | number: "1.2-2"  }}
   </div>
 
 </div>

@@ -464,7 +464,9 @@ export class FeedsWidget12Component implements OnInit {
             this.isMonthTab = false;
             alert("Data not found..!")
           }
-          this.spinner.hide()
+          
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
           this.cd.detectChanges()
         }
       })
@@ -514,10 +516,14 @@ export class FeedsWidget12Component implements OnInit {
 
           this.salesTotal = salesTotal
 
-          this.spinner.hide()
+          
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
           this.cd.detectChanges()
         } else {
-          this.spinner.hide()
+          
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
           this.cd.detectChanges()
         }
       });
@@ -559,6 +565,7 @@ export class FeedsWidget12Component implements OnInit {
                 purchaseTotalMonth1 = purchaseTotalMonth1 + Number(res1.vatAmt)
               })
               this.purchaseTotalMonth1 = purchaseTotalMonth1
+              this.cd.detectChanges()
 
               this.productWiseMeterSalesMonth1 = res.data;
 
@@ -592,8 +599,10 @@ export class FeedsWidget12Component implements OnInit {
 
               this.salesTotalMonth1 = salesTotalMonth1
 
-              this.spinner.hide()
               this.cd.detectChanges()
+              
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
             }
           });
@@ -628,6 +637,7 @@ export class FeedsWidget12Component implements OnInit {
                   purchaseTotalMonth1 = purchaseTotalMonth1 + Number(res1.vatAmt)
                 })
                 this.purchaseTotalMonth1 = purchaseTotalMonth1
+                this.cd.detectChanges()
 
                 this.productWiseMeterSalesMonth1 = res.data;
 
@@ -661,7 +671,9 @@ export class FeedsWidget12Component implements OnInit {
 
                 this.salesTotalMonth1 = salesTotalMonth1
 
-                this.spinner.hide()
+                
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
                 this.cd.detectChanges()
 
 
@@ -694,6 +706,7 @@ export class FeedsWidget12Component implements OnInit {
                         purchaseTotalMonth2 = purchaseTotalMonth2 + Number(res1.vatAmt)
                       })
                       this.purchaseTotalMonth2 = purchaseTotalMonth2
+                      this.cd.detectChanges()
 
                       this.productWiseMeterSalesMonth2 = res.data;
 
@@ -727,7 +740,9 @@ export class FeedsWidget12Component implements OnInit {
 
                       this.salesTotalMonth2 = salesTotalMonth2
 
-                      this.spinner.hide()
+                      
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
                       this.cd.detectChanges()
 
                     }
@@ -767,6 +782,7 @@ export class FeedsWidget12Component implements OnInit {
                     purchaseTotalMonth1 = purchaseTotalMonth1 + Number(res1.vatAmt)
                   })
                   this.purchaseTotalMonth1 = purchaseTotalMonth1
+                  this.cd.detectChanges()
 
                   this.productWiseMeterSalesMonth1 = res.data;
 
@@ -800,7 +816,9 @@ export class FeedsWidget12Component implements OnInit {
 
                   this.salesTotalMonth1 = salesTotalMonth1
 
-                  this.spinner.hide()
+                  
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
                   this.cd.detectChanges()
 
 
@@ -833,6 +851,7 @@ export class FeedsWidget12Component implements OnInit {
                           purchaseTotalMonth2 = purchaseTotalMonth2 + Number(res1.vatAmt)
                         })
                         this.purchaseTotalMonth2 = purchaseTotalMonth2
+                        this.cd.detectChanges()
 
                         this.productWiseMeterSalesMonth2 = res.data;
 
@@ -866,7 +885,9 @@ export class FeedsWidget12Component implements OnInit {
 
                         this.salesTotalMonth2 = salesTotalMonth2
 
-                        this.spinner.hide()
+                        
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
                         this.cd.detectChanges()
 
 
@@ -898,6 +919,7 @@ export class FeedsWidget12Component implements OnInit {
                                 purchaseTotalMonth3 = purchaseTotalMonth3 + Number(res1.vatAmt)
                               })
                               this.purchaseTotalMonth3 = purchaseTotalMonth3
+                              this.cd.detectChanges()
 
                               this.productWiseMeterSalesMonth3 = res.data;
 
@@ -931,7 +953,9 @@ export class FeedsWidget12Component implements OnInit {
 
                               this.salesTotalMonth3 = salesTotalMonth3
 
-                              this.spinner.hide()
+                              
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
                               this.cd.detectChanges()
 
                             }
@@ -974,6 +998,7 @@ export class FeedsWidget12Component implements OnInit {
                       purchaseTotalMonth1 = purchaseTotalMonth1 + Number(res1.vatAmt)
                     })
                     this.purchaseTotalMonth1 = purchaseTotalMonth1
+                    this.cd.detectChanges()
 
                     this.productWiseMeterSalesMonth1 = res.data;
 
@@ -1007,7 +1032,9 @@ export class FeedsWidget12Component implements OnInit {
 
                     this.salesTotalMonth1 = salesTotalMonth1
 
-                    this.spinner.hide()
+                    
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
                     this.cd.detectChanges()
 
 
@@ -1040,6 +1067,7 @@ export class FeedsWidget12Component implements OnInit {
                             purchaseTotalMonth2 = purchaseTotalMonth2 + Number(res1.vatAmt)
                           })
                           this.purchaseTotalMonth2 = purchaseTotalMonth2
+                          this.cd.detectChanges()
 
                           this.productWiseMeterSalesMonth2 = res.data;
 
@@ -1073,7 +1101,9 @@ export class FeedsWidget12Component implements OnInit {
 
                           this.salesTotalMonth2 = salesTotalMonth2
 
-                          this.spinner.hide()
+                          
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
                           this.cd.detectChanges()
 
 
@@ -1106,6 +1136,7 @@ export class FeedsWidget12Component implements OnInit {
                                 })
                                 this.purchaseTotalMonth3 = purchaseTotalMonth3
 
+                                this.cd.detectChanges()
                                 this.productWiseMeterSalesMonth3 = res.data;
 
                                 this.vatSalesDetailsMonth3.length = 0;
@@ -1138,7 +1169,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                 this.salesTotalMonth3 = salesTotalMonth3
 
-                                this.spinner.hide()
+                                
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
                                 this.cd.detectChanges()
 
 
@@ -1171,6 +1204,7 @@ export class FeedsWidget12Component implements OnInit {
                                         purchaseTotalMonth4 = purchaseTotalMonth4 + Number(res1.vatAmt)
                                       })
                                       this.purchaseTotalMonth4 = purchaseTotalMonth4
+                                      this.cd.detectChanges()
 
                                       this.productWiseMeterSalesMonth4 = res.data;
 
@@ -1204,7 +1238,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                       this.salesTotalMonth4 = salesTotalMonth4
 
-                                      this.spinner.hide()
+                                      
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
                                       this.cd.detectChanges()
 
                                     }
@@ -1251,6 +1287,7 @@ export class FeedsWidget12Component implements OnInit {
                         purchaseTotalMonth1 = purchaseTotalMonth1 + Number(res1.vatAmt)
                       })
                       this.purchaseTotalMonth1 = purchaseTotalMonth1
+                      this.cd.detectChanges()
 
                       this.productWiseMeterSalesMonth1 = res.data;
 
@@ -1284,7 +1321,9 @@ export class FeedsWidget12Component implements OnInit {
 
                       this.salesTotalMonth1 = salesTotalMonth1
 
-                      this.spinner.hide()
+                      
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
                       this.cd.detectChanges()
 
 
@@ -1317,6 +1356,7 @@ export class FeedsWidget12Component implements OnInit {
                               purchaseTotalMonth2 = purchaseTotalMonth2 + Number(res1.vatAmt)
                             })
                             this.purchaseTotalMonth2 = purchaseTotalMonth2
+                            this.cd.detectChanges()
 
                             this.productWiseMeterSalesMonth2 = res.data;
 
@@ -1350,7 +1390,9 @@ export class FeedsWidget12Component implements OnInit {
 
                             this.salesTotalMonth2 = salesTotalMonth2
 
-                            this.spinner.hide()
+                            
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
                             this.cd.detectChanges()
 
 
@@ -1382,6 +1424,7 @@ export class FeedsWidget12Component implements OnInit {
                                     purchaseTotalMonth3 = purchaseTotalMonth3 + Number(res1.vatAmt)
                                   })
                                   this.purchaseTotalMonth3 = purchaseTotalMonth3
+                                  this.cd.detectChanges()
 
                                   this.productWiseMeterSalesMonth3 = res.data;
 
@@ -1415,7 +1458,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                   this.salesTotalMonth3 = salesTotalMonth3
 
-                                  this.spinner.hide()
+                                  
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
                                   this.cd.detectChanges()
 
 
@@ -1448,6 +1493,7 @@ export class FeedsWidget12Component implements OnInit {
                                           purchaseTotalMonth4 = purchaseTotalMonth4 + Number(res1.vatAmt)
                                         })
                                         this.purchaseTotalMonth4 = purchaseTotalMonth4
+                                        this.cd.detectChanges()
 
                                         this.productWiseMeterSalesMonth4 = res.data;
 
@@ -1481,7 +1527,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                         this.salesTotalMonth4 = salesTotalMonth4
 
-                                        this.spinner.hide()
+                                        
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
                                         this.cd.detectChanges()
 
 
@@ -1515,6 +1563,7 @@ export class FeedsWidget12Component implements OnInit {
                                                 purchaseTotalMonth5 = purchaseTotalMonth5 + Number(res1.vatAmt)
                                               })
                                               this.purchaseTotalMonth5 = purchaseTotalMonth5
+                                              this.cd.detectChanges()
 
                                               this.productWiseMeterSalesMonth5 = res.data;
 
@@ -1548,7 +1597,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                               this.salesTotalMonth5 = salesTotalMonth5
 
-                                              this.spinner.hide()
+                                              
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
                                               this.cd.detectChanges()
 
                                             }
@@ -1597,6 +1648,7 @@ export class FeedsWidget12Component implements OnInit {
                           purchaseTotalMonth1 = purchaseTotalMonth1 + Number(res1.vatAmt)
                         })
                         this.purchaseTotalMonth1 = purchaseTotalMonth1
+                        this.cd.detectChanges()
 
                         this.productWiseMeterSalesMonth1 = res.data;
 
@@ -1630,7 +1682,9 @@ export class FeedsWidget12Component implements OnInit {
 
                         this.salesTotalMonth1 = salesTotalMonth1
 
-                        this.spinner.hide()
+                        
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
                         this.cd.detectChanges()
 
 
@@ -1663,6 +1717,7 @@ export class FeedsWidget12Component implements OnInit {
                                 purchaseTotalMonth2 = purchaseTotalMonth2 + Number(res1.vatAmt)
                               })
                               this.purchaseTotalMonth2 = purchaseTotalMonth2
+                              this.cd.detectChanges()
 
                               this.productWiseMeterSalesMonth2 = res.data;
 
@@ -1696,7 +1751,9 @@ export class FeedsWidget12Component implements OnInit {
 
                               this.salesTotalMonth2 = salesTotalMonth2
 
-                              this.spinner.hide()
+                              
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
                               this.cd.detectChanges()
 
 
@@ -1728,6 +1785,7 @@ export class FeedsWidget12Component implements OnInit {
                                       purchaseTotalMonth3 = purchaseTotalMonth3 + Number(res1.vatAmt)
                                     })
                                     this.purchaseTotalMonth3 = purchaseTotalMonth3
+                                    this.cd.detectChanges()
 
                                     this.productWiseMeterSalesMonth3 = res.data;
 
@@ -1761,7 +1819,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                     this.salesTotalMonth3 = salesTotalMonth3
 
-                                    this.spinner.hide()
+                                    
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
                                     this.cd.detectChanges()
 
 
@@ -1793,7 +1853,8 @@ export class FeedsWidget12Component implements OnInit {
                                           this.productPurchaseDetailsMonth4.map((res1: { vatAmt: any; }) => {
                                             purchaseTotalMonth4 = purchaseTotalMonth4 + Number(res1.vatAmt)
                                           })
-                                          this.purchaseTotalMonth4 = purchaseTotalMonth4
+                                          this.purchaseTotalMonth4 = purchaseTotalMonth4  
+                                          this.cd.detectChanges()
 
                                           this.productWiseMeterSalesMonth4 = res.data;
 
@@ -1827,7 +1888,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                           this.salesTotalMonth4 = salesTotalMonth4
 
-                                          this.spinner.hide()
+                                          
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
                                           this.cd.detectChanges()
 
 
@@ -1861,6 +1924,7 @@ export class FeedsWidget12Component implements OnInit {
                                                   purchaseTotalMonth5 = purchaseTotalMonth5 + Number(res1.vatAmt)
                                                 })
                                                 this.purchaseTotalMonth5 = purchaseTotalMonth5
+                                                this.cd.detectChanges()
 
                                                 this.productWiseMeterSalesMonth5 = res.data;
 
@@ -1894,7 +1958,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                 this.salesTotalMonth5 = salesTotalMonth5
 
-                                                this.spinner.hide()
+                                                
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
                                                 this.cd.detectChanges()
 
 
@@ -1928,6 +1994,7 @@ export class FeedsWidget12Component implements OnInit {
                                                         purchaseTotalMonth6 = purchaseTotalMonth6 + Number(res1.vatAmt)
                                                       })
                                                       this.purchaseTotalMonth6 = purchaseTotalMonth6
+                                                      this.cd.detectChanges()
 
                                                       this.productWiseMeterSalesMonth6 = res.data;
 
@@ -1961,7 +2028,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                       this.salesTotalMonth6 = salesTotalMonth6
 
-                                                      this.spinner.hide()
+                                                      
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
                                                       this.cd.detectChanges()
 
                                                     }
@@ -2014,6 +2083,7 @@ export class FeedsWidget12Component implements OnInit {
                             purchaseTotalMonth1 = purchaseTotalMonth1 + Number(res1.vatAmt)
                           })
                           this.purchaseTotalMonth1 = purchaseTotalMonth1
+                          this.cd.detectChanges()
 
                           this.productWiseMeterSalesMonth1 = res.data;
 
@@ -2047,7 +2117,9 @@ export class FeedsWidget12Component implements OnInit {
 
                           this.salesTotalMonth1 = salesTotalMonth1
 
-                          this.spinner.hide()
+                          
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -2079,6 +2151,7 @@ export class FeedsWidget12Component implements OnInit {
                                   purchaseTotalMonth2 = purchaseTotalMonth2 + Number(res1.vatAmt)
                                 })
                                 this.purchaseTotalMonth2 = purchaseTotalMonth2
+                                this.cd.detectChanges()
 
                                 this.productWiseMeterSalesMonth2 = res.data;
 
@@ -2112,7 +2185,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                 this.salesTotalMonth2 = salesTotalMonth2
 
-                                this.spinner.hide()
+                                
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
                                 this.month3 = 'Jun'
@@ -2143,6 +2218,7 @@ export class FeedsWidget12Component implements OnInit {
                                         purchaseTotalMonth3 = purchaseTotalMonth3 + Number(res1.vatAmt)
                                       })
                                       this.purchaseTotalMonth3 = purchaseTotalMonth3
+                                      this.cd.detectChanges()
 
                                       this.productWiseMeterSalesMonth3 = res.data;
 
@@ -2176,7 +2252,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                       this.salesTotalMonth3 = salesTotalMonth3
 
-                                      this.spinner.hide()
+                                      
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -2208,6 +2286,7 @@ export class FeedsWidget12Component implements OnInit {
                                               purchaseTotalMonth4 = purchaseTotalMonth4 + Number(res1.vatAmt)
                                             })
                                             this.purchaseTotalMonth4 = purchaseTotalMonth4
+                                            this.cd.detectChanges()
 
                                             this.productWiseMeterSalesMonth4 = res.data;
 
@@ -2241,7 +2320,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                             this.salesTotalMonth4 = salesTotalMonth4
 
-                                            this.spinner.hide()
+                                            
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -2275,6 +2356,7 @@ export class FeedsWidget12Component implements OnInit {
                                                   })
                                                   this.purchaseTotalMonth5 = purchaseTotalMonth5
 
+                                                  this.cd.detectChanges()
                                                   this.productWiseMeterSalesMonth5 = res.data;
 
                                                   this.vatSalesDetailsMonth5.length = 0;
@@ -2307,7 +2389,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                   this.salesTotalMonth5 = salesTotalMonth5
 
-                                                  this.spinner.hide()
+                                                  
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -2340,6 +2424,7 @@ export class FeedsWidget12Component implements OnInit {
                                                           purchaseTotalMonth6 = purchaseTotalMonth6 + Number(res1.vatAmt)
                                                         })
                                                         this.purchaseTotalMonth6 = purchaseTotalMonth6
+                                                        this.cd.detectChanges()
 
                                                         this.productWiseMeterSalesMonth6 = res.data;
 
@@ -2373,7 +2458,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                         this.salesTotalMonth6 = salesTotalMonth6
 
-                                                        this.spinner.hide()
+                                                        
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -2405,6 +2492,7 @@ export class FeedsWidget12Component implements OnInit {
                                                                 purchaseTotalMonth7 = purchaseTotalMonth7 + Number(res1.vatAmt)
                                                               })
                                                               this.purchaseTotalMonth7 = purchaseTotalMonth7
+                                                              this.cd.detectChanges()
 
                                                               this.productWiseMeterSalesMonth7 = res.data;
 
@@ -2438,7 +2526,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                               this.salesTotalMonth7 = salesTotalMonth7
 
-                                                              this.spinner.hide()
+                                                              
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
                                                             }
@@ -2493,6 +2583,7 @@ export class FeedsWidget12Component implements OnInit {
                               purchaseTotalMonth1 = purchaseTotalMonth1 + Number(res1.vatAmt)
                             })
                             this.purchaseTotalMonth1 = purchaseTotalMonth1
+                            this.cd.detectChanges()
 
                             this.productWiseMeterSalesMonth1 = res.data;
 
@@ -2526,7 +2617,9 @@ export class FeedsWidget12Component implements OnInit {
 
                             this.salesTotalMonth1 = salesTotalMonth1
 
-                            this.spinner.hide()
+                            
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -2558,6 +2651,7 @@ export class FeedsWidget12Component implements OnInit {
                                     purchaseTotalMonth2 = purchaseTotalMonth2 + Number(res1.vatAmt)
                                   })
                                   this.purchaseTotalMonth2 = purchaseTotalMonth2
+                                  this.cd.detectChanges()
 
                                   this.productWiseMeterSalesMonth2 = res.data;
 
@@ -2591,7 +2685,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                   this.salesTotalMonth2 = salesTotalMonth2
 
-                                  this.spinner.hide()
+                                  
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
                                   this.cd.detectChanges()
 
 
@@ -2623,6 +2719,7 @@ export class FeedsWidget12Component implements OnInit {
                                           purchaseTotalMonth3 = purchaseTotalMonth3 + Number(res1.vatAmt)
                                         })
                                         this.purchaseTotalMonth3 = purchaseTotalMonth3
+                                        this.cd.detectChanges()
 
                                         this.productWiseMeterSalesMonth3 = res.data;
 
@@ -2656,7 +2753,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                         this.salesTotalMonth3 = salesTotalMonth3
 
-                                        this.spinner.hide()
+                                        
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -2688,6 +2787,7 @@ export class FeedsWidget12Component implements OnInit {
                                                 purchaseTotalMonth4 = purchaseTotalMonth4 + Number(res1.vatAmt)
                                               })
                                               this.purchaseTotalMonth4 = purchaseTotalMonth4
+                                              this.cd.detectChanges()
 
                                               this.productWiseMeterSalesMonth4 = res.data;
 
@@ -2721,7 +2821,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                               this.salesTotalMonth4 = salesTotalMonth4
 
-                                              this.spinner.hide()
+                                              
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -2754,6 +2856,7 @@ export class FeedsWidget12Component implements OnInit {
                                                       purchaseTotalMonth5 = purchaseTotalMonth5 + Number(res1.vatAmt)
                                                     })
                                                     this.purchaseTotalMonth5 = purchaseTotalMonth5
+                                                    this.cd.detectChanges()
 
                                                     this.productWiseMeterSalesMonth5 = res.data;
 
@@ -2787,7 +2890,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                     this.salesTotalMonth5 = salesTotalMonth5
 
-                                                    this.spinner.hide()
+                                                    
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -2820,6 +2925,7 @@ export class FeedsWidget12Component implements OnInit {
                                                             purchaseTotalMonth6 = purchaseTotalMonth6 + Number(res1.vatAmt)
                                                           })
                                                           this.purchaseTotalMonth6 = purchaseTotalMonth6
+                                                          this.cd.detectChanges()
 
                                                           this.productWiseMeterSalesMonth6 = res.data;
 
@@ -2853,7 +2959,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                           this.salesTotalMonth6 = salesTotalMonth6
 
-                                                          this.spinner.hide()
+                                                          
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -2885,6 +2993,7 @@ export class FeedsWidget12Component implements OnInit {
                                                                   purchaseTotalMonth7 = purchaseTotalMonth7 + Number(res1.vatAmt)
                                                                 })
                                                                 this.purchaseTotalMonth7 = purchaseTotalMonth7
+                                                                this.cd.detectChanges()
 
                                                                 this.productWiseMeterSalesMonth7 = res.data;
 
@@ -2918,7 +3027,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                                 this.salesTotalMonth7 = salesTotalMonth7
 
-                                                                this.spinner.hide()
+                                                                
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -2945,6 +3056,7 @@ export class FeedsWidget12Component implements OnInit {
                                                                       }
 
                                                                       this.productPurchaseDetailsMonth8 = res.purchaseData;
+                                                                      this.cd.detectChanges()
 
                                                                       let purchaseTotalMonth8 = 0
                                                                       this.productPurchaseDetailsMonth8.map((res1: { vatAmt: any; }) => {
@@ -2984,7 +3096,10 @@ export class FeedsWidget12Component implements OnInit {
 
                                                                       this.salesTotalMonth8 = salesTotalMonth8
 
-                                                                      this.spinner.hide()
+                                                                      
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
+                                                                      this.cd.detectChanges()
 
                                                                     }
                                                                   });
@@ -3044,6 +3159,7 @@ export class FeedsWidget12Component implements OnInit {
                                 purchaseTotalMonth1 = purchaseTotalMonth1 + Number(res1.vatAmt)
                               })
                               this.purchaseTotalMonth1 = purchaseTotalMonth1
+                              this.cd.detectChanges()
 
                               this.productWiseMeterSalesMonth1 = res.data;
 
@@ -3077,7 +3193,10 @@ export class FeedsWidget12Component implements OnInit {
 
                               this.salesTotalMonth1 = salesTotalMonth1
 
-                              this.spinner.hide()
+                              this.cd.detectChanges()
+                              
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -3109,6 +3228,7 @@ export class FeedsWidget12Component implements OnInit {
                                       purchaseTotalMonth2 = purchaseTotalMonth2 + Number(res1.vatAmt)
                                     })
                                     this.purchaseTotalMonth2 = purchaseTotalMonth2
+                                    this.cd.detectChanges()
 
                                     this.productWiseMeterSalesMonth2 = res.data;
 
@@ -3142,7 +3262,10 @@ export class FeedsWidget12Component implements OnInit {
 
                                     this.salesTotalMonth2 = salesTotalMonth2
 
-                                    this.spinner.hide()
+                                    this.cd.detectChanges()
+                                    
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
                                     this.month3 = 'Jun'
@@ -3206,7 +3329,10 @@ export class FeedsWidget12Component implements OnInit {
 
                                           this.salesTotalMonth3 = salesTotalMonth3
 
-                                          this.spinner.hide()
+                                          this.cd.detectChanges()
+                                          
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -3271,7 +3397,10 @@ export class FeedsWidget12Component implements OnInit {
 
                                                 this.salesTotalMonth4 = salesTotalMonth4
 
-                                                this.spinner.hide()
+                                                this.cd.detectChanges()
+                                                
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -3337,7 +3466,10 @@ export class FeedsWidget12Component implements OnInit {
 
                                                       this.salesTotalMonth5 = salesTotalMonth5
 
-                                                      this.spinner.hide()
+                                                      this.cd.detectChanges()
+                                                      
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -3403,7 +3535,10 @@ export class FeedsWidget12Component implements OnInit {
 
                                                             this.salesTotalMonth6 = salesTotalMonth6
 
-                                                            this.spinner.hide()
+                                                            this.cd.detectChanges()
+                                                            
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -3468,7 +3603,10 @@ export class FeedsWidget12Component implements OnInit {
 
                                                                   this.salesTotalMonth7 = salesTotalMonth7
 
-                                                                  this.spinner.hide()
+                                                                  this.cd.detectChanges()
+                                                                  
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -3534,7 +3672,10 @@ export class FeedsWidget12Component implements OnInit {
 
                                                                         this.salesTotalMonth8 = salesTotalMonth8
 
-                                                                        this.spinner.hide()
+                                                                        this.cd.detectChanges()
+                                                                        
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -3601,6 +3742,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                                               this.salesTotalMonth9 = salesTotalMonth9
 
+                                                                              this.cd.detectChanges()
+                                                                              
+                                                                              this.cd.detectChanges()
                                                                               this.spinner.hide()
 
 
@@ -3704,7 +3848,8 @@ export class FeedsWidget12Component implements OnInit {
 
                                 this.salesTotalMonth1 = salesTotalMonth1
 
-                                this.spinner.hide()
+                                this.cd.detectChanges()
+                                this.cd.detectChanges()
 
 
 
@@ -3769,7 +3914,7 @@ export class FeedsWidget12Component implements OnInit {
 
                                       this.salesTotalMonth2 = salesTotalMonth2
 
-                                      this.spinner.hide()
+                                      this.cd.detectChanges()
 
 
                                       this.month3 = 'Jun'
@@ -3833,7 +3978,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                             this.salesTotalMonth3 = salesTotalMonth3
 
-                                            this.spinner.hide()
+                                            
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -3898,7 +4045,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                   this.salesTotalMonth4 = salesTotalMonth4
 
-                                                  this.spinner.hide()
+                                                  
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -3964,7 +4113,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                         this.salesTotalMonth5 = salesTotalMonth5
 
-                                                        this.spinner.hide()
+                                                        
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -4030,7 +4181,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                               this.salesTotalMonth6 = salesTotalMonth6
 
-                                                              this.spinner.hide()
+                                                              
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -4095,7 +4248,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                                     this.salesTotalMonth7 = salesTotalMonth7
 
-                                                                    this.spinner.hide()
+                                                                    
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -4161,7 +4316,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                                           this.salesTotalMonth8 = salesTotalMonth8
 
-                                                                          this.spinner.hide()
+                                                                          
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -4228,7 +4385,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                                                 this.salesTotalMonth9 = salesTotalMonth9
 
-                                                                                this.spinner.hide()
+                                                                                
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -4294,7 +4453,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                                                       this.salesTotalMonth10 = salesTotalMonth10
 
-                                                                                      this.spinner.hide()
+                                                                                      
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
                                                                                     }
                                                                                   });
@@ -4426,7 +4587,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                   this.salesTotalMonth1 = salesTotalMonth1
 
-                                  this.spinner.hide()
+                                  
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -4491,7 +4654,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                         this.salesTotalMonth2 = salesTotalMonth2
 
-                                        this.spinner.hide()
+                                        
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
                                         this.month3 = 'Jun'
@@ -4555,7 +4720,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                               this.salesTotalMonth3 = salesTotalMonth3
 
-                                              this.spinner.hide()
+                                              
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -4620,7 +4787,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                     this.salesTotalMonth4 = salesTotalMonth4
 
-                                                    this.spinner.hide()
+                                                    
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -4686,7 +4855,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                           this.salesTotalMonth5 = salesTotalMonth5
 
-                                                          this.spinner.hide()
+                                                          
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -4752,7 +4923,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                                 this.salesTotalMonth6 = salesTotalMonth6
 
-                                                                this.spinner.hide()
+                                                                
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -4817,7 +4990,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                                       this.salesTotalMonth7 = salesTotalMonth7
 
-                                                                      this.spinner.hide()
+                                                                      
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -4883,7 +5058,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                                             this.salesTotalMonth8 = salesTotalMonth8
 
-                                                                            this.spinner.hide()
+                                                                            
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -4950,7 +5127,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                                                   this.salesTotalMonth9 = salesTotalMonth9
 
-                                                                                  this.spinner.hide()
+                                                                                  
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -5016,7 +5195,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                                                         this.salesTotalMonth10 = salesTotalMonth10
 
-                                                                                        this.spinner.hide()
+                                                                                        
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -5082,7 +5263,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                                                               this.salesTotalMonth11 = salesTotalMonth11
 
-                                                                                              this.spinner.hide()
+                                                                                              
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
                                                                                             }
                                                                                           });
@@ -5182,7 +5365,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                     this.salesTotalMonth1 = salesTotalMonth1
 
-                                    this.spinner.hide()
+                                    
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -5246,7 +5431,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                           this.salesTotalMonth2 = salesTotalMonth2
 
-                                          this.spinner.hide()
+                                          
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
                                           this.month3 = 'Jun'
@@ -5309,7 +5496,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                 this.salesTotalMonth3 = salesTotalMonth3
 
-                                                this.spinner.hide()
+                                                
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -5373,7 +5562,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                       this.salesTotalMonth4 = salesTotalMonth4
 
-                                                      this.spinner.hide()
+                                                      
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -5438,7 +5629,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                             this.salesTotalMonth5 = salesTotalMonth5
 
-                                                            this.spinner.hide()
+                                                            
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -5503,7 +5696,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                                   this.salesTotalMonth6 = salesTotalMonth6
 
-                                                                  this.spinner.hide()
+                                                                  
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -5567,7 +5762,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                                         this.salesTotalMonth7 = salesTotalMonth7
 
-                                                                        this.spinner.hide()
+                                                                        
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -5632,6 +5829,8 @@ export class FeedsWidget12Component implements OnInit {
 
                                                                               this.salesTotalMonth8 = salesTotalMonth8
 
+                                                                              
+                                                                              this.cd.detectChanges()
                                                                               this.spinner.hide()
 
 
@@ -5698,7 +5897,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                                                     this.salesTotalMonth9 = salesTotalMonth9
 
-                                                                                    this.spinner.hide()
+                                                                                    
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -5763,7 +5964,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                                                           this.salesTotalMonth10 = salesTotalMonth10
 
-                                                                                          this.spinner.hide()
+                                                                                          
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -5828,7 +6031,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                                                                 this.salesTotalMonth11 = salesTotalMonth11
 
-                                                                                                this.spinner.hide()
+                                                                                                
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
 
 
@@ -5895,7 +6100,9 @@ export class FeedsWidget12Component implements OnInit {
 
                                                                                                       this.salesTotalMonth12 = salesTotalMonth12
 
-                                                                                                      this.spinner.hide()
+                                                                                                      
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
 
                                                                                                     }
                                                                                                   });
@@ -5942,9 +6149,13 @@ export class FeedsWidget12Component implements OnInit {
           }
         }
       }
-      this.spinner.hide()
+      
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
     } else {
-      this.spinner.hide()
+      
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
     }
 
   }
@@ -6095,9 +6306,13 @@ export class FeedsWidget12Component implements OnInit {
 
           this.salesTotal = salesTotal
 
-          this.spinner.hide()
+          
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
         } else {
-          this.spinner.hide()
+          
+                                                                              this.cd.detectChanges()
+                                                                              this.spinner.hide()
         }
       });
   }

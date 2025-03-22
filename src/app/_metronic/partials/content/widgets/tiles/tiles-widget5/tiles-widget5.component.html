@@ -188,24 +188,32 @@
             <div class="text-sm-end">
               <span *ngIf="isFilter">
                 <span *ngIf="isOILBook" (click)="isOILBookFilter()" style="font-size: 35px;cursor: pointer;"
-                  ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv" style="font-size: 30px;"></i></span>
+                  ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv"
+                    style="font-size: 30px;"></i></span>
                 <span *ngIf="isBankBook" (click)="isBankBookFilter()" style="font-size: 35px;cursor: pointer;"
-                  ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv" style="font-size: 30px;"></i></span>
+                  ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv"
+                    style="font-size: 30px;"></i></span>
                 <span *ngIf="isPOSBook" (click)="isPOSBookFilter()" style="font-size: 35px;cursor: pointer;"
-                  ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv" style="font-size: 30px;"></i></span>
+                  ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv"
+                    style="font-size: 30px;"></i></span>
                 <span *ngIf="isCASHBook" (click)="isCASHBookFilter()" style="font-size: 35px;cursor: pointer;"
-                  ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv" style="font-size: 30px;"></i></span>
+                  ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv"
+                    style="font-size: 30px;"></i></span>
                 <br>
               </span>
               <span *ngIf="!isFilter">
                 <span *ngIf="isOILBook" (click)="isOILBookNoFilter()" style="font-size: 35px;cursor: pointer;"
-                  ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv" style="font-size: 30px;"></i></span>
+                  ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv"
+                    style="font-size: 30px;"></i></span>
                 <span *ngIf="isBankBook" (click)="isBankBookNoFilter()" style="font-size: 35px;cursor: pointer;"
-                  ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv" style="font-size: 30px;"></i></span>
+                  ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv"
+                    style="font-size: 30px;"></i></span>
                 <span *ngIf="isPOSBook" (click)="isPOSBookNoFilter()" style="font-size: 35px;cursor: pointer;"
-                  ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv" style="font-size: 30px;"></i></span>
+                  ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv"
+                    style="font-size: 30px;"></i></span>
                 <span *ngIf="isCASHBook" (click)="isCASHBookNoFilter()" style="font-size: 35px;cursor: pointer;"
-                  ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv" style="font-size: 30px;"></i></span>
+                  ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv"
+                    style="font-size: 30px;"></i></span>
                 <br>
               </span>
             </div>
@@ -292,10 +300,18 @@
         <div class="row">
           <div class="col-sm-10">
             <div class="search-box me-4 mb-4 d-inline-block">
-              <div class="position-relative">
+              <!-- <div class="position-relative">
                 <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="searchBox">
                 <i class="bx bx-search-alt search-icon"></i>
+              </div> -->
+
+              <div class="position-relative">
+                <input class="form-control mr-sm-4" type="text" placeholder="search"
+                  oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                  [formControl]="searchBox" aria-label="Search..." (click)="searchInTable()">
+                <i class="bx bx-search-alt search-icon"></i>
               </div>
+
             </div>
           </div>
         </div>
@@ -552,16 +568,16 @@
             <table class="table table-centered table-nowrap" style="border: solid 1px;">
               <thead>
                 <tr>
-                  <th style="text-align: center;border: solid 1px;"> Book </th>
-                  <th style="text-align: center;border: solid 1px;">
+                  <th style="text-align: center;border: solid 1px;"><b> Book </b></th>
+                  <th style="text-align: center;border: solid 1px;"><b>
                     Opening balance <br>
-                    ( as of {{openingDate | date:"mediumDate"}} )
+                    ( as of {{openingDate | date:"mediumDate"}} )</b>
                   </th>
-                  <th style="text-align: center;border: solid 1px;"> Total Debit </th>
-                  <th style="text-align: center;border: solid 1px;"> Total Credit </th>
-                  <th style="text-align: center;border: solid 1px;">
+                  <th style="text-align: center;border: solid 1px;"><b> Total Debit </b></th>
+                  <th style="text-align: center;border: solid 1px;"><b> Total Credit </b></th>
+                  <th style="text-align: center;border: solid 1px;"><b>
                     Closing Balance <br>
-                    ( as of {{closingDate | date:"mediumDate"}} )
+                    ( as of {{closingDate | date:"mediumDate"}} )</b>
                   </th>
                 </tr>
               </thead>

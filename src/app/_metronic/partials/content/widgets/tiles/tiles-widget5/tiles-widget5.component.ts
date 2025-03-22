@@ -88,8 +88,8 @@ export class TilesWidget5Component {
   selected: any;
   selectValue: string[];
 
-  searchBox: any = "";
-  searchTermm: any;
+  // searchBox: any = "";
+  // searchTermm: any;
   page: any = 1;
   pageSize: any = 10;
 
@@ -267,6 +267,8 @@ export class TilesWidget5Component {
   dataPaymentTotalCredit: any = 0;
   dataPaytotal2223: any = 0;
   bankwisePayment2223Data: any = [];
+    searchBox:FormControl = new FormControl();
+    searchTermm: any = "";
 
   constructor(
     private modalService: NgbModal,
@@ -1106,6 +1108,73 @@ export class TilesWidget5Component {
             });
           }
         } else {
+          if(this.isCASHBook == true){
+            let termm = this.searchTermm;
+            this.cashAccountingBookData = this.cashAccountingSearchBookData.filter(function (res: any) {
+              return res.accountingBook.indexOf(termm) >= 0;
+            });
+            if (this.cashAccountingBookData.length == 0) {
+              termm = this.searchTermm;
+              this.cashAccountingBookData = this.cashAccountingSearchBookData.filter(function (res: any) {
+                return res.accountingTransactionType.indexOf(termm) >= 0;
+              });
+            } if (this.posAccountingBookData.length == 0) {
+              termm = this.searchTermm;
+              this.cashAccountingBookData = this.cashAccountingSearchBookData.filter(function (res: any) {
+                return res.accountingDetails.indexOf(termm) >= 0;
+              });
+            }
+            if (this.cashAccountingBookData.length == 0) {
+              termm = this.searchTermm;
+              this.cashAccountingBookData = this.cashAccountingSearchBookData.filter(function (res: any) {
+                return res.paidFromBankName.indexOf(termm) >= 0;
+              });
+            }
+            if (this.cashAccountingBookData.length == 0) {
+              termm = this.searchTermm;
+              this.cashAccountingBookData = this.cashAccountingSearchBookData.filter(function (res: any) {
+                return res.paidFromAccountNumber.indexOf(termm) >= 0;
+              });
+            }
+            if (this.cashAccountingBookData.length == 0) {
+              termm = this.searchTermm;
+              this.cashAccountingBookData = this.posAccountingSearchBookData.filter(function (res: any) {
+                return res.accountingFromInput.indexOf(termm) >= 0;
+              });
+            }
+            if (this.cashAccountingBookData.length == 0) {
+              termm = this.searchTermm;
+              this.cashAccountingBookData = this.cashAccountingSearchBookData.filter(function (res: any) {
+                return res.paidToBankName.indexOf(termm) >= 0;
+              });
+            }
+            if (this.cashAccountingBookData.length == 0) {
+              termm = this.searchTermm;
+              this.cashAccountingBookData = this.cashAccountingSearchBookData.filter(function (res: any) {
+                return res.paidToAccountNumber.indexOf(termm) >= 0;
+              });
+            }
+            if (this.cashAccountingBookData.length == 0) {
+              termm = this.searchTermm;
+              this.cashAccountingBookData = this.cashAccountingSearchBookData.filter(function (res: any) {
+                return res.accountingToInput.indexOf(termm) >= 0;
+              });
+            }
+            if (this.cashAccountingBookData.length == 0) {
+              termm = this.searchTermm;
+              this.cashAccountingBookData = this.cashAccountingSearchBookData.filter(function (res: any) {
+                return res.accountingCreatedBy.indexOf(termm) >= 0;
+              });
+            }
+            if (this.cashAccountingBookData.length == 0) {
+              termm = this.searchTermm;
+              this.cashAccountingBookData = this.cashAccountingSearchBookData.filter(function (res: any) {
+                return res.accountingAmout.indexOf(termm) >= 0;
+              });
+            }
+          } else{
+
+          }
         }
       }
     }
@@ -2781,5 +2850,13 @@ export class TilesWidget5Component {
 
   }
 
+  searchInTable(){ 
+    this.searchBox.valueChanges
+    .subscribe((dataList: any) => {
+      this.searchTermm = dataList;
+      this.search();
+    })
+  }
+  
 
 }
