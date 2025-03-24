@@ -8,8 +8,6 @@ export const environment = {
   USERDATA_KEY: 'authf649fc9a5f55',
   isMockEnabled: true,
   
-
-  
   defaultauth: 'fackbackend',
  
   firebaseConfig: {
@@ -22,10 +20,6 @@ export const environment = {
     appId: '',
     measurementId: ''
   },
-
-
-
-  crmAPIURL:'http://13.234.114.76:3000/', 
    
    //*  prod details listed // production environment*/
    key: 'rzp_live_I7qQzdkmzXiHSm',
@@ -33,9 +27,6 @@ export const environment = {
    key_sec: 'jNeIn02AjQXJZ4nHMqhQb28a',
    imagePath: 'https://veelsimage.s3.ap-south-1.amazonaws.com/',
    apiUrl: 'https://theveels.in:9000/', 
-
-
-
 
 
   appThemeName: 'Metronic',
