@@ -46,6 +46,7 @@ export class HeaderMenuComponent implements OnInit {
   isUpdateLite: boolean = false;
   fuelDealerConversionId: any;
   userName: string;
+  headQuarterName: any;
 
   constructor(private router: Router, private layout: LayoutService, private layoutInit: LayoutInitService, 
     private post: StatsService,
@@ -82,11 +83,18 @@ export class HeaderMenuComponent implements OnInit {
       this.city = dealerData.city;
       this.companyName = dealerData.companyName;
       this.phone1 = dealerData.hostPhone;
-      // this.getCorporateById(this.veelsplusCorporate)
+      
+    if(element.accessGroupId == '14'){
+      var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
+      this.city = managerData.city;
+      this.companyName = managerData.companyName;
+      this.phone1 = managerData.hostPhone;
+    }
       if (element.accessGroupId == '7') {
         this.isAdmin = true;
         this.isDealer = false;
         this.isTransporter = false;
+        this.getCorporateById(this.veelsplusCorporate)
       }else if (element.accessGroupId == '2') {
         this.isTransporter = true;
         this.isAdmin = false;
@@ -212,6 +220,7 @@ export class HeaderMenuComponent implements OnInit {
           this.city = res.data[0].city;
           this.companyName = res.data[0].companyName;
           this.phone1 = res.data[0].phone1;
+          this.headQuarterName = res.data[0].headQuarterName;
 
           // this.getBranchByCorporateVeelsplusId(this.vpcorporateId);
           this.cd.detectChanges();

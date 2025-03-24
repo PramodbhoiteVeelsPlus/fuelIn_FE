@@ -15,6 +15,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 // #fake-start#
 import { FakeAPIService } from './_fake/fake-api.service';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 // #fake-end#
 
 // function appInitializer(authService: AuthService) {
@@ -51,12 +52,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     
   ],
   // providers: [
-  //   {
-  //     provide: APP_INITIALIZER,
-  //     useFactory: appInitializer,
-  //     multi: true,
-  //     deps: [AuthService],
-  //   },
+  //     { provide: LocationStrategy, useClass: HashLocationStrategy }, 
   // ],
   bootstrap: [AppComponent],
 })

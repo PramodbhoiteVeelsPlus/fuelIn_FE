@@ -1,10 +1,18 @@
 <!--begin::Logo image-->
 <a routerLink="/dashboard">
   <ng-container *ngIf="currentLayoutType === 'dark-sidebar'">
-    <b class="h-25px app-sidebar-logo-default" style="font-size: 35px;">VeelsPlus</b>
+    <span class="logo-lg">
+      <img src="assets/images/home/fuelin.jpg" alt="" height="50">
+    </span>
+    <b class="h-25px app-sidebar-logo-default" style="font-size: 20px;"> FUELIN PLUS</b>
+    <span *ngIf="accessGroupId == '12'" class="ms-1" style="font-size: 16;">Prime</span>
   </ng-container>
   <ng-container *ngIf="currentLayoutType !== 'dark-sidebar'">
-    <b class="h-25px app-sidebar-logo-default" style="font-size: 35px;">VeelsPlus</b>
+    <span class="logo-lg">
+      <img src="assets/images/home/fuelin.jpg" alt="" height="50">
+    </span>
+    <b class="h-25px app-sidebar-logo-default" style="font-size: 20px;">FUELIN PLUS</b>
+    <span *ngIf="accessGroupId == '12'" class="ms-1" style="font-size: 16;">Prime</span>
   </ng-container>
 
   <img alt="Logo" src="./assets/media/logos/wheel.png" class="h-20px app-sidebar-logo-minimize" />

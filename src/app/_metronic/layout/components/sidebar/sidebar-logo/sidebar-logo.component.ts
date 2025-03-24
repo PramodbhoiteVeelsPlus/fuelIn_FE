@@ -17,17 +17,42 @@ export class SidebarLogoComponent implements OnInit, OnDestroy {
   currentLayoutType: LayoutType | null;
 
   toggleAttr: string;
+  accessGroupId: any;
+  isAdmin: boolean = false;
+  isDealer: boolean = false;
+  isTransporter: boolean = false;
+  router: any;
 
   constructor(private layout: LayoutService) {}
 
   ngOnInit(): void {
-    this.toggleAttr = `app-sidebar-${this.toggleType}`;
-    const layoutSubscr = this.layout.currentLayoutTypeSubject
-      .asObservable()
-      .subscribe((layout) => {
-        this.currentLayoutType = layout;
-      });
-    this.unsubscribe.push(layoutSubscr);
+    if (JSON.parse(localStorage.getItem('isLoggedin') || '{}') == true) {
+      var element = JSON.parse(localStorage.getItem("element") || '{}');
+      this.accessGroupId = element.accessGroupId
+      if (element.accessGroupId == '7') {
+        this.isAdmin = true;
+        this.isDealer = false;
+        this.isTransporter = false;
+      } else if (element.accessGroupId == '2') {
+        var transporterData = JSON.parse(localStorage.getItem('transporterData') || '');
+        this.isTransporter = true;
+        this.isAdmin = false;
+        this.isDealer = false;
+      } else if (element.accessGroupId == '12' || element.accessGroupId == '14' || element.accessGroupId == '19') {
+        this.isDealer = true;
+        this.isAdmin = false;
+        this.isTransporter = false;
+        // this.dealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
+        // this.getCustomize(this.dealerId);
+      } else {
+        this.isAdmin = false;
+        this.isDealer = false;
+        this.isTransporter = false;
+        this.router.navigate(['/auth/login']);
+      }
+    } else {
+      this.router.navigate(['/auth/login'])
+    }
   }
 
   ngOnDestroy() {
