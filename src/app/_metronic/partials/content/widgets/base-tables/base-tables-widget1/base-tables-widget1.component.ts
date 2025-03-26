@@ -329,8 +329,11 @@ export class BaseTablesWidget1Component implements OnInit {
                 this.selectCorporate.controls["startDate"].setValue("");
                 this.selectCorporate.controls["endDate"].setValue("");
                 alert("Data not found!")
+                this.allCreditReq = [];
+                this.productWiseCRAmt = []
                 this.showHeading = false;
                 this.getFuelCreditRequestByfuelDealerId(this.fuelDealerId);
+                this.spinner.hide()
                 this.cd.detectChanges()
               }
             });
@@ -369,7 +372,10 @@ export class BaseTablesWidget1Component implements OnInit {
                 this.selectCorporate.controls["startDate"].setValue("");
                 this.selectCorporate.controls["endDate"].setValue("");
                 alert("Data not found!")
+                this.allCreditReq = [];
+                this.productWiseCRAmt = []
                 this.getFuelCreditRequestByCorporateId(this.dealerCorporateId);
+                this.spinner.hide()
                 this.cd.detectChanges()
               }
             });

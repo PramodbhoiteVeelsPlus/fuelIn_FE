@@ -510,8 +510,8 @@ export class MixedWidget4Component {
                             this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
                             let dateCoin = moment(this.addPaymentForm.value.paymentDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD') + ' ' + moment(new Date()).format('HH:mm:ss')
                             this.addCoindetails(res.data.insertId, dateCoin)
-                            this.resetPaymentForm();
-                            this.clearAll()
+                            // this.resetPaymentForm();
+                            // this.clearAll()
                             this.isSelected1 = false;
                             this.spinner.hide();
                             this.cd.detectChanges()
@@ -553,8 +553,8 @@ export class MixedWidget4Component {
                             this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
                             let dateCoin = moment(this.addPaymentForm.value.paymentDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD') + ' ' + moment(new Date()).format('HH:mm:ss')
                             this.addCoindetails(res.data.insertId, dateCoin)
-                            this.resetPaymentForm();
-                            this.clearAll()
+                            // this.resetPaymentForm();
+                            // this.clearAll()
                             this.isSelected1 = false;
                             this.spinner.hide();
                             this.cd.detectChanges()
@@ -597,8 +597,8 @@ export class MixedWidget4Component {
                           this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
                           let dateCoin = moment(this.addPaymentForm.value.paymentDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD') + ' ' + moment(new Date()).format('HH:mm:ss')
                           this.addCoindetails(res.data.insertId, dateCoin)
-                          this.resetPaymentForm();
-                          this.clearAll()
+                          // this.resetPaymentForm();
+                          // this.clearAll()
                           this.isSelected1 = false;
                           this.spinner.hide();
                           this.cd.detectChanges()
@@ -707,8 +707,8 @@ export class MixedWidget4Component {
                               this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
                               let dateCoin = moment(this.addPaymentForm.value.paymentDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD') + ' ' + moment(new Date()).format('HH:mm:ss')
                               this.addCoindetails(res.data.insertId, dateCoin)
-                              this.resetPaymentForm();
-                              this.clearAll()
+                              // this.resetPaymentForm();
+                              // this.clearAll()
                               this.isSelected1 = false;
                               this.spinner.hide();
                               this.cd.detectChanges()
@@ -753,8 +753,8 @@ export class MixedWidget4Component {
                               this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
                               let dateCoin = moment(this.addPaymentForm.value.paymentDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD') + ' ' + moment(new Date()).format('HH:mm:ss')
                               this.addCoindetails(res.data.insertId, dateCoin)
-                              this.resetPaymentForm();
-                              this.clearAll()
+                              // this.resetPaymentForm();
+                              // this.clearAll()
                               this.isSelected1 = false;
                               this.spinner.hide();
                               this.cd.detectChanges()
@@ -800,8 +800,8 @@ export class MixedWidget4Component {
                             this.updatePaymentInFuelDealerCustomerMap(this.fuelDealerCorpMapIdNew)
                             let dateCoin = moment(this.addPaymentForm.value.paymentDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD') + ' ' + moment(new Date()).format('HH:mm:ss')
                             this.addCoindetails(res.data.insertId, dateCoin)
-                            this.resetPaymentForm();
-                            this.clearAll()
+                            // this.resetPaymentForm();
+                            // this.clearAll()
                             this.isSelected1 = false;
                             this.spinner.hide();
                             this.cd.detectChanges()
@@ -910,9 +910,11 @@ export class MixedWidget4Component {
         if (res.status == 'OK') {
           this.updatelastDateCR(fuelDealerCustomMapId)
           this.spinner.hide();
+          this.cd.detectChanges()
         } else {
           alert("ERROR to Update PAYMENT Details!")
           this.spinner.hide();
+          this.cd.detectChanges()
 
           // this.getDetailsByMapId(this.fuelDealerCorpMapIdNew);
         }
@@ -930,8 +932,6 @@ export class MixedWidget4Component {
       .subscribe((res) => {
         if (res.status == 'OK') {
           // console.log("Date updated successfully..")
-          alert("PAYMENT Details Updated Successfully!")
-          this.spinner.hide();
           this.addPaymentForm.controls["paymentMethod"].setValue("");
           this.addPaymentForm.controls["paymentAmount"].setValue("");
           this.addPaymentForm.controls["paymentTransactionNo"].setValue("");
@@ -944,10 +944,14 @@ export class MixedWidget4Component {
           this.posEntry = 'FALSE'
           this.isCash = false;
           this.resetPaymentForm();
+          alert("PAYMENT Details Updated Successfully!")
+          this.spinner.hide();
+          this.cd.detectChanges()
         } else {
           // console.log("Error to update Date..")
           alert("ERROR to Update PAYMENT Details!")
           this.spinner.hide();
+          this.cd.detectChanges()
         }
       });
   }

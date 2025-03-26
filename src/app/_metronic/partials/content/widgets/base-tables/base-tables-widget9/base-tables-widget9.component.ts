@@ -300,17 +300,19 @@ export class BaseTablesWidget9Component implements OnInit {
                     this.totalAmount = Number(this.totalAmount) + Number(fuelCreditId1.creditAmount);
 
                     this.spinner.hide();
+                    this.cd.detectChanges()
                   });
                 } else {
                   this.isNoRequest = false;
                   this.spinner.hide();
+                  this.cd.detectChanges()
                 }
-                this.spinner.hide();
                 this.getTransactionDetails();
+                this.spinner.hide();
                 this.cd.detectChanges()
               } else {
-                this.spinner.hide();
                 this.getTransactionDetails();
+                this.spinner.hide();
                 this.cd.detectChanges()
               }
             });
@@ -340,6 +342,7 @@ export class BaseTablesWidget9Component implements OnInit {
           this.toState = res.data[0].state;
           this.invoiceFor = res.data[0].mappingCompanyName;
           this.forCorporateId = res.data[0].corporateId;
+          this.cd.detectChanges()
         } else {
           this.name = res.data[0].companyName;
           this.toAddress = res.data[0].city;
@@ -347,6 +350,7 @@ export class BaseTablesWidget9Component implements OnInit {
           this.toState = res.data[0].state;
           this.invoiceFor = res.data[0].companyName;
           this.forCorporateId = res.data[0].corporateId;
+          this.cd.detectChanges()
         }
       }
     });
@@ -435,6 +439,7 @@ export class BaseTablesWidget9Component implements OnInit {
               this.totalPurchaseAmount = Number(this.totalPurchaseAmount) + Number(accountTransacLogId1.grandTotalAmount);
 
               this.spinner.hide();
+              this.cd.detectChanges()
             });
           }
         }
@@ -473,6 +478,7 @@ export class BaseTablesWidget9Component implements OnInit {
 
                 this.combineCreditAndPaymentDetails.push(dataJson);
               });
+              this.cd.detectChanges()
             }
             if (this.allPaymentData.length) {
               //purchase
@@ -512,12 +518,14 @@ export class BaseTablesWidget9Component implements OnInit {
                   a.date < b.date ? -1 : 1
                 );
               });
+              this.cd.detectChanges()
             } else {
             }
           } else {
           }
         } else {
           this.showPaymetCreditTable = false;
+          this.cd.detectChanges()
         }
       });
   }
@@ -549,7 +557,7 @@ export class BaseTablesWidget9Component implements OnInit {
     } else {
       this.invoiceOf = "LUBE TAX"
     }
-
+    this.spinner.show()
     let data = {
       fromGSTNo: this.fromGSTNo,  //for manager
       invoiceNo: this.invoiceNo,
@@ -587,6 +595,7 @@ export class BaseTablesWidget9Component implements OnInit {
       dueDate: moment(this.searchDiscountForm.value.dueDate, ["DD-MM-YYYY",]).format("YYYY-MM-DD"),
     };
 
+   
     this.post.addfuelInvoiceFuelAndPaymentPOST(data).subscribe((res) => {
       if (res.status == "OK") {
         alert(res.msg);
@@ -598,6 +607,7 @@ export class BaseTablesWidget9Component implements OnInit {
         this.invoiceNo = "";
         this.hsnCode = "";
         window.location.reload()
+        this.spinner.hide()
         
         this.cd.detectChanges()
 

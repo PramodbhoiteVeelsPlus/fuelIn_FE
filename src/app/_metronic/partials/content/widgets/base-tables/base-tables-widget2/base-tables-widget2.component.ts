@@ -212,6 +212,7 @@ export class BaseTablesWidget2Component implements OnInit {
   getFilterCRPaymentFORDealer() {
     if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
       if (this.filterForm.value.selectCorporateName) {
+        this.spinner.show()
         let data = {
           fuelDealerId: this.fuelDealerId,
           corporateId: this.dealerCorporateId,
@@ -227,10 +228,13 @@ export class BaseTablesWidget2Component implements OnInit {
                   this.crPaymentDetails = res.data;
                   this.crPaymentDetailsData = res.data;
                   this.showHeading = true;
+                  this.spinner.hide()
                   this.cd.detectChanges();
                 }
                 else {
                   alert("Don't have any Credit Payment in this Month!")
+                  this.crPaymentDetails = [];
+                  this.spinner.hide()
                   this.cd.detectChanges();
                 }
               }
@@ -240,6 +244,7 @@ export class BaseTablesWidget2Component implements OnInit {
         }
       }
       else {
+        this.spinner.show()
         let data = {
           corporateId: this.dealerCorporateId,
           startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
@@ -253,10 +258,13 @@ export class BaseTablesWidget2Component implements OnInit {
                   this.crPaymentDetails = res.data;
                   this.crPaymentDetailsData = res.data;
                   this.showHeading = true;
+                  this.spinner.hide()
                   this.cd.detectChanges();
                 }
                 else {
                   alert("Don't have any Credit Payment in this Month!")
+                  this.crPaymentDetails = [];
+                  this.spinner.hide()
                   this.cd.detectChanges();
                 }
               }
@@ -268,6 +276,7 @@ export class BaseTablesWidget2Component implements OnInit {
     }
     else {
       if (this.filterForm.value.selectCorporateName) {
+        this.spinner.show()
         let data = {
           fuelDealerId: this.fuelDealerId,
           corporateId: this.dealerCorporateId,
@@ -283,10 +292,13 @@ export class BaseTablesWidget2Component implements OnInit {
                   this.crPaymentDetails = res.data;
                   this.crPaymentDetailsData = res.data;
                   this.showHeading = true;
+                  this.spinner.hide()
                   this.cd.detectChanges();
                 }
                 else {
                   alert("Don't have any Credit Payment in this Month for selected Customer!")
+                  this.crPaymentDetails = [];
+                  this.spinner.hide()
                   this.cd.detectChanges();
                 }
               }
