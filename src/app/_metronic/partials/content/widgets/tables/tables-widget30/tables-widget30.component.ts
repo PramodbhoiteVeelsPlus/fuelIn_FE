@@ -421,7 +421,11 @@ export class TablesWidget30Component {
       } else {
         this.show = true;
         this.rowNumber = i
-        this.previousOutstandExpand = previousOutstand
+        if(previousOutstand == 'null'){
+          this.previousOutstandExpand = 0
+        } else {
+          this.previousOutstandExpand = previousOutstand
+        }
         this.maxCreditAmountExpand = maxCreditAmount
         this.creditDayLimitExpand = creditDayLimit
         this.manualNumberStartExpand = manualNumberStart
@@ -431,7 +435,11 @@ export class TablesWidget30Component {
     } else {
       this.rowNumber = i
       this.show = true;
-      this.previousOutstandExpand = previousOutstand
+      if(previousOutstand == 'null'){
+        this.previousOutstandExpand = 0
+      } else {
+        this.previousOutstandExpand = previousOutstand
+      }
       this.maxCreditAmountExpand = maxCreditAmount
       this.creditDayLimitExpand = creditDayLimit
       this.manualNumberStartExpand = manualNumberStart

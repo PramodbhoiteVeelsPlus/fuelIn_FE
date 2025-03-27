@@ -187,8 +187,6 @@ export class TablesWidget31Component {
 
   getMappingAccount(fuelDealerId: any) {
     this.spinner.show();
-    this.mappingAccData2 = []
-    this.mappingAccSearchData2 = []
     this.crOutstanding2 = 0
     this.advanceAmt = 0
     let data = {
@@ -220,7 +218,6 @@ export class TablesWidget31Component {
 
   getMappingAccount1(fuelDealerId: any) {
     this.spinner.show();
-    this.mappingAccSearchData2 = []
     this.crOutstanding2 = 0
     this.advanceAmt = 0
     let data = {
