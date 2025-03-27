@@ -130,7 +130,7 @@ export class ViewAccountComponent {
           }
         }
         else {
-          this.spinner.hide();
+          // this.spinner.hide();
         }
       })
   }
@@ -148,14 +148,14 @@ export class ViewAccountComponent {
           // this.getFuelCreditRequestCorporateByfuelDealerId(this.fuelDealerId);
         }
         else {
-          this.spinner.hide();
+          // this.spinner.hide();
           this.cd.detectChanges()
         }
       })
   }
   
   getMappingAccount(fuelDealerId: any){
-    this.spinner.show();
+    // this.spinner.show();
     // this.crOutstanding2 = 0
     this.advanceAmt = 0
     let data = {
@@ -171,10 +171,10 @@ export class ViewAccountComponent {
             this.advanceAmt = this.advanceAmt + (Number(res.netOS)) 
           } 
         })
-        this.spinner.hide();
+        // this.spinner.hide();
         this.cd.detectChanges()
       } else{
-        this.spinner.hide();
+        // this.spinner.hide();
         this.cd.detectChanges()
       }
     })

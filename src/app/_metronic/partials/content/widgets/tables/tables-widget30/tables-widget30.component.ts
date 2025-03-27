@@ -249,13 +249,13 @@ export class TablesWidget30Component {
           this.mappingAccData = res.data;
           this.mappingAccSearchData = res.data;
           localStorage.setItem('mappingAccData', JSON.stringify(res.data));
-          this.spinner.hide();
           this.cd.detectChanges()
+          this.spinner.hide();
         } else {
           this.mappingAccData = [];
           localStorage.setItem('mappingAccData', JSON.stringify([]));
-          this.spinner.hide();
           this.cd.detectChanges()
+          this.spinner.hide();
         }
       })
   }
@@ -272,13 +272,13 @@ export class TablesWidget30Component {
           this.mappingAccData = res.data;
           this.mappingAccSearchData = res.data;
           localStorage.setItem('mappingAccData', JSON.stringify(res.data));
-          this.spinner.hide();
           this.cd.detectChanges()
+          this.spinner.hide();
         } else {
           this.mappingAccData = [];
           localStorage.setItem('mappingAccData', JSON.stringify([]));
-          this.spinner.hide();
           this.cd.detectChanges()
+          this.spinner.hide();
         }
       })
   }

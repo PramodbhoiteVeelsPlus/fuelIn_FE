@@ -1,9 +1,9 @@
 <div class="card-body">
  
-  <div class="fw-bold" [ngClass]="'text-inverse-' + color + ' fs-5'">
+  <div class="fw-bold" [ngClass]="'text-inverse-' + color + ' fs-6'">
     {{ title }}
   </div>
-  <div *ngIf="isOS" [ngClass]="'text-inverse-' + color" class="fw-bold text-white me-2 lh-1 ls-n2">
+  <div *ngIf="isOS" [ngClass]="'text-inverse-' + color" class="fw-bold text-white me-2 lh-1 ls-n2 fs-5">
    <span *ngIf="!totalOS">
     ₹ 0
    </span>
@@ -11,10 +11,10 @@
     ₹ {{ totalOS }}
    </span>
   </div>
-  <div *ngIf="isSales" [ngClass]="'text-inverse-' + color" class="fw-bold text-white me-2 lh-1 ls-n2">
+  <div *ngIf="isSales" [ngClass]="'text-inverse-' + color" class="fw-bold text-white me-2 lh-1 ls-n2 fs-5">
     ₹ {{ thisMonthCrSale | number: "1.2-2" }}
   </div>
-  <div *ngIf="isPayment" [ngClass]="'text-inverse-' + color" class="fw-bold text-white me-2 lh-1 ls-n2">
+  <div *ngIf="isPayment" [ngClass]="'text-inverse-' + color" class="fw-bold text-white me-2 lh-1 ls-n2 fs-5">
     ₹ {{ thisMonthCrPayment | number: "1.2-2"  }}
   </div>
 

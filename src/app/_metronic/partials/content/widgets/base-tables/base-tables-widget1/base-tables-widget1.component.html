@@ -122,14 +122,14 @@
         <div class="col-md-4">
           <div class="search-box">
             <!-- <div class="position-relative"> -->
-              <!-- <input class="form-control " type="text" placeholder="search" style="width: 289px"
+            <!-- <input class="form-control " type="text" placeholder="search" style="width: 289px"
                 [(ngModel)]="searchData" [ngModelOptions]="{standalone: true}" (input)="onSearch()">
               <i class="bx bx-search-alt search-icon"></i> -->
-              <div class="position-relative">
-                  <input class="form-control mr-sm-4" type="text" placeholder="search" 
-                  oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
-                  [formControl]="searchBox" aria-label="Search" (click) = "searchInTable()">
-                <i class="bx bx-search-alt search-icon"></i>
+            <div class="position-relative">
+              <input class="form-control mr-sm-4" type="text" placeholder="search"
+                oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                [formControl]="searchBox" aria-label="Search" (click)="searchInTable()">
+              <i class="bx bx-search-alt search-icon"></i>
               <!-- </div> -->
             </div>
           </div>
@@ -443,6 +443,18 @@
                       </button>
                     </div>
                     <div class="modal-body">
+                      <div class="row">
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-2">
+                          <button class="btn btn-outline-success my-2 my-sm-0"
+                            (click)="askForPass(PasswordTemplate,data.fuelCreditId,data.fuelDealerCustomerMapId,'CANCEL')">YES</button>
+                        </div>
+                        <div class="col-auto">
+                          <button type="button" class="btn btn-danger" aria-label="Close"
+                            (click)="d('Cross click')">No</button>
+                        </div>
+                      </div>
                     </div>
                     <!-- <div class="row">
                       <div class="col-md-4">
@@ -475,6 +487,18 @@
                       </button>
                     </div>
                     <div class="modal-body">
+                      <div class="row">
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-2">
+                          <button class="btn btn-outline-success my-2 my-sm-0"
+                          (click)="askForPassEdit(PasswordTemplateEdit,updateFuelCr,data.fuelCreditId,data.refuelForDriver,data.hostPhone,data.fuelProdId,data.productCategory,data.productRate,data.vehicleNumber,data.reqQuantity,data.reqCreditAmount,data.actualCreditQuantity,data.creditAmount,data.estimatedRefuelDate,data.vehicleId,data.vehicleVPStatus,data.fuelDealerCustomerMapId,data.manualCrNumber)">YES</button>
+                        </div>
+                        <div class="col-auto">
+                          <button type="button" class="btn btn-danger" aria-label="Close"
+                            (click)="d('Cross click')">No</button>
+                        </div>
+                      </div>
                     </div>
                     <!-- <div class="row">
                       <div class="col-md-4">
@@ -823,7 +847,7 @@
                                           {{manualCrNumberShow}}
                                         </span>
                                         <span *ngIf="manualCrNumberShow == 'undefined'">
-                                          
+
                                         </span>
                                       </span>
                                       <span *ngIf="vehicleNumberShow != 'undefined'">
@@ -831,7 +855,7 @@
                                           {{manualCrNumberShow}}
                                         </span>
                                         <span *ngIf="manualCrNumberShow == 'undefined'">
-                                          
+
                                         </span>
                                       </span>
                                       <!-- </span> -->
@@ -1484,6 +1508,18 @@
                 </button>
               </div>
               <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-4">
+                  </div>
+                  <div class="col-md-2">
+                    <button class="btn btn-outline-success my-2 my-sm-0"
+                      (click)="askForPass(PasswordTemplate,data.fuelCreditId,data.fuelDealerCustomerMapId,'CANCEL')">YES</button>
+                  </div>
+                  <div class="col-auto">
+                    <button type="button" class="btn btn-danger" aria-label="Close"
+                      (click)="d('Cross click')">No</button>
+                  </div>
+                </div>
               </div>
               <!-- <div class="row">
                 <div class="col-md-4">
@@ -1515,6 +1551,18 @@
                 </button>
               </div>
               <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-4">
+                  </div>
+                  <div class="col-md-2">
+                    <button class="btn btn-outline-success my-2 my-sm-0"
+                    (click)="askForPassEdit(PasswordTemplateEdit,updateFuelCr,data.fuelCreditId,data.refuelForDriver,data.hostPhone,data.fuelProdId,data.productCategory,data.productRate,data.vehicleNumber,data.reqQuantity,data.reqCreditAmount,data.actualCreditQuantity,data.creditAmount,data.estimatedRefuelDate,data.vehicleId,data.vehicleVPStatus,data.fuelDealerCustomerMapId,data.manualCrNumber)">YES</button>
+                  </div>
+                  <div class="col-auto">
+                    <button type="button" class="btn btn-danger" aria-label="Close"
+                      (click)="d('Cross click')">No</button>
+                  </div>
+                </div>
               </div>
               <!-- <div class="row">
                 <div class="col-md-4">
@@ -1681,7 +1729,7 @@
                                     {{manualCrNumberShow}}
                                   </span>
                                   <span *ngIf="manualCrNumberShow == 'undefined'">
-                                    
+
                                   </span>
                                 </span>
                                 <span *ngIf="vehicleNumberShow != 'undefined'">
@@ -1689,7 +1737,7 @@
                                     {{manualCrNumberShow}}
                                   </span>
                                   <span *ngIf="manualCrNumberShow == 'undefined'">
-                                    
+
                                   </span>
                                 </span>
                                 <!-- </span> -->
