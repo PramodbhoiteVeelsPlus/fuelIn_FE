@@ -366,7 +366,7 @@
                     <span *ngIf="!showamount">
                       <input type="number" class="form-control" [(ngModel)]="charges.creditAmount"
                         [ngModelOptions]="{standalone: true}" placeholder="Enter Credit Amount"
-                        (blur)="amountCalculateNEW(i)" />
+                        (blur)="amountCalculateNEW(i)" (keypress)="preventSymbols($event)"/>
                     </span>
 
                   </td>
@@ -374,7 +374,7 @@
                     <span *ngIf="showamount">
                       <input type="number" class="form-control" [(ngModel)]="charges.creditQuantity"
                         [ngModelOptions]="{standalone: true}" placeholder="Enter Credit Quantity"
-                        (blur)="quantityCalculateNEW(i)" />
+                        (blur)="quantityCalculateNEW(i)" (keypress)="preventSymbols($event)"/>
                     </span>
                   </td>
 

@@ -160,6 +160,8 @@ export class TablesWidget30Component {
   crDays: string;
   addressId: any
   customerId: any;
+  searchBox: FormControl = new FormControl();
+  searchTerm: any;
 
   constructor(
     private post: WidgetService,
@@ -185,13 +187,13 @@ export class TablesWidget30Component {
     this.dealerLoginVPId = element.veelsPlusCorporateID;
     if (element.accessGroupId == 12 || element.accessGroupId == 14 || element.accessGroupId == 19 || element.accessGroupId == 21) {
       this.dealerAccess = true
-      if(element.accessGroupId == '12'){
+      if (element.accessGroupId == '12') {
         this.customerId = dealerData.customerId;
         this.headerName1 = dealerData.companyName;
-        this.headerName2 = dealerData.address1+', '+dealerData.address2+', '+dealerData.city;
+        this.headerName2 = dealerData.address1 + ', ' + dealerData.address2 + ', ' + dealerData.city;
         this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
-      } 
-      if(element.accessGroupId == '14'){
+      }
+      if (element.accessGroupId == '14') {
         var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
         this.customerId = managerData.customerId;
         this.searchDealerBycustomerId(this.customerId)
@@ -216,26 +218,26 @@ export class TablesWidget30Component {
     this.getMappingAccount(this.fuelDealerId);
   }
 
-  searchDealerBycustomerId(customerId: any) {  
-    this.spinner.show()  
+  searchDealerBycustomerId(customerId: any) {
+    this.spinner.show()
     let data = {
       customerId: customerId,
     };
     this.post.getCustomerByCustomerIdPOST(data)
       .subscribe(res => {
-        if (res.data.length) {         
+        if (res.data.length) {
           this.headerName1 = res.data[0].companyName;
           this.headerName2 = res.data[0].address1 + ', ' + res.data[0].address2 + ', ' + res.data[0].city;
-          this.headerName3 = res.data[0].state + '-' + res.data[0].pin + '  ' + "GST: " + res.data[0].GSTNumber;    
+          this.headerName3 = res.data[0].state + '-' + res.data[0].pin + '  ' + "GST: " + res.data[0].GSTNumber;
           this.spinner.hide();
-          this.cd.detectChanges()     
-          
+          this.cd.detectChanges()
+
         } else {
           this.spinner.hide();
           this.cd.detectChanges()
         }
       });
-}
+  }
 
   getMappingAccount(fuelDealerId: any) {
     this.spinner.show();
@@ -395,15 +397,19 @@ export class TablesWidget30Component {
     this.excelService.exportAsExcelFile(this.mappingAccDataExcel, "All Customers");
   }
 
-  onSearch() {
-    // Trim the query and convert it to lowercase for case-insensitive search
-    let query = this.searchData
-    query = query.trim().toLowerCase();
+  searchInTable(){
+    this.searchBox.valueChanges
+    .subscribe((term) => {
+      this.searchTerm = term;
+      this.onSearch();
+    })
+  }
 
-    // Filter the data based on the search query    
-    this.mappingAccData = this.mappingAccSearchData.filter((item: { companyName: any; }) =>
-      item.companyName.toLowerCase().includes(query)
-    );
+  onSearch() {
+    let term = this.searchTerm;
+    this.mappingAccData = this.mappingAccSearchData.filter(function (res: { companyName: string | any[]; }) {
+      return res.companyName.indexOf(term) >= 0;
+    });
   }
 
   changeValue(i: any, previousOutstand: any, maxCreditAmount: any, creditDayLimit: any, manualNumberStart: any, manualNumberEnd: any, fuelDealerCustomerMapId: any, mappingStatus: any) {
@@ -421,7 +427,7 @@ export class TablesWidget30Component {
       } else {
         this.show = true;
         this.rowNumber = i
-        if(previousOutstand == 'null'){
+        if (previousOutstand == 'null') {
           this.previousOutstandExpand = 0
         } else {
           this.previousOutstandExpand = previousOutstand
@@ -435,7 +441,7 @@ export class TablesWidget30Component {
     } else {
       this.rowNumber = i
       this.show = true;
-      if(previousOutstand == 'null'){
+      if (previousOutstand == 'null') {
         this.previousOutstandExpand = 0
       } else {
         this.previousOutstandExpand = previousOutstand
@@ -983,6 +989,12 @@ export class TablesWidget30Component {
 
   addFuelCreditVehicle() {
     if (this.fuelDealerCorpMapIdNew) {
+
+      if (this.addVehicleData.some((vehicle: { vehicleNumber: any }) => !vehicle.vehicleNumber || String(vehicle.vehicleNumber).trim() === '')) {
+        alert("Please enter vehicle number.");
+        return;
+      }
+
       let createdDate = new Date
       let data = {
         addVehicleData: this.addVehicleData,

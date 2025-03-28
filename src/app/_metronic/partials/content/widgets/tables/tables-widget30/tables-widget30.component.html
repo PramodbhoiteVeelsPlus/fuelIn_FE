@@ -127,8 +127,11 @@
 
         <div class="search-box me-2 mb-2 d-inline-block">
           <div class="position-relative">
-            <input class="form-control" type="text" (input)="onSearch()" placeholder="Search" [(ngModel)]="searchData"
-              [ngModelOptions]="{standalone: true}">
+            <!-- <input class="form-control" type="text" (input)="onSearch()" placeholder="Search" [(ngModel)]="searchData"
+              [ngModelOptions]="{standalone: true}"> -->
+              <input class="form-control mr-sm-2" type="text" placeholder="Search customer"
+                  oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                  [formControl]="searchBox" aria-label="Search" (click)="searchInTable()">
             <i class="bx bx-search-alt search-icon"></i>
           </div>
         </div>

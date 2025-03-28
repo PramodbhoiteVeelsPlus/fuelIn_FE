@@ -476,6 +476,19 @@ submitByDealerForAdvance() {
         if (this.fuelDealerCorpMapIdNew) {
           if (this.requestTransporterAdvance.value.advanceManualCrAmount) {
             if (this.requestTransporterAdvance.value.advanceAmount) {
+
+              if (this.CreditRequestDataAdvance.some((advanceManualCrAmount: { advanceManualCrAmount: any }) => !advanceManualCrAmount.advanceManualCrAmount || String(advanceManualCrAmount.advanceManualCrAmount).trim() === '')) {
+                alert("Please enter Bill / Ref Number.");
+                this.spinner.hide();
+                return;
+              }
+              
+              if (this.CreditRequestDataAdvance.some((advanceAmount: { advanceAmount: any }) => !advanceAmount.advanceAmount || String(advanceAmount.advanceAmount).trim() === '')) {
+                alert("Please enter Amount .");
+                this.spinner.hide();
+                return;
+              }
+
               let data = {
                 advanceAllData:this.CreditRequestDataAdvance,
                 advanceFuelDealerCustomerMapId: this.fuelDealerCorpMapIdNew,
@@ -766,4 +779,11 @@ closeModal() {
   this.isVehicleViewed = false
 
 }
+
+preventSymbols(event: KeyboardEvent) {
+  if (event.key === '+' || event.key === '-') {
+    event.preventDefault();
+  }
+}
+
 }

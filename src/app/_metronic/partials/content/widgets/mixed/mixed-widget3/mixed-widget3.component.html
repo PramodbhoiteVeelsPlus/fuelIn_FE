@@ -271,7 +271,7 @@
 
                     <td>
                       <input type="number" class="form-control" [(ngModel)]="charges.advanceAmount"
-                        [ngModelOptions]="{standalone: true}" placeholder="Enter Amount" (blur)="setAdvance()" />
+                        [ngModelOptions]="{standalone: true}" placeholder="Enter Amount" (blur)="setAdvance()" (keypress)="preventSymbols($event)"/>
                     </td>
 
                     <td>

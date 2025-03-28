@@ -647,6 +647,25 @@ export class MixedWidget1Component {
           if (this.vehicleMapId) {
             if (this.requestVehicle.value.manualCrNumber) {
 
+                    
+              if (this.CreditVehicleRequestDataArray.some((manualNumber: { manualNumber: any }) => !manualNumber.manualNumber || String(manualNumber.manualNumber).trim() === '')) {
+                alert("Please enter Bill / Ref Number.");
+                this.spinner.hide();
+                return;
+              }
+              
+              if (this.CreditVehicleRequestDataArray.some((creditAmount: { creditAmount: any }) => !creditAmount.creditAmount || String(creditAmount.creditAmount).trim() === '')) {
+                alert("Please enter Amount .");
+                this.spinner.hide();
+                return;
+              }
+              
+              if (this.CreditVehicleRequestDataArray.some((creditQuantity: { creditQuantity: any }) => !creditQuantity.creditQuantity || String(creditQuantity.creditQuantity).trim() === '')) {
+                alert("Please enter Quantity .");
+                this.spinner.hide();
+                return;
+              }
+              
               let data = {
                 idfuelCreditVehicle: this.idfuelCreditVehicle,
                 fuelVehicleNumber: this.fuelVehicleNumber,
@@ -965,5 +984,13 @@ export class MixedWidget1Component {
         }
       })
   }
+
+  preventSymbols(event: KeyboardEvent) {
+     const charCode = event.which ? event.which : event.keyCode;
+  if (charCode < 48 || charCode > 57) {
+    event.preventDefault();
+  }
+  }
+  
 }
 

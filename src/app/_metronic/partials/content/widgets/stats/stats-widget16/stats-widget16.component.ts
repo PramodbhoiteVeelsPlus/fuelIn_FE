@@ -824,6 +824,26 @@ export class StatsWidget16Component {
                     else {
                       this.fleetStatus = "FALSE"
                     }
+
+                    
+                    if (this.CreditRequestDataArray.some((manualNumber: { manualNumber: any }) => !manualNumber.manualNumber || String(manualNumber.manualNumber).trim() === '')) {
+                      alert("Please enter Bill / Ref Number.");
+                      this.spinner.hide();
+                      return;
+                    }
+                    
+                    if (this.CreditRequestDataArray.some((creditAmount: { creditAmount: any }) => !creditAmount.creditAmount || String(creditAmount.creditAmount).trim() === '')) {
+                      alert("Please enter Amount .");
+                      this.spinner.hide();
+                      return;
+                    }
+                    
+                    if (this.CreditRequestDataArray.some((creditQuantity: { creditQuantity: any }) => !creditQuantity.creditQuantity || String(creditQuantity.creditQuantity).trim() === '')) {
+                      alert("Please enter Quantity .");
+                      this.spinner.hide();
+                      return;
+                    }
+
                     let data = {
                       crDetails: this.CreditRequestDataArray,
                       fuelDealerCustomerMapId: this.fuelDealerCorpMapIdNew,
@@ -1237,4 +1257,11 @@ export class StatsWidget16Component {
         }
       })
   }
+
+  preventSymbols(event: KeyboardEvent) {
+    if (event.key === '+' || event.key === '-') {
+      event.preventDefault();
+    }
+  }
+  
 }

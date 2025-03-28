@@ -279,12 +279,12 @@
                       <td *ngIf="vehicleAmtType">
                         <input type="text" class="form-control" [(ngModel)]="charges.creditAmount"
                           [ngModelOptions]="{standalone: true}" placeholder="Enter Credit Amount"
-                          (blur)="amountCalculateVehicle(i)" />
+                          (blur)="amountCalculateVehicle(i)" (keypress)="preventSymbols($event)"/>
                       </td>
                       <td *ngIf="!vehicleAmtType">
                         <input type="number" class="form-control" [(ngModel)]="charges.creditQuantity"
                           [ngModelOptions]="{standalone: true}" (blur)="quantityCalculateVehicle(i)"
-                          placeholder="Enter Credit Quantity" />
+                          placeholder="Enter Credit Quantity" (keypress)="preventSymbols($event)"/>
                       </td>
 
                       <td *ngIf="vehicleAmtType">

@@ -31,8 +31,8 @@
                   <tbody *ngFor="let data of lubeStockDetails; let i = index">
                     <tr>
                       <td style="text-align: left;"> {{data.lubricantStockLubricantName}} </td>
-                      <td style="text-align: left;"> {{data.lubricantStockQuantity}} </td>
-                      <td style="text-align: left;"> {{data.lubricantStockQuantityInPieces}} </td>
+                      <td style="text-align: left;"> {{data.lubricantStockQuantity | number: '1.2-2'}} </td>
+                      <td style="text-align: left;"> {{data.lubricantStockQuantityInPieces | number: '1.2-2'}} </td>
                     </tr>
 
                   </tbody>

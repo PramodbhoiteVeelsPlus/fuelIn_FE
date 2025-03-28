@@ -521,6 +521,24 @@ export class MixedWidget2Component implements OnInit {
                 if (this.requestTransporterLube.value.nameLube) {
                   if (this.requestTransporterLube.value.manualCrNumber) {
                     if (this.requestTransporterLube.value.unitLube) {
+                    
+                      if (this.CreditRequestDataLube.some((manualNumberLube: { manualNumberLube: any }) => !manualNumberLube.manualNumberLube || String(manualNumberLube.manualNumberLube).trim() === '')) {
+                        alert("Please enter Bill / Ref Number.");
+                        this.spinner.hide();
+                        return;
+                      }
+                      
+                      if (this.CreditRequestDataLube.some((creditAmountLube: { creditAmountLube: any }) => !creditAmountLube.creditAmountLube || String(creditAmountLube.creditAmountLube).trim() === '')) {
+                        alert("Please enter Amount .");
+                        this.spinner.hide();
+                        return;
+                      }
+                      
+                      if (this.CreditRequestDataLube.some((creditQuantityLube: { creditQuantityLube: any }) => !creditQuantityLube.creditQuantityLube || String(creditQuantityLube.creditQuantityLube).trim() === '')) {
+                        alert("Please enter Quantity .");
+                        this.spinner.hide();
+                        return;
+                      }
 
                       let data = {
                         lubeAllData: this.CreditRequestDataLube,
@@ -930,4 +948,11 @@ updateAssignedAutoManualNumber(status: string,count: any){
     
   }
     }
+
+    preventSymbols(event: KeyboardEvent) {
+      if (event.key === '+' || event.key === '-') {
+        event.preventDefault();
+      }
+    }
+    
 }

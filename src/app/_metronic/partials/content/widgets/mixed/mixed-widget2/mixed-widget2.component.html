@@ -222,13 +222,13 @@
                     <td>
                       <input type="number" class="form-control" [(ngModel)]="charges.creditAmountLube"
                         [ngModelOptions]="{standalone: true}" placeholder="Enter Credit Amount"
-                        (blur)="setAmountLube()" />
+                        (blur)="setAmountLube()" (keypress)="preventSymbols($event)"/>
                     </td>
 
                     <td>
                       <input type="number" class="form-control" [(ngModel)]="charges.creditQuantityLube"
                         [ngModelOptions]="{standalone: true}" placeholder="Enter Credit Quantity"
-                        (blur)="setQuantityLube()" />
+                        (blur)="setQuantityLube()" (keypress)="preventSymbols($event)"/>
                     </td>
                     <td>
                       <select class="form-control" [(ngModel)]="charges.unitLube" [ngModelOptions]="{standalone: true}"
