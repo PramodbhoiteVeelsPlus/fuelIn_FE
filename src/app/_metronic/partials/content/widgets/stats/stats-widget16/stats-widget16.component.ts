@@ -864,15 +864,16 @@ export class StatsWidget16Component {
                             this.myInputField.nativeElement.focus();
                             this.updateAssignedAutoManualNumber('CREDIT', res.count)
 
-                            // this.getFuelCreditRequestByfuelDealerId(this.fuelDealerId);
                             this.isCRQUANTITY = false;
                             this.isQUANTITY = false;
                             this.CreditRequestDataArray = [];
+                            this.CreditRequestDataArray.length = 0;
+                            this.isSelected1 = false;
+                            this.requestTransporter1.controls["selectedCorp"].setValue('');
                             this.count = 1;
-                            this.closeModal()
+                            // this.closeModal()
                             this.requestTransporter.controls["requestType"].setValue("showamount");
                             this.requestTransporter.controls["requestTypeCR"].setValue("showamount");
-                            // this.closeRequestForm.controls["requestTypeClose"].setValue("showamount");
                             this.checkDates(this.fuelDealerCorpMapIdNew, moment(this.requestTransporter.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
                             this.requestTransporter.controls["manualCrNumber"].setValue("");
                             this.requestTransporter.controls["actualCreditQuantity"].setValue("");
@@ -880,19 +881,21 @@ export class StatsWidget16Component {
                             this.requestTransporter.controls["reqCreditAmount"].setValue("");
                             this.requestTransporter.controls["reqQuantity"].setValue("");
                             this.requestTransporter.controls["vehicleNumber"].setValue("");
-                            this.requestTransporter.controls["productPrice"].setValue('');
-                            this.requestTransporter.controls["productName"].setValue('');
+                            // this.requestTransporter.controls["productPrice"].setValue('');
+                            // this.requestTransporter.controls["productName"].setValue('');
                           } else {
 
                             this.myInputField.nativeElement.focus();
-                            // this.getFuelCreditRequestByfuelDealerId(this.fuelDealerId);
                             this.isCRQUANTITY = false;
                             this.isQUANTITY = false;
                             this.CreditRequestDataArray = [];
+                            this.CreditRequestDataArray.length = 0;
+                            this.isSelected1 = false;
+                            this.requestTransporter1.controls["selectedCorp"].setValue('');
+                            // this.addFormRequest();
                             this.count = 1;
                             this.requestTransporter.controls["requestType"].setValue("showamount");
                             this.requestTransporter.controls["requestTypeCR"].setValue("showamount");
-                            // this.closeRequestForm.controls["requestTypeClose"].setValue("showamount");
                             this.addFormRequest();
                             this.checkDates(this.fuelDealerCorpMapIdNew, moment(this.requestTransporter.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
                             this.requestTransporter.controls["manualCrNumber"].setValue("");
@@ -901,8 +904,8 @@ export class StatsWidget16Component {
                             this.requestTransporter.controls["reqCreditAmount"].setValue("");
                             this.requestTransporter.controls["reqQuantity"].setValue("");
                             this.requestTransporter.controls["vehicleNumber"].setValue("");
-                            this.requestTransporter.controls["productPrice"].setValue('');
-                            this.requestTransporter.controls["productName"].setValue('');
+                            // this.requestTransporter.controls["productPrice"].setValue('');
+                            // this.requestTransporter.controls["productName"].setValue('');
                           }
 
                         } else {
@@ -1004,15 +1007,16 @@ export class StatsWidget16Component {
                             if (this.autoManualStatus == 'TRUE') {
                               this.updateAssignedAutoManualNumber('CREDIT', res.count)
 
-                              // this.getFuelCreditRequestByfuelDealerId(this.fuelDealerId);
                               this.isCRQUANTITY = false;
                               this.isQUANTITY = false;
                               this.CreditRequestDataArray = [];
+                              this.CreditRequestDataArray.length = 0;
+                              this.isSelected1 = false;
+                              this.requestTransporter1.controls["selectedCorp"].setValue('');
                               this.count = 1;
-                              this.closeModal()
+                              // this.closeModal()
                               this.requestTransporter.controls["requestType"].setValue("showamount");
                               this.requestTransporter.controls["requestTypeCR"].setValue("showamount");
-                              // this.closeRequestForm.controls["requestTypeClose"].setValue("showamount");
                               this.checkDates(this.fuelDealerCorpMapIdNew, moment(this.requestTransporter.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
                               this.requestTransporter.controls["manualCrNumber"].setValue("");
                               this.requestTransporter.controls["actualCreditQuantity"].setValue("");
@@ -1020,17 +1024,18 @@ export class StatsWidget16Component {
                               this.requestTransporter.controls["reqCreditAmount"].setValue("");
                               this.requestTransporter.controls["reqQuantity"].setValue("");
                               this.requestTransporter.controls["vehicleNumber"].setValue("");
-                              this.requestTransporter.controls["productPrice"].setValue('');
-                              this.requestTransporter.controls["productName"].setValue('');
+                              // this.requestTransporter.controls["productPrice"].setValue('');
+                              // this.requestTransporter.controls["productName"].setValue('');
                             } else {
-                              // this.getFuelCreditRequestByfuelDealerId(this.fuelDealerId);
                               this.isCRQUANTITY = false;
                               this.isQUANTITY = false;
                               this.CreditRequestDataArray = [];
+                              this.CreditRequestDataArray.length = 0;
+                              this.isSelected1 = false;
+                              this.requestTransporter1.controls["selectedCorp"].setValue('');
                               this.count = 1;
                               this.requestTransporter.controls["requestType"].setValue("showamount");
                               this.requestTransporter.controls["requestTypeCR"].setValue("showamount");
-                              // this.closeRequestForm.controls["requestTypeClose"].setValue("showamount");
                               this.addFormRequest();
                               this.checkDates(this.fuelDealerCorpMapIdNew, moment(this.requestTransporter.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
                               this.requestTransporter.controls["manualCrNumber"].setValue("");
@@ -1039,8 +1044,8 @@ export class StatsWidget16Component {
                               this.requestTransporter.controls["reqCreditAmount"].setValue("");
                               this.requestTransporter.controls["reqQuantity"].setValue("");
                               this.requestTransporter.controls["vehicleNumber"].setValue("");
-                              this.requestTransporter.controls["productPrice"].setValue('');
-                              this.requestTransporter.controls["productName"].setValue('');
+                              // this.requestTransporter.controls["productPrice"].setValue('');
+                              // this.requestTransporter.controls["productName"].setValue('');
                             }
                           }
 

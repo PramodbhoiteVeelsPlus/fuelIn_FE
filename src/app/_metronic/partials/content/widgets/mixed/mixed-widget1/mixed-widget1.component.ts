@@ -679,9 +679,8 @@ export class MixedWidget1Component {
                     this.isBalance1 = false;
                     this.isCRQUANTITY = false;
                     this.isQUANTITY = false;
-                    // this.CreditVehicleRequestDataArray = [];
-                    // this.countVehicle = 1;
-                    this.closeModal()
+                    this.isVehicleViewed = false
+                    // this.closeModal()
                     this.spinner.hide();
                     this.myInputField.nativeElement.focus();
                     this.checkDates(this.vehicleMapId, moment(this.requestVehicle.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
@@ -696,8 +695,8 @@ export class MixedWidget1Component {
 
                     this.mappingCompanyNameForVehicle = "";
                     this.requestVehicle.controls["vehicleNumber"].setValue('');
-                    this.requestVehicle.controls["productPrice"].setValue('');
-                    this.requestVehicle.controls["productName"].setValue('');
+                    // this.requestVehicle.controls["productPrice"].setValue('');
+                    // this.requestVehicle.controls["productName"].setValue('');
                     this.isVehicleViewed = false
                     this.mappingCompanyNameForVehicle = ""
                     this.CreditVehicleRequestDataArray[0].manualNumber = '';
@@ -773,14 +772,13 @@ export class MixedWidget1Component {
                         if (res.status == "OK") {
                           alert("Credit Added Sccessfully!");
                           this.isBalance1 = false;
+                          this.isVehicleViewed = false
                           this.spinner.hide();
                           this.myInputField.nativeElement.focus();
                           this.checkDates(this.vehicleMapId, moment(this.requestVehicle.value.estimatedRefuelDate, ["DD-MM-YYYY"]).format('YYYY-MM-DD'))
                           this.isCRQUANTITY = false;
                           this.isQUANTITY = false;
-                          // this.CreditVehicleRequestDataArray = [];
-                          // this.countVehicle = 1;
-                          this.closeModal()
+                          // this.closeModal()
                           if (this.autoManualStatus == 'TRUE') {
 
                             this.updateAssignedAutoManualNumber('VEHICLE', res.count)
@@ -791,8 +789,8 @@ export class MixedWidget1Component {
                           }
                           this.requestVehicle.controls["requestType"].setValue("showamount");
                           this.requestVehicle.controls["vehicleNumber"].setValue('');
-                          this.requestVehicle.controls["productPrice"].setValue('');
-                          this.requestVehicle.controls["productName"].setValue('');
+                          // this.requestVehicle.controls["productPrice"].setValue('');
+                          // this.requestVehicle.controls["productName"].setValue('');
                           this.isVehicleViewed = false
                           this.mappingCompanyNameForVehicle = ""
                           this.CreditVehicleRequestDataArray[0].manualNumber = '';
@@ -801,7 +799,6 @@ export class MixedWidget1Component {
                           this.countVehicle = 1
                           this.cd.detectChanges()
                           this.spinner.hide()
-                          // this.closeRequestForm.controls["requestTypeClose"].setValue("showamount");
                         } else {
                           alert("Error to Created Request!")
                           this.isBalance1 = false;

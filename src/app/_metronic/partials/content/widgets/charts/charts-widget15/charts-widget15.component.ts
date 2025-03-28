@@ -104,8 +104,8 @@ export class ChartsWidget15Component implements OnInit {
     tax: new FormControl('', Validators.required),
     taxDetails: new FormControl('', Validators.required),
     address: new FormControl('', Validators.required),
-    totalAmount: new FormControl(Validators.required),
-    totalWOGSTAmount: new FormControl('', Validators.required),
+    totalAmount: new FormControl('',Validators.required),
+    totalWOGSTAmount: new FormControl('',Validators.required),
 
   });
 
@@ -523,8 +523,10 @@ export class ChartsWidget15Component implements OnInit {
       if (this.cashBillLubricantForm.value.taxDetails == 'INCLUDE') {
 
         this.gstAmount = Number(Number(this.cashBillLubricantForm.value.reqCreditAmount) - (Number(this.cashBillLubricantForm.value.reqCreditAmount) * (100 / (100 + Number(this.cashBillLubricantForm.value.gst))))).toFixed(2)
-        // this.cashBillLubricantForm.controls["totalAmount"].setValue(Number(this.cashBillLubricantForm.value.reqCreditAmount))
+        this.cashBillLubricantForm.controls["totalAmount"].setValue((this.cashBillLubricantForm.value.reqCreditAmount))
         // this.cashBillLubricantForm.controls["totalWOGSTAmount"].setValue(Number(this.cashBillLubricantForm.value.reqCreditAmount) - Number(this.gstAmount))
+        this.cashBillLubricantForm.controls["totalWOGSTAmount"].setValue((Number(this.cashBillLubricantForm.value.reqCreditAmount) - Number(this.gstAmount)).toString()
+        );
 
         if (this.subGST == 'CGST') {
           this.cashBillLubricantForm.controls["cgst"].setValue(Number(this.cashBillLubricantForm.value.gst) / 2)
@@ -536,8 +538,8 @@ export class ChartsWidget15Component implements OnInit {
       } else {
 
         this.gstAmount = Number((Number(this.cashBillLubricantForm.value.reqCreditAmount) * Number(this.cashBillLubricantForm.value.gst)) / 100).toFixed(2)
-        // this.cashBillLubricantForm.controls["totalAmount"].setValue(Number(this.cashBillLubricantForm.value.reqCreditAmount) + Number(this.gstAmount))
-        // this.cashBillLubricantForm.controls["totalWOGSTAmount"].setValue(Number(this.cashBillLubricantForm.value.reqCreditAmount))
+        this.cashBillLubricantForm.controls["totalAmount"].setValue((this.cashBillLubricantForm.value.reqCreditAmount) + Number(this.gstAmount))
+        this.cashBillLubricantForm.controls["totalWOGSTAmount"].setValue((this.cashBillLubricantForm.value.reqCreditAmount))
 
         if (this.subGST == 'CGST') {
           this.cashBillLubricantForm.controls["cgst"].setValue(Number(this.cashBillLubricantForm.value.gst) / 2)
