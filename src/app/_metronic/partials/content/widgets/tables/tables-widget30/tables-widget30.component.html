@@ -1,9 +1,9 @@
 <head>
   <style>
-  .table td {
-    white-space: normal;
-    word-wrap: break-word;
-  }
+    .table td {
+      white-space: normal;
+      word-wrap: break-word;
+    }
 
     .btn.btn-icon.badge.badge-light-success {
       background-color: #DFFFEA;
@@ -129,9 +129,9 @@
           <div class="position-relative">
             <!-- <input class="form-control" type="text" (input)="onSearch()" placeholder="Search" [(ngModel)]="searchData"
               [ngModelOptions]="{standalone: true}"> -->
-              <input class="form-control mr-sm-2" type="text" placeholder="Search customer"
-                  oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
-                  [formControl]="searchBox" aria-label="Search" (click)="searchInTable()">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search customer"
+              oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+              [formControl]="searchBox" aria-label="Search" (click)="searchInTable()">
             <i class="bx bx-search-alt search-icon"></i>
           </div>
         </div>
@@ -139,12 +139,12 @@
       </div>
       <div class="col-md-2"></div>
       <div class="col-md-1">
-        <span style="font-size: 45px;cursor: pointer; margin-left: 260px;" (click)="allCustomerPDFDownload()" ngbTooltip="Download PDF"
-          placement="bottom"><i class="fas fa-file-pdf" style="font-size: 30px;"></i></span>
+        <span style="font-size: 45px;cursor: pointer; margin-left: 260px;" (click)="allCustomerPDFDownload()"
+          ngbTooltip="Download PDF" placement="bottom"><i class="fas fa-file-pdf" style="font-size: 30px;"></i></span>
       </div>
       <div class="col-md-1">
-        <span style="font-size: 45px;cursor: pointer; margin-left: 270px;" (click)="allCustomerExcelDownload()" ngbTooltip="Download CSV"
-          placement="bottom"><i class="fas fa-file-csv" style="font-size: 30px;"></i></span>
+        <span style="font-size: 45px;cursor: pointer; margin-left: 270px;" (click)="allCustomerExcelDownload()"
+          ngbTooltip="Download CSV" placement="bottom"><i class="fas fa-file-csv" style="font-size: 30px;"></i></span>
       </div>
     </div>
     <!-- <span class="card-label fw-bolder fs-3 mb-1">Rate Overview</span> -->
@@ -208,8 +208,8 @@
               ★ ★ ★ ★ ★
             </span>
           </td>
-          <td style="cursor:pointer;" 
-          (click)="getVehicleByCustMapId(viewVehicle,data.fuelDealerCustomerMapId, data.companyName)">
+          <td style="cursor:pointer;"
+            (click)="getVehicleByCustMapId(viewVehicle,data.fuelDealerCustomerMapId, data.companyName)">
             {{ data.totalVehicleNumber }} </td>
           <td>
             <div ngbDropdown placement="bottom-left">
@@ -286,8 +286,8 @@
               ★ ★ ★ ★ ★
             </span>
           </td>
-          <td style="cursor:pointer;" 
-          (click)="getVehicleByCustMapId(viewVehicle,data.fuelDealerCustomerMapId, data.companyName)">
+          <td style="cursor:pointer;"
+            (click)="getVehicleByCustMapId(viewVehicle,data.fuelDealerCustomerMapId, data.companyName)">
             {{data.totalVehicleNumber}}</td>
           <td style="text-align: left;cursor: pointer;">
             <div ngbDropdown placement="bottom-left">
@@ -413,10 +413,16 @@
     </table>
     <br><br><br><br><br><br><br><br><br>
     <!-- begin::Pagination -->
-    <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+    <!-- <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
       style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
-    </pagination-controls>
-    <!-- end::Pagination -->
+    </pagination-controls> -->
+
+
+    <div class="text-md-right float-md-end pagination-rounded">
+      <ngb-pagination [collectionSize]="mappingAccData.length" [(page)]="p" [pageSize]="10" [maxSize]="5"
+        [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+      <!-- end::Pagination -->
+    </div>
   </div>
 
   <ng-template #viewVehicle let-c="close" let-d="dismiss">

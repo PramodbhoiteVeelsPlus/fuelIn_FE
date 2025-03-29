@@ -543,7 +543,12 @@ export class TablesWidget30Component {
   }
 
   openPreOutstand(openDate: any, fuelDealerCustomerMapId: any, previousOutstand: any, companyName: any) {
-    this.previousOutstandForModal = previousOutstand;
+    if (previousOutstand == 'undefined' || previousOutstand == 'null') {
+      this.previousOutstandForModal = 0
+    } else {
+      this.previousOutstandForModal = previousOutstand
+    }
+    // this.previousOutstandForModal = previousOutstand;
     this.pendingOutstanding = previousOutstand;
     this.companyNameOust = companyName
     this.modalRef2 = this.modalService.open(openDate, { size: 'sm' });

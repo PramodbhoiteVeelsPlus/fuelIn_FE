@@ -217,7 +217,7 @@ export class BaseTablesWidget1Component implements OnInit {
   isDisabled: boolean = true
   productCategory: any;
   estimatedRefuelDateForEdit: moment.MomentInput;
-  reqCreditAmount: any;
+  // reqCreditAmount: any;
   reqQuantity: any;
   customerId: any;
   searchBox:FormControl = new FormControl();
@@ -1114,8 +1114,8 @@ export class BaseTablesWidget1Component implements OnInit {
     this.productRate = productRate;
     this.estimatedRefuelDateForEdit = estimatedRefuelDate
     this.fuelDealerCustomerMapIdEdit = fuelDealerCustomerMapId;
-    this.reqCreditAmount = reqCreditAmount
-    this.reqQuantity = reqQuantity;
+    // this.reqCreditAmount = reqCreditAmount
+    // this.reqQuantity = reqQuantity;
     this.requestEditCr.controls["mobile"].setValue(phone1);
     this.requestEditCr.controls["productCategory"].setValue(productCategory);
     this.requestEditCr.controls["productRate"].setValue(productRate);
