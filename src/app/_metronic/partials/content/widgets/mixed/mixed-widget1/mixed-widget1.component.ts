@@ -182,28 +182,52 @@ export class MixedWidget1Component {
       }
     }
 
-    if(element.accessGroupId == '12'){
-      this.autoManualNumber = dealerData.assignedAutoManualNumber;
-      this.autoManualStatus = dealerData.autoManualStatus;
-    } 
+    // if(element.accessGroupId == '12'){
+    //   this.autoManualNumber = dealerData.assignedAutoManualNumber;
+    //   this.autoManualStatus = dealerData.autoManualStatus;
+    // } 
     
-    if(element.accessGroupId == '14'){
-      var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
-      this.autoManualNumber = managerData.assignedAutoManualNumber;
-      this.autoManualStatus = managerData.autoManualStatus;
-    } 
+    // if(element.accessGroupId == '14'){
+    //   var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
+    //   this.autoManualNumber = managerData.assignedAutoManualNumber;
+    //   this.autoManualStatus = managerData.autoManualStatus;
+    // } 
     this.requestVehicle.controls["requestType"].setValue("showamount");
     this.requestVehicle.controls["requestType"].setValue("showamount");
     this.requestVehicle.controls["estimatedRefuelDate"].setValue(this.todayDate);
     this.requestVehicle.controls["priceDate"].setValue(this.todayDate);
     this.requestVehicle.controls["productPrice"].setValue("");
     this.addFormVehicleRequest();
-    this.getProductsByDealerId(this.fuelDealerId)
+    // this.getProductsByDealerId(this.fuelDealerId)
     this.getAllVehicle()
-    this.getFuelStaffIdByfuelDealerId(this.fuelDealerId);
+    // this.getFuelStaffIdByfuelDealerId(this.fuelDealerId);
+    this.getfuelDealerIdByCorporateId(this.dealerCorporateId);
     this.cd.detectChanges()
   }
 
+
+  getfuelDealerIdByCorporateId(dealerCorporateId: any) {
+    let data = {
+      corporateId: dealerCorporateId
+    }
+    this.post1.getfuelDealerIdByCorporateIdPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          this.fuelDealerId = res.data[0].fuelDealerId;
+          this.autoManualNumber = res.data[0].assignedAutoManualNumber;
+          this.autoManualNumberLube = res.data[0].assignedAutoManualNumberLube;
+          this.autoManualNumberAdvance = res.data[0].assignedAutoManualNumberAdvance;
+          this.autoManualNumberVehicle = res.data[0].assignedAutoManualNumberVehicle;
+          this.autoManualStatus = res.data[0].autoManualStatus;
+          // this.addFormVehicleRequest();
+          this.getProductsByDealerId(this.fuelDealerId);
+          this.getFuelStaffIdByfuelDealerId(this.fuelDealerId);
+          this.getAllVehicle();
+        }
+        else {
+        }
+      })
+  }
 
   getPriceVehicle(id: any, setFuelPrice: any) {
 
@@ -341,7 +365,7 @@ export class MixedWidget1Component {
     if (this.autoManualStatus == 'TRUE') {
       this.countVehicle = this.countVehicle + 1;
       this.CreditVehicleRequest = new CreditVehicleRequest();
-      this.CreditVehicleRequest.manualNumber = this.autoManualNumber
+      this.CreditVehicleRequest.manualNumber = this.autoManualNumberVehicle
       this.CreditVehicleRequestDataArray.push(this.CreditVehicleRequest);
       this.cd.detectChanges()
     } else {
@@ -645,7 +669,7 @@ export class MixedWidget1Component {
       if (this.requestVehicle.value.estimatedRefuelDate) {
         if (this.requestVehicle.value.actualCreditAmount || this.requestVehicle.value.reqQuantity) {
           if (this.vehicleMapId) {
-            if (this.requestVehicle.value.manualCrNumber) {
+            // if (this.requestVehicle.value.manualCrNumber) {
 
                     
               if (this.CreditVehicleRequestDataArray.some((manualNumber: { manualNumber: any }) => !manualNumber.manualNumber || String(manualNumber.manualNumber).trim() === '')) {
@@ -730,10 +754,10 @@ export class MixedWidget1Component {
                     this.spinner.hide();
                   }
                 });
-            } else {
-              alert("Please Enter Bill / Ref Number!")
-              this.spinner.hide();
-            }
+            // } else {
+            //   alert("Please Enter Bill / Ref Number!")
+            //   this.spinner.hide();
+            // }
           }
           else {
             alert("Please Select customer!")

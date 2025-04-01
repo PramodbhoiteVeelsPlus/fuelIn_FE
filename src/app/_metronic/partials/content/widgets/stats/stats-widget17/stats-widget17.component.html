@@ -11,7 +11,7 @@
               </h4>
 
               <div class="text-center mb-4" *ngIf="isAlert" style="position: absolute; top: 14%; left: 50%; 
-                          transform: translate(-50%, -50%);">                                       
+                          transform: translate(-50%, -50%);">
                 <div class="row justify-content-center">
                   <div class="col-xl-10" style="color: red">
                     <i class="fa fa-exclamation-triangle fa-fw fa-6x" style="color: red"></i>
@@ -63,7 +63,14 @@
                   <div class="col-md-9">
                     <input type="number" class="form-control" formControlName="phoneNumber"
                       (blur)="searchCorporateByPhone()" placeholder="Enter Mobile Number"
+                      [class.is-invalid]="userMobile?.invalid && userMobile?.touched"
                       onkeypress="return this.value.length < 10;" oninput="if(this.value.length=10)">
+                    <div *ngIf="(userMobile?.invalid && userMobile?.touched) || userMobile?.dirty">
+                      <small *ngIf="userMobile?.errors?.required" class="text-danger">
+                        Mobile Number is required</small>
+                      <small *ngIf="userMobile?.errors?.pattern" class="text-danger">
+                        Please enter valid 10 Digit Mobile Number</small>
+                    </div>
 
                   </div>
                 </div>
@@ -84,14 +91,16 @@
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label class="col-md-3 col-form-label"><b>Cr. Limit Amount:</b><span style="color: red;">*</span></label>
+                  <label class="col-md-3 col-form-label"><b>Cr. Limit Amount:</b><span
+                      style="color: red;">*</span></label>
                   <div class="col-md-9">
                     <input class="form-control" name="creditLimitAmount" type="number"
                       placeholder="Enter Credit Limit Amount" formControlName="maxCreditAmount">
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label class="col-md-3 col-form-label"><b>Cr. Limit Days:</b><span style="color: red;">*</span></label>
+                  <label class="col-md-3 col-form-label"><b>Cr. Limit Days:</b><span
+                      style="color: red;">*</span></label>
                   <div class="col-md-9">
                     <input class="form-control" name="creditLimitDays" min="0" type="number"
                       placeholder="Enter Credit Limit Days" formControlName="creditDayLimit" (change)="disableError()">
@@ -133,11 +142,12 @@
                   <label class="col-md-3 col-form-label"><b>Email:</b></label>
                   <div class="col-md-9">
                     <input class="form-control" name="Email" type="text" placeholder="Enter Email"
-                      formControlName="carrierEmail" placeholder="Enter Email Address">
-                    <!-- <div *ngIf="(primEmailUser.invalid && primEmailUser.touched) || primEmailUser.dirty">
-                          <small *ngIf="primEmailUser.errors?.pattern" class="text-danger">
-                            Please enter valid email address</small>
-                        </div> -->
+                      formControlName="carrierEmail" placeholder="Enter Email Address"
+                      [class.is-invalid]="primEmailUser?.invalid && primEmailUser?.touched">
+                    <div *ngIf="(primEmailUser?.invalid && primEmailUser?.touched) || primEmailUser?.dirty">
+                      <small *ngIf="primEmailUser?.errors?.pattern" class="text-danger">
+                        Please enter valid email address</small>
+                    </div>
                   </div>
                 </div>
 
@@ -221,8 +231,12 @@
                   <label class="col-md-3 col-form-label"><b>Email:</b></label>
                   <div class="col-md-9">
                     <input class="form-control" name="Email" type="text" placeholder="Enter Email"
-                      formControlName="carrierEmail" placeholder="Email Address">
-
+                      formControlName="carrierEmail" placeholder="Email Address"
+                      [class.is-invalid]="primEmailUser?.invalid && primEmailUser?.touched">
+                    <div *ngIf="(primEmailUser?.invalid && primEmailUser?.touched) || primEmailUser?.dirty">
+                      <small *ngIf="primEmailUser?.errors?.pattern" class="text-danger">
+                        Please enter valid email address</small>
+                    </div>
                   </div>
                 </div>
 

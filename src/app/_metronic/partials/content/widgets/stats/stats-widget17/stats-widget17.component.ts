@@ -1091,4 +1091,11 @@ export class StatsWidget17Component {
     this.isForm2 = false
   }
 
+  get userMobile() {
+    return this.corporateMappingForm.get('phoneNumber')
+  } 
+
+  get primEmailUser() {
+    return this.corporateMappingForm.get('carrierEmail')
+  }
 }

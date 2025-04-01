@@ -181,24 +181,44 @@ export class MixedWidget2Component implements OnInit {
       }
     }
 
-    if(element.accessGroupId == '12'){
-      this.autoManualStatus = dealerData.autoManualStatus;
-      this.autoManualNumberLube = dealerData.assignedAutoManualNumberLube;
-    } 
+    // if(element.accessGroupId == '12'){
+    //   this.autoManualStatus = dealerData.autoManualStatus;
+    //   this.autoManualNumberLube = dealerData.assignedAutoManualNumberLube;
+    // } 
     
-    if(element.accessGroupId == '14'){
-      var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
-      this.autoManualNumberLube = managerData.assignedAutoManualNumberLube;
-      this.autoManualStatus = managerData.autoManualStatus;
-    } 
+    // if(element.accessGroupId == '14'){
+    //   var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
+    //   this.autoManualNumberLube = managerData.assignedAutoManualNumberLube;
+    //   this.autoManualStatus = managerData.autoManualStatus;
+    // } 
     this.requestTransporterLube.controls["estimatedRefuelDate"].setValue(this.todayDate);
     this.getCorporateMappedListByDealerId(this.fuelDealerId);
     this.getLubricants(this.fuelDealerId)
     this.addFormRequestLube();
     this.getFuelStaffIdByfuelDealerId(this.fuelDealerId);
+    this.getfuelDealerIdByCorporateId(this.dealerCorporateId);
     this.cd.detectChanges()
   }
 
+  getfuelDealerIdByCorporateId(dealerCorporateId: any) {
+    let data = {
+      corporateId: dealerCorporateId
+    }
+    this.post1.getfuelDealerIdByCorporateIdPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          this.fuelDealerId = res.data[0].fuelDealerId;
+          this.autoManualNumberLube = res.data[0].assignedAutoManualNumberLube;
+          this.autoManualStatus = res.data[0].autoManualStatus;
+          // this.addFormRequestLube();
+          this.getCorporateMappedListByDealerId(this.fuelDealerId)
+          this.getFuelStaffIdByfuelDealerId(this.fuelDealerId);
+          this.getLubricants(this.fuelDealerId);
+        }
+        else {
+        }
+      })
+  }
 
   getFuelStaffIdByfuelDealerId(fuelDealerId: any) {
     let data = {
@@ -362,6 +382,7 @@ export class MixedWidget2Component implements OnInit {
 
       this.CreditRequestLube = new CreditRequestLube();
       this.CreditRequestLube.manualNumberLube = this.autoManualNumberLube
+      console.log("wydu", this.CreditRequestLube.manualNumberLube = this.autoManualNumberLube)
       this.CreditRequestDataLube.push(this.CreditRequestLube);
     } else {
       this.countLube = this.countLube + 1;

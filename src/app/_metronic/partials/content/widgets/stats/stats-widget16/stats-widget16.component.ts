@@ -186,16 +186,16 @@ export class StatsWidget16Component {
     this.managerPersonId = element.personId
     this.managerName = element.firstName + ' ' + element.lastName
     this.acceesGroup = element.accessGroupId;
-    if(element.accessGroupId == '12'){
-      this.autoManualNumber = dealerData.assignedAutoManualNumber;
-      this.autoManualStatus = dealerData.autoManualStatus;
-    } 
+    // if(element.accessGroupId == '12'){
+    //   this.autoManualNumber = dealerData.assignedAutoManualNumber;
+    //   this.autoManualStatus = dealerData.autoManualStatus;
+    // } 
     
-    if(element.accessGroupId == '14'){
-      var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
-      this.autoManualNumber = managerData.assignedAutoManualNumber;
-      this.autoManualStatus = managerData.autoManualStatus;
-    } 
+    // if(element.accessGroupId == '14'){
+    //   var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
+    //   this.autoManualNumber = managerData.assignedAutoManualNumber;
+    //   this.autoManualStatus = managerData.autoManualStatus;
+    // } 
     this.requestTransporter.controls["requestType"].setValue("showamount");
     this.requestTransporter.controls["requestType"].setValue("showamount");
     this.requestTransporter.controls["estimatedRefuelDate"].setValue(this.todayDate);
@@ -215,6 +215,8 @@ export class StatsWidget16Component {
       .subscribe(res => {
         if (res.status == "OK") {
           this.fuelDealerId = res.data[0].fuelDealerId;
+          this.autoManualNumber = res.data[0].assignedAutoManualNumber;
+          this.autoManualStatus = res.data[0].autoManualStatus;
           this.getProductsByDealerId(this.fuelDealerId);
           this.getCorporateMappedListByDealerId(this.fuelDealerId);
           this.addFormRequest()

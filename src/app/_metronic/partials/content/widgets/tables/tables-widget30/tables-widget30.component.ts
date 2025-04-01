@@ -883,7 +883,7 @@ export class TablesWidget30Component {
   }
 
   addFlagForCorp() {
-    if (this.corporateFlagPurpose) {
+    if (this.corporateFlagPurpose && this.corporateFlagPurpose.trim() !== '') {
       let data = {
         corporateFlagDealerId: this.fuelDealerId,
         corporateReviewFlag: "TRUE",

@@ -163,8 +163,6 @@ export class MixedWidget3Component implements OnInit {
     this.managerVPPersonId = element.veelsPlusId
     this.managerPersonId = element.personId
     this.managerName = element.firstName + ' ' + element.lastName
-    this.autoManualStatus = dealerData.autoManualStatus;
-    this.autoManualNumberAdvance = dealerData.assignedAutoManualNumberAdvance;
     if (element.accessGroupId == 12 || element.accessGroupId == 14 || element.accessGroupId == 19 || element.accessGroupId == 21) {
       this.dealerAccess = true
       if (element.accessGroupId == 19 || element.accessGroupId == 21) {
@@ -172,24 +170,34 @@ export class MixedWidget3Component implements OnInit {
       }
     }
 
-    if(element.accessGroupId == '12'){
-      this.autoManualStatus = dealerData.autoManualStatus;
-      this.autoManualNumberAdvance = dealerData.assignedAutoManualNumberAdvance;
-    } 
-    
-    if(element.accessGroupId == '14'){
-      var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
-      this.autoManualStatus = managerData.autoManualStatus;
-      this.autoManualNumberAdvance = managerData.assignedAutoManualNumberAdvance;
-    } 
-
     this.requestTransporterAdvance.controls["estimatedRefuelDate"].setValue(this.todayDate);
     this.getCorporateMappedListByDealerId(this.fuelDealerId);
-    this.addFormRequestAdvance();
+    // this.addFormRequestAdvance();
     this.getFuelStaffIdByfuelDealerId(this.fuelDealerId);
+    this.getfuelDealerIdByCorporateId(this.dealerCorporateId);
     this.cd.detectChanges()
   }
-  
+ 
+  getfuelDealerIdByCorporateId(dealerCorporateId: any) {
+    let data = {
+      corporateId: dealerCorporateId
+    }
+    this.post1.getfuelDealerIdByCorporateIdPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          this.fuelDealerId = res.data[0].fuelDealerId;
+          this.autoManualNumber = res.data[0].assignedAutoManualNumber;
+          this.autoManualNumberAdvance = res.data[0].assignedAutoManualNumberAdvance;
+          this.autoManualStatus = res.data[0].autoManualStatus;
+          this.addFormRequestAdvance();
+          this.getCorporateMappedListByDealerId(this.fuelDealerId)
+          this.getFuelStaffIdByfuelDealerId(this.fuelDealerId);
+        }
+        else {
+        }
+      })
+  }
+
   getDetailsByfuelDealerCustomerMapIdId(id: any) {
     if (id.target.value) {
       this.fuelDealerCustomerMapId = id.target.value;
