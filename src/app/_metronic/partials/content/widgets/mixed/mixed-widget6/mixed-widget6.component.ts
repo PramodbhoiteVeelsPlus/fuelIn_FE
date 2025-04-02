@@ -221,6 +221,7 @@ export class MixedWidget6Component implements OnInit {
           this.totalPaymentAmt = res.data[0].totalPaymentAmt
           this.netOS = res.data[0].netOS
           // this.transform(Math.round(Number(this.netOS)));
+          if (this.netOS > 0) {
           var osForWrd = ''
           osForWrd = (this.netOS).toFixed(2)
           var osForWrd1 = osForWrd.split(".")
@@ -235,6 +236,7 @@ export class MixedWidget6Component implements OnInit {
           } else {
             this.amountInWords = "";
           }
+        }
           this.getInfobyCustomerMapId()
           this.spinner.hide();
           this.cd.detectChanges()

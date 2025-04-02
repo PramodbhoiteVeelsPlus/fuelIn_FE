@@ -113,8 +113,8 @@ export class MixedWidget7Component implements OnInit {
   mobileStatus: boolean = false;
   phone1: any;
   statementDetails: any = [];
-  rupeesWrd: any;
-  paisaWrd: any;
+  rupeesWrd: any = 0;
+  paisaWrd: any = 0;
   amountInWords: string;
   GSTNumber: any;
   address1: any;
@@ -164,7 +164,7 @@ export class MixedWidget7Component implements OnInit {
       // this.getVBCorporateById(this.veelsplusCorporate);
       this.getCredit();
     }
-    if(this.accessGroup == '14'){
+    if (this.accessGroup == '14') {
       var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
       this.customerId = managerData.customerId;
       this.searchDealerBycustomerId(this.customerId)
@@ -224,20 +224,23 @@ export class MixedWidget7Component implements OnInit {
           this.totalPaymentAmt = res.data[0].totalPaymentAmt
           this.netOS = res.data[0].netOS
           // this.transform(Math.round(Number(this.netOS)));
-          var osForWrd = ''
-          osForWrd = (this.netOS).toFixed(2)
-          var osForWrd1 = osForWrd.split(".")
-          this.rupeesWrd = osForWrd1[0]
-          this.paisaWrd = osForWrd1[1]
-          if (this.rupeesWrd != 0 && this.paisaWrd != 0) {
-            this.amountInWords = numWords((this.rupeesWrd)) + " rupees and " + numWords((this.paisaWrd)) + " paisa only";
-          } else if (this.rupeesWrd != 0) {
-            this.amountInWords = numWords((this.rupeesWrd)) + " rupees";
-          } else if (this.paisaWrd != 0) {
-            this.amountInWords = numWords((this.paisaWrd)) + " paisa only";
-          } else {
-            this.amountInWords = "";
+          if (this.netOS > 0) {
+            var osForWrd = ''
+            osForWrd = (this.netOS).toFixed(2)
+            var osForWrd1 = osForWrd.split(".")
+            this.rupeesWrd = parseInt(osForWrd1[0], 10)
+            this.paisaWrd = parseInt(osForWrd1[1], 10);
+            if (this.rupeesWrd != 0 && this.paisaWrd != 0) {
+              this.amountInWords = numWords((this.rupeesWrd)) + " rupees and " + numWords((this.paisaWrd)) + " paisa only";
+            } else if (this.rupeesWrd != 0) {
+              this.amountInWords = numWords((this.rupeesWrd)) + " rupees";
+            } else if (this.paisaWrd != 0) {
+              this.amountInWords = numWords((this.paisaWrd)) + " paisa only";
+            } else {
+              this.amountInWords = "";
+            }
           }
+
           this.getInfobyCustomerMapId()
           this.spinner.hide();
           this.cd.detectChanges()
@@ -261,7 +264,7 @@ export class MixedWidget7Component implements OnInit {
         }
       })
   }
-  
+
   getInfobyCustomerMapId() {
     const data = {
       fuelDealerCustomerMapId: this.fuelDealerCustomerMapId,
@@ -294,7 +297,7 @@ export class MixedWidget7Component implements OnInit {
       }
       );
   }
-  
+
   getManagerMobileByfuelDealerId(fuelDealerId: any) {
     const data = {
       fuelDealerId: fuelDealerId,
@@ -310,14 +313,14 @@ export class MixedWidget7Component implements OnInit {
       }
       );
   }
-  
-  searchDealerBycustomerId(customerId: any) {    
+
+  searchDealerBycustomerId(customerId: any) {
     let data = {
       customerId: customerId,
     };
     this.post1.getCustomerByCustomerIdPOST(data)
       .subscribe(res => {
-        if (res.data.length) {         
+        if (res.data.length) {
           this.companyName = res.data[0].companyName;
           this.oilCompanyName = res.data[0].brandName;
           this.address1 = res.data[0].address1;
@@ -325,12 +328,13 @@ export class MixedWidget7Component implements OnInit {
           this.city = res.data[0].city;
           this.state = res.data[0].state;
           this.pin = res.data[0].pin;
-          this.GSTNumber = res.data[0].GSTNumber;         
-          
+          this.GSTNumber = res.data[0].GSTNumber;
+
         } else {
           this.spinner.hide();
         }
       });
-}
+  }
+
 }
 

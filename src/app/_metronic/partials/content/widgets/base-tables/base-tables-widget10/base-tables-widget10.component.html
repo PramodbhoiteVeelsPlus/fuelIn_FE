@@ -62,8 +62,10 @@
       <b> VPFCINV</b>
     </label>
     <div class="col-sm-2">
-      <input class="form-control" type="text" (input)="onSearch()" placeholder="Search" [(ngModel)]="searchData"
-        [ngModelOptions]="{standalone: true}">
+      <!-- <input class="form-control" type="text" (input)="onSearch()" placeholder="Search" [(ngModel)]="searchData"
+        [ngModelOptions]="{standalone: true}"> -->
+        <input class="form-control mr-sm-2" type="text" placeholder="search only number" 
+        [formControl]="searchBox" aria-label="Search" (click) = "searchInTable()">
       <i class="bx bx-search-alt search-icon"></i>
 
     </div>
@@ -244,7 +246,7 @@
           </pagination-controls> -->
 
           <div class="text-md-right float-md-end pagination-rounded">
-            <ngb-pagination [collectionSize]="pageLength.length" [(page)]="p" [pageSize]="10" [maxSize]="5"
+            <ngb-pagination [collectionSize]="FCInvoiceListDetails.length" [(page)]="p" [pageSize]="10" [maxSize]="5"
               [rotate]="true" [boundaryLinks]="true">
             </ngb-pagination>
           </div>

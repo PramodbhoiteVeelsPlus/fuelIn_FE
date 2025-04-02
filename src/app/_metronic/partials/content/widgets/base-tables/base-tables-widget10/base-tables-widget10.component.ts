@@ -184,6 +184,8 @@ export class BaseTablesWidget10Component implements OnInit {
   userId: any;
   modalRefCancel: any;
   searchData: any;
+  searchBox:FormControl = new FormControl();
+  searchTermm: any = "";
 
   constructor(
     private post: BaseTablesService,
@@ -561,14 +563,19 @@ export class BaseTablesWidget10Component implements OnInit {
     });
   }
 
-  onSearch() {
-    // Trim the query and convert it to lowercase for case-insensitive search
-    let query = this.searchData
-    query = query.trim().toLowerCase();
-
-    // Filter the data based on the search query     
-    this.FCInvoiceListDetails = this.FCInvoiceListDetailsNew.filter((item: { invoiceCode: any; }) =>
-      item.invoiceCode.toLowerCase().includes(query)
-    );
+  searchInTable(){ 
+    this.searchBox.valueChanges
+    .subscribe((dataList) => {
+      this.searchTermm = dataList;
+      this.onSearch();
+    })
   }
+
+  onSearch() {
+    let termm = this.searchTermm;
+    this.FCInvoiceListDetails = this.FCInvoiceListDetailsNew.filter(function (res: { invoiceCode: string | any[]; }) {
+      return res.invoiceCode.indexOf(termm) >= 0;
+    });
+  }
+  
 }

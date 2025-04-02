@@ -893,6 +893,7 @@ export class StatsWidget16Component {
                             this.isSelected1 = false;
                             this.requestTransporter1.controls["selectedCorp"].setValue('');
                             this.count = 1;
+                            this.addFormRequest();
                             // this.closeModal()
                             this.requestTransporter.controls["requestType"].setValue("showamount");
                             this.requestTransporter.controls["requestTypeCR"].setValue("showamount");
