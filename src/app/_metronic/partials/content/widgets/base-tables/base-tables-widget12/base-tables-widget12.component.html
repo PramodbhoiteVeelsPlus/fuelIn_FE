@@ -82,9 +82,15 @@
     </table>
 
     <!-- begin::Pagination -->
-    <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+    <!-- <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
       style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
-    </pagination-controls>
+    </pagination-controls> -->
+    <div class="text-md-right float-md-end pagination-rounded">
+      <ngb-pagination [collectionSize]="customerDetails.length" [(page)]="p" [pageSize]="10" [maxSize]="5"
+        [rotate]="true" [boundaryLinks]="true">
+      </ngb-pagination>
+    </div>
+
     <!-- end::Pagination -->
   </div>
 </div>

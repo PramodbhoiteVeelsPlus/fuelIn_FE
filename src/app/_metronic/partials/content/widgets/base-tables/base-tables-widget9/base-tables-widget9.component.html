@@ -3,7 +3,7 @@
     border: 1px solid #28a745 !important;
     color: #28a745 !important;
     background-color: transparent !important;
-}
+  }
 </style>
 
 <br>
@@ -12,16 +12,16 @@
     <div class="row">
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <label for="example-text-input" class="col-md-2 col-form-label"><b>
-        Customer Name</b>
+          Customer Name</b>
       </label>
-      
+
 
       <label for="example-text-input" class="col-md-4 col-form-label"><b>Date Range</b>
       </label>
 
       <label for="example-text-input" class="col-md-2 col-form-label"><b>
-        Type
-      </b></label>
+          Type
+        </b></label>
 
     </div>
 
@@ -75,7 +75,8 @@
         </label>
 
         &nbsp;
-        <button class="btn btn-outline-success my-2 my-sm-0 btn-sm" style="margin-left: 50px;" (click)="openSelectMobile(selectMobile)">
+        <button class="btn btn-outline-success my-2 my-sm-0 btn-sm" style="margin-left: 50px;"
+          (click)="openSelectMobile(selectMobile)">
           +
         </button>
 
@@ -112,9 +113,9 @@
                   <button class="btn btn-outline-success" type="button" (click)="submitMobile()">
                     Select
                   </button>
-                  </div>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <div class="col-md-3">
+                </div>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <div class="col-md-3">
                   <button class="btn btn-danger" type="button" (click)="d('Cross click')">
                     Cancel
                   </button>
@@ -314,20 +315,33 @@
           </tr>
         </tbody>
       </table>
-      <div *ngIf="showPaymetCreditTable">
-        <!-- begin::Pagination -->
+      <!-- <div *ngIf="showPaymetCreditTable">
+        begin::Pagination
         <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
           style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
         </pagination-controls>
-        <!-- end::Pagination -->
+        end::Pagination
       </div>
 
       <div *ngIf="!showPaymetCreditTable">
-        <!-- begin::Pagination -->
+        begin::Pagination
         <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
           style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
         </pagination-controls>
-        <!-- end::Pagination -->
+        end::Pagination
+      </div> -->
+
+      <div class="text-md-right float-md-end pagination-rounded">
+        <div *ngIf="showPaymetCreditTable">
+          <ngb-pagination [collectionSize]="allDiscountedData.length" [(page)]="p" [pageSize]="10" [maxSize]="5"
+            [rotate]="true" [boundaryLinks]="true">
+          </ngb-pagination>
+        </div>
+        <div *ngIf="!showPaymetCreditTable">
+          <ngb-pagination [collectionSize]="combineCreditAndPaymentDetails.length" [(page)]="p" [pageSize]="10"
+            [maxSize]="5" [rotate]="true" [boundaryLinks]="true">
+          </ngb-pagination>
+        </div>
       </div>
     </div>
   </div>
