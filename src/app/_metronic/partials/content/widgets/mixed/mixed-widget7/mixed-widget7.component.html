@@ -826,7 +826,9 @@ table.table-bordered > tbody > tr > td{
   
               <div class="d-print-none">
                 <div class="float-end">
-                  <a href="javascript:window.print()" class="btn btn-success"><i class="fa fa-print"></i></a>
+                  <!-- <a href="javascript:window.print()" class="btn btn-success"><i class="fa fa-print"></i></a> -->
+                  &nbsp; <button class="noprint" style="font-size: medium;" printSectionId="page-wrap" [useExistingCss]="true" ngxPrint> &nbsp;&nbsp;<i class="fa fa-print"
+                   aria-hidden="true"></i> &nbsp;</button>
                 </div>
               </div>
             </div>
