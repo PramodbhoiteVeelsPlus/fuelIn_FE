@@ -186,16 +186,6 @@ export class StatsWidget16Component {
     this.managerPersonId = element.personId
     this.managerName = element.firstName + ' ' + element.lastName
     this.acceesGroup = element.accessGroupId;
-    // if(element.accessGroupId == '12'){
-    //   this.autoManualNumber = dealerData.assignedAutoManualNumber;
-    //   this.autoManualStatus = dealerData.autoManualStatus;
-    // } 
-    
-    // if(element.accessGroupId == '14'){
-    //   var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
-    //   this.autoManualNumber = managerData.assignedAutoManualNumber;
-    //   this.autoManualStatus = managerData.autoManualStatus;
-    // } 
     this.requestTransporter.controls["requestType"].setValue("showamount");
     this.requestTransporter.controls["requestType"].setValue("showamount");
     this.requestTransporter.controls["estimatedRefuelDate"].setValue(this.todayDate);
@@ -753,6 +743,7 @@ export class StatsWidget16Component {
       } else {
 
       }
+      console.log("bill", this.requestTransporter.value.manualCrNumber)
     } else {
       alert("Please Select product Price")
     }
@@ -827,19 +818,19 @@ export class StatsWidget16Component {
                       this.fleetStatus = "FALSE"
                     }
 
-                    
+
                     if (this.CreditRequestDataArray.some((manualNumber: { manualNumber: any }) => !manualNumber.manualNumber || String(manualNumber.manualNumber).trim() === '')) {
                       alert("Please enter Bill / Ref Number.");
                       this.spinner.hide();
                       return;
                     }
-                    
+
                     if (this.CreditRequestDataArray.some((creditAmount: { creditAmount: any }) => !creditAmount.creditAmount || String(creditAmount.creditAmount).trim() === '')) {
                       alert("Please enter Amount .");
                       this.spinner.hide();
                       return;
                     }
-                    
+
                     if (this.CreditRequestDataArray.some((creditQuantity: { creditQuantity: any }) => !creditQuantity.creditQuantity || String(creditQuantity.creditQuantity).trim() === '')) {
                       alert("Please enter Quantity .");
                       this.spinner.hide();
@@ -1157,7 +1148,11 @@ export class StatsWidget16Component {
       }
       this.post1.updateAssignedAutoManualNumberPOST(data)
         .subscribe(res => {
-          // this.getfuelDealerIdByCorporateIdForCalling(status)
+          if(res.status == "OK"){
+            this.getfuelDealerIdByCorporateIdForCalling(status)
+          } else {
+          this.getfuelDealerIdByCorporateIdForCalling(status)
+          }
 
         })
     } else {
@@ -1266,5 +1261,24 @@ export class StatsWidget16Component {
       event.preventDefault();
     }
   }
-  
+
+  getfuelDealerIdByCorporateIdForCalling(status: string) {
+    this.autoManualStatus = ''
+    let data = {
+      corporateId: this.dealerCorporateId
+    }
+    this.post.getfuelDealerIdByCorporateIdPOST(data)
+      .subscribe(res => {
+        if (res.status == "OK") {
+          this.fuelDealerId = res.data[0].fuelDealerId;
+          this.autoManualNumber = res.data[0].assignedAutoManualNumber;
+          this.autoManualStatus = res.data[0].autoManualStatus;
+          this.cd.detectChanges()
+
+        } else {
+          this.cd.detectChanges()
+        }
+      })
+  }
+
 }
