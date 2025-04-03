@@ -148,37 +148,37 @@ export class FeedsWidget10Component implements OnInit {
     private cd: ChangeDetectorRef,) { }
 
   ngOnInit(): void {
-    this.spinner.show();
+    // this.spinner.show();
 
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
-      this.spinner.hide();
-    }, 2000);
+    // setTimeout(() => {
+    //   /** spinner ends after 5 seconds */
+    //   this.spinner.hide();
+    // }, 2000);
 
-    var element = JSON.parse(localStorage.getItem('element')|| '');
+    var element = JSON.parse(localStorage.getItem('element') || '');
     this.fuelDealerId = localStorage.getItem('dealerId');
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
-    this.accessGroupId = element.accessGroupId;  
-    if(this.accessGroupId == '12'){
+    this.accessGroupId = element.accessGroupId;
+    if (this.accessGroupId == '12') {
       var dealerData = JSON.parse(localStorage.getItem('dealerData') || '');
       this.dealerCompanyName = dealerData.companyName;
       this.dealerCity = dealerData.city;
-    } 
-    if(this.accessGroupId == '14'){
+    }
+    if (this.accessGroupId == '14') {
       var managerData = JSON.parse(localStorage.getItem('managerData') || '');
       this.dealerCompanyName = managerData.companyName;
       this.dealerCity = managerData.city;
-    } 
+    }
 
     this.selectedDate = moment(new Date()).format("DD-MM-YYYY");
-    this.reportDate = new Date();    
+    this.reportDate = new Date();
     this.getOpeningBalance(this.fuelDealerId);
-    // this.getDigitalTotalByDate(this.dealerCorporateId);
+    this.getDigitalTotalByDate(this.dealerCorporateId);
     // this.getFuelCreditPaymentByDate(this.dealerCorporateId);
     // this.getNzWise(this.fuelDealerId);
     // this.getSalesDetailsProductWise(this.fuelDealerId);
     // this.getFuelCreditByDate(this.fuelDealerId);
-    this.getoverallReportData(this.fuelDealerId);
+    // this.getoverallReportData(this.fuelDealerId);
     // this.getPreviousVariation(this.fuelDealerId);
     this.cd.detectChanges();
   }
@@ -213,12 +213,12 @@ export class FeedsWidget10Component implements OnInit {
     this.totalCrCustQty = 0
     this.reportDate = moment(this.selectedDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD")
     this.getOpeningBalance(this.fuelDealerId);
-    // this.getDigitalTotalByDate(this.dealerCorporateId);
+    this.getDigitalTotalByDate(this.dealerCorporateId);
     // this.getFuelCreditPaymentByDate(this.dealerCorporateId);
     // this.getNzWise(this.fuelDealerId);
     // this.getSalesDetailsProductWise(this.fuelDealerId);
     // this.getFuelCreditByDate(this.fuelDealerId);
-    this.getoverallReportData(this.fuelDealerId);
+    // this.getoverallReportData(this.fuelDealerId);
     // this.getPreviousVariation(this.fuelDealerId);
     this.cd.detectChanges();
   }
@@ -237,7 +237,7 @@ export class FeedsWidget10Component implements OnInit {
   }
 
   getNzWise(fuelDealerId: any) {
-    this.spinner.show()
+    // this.spinner.show()
     this.shiftNzDetails = []
     this.totalNzDetails = []
     const data = {
@@ -250,24 +250,18 @@ export class FeedsWidget10Component implements OnInit {
           this.shiftNzDetails = res.data
           this.totalNzDetails = res.data1
           this.getSalesDetailsProductWise(this.fuelDealerId);
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 2000);
+            // this.spinner.hide();
           this.cd.detectChanges();
         } else {
           this.getSalesDetailsProductWise(this.fuelDealerId);
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 2000);
+            // this.spinner.hide();
           this.cd.detectChanges();
         }
       });
   }
 
   getSalesDetailsProductWise(fuelDealerId: any) {
-    this.spinner.show()
+    // this.spinner.show()
     this.meterSalesDetails = [];
     this.creditSalesProductwise = []
     this.totalMeterSalesDetails = 0
@@ -293,13 +287,13 @@ export class FeedsWidget10Component implements OnInit {
           this.totalCreditCNGQuantity = Number(res.data4[0].totalCreditQuantity)
           this.cashLubeDetails = res.data5
           this.crLubeDetails = res.data6
-          if(res.data5.length){
+          if (res.data5.length) {
             this.cashLubeAmt = res.data5[0].totalCashAmount;
           } else {
             this.cashLubeAmt = 0;
           }
 
-          if(res.data6.length){
+          if (res.data6.length) {
             this.crLubeAmt = res.data6[0].totalCreditAmount;
           } else {
             this.crLubeAmt = 0;
@@ -335,24 +329,18 @@ export class FeedsWidget10Component implements OnInit {
             this.productWiseCreditData.push(shiftDataJSON);
           })
           this.getFuelCreditByDate(this.fuelDealerId);
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 2000);
+            // this.spinner.hide();
           this.cd.detectChanges();
         } else {
           this.getFuelCreditByDate(this.fuelDealerId);
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 2000);
+            // this.spinner.hide();
           this.cd.detectChanges();
         }
       });
   }
 
   getFuelCreditByDate(fuelDealerId: any) {
-    this.spinner.show()
+    // this.spinner.show()
     this.creditDetails = []
     this.creditLubeDetails = []
     const data = {
@@ -382,24 +370,18 @@ export class FeedsWidget10Component implements OnInit {
 
           })
           this.getoverallReportData(this.fuelDealerId);
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 2000);
+            // this.spinner.hide();
           this.cd.detectChanges();
         } else {
           this.getoverallReportData(this.fuelDealerId);
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 2000);
+            // this.spinner.hide();
           this.cd.detectChanges();
         }
       });
   }
 
   getTallyDetails(fuelDealerId: any) {
-    this.spinner.show()
+    // this.spinner.show()
     this.tallySalesDetails = [];
     this.totalSalesDetails = []
     this.cashSales = 0
@@ -437,10 +419,10 @@ export class FeedsWidget10Component implements OnInit {
             this.shiftExpenseAmt = res.data1[0].expenseAmt
           }
           this.getExpenseDetails(this.fuelDealerId);
-          this.spinner.hide()
+          // this.spinner.hide()
           this.cd.detectChanges();
         } else {
-          this.spinner.hide()
+          // this.spinner.hide()
           this.cd.detectChanges();
         }
       });
@@ -470,18 +452,18 @@ export class FeedsWidget10Component implements OnInit {
           }
 
           this.getBankACwiseDetails(this.fuelDealerId);
-          this.spinner.hide()
+          // this.spinner.hide()
           this.cd.detectChanges();
 
         } else {
-          this.spinner.hide()
+          // this.spinner.hide()
           this.cd.detectChanges();
         }
       })
   }
 
   getBankACwiseDetails(fuelDealerId: any) {
-    this.spinner.show()
+    // this.spinner.show()
     this.totalCrBank = 0;
     this.bankoverallReportData = []
     let data = {
@@ -502,10 +484,10 @@ export class FeedsWidget10Component implements OnInit {
             this.netAmt();
           }
 
-          this.spinner.hide()
+          // this.spinner.hide()
           this.cd.detectChanges();
         } else {
-          this.spinner.hide()
+          // this.spinner.hide()
           this.cd.detectChanges();
         }
       })
@@ -537,20 +519,14 @@ export class FeedsWidget10Component implements OnInit {
             this.getFuelCreditPaymentDetails(this.dealerCorporateId);
           }
         }
-        this.getDigitalTotalByDate(this.dealerCorporateId);
-        setTimeout(() => {
-      /** spinner ends after 5 seconds */
-      this.spinner.hide();
-    }, 2000);
+        // this.getDigitalTotalByDate(this.dealerCorporateId);
+        // this.spinner.hide();
         this.cd.detectChanges();
       } else {
         this.openingAmtDate = '';
         this.openingAmt = 0;
-        this.getDigitalTotalByDate(this.dealerCorporateId);
-        setTimeout(() => {
-          /** spinner ends after 5 seconds */
-          this.spinner.hide();
-        }, 2000);
+        // this.getDigitalTotalByDate(this.dealerCorporateId);
+        // this.spinner.hide();
         this.cd.detectChanges();
       }
     })
@@ -565,7 +541,7 @@ export class FeedsWidget10Component implements OnInit {
   }
 
   getFuelCreditPaymentDetails(dealerCorporateId: any) {
-    this.spinner.show()
+    // this.spinner.show()
     this.totalCrAmtCash = 0
     this.totalCrAmtOther = 0
     this.totalCrAmt = 0
@@ -587,11 +563,11 @@ export class FeedsWidget10Component implements OnInit {
             this.totalCrAmt = res.data2[0].totalCrAmt;
           }
           this.getTallyDetails(this.fuelDealerId);
-          this.spinner.hide()
+          // this.spinner.hide()
           this.cd.detectChanges();
 
         } else {
-          this.spinner.hide()
+          // this.spinner.hide()
           this.cd.detectChanges();
         }
       });
@@ -599,7 +575,7 @@ export class FeedsWidget10Component implements OnInit {
 
 
   getoverallReportData(fuelDealerId: any) {
-    this.spinner.show()
+    // this.spinner.show()
     this.overallReportDataData = []
     this.lubeWiseDetails = []
     this.lubeWiseCashDetails = []
@@ -635,7 +611,7 @@ export class FeedsWidget10Component implements OnInit {
             this.totalLubeCrAmt = res.data5[0].totalLubeCrAmount;
           }
           this.totalLubeAmount = Number(this.totalLubeCashAmount) + Number(this.totalLubeCrAmount)
-          console.log("ff", this.totalLubeAmount, this.totalLubeCashAmount , this.totalLubeCrAmount)
+          console.log("ff", this.totalLubeAmount, this.totalLubeCashAmount, this.totalLubeCrAmount)
 
           if (res.data3.length) {
             this.lubeWiseDetails = res.data3;
@@ -644,18 +620,12 @@ export class FeedsWidget10Component implements OnInit {
             this.lubeWiseCashDetails = res.data4;
           }
           this.getPreviousVariation(this.fuelDealerId);
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 2000);
           this.cd.detectChanges();
+          this.spinner.hide();
         } else {
           this.getPreviousVariation(this.fuelDealerId);
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 2000);
           this.cd.detectChanges();
+          this.spinner.hide();
         }
       })
 
@@ -668,18 +638,12 @@ export class FeedsWidget10Component implements OnInit {
             if (Number(res.data1[0].totalVariationAmt) < 0) {
               this.totalVariationAmt = res.data1[0].totalVariationAmt;
             }
-          }this.getPreviousVariation(this.fuelDealerId);
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 2000);
+          } this.getPreviousVariation(this.fuelDealerId);
+            // this.spinner.hide();
           this.cd.detectChanges();
         } else {
           this.getPreviousVariation(this.fuelDealerId);
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 2000);
+            // this.spinner.hide();
           this.cd.detectChanges();
         }
       })
@@ -691,7 +655,7 @@ export class FeedsWidget10Component implements OnInit {
     this.closingBlcForPrevious = Number(this.netTotalForPrevious) - Number(this.creditSalesForPrevious) - Number(this.totalLubeCrAmountPrevious) - Number(this.digitalTotalSalesForPrevious) - Number(this.totalExpenseAmtForPrevious) - Number(this.shiftExpenseAmtForPrevious) - Number(this.totalCrBankForPrevious) - Number(this.shortAmtTotalForPrevious) + Number(this.totalVariationPrevAmt)
     // this.closingBlcForPrevious = Number(this.netTotalForPrevious) - Number(this.creditSalesForPrevious) - Number(this.totalLubeCrAmountPrevious) - Number(this.digitalTotalSalesForPrevious) - Number(this.totalExpenseAmtForPrevious) - Number(this.shiftExpenseAmtForPrevious) - Number(this.totalCrBankForPrevious) - Number(this.shortAmtTotalForPrevious) - Number(this.totalVariationPrevAmt) - Number(this.totalCrAmtOtherForPrevious)
     this.openingBlc = this.closingBlcForPrevious
-    // console.log("openingBlc ",this.openingBlc, '=', this.netTotalForPrevious ,'-', this.creditSalesForPrevious ,'-', this.totalLubeCrAmountPrevious ,'-', this.digitalTotalSalesForPrevious ,'-', this.totalExpenseAmtForPrevious ,'-', this.shiftExpenseAmtForPrevious ,'-', this.totalCrBankForPrevious, '-', this.shortAmtTotalForPrevious, this.totalVariationPrevAmt, this.totalCrAmtOtherForPrevious)
+    console.log("openingBlc ", this.openingBlc, '=', this.netTotalForPrevious, '-', this.creditSalesForPrevious, '-', this.totalLubeCrAmountPrevious, '-', this.digitalTotalSalesForPrevious, '-', this.totalExpenseAmtForPrevious, '-', this.shiftExpenseAmtForPrevious, '-', this.totalCrBankForPrevious, '-', this.shortAmtTotalForPrevious, this.totalVariationPrevAmt, this.totalCrAmtOtherForPrevious)
     this.netAmt()
     this.cd.detectChanges();
   }
@@ -710,11 +674,11 @@ export class FeedsWidget10Component implements OnInit {
     this.closingBlc = Number(this.netTotal) - Number(this.creditSales) - Number(this.totalLubeCrAmount) - Number(this.digitalTotalSales) - Number(this.totalExpenseAmt) - Number(this.shiftExpenseAmt) - Number(this.totalCrBank) - Number(this.shortAmtTotal) + Number(this.totalVariationAmt)
     // this.closingBlc = Number(this.netTotal) - Number(this.creditSales) - Number(this.totalLubeCrAmount) - Number(this.digitalTotalSales) - Number(this.totalExpenseAmt) - Number(this.shiftExpenseAmt) - Number(this.totalCrBank) - Number(this.shortAmtTotal) - Number(this.totalVariationAmt) - Number(this.totalCrAmtOther)
     console.log("closingBlc ", this.closingBlc, '=', this.netTotal, '-', this.creditSales, '-', this.totalLubeCrAmount, '-', this.digitalTotalSales, '-', this.totalExpenseAmt, '-', this.shiftExpenseAmt, '-', this.totalCrBank, '-', this.shortAmtTotal, Number(this.totalVariationAmt), Number(this.totalCrAmtOther))
-        this.cd.detectChanges();
+    this.cd.detectChanges();
   }
 
   getFuelCreditPaymentDetailsForPrevious(dealerCorporateId: any) {
-    this.spinner.show()
+    // this.spinner.show()
     this.totalCrAmtCashForPrevious = 0
     this.totalCrAmtOtherForPrevious = 0
     this.totalCrAmtForPrevious = 0
@@ -737,17 +701,17 @@ export class FeedsWidget10Component implements OnInit {
           }
           this.getTallyDetailsForPrevious(this.fuelDealerId);
           this.getPreviousVariation(this.fuelDealerId);
-          this.spinner.hide()
+          // this.spinner.hide()
           this.cd.detectChanges();
         } else {
-          this.spinner.hide()
+          // this.spinner.hide()
           this.cd.detectChanges();
         }
       });
   }
 
   getTallyDetailsForPrevious(fuelDealerId: any) {
-    this.spinner.show()
+    // this.spinner.show()
     this.cashSalesForPrevious = 0
     this.digitalSalesForPrevious = 0
     this.creditSalesForPrevious = 0
@@ -786,17 +750,17 @@ export class FeedsWidget10Component implements OnInit {
             this.digitalTotalSalesForPrevious = res.data1[0].digitalEntry
           }
           this.getExpenseDetailsForPrevious(this.fuelDealerId);
-          this.spinner.hide()
+          // this.spinner.hide()
           this.cd.detectChanges();
         } else {
-          this.spinner.hide()
+          // this.spinner.hide()
           this.cd.detectChanges();
         }
       });
   }
 
   getExpenseDetailsForPrevious(fuelDealerId: any) {
-    this.spinner.show()
+    // this.spinner.show()
     this.totalExpenseCASHAmtForPrevious = 0
     this.totalExpenseOtherAmtForPrevious = 0
     this.totalExpenseAmtForPrevious = 0
@@ -833,10 +797,10 @@ export class FeedsWidget10Component implements OnInit {
             this.totalCrBankForPrevious = res.data5[0].bankCrAmt;
           }
 
-          this.spinner.hide()
+          // this.spinner.hide()
           this.cd.detectChanges();
         } else {
-          this.spinner.hide()
+          // this.spinner.hide()
           this.cd.detectChanges();
         }
       })
@@ -844,7 +808,7 @@ export class FeedsWidget10Component implements OnInit {
 
 
   getPreviousVariation(fuelDealerId: any) {
-    this.spinner.show()
+    // this.spinner.show()
     this.totalVariationPrevious = 0
     this.totalVariationPrevAmt = 0
     const data = {
@@ -863,23 +827,17 @@ export class FeedsWidget10Component implements OnInit {
             }
             // console.log("prevVariation", this.totalVariationPrevious, moment(this.reportDate).subtract(1, "day").format('YYYY-MM-DD'))
           }
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 2000);
           this.cd.detectChanges();
+          // this.spinner.hide();
         } else {
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 2000);
           this.cd.detectChanges();
+          // this.spinner.hide();
         }
       })
   }
 
   getDigitalTotalByDate(dealerCorporateId: any) {
-    this.spinner.show()
+    // this.spinner.show()
     this.digitalDetails.length = 0
     this.digitalTotalSales = 0
     this.cashHandOverAmount = 0
@@ -898,24 +856,18 @@ export class FeedsWidget10Component implements OnInit {
             this.cashHandOverAmount = res.data2[0].totalAmount
           }
           this.getFuelCreditPaymentByDate(this.dealerCorporateId);
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 2000);
+            // this.spinner.hide();
           this.cd.detectChanges();
         } else {
           this.getFuelCreditPaymentByDate(this.dealerCorporateId);
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 2000);
+            // this.spinner.hide();
           this.cd.detectChanges();
         }
       });
   }
 
   getFuelCreditPaymentByDate(dealerCorporateId: any) {
-    this.spinner.show()
+    // this.spinner.show()
     this.creditPaymentDetails.length = 0
     const data = {
       date: moment(this.reportDate).format('YYYY-MM-DD'),
@@ -926,17 +878,11 @@ export class FeedsWidget10Component implements OnInit {
         if (res.status == 'OK') {
           this.creditPaymentDetails = res.data;
           this.getNzWise(this.fuelDealerId);
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 2000);
+            // this.spinner.hide();
           this.cd.detectChanges();
         } else {
           this.getNzWise(this.fuelDealerId);
-          setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 2000);
+            // this.spinner.hide();
           this.cd.detectChanges();
         }
       });

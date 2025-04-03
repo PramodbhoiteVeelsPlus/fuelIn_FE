@@ -137,6 +137,17 @@ export class BaseTablesWidget2Component implements OnInit {
     private route: ActivatedRoute,
     private post1: WidgetService,
     private router: Router) {
+      const currentDate = new Date();
+      const month = moment(new Date()).format("MM");
+      const year = moment(new Date()).subtract(1, 'year').format("YYYY");
+      const lastYear = moment(new Date()).subtract(2, 'year').format("YYYY");
+      if(Number(month) > 3){
+        config.minDate = { year: Number(year), month: 4, day: 1 };
+        config.maxDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
+      } else {
+        config.minDate = { year: Number(lastYear), month: 4, day: 1 };
+        config.maxDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
+      }
   }
 
   ngOnInit(): void {
