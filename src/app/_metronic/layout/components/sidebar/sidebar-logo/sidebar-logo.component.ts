@@ -11,7 +11,7 @@ import { LayoutService } from '../../../core/layout.service';
 export class SidebarLogoComponent implements OnInit, OnDestroy {
   private unsubscribe: Subscription[] = [];
   @Input() toggleButtonClass: string = '';
-  @Input() toggleEnabled: boolean;
+  @Input() toggleEnabled: boolean = true;
   @Input() toggleType: string = '';
   @Input() toggleState: string = '';
   currentLayoutType: LayoutType | null;
@@ -26,6 +26,7 @@ export class SidebarLogoComponent implements OnInit, OnDestroy {
   constructor(private layout: LayoutService) {}
 
   ngOnInit(): void {
+    this.toggleAttr = `app-sidebar-${this.toggleType}`;
     if (JSON.parse(localStorage.getItem('isLoggedin') || '{}') == true) {
       var element = JSON.parse(localStorage.getItem("element") || '{}');
       this.accessGroupId = element.accessGroupId
@@ -53,6 +54,7 @@ export class SidebarLogoComponent implements OnInit, OnDestroy {
     } else {
       this.router.navigate(['/auth/login'])
     }
+    console.log("toggleEnabled", this.toggleEnabled)
   }
 
   ngOnDestroy() {

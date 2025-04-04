@@ -184,7 +184,7 @@ export class BaseTablesWidget8Component implements OnInit {
       console.log("11 ,", this.fiscalyear1, this.fiscalyear2)
     }
     this.currentMonth = new Date().getMonth() + 1
-    this.filterForm.controls['fiscalyear'].setValue(this.fiscalyear1);
+    this.filterForm.controls['fiscalyear'].setValue(this.fiscalyear2);
     this.filterForm.controls["productNameDAY"].setValue("")
     this.getFuelCreditCorporateByfuelDealerId(this.fuelDealerId)
     this.getProductsByDealerId(this.fuelDealerId)

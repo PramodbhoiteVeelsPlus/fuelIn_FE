@@ -106,9 +106,16 @@ export class MixedWidget9Component implements OnInit {
     private modalService: NgbModal,
     private router: Router,) {
     const currentDate = new Date();
-    config.minDate = { year: 2018, month: 1, day: 1 };
-    config.maxDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
-    config.outsideDays = 'hidden';
+    const month = moment(new Date()).format("MM");
+    const year = moment(new Date()).subtract(1, 'year').format("YYYY");
+    const lastYear = moment(new Date()).subtract(2, 'year').format("YYYY");
+    if(Number(month) > 3){
+      config.minDate = { year: Number(year), month: 4, day: 1 };
+      config.maxDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
+    } else {
+      config.minDate = { year: Number(lastYear), month: 4, day: 1 };
+      config.maxDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
+    }
   }
 
   ngOnInit(): void {
