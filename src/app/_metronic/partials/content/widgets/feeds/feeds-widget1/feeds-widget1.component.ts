@@ -1740,9 +1740,11 @@ export class FeedsWidget1Component implements OnInit {
         if (res.status == 'OK' && res.data.length) {
           this.reportData = res.data;
           this.spinner.hide();
+          this.cd.detectChanges()
         } else {
           this.reportData = [];
           this.spinner.hide();
+          this.cd.detectChanges()
         }
       })
     } else {
