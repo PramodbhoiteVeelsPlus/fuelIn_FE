@@ -85,6 +85,9 @@ export class ListsWidget7Component {
   closeResult: string;
   password: any;
   modalDeleteShift: any;
+  shiftTimeId: any;
+  staffId: any;
+  totalCreditSalesByStaff: any = [];
 
   constructor(
     private post: ListWidgetService,
@@ -255,20 +258,95 @@ export class ListsWidget7Component {
             alert("Shift Deleted successfully..!")
             this.modalDeleteShift.close('close')
             this.getAllOngoingShift(this.fuelDealerId);
+            this.deleteCrSalesFromShift()
+            this.spinner.hide()
+            this.cd.detectChanges()
           } else {
             alert("Error to Delete..")
             this.spinner.hide()
+            this.cd.detectChanges()
           }
         });
 
     } else {
       alert("Error to Delete..")
       this.spinner.hide()
+      this.cd.detectChanges()
     }
   }
 
   closeModal() {
     this.modalDeleteShift.close('close')
+  }
+
+  askForConfirmDelete(confirmdeleteTemplate: any, idfuelShiftDetails: any, openDate: any) {
+    this.modalRefpass = this.modalService.open(confirmdeleteTemplate)
+    this.modalRefpass.result.then((result: any) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason: any) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+
+    this.spinner.show()
+    const data = {
+      fuelShiftId: idfuelShiftDetails,
+    };
+    this.post.getShiftDetailsByShiftIdPOST(data).subscribe((res) => {
+      if (res.status == 'OK') {
+        this.shiftTimeId = res.data[0].shiftTimeId
+        this.staffId = res.data[0].fuelDealerStaffId
+
+        this.getAllFuelCreditByStaffIdDate(this.staffId, openDate, idfuelShiftDetails)
+        this.spinner.hide()
+        this.cd.detectChanges()
+      } else {
+        this.spinner.hide()
+        this.cd.detectChanges()
+      }
+    });
+
+  }
+
+  getAllFuelCreditByStaffIdDate(staffId: any, openDate: any, idfuelShiftDetails: any) {
+    this.totalCreditSalesByStaff = [];
+    this.spinner.show()
+    const data = {
+      fuelDealerStaffId: staffId,
+      date: openDate,
+      fuelShiftId: idfuelShiftDetails
+    };
+    this.post.getAllFuelCreditByStaffIdDatePOST(data)
+      .subscribe(res => {
+        if (res.status == 'OK') {
+          this.totalCreditSalesByStaff = res.data;
+          this.spinner.hide()
+          this.cd.detectChanges()
+        } else {
+          this.spinner.hide()
+          this.cd.detectChanges()
+        }
+      });
+
+  }
+
+  deleteCrSalesFromShift(){
+    if(this.totalCreditSalesByStaff){
+      this.spinner.show();
+      let data = {
+        salesArray: this.totalCreditSalesByStaff
+      }
+
+      this.post.deleteCrSalesByShiftPOST(data).subscribe(res => {
+        if(res.status == "OK"){
+          alert("Credit Sales Deleted Successfully..!")
+          this.cd.detectChanges()
+          this.spinner.hide()
+        } else {
+          this.cd.detectChanges()
+          this.spinner.hide()
+        }
+      })
+    }
   }
 
 }
