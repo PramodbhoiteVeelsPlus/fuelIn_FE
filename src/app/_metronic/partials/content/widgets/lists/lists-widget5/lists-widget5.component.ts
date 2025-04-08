@@ -1049,13 +1049,12 @@ export class ListsWidget5Component {
       let data = {
         shiftId: this.shiftId,
       }
-      this.post.deleteShiftByShiftIdPOST(data)
+      this.post.deleteShiftByShiftIdNEWPOST(data)
         .subscribe(res => {
           if (res.status == 'OK') {
             alert("Shift Deleted successfully..!")
             this.modalDeleteShift.close('close')
             this.getAllOngoingShift(this.fuelDealerId);
-            this.deleteCrSalesFromShift()
             this.spinner.hide()
             this.cd.detectChanges()
           } else {
@@ -3824,7 +3823,7 @@ export class ListsWidget5Component {
     this.getShort()
   }
   
-  askForConfirmDelete(confirmdeleteTemplate: any, idfuelShiftDetails: any) {
+  askForConfirmDelete(confirmdeleteTemplate: any) {
     this.modalRefpass = this.modalService.open(confirmdeleteTemplate)
     this.modalRefpass.result.then((result: any) => {
       this.closeResult = `Closed with: ${result}`;
@@ -3832,44 +3831,6 @@ export class ListsWidget5Component {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
 
-    this.spinner.show()
-    const data = {
-      fuelShiftId: idfuelShiftDetails,
-    };
-    this.post.getShiftDetailsByShiftIdPOST(data).subscribe((res) => {
-      if (res.status == 'OK') {
-        this.shiftTimeId = res.data[0].shiftTimeId
-        this.staffId = res.data[0].fuelDealerStaffId
-
-        this.getAllFuelCreditByStaffIdDate(this.staffId)
-        this.spinner.hide()
-        this.cd.detectChanges()
-      } else {
-        this.spinner.hide()
-        this.cd.detectChanges()
-      }
-    });
-
-  }
-
-  deleteCrSalesFromShift(){
-    if(this.totalCreditSalesByStaff){
-      this.spinner.show();
-      let data = {
-        salesArray: this.totalCreditSalesByStaff
-      }
-
-      this.post.deleteCrSalesByShiftPOST(data).subscribe(res => {
-        if(res.status == "OK"){
-          alert("Credit Sales Deleted Successfully..!")
-          this.spinner.hide()
-          this.cd.detectChanges()
-        } else {
-          this.spinner.hide()
-          this.cd.detectChanges()
-        }
-      })
-    }
   }
 
 }

@@ -136,6 +136,7 @@ export class ListWidgetService {
     private getOperatorWiseDetailsURL = this.baseURL + 'shiftBook/getOperatorWiseDetails';
     private getOperatorWiseQuantityDetailsURL = this.baseURL + 'shiftBook/getOperatorWiseQuantityDetails';
     private deleteCrSalesByShiftURL = this.baseURL + 'fuelDealerCustMap/deleteCrSalesByShift';
+    private deleteShiftByShiftIdNEWURL = this.baseURL + 'shiftList/deleteShiftByShiftIdNEW';
 
 
 
@@ -1160,6 +1161,16 @@ export class ListWidgetService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.deleteCrSalesByShiftURL, body, {
+            headers: headers
+        })
+    }
+
+    // deleteShiftByShiftIdNEWURL
+    deleteShiftByShiftIdNEWPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.deleteShiftByShiftIdNEWURL, body, {
             headers: headers
         })
     }

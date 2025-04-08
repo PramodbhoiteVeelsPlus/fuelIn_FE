@@ -69,7 +69,7 @@
                   <i class="fas fa-edit" style="color: #4e9b4e;">
                   </i> &nbsp;Add/ Edit</a>
                 <a class="dropdown-item" href="javascript: void(0);"
-                  (click)="askForConfirmDelete(confirmdeleteTemplate, data.idfuelShiftDetails)">
+                  (click)="askForConfirmDelete(confirmdeleteTemplate)">
                   <i class="fas fa-ban" style="color: red;"></i> &nbsp; Remove</a>
               </div>
             </div>
@@ -220,12 +220,12 @@
       </div>
       <div class="modal-body">
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-3">
           </div>
-          <div class="col-md-2">
+          <div class="col-auto">
             <button type="submit" class="btn btn-outline-success my-2 my-sm-0" (click)="deleteShiftById()">Yes</button>
           </div>&nbsp;&nbsp;
-          <div class="col-md-2">
+          <div class="col-auto">
             <button type="submit" class="btn btn-danger" (click)="closeModal()">No</button>
           </div>
         </div>
