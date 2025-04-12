@@ -204,9 +204,9 @@
 
     <div class="text-md-right float-md-end pagination-rounded">
       <!-- begin::Pagination -->
-      <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
-      style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
-    </pagination-controls>
+            <ngb-pagination [collectionSize]="shiftWiseQuantityData.length" [(page)]="p" [pageSize]="10"
+            [maxSize]="5" [rotate]="true" [boundaryLinks]="true">
+        </ngb-pagination>
     <!-- end::Pagination -->
     </div>
 

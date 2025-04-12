@@ -480,6 +480,7 @@ export class ListsWidget14Component {
   getByProduct(id: any) {
     if (this.shiftForm.value.shiftTimeId) {
       this.shiftWiseQuantityData = [];
+      this.spinner.show()
       const data = {
         dealerId: this.fuelDealerId,
         startDate: moment(this.shiftForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
@@ -518,20 +519,27 @@ export class ListsWidget14Component {
                 })
 
 
-                this.shiftWiseQuantityData.push(dataJson);
+                this.shiftWiseQuantityData.push(dataJson); 
+                this.spinner.hide()
+                this.cd.detectChanges()
 
               })
             } else {
-              this.shiftWiseQuantityData = res.data;
+              this.shiftWiseQuantityData = res.data; 
+              this.spinner.hide()
+              this.cd.detectChanges()
             }
           } else {
-            this.shiftWiseQuantityData = []
+            this.shiftWiseQuantityData = [] 
+            this.spinner.hide()
+            this.cd.detectChanges()
           }
         }
       })
     } else {
 
       this.shiftWiseQuantityData = [];
+      this.spinner.show()
       const data = {
         dealerId: this.fuelDealerId,
         startDate: moment(this.shiftForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),  //endDate,
@@ -569,14 +577,20 @@ export class ListsWidget14Component {
                 })
 
 
-                this.shiftWiseQuantityData.push(dataJson);
+                this.shiftWiseQuantityData.push(dataJson); 
+                this.spinner.hide()
+                this.cd.detectChanges()
 
               })
             } else {
-              this.shiftWiseQuantityData = res.data;
+              this.shiftWiseQuantityData = res.data; 
+              this.spinner.hide()
+              this.cd.detectChanges()
             }
           } else {
-            this.shiftWiseQuantityData = []
+            this.shiftWiseQuantityData = [] 
+            this.spinner.hide()
+            this.cd.detectChanges()
           }
         }
       })

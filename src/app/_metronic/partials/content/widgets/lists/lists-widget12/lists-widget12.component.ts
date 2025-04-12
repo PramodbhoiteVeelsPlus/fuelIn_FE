@@ -1300,6 +1300,7 @@ export class ListsWidget12Component {
   
   getByProduct(id:any){
     this.quantityDetails = []
+    this.spinner.show()
     const data = {
       fuelDealerId: this.fuelDealerId,
       month: this.month,
@@ -1334,13 +1335,19 @@ export class ListsWidget12Component {
               })
   
               this.quantityDetails.push(dataJson); 
+              this.spinner.hide()
+              this.cd.detectChanges()
              
               })
           }else{
-            this.quantityDetails = res.data;
+            this.quantityDetails = res.data; 
+            this.spinner.hide()
+            this.cd.detectChanges()
           }
         }else{
-          this.quantityDetails = []
+          this.quantityDetails = [] 
+          this.spinner.hide()
+          this.cd.detectChanges()
         }
       }
     })
