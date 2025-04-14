@@ -620,6 +620,7 @@ export class ListsWidget12Component {
           }
         }
         this.getDayWiseShiftDetailsFilter(this.fuelDealerId);
+        this.shiftForm.controls['productName'].setValue("")
         this.cd.detectChanges()
       } else {
         alert("Select Year..!")
