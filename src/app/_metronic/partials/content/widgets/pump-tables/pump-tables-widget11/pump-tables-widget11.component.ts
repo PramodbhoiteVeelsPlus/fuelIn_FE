@@ -553,27 +553,29 @@ export class PumpTablesWidget11Component implements OnInit {
           dataPAYJson.expenses = shift.expenseAmount;
           dataPAYJson.short = shift.shortamount;
           dataPAYJson.shiftTally = shift.totalAmountTally;
+          dataPAYJson.meterSaleAmount = shift.totalAmountTally;
+          dataPAYJson.differnece = dataPAYJson.shiftTally - dataPAYJson.meterSaleAmount;
           if (shift.fuelShiftTimeShiftName != '') {
             dataPAYJson.shiftTime = shift.fuelShiftTimeShiftName;
           } else {
             dataPAYJson.shiftTime = shift.fuelShiftTimeDetails;
-          }//shift.fuelShiftTimeDetails+' '+shift.fuelShiftTimeShiftName
+          }
           dataPAYJson.cashHandOver = Number(shift.totalCashTally) - Number(shift.shortamount) - Number(shift.expenseAmount);
-          dataPAYJson.meterSaleAmount = shift.totalAmountTally;
-          dataPAYJson.differnece = dataPAYJson.shiftTally - dataPAYJson.meterSaleAmount;
           dataPAYJson.expenseAmtDetails = shift.expenseAmtDetails
 
           //   this.meterSalesAmount.map(sales => {
           //     if (sales.fuelShiftDetailsId == shift.idfuelShiftDetails) {
           //         dataPAYJson.meterSaleAmount = sales.meterSaleAmount;
-          //         dataPAYJson.differnece = Number(shift.totalAmountTally) - Number(sales.meterSaleAmount);
+          //         dataPAYJson.differnece = Number(shift.totalAmountTally);
           //     }
           // })
 
           this.shiftWiseData.push(dataPAYJson);
-          this.spinner.hide()
-          this.cd.detectChanges()
         })
+
+        // this.cashHandover = this.shiftWiseData.cashHandOver
+        this.spinner.hide()
+        this.cd.detectChanges()
       } else {
         this.spinner.hide()
         this.cd.detectChanges()
