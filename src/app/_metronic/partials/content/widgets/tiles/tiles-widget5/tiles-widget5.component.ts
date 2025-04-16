@@ -267,8 +267,10 @@ export class TilesWidget5Component {
   dataPaymentTotalCredit: any = 0;
   dataPaytotal2223: any = 0;
   bankwisePayment2223Data: any = [];
-    searchBox:FormControl = new FormControl();
-    searchTermm: any = "";
+  searchBox:FormControl = new FormControl();
+  searchTermm: any = "";
+  dataPaytotal2324: any = 0;
+  bankwisePayment2324Data: any = [];
 
   constructor(
     private modalService: NgbModal,
@@ -1344,6 +1346,8 @@ export class TilesWidget5Component {
       this.dataPaymentTotalCredit = 0
       this.dataPaytotal2223 = 0
       this.bankwisePayment2223Data = []
+      this.dataPaytotal2324 = 0
+      this.bankwisePayment2324Data = []
 
       let data = {
         fuelDealerId: this.fuelDealerId,
@@ -1393,13 +1397,18 @@ export class TilesWidget5Component {
             if (res.dataPay2223.length) {
               this.dataPaytotal2223 = Number(res.dataPay2223[0].totalCredit)
             }
-            this.bankWiseTotalAmount1 = this.bankWiseExpenseAmount - this.data3totalDebit + (this.data4totalCredit) + this.data7totalCredit + this.dataPaymentTotalCredit + this.dataPaytotal2223;
+
+            if (res.dataPay2324.length) {
+              this.dataPaytotal2324 = Number(res.dataPay2324[0].totalCredit)
+            }
+            this.bankWiseTotalAmount1 = this.bankWiseExpenseAmount - this.data3totalDebit + (this.data4totalCredit) + this.data7totalCredit + this.dataPaymentTotalCredit + this.dataPaytotal2223 + this.dataPaytotal2324;
             this.totalBankWiseDebit = this.data1totalDebit
             this.totalBankWiseCredit = this.data2totalCredit + (this.data5totalCredit) + (this.dataPaytotalCredit)
             this.closingBankWiseBlc = Number(this.bankWiseTotalAmount1) - Number(this.totalBankWiseDebit) + Number(this.totalBankWiseCredit)
             this.bankWisePaymentDetails = res.data6;
             this.bankWisePaymentData = res.dataAllPay;
             this.bankwisePayment2223Data = res.dataAllPay2223;
+            this.bankwisePayment2324Data = res.dataAllPay2324;
             this.getBankIdWiseBankBook();
             this.cd.detectChanges();
             this.spinner.hide();
@@ -2350,7 +2359,7 @@ export class TilesWidget5Component {
             this.spinner.hide();
           }
           if (this.bankwisePayment2223Data.length) {
-            this.bankwisePayment2223Data.map((res3: any) => {
+            this.bankwisePayment2223Data.map((res4: any) => {
               const dataJson2 = {
                 accountingDate: '',
                 accountingBook: '',
@@ -2369,19 +2378,19 @@ export class TilesWidget5Component {
                 paidFromBankId: '',
                 paidToBankId: '',
               };
-              dataJson2.accountingDate = res3.transacDate;
+              dataJson2.accountingDate = res4.transacDate;
               dataJson2.accountingBook = "Bank";
-              dataJson2.accountingAmout = res3.grandTotalAmount;
+              dataJson2.accountingAmout = res4.grandTotalAmount;
               dataJson2.accountingCreatedBy = "";
-              dataJson2.accountingDetails = res3.paymentMethod + ' ' + res3.chequeNO;
-              dataJson2.accountingFromInput = res3.companyName
+              dataJson2.accountingDetails = res4.paymentMethod + ' ' + res4.chequeNO;
+              dataJson2.accountingFromInput = res4.companyName
               dataJson2.accountingBankCr = "TRUE";
               dataJson2.accountingBankDb = "FALSE";
               dataJson2.accountingTransactionType = "Credit Payment";
-              dataJson2.paidToAccountNumber = res3.accountNumber;
+              dataJson2.paidToAccountNumber = res4.accountNumber;
               dataJson2.paidFromBankId = "22";
-              dataJson2.paidToBankId = res3.accountId;
-              dataJson2.paidToBankName = res3.bankName;
+              dataJson2.paidToBankId = res4.accountId;
+              dataJson2.paidToBankName = res4.bankName;
               this.bankAccountingBookDetails.push(dataJson2);
               this.bankAccountingBookDetails.sort((a: any, b: any) => (a.accountingDate < b.accountingDate ? -1 : 1))
             })
@@ -2393,6 +2402,52 @@ export class TilesWidget5Component {
             this.cd.detectChanges();
             this.spinner.hide();
           }
+
+          if (this.bankwisePayment2324Data.length) {
+            this.bankwisePayment2324Data.map((res5: any) => {
+              const dataJson2 = {
+                accountingDate: '',
+                accountingBook: '',
+                accountingAmout: 0,
+                accountingCreatedBy: '',
+                accountingDetails: '',
+                accountingFromInput: '',
+                accountingBankCr: '',
+                accountingBankDb: '',
+                accountingToInput: '',
+                accountingTransactionType: '',
+                paidFromAccountNumber: '',
+                paidFromBankName: '',
+                paidToAccountNumber: '',
+                paidToBankName: '',
+                paidFromBankId: '',
+                paidToBankId: '',
+              };
+              dataJson2.accountingDate = res5.transacDate;
+              dataJson2.accountingBook = "Bank";
+              dataJson2.accountingAmout = res5.grandTotalAmount;
+              dataJson2.accountingCreatedBy = "";
+              dataJson2.accountingDetails = res5.paymentMethod + ' ' + res5.chequeNO;
+              dataJson2.accountingFromInput = res5.companyName
+              dataJson2.accountingBankCr = "TRUE";
+              dataJson2.accountingBankDb = "FALSE";
+              dataJson2.accountingTransactionType = "Credit Payment";
+              dataJson2.paidToAccountNumber = res5.accountNumber;
+              dataJson2.paidFromBankId = "22";
+              dataJson2.paidToBankId = res5.accountId;
+              dataJson2.paidToBankName = res5.bankName;
+              this.bankAccountingBookDetails.push(dataJson2);
+              this.bankAccountingBookDetails.sort((a: any, b: any) => (a.accountingDate < b.accountingDate ? -1 : 1))
+            })
+            this.getBankWiseBankBook(this.bankAccountingBookDetails)
+            this.cd.detectChanges();
+            this.spinner.hide();
+          } else {
+            this.getBankWiseBankBook(this.bankAccountingBookDetails)
+            this.cd.detectChanges();
+            this.spinner.hide();
+          }
+
           this.spinner.hide()
         } else {
           this.spinner.hide()
