@@ -222,6 +222,10 @@ export class BaseTablesWidget1Component implements OnInit {
   customerId: any;
   searchBox:FormControl = new FormControl();
   searchTermm: any = "";
+  companyName: any;
+  headQuarterName: any;
+  GSTNumber: any;
+  managerMobile: any;
 
   constructor(
     private modalService: NgbModal,
@@ -248,6 +252,9 @@ export class BaseTablesWidget1Component implements OnInit {
       this.headerName1 = dealerData.companyName;
       this.headerName2 = dealerData.address1 + ', ' + dealerData.address2 + ', ' + dealerData.city;
       this.headerName3 = dealerData.state + '-' + dealerData.pin + '  ' + "GST: " + dealerData.GSTNumber;
+      this.companyName = dealerData.companyName;
+      this.headQuarterName = dealerData.headQuarterName;
+      this.GSTNumber = dealerData.GSTNumber;
     }
     this.dealerMobile = element.phone1;
     this.dealerLoginVPId = element.veelsPlusCorporateID;
@@ -265,9 +272,13 @@ export class BaseTablesWidget1Component implements OnInit {
     if(element.accessGroupId == '14'){
       var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
       this.customerId = managerData.customerId;
+      this.companyName = managerData.companyName;
+      this.headQuarterName = managerData.headQuarterName;
+      this.GSTNumber = managerData.GSTNumber;
       this.searchDealerBycustomerId(this.customerId)
     }
     // this.getFuelCreditRequestByCorporateId(this.dealerCorporateId)
+    this.getManagerMobileByfuelDealerId(this.fuelDealerId)
   }
 
   getFuelCreditRequestCorporateByfuelDealerId(fuelDealerId: any) {
@@ -1392,4 +1403,21 @@ search1() {
   }
 
 }
+
+getManagerMobileByfuelDealerId(fuelDealerId: any) {
+  const data = {
+    fuelDealerId: fuelDealerId,
+  };
+  this.post.getSelectedMobileNumberByDealerIdPOST(data)
+    .subscribe(res => {
+      if (res.data.length) {
+        this.managerMobile = res.data[0].mobile;
+        this.spinner.hide()
+      } else {
+        this.spinner.hide()
+      }
+    }
+    );
+}
+
 }

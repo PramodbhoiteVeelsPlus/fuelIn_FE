@@ -270,8 +270,8 @@ export class ListsWidget5Component {
   totalCreditTally1: any;
   totalCashTally: any = 0;
   totalDigitalTally: any = 0;
-  expenseAmount: any;
-  shortamount: any;
+  expenseAmount: any = 0;
+  shortamount: any = 0;
   totalAmount: any = 0;
   expenseAmtDetails: any;
   meterSalesUpdate: string;
@@ -1182,7 +1182,7 @@ export class ListsWidget5Component {
 
   getShiftWiseDetails(fuelDealerId: any) {
     this.spinner.show()
-    // this.shiftWiseData.length = 0;
+    this.shiftWiseData.length = 0;
     this.meterSalesAmount = [];
     this.shiftDetails = []
     const data = {
@@ -1214,13 +1214,41 @@ export class ListsWidget5Component {
 
           dataPAYJson.openDate = moment(shift.openDate).format("YYYY-MM-DD");
           dataPAYJson.name = shift.firstName + ' ' + shift.lastName;
-          dataPAYJson.cash = shift.totalCashTally;
-          dataPAYJson.digital = shift.paytmTotalAmount;
-          dataPAYJson.credit = shift.totalCreditTally;
+          // dataPAYJson.cash = shift.totalCashTally;
+          // dataPAYJson.digital = shift.paytmTotalAmount;
+          // dataPAYJson.credit = shift.totalCreditTally;
+          if(typeof shift.totalCreditTally === 'number' && !isNaN(shift.totalCreditTally)){
+            dataPAYJson.credit = shift.totalCreditTally;
+          } else {
+            dataPAYJson.credit = 0
+          }
+          
+          if(typeof shift.paytmTotalAmount === 'number' && !isNaN(shift.paytmTotalAmount)){
+            dataPAYJson.digital = shift.paytmTotalAmount;
+          } else {
+            dataPAYJson.digital = 0;
+          }
+
+          if(typeof shift.totalCashTally === 'number' && !isNaN(shift.totalCashTally)){
+            dataPAYJson.cash = shift.totalCashTally;
+          } else {
+            dataPAYJson.cash = 0;
+          }
+
+          if(typeof shift.totalAmountTally === 'number' && !isNaN(shift.totalAmountTally)){
+            dataPAYJson.shiftTally = shift.totalAmountTally;
+          } else {
+            dataPAYJson.shiftTally = 0;
+          }
+
           dataPAYJson.expenses = shift.expenseAmount;
           dataPAYJson.short = shift.shortamount;
-          dataPAYJson.shiftTally = shift.totalAmountTally;
-          dataPAYJson.meterSaleAmount = shift.totalAmountTally;
+          // dataPAYJson.shiftTally = shift.totalAmountTally;
+          if(typeof shift.totalAmountTally === 'number' && !isNaN(shift.totalAmountTally)){
+            dataPAYJson.meterSaleAmount = shift.totalAmountTally;
+          } else {
+            dataPAYJson.meterSaleAmount = 0;
+          }
           dataPAYJson.differnece = dataPAYJson.shiftTally - dataPAYJson.meterSaleAmount;
           if (shift.fuelShiftTimeShiftName != '') {
             dataPAYJson.shiftTime = shift.fuelShiftTimeShiftName;
@@ -1238,6 +1266,7 @@ export class ListsWidget5Component {
           // })
 
           this.shiftWiseData.push(dataPAYJson);
+          // console.log("shiftWiseData", this.shiftWiseData)
         })
 
         this.cashHandover = this.shiftWiseData.cashHandOver
@@ -1931,6 +1960,8 @@ export class ListsWidget5Component {
   getTotalTally() {
     this.totalAmount = (Number(this.totalCashTally) + Number(this.totalDigitalTally)
       + Number(this.totalCreditTally)).toFixed(2);
+      console.log("totalAmount", this.totalAmount, '=', Number(this.totalCashTally), '+', Number(this.totalDigitalTally),
+     '+', Number(this.totalCreditTally))
     this.getDifference()
 
   }
