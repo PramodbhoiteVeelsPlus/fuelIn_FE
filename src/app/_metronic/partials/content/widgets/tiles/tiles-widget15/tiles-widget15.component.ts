@@ -21,6 +21,7 @@ export class TilesWidget15Component {
     
   ngOnInit(): void {
     this.getDealerList()
+    this.cd.detectChanges()
   }
 
   getDealerList(){
@@ -32,10 +33,12 @@ export class TilesWidget15Component {
       if (res.status == "OK") {
         if(res.data.length){
           this.dealerList = res.data;
+          this.cd.detectChanges()
           this.spinner.hide();
         } else{
-          this.spinner.hide();
           this.dealerList = [];
+          this.cd.detectChanges()
+          this.spinner.hide();
         }      
       }
     })
