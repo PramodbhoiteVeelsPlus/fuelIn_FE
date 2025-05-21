@@ -73,6 +73,7 @@ export class TablesWidget24Component {
   p1: number = 1;
   total: number = 0;
   waive: any;
+  currentDemoStatus: any;
 
   constructor(
     private post: WidgetService,
@@ -162,12 +163,14 @@ export class TablesWidget24Component {
   }
 
   demoDealerActive(status: any, fuelDealerId: any, demoDealer: string) {
+    this.currentDemoStatus = demoDealer
     if (demoDealer == "TRUE") {
       if (status.target.checked) {
         demoDealer = "FALSE";
         let data = {
           demoDealer: demoDealer,
           fuelDealerId: fuelDealerId,
+          currentDemoStatus: this.currentDemoStatus
 
         }
         this.post.updateDealerDemoStatusPOST(data)
@@ -183,6 +186,7 @@ export class TablesWidget24Component {
       let data = {
         demoDealer: demoDealer,
         fuelDealerId: fuelDealerId,
+        currentDemoStatus: this.currentDemoStatus
       }
 
       this.post.updateDealerDemoStatusPOST(data)

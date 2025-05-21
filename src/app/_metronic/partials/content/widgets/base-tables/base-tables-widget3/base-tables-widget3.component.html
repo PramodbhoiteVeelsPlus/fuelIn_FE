@@ -68,11 +68,18 @@
                 <td style="text-align: center" > {{ data.companyName }} </td>
                 <td style="text-align: center"> {{ data.description }} </td>
                 <td style="text-align: center"> {{ data.product }} </td>
-                <td style="text-align: center" *ngIf="data.purpose == 'CREDIT'">
+                <!-- <td style="text-align: center" *ngIf="data.purpose == 'CREDIT'">
                   {{ data.quantity }} Ltrs
                 </td>
                 <td style="text-align: center" *ngIf="data.purpose != 'CREDIT'">
                   
+                </td> -->
+                <td style="text-align: center">
+                  <div [ngSwitch]="data.purpose">
+                    <div *ngSwitchCase="'CREDIT'">{{ data.quantity }} Ltrs</div>
+                    <div *ngSwitchDefault></div>
+                  </div>
+                
                 </td>
 
                 <td style="text-align: center">  <i class="fa-solid fa-indian-rupee-sign"></i>

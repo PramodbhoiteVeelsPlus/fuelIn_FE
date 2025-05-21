@@ -345,11 +345,11 @@
     <table class="table table-centered table-nowrap">
       <thead class="table-light">
         <tr>
-          <th style="text-align: left;"><b>Sr.No</b>>
-          <th style="text-align: left;"><b>Date</b>>
-          <th style="text-align: left;"><b>Bill / ref number</b>>
+          <th style="text-align: left;"><b>Sr.No</b>
+          <th style="text-align: left;"><b>Date</b>
+          <th style="text-align: left;"><b>Bill / ref number</b>
           <th style="text-align: left;"><b>Vehicle no / other details</b></th>
-          <th style="text-align: left;"><b>Credit Amount</b>>
+          <th style="text-align: left;"><b>Credit Amount</b>
         </tr>
       </thead>
       <tbody
@@ -368,7 +368,7 @@
             {{data.manualCrNumber}}
           </td>
           <td style="text-align: left;">
-            <span *ngIf="data.purpose == 'CREDIT'">
+            <!-- <span *ngIf="data.purpose == 'CREDIT'">
               <span *ngIf="data.vehicleNumber == 'undefined'">
               </span>
               <span *ngIf="data.vehicleNumber != 'undefined'">
@@ -385,7 +385,27 @@
             </span>
             <span *ngIf="data.purpose == 'AdvAmt'">
               {{data.advName}} {{data.advMobile}}
-            </span>
+            </span> -->
+
+            
+            <div [ngSwitch]="data.purpose">
+              <div *ngSwitchCase="'CREDIT'">
+                <div [ngSwitch]="data.vehicleNumber">
+                  <div *ngSwitchCase="'undefined'"></div>
+                  <div *ngSwitchDefault>{{ data.vehicleNumber }}</div>
+                </div>
+              </div>
+              <div *ngSwitchCase="'LUBE'">
+                <div [ngSwitch]="data.vehicleNumber">
+                  <div *ngSwitchCase="'undefined'"> {{data.lubeName}}</div>
+                  <div *ngSwitchDefault>{{ data.vehicleNumber }} {{data.lubeName}}</div>
+                </div>
+              </div>
+              <div *ngSwitchCase="'AdvAmt'">
+                {{data.advName}} {{data.advMobile}}
+              </div>
+            </div>
+
           </td>
           <td style="text-align: left;"> {{data.creditAmount | number:'1.2-2'}}</td>
         </tr>

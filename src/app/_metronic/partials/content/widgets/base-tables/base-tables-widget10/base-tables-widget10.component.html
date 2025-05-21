@@ -141,7 +141,7 @@
                 </td>
 
                 <td style="text-align: center">
-                  <span *ngIf="data.invoiceOf == 'LUBE TAX' ">
+                  <!-- <span *ngIf="data.invoiceOf == 'LUBE TAX' ">
                     -
                   </span>
                   <span *ngIf="data.invoiceOf != 'LUBE TAX' ">
@@ -156,8 +156,26 @@
                     <span *ngIf="!data.fuelInvoicePreviousStatement">
                       0
                     </span>
-                  </span>
+                  </span> -->
 
+                  <div [ngSwitch]="data.invoiceOf">
+                    <span *ngSwitchCase="'LUBE TAX'">-</span>
+                  
+                    <ng-container *ngSwitchDefault>
+                      <ng-container [ngSwitch]="true">
+                        <span *ngSwitchCase="data.fuelInvoicePreviousStatement >= 0">
+                          {{ data.fuelInvoicePreviousStatement | number: '1.2-2' }}
+                        </span>
+                  
+                        <span *ngSwitchCase="data.fuelInvoicePreviousStatement < 0">
+                          {{ (data.fuelInvoicePreviousStatement) * (-1) | number: '1.2-2' }} CR
+                        </span>
+                  
+                        <span *ngSwitchDefault>0</span>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                  
                 </td>
 
                 <td style="text-align: center">

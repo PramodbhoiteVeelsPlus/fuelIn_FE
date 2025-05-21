@@ -80,6 +80,8 @@ export class TilesService {
     private getProductWiseDSRShiftTimeURL = this.baseURL + 'shiftBook/getProductWiseDSRShiftTime';
     private getTotalMeterSalesAndTallyEnteryBYShiftTimeURL = this.baseURL + 'shiftBook/getTotalMeterSalesAndTallyEnteryBYShiftTime'; 
     private getDigitalTotalByShiftTimeURL = this.baseURL + 'shiftBook/getDigitalTotalByShiftTime';
+    private getStaffDetailsByVEELSURL = this.baseURL + 'groupAccess/getStaffDetailsByVEELS'; 
+    private getVeelsIdURL = this.baseURL + 'groupAccess/getVeelsId'; 
 
 
 
@@ -677,6 +679,26 @@ export class TilesService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.getDigitalTotalByShiftTimeURL, body, {
+            headers: headers
+        })
+    }
+
+    // getStaffDetailsByVEELSURL
+    getStaffDetailsByVEELSPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getStaffDetailsByVEELSURL, body, {
+            headers: headers
+        })
+    }
+
+    // getVeelsIdURL
+    getVeelsIdPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getVeelsIdURL, body, {
             headers: headers
         })
     }

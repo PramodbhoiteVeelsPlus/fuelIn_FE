@@ -99,14 +99,23 @@
               {{data.transacDate | date:"d MMM, yyyy" }}
             </span>
           </td>
-          <td style="text-align: left;">
+          <!-- <td style="text-align: left;">
             <span *ngIf="data.mappingPreviousStatus =='TRUE'">
               {{data.mappingCompanyName}}
             </span>
             <span *ngIf="data.mappingPreviousStatus =='FALSE'">
               {{data.companyName}}
             </span>
+          </td> -->
+          
+          <td>
+            <div [ngSwitch]="data.mappingPreviousStatus">
+              <div *ngSwitchCase="'TRUE'">{{data.mappingCompanyName}}</div>
+              <div *ngSwitchCase="'FALSE'">{{data.companyName}} </div>
+              <div *ngSwitchDefault></div>
+            </div>
           </td>
+
           <td style="text-align: left;"> {{data.paymentMethod}} </td>
           <td style="text-align: left;">
             ₹ &nbsp; {{data.grandTotalAmount | number:'1.2-2'}} </td>
@@ -178,13 +187,19 @@
                   <td style="text-align: left;"> {{hostPhone}} </td>
                   <td style="text-align: left;"> {{chequeNO}} </td>
                   <td *ngIf="dealerView" style="text-align: left;">
-                    <span *ngIf="byManager == 'FALSE' ">
+                    <!-- <span *ngIf="byManager == 'FALSE' ">
                       {{ownerName}}
                     </span>
                     <span *ngIf="byManager == 'TRUE' ">
                       {{managerName}}
-                    </span>
+                    </span> -->
+                    <div [ngSwitch]="byManager">
+                      <div *ngSwitchCase="'FALSE'">{{ownerName}}</div>
+                      <div *ngSwitchCase="'TRUE'">{{managerName}} </div>
+                      <div *ngSwitchDefault></div>
+                    </div>
                   </td>
+                  
                 </tr>
               </tbody>
             </table>

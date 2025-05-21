@@ -75,6 +75,9 @@ export class TablesWidget20Component {
   p1: number = 1;
   total: number = 0;
   waive: any;
+  currStatus: string;
+  currentCrStatus: string;
+  currentSmsStatus: string;
 
   constructor(
     private post: WidgetService,
@@ -213,6 +216,7 @@ export class TablesWidget20Component {
   }
 
   smsEnable(status: any, corporateId: any, userId: any, smsStatus: string) {
+    this.currentSmsStatus = smsStatus
     if (smsStatus == "TRUE") {
       if (status.target.checked) {
         smsStatus = "FALSE";
@@ -222,7 +226,8 @@ export class TablesWidget20Component {
           userId: userId,
           corporateId: corporateId,
           fueldealerSmsSend: "FALSE",
-          accessGroup: "12"
+          accessGroup: "12",
+          currentSmsStatus: this.currentSmsStatus
         }
 
         this.post.updateSmsStatusPOST(data)
@@ -240,7 +245,8 @@ export class TablesWidget20Component {
         smsStatus: smsStatus,
         userId: userId,
         corporateId: corporateId,
-        accessGroup: "12"
+        accessGroup: "12",
+        currentSmsStatus: this.currentSmsStatus
       }
 
       this.post.updateSmsStatusPOST(data)
@@ -256,6 +262,7 @@ export class TablesWidget20Component {
   }
 
   crSMSActive(status: any, fuelDealerId: any, crUserSMS: string) {
+    this.currentCrStatus = crUserSMS
     var crSMS = "";
     if (crUserSMS == "TRUE") {
       if (status.target.checked) {
@@ -263,6 +270,7 @@ export class TablesWidget20Component {
         let data = {
           crSMS: crSMS,
           fuelDealerId: fuelDealerId,
+          currentCrStatus: this.currentCrStatus
         }
         this.post.updateDealerCRSMSStatusPOST(data)
           .subscribe(res => {
@@ -277,6 +285,7 @@ export class TablesWidget20Component {
       let data = {
         crSMS: crSMS,
         fuelDealerId: fuelDealerId,
+        currentCrStatus: this.currentCrStatus
       }
 
       this.post.updateDealerCRSMSStatusPOST(data)
@@ -293,6 +302,7 @@ export class TablesWidget20Component {
 
   
 osSmsEnable(status: any, corporateId: any, userId: any, smsStatus: string) {
+  this.currStatus = smsStatus;
   if (smsStatus == "TRUE") {
     if (status.target.checked) {
       smsStatus = "FALSE";
@@ -302,7 +312,8 @@ osSmsEnable(status: any, corporateId: any, userId: any, smsStatus: string) {
         userId: userId,
         corporateId: corporateId,
         fueldealerSmsSend: "FALSE",
-        accessGroup: "12"
+        accessGroup: "12",
+        currStatus : this.currStatus
       }
 
       this.post.updateOsSmsStatusPOST(data)
@@ -320,7 +331,8 @@ osSmsEnable(status: any, corporateId: any, userId: any, smsStatus: string) {
       smsStatus: smsStatus,
       userId: userId,
       corporateId: corporateId,
-      accessGroup: "12"
+      accessGroup: "12",
+      currStatus : this.currStatus
     }
 
     this.post.updateOsSmsStatusPOST(data)

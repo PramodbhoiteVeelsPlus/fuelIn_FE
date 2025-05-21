@@ -225,13 +225,18 @@
                         <span *ngIf="data.netOS < 0 ">
                             ₹ {{(data.netOS)*(-1) | number:'1.2-2'}} CR
                         </span>
-                        <span *ngIf="data.netOS >= 0 ">
+                        <!-- <span *ngIf="data.netOS >= 0 ">
                             <span *ngIf="data.netOS < ((data.maxCreditAmount * 90)/100)">
                                 ₹ {{(data.netOS) | number:'1.2-2'}}
                             </span>
                             <span *ngIf="data.netOS >= ((data.maxCreditAmount * 90)/100)" style="color: red;">
                                 ₹ {{data.netOS | number:'1.2-2'}}
                             </span>
+                        </span> -->
+                        <span [ngSwitch]="data.netOS >= 0">
+                            <span *ngSwitchCase="data.netOS < ((data.maxCreditAmount * 90)/100)"> ₹ {{(data.netOS) | number:'1.2-2'}} </span>
+                            <span *ngSwitchCase="data.netOS >= ((data.maxCreditAmount * 90)/100)" style="color: red;"> ₹ {{(data.netOS) | number:'1.2-2'}}</span>
+                            <span *ngSwitchDefault></span>
                         </span>
                     </td>
                     <td>
@@ -279,13 +284,18 @@
                         <span *ngIf="data.netOS < 0 ">
                             ₹ {{(data.netOS)*(-1) | number:'1.2-2'}} CR
                         </span>
-                        <span *ngIf="data.netOS >= 0 ">
+                        <!-- <span *ngIf="data.netOS >= 0 ">
                             <span *ngIf="data.netOS < ((data.maxCreditAmount * 90)/100)">
                                 ₹ {{(data.netOS) | number:'1.2-2'}}
                             </span>
                             <span *ngIf="data.netOS >= ((data.maxCreditAmount * 90)/100)" style="color: red;">
                                 ₹ {{data.netOS | number:'1.2-2'}}
                             </span>
+                        </span> -->
+                        <span [ngSwitch]="data.netOS >= 0">
+                            <span *ngSwitchCase="data.netOS < ((data.maxCreditAmount * 90)/100)"> ₹ {{(data.netOS) | number:'1.2-2'}} </span>
+                            <span *ngSwitchCase="data.netOS >= ((data.maxCreditAmount * 90)/100)" style="color: red;"> ₹ {{(data.netOS) | number:'1.2-2'}}</span>
+                            <span *ngSwitchDefault></span>
                         </span>
                     </td>
                     <td>

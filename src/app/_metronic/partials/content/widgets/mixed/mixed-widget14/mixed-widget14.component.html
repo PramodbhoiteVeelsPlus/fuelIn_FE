@@ -94,7 +94,7 @@
                                   {{data.estimatedRefuelDate | date:'d MMM y'}} 
                               </td>
                               <td style="text-align: center; border: 1px solid black;">
-                                  <span *ngIf="data.purpose == 'LUBE' ">
+                                  <!-- <span *ngIf="data.purpose == 'LUBE' ">
                                       {{data.productName}}
                                   </span>
                                   <span *ngIf="data.purpose == 'CREDIT' ">
@@ -105,11 +105,19 @@
                                   </span>
                                   <span *ngIf="data.purpose == 'LUBETAX'">
                                       LUBRICANTS-TAX
-                                  </span>
+                                  </span> -->
+                                  
+                                <div [ngSwitch]="data.purpose">
+                                  <div *ngSwitchCase="'LUBE'"> {{data.productName}}</div>
+                                  <div *ngSwitchCase="'CREDIT'"> {{data.productName}}</div>
+                                  <div *ngSwitchCase="'AdvAmt'">ADVANCE </div>
+                                  <div *ngSwitchCase="'LUBETAX'"> LUBRICANTS-TAX </div>
+                                  <div *ngSwitchDefault>{{data.productName}}</div>
+                                </div>
                               </td>
     
                               <td style="text-align: center; border: 1px solid black;">
-                                  <span *ngIf="data.purpose == 'CREDIT'">
+                                  <!-- <span *ngIf="data.purpose == 'CREDIT'">
                                       <span *ngIf="data.vehicleNumber == 'undefined'">
           
                                       </span>
@@ -135,13 +143,37 @@
                                       <span *ngIf="data.vehicleNumber != 'undefined'">
                                           {{ data.vehicleNumber}} 
                                       </span>
-                                  </span>
+                                  </span> -->
+                                  
+                                <div [ngSwitch]="data.purpose">
+                                  <div *ngSwitchCase="'CREDIT'">
+                                    <div [ngSwitch]="data.vehicleNumber">
+                                      <div *ngSwitchCase="'undefined'"></div>
+                                      <div *ngSwitchDefault>{{ data.vehicleNumber }}</div>
+                                    </div>
+                                  </div>
+                                  <div *ngSwitchCase="'LUBE'">
+                                    <div [ngSwitch]="data.vehicleNumber">
+                                      <div *ngSwitchCase="'undefined'"> -</div>
+                                      <div *ngSwitchDefault>{{data.vehicleNumber}} {{data.lubeName}}</div>
+                                    </div>
+                                  </div>
+                                  <div *ngSwitchCase="'AdvAmt'">
+                                    {{data.advName}} {{data.advMobile}}
+                                  </div>
+                                  <div *ngSwitchCase="'LUBETAX'">
+                                    <div [ngSwitch]="data.vehicleNumber">
+                                      <div *ngSwitchCase="'undefined'"> -</div>
+                                      <div *ngSwitchDefault>{{data.vehicleNumber}}</div>
+                                    </div>
+                                  </div>
+                                </div>
                               </td>         
                               <td style="text-align: center; border: 1px solid black;">
                                 {{ data.manualCrNumber }}
                             </td>              
                               <td style="text-align: center; border: 1px solid black;">
-                                  <span *ngIf="data.purpose == 'CREDIT' ">
+                                  <!-- <span *ngIf="data.purpose == 'CREDIT' ">
                                       <span *ngIf='data.productCategory == "CNG" '>
                                           {{data.actualCreditQuantity | number:'1.2-2'}} Kg
                                       </span>
@@ -154,7 +186,22 @@
                                   </span>
                                   <span *ngIf="data.purpose == 'LUBETAX' ">
                                       {{data.actualCreditQuantity | number:'1.2-2'}} {{data.lubeUnit}}
-                                  </span>
+                                  </span> -->
+
+                                  <div [ngSwitch]="data.purpose">
+                                    <div *ngSwitchCase="'CREDIT'">
+                                      <div [ngSwitch]="data.productCategory">
+                                        <div *ngSwitchCase="'CNG'"> {{data.actualCreditQuantity | number:'1.2-2'}} Kg</div>
+                                        <div *ngSwitchDefault> {{data.actualCreditQuantity | number:'1.2-2'}} Ltr</div>
+                                      </div>
+                                    </div>
+                                    <div *ngSwitchCase="'LUBE'">
+                                      {{data.actualCreditQuantity | number:'1.2-2'}} {{data.lubeUnit}} 
+                                    </div>
+                                    <div *ngSwitchCase="'LUBETAX'">
+                                      {{data.actualCreditQuantity | number:'1.2-2'}} {{data.lubeUnit}} 
+                                    </div>
+                                </div>
                               </td>
                               <td style="text-align: center; border: 1px solid black;"> {{data.productRate}} </td>
       

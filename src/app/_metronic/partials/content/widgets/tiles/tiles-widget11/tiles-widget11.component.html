@@ -29,14 +29,23 @@
                 <td style="text-align: center;border: solid 1px;">
                   Oil Company
                 </td>
-                <td *ngIf="oilCoStatus" style="text-align: center;border: solid 1px;">
+                <!-- <td *ngIf="oilCoStatus" style="text-align: center;border: solid 1px;">
                   <span *ngIf="oilCoAcTotalAmount1 < 0" style="color: red;">
                     {{ oilCoAcTotalAmount1 | number:'1.2-2'}}
                   </span>
                   <span *ngIf="oilCoAcTotalAmount1 >= 0">
                     {{ oilCoAcTotalAmount1 | number:'1.2-2'}}
                   </span>
+                </td> -->
+                
+                <td style="text-align: center;border: solid 1px;">
+                  <div [ngSwitch]="oilCoStatus" style="text-align: center;">
+                    <span *ngSwitchCase="oilCoAcTotalAmount1 < 0" style="color: red;"> {{ oilCoAcTotalAmount1 | number:'1.2-2'}} </span>
+                    <span *ngSwitchCase="oilCoAcTotalAmount1 >= 0"> {{ oilCoAcTotalAmount1 | number:'1.2-2'}} </span>
+                    <span *ngSwitchDefault> </span>
+                  </div>
                 </td>
+
                 <td *ngIf="!oilCoStatus" style="text-align: center;">
                   -
                 </td>
@@ -46,14 +55,27 @@
                 <td style="text-align: center;border: solid 1px;">
                   {{totalOilCoCredit | number:'1.2-2'}}
                 </td>
-                <td *ngIf="oilCoStatus" style="text-align: center;border: solid 1px;">
+                <!-- <td *ngIf="oilCoStatus" style="text-align: center;border: solid 1px;">
                   <span *ngIf="closingOilCoACBlc < 0" style="color: red;">
                     {{ closingOilCoACBlc | number:'1.2-2'}}
                   </span>
                   <span *ngIf="closingOilCoACBlc >= 0">
                     {{ closingOilCoACBlc | number:'1.2-2'}}
                   </span>
+                </td> -->
+
+                <td style="text-align: center;border: solid 1px;">
+                  <div [ngSwitch]="oilCoStatus" style="text-align: center;">
+                  <span *ngSwitchCase="closingOilCoACBlc < 0" style="color: red;">
+                    {{ closingOilCoACBlc | number:'1.2-2'}}
+                  </span>
+                  <span *ngIf="closingOilCoACBlc >= 0">
+                    {{ closingOilCoACBlc | number:'1.2-2'}}
+                  </span>
+                  <span *ngSwitchDefault> </span>
+                  </div>
                 </td>
+
                 <td *ngIf="!oilCoStatus" style="text-align: center;border: solid 1px;">
                   -
                 </td>

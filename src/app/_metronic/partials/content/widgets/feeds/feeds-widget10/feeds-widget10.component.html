@@ -208,24 +208,48 @@
                           <span *ngIf="data.meterSaleQuantity"> {{data.meterSaleAmount | number:'1.2-2'}} </span>
                         </td>
                         <td colspan="3" style="text-align: center; border: 1px solid #272829;">
-                          <span *ngIf="data.meterSaleQuantity">
+                          <!-- <span *ngIf="data.meterSaleQuantity">
                             <span *ngIf="data.productName == 'CNG' ">
                               {{data.meterSaleQuantity | number:'1.2-2'}} Kg
                             </span>
                             <span *ngIf="data.productName != 'CNG' ">
                               {{data.meterSaleQuantity | number:'1.2-2'}} Ltrs
                             </span>
+                          </span> -->
+
+                          <span *ngIf="data.meterSaleQuantity">
+                            <span [ngSwitch]="data.productName">
+                              <span *ngSwitchCase="'CNG'">
+                                {{data.meterSaleQuantity | number:'1.2-2'}} Kg
+                              </span>
+                              <span *ngSwitchDefault>
+                                {{data.meterSaleQuantity | number:'1.2-2'}} Ltrs
+                              </span>
+                            </span>
                           </span>
+                          
                         </td>
                         <td colspan="2" style="text-align: center; border: 1px solid #272829;">
-                          <span *ngIf="data.totalPumpTesting">
+                          <!-- <span *ngIf="data.totalPumpTesting">
                             <span *ngIf="data.productName == 'CNG' ">
                               {{data.totalPumpTesting | number:'1.2-2'}} Kg
                             </span>
                             <span *ngIf="data.productName != 'CNG' ">
                               {{data.totalPumpTesting | number:'1.2-2'}} Ltrs
                             </span>
+                          </span> -->
+
+                          <span *ngIf="data.totalPumpTesting">
+                            <span [ngSwitch]="data.productName">
+                              <span *ngSwitchCase="'CNG'">
+                                {{data.totalPumpTesting | number:'1.2-2'}} Kg
+                              </span>
+                              <span *ngSwitchDefault>
+                                {{data.totalPumpTesting | number:'1.2-2'}} Ltrs
+                              </span>
+                            </span>
                           </span>
+                          
                         </td>
                       </tr>
                       <tr *ngFor="let data of cashLubeDetails; let i = index">

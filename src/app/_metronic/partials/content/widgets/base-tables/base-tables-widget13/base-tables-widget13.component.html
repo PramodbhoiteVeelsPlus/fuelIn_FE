@@ -133,9 +133,16 @@
 
                       <td style="text-align: left;"> {{data.phone1}} </td>
                       <td style="text-align: left;">
-                        <span *ngIf="data.accessGroupId == '12'">OWNER</span>
+                        <!-- <span *ngIf="data.accessGroupId == '12'">OWNER</span>
                         <span *ngIf="data.accessGroupId == '13'">OPERATOR</span>
-                        <span *ngIf="data.accessGroupId == '14'">MANAGER</span>
+                        <span *ngIf="data.accessGroupId == '14'">MANAGER</span> -->
+
+                        <div [ngSwitch]="data.accessGroupId">
+                          <div *ngSwitchCase="12"> OWNER </div>
+                          <div *ngSwitchCase="13"> OPERATOR </div>
+                          <div *ngSwitchCase="14"> MANAGER </div>
+                          <div *ngSwitchDefault> - </div>
+                        </div>
                       </td>
                       <td style="text-align: left;">
                         <span *ngIf="data.accessGroupId != '12'">

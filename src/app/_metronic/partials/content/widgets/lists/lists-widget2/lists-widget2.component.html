@@ -83,23 +83,41 @@
             <td style="text-align: center;"> {{data.actualCreditQuantity| number:'1.2-2'}} </td>
             <td style="text-align: center;"> {{data.fuelcreditBeforeTax | number:'1.2-2'}} </td>
             <td style="text-align: center;">
-              <p *ngIf="data.fuelcreditCGST == '' "> - </p>
+              <!-- <p *ngIf="data.fuelcreditCGST == '' "> - </p>
               <p *ngIf="data.fuelcreditCGST == 'undefined' "> - </p>
               <p *ngIf="data.fuelcreditCGST != '' && data.fuelcreditCGST != 'undefined' "> {{data.fuelcreditGSTAmount/2
-                | number:'1.2-2'}} </p>
+                | number:'1.2-2'}} </p> -->
+
+            <div [ngSwitch]="data.fuelcreditCGST">
+              <div *ngSwitchCase="''"> - </div>
+              <div *ngSwitchCase="'undefined'"> - </div>
+              <div *ngSwitchDefault>{{data.fuelcreditGSTAmount/2 | number:'1.2-2'}}</div>
+            </div>
             </td>
             <td style="text-align: center;">
-              <p *ngIf="data.fuelcreditSGST == '' "> - </p>
+              <!-- <p *ngIf="data.fuelcreditSGST == '' "> - </p>
               <p *ngIf="data.fuelcreditSGST == 'undefined' "> - </p>
               <p *ngIf="data.fuelcreditSGST != '' && data.fuelcreditSGST != 'undefined'"> {{data.fuelcreditGSTAmount/2 |
-                number:'1.2-2'}} </p>
+                number:'1.2-2'}} </p> -->
+
+                <div [ngSwitch]="data.fuelcreditSGST">
+                 <div *ngSwitchCase="''"> - </div>
+                 <div *ngSwitchCase="'undefined'"> - </div>
+                 <div *ngSwitchDefault>{{data.fuelcreditGSTAmount/2 | number:'1.2-2'}}</div>
+                </div>
+
             </td>
 
             <td style="text-align: center;">
-              <p *ngIf="data.fuelcreditIGST == '' "> - </p>
+              <!-- <p *ngIf="data.fuelcreditIGST == '' "> - </p>
               <p *ngIf="data.fuelcreditIGST == 'undefined' "> - </p>
               <p *ngIf="data.fuelcreditIGST != '' && data.fuelcreditIGST != 'undefined' "> {{data.fuelcreditGSTAmount |
-                number:'1.2-2'}} </p>
+                number:'1.2-2'}} </p> -->
+                 <div [ngSwitch]="data.fuelcreditIGST">
+                  <div *ngSwitchCase="''"> - </div>
+                  <div *ngSwitchCase="'undefined'"> - </div>
+                  <div *ngSwitchDefault>{{data.fuelcreditGSTAmount | number:'1.2-2'}}</div>
+                </div>
             </td>
 
             <td style="text-align: center;">

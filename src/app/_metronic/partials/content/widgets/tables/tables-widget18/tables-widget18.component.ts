@@ -116,6 +116,10 @@ export class TablesWidget18Component {
   closeResult: string;
   remainingTotalAmt: any;
   waive: any;
+  currentSmsStatus: string;
+  currentEmailStatus: string;
+  currentDemoStatus: string;
+  currentCrStatus: any;
 
   constructor(
     private post: WidgetService,
@@ -579,6 +583,7 @@ export class TablesWidget18Component {
   }
 
   smsEnable(status: any, corporateId: any, userId: any, smsStatus: string) {
+    this.currentSmsStatus = smsStatus
     if (smsStatus == "TRUE") {
       if (status.target.checked) {
         smsStatus = "FALSE";
@@ -588,7 +593,8 @@ export class TablesWidget18Component {
           userId: userId,
           corporateId: corporateId,
           fueldealerSmsSend: "FALSE",
-          accessGroup: "12"
+          accessGroup: "12",
+          currentSmsStatus: this.currentSmsStatus
         }
 
         this.post.updateSmsStatusPOST(data)
@@ -606,7 +612,8 @@ export class TablesWidget18Component {
         smsStatus: smsStatus,
         userId: userId,
         corporateId: corporateId,
-        accessGroup: "12"
+        accessGroup: "12",
+        currentSmsStatus: this.currentSmsStatus
       }
 
       this.post.updateSmsStatusPOST(data)
@@ -622,6 +629,7 @@ export class TablesWidget18Component {
   }
 
   emailEnable(status: any, corporateId: any, userId: any, emailStatus: string, accessGroupId: any) {
+    this.currentEmailStatus = emailStatus
     if (emailStatus == "TRUE") {
       if (status.target.checked) {
         emailStatus = "FALSE";
@@ -629,7 +637,8 @@ export class TablesWidget18Component {
           emailStatus: emailStatus,
           userId: userId,
           corporateId: corporateId,
-          accessGroup: accessGroupId
+          accessGroup: accessGroupId,
+          currentEmailStatus: this.currentEmailStatus
 
         }
         this.post.updateemailStatusPOST(data)
@@ -647,7 +656,8 @@ export class TablesWidget18Component {
         emailStatus: emailStatus,
         userId: userId,
         corporateId: corporateId,
-        accessGroup: accessGroupId
+        accessGroup: accessGroupId,
+        currentEmailStatus: this.currentEmailStatus
       }
 
       this.post.updateemailStatusPOST(data)
@@ -663,12 +673,14 @@ export class TablesWidget18Component {
   }
 
   demoDealerActive(status: any, fuelDealerId: any, demoDealer: string) {
+    this.currentDemoStatus = demoDealer
     if (demoDealer == "TRUE") {
       if (status.target.checked) {
         demoDealer = "FALSE";
         let data = {
           demoDealer: demoDealer,
           fuelDealerId: fuelDealerId,
+          currentDemoStatus: this.currentDemoStatus
         }
         this.post.updateDealerDemoStatusPOST(data)
           .subscribe(res => {
@@ -683,6 +695,7 @@ export class TablesWidget18Component {
       let data = {
         demoDealer: demoDealer,
         fuelDealerId: fuelDealerId,
+        currentDemoStatus : this.currentDemoStatus
       }
 
       this.post.updateDealerDemoStatusPOST(data)
@@ -697,6 +710,7 @@ export class TablesWidget18Component {
   }
 
   crSMSActive(status: any, fuelDealerId: any, crUserSMS: string) {
+    this.currentCrStatus= crUserSMS
     var crSMS = "";
     if (crUserSMS == "TRUE") {
       if (status.target.checked) {
@@ -704,6 +718,7 @@ export class TablesWidget18Component {
         let data = {
           crSMS: crSMS,
           fuelDealerId: fuelDealerId,
+          currentCrStatus: this.currentCrStatus
         }
         this.post.updateDealerCRSMSStatusPOST(data)
           .subscribe(res => {
@@ -719,6 +734,7 @@ export class TablesWidget18Component {
       let data = {
         crSMS: crSMS,
         fuelDealerId: fuelDealerId,
+        currentCrStatus: this.currentCrStatus
       }
 
       this.post.updateDealerCRSMSStatusPOST(data)
