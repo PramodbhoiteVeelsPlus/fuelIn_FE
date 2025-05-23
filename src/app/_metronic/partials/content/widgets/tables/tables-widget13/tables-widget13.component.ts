@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Injectable, OnInit } from '@angular/core';
-import { NgbDateAdapter, NgbDateParserFormatter, NgbDatepickerConfig, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbDateAdapter, NgbDateParserFormatter, NgbDatepickerConfig, NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { WidgetService } from '../../widgets.services';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -78,12 +78,34 @@ export class TablesWidget13Component implements OnInit {
   allDealerDetails: any = [];
   searchData: any;
   allDealerDetailsSearch: any = [];
+  dealerId: any;
+  modalReference: any;
+  closeResult: string;
+  allCustList: any = [];
+  p: number = 1;
+  p1: number = 1;
+  total: number = 0;
+  activeCustList: any = [];
+  modalReference1: any;
+  managerDetails: any = [];
+  operatorDetails: any = [];
+  modalReference3: any;
+  modalReference2: any;
+  posDetails: any;
+  modalReference4: any;
+  modalReference5: any;
+  tankDetails: any;
+  modalReference6: any;
+  PumpDetails: any;
+  modalReference7: any;
+  NozzleDetails: any;
 
   constructor(
     private post: WidgetService,
     private spinner: NgxSpinnerService,
     config: NgbDatepickerConfig,
-    public cd: ChangeDetectorRef,) {
+    public cd: ChangeDetectorRef,
+    private modalService: NgbModal,) {
     const currentDate = new Date();
     config.minDate = { year: 2018, month: 1, day: 1 };
     config.maxDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
@@ -235,9 +257,11 @@ export class TablesWidget13Component implements OnInit {
         tankCount: 0,
         pumpCount: 0,
         nzCount: 0,
+        fuelDealerId: ''
       };
 
       dataJson.pumpName = res1.companyName;
+      dataJson.fuelDealerId = res1.fuelDealerId
 
       this.allCustomerListDetails.map((res2: { fuelDealerId: any; allCustomers: number; }) => {
         if (res1.fuelDealerId == res2.fuelDealerId) {
@@ -293,5 +317,295 @@ export class TablesWidget13Component implements OnInit {
     this.allDealerDetails = this.allDealerDetailsSearch.filter((item: { pumpName: any; }) =>
       item.pumpName.toLowerCase().includes(query)
     );
+  }
+  
+    custName(cust: any,fuelDealerId: any){
+      this.dealerId = fuelDealerId
+      this.modalReference = this.modalService.open(cust)
+      this.modalReference.result.then((result: any) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason: any) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+  
+      this.getAllCustList()
+    }
+    
+    private getDismissReason(reason: any): string {
+      if (reason === ModalDismissReasons.ESC) {
+        return 'by pressing ESC';
+      } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+        return 'by clicking on a backdrop';
+      } else {
+        return `with: ${reason}`;
+      }
+    }
+    
+  getAllCustList() {
+    this.spinner.show()
+    let data = {
+      fuelDealerId: this.dealerId
+    }
+    this.post.getAllCustomerListPOST(data).subscribe(res => {
+      if (res.status == "OK") {
+        this.allCustList = res.data
+        this.spinner.hide()
+        this.cd.detectChanges();
+      } else {
+        this.allCustList = [];
+        this.spinner.hide()
+        this.cd.detectChanges();
+      }
+    })
+  }
+
+  pageChangeEvent(event: number) {
+    this.p = event;
+    this.getAllCustList();
+  }
+
+  activeCustomer(activeCust: any,fuelDealerId: any){
+    this.dealerId = fuelDealerId
+    this.modalReference1 = this.modalService.open(activeCust)
+    this.modalReference1.result.then((result: any) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason: any) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+
+    this.getActiveCustList()
+  }
+   
+  getActiveCustList() {
+    this.spinner.show()
+    let data = {
+      fuelDealerId: this.dealerId
+    }
+    this.post.getActiveCustListPOST(data).subscribe(res => {
+      if (res.status == "OK") {
+        this.activeCustList = res.data
+        this.spinner.hide()
+        this.cd.detectChanges();
+      } else {
+        this.activeCustList = [];
+        this.spinner.hide()
+        this.cd.detectChanges();
+      }
+    })
+  }
+  
+  pageChangeEvent1(event: number) {
+    this.p = event;
+    this.getActiveCustList();
+  }
+  
+  managerName(manager: any,fuelDealerId: any){
+    this.dealerId = fuelDealerId
+    this.modalReference2 = this.modalService.open(manager)
+    this.modalReference2.result.then((result: any) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason: any) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+
+    this.getManagerList()
+  }
+  
+  getManagerList() {
+    this.spinner.show()
+    let data = {
+      fuelDealerId: this.dealerId
+    }
+    this.post.getManagerListPOST(data).subscribe(res => {
+      if (res.status == "OK") {
+        this.managerDetails = res.data
+        this.spinner.hide()
+        this.cd.detectChanges();
+      } else {
+        this.managerDetails = [];
+        this.spinner.hide()
+        this.cd.detectChanges();
+      }
+    })
+  }
+  
+  pageChangeEvent2(event: number) {
+    this.p = event;
+    this.getManagerList();
+  }
+  
+  operatorName(operator: any,fuelDealerId: any){
+    this.dealerId = fuelDealerId
+    this.modalReference3 = this.modalService.open(operator)
+    this.modalReference3.result.then((result: any) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason: any) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+
+    this.getOperatorList()
+  }
+  
+  getOperatorList() {
+    this.spinner.show()
+    let data = {
+      fuelDealerId: this.dealerId
+    }
+    this.post.getOperatorListPOST(data).subscribe(res => {
+      if (res.status == "OK") {
+        this.operatorDetails = res.data
+        this.spinner.hide()
+        this.cd.detectChanges();
+      } else {
+        this.operatorDetails = [];
+        this.spinner.hide()
+        this.cd.detectChanges();
+      }
+    })
+  }
+  
+  pageChangeEvent3(event: number) {
+    this.p = event;
+    this.getOperatorList();
+  }
+   
+  posName(pos: any,fuelDealerId: any){
+    this.dealerId = fuelDealerId
+    this.modalReference4 = this.modalService.open(pos)
+    this.modalReference4.result.then((result: any) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason: any) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+
+    this.getPosList()
+  }
+  
+  getPosList() {
+    this.spinner.show()
+    let data = {
+      fuelDealerId: this.dealerId
+    }
+    this.post.getPosListPOST(data).subscribe(res => {
+      if (res.status == "OK") {
+        this.posDetails = res.data
+        this.spinner.hide()
+        this.cd.detectChanges();
+      } else {
+        this.posDetails = [];
+        this.spinner.hide()
+        this.cd.detectChanges();
+      }
+    })
+  }
+  
+  pageChangeEvent4(event: number) {
+    this.p = event;
+    this.getPosList();
+  }
+  
+  tankName(tank: any,fuelDealerId: any){
+    this.dealerId = fuelDealerId
+    this.modalReference5 = this.modalService.open(tank)
+    this.modalReference5.result.then((result: any) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason: any) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+
+    this.getTankList()
+  }
+  
+  getTankList() {
+    this.spinner.show()
+    let data = {
+      fuelDealerId: this.dealerId
+    }
+    this.post.getTankListPOST(data).subscribe(res => {
+      if (res.status == "OK") {
+        this.tankDetails = res.data
+        this.spinner.hide()
+        this.cd.detectChanges();
+      } else {
+        this.tankDetails = [];
+        this.spinner.hide()
+        this.cd.detectChanges();
+      }
+    })
+  }
+  
+  pageChangeEvent5(event: number) {
+    this.p = event;
+    this.getTankList();
+  }
+  
+  pumpName(pump: any,fuelDealerId: any){
+    this.dealerId = fuelDealerId
+    this.modalReference6 = this.modalService.open(pump)
+    this.modalReference6.result.then((result: any) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason: any) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+
+    this.getPumpList()
+  }
+  
+  getPumpList() {
+    this.spinner.show()
+    let data = {
+      fuelDealerId: this.dealerId
+    }
+    this.post.getPumpListPOST(data).subscribe(res => {
+      if (res.status == "OK") {
+        this.PumpDetails = res.data
+        this.spinner.hide()
+        this.cd.detectChanges();
+      } else {
+        this.PumpDetails = [];
+        this.spinner.hide()
+        this.cd.detectChanges();
+      }
+    })
+  }
+  
+  pageChangeEvent6(event: number) {
+    this.p = event;
+    this.getPumpList();
+  }
+  
+  nozzleName(nozzle: any,fuelDealerId: any){
+    this.dealerId = fuelDealerId
+    this.modalReference7 = this.modalService.open(nozzle)
+    this.modalReference7.result.then((result: any) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason: any) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+
+    this.getNozzleList()
+  }
+  
+  getNozzleList() {
+    this.spinner.show()
+    let data = {
+      fuelDealerId: this.dealerId
+    }
+    this.post.getNzListPOST(data).subscribe(res => {
+      if (res.status == "OK") {
+        this.NozzleDetails = res.data
+        this.spinner.hide()
+        this.cd.detectChanges();
+      } else {
+        this.NozzleDetails = [];
+        this.spinner.hide()
+        this.cd.detectChanges();
+      }
+    })
+  }
+  
+  pageChangeEvent7(event: number) {
+    this.p = event;
+    this.getNozzleList();
   }
 }

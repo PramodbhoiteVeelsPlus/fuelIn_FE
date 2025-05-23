@@ -9,6 +9,7 @@
             (change)="getDetailsByCustomerMapName($event)">
           <datalist id="dealerList">
             <option *ngFor="let data of dealerList" [value]="data.companyName">
+            {{ data.FuelVeelsId }}
           </datalist>
         </span>
       </div>

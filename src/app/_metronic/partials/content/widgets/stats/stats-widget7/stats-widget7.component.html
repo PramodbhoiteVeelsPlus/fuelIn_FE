@@ -29,6 +29,7 @@
         formcontrolName="dealer" (change)="getActivityCountByDealer($event)">
       <datalist id="activityCountDealers">
         <option *ngFor="let data of activityCountDealers" [value]="data.companyName">
+            {{ data.FuelVeelsId }}
       </datalist>
     </div>
     <div class="col-md-4"></div>

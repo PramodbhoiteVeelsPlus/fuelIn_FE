@@ -151,6 +151,14 @@ export class WidgetService {
   private addFuelVehicleDetailsURL = this.baseURL + 'fuelVehicleDetails/addFuelVehicleDetails';
   private updateTotalInvCreditAmtURL = this.baseURL + 'fuelCreditInvoice/updateTotalCreditAmt'; 
   private updateCompanyNameAddressURL = this.baseURL + 'fuelDealerCustMap/updateCompanyNameAddress'; 
+  private getAllCustomerListURL = this.baseURL + 'adminDashboard/getAllCustomerList';
+  private getActiveCustListURL = this.baseURL + 'adminDashboard/getActiveCustomerList';
+  private getManagerListURL = this.baseURL + 'adminDashboard/getManagerList';
+  private getOperatorListURL = this.baseURL + 'adminDashboard/getOperatorList';
+  private getPosListURL = this.baseURL + 'adminDashboard/getPosList';
+  private getTankListURL = this.baseURL + 'adminDashboard/getTankList';
+  private getPumpListURL = this.baseURL + 'adminDashboard/getPumpList';
+  private getNzListURL = this.baseURL + 'adminDashboard/getNzList';
 
 
   setHeader() {
@@ -1339,5 +1347,83 @@ export class WidgetService {
   }
 
 
+  // getAllCustomerListURL
+  getAllCustomerListPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getAllCustomerListURL, body, {
+      headers: headers
+    })
+  }
 
+  // getActiveCustListURL
+  getActiveCustListPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getActiveCustListURL, body, {
+      headers: headers
+    })
+  }
+  
+  // getManagerListURL
+  getManagerListPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getManagerListURL, body, {
+      headers: headers
+    })
+  }
+
+  // getOperatorListURL
+  getOperatorListPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getOperatorListURL, body, {
+      headers: headers
+    })
+  }
+
+  // getPosListURL
+  getPosListPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getPosListURL, body, {
+      headers: headers
+    })
+  }
+  
+  // getTankListURL
+  getTankListPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getTankListURL, body, {
+      headers: headers
+    })
+  }
+
+  // getPumpListURL
+  getPumpListPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getPumpListURL, body, {
+      headers: headers
+    })
+  }
+
+  // getNzListURL
+  getNzListPOST(body: Object): Observable<any> {
+    this.setHeader();
+    let headers = new HttpHeaders();
+    headers = headers.set('authenticationToken', this.token);
+    return this.http.post(this.getNzListURL, body, {
+      headers: headers
+    })
+  }
 }

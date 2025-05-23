@@ -31,7 +31,7 @@
         <select class="form-control" formControlName="selectedCorp" required>
           <option value="">All</option>
           <option *ngFor="let data of corporateList" [value]="data.fuelDealerId">
-            {{data.companyName}}
+            {{data.companyName}} - {{ data.FuelVeelsId }}
           </option>
         </select>
       </div>

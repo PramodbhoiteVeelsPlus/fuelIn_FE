@@ -820,6 +820,11 @@ export class TablesWidget30Component {
   addOutstandAmount() {
     this.spinner.show();
     let createDate = new Date();
+
+    if(this.pendingOutstanding == null){
+      this.pendingOutstanding = 0
+    } 
+
     const data = {
       fuelDealerCustomerMapId: this.billingForm.value.fuelDealerCustomerMapIdForBilling,
       pendingOutstanding: this.pendingOutstanding,

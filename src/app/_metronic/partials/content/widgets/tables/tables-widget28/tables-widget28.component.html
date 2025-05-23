@@ -12,6 +12,7 @@
                                     (blur)=getDealerId($event)>
                                 <datalist id="allCorporateList">
                                     <option *ngFor="let data of allDealerList" [value]="data.companyName">
+                                        {{ data.FuelVeelsId }}
                                 </datalist>
                             </div>
 

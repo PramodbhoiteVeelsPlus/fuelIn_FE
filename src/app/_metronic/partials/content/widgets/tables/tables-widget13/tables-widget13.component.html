@@ -35,24 +35,399 @@
       <tbody *ngFor="let data of allDealerDetails ; let i = index">
         <tr>
           <td> {{data.pumpName}} </td>
-          <td> {{data.allCustCount}}
+          <td style="cursor: pointer;"
+              (click)="custName(cust, data.fuelDealerId)"> {{data.allCustCount}}
           </td>
-          <td> {{data.activeCustCount}}
+          <td style="cursor: pointer;"
+              (click)="activeCustomer(activeCust, data.fuelDealerId)"> {{data.activeCustCount}}
           </td>
-          <td> {{data.managerCount}}
+          <td style="cursor: pointer;"
+              (click)="managerName(manager, data.fuelDealerId)"> {{data.managerCount}}
           </td>
-          <td> {{data.operatorCount}}
+          <td style="cursor: pointer;"
+              (click)="operatorName(operator, data.fuelDealerId)"> {{data.operatorCount}}
           </td>
-          <td> {{data.posCount}} </td>
-          <td> {{data.tankCount}} </td>
-          <td> {{data.pumpCount}} </td>
-          <td> {{data.nzCount}} </td>
+          <td style="cursor: pointer;"
+              (click)="posName(pos, data.fuelDealerId)"> {{data.posCount}} </td>
+          <td style="cursor: pointer;"
+              (click)="tankName(tank, data.fuelDealerId)"> {{data.tankCount}} </td>
+          <td style="cursor: pointer;"
+              (click)="pumpName(pump, data.fuelDealerId)"> {{data.pumpCount}} </td>
+          <td style="cursor: pointer;"
+              (click)="nozzleName(nozzle, data.fuelDealerId)"> {{data.nzCount}} </td>
         </tr>
 
       </tbody>
       <!-- end::Table body -->
     </table>
     <!-- end::Table -->
+
+      <ng-template #cust>
+        <div class="modal-header">
+          <h4 class="modal-title">
+            <strong>
+              &nbsp;&nbsp;&nbsp;
+              All Customer </strong>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <!-- begin::Table container -->
+          <div class="table-responsive mb-0">
+            <!-- begin::Table -->
+            <table class="table table-centered">
+              <!-- begin::Table head -->
+              <thead>
+                <tr class="fw-bolder bg-light">
+                  <th class="min-w-125px" style="text-align: center"><b>Sr.no</b></th>
+                  <th class="min-w-125px" style="text-align: center"><b>Customer Name</b></th>
+                  <th class="min-w-125px" style="text-align: center"><b>Phone Number</b></th>
+                </tr>
+              </thead>
+              <!-- end::Table head -->
+              <!-- begin::Table body -->
+              <tbody *ngFor="let data of allCustList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                <tr>
+                  <td class="min-w-125px" style="text-align: center">{{i+1}} </td>
+                  <td class="min-w-125px" style="text-align: center">{{data.hostName}}</td>
+                  <td class="min-w-125px" style="text-align: center">{{data.hostPhone}}</td>
+                </tr>
+      
+              </tbody>
+              <!-- end::Table body -->
+            </table>
+
+            <!-- begin::Pagination -->
+            <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+                style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+            </pagination-controls>
+            <!-- end::Pagination -->
+             
+          </div>
+          <!-- end::Table -->
+        </div>
+
+      </ng-template>
+      
+      <ng-template #activeCust>
+        <div class="modal-header">
+          <h4 class="modal-title">
+            <strong>
+              &nbsp;&nbsp;&nbsp;
+              Active Customers </strong>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <!-- begin::Table container -->
+          <div class="table-responsive mb-0">
+            <!-- begin::Table -->
+            <table class="table table-centered">
+              <!-- begin::Table head -->
+              <thead>
+                <tr class="fw-bolder bg-light">
+                  <th class="min-w-125px" style="text-align: center"><b>Sr.no</b></th>
+                  <th class="min-w-125px" style="text-align: center"><b>Customer Name</b></th>
+                  <th class="min-w-125px" style="text-align: center"><b>Phone Number</b></th>
+                </tr>
+              </thead>
+              <!-- end::Table head -->
+              <!-- begin::Table body -->
+              <tbody *ngFor="let data of activeCustList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                <tr>
+                  <td class="min-w-125px" style="text-align: center">{{i+1}} </td>
+                  <td class="min-w-125px" style="text-align: center">{{data.hostName}}</td>
+                  <td class="min-w-125px" style="text-align: center">{{data.hostPhone}}</td>
+                </tr>
+      
+              </tbody>
+              <!-- end::Table body -->
+            </table>
+
+            <!-- begin::Pagination -->
+            <pagination-controls (pageChange)="pageChangeEvent1($event)" previousLabel="" nextLabel=""
+                style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+            </pagination-controls>
+            <!-- end::Pagination -->
+             
+          </div>
+          <!-- end::Table -->
+        </div>
+
+      </ng-template>
+      
+      <ng-template #manager>
+        <div class="modal-header">
+          <h4 class="modal-title">
+            <strong>
+              &nbsp;&nbsp;&nbsp;
+              Manager </strong>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <!-- begin::Table container -->
+          <div class="table-responsive mb-0">
+            <!-- begin::Table -->
+            <table class="table table-centered">
+              <!-- begin::Table head -->
+              <thead>
+                <tr class="fw-bolder bg-light">
+                  <th class="min-w-125px" style="text-align: center"><b>Sr.no</b></th>
+                  <th class="min-w-125px" style="text-align: center"><b>Manager Name</b></th>
+                  <th class="min-w-125px" style="text-align: center"><b>Phone Number</b></th>
+                </tr>
+              </thead>
+              <!-- end::Table head -->
+              <!-- begin::Table body -->
+              <tbody *ngFor="let data of managerDetails | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                <tr>
+                  <td class="min-w-125px" style="text-align: center">{{i+1}} </td>
+                  <td class="min-w-125px" style="text-align: center">{{data.firstName}} {{data.lastName}}</td>
+                  <td class="min-w-125px" style="text-align: center">{{data.phone1}}</td>
+                </tr>
+      
+              </tbody>
+              <!-- end::Table body -->
+            </table>
+
+            <!-- begin::Pagination -->
+            <pagination-controls (pageChange)="pageChangeEvent2($event)" previousLabel="" nextLabel=""
+                style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+            </pagination-controls>
+            <!-- end::Pagination -->
+             
+          </div>
+          <!-- end::Table -->
+        </div>
+
+      </ng-template>
+      
+      <ng-template #operator>
+        <div class="modal-header">
+          <h4 class="modal-title">
+            <strong>
+              &nbsp;&nbsp;&nbsp;
+              Operator </strong>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <!-- begin::Table container -->
+          <div class="table-responsive mb-0">
+            <!-- begin::Table -->
+            <table class="table table-centered">
+              <!-- begin::Table head -->
+              <thead>
+                <tr class="fw-bolder bg-light">
+                  <th class="min-w-125px" style="text-align: center"><b>Sr.no</b></th>
+                  <th class="min-w-125px" style="text-align: center"><b>Operator Name</b></th>
+                  <th class="min-w-125px" style="text-align: center"><b>Phone Number</b></th>
+                </tr>
+              </thead>
+              <!-- end::Table head -->
+              <!-- begin::Table body -->
+              <tbody *ngFor="let data of operatorDetails | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                <tr>
+                  <td class="min-w-125px" style="text-align: center">{{i+1}} </td>
+                  <td class="min-w-125px" style="text-align: center">{{data.firstName}} {{data.lastName}}</td>
+                  <td class="min-w-125px" style="text-align: center">{{data.phone1}}</td>
+                </tr>
+      
+              </tbody>
+              <!-- end::Table body -->
+            </table>
+
+            <!-- begin::Pagination -->
+            <pagination-controls (pageChange)="pageChangeEvent3($event)" previousLabel="" nextLabel=""
+                style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+            </pagination-controls>
+            <!-- end::Pagination -->
+             
+          </div>
+          <!-- end::Table -->
+        </div>
+
+      </ng-template>
+      
+      <ng-template #pos>
+        <div class="modal-header">
+          <h4 class="modal-title">
+            <strong>
+              &nbsp;&nbsp;&nbsp;
+              POS </strong>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <!-- begin::Table container -->
+          <div class="table-responsive mb-0">
+            <!-- begin::Table -->
+            <table class="table table-centered">
+              <!-- begin::Table head -->
+              <thead>
+                <tr class="fw-bolder bg-light">
+                  <th class="min-w-125px" style="text-align: center"><b>Sr.no</b></th>
+                  <th class="min-w-125px" style="text-align: center"><b>POS Name</b></th>
+                </tr>
+              </thead>
+              <!-- end::Table head -->
+              <!-- begin::Table body -->
+              <tbody *ngFor="let data of posDetails | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                <tr>
+                  <td class="min-w-125px" style="text-align: center">{{i+1}} </td>
+                  <td class="min-w-125px" style="text-align: center">{{data.terminalName}}</td>
+                </tr>
+      
+              </tbody>
+              <!-- end::Table body -->
+            </table>
+
+            <!-- begin::Pagination -->
+            <pagination-controls (pageChange)="pageChangeEvent4($event)" previousLabel="" nextLabel=""
+                style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+            </pagination-controls>
+            <!-- end::Pagination -->
+             
+          </div>
+          <!-- end::Table -->
+        </div>
+
+      </ng-template>
+      
+      <ng-template #tank>
+        <div class="modal-header">
+          <h4 class="modal-title">
+            <strong>
+              &nbsp;&nbsp;&nbsp;
+              Tank </strong>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <!-- begin::Table container -->
+          <div class="table-responsive mb-0">
+            <!-- begin::Table -->
+            <table class="table table-centered">
+              <!-- begin::Table head -->
+              <thead>
+                <tr class="fw-bolder bg-light">
+                  <th class="min-w-125px" style="text-align: center"><b>Sr.no</b></th>
+                  <th class="min-w-125px" style="text-align: center"><b>Tank Name</b></th>
+                  <th class="min-w-125px" style="text-align: center"><b>Product Name</b></th>
+                </tr>
+              </thead>
+              <!-- end::Table head -->
+              <!-- begin::Table body -->
+              <tbody *ngFor="let data of tankDetails | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                <tr>
+                  <td class="min-w-125px" style="text-align: center">{{i+1}} </td>
+                  <td class="min-w-125px" style="text-align: center">{{data.tankNo}}</td>
+                  <td class="min-w-125px" style="text-align: center">{{data.productName}}</td>
+                </tr>
+      
+              </tbody>
+              <!-- end::Table body -->
+            </table>
+
+            <!-- begin::Pagination -->
+            <pagination-controls (pageChange)="pageChangeEvent5($event)" previousLabel="" nextLabel=""
+                style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+            </pagination-controls>
+            <!-- end::Pagination -->
+             
+          </div>
+          <!-- end::Table -->
+        </div>
+
+      </ng-template>
+      
+      <ng-template #pump>
+        <div class="modal-header">
+          <h4 class="modal-title">
+            <strong>
+              &nbsp;&nbsp;&nbsp;
+              Pump </strong>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <!-- begin::Table container -->
+          <div class="table-responsive mb-0">
+            <!-- begin::Table -->
+            <table class="table table-centered">
+              <!-- begin::Table head -->
+              <thead>
+                <tr class="fw-bolder bg-light">
+                  <th class="min-w-125px" style="text-align: center"><b>Sr.no</b></th>
+                  <th class="min-w-125px" style="text-align: center"><b>Pump Name</b></th>
+                  <th class="min-w-125px" style="text-align: center"><b>Product Name</b></th>
+                </tr>
+              </thead>
+              <!-- end::Table head -->
+              <!-- begin::Table body -->
+              <tbody *ngFor="let data of PumpDetails | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                <tr>
+                  <td class="min-w-125px" style="text-align: center">{{i+1}} </td>
+                  <td class="min-w-125px" style="text-align: center">{{data.duNo}}</td>
+                  <td class="min-w-125px" style="text-align: center">{{data.productName}}</td>
+                </tr>
+      
+              </tbody>
+              <!-- end::Table body -->
+            </table>
+
+            <!-- begin::Pagination -->
+            <pagination-controls (pageChange)="pageChangeEvent6($event)" previousLabel="" nextLabel=""
+                style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+            </pagination-controls>
+            <!-- end::Pagination -->
+             
+          </div>
+          <!-- end::Table -->
+        </div>
+
+      </ng-template>
+      
+      <ng-template #nozzle>
+        <div class="modal-header">
+          <h4 class="modal-title">
+            <strong>
+              &nbsp;&nbsp;&nbsp;
+              Nozzle </strong>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <!-- begin::Table container -->
+          <div class="table-responsive mb-0">
+            <!-- begin::Table -->
+            <table class="table table-centered">
+              <!-- begin::Table head -->
+              <thead>
+                <tr class="fw-bolder bg-light">
+                  <th class="min-w-125px" style="text-align: center"><b>Sr.no</b></th>
+                  <th class="min-w-125px" style="text-align: center"><b>Nozzle Name</b></th>
+                  <th class="min-w-125px" style="text-align: center"><b>Product Name</b></th>
+                </tr>
+              </thead>
+              <!-- end::Table head -->
+              <!-- begin::Table body -->
+              <tbody *ngFor="let data of NozzleDetails | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+                <tr>
+                  <td class="min-w-125px" style="text-align: center">{{i+1}} </td>
+                  <td class="min-w-125px" style="text-align: center">{{data.duNo}}{{data.nozNo}}</td>
+                  <td class="min-w-125px" style="text-align: center">{{data.productName}}</td>
+                </tr>
+      
+              </tbody>
+              <!-- end::Table body -->
+            </table>
+
+            <!-- begin::Pagination -->
+            <pagination-controls (pageChange)="pageChangeEvent7($event)" previousLabel="" nextLabel=""
+                style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+            </pagination-controls>
+            <!-- end::Pagination -->
+             
+          </div>
+          <!-- end::Table -->
+        </div>
+
+      </ng-template>
+
   </div>
   <!-- end::Table container -->
 </div>

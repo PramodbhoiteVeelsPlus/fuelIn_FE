@@ -12,6 +12,7 @@
                                     placeholder="Select Pump Name" (change)="getDealerId($event)">
                                 <datalist id="allDealerList">
                                     <option *ngFor="let data of allDealerList" [value]="data.companyName">
+                                        {{ data.FuelVeelsId }}
                                 </datalist>
                             </div>
                             <div class="col-auto">
