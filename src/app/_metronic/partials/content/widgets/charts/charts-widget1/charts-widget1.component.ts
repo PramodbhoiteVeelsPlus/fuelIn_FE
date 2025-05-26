@@ -791,69 +791,58 @@ export class ChartsWidget1Component implements OnInit {
   }
 }
 
-function getChartOptions(height: number, months: any, os: any, purchase: any, payment: any) {
+function getChartOptions(height: number, months: string[], os: any[], purchase: any[], payment: any[]): any {
   const labelColor = getCSSVariableValue('--bs-gray-500')
-  const borderColor = getCSSVariableValue('--bs-gray-200')
-
   return {
     series: [
       {
         name: 'O/s',
-        data: [os[0], os[1], os[2], os[3], os[4], os[5]],
+        type: 'column',
+        data: os
       },
       {
         name: 'Sales',
-        data: [purchase[0], purchase[1], purchase[2], purchase[3], purchase[4], purchase[5]],
+        type: 'column',
+        data: purchase
       },
       {
         name: 'Payment',
-        data: [payment[0], payment[1], payment[2], payment[3], payment[4], payment[5]],
-      },
+        type: 'column',
+        data: payment
+      }
     ],
     chart: {
-      fontFamily: 'inherit',
-      type: 'bar',
       height: height,
+      type: 'line',
       toolbar: {
-        show: false,
-      },
-    },
-    plotOptions: {
-      bar: {
-        horizontal: false,
-        columnWidth: '40%',
-        borderRadius: 5,
-      },
-    },
-    legend: {
-      show: false,
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      show: true,
-      width: 2,
-      colors: ['transparent'],
+        show: false
+      }
     },
     xaxis: {
-      title: {
-        text: 'Month'
-      },
-      categories: months,
-      axisBorder: {
-        show: false,
-      },
-      axisTicks: {
-        show: false,
-      },
-      labels: {
-        style: {
-          colors: labelColor,
-          fontSize: '12px',
-        },
-      },
+      categories: months
     },
+    // yaxis: [
+    //   {
+    //     // title: {
+    //     //   text: 'Outstanding (OS)'
+    //     // },
+    //     labels: {
+    //       formatter: (val: number) => val.toFixed(0)
+    //     }
+    //   },
+    //   {
+    //     opposite: true,
+    //     // title: {
+    //     //   text: 'Purchase & Payment'
+    //     // },
+    //     // labels: {
+    //     //   formatter: (val: number) => val.toFixed(0)
+    //     // }
+    //   }
+      
+    // ],
+
+    
     yaxis: {
       title: {
         text: '₹'
@@ -865,49 +854,151 @@ function getChartOptions(height: number, months: any, os: any, purchase: any, pa
         },
       },
     },
-    fill: {
-      opacity: 1,
+    dataLabels: {
+      enabled: false
     },
-    states: {
-      normal: {
-        filter: {
-          type: 'none',
-          value: 0,
-        },
-      },
-      hover: {
-        filter: {
-          type: 'none',
-          value: 0,
-        },
-      },
-      active: {
-        allowMultipleDataPointsSelection: false,
-        filter: {
-          type: 'none',
-          value: 0,
-        },
-      },
+    stroke: {
+      width: [0, 3, 3],
+      curve: 'smooth'
     },
     tooltip: {
-      style: {
-        fontSize: '12px',
-      },
-      y: {
-        formatter: function (val: number) {
-          return '₹' + val;
-        },
-      },
+      shared: true,
+      intersect: false
+    },
+    legend: {
+      position: 'top'
     },
     colors: ['#F8285A', '#1B84FF', '#17C653'],
-    grid: {
-      borderColor: borderColor,
-      strokeDashArray: 4,
-      yaxis: {
-        lines: {
-          show: true,
-        },
-      },
+    plotOptions: {
+      bar: {
+        columnWidth: '40%'
+      }
     },
+    fill: {
+      type: ['solid', 'solid', 'solid']
+    }
   };
 }
+
+
+
+// function getChartOptions(height: number, months: any[], os: any[], purchase: any[], payment: any[]) {
+//   const labelColor = getCSSVariableValue('--bs-gray-500')
+//   const borderColor = getCSSVariableValue('--bs-gray-200')
+
+//   return {
+//     series: [
+//       {
+//         name: 'O/s',
+//         data: [os[0], os[1], os[2], os[3], os[4], os[5]],
+//       },
+//       {
+//         name: 'Sales',
+//         data: [purchase[0], purchase[1], purchase[2], purchase[3], purchase[4], purchase[5]],
+//       },
+//       {
+//         name: 'Payment',
+//         data: [payment[0], payment[1], payment[2], payment[3], payment[4], payment[5]],
+//       },
+//     ],
+//     chart: {
+//       fontFamily: 'inherit',
+//       type: 'bar',
+//       height: height,
+//       toolbar: {
+//         show: false,
+//       },
+//     },
+//     plotOptions: {
+//       bar: {
+//         horizontal: false,
+//         columnWidth: '40%',
+//         borderRadius: 5,
+//       },
+//     },
+//     legend: {
+//       show: false,
+//     },
+//     dataLabels: {
+//       enabled: false,
+//     },
+//     stroke: {
+//       show: true,
+//       width: 2,
+//       colors: ['transparent'],
+//     },
+//     xaxis: {
+//       title: {
+//         text: 'Month'
+//       },
+//       categories: months,
+//       axisBorder: {
+//         show: false,
+//       },
+//       axisTicks: {
+//         show: false,
+//       },
+//       labels: {
+//         style: {
+//           colors: labelColor,
+//           fontSize: '12px',
+//         },
+//       },
+//     },
+//     yaxis: {
+//       title: {
+//         text: '₹'
+//       },
+//       labels: {
+//         style: {
+//           colors: labelColor,
+//           fontSize: '12px',
+//         },
+//       },
+//     },
+//     fill: {
+//       opacity: 1,
+//     },
+//     states: {
+//       normal: {
+//         filter: {
+//           type: 'none',
+//           value: 0,
+//         },
+//       },
+//       hover: {
+//         filter: {
+//           type: 'none',
+//           value: 0,
+//         },
+//       },
+//       active: {
+//         allowMultipleDataPointsSelection: false,
+//         filter: {
+//           type: 'none',
+//           value: 0,
+//         },
+//       },
+//     },
+//     tooltip: {
+//       style: {
+//         fontSize: '12px',
+//       },
+//       y: {
+//         formatter: function (val: number) {
+//           return '₹' + val;
+//         },
+//       },
+//     },
+//     colors: ['#F8285A', '#1B84FF', '#17C653'],
+//     grid: {
+//       borderColor: borderColor,
+//       strokeDashArray: 4,
+//       yaxis: {
+//         lines: {
+//           show: true,
+//         },
+//       },
+//     },
+//   };
+// }
