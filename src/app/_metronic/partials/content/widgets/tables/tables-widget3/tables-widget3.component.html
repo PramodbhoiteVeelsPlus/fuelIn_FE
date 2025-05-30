@@ -149,9 +149,9 @@
             <span *ngIf="data.accessGroupId == '14'">MANAGER</span> -->
 
             <div [ngSwitch]="data.accessGroupId">
-                <div *ngSwitchCase="'12'"> OWNER </div>
-                <div *ngSwitchCase="'13'"> OPERATOR </div>
-                <div *ngSwitchCase="'14'"> MANAGER </div>
+                <div *ngSwitchCase="12"> OWNER </div>
+                <div *ngSwitchCase="13"> OPERATOR </div>
+                <div *ngSwitchCase="14"> MANAGER </div>
                 <div *ngSwitchDefault> - </div>
             </div>
           </td>

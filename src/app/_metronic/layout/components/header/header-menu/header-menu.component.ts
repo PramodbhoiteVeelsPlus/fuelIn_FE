@@ -86,7 +86,11 @@ export class HeaderMenuComponent implements OnInit {
       
     if(element.accessGroupId == '14'){
       var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
-      this.city = managerData.city;
+      if (managerData.city == 'undefined') {
+        this.city = ' ';
+      } else {
+        this.city = managerData.city;
+      }
       this.companyName = managerData.companyName;
       this.phone1 = managerData.hostPhone;
     }
