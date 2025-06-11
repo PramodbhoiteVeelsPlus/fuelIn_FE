@@ -876,7 +876,7 @@ export class StatsWidget16Component {
                           if (this.autoManualStatus == 'TRUE') {
                             this.myInputField.nativeElement.focus();
                             this.updateAssignedAutoManualNumber('CREDIT', res.count)
-
+                            console.log("count", res.count)
                             this.isCRQUANTITY = false;
                             this.isQUANTITY = false;
                             this.CreditRequestDataArray = [];
@@ -884,7 +884,7 @@ export class StatsWidget16Component {
                             this.isSelected1 = false;
                             this.requestTransporter1.controls["selectedCorp"].setValue('');
                             this.count = 1;
-                            this.addFormRequest();
+                            // this.addFormRequest();
                             // this.closeModal()
                             this.requestTransporter.controls["requestType"].setValue("showamount");
                             this.requestTransporter.controls["requestTypeCR"].setValue("showamount");
@@ -1150,8 +1150,10 @@ export class StatsWidget16Component {
         .subscribe(res => {
           if(res.status == "OK"){
             this.getfuelDealerIdByCorporateIdForCalling(status)
+          this.cd.detectChanges()
           } else {
           this.getfuelDealerIdByCorporateIdForCalling(status)
+          this.cd.detectChanges()
           }
 
         })
@@ -1263,7 +1265,7 @@ export class StatsWidget16Component {
   }
 
   getfuelDealerIdByCorporateIdForCalling(status: string) {
-    this.autoManualStatus = ''
+    // this.autoManualStatus = ''
     let data = {
       corporateId: this.dealerCorporateId
     }
@@ -1273,6 +1275,10 @@ export class StatsWidget16Component {
           this.fuelDealerId = res.data[0].fuelDealerId;
           this.autoManualNumber = res.data[0].assignedAutoManualNumber;
           this.autoManualStatus = res.data[0].autoManualStatus;
+          console.log("count", this.autoManualNumber)
+          if(status == 'CREDIT'){
+            this.addFormRequest()
+          }
           this.cd.detectChanges()
 
         } else {
