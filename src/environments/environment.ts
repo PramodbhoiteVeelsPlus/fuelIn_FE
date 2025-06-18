@@ -7,10 +7,10 @@ export const environment = {
   appVersion: 'v8.2.4',
   USERDATA_KEY: 'authf649fc9a5f55',
   isMockEnabled: true,
+
   
-// apiUrl: 'http://13.234.240.139:9000/',  // for test
-apiUrl: 'http://localhost:3000/',  //for system
-//apiUrl: 'https://theveels.in:9000/',  //for production
+//apiUrl: 'http://localhost:3000/',  //for system
+apiUrl: 'https://theveels.in:9000/',  //for production
 
 
 
