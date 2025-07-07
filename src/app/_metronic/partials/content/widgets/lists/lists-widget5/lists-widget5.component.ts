@@ -260,14 +260,14 @@ export class ListsWidget5Component {
   staffId: any;
   noTally: boolean;
   tallyTableId: any;
-  totalCreditTallyUpdate: any;
-  totalCashTallyUpdate: any;
-  totalDigitalTallyUpdate: any;
-  expenseAmountUpdate: any;
-  shortamountUpdate: any;
-  totalAmountUpdate: string;
+  totalCreditTallyUpdate: any = 0;
+  totalCashTallyUpdate: any = 0;
+  totalDigitalTallyUpdate: any = 0;
+  expenseAmountUpdate: any = 0;
+  shortamountUpdate: any = 0;
+  totalAmountUpdate: any = 0;
   totalCreditTally: any = 0;
-  totalCreditTally1: any;
+  totalCreditTally1: any = 0;
   totalCashTally: any = 0;
   totalDigitalTally: any = 0;
   expenseAmount: any = 0;
@@ -493,7 +493,7 @@ export class ListsWidget5Component {
   closeRequestDate = moment(new Date()).format("DD-MM-YYYY");
   cashDetailsUpdate: any = [];
   totalCASHSalesUpdate: number;
-  totalCashHandoverUpdate: any;
+  totalCashHandoverUpdate: any = 0;
   totalDigitalSalesUpdate: number;
   digitalSalesDetailsUpdate: any = [];
   differenceUpdate: string;
@@ -525,7 +525,7 @@ export class ListsWidget5Component {
     this.managerPersonId = element.personId
     this.keyPerson = element.firstName + ' ' + element.lastName;
     this.createdBy = element.firstName + ' ' + element.lastName
-    
+
     if (this.accessGroup == '12') {
       var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
       this.companyName = dealerData.companyName
@@ -1222,7 +1222,7 @@ export class ListsWidget5Component {
           // } else {
           //   dataPAYJson.credit = 0
           // }
-          
+
           // if(typeof shift.paytmTotalAmount === 'number' && !isNaN(shift.paytmTotalAmount)){
           //   dataPAYJson.digital = shift.paytmTotalAmount;
           // } else {
@@ -1962,8 +1962,8 @@ export class ListsWidget5Component {
   getTotalTally() {
     this.totalAmount = (Number(this.totalCashTally) + Number(this.totalDigitalTally)
       + Number(this.totalCreditTally)).toFixed(2);
-      console.log("totalAmount", this.totalAmount, '=', Number(this.totalCashTally), '+', Number(this.totalDigitalTally),
-     '+', Number(this.totalCreditTally))
+    console.log("totalAmount", this.totalAmount, '=', Number(this.totalCashTally), '+', Number(this.totalDigitalTally),
+      '+', Number(this.totalCreditTally))
     this.getDifference()
 
   }
@@ -2306,7 +2306,7 @@ export class ListsWidget5Component {
               this.pin = ' - ' + res.data[0].pin
             }
           }
-          console.log("add",this.address1 + this.address2 + this.city + this.state + this.pin)
+          console.log("add", this.address1 + this.address2 + this.city + this.state + this.pin)
           this.cashBillLubricantForm.controls["address"].setValue(this.address1 + this.address2 + this.city + this.state + this.pin)
           this.cashBillLubricantForm.controls["customerNumber"].setValue(res.data[0].phone1)
           this.digitalLubricantForm.controls["address"].setValue(this.address1 + this.address2 + this.city + this.state + this.pin)
@@ -3648,6 +3648,30 @@ export class ListsWidget5Component {
   update() {
     this.spinner.show();
     if (Number(this.meterSalesTotal) <= Number(this.totalAmount)) {
+
+          if (this.expenseAmount == 'undefined' || this.expenseAmount == 'NaN') {
+            this.expenseAmount = 0
+          }
+
+          if (this.shortamount == 'undefined' || this.shortamount == 'NaN') {
+            this.shortamount = 0
+          }
+          if (this.totalAmount == 'undefined' || this.totalAmount == 'NaN') {
+            this.totalAmount = 0
+          }
+          if (this.totalCashHandover == 'undefined' || this.totalCashHandover == 'NaN') {
+            this.totalCashHandover = 0
+          }
+          if (this.totalCashTally == 'undefined' || this.totalCashTally == 'NaN') {
+            this.totalCashTally = 0
+          }
+          if (this.totalCreditTally == 'undefined' || this.totalCreditTally == 'NaN') {
+            this.totalCreditTally = 0
+          }
+          if (this.totalDigitalTally == 'undefined' || this.totalDigitalTally == 'NaN') {
+            this.totalDigitalTally = 0
+          }
+
       if (Number(this.totalCashTally)) {
         if (Number(this.totalCashHandover)) {
 
@@ -3725,6 +3749,29 @@ export class ListsWidget5Component {
 
       if (Number(this.totalCashTally)) {
         if (Number(this.totalCashHandover)) {
+
+          if (this.expenseAmount == 'undefined' || this.expenseAmount == 'NaN') {
+            this.expenseAmount = 0
+          }
+
+          if (this.shortamount == 'undefined' || this.shortamount == 'NaN') {
+            this.shortamount = 0
+          }
+          if (this.totalAmount == 'undefined' || this.totalAmount == 'NaN') {
+            this.totalAmount = 0
+          }
+          if (this.totalCashHandover == 'undefined' || this.totalCashHandover == 'NaN') {
+            this.totalCashHandover = 0
+          }
+          if (this.totalCashTally == 'undefined' || this.totalCashTally == 'NaN') {
+            this.totalCashTally = 0
+          }
+          if (this.totalCreditTally == 'undefined' || this.totalCreditTally == 'NaN') {
+            this.totalCreditTally = 0
+          }
+          if (this.totalDigitalTally == 'undefined' || this.totalDigitalTally == 'NaN') {
+            this.totalDigitalTally = 0
+          }
           const data = {
             corporateId: this.dealerCorporateId,
             fuelDealerId: this.fuelDealerId,
@@ -3747,6 +3794,7 @@ export class ListsWidget5Component {
             reqFromDevice: "PORTAL",
             expenseAmtDetails: this.expenseAmtDetails
           };
+
           this.post.addFuelShiftTallySalesPOST(data).subscribe((res) => {
             if (res.status == 'OK') {
               alert('Data submitted successfully...');
@@ -3763,7 +3811,28 @@ export class ListsWidget5Component {
           this.spinner.hide();
         }
       } else {
+        if (this.expenseAmountUpdate == 'undefined' || this.expenseAmountUpdate == 'NaN') {
+          this.expenseAmountUpdate = 0
+        }
 
+        if (this.shortamountUpdate == 'undefined' || this.shortamountUpdate == 'NaN') {
+          this.shortamountUpdate = 0
+        }
+        if (this.totalAmountUpdate == 'undefined' || this.totalAmountUpdate == 'NaN') {
+          this.totalAmountUpdate = 0
+        }
+        if (this.totalCashHandoverUpdate == 'undefined' || this.totalCashHandoverUpdate == 'NaN') {
+          this.totalCashHandoverUpdate = 0
+        }
+        if (this.totalCashTallyUpdate == 'undefined' || this.totalCashTallyUpdate == 'NaN') {
+          this.totalCashTallyUpdate = 0
+        }
+        if (this.totalCreditTallyUpdate == 'undefined' || this.totalCreditTallyUpdate == 'NaN') {
+          this.totalCreditTallyUpdate = 0
+        }
+        if (this.totalDigitalTallyUpdate == 'undefined' || this.totalDigitalTallyUpdate == 'NaN') {
+          this.totalDigitalTallyUpdate = 0
+        }
         const data = {
           corporateId: this.dealerCorporateId,
           fuelDealerId: this.fuelDealerId,
@@ -3786,6 +3855,7 @@ export class ListsWidget5Component {
           reqFromDevice: "PORTAL",
           expenseAmtDetails: this.expenseAmtDetails
         };
+  
         this.post.addFuelShiftTallySalesPOST(data).subscribe((res) => {
           if (res.status == 'OK') {
             alert('Data submitted successfully...');
@@ -3855,7 +3925,7 @@ export class ListsWidget5Component {
     this.differenceUpdate = Number(Number(this.totalAmountUpdate) - Number(this.meterSalesUpdate)).toFixed(2);
     this.getShort()
   }
-  
+
   askForConfirmDelete(confirmdeleteTemplate: any) {
     this.modalRefpass = this.modalService.open(confirmdeleteTemplate)
     this.modalRefpass.result.then((result: any) => {
