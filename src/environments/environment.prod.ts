@@ -26,7 +26,7 @@ export const environment = {
    callback_url: 'http://52.66.192.10/#/login',
    key_sec: 'jNeIn02AjQXJZ4nHMqhQb28a',
    imagePath: 'https://veelsimage.s3.ap-south-1.amazonaws.com/',
-   apiUrl: 'https://theveels.in:9000/', 
+   apiUrl: 'https://theveels.in/', 
 
 
   appThemeName: 'Metronic',
