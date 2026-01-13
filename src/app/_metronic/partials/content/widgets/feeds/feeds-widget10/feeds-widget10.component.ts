@@ -799,6 +799,12 @@ export class FeedsWidget10Component implements OnInit {
           if (res.data5[0].bankCrAmt) {
             this.totalCrBankForPrevious = res.data5[0].bankCrAmt;
           }
+          
+          if (this.openingAmtDate < moment(this.selectedDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD")) {
+            this.netAmtForPrevious();
+          } else {
+            // this.netAmt();
+          }
 
           // this.spinner.hide()
           this.cd.detectChanges();
