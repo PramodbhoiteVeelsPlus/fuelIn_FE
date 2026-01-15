@@ -255,6 +255,27 @@ export class ChartsWidget9Component implements OnInit {
   submitTankDetailForAll(){
     // console.log('this.setTankData',this.setTankData);
     
+  // Check empty array
+  if (!this.setTankData || !this.setTankData.length) {
+    alert('Please add tank details.');
+    return;
+  }
+
+  // Check for invalid / partial rows
+  const invalidRow = this.setTankData.some((tank: { product: string; tank: string; volume: string | null | undefined; }) =>
+    !tank ||
+    !tank.product?.trim() ||
+    !tank.tank?.trim() ||
+    tank.volume === undefined ||
+    tank.volume === null ||
+    tank.volume === ''
+  );
+
+  if (invalidRow) {
+    alert('Please fill all tank details.');
+    return;
+  }
+
   this.spinner.show()
     let data = {
        fuelDealerId:this.fuelDealerId,

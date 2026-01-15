@@ -832,4 +832,12 @@ export class ListsWidget1Component {
         });
     }
   }
+  
+
+    //clear()
+    clear(){
+      // this.CreditRequestDataLubeTax.length = 0;
+      this.requestTransporter1.reset();
+    }
+     
 }

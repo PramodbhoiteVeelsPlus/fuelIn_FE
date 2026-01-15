@@ -872,6 +872,7 @@ export class StatsWidget16Component {
                         if (res.status == "OK") {
                           alert("Credit Added Sccessfully!");
                           this.isBalance1 = false;
+                          this.showamount = false;
                           this.spinner.hide();
                           if (this.autoManualStatus == 'TRUE') {
                             this.myInputField.nativeElement.focus();
@@ -1017,6 +1018,7 @@ export class StatsWidget16Component {
                             this.myInputField.nativeElement.focus();
                             alert("Credit Added Sccessfully!");
                             this.isBalance1 = false;
+                            this.showamount = false;
                             this.spinner.hide();
                             if (this.autoManualStatus == 'TRUE') {
                               this.updateAssignedAutoManualNumber('CREDIT', res.count)

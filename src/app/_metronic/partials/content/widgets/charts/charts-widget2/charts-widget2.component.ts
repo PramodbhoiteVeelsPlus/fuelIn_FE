@@ -256,6 +256,7 @@ export class ChartsWidget2Component implements OnInit {
   removeFormRequestOilCompany(i: number) {
     this.CreditRequestDataArrayOilCompany.splice(i, 1);
     this.countOilCompany = this.countOilCompany - 1;
+    this.isShowOilCompanySubmit = true;
 
   }
 

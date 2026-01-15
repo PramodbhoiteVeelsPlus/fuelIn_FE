@@ -140,7 +140,14 @@
         <tr>
           <td style="text-align: left;"> {{i+1}} </td>
           <td style="text-align: left;"> {{data.firstName}} </td>
-          <td style="text-align: left;"> {{data.lastName}} </td>
+          <td style="text-align: left;">
+            <span *ngIf="data.lastName == 'null'">
+
+            </span>
+            <span *ngIf="data.lastName != 'null'">
+              {{data.lastName}} 
+            </span>
+          </td>
 
           <td style="text-align: left;"> {{data.phone1}} </td>
           <td style="text-align: left;">
@@ -157,7 +164,12 @@
           </td>
           <td style="text-align: left;">
             <span *ngIf="data.accessGroupId != '12'">
-              {{data.salary}}
+              <span *ngIf="data.salary == 'null'">
+
+              </span>
+              <span *ngIf="data.salary != 'null'">
+                {{data.salary}}
+              </span>
             </span>
             <span *ngIf="data.accessGroupId == '12'">
               -

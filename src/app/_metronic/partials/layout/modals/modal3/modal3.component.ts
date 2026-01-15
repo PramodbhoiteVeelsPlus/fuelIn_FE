@@ -204,6 +204,7 @@ export class Modal3Component {
             alert(res.msg)
             this.closed.emit();
             this.spinner.hide();
+            this.clear();
             // this.getBankDetailsByDealerId(this.fuelDealerId)
             this.close();          
           }

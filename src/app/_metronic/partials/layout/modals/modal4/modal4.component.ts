@@ -213,5 +213,10 @@ export class Modal4Component {
 
   }
 
+  clearAll() {
+    this.terminal.reset();
+    this.terminal.controls["terminalType"].setValue("");
+    this.terminal.controls["accountDetails"].setValue("");
+  }
 
 }

@@ -457,9 +457,9 @@ export class SidebarMenuComponent implements OnInit {
 
 
           this.cd.detectChanges();
-          // this.spinner.hide();
+          this.spinner.hide();
         } else {
-          // this.spinner.hide();
+          this.spinner.hide();
           this.cd.detectChanges();
         }
       });

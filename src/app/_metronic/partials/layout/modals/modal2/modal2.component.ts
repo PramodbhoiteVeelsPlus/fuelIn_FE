@@ -438,6 +438,7 @@ export class Modal2Component {
 
 
   fuelStaffRegister() {
+    if(this.userForm.value.firstName && this.userForm.value.lastName){
     var payment;
     this.spinner.show()
     this.createCorporateId()
@@ -487,6 +488,10 @@ export class Modal2Component {
         this.modalReference.close('close')
       }
     })
+  } else {
+      alert("Please Enter Name")
+        this.spinner.hide();
+  }
   }
 
   addDealerStaffAccess(staffPersonId: any) {

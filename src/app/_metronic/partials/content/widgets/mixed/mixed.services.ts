@@ -73,6 +73,7 @@ export class MixedService {
     private addManagerMobileToDOCURL = this.baseURL + 'fuelCreditInvoice/addManagerMobileToDOC';
     private updateCustManualNumberStatusURL = this.baseURL + 'fuelDealerCustMap/updateCustManualNumberStatus';
     private updateAutoManualNumberStatusURL = this.baseURL + 'fuelDealerCustMap/updateAutoManualNumberStatus';
+  private calOutstandingAmountforAllURL = this.baseURL + 'fuelCreditInvoice/calOutstandingAmountforAll';
 
 
     setHeader() {
@@ -517,6 +518,16 @@ export class MixedService {
         let headers = new HttpHeaders();
         headers = headers.set('authenticationToken', this.token);
         return this.http.post(this.updateAutoManualNumberStatusURL, body, {
+            headers: headers
+        })
+    }
+
+    // calOutstandingAmountforAllURL
+    calOutstandingAmountforAllPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.calOutstandingAmountforAllURL, body, {
             headers: headers
         })
     }

@@ -157,6 +157,10 @@ export class MixedWidget4Component {
   fueldealerSmsSend: any;
   overAllPaidAmount: any;
   managerName: string;
+  discountData: any;
+  outstandData: any;
+  paymentData: any;
+  previousOutstandData: any;
 
   constructor(
     private post: MixedService,
@@ -273,12 +277,37 @@ export class MixedWidget4Component {
           this.isMappingEmail = res.data[0].isMappingEmail;
           this.isMappingSMS = res.data[0].isMappingSMS;
           // this.getDetailsByMapId(this.fuelDealerCorpMapIdNew);
-          // this.getAllOutStanding(this.fuelDealerCorpMapIdNew)
+          this.getAllOutStanding(this.fuelDealerCorpMapIdNew)
           this.cd.detectChanges()
         } else {
           this.cd.detectChanges()
         }
       });
+
+  }
+
+
+  getAllOutStanding(fuelDealerCorpMapIdNew: string) {
+    let data = {
+      fuelDealerCustomerMapId: fuelDealerCorpMapIdNew,
+    }
+    this.post.calOutstandingAmountforAllPOST(data)
+      .subscribe(res => {
+        if (res) {
+          this.discountData = res.discountData[0].totalDiscountAmt;
+          this.outstandData = res.outstandData[0].totalCRAmt;
+          this.paymentData = res.paymentData[0].totalPaymentAmt;
+          this.previousOutstandData = res.previousOutstandData[0].previousOutstand;
+
+          this.calculateOut()
+        }
+      })
+
+  }
+
+  calculateOut() {
+
+    this.netOutstanding = ((Number(this.outstandData) + Number(this.previousOutstandData)) - (Number(this.paymentData) + Number(this.discountData)))
 
   }
 

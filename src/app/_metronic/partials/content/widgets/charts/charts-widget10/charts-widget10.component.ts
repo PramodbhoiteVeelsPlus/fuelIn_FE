@@ -244,6 +244,31 @@ export class ChartsWidget10Component implements OnInit {
   
   submitNozzelDetailForAll(){
     // console.log('this.setTankData',this.SetNozzelData);
+    
+  // Check empty array
+  if (!this.SetNozzelData || !this.SetNozzelData.length) {
+    alert('Please add Nozzle details.');
+    return;
+  }
+
+  // Check for invalid / partial rows
+  const invalidRow = this.SetNozzelData.some((nozzle: { product: string; tank: string; tankVolume: string | null | undefined; pump: string, nozzel: string }) =>
+    !nozzle ||
+    !nozzle.product?.trim() ||
+    !nozzle.tank?.trim() ||
+    nozzle.tankVolume === undefined ||
+    nozzle.tankVolume === null ||
+    nozzle.tankVolume === '' ||
+    !nozzle.pump?.trim() ||
+    !nozzle.nozzel?.trim() 
+  );
+
+  if (invalidRow) {
+    alert('Please fill all Nozzle details.');
+    return;
+  }
+
+
     let mappedDate = new Date()
   this.spinner.show()
     let data = {
