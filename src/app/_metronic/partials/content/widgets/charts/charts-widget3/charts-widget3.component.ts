@@ -512,7 +512,7 @@ export class ChartsWidget3Component implements OnInit {
   }
 
   oilCompanyUpdate(fuelExpenseId: any, i: any) {
-
+    if(this.oilCompanyDetails[i].basicAmt && this.oilCompanyDetails[i].vatAmt){
     this.spinner.show()
     let data = {
       expenseId: fuelExpenseId,
@@ -535,6 +535,9 @@ export class ChartsWidget3Component implements OnInit {
           this.spinner.hide()
         }
       })
+    } else{
+      alert("Please add Basic Amount and VAT Amount")
+    }
   }
 
   deleteOilCompanyPurchase(fuelExpenseId: any) {

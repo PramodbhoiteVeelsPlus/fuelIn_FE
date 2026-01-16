@@ -1370,10 +1370,20 @@
                 <span *ngIf="data.transactionStatus != 'CANCEL'">
                   <span *ngIf="data.transactionStatus != 'PENDING'">
                     <span *ngIf="data.productCategory == 'CNG'">
-                      {{data.actualCreditQuantity | number:'1.2-2'}} Kg
+                      <span *ngIf="data.actualCreditQuantity != 'null'">
+                        {{data.actualCreditQuantity | number:'1.2-2'}} Kg
+                      </span>
+                      <span *ngIf="data.productCategory == 'null'">
+                        -
+                      </span>
                     </span>
                     <span *ngIf="data.productCategory != 'CNG'">
-                      {{data.actualCreditQuantity | number:'1.2-2'}} Ltrs
+                      <span *ngIf="data.actualCreditQuantity != 'null'">
+                        {{data.actualCreditQuantity | number:'1.2-2'}} Ltrs
+                      </span>
+                      <span *ngIf="data.productCategory == 'null'">
+                        -
+                      </span>
                     </span>
                   </span>
                   <span *ngIf="data.transactionStatus == 'PENDING'">

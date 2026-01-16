@@ -197,14 +197,18 @@ export class AdvanceTablesWidget14Component {
       && this.addArrayLube[i].lubricantsHsnSacNumber) {
       this.isShowLubeSubmit = true;
       this.addArrayLube[i + 1].lubricantsUnit = ''
+      this.cd.detectChanges()
     } else {
       this.isShowLubeSubmit = false;
+      this.cd.detectChanges()
     }
   }
 
   removeFormRequestLube(i: number) {
     this.addArrayLube.splice(i, 1);
     this.countLube = this.countLube - 1;
+    this.isShowLubeSubmit = true;
+    this.cd.detectChanges()
   }
 
   addLubricants() {

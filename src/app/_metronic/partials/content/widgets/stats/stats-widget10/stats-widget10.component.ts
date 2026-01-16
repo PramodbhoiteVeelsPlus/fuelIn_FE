@@ -358,7 +358,11 @@ export class StatsWidget10Component {
           this.phone1 = res.data[0].phone1;
           this.email1 = res.data[0].email1;
           this.state = res.data[0].state;
+          if(res.data[0].country == 'undefined'){
+          this.country = "";
+          } else {
           this.country = res.data[0].country;
+        }
           this.pin = res.data[0].pin;
           this.businessType = res.data[0].businessType
           this.transporterDetails.controls["firstName"].setValue(res.data[0].firstName);

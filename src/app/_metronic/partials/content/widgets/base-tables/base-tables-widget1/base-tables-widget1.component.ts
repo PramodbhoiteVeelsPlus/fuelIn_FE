@@ -1233,6 +1233,7 @@ export class BaseTablesWidget1Component implements OnInit {
 
   updateCrRequest() {
     if (this.fuelCreditIdForEditReq) {
+      if(this.requestEditCr.value.reqQuantity != null && this.requestEditCr.value.reqCreditAmount != null){
       let data = {
         fuelCreditId: this.fuelCreditIdForEditReq,
         reqQuantity: this.requestEditCr.value.reqQuantity,
@@ -1274,6 +1275,9 @@ export class BaseTablesWidget1Component implements OnInit {
             alert("Error to Edit Credit!")
           }
         });
+      } else {
+        alert("Please Add Amount and Quantity..!")
+      }
     }
     else {
     }

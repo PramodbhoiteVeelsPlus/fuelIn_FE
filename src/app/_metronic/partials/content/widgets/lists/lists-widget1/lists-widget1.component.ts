@@ -836,7 +836,21 @@ export class ListsWidget1Component {
 
     //clear()
     clear(){
-      // this.CreditRequestDataLubeTax.length = 0;
+      this.CreditRequestDataLubeTax[0].lubeId = '';
+      this.CreditRequestDataLubeTax[0].gst = '';
+      this.CreditRequestDataLubeTax[0].taxDetails = 'INCLUDE';
+      this.CreditRequestDataLubeTax[0].manualNumberLube = '';
+      this.CreditRequestDataLubeTax[0].vehicleNumberLube = '';
+      this.CreditRequestDataLubeTax[0].creditAmountLube = '';
+      this.CreditRequestDataLubeTax[0].quantityInPieces = '';
+      this.CreditRequestDataLubeTax[0].creditQuantityLube = '';
+      this.CreditRequestDataLubeTax[0].hsnSacNumber = '';
+      this.CreditRequestDataLubeTax[0].gstAmount = '';
+      this.CreditRequestDataLubeTax[0].totalWOGSTAmount = '';
+      this.CreditRequestDataLubeTax[0].totalAmount = '';
+      this.CreditRequestDataLubeTax[0].unitLube = '';
+      this.CreditRequestDataLubeTax.length = 1;
+      this.isSelected1 = false
       this.requestTransporter1.reset();
     }
      
