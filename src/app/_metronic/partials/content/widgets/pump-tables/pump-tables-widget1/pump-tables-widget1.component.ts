@@ -266,6 +266,7 @@ export class PumpTablesWidget1Component implements OnInit {
   }
 
   addLubePurchaseRows(i: any) {
+    this.isValid = false;
     if (this.lubricantForm.value.companyName && this.lubricantForm.value.invoiceDate) {
       if (this.addLubePurchaseArray[i].lubricantId && this.addLubePurchaseArray[i].quantity
         && this.addLubePurchaseArray[i].totalAmt) {
@@ -284,6 +285,7 @@ export class PumpTablesWidget1Component implements OnInit {
   removeLubePurchaseRow(i: any) {
     this.addLubePurchaseArray.splice(i, 1);
     this.countAddArray = this.countAddArray - 1;
+    this.isValid = true;
   }
 
   submitLubePurchase() {

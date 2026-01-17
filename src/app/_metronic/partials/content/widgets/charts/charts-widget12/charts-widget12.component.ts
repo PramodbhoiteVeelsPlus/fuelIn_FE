@@ -82,11 +82,11 @@ export class ChartsWidget12Component implements OnInit {
     });
 
    @Input() fromDate: Date;
-   @Input() toDate: Date;
+   @Input() toDate: Date | null = null;
    @Output() dateRangeSelected: EventEmitter<{}> = new EventEmitter();
-   hoveredDate: NgbDate;
-   fromNGDate: NgbDate;
-   toNGDate: NgbDate;
+   hoveredDate: NgbDate | null = null;
+   fromNGDate: NgbDate | null = null;
+   toNGDate: NgbDate | null = null;
    selected: any;
    hidden: boolean = true;
   getFuelPriceDetailsList: any = [];
@@ -100,28 +100,54 @@ export class ChartsWidget12Component implements OnInit {
   getFuelPriceData: any;
   fuelPriceID: any;
    
-    /**
- * @param date date obj
- */
+//     /**
+//  * @param date date obj
+//  */
+// isInside(date: NgbDate) {
+//   return date.after(this.fromNGDate) && date.before(this.toNGDate);
+// }
+
+//    /**
+//  * @param date date obj
+//  */
+// isRange(date: NgbDate) {
+//   return date.equals(this.fromNGDate) || date.equals(this.toNGDate) || this.isInside(date) || this.isHovered(date);
+// }
+
+// /**
+//  * Is hovered over date
+//  * @param date date obj
+//  */
+// isHovered(date: NgbDate) {
+//   return this.fromNGDate && !this.toNGDate && this.hoveredDate && date.after(this.fromNGDate) && date.before(this.hoveredDate);
+// }
 isInside(date: NgbDate) {
-  return date.after(this.fromNGDate) && date.before(this.toNGDate);
+  return (
+    this.fromNGDate &&
+    this.toNGDate &&
+    date.after(this.fromNGDate) &&
+    date.before(this.toNGDate)
+  );
 }
 
-   /**
- * @param date date obj
- */
 isRange(date: NgbDate) {
-  return date.equals(this.fromNGDate) || date.equals(this.toNGDate) || this.isInside(date) || this.isHovered(date);
+  return (
+    (this.fromNGDate && date.equals(this.fromNGDate)) ||
+    (this.toNGDate && date.equals(this.toNGDate)) ||
+    this.isInside(date) ||
+    this.isHovered(date)
+  );
 }
 
-/**
- * Is hovered over date
- * @param date date obj
- */
 isHovered(date: NgbDate) {
-  return this.fromNGDate && !this.toNGDate && this.hoveredDate && date.after(this.fromNGDate) && date.before(this.hoveredDate);
+  return (
+    this.fromNGDate &&
+    !this.toNGDate &&
+    this.hoveredDate &&
+    date.after(this.fromNGDate) &&
+    date.before(this.hoveredDate)
+  );
 }
-
   fuelDealerId: any;
   dealerCorporateId: any;
   accessGroup: any;
@@ -215,45 +241,81 @@ isHovered(date: NgbDate) {
     );
   }
 
-  onDateSelection(date: NgbDate) {
-    if (!this.fromDate && !this.toDate) {
-      this.fromNGDate = date;
-      this.fromDate = new Date(date.year, date.month - 1, date.day);
-      this.selected = '';
-      // console.log('11111111');
-      // console.log(this.selected);
+  // onDateSelection(date: NgbDate) {
+  //   if (!this.fromDate && !this.toDate) {
+  //     this.fromNGDate = date;
+  //     this.fromDate = new Date(date.year, date.month - 1, date.day);
+  //     this.selected = '';
+  //     // console.log('11111111');
+  //     // console.log(this.selected);
       
-    } else if (this.fromDate && !this.toDate && date.after(this.fromNGDate)) {
-      this.toNGDate = date;
-      this.toDate = new Date(date.year, date.month - 1, date.day);
-      this.hidden = true;
-     // this.selected = this.fromDate.toLocaleDateString() + '-' + this.toDate.toLocaleDateString();
+  //   } else if (this.fromDate && !this.toDate && date.after(this.fromNGDate)) {
+  //     this.toNGDate = date;
+  //     this.toDate = new Date(date.year, date.month - 1, date.day);
+  //     this.hidden = true;
+  //    // this.selected = this.fromDate.toLocaleDateString() + '-' + this.toDate.toLocaleDateString();
 
-     this.selected =  moment(this.fromDate.toLocaleDateString()).format("DD-MM-YYYY")+ ' - ' + moment(this.toDate.toLocaleDateString()).format("DD-MM-YYYY")
-     this.filterForm.controls["startDate"].setValue( moment(this.fromDate.toLocaleDateString()).format("DD-MM-YYYY"));
-     this.filterForm.controls["endDate"].setValue(moment(this.toDate.toLocaleDateString()).format("DD-MM-YYYY"));
+  //    this.selected =  moment(this.fromDate.toLocaleDateString()).format("DD-MM-YYYY")+ ' - ' + moment(this.toDate.toLocaleDateString()).format("DD-MM-YYYY")
+  //    this.filterForm.controls["startDate"].setValue( moment(this.fromDate.toLocaleDateString()).format("DD-MM-YYYY"));
+  //    this.filterForm.controls["endDate"].setValue(moment(this.toDate.toLocaleDateString()).format("DD-MM-YYYY"));
 
 
-      this.dateRangeSelected.emit({ fromDate: this.fromDate, toDate: this.toDate });
-      // console.log('2222222222');
-      // console.log(this.selected);
+  //     this.dateRangeSelected.emit({ fromDate: this.fromDate, toDate: this.toDate });
+  //     // console.log('2222222222');
+  //     // console.log(this.selected);
 
-      // this.fromDate = null;
-      // this.toDate = null;
-      // this.fromNGDate = null;
-      // this.toNGDate = null;
+  //     // this.fromDate = null;
+  //     // this.toDate = null;
+  //     // this.fromNGDate = null;
+  //     // this.toNGDate = null;
 
-    } else {
-      this.fromNGDate = date;
-      this.fromDate = new Date(date.year, date.month - 1, date.day);
-      this.selected = '';
+  //   } else {
+  //     this.fromNGDate = date;
+  //     this.fromDate = new Date(date.year, date.month - 1, date.day);
+  //     this.selected = '';
 
-      // console.log('33333333');
-      // console.log(this.selected);
+  //     // console.log('33333333');
+  //     // console.log(this.selected);
 
-    }
+  //   }
+  // }
+  onDateSelection(date: NgbDate) {
+  // First click OR starting new selection
+  if (!this.fromNGDate || (this.fromNGDate && this.toNGDate)) {
+    this.fromNGDate = date;
+    this.toNGDate = null;
+    this.fromDate = new Date(date.year, date.month - 1, date.day);
+    this.toDate = null;
+    this.selected = '';
+    return;
   }
-  
+
+  // Second click (end date)
+  if (date.after(this.fromNGDate)) {
+    this.toNGDate = date;
+    this.toDate = new Date(date.year, date.month - 1, date.day);
+    this.hidden = true;
+
+    this.selected =
+      moment(this.fromDate).format('DD-MM-YYYY') +
+      ' - ' +
+      moment(this.toDate).format('DD-MM-YYYY');
+
+    this.filterForm.controls['startDate'].setValue(
+      moment(this.fromDate).format('DD-MM-YYYY')
+    );
+    this.filterForm.controls['endDate'].setValue(
+      moment(this.toDate).format('DD-MM-YYYY')
+    );
+
+    this.dateRangeSelected.emit({
+      fromDate: this.fromDate,
+      toDate: this.toDate,
+    });
+  }
+}
+
+
   downloadFuelPrice() {
     if(this.filterForm.value.startDate && this.filterForm.value.endDate){
       let data = {

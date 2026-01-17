@@ -282,6 +282,34 @@ export class ChartsWidget2Component implements OnInit {
     if (this.addOilCompanyForm.value.invoiceDate) {
       if (this.addOilCompanyForm.value.receivedDate) {
         if (this.addOilCompanyForm.value.vehicleNumber) {
+        if (this.addOilCompanyForm.value.invoiceNumber) {
+
+          if (!this.CreditRequestDataArrayOilCompany || !this.CreditRequestDataArrayOilCompany.length) {
+            alert('Please add Amount and Quantity.');
+            return;
+          }
+
+          const invalidRow = this.CreditRequestDataArrayOilCompany.some(
+            (item: {
+              product: string;
+              basicAmount: number | string | null | undefined;
+              quantity: number | string | null | undefined;
+            }) =>
+              !item ||
+              !item.product?.trim() ||
+              item.basicAmount === undefined ||
+              item.basicAmount === null ||
+              item.basicAmount === '' ||
+              item.quantity === undefined ||
+              item.quantity === null ||
+              item.quantity === ''
+          );
+
+          if (invalidRow) {
+            alert('Please add Amount and Quantity.');
+            return;
+          }
+
           this.spinner.show()
           let data = {
             oilCompanyData: this.CreditRequestDataArrayOilCompany,
@@ -310,6 +338,9 @@ export class ChartsWidget2Component implements OnInit {
                 this.cd.detectChanges()
               }
             })
+          } else {
+          alert("Please enter Invoice number")
+        }
         } else {
           alert("Please enter vehicle number")
         }
