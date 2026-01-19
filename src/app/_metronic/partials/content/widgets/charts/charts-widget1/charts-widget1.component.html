@@ -19,7 +19,7 @@
   </div> -->
 
   <div #chartRef id="kt_charts_widget_1_chart" [style.height]="'350px'">
-  <apx-chart 
+  <apx-chart *ngIf="chartOptions?.chart?.type && chartOptions?.series?.length"
     [series]="chartOptions.series"
     [chart]="chartOptions.chart"
     [xaxis]="chartOptions.xaxis"

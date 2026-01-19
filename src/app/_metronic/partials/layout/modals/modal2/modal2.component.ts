@@ -438,7 +438,7 @@ export class Modal2Component {
 
 
   fuelStaffRegister() {
-    if(this.userForm.value.firstName && this.userForm.value.lastName){
+    if(this.userForm.value.firstName && this.userForm.value.lastName && this.userForm.value.phoneNumber){
     var payment;
     this.spinner.show()
     this.createCorporateId()
@@ -489,7 +489,7 @@ export class Modal2Component {
       }
     })
   } else {
-      alert("Please Enter Name")
+      alert("Please Enter Name and mobile Number")
         this.spinner.hide();
   }
   }

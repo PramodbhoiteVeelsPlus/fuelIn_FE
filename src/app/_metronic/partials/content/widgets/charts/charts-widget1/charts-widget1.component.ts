@@ -791,7 +791,7 @@ export class ChartsWidget1Component implements OnInit {
   }
 }
 
-function getChartOptions(height: number, months: string[], os: any[], purchase: any[], payment: any[]): any {
+function getChartOptions(height: number, months: string[] = [], os: any[] = [], purchase: any[] = [], payment: any[] = []): any {
   const labelColor = getCSSVariableValue('--bs-gray-500')
   return {
     series: [

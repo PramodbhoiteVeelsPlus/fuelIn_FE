@@ -711,7 +711,11 @@ export class ListsWidget5Component {
           this.expenseAmount = res.data1[0].expenseAmount;
           this.shortamount = res.data1[0].shortamount;
           this.totalAmount = Number(res.data1[0].totalAmountTally).toFixed(2);
+          if(res.data1[0].expenseAmtDetails == 'undefined'){
+          this.expenseAmtDetails = '';
+          } else {
           this.expenseAmtDetails = res.data1[0].expenseAmtDetails;
+        }
         } else {
           this.noTally = true;
         }
@@ -1258,7 +1262,11 @@ export class ListsWidget5Component {
             dataPAYJson.shiftTime = shift.fuelShiftTimeDetails;
           }
           dataPAYJson.cashHandOver = Number(shift.totalCashTally) - Number(shift.shortamount) - Number(shift.expenseAmount);
-          dataPAYJson.expenseAmtDetails = shift.expenseAmtDetails
+          if (shift.expenseAmtDetails == 'undefined') {
+            dataPAYJson.expenseAmtDetails = ''
+          } else {
+            dataPAYJson.expenseAmtDetails = shift.expenseAmtDetails
+          }
 
           //   this.meterSalesAmount.map(sales => {
           //     if (sales.fuelShiftDetailsId == shift.idfuelShiftDetails) {

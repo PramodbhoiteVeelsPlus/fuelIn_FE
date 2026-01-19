@@ -87,6 +87,7 @@ export class ListsWidget7Component {
   modalDeleteShift: any;
   shiftTimeId: any;
   staffId: any;
+  modalRefConfirm: any;
 
   constructor(
     private post: ListWidgetService,
@@ -225,6 +226,7 @@ export class ListsWidget7Component {
       .subscribe(result => {
         if (result.status == 'OK') {
           this.modalRefpass.close('close')
+          this.modalRefConfirm.close('close')
           this.password = "";
           this.spinner.hide()
           this.deleteShiftModal(deleteShift)
@@ -278,8 +280,8 @@ export class ListsWidget7Component {
   }
 
   askForConfirmDelete(confirmdeleteTemplate: any,) {
-    this.modalRefpass = this.modalService.open(confirmdeleteTemplate)
-    this.modalRefpass.result.then((result: any) => {
+    this.modalRefConfirm = this.modalService.open(confirmdeleteTemplate)
+    this.modalRefConfirm.result.then((result: any) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason: any) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;

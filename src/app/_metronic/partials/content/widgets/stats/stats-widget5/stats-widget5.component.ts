@@ -39,8 +39,8 @@ export class StatsWidget5Component {
     this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
     this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
     this.totalOS = JSON.parse(localStorage.getItem("totalOS") || '{}');
-    this.thisMonthCrSale = JSON.parse(localStorage.getItem("thisMonthCrSale") || '{}');
-    this.thisMonthCrPayment = JSON.parse(localStorage.getItem("thisMonthCrPayment") || '{}');
+    // this.thisMonthCrSale = JSON.parse(localStorage.getItem("thisMonthCrSale") || '{}');
+    // this.thisMonthCrPayment = JSON.parse(localStorage.getItem("thisMonthCrPayment") || '{}');
     this.dealerMobile = element.phone1;
     this.accessGroupId = element.accessGroupId;
 
