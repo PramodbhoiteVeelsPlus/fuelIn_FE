@@ -104,6 +104,7 @@ export class ListsWidget2Component {
   userId: any;
   searchCustName: FormControl = new FormControl();
   searchTermm: any;
+  firstName1: any;
 
   constructor(
     private post: ListWidgetService,
@@ -140,6 +141,7 @@ export class ListsWidget2Component {
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
     this.accessGroup = element.accessGroupId;
     this.userId = element.userId;
+    this.firstName1 = element.firstName;
     this.getLubeTaxDetailsByDealerIdPost()
     this.cd.detectChanges()
   }

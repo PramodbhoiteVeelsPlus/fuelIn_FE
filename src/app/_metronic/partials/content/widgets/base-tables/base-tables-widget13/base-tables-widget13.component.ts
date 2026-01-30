@@ -208,7 +208,7 @@ export class BaseTablesWidget13Component implements OnInit {
     return await this.modal2Component.open();
   }
 
-  updateMapping(status: any, fuelDealerStaffId: any, dealerMapStatus: string) {
+  updateMapping(status: any, fuelDealerStaffId: any, dealerMapStatus: string, phone: any) {
 
     this.spinner.show()
     if (dealerMapStatus != "MAPPED") {
@@ -219,11 +219,12 @@ export class BaseTablesWidget13Component implements OnInit {
         let data = {
           dealerMapStatus: dealerMapStatus,
           fuelDealerStaffId: fuelDealerStaffId,
+          phone: phone
         }
         this.post.updateMapStatusforStaffPOST(data)
           .subscribe(res => {
             if (res) {
-              alert("Mapping Status Updated to MAPPED!")
+              alert(res.msg)
               this.spinner.hide();
               this.getStaffDetails(this.fuelDealerId)
             }
@@ -241,6 +242,7 @@ export class BaseTablesWidget13Component implements OnInit {
         dealerMapStatus: dealerMapStatus,
         fuelDealerStaffId: fuelDealerStaffId,
         fuelDealerId: this.fuelDealerId,
+        phone: phone
       }
       this.post.updateMapStatusforStaffPOST(data)
         .subscribe(res => {

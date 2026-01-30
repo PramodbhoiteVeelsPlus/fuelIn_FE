@@ -444,14 +444,14 @@
                       <div *ngIf="data.dealerMapStatus == 'MAPPED'">
                         <label class="switch">
                           <input type="checkbox" checked="checked"
-                            (change)="updateMapping($event,data.fuelDealerStaffId,data.dealerMapStatus)">
+                            (change)="updateMapping($event,data.fuelDealerStaffId,data.dealerMapStatus, data.phone1)">
                           <span class="slider round"></span>
                         </label>
                       </div>
                       <div *ngIf="data.dealerMapStatus == 'UNMAPPED'">
                         <label class="switch">
                           <input type="checkbox" [checked]="false"
-                            (change)="updateMapping($event,data.fuelDealerStaffId,data.dealerMapStatus)">
+                            (change)="updateMapping($event,data.fuelDealerStaffId,data.dealerMapStatus, data.phone1)">
                           <span class="slider round"></span>
                         </label>
                       </div>

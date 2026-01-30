@@ -835,7 +835,7 @@ lastNameTransporter: any;
     }
   }
 
-  updateMapping(status: any, fuelDealerStaffId: any, dealerMapStatus: string) {
+  updateMapping(status: any, fuelDealerStaffId: any, dealerMapStatus: string, phone: any) {
     if (dealerMapStatus != "MAPPED") {
       this.spinner.show()
       if (status.target.checked) {
@@ -844,12 +844,13 @@ lastNameTransporter: any;
         let data = {
           dealerMapStatus: dealerMapStatus,
           fuelDealerStaffId: fuelDealerStaffId,
+          phone: phone
         }
 
         this.post.updateMapStatusforStaffPOST(data)
           .subscribe(res => {
             if (res) {
-              alert("Mapping Status Updated to MAPPED!")
+              alert(res.msg)
               this.spinner.hide();
               this.getStaffDetails(this.fuelDealerId)
               this.cd.detectChanges()
@@ -871,6 +872,7 @@ lastNameTransporter: any;
         dealerMapStatus: dealerMapStatus,
         fuelDealerStaffId: fuelDealerStaffId,
         fuelDealerId: this.fuelDealerId,
+        phone: phone
       }
 
       this.post.updateMapStatusforStaffPOST(data)
