@@ -249,8 +249,8 @@ export class PumpTablesWidget9Component implements OnInit {
   submitRechargeLQ() {
     const data = {
       fastagTransactionEntityId: this.entityIdForCorpLQ,  
-      startDate:moment(this.filterFormLQ.value.startDate).format('YYYY-MM-DD') + ' 00:00:01',
-      endDate:moment(this.filterFormLQ.value.endDate).format('YYYY-MM-DD') + ' 23:59:59',   
+      startDate:moment(this.filterFormLQ.value.startDate, "DD-MM-YYYY").format('YYYY-MM-DD') + ' 00:00:01',
+      endDate:moment(this.filterFormLQ.value.endDate, "DD-MM-YYYY").format('YYYY-MM-DD') + ' 23:59:59',   
     };
     this.post.getRechargeFastagByDateLQPOST(data).subscribe((res) => {
     if (res.status == 'OK') {

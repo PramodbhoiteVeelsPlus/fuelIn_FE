@@ -412,8 +412,8 @@ export class PumpTablesWidget5Component implements OnInit {
     const data = {
       fastagTransactionEntityId: this.entityIdForCorpLQ,
       vehicleNumber: this.dropVehicleNumber,
-      startDate: moment(this.filterFormLQ.value.startDate).format('YYYY-MM-DD') + ' 00:00:01',
-      endDate: moment(this.filterFormLQ.value.endDate).format('YYYY-MM-DD') + ' 23:59:59',
+      startDate: moment(this.filterFormLQ.value.startDate, "DD-MM-YYYY").format('YYYY-MM-DD') + ' 00:00:01',
+      endDate: moment(this.filterFormLQ.value.endDate, "DD-MM-YYYY").format('YYYY-MM-DD') + ' 23:59:59',
     };
     this.post.getTransactionFastagByVehicleNumberDatewiseLQPOST(data).subscribe((res) => {
       if (res.status == 'OK') {

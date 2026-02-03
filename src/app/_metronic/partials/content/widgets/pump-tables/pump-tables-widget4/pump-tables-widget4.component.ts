@@ -348,8 +348,8 @@ export class PumpTablesWidget4Component implements OnInit {
       this.spinner.show();
       let data = {
         fastagTransactionEntityId: this.entityIdForCorpLQ,
-        startDate: moment(this.filterFormLQ.value.startDate).format("YYYY-MM-DD"),
-        endDate: moment(this.filterFormLQ.value.endDate).format("YYYY-MM-DD")
+        startDate: moment(this.filterFormLQ.value.startDate, "DD-MM-YYYY").format("YYYY-MM-DD"),
+        endDate: moment(this.filterFormLQ.value.endDate, "DD-MM-YYYY").format("YYYY-MM-DD")
       }
       this.post.getTransactionFastagByVeelsIdDatewiseLQPOST(data)
         .subscribe(res => {
@@ -677,7 +677,7 @@ export class PumpTablesWidget4Component implements OnInit {
       this.post.setRoutingWithDate('current', this.fastagTransactionDataLQ, moment(this.filterFormLQ.value.startDate).format("YYYY-MM-DD"), moment(this.filterFormLQ.value.endDate).format("YYYY-MM-DD"), "LQ")
       this.router.navigate(['/transporter/fastagRechargeTransactions']);
     } else {
-      this.post.setRoutingWithDate('range', this.fastagTransactionDataLQ, moment(this.filterFormLQ.value.startDate).format("YYYY-MM-DD"), moment(this.filterFormLQ.value.endDate).format("YYYY-MM-DD"), "LQ")
+      this.post.setRoutingWithDate('range', this.fastagTransactionDataLQ, moment(this.filterFormLQ.value.startDate, "DD-MM-YYYY").format("YYYY-MM-DD"), moment(this.filterFormLQ.value.endDate, "DD-MM-YYYY").format("YYYY-MM-DD"), "LQ")
       this.router.navigate(['/transporter/fastagRechargeTransactions']);
     }
   }

@@ -87,6 +87,7 @@ export class TilesWidget14Component {
               this.debitSum = Number(this.debitSum) + Number(res1.transaction.amount)
   
             }
+            console.log("this.creditSum", this.creditSum, this.debitSum)
           })
         }
   
@@ -107,7 +108,16 @@ export class TilesWidget14Component {
         
       }
     }
-
+  if (this.dataArray.length) {
+      this.dataArray.map((res1: { fastagType: string; fastagTransactionAmount: any; }) => {
+        if (res1.fastagType == "CREDIT") {
+          this.creditSum = Number(this.creditSum) + Number(res1.fastagTransactionAmount)
+        }
+        if (res1.fastagType == "DEBIT") {
+          this.debitSum = Number(this.debitSum) + Number(res1.fastagTransactionAmount)
+        }
+      })
+    }
     this.startDate = this.post1.date1;
     this.endDate = this.post1.date2;
     this.dataArray = this.post1.dataArray;
