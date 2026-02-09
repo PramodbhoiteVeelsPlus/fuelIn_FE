@@ -421,6 +421,7 @@ export class PumpTablesWidget5Component implements OnInit {
         this.fastagLQLength = res.data
         this.cd.detectChanges()
       } else {
+        alert(res.msg)
         this.cd.detectChanges()
       }
     });

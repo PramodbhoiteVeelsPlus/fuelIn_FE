@@ -112,7 +112,7 @@ export class PumpTablesWidget4Component implements OnInit {
   fastagTransaction: any = [];
   fastagTransactionData: any = [];
   fastagTransactionDataLength: any = [];
-  stausToll: boolean;
+  stausToll: boolean = true;
   fastagTransactionDataLQ: any = [];
   fastagTransactionLQ: any = [];
   fastagTransactionDataLengthLQ: any = [];
@@ -348,8 +348,8 @@ export class PumpTablesWidget4Component implements OnInit {
       this.spinner.show();
       let data = {
         fastagTransactionEntityId: this.entityIdForCorpLQ,
-        startDate: moment(this.filterFormLQ.value.startDate, "DD-MM-YYYY").format("YYYY-MM-DD"),
-        endDate: moment(this.filterFormLQ.value.endDate, "DD-MM-YYYY").format("YYYY-MM-DD")
+        startDate: moment(this.filterFormLQ.value.startDate, "DD-MM-YYYY").format("YYYY-MM-DD 00:00:01"),
+        endDate: moment(this.filterFormLQ.value.endDate, "DD-MM-YYYY").format("YYYY-MM-DD 23:59:59")
       }
       this.post.getTransactionFastagByVeelsIdDatewiseLQPOST(data)
         .subscribe(res => {
@@ -672,12 +672,36 @@ export class PumpTablesWidget4Component implements OnInit {
     this.excelService.exportAsExcelFile(this.exceldata1, 'TransactionReport');
   }
 
+  convertToYMD(date: any): string {
+
+  // If it's a JS Date object
+  if (date instanceof Date) {
+    return moment(date).format('YYYY-MM-DD');
+  }
+
+  // If it's DD-MM-YYYY string
+  if (moment(date, ['DD-MM-YYYY', 'D-M-YYYY'], true).isValid()) {
+    return moment(date, ['DD-MM-YYYY', 'D-M-YYYY']).format('YYYY-MM-DD');
+  }
+
+  // If it's already ISO or has time
+  if (moment(date, ['YYYY-MM-DD', 'YYYY-MM-DD HH:mm:ss'], true).isValid()) {
+    return moment(date).format('YYYY-MM-DD');
+  }
+
+  // Fallback (last resort)
+  return moment(date).format('YYYY-MM-DD');
+}
+
   goToPDFLQ(status: string) {
     if (status == "current") {
-      this.post.setRoutingWithDate('current', this.fastagTransactionDataLQ, moment(this.filterFormLQ.value.startDate).format("YYYY-MM-DD"), moment(this.filterFormLQ.value.endDate).format("YYYY-MM-DD"), "LQ")
+      this.post.setRoutingWithDate('current', this.fastagTransactionDataLQ, moment(this.filterFormLQ.value.startDate).format("YYYY-MM-DD"), moment(this.filterFormLQ.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"), "LQ")
       this.router.navigate(['/transporter/fastagRechargeTransactions']);
     } else {
-      this.post.setRoutingWithDate('range', this.fastagTransactionDataLQ, moment(this.filterFormLQ.value.startDate, "DD-MM-YYYY").format("YYYY-MM-DD"), moment(this.filterFormLQ.value.endDate, "DD-MM-YYYY").format("YYYY-MM-DD"), "LQ")
+      const startDate = this.convertToYMD(this.filterFormLQ.value.startDate);
+      const endDate   = this.convertToYMD(this.filterFormLQ.value.endDate);
+
+      this.post.setRoutingWithDate('range', this.fastagTransactionDataLQ, startDate, endDate, "LQ")
       this.router.navigate(['/transporter/fastagRechargeTransactions']);
     }
   }
