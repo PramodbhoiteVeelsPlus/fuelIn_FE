@@ -8,14 +8,14 @@
     ₹ 0
    </span>
    <span *ngIf="totalOS">
-    ₹ {{ totalOS }}
+    ₹ {{ stats | number: "1.2-2" }}
    </span>
   </div>
   <div *ngIf="isSales" [ngClass]="'text-inverse-' + color" class="fw-bold text-white me-2 lh-1 ls-n2 fs-5">
-    ₹ {{ thisMonthCrSale | number: "1.2-2" }}
+    ₹ {{ stats | number: "1.2-2" }}
   </div>
   <div *ngIf="isPayment" [ngClass]="'text-inverse-' + color" class="fw-bold text-white me-2 lh-1 ls-n2 fs-5">
-    ₹ {{ thisMonthCrPayment | number: "1.2-2"  }}
+    ₹ {{ stats | number: "1.2-2"  }}
   </div>
 
 </div>

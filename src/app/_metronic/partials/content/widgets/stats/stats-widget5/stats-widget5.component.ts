@@ -15,6 +15,7 @@ export class StatsWidget5Component {
   @Input() color = '';
   @Input() amount = '';
   @Input() title = '';
+  @Input() stats: number = 0;
   dealerMobile: any;
   fuelDealerId: any;
   thisMonthCrSale: any = 0;
@@ -48,29 +49,14 @@ export class StatsWidget5Component {
       this.isOS = true;
       this.isSales = false;
       this.isPayment = false;
-      if (this.totalOS) {
-        this.getCreditOsByDealerId1(this.fuelDealerId)
-      } else {
-        this.getCreditOsByDealerId(this.fuelDealerId)
-      }
     } else if (this.title == "Credit Sales") {
       this.isOS = false;
       this.isSales = true;
       this.isPayment = false;
-      if (this.thisMonthCrSale) {
-        this.getCreditSalesDetailsByDealerId1(this.fuelDealerId)
-      } else {
-        this.getCreditSalesDetailsByDealerId(this.fuelDealerId)
-      }
     } else if (this.title == "Credit Payment") {
       this.isOS = false;
       this.isSales = false;
       this.isPayment = true;
-      if (this.thisMonthCrPayment) {
-        this.getCreditPaymentDetailsByDealerId1(this.fuelDealerId)
-      } else {
-        this.getCreditPaymentDetailsByDealerId(this.fuelDealerId)
-      }
     }
 
     // this.getCreditDetailsByDealerId(this.fuelDealerId);

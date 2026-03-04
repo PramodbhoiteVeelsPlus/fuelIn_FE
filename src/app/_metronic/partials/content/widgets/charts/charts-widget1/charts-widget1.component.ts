@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { getCSSVariableValue } from '../../../../../kt/_utils';
 import { ChartsService } from '../charts.services';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -7,7 +7,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
   selector: 'app-charts-widget1',
   templateUrl: './charts-widget1.component.html',
 })
-export class ChartsWidget1Component implements OnInit {
+export class ChartsWidget1Component implements OnChanges {
+  @Input() stats: any = [];
   chartOptions: any = {};
   months: any = [];
   os: any = [];
@@ -47,33 +48,391 @@ export class ChartsWidget1Component implements OnInit {
     private spinner: NgxSpinnerService,
     private cd: ChangeDetectorRef,) { }
 
-  ngOnInit(): void {
-    this.spinner.hide();
-    var element = JSON.parse(localStorage.getItem("element") || '{}');
-    this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
-    this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
-    this.graphData = JSON.parse(localStorage.getItem("graphData") || '{}');
-    this.accessGroupId = element.accessGroupId;
-    if (!this.graphData.length) {
-      this.getGraphDataByDealerId(this.fuelDealerId);
-    } else {
-      this.getGraphDataByDealerId1(this.fuelDealerId);
+    ngOnChanges(changes: SimpleChanges) {
+    if (changes['stats'] && this.stats?.length) {
+      console.log("Received stats:", this.stats);
+      this.getGraphData();
     }
-    this.cd.detectChanges()
   }
+  
+  // ngOnInit(): void {
+  //   this.spinner.hide();
+  //   var element = JSON.parse(localStorage.getItem("element") || '{}');
+  //   this.fuelDealerId = JSON.parse(localStorage.getItem("dealerId") || '{}');
+  //   this.dealerCorporateId = JSON.parse(localStorage.getItem("dealerCorporateId") || '{}');
+  //   // this.graphData = JSON.parse(localStorage.getItem("graphData") || '{}');
+  //   this.accessGroupId = element.accessGroupId;
+  //   this.getGraphData()
+  //   // if (!this.graphData.length) {
+  //   //   this.getGraphDataByDealerId(this.fuelDealerId);
+  //   // } else {
+  //   //   this.getGraphDataByDealerId1(this.fuelDealerId);
+  //   // }
+  //   this.cd.detectChanges()
+  // }
 
+  getGraphData() {
+    console.log("stats", this.stats, this.graphData)
+    this.graphData = [...this.stats].reverse()
+    localStorage.setItem('graphData', JSON.stringify(this.graphData));
+    if (this.stats.length > 5) {
+      //Months
+      if (this.graphData[5]) {
+        this.month1 = this.graphData[5].month + ' ' + this.graphData[5].year;
+      }
+      if (this.graphData[4]) {
+        this.month2 = this.graphData[4].month + ' ' + this.graphData[4].year;
+      }
+      if (this.graphData[3]) {
+        this.month3 = this.graphData[3].month + ' ' + this.graphData[3].year;
+      }
+      if (this.graphData[2]) {
+        this.month4 = this.graphData[2].month + ' ' + this.graphData[2].year;
+      }
+      if (this.graphData[1]) {
+        this.month5 = this.graphData[1].month + ' ' + this.graphData[1].year;
+      }
+      if (this.graphData[0]) {
+        this.month6 = this.graphData[0].month + ' ' + this.graphData[0].year;
+      }
+
+      // OS          
+      if (this.graphData[5]) {
+        this.os1 = Number(this.graphData[5].balance).toFixed(0);
+      }
+      if (this.graphData[4]) {
+        this.os2 = Number(this.graphData[4].balance).toFixed(0);
+      }
+      if (this.graphData[3]) {
+        this.os3 = Number(this.graphData[3].balance).toFixed(0);
+      }
+      if (this.graphData[2]) {
+        this.os4 = Number(this.graphData[2].balance).toFixed(0);
+      }
+      if (this.graphData[1]) {
+        this.os5 = Number(this.graphData[1].balance).toFixed(0);
+      }
+      if (this.graphData[0]) {
+        this.os6 = Number(this.graphData[0].balance).toFixed(0);
+      }
+
+      // Purchase          
+      if (this.graphData[5]) {
+        this.purchase1 = Number(this.graphData[5].purchase).toFixed(0);
+      }
+      if (this.graphData[4]) {
+        this.purchase2 = Number(this.graphData[4].purchase).toFixed(0);
+      }
+      if (this.graphData[3]) {
+        this.purchase3 = Number(this.graphData[3].purchase).toFixed(0);
+      }
+      if (this.graphData[2]) {
+        this.purchase4 = Number(this.graphData[2].purchase).toFixed(0);
+      }
+      if (this.graphData[1]) {
+        this.purchase5 = Number(this.graphData[1].purchase).toFixed(0);
+      }
+      if (this.graphData[0]) {
+        this.purchase6 = Number(this.graphData[0].purchase).toFixed(0);
+      }
+
+      // Payment          
+      if (this.graphData[5]) {
+        this.payment1 = Number(this.graphData[5].payment).toFixed(0);
+      }
+      if (this.graphData[4]) {
+        this.payment2 = Number(this.graphData[4].payment).toFixed(0);
+      }
+      if (this.graphData[3]) {
+        this.payment3 = Number(this.graphData[3].payment).toFixed(0);
+      }
+      if (this.graphData[2]) {
+        this.payment4 = Number(this.graphData[2].payment).toFixed(0);
+      }
+      if (this.graphData[1]) {
+        this.payment5 = Number(this.graphData[1].payment).toFixed(0);
+      }
+      if (this.graphData[0]) {
+        this.payment6 = Number(this.graphData[0].payment).toFixed(0);
+      }
+
+      this.months = [this.month1, this.month2, this.month3, this.month4, this.month5, this.month6];
+      this.os = [this.os1, this.os2, this.os3, this.os4, this.os5, this.os6];
+      this.purchase = [this.purchase1, this.purchase2, this.purchase3, this.purchase4, this.purchase5, this.purchase6];
+      this.payment = [this.payment1, this.payment2, this.payment3, this.payment4, this.payment5, this.payment6];
+
+    } else if (this.stats.length == 5) {
+      //Months
+      if (this.graphData[4]) {
+        this.month1 = this.graphData[4].month + ' ' + this.graphData[4].year;
+      }
+      if (this.graphData[3]) {
+        this.month2 = this.graphData[3].month + ' ' + this.graphData[3].year;
+      }
+      if (this.graphData[2]) {
+        this.month3 = this.graphData[2].month + ' ' + this.graphData[2].year;
+      }
+      if (this.graphData[1]) {
+        this.month4 = this.graphData[1].month + ' ' + this.graphData[1].year;
+      }
+      if (this.graphData[0]) {
+        this.month5 = this.graphData[0].month + ' ' + this.graphData[0].year;
+      }
+
+      // OS          
+      if (this.graphData[4]) {
+        this.os1 = Number(this.graphData[4].balance).toFixed(0);
+      }
+      if (this.graphData[3]) {
+        this.os2 = Number(this.graphData[3].balance).toFixed(0);
+      }
+      if (this.graphData[2]) {
+        this.os3 = Number(this.graphData[2].balance).toFixed(0);
+      }
+      if (this.graphData[1]) {
+        this.os4 = Number(this.graphData[1].balance).toFixed(0);
+      }
+      if (this.stats[0]) {
+        this.os5 = Number(this.graphData[0].balance).toFixed(0);
+      }
+
+      // Purchase          
+      if (this.graphData[4]) {
+        this.purchase1 = Number(this.graphData[4].purchase).toFixed(0);
+      }
+      if (this.graphData[3]) {
+        this.purchase2 = Number(this.graphData[3].purchase).toFixed(0);
+      }
+      if (this.graphData[2]) {
+        this.purchase3 = Number(this.graphData[2].purchase).toFixed(0);
+      }
+      if (this.graphData[1]) {
+        this.purchase4 = Number(this.graphData[1].purchase).toFixed(0);
+      }
+      if (this.graphData[0]) {
+        this.purchase5 = Number(this.graphData[0].purchase).toFixed(0);
+      }
+
+      // Payment          
+      if (this.graphData[4]) {
+        this.payment1 = Number(this.graphData[4].payment).toFixed(0);
+      }
+      if (this.graphData[3]) {
+        this.payment2 = Number(this.graphData[3].payment).toFixed(0);
+      }
+      if (this.graphData[2]) {
+        this.payment3 = Number(this.graphData[2].payment).toFixed(0);
+      }
+      if (this.graphData[1]) {
+        this.payment4 = Number(this.graphData[1].payment).toFixed(0);
+      }
+      if (this.graphData[0]) {
+        this.payment5 = Number(this.graphData[0].payment).toFixed(0);
+      }
+
+      this.months = [this.month1, this.month2, this.month3, this.month4, this.month5];
+      this.os = [this.os1, this.os2, this.os3, this.os4, this.os5];
+      this.purchase = [this.purchase1, this.purchase2, this.purchase3, this.purchase4, this.purchase5];
+      this.payment = [this.payment1, this.payment2, this.payment3, this.payment4, this.payment5];
+    } else if (this.stats.length == 4) {
+      //Months
+      if (this.graphData[3]) {
+        this.month1 = this.graphData[3].month + ' ' + this.graphData[3].year;
+      }
+      if (this.graphData[2]) {
+        this.month2 = this.graphData[2].month + ' ' + this.graphData[2].year;
+      }
+      if (this.graphData[1]) {
+        this.month3 = this.graphData[1].month + ' ' + this.graphData[1].year;
+      }
+      if (this.graphData[0]) {
+        this.month4 = this.graphData[0].month + ' ' + this.graphData[0].year;
+      }
+
+      // OS          
+      if (this.graphData[3]) {
+        this.os1 = Number(this.graphData[3].balance).toFixed(0);
+      }
+      if (this.graphData[2]) {
+        this.os3 = Number(this.graphData[2].balance).toFixed(0);
+      }
+      if (this.graphData[1]) {
+        this.os2 = Number(this.graphData[1].balance).toFixed(0);
+      }
+      if (this.graphData[0]) {
+        this.os4 = Number(this.graphData[0].balance).toFixed(0);
+      }
+
+      // Purchase          
+      if (this.graphData[3]) {
+        this.purchase1 = Number(this.graphData[3].purchase).toFixed(0);
+      }
+      if (this.graphData[2]) {
+        this.purchase2 = Number(this.graphData[2].purchase).toFixed(0);
+      }
+      if (this.graphData[1]) {
+        this.purchase3 = Number(this.graphData[1].purchase).toFixed(0);
+      }
+      if (this.graphData[0]) {
+        this.purchase4 = Number(this.graphData[0].purchase).toFixed(0);
+      }
+
+      // Payment          
+      if (this.stats[3]) {
+        this.payment1 = Number(this.stats[3].payment).toFixed(0);
+      }
+      if (this.stats[2]) {
+        this.payment2 = Number(this.stats[2].payment).toFixed(0);
+      }
+      if (this.stats[1]) {
+        this.payment3 = Number(this.stats[1].payment).toFixed(0);
+      }
+      if (this.stats[0]) {
+        this.payment4 = Number(this.graphData[0].payment).toFixed(0);
+      }
+
+      this.months = [this.month1, this.month2, this.month3, this.month4];
+      this.os = [this.os1, this.os2, this.os3, this.os4];
+      this.purchase = [this.purchase1, this.purchase2, this.purchase3, this.purchase4];
+      this.payment = [this.payment1, this.payment2, this.payment3, this.payment4];
+    } else if (this.stats.length == 3) {
+      //Months
+      if (this.graphData[2]) {
+        this.month1 = this.graphData[2].month + ' ' + this.graphData[2].year;
+      }
+      if (this.graphData[1]) {
+        this.month2 = this.graphData[1].month + ' ' + this.graphData[1].year;
+      }
+      if (this.graphData[0]) {
+        this.month3 = this.graphData[0].month + ' ' + this.graphData[0].year;
+      }
+
+      // OS          
+      if (this.graphData[2]) {
+        this.os1 = Number(this.graphData[2].balance).toFixed(0);
+      }
+      if (this.graphData[1]) {
+        this.os2 = Number(this.graphData[1].balance).toFixed(0);
+      }
+      if (this.graphData[0]) {
+        this.os3 = Number(this.graphData[0].balance).toFixed(0);
+      }
+
+      // Purchase          
+      if (this.graphData[2]) {
+        this.purchase1 = Number(this.graphData[2].purchase).toFixed(0);
+      }
+      if (this.graphData[1]) {
+        this.purchase2 = Number(this.graphData[1].purchase).toFixed(0);
+      }
+      if (this.graphData[0]) {
+        this.purchase3 = Number(this.graphData[0].purchase).toFixed(0);
+      }
+
+      // Payment          
+      if (this.graphData[2]) {
+        this.payment1 = Number(this.graphData[2].payment).toFixed(0);
+      }
+      if (this.graphData[1]) {
+        this.payment2 = Number(this.graphData[1].payment).toFixed(0);
+      }
+      if (this.graphData[0]) {
+        this.payment3 = Number(this.graphData[0].payment).toFixed(0);
+      }
+
+      this.months = [this.month1, this.month2, this.month3];
+      this.os = [this.os1, this.os2, this.os3];
+      this.purchase = [this.purchase1, this.purchase2, this.purchase3];
+      this.payment = [this.payment1, this.payment2, this.payment3];
+    } else if (this.stats.length == 2) {
+      //Months
+      if (this.graphData[1]) {
+        this.month1 = this.graphData[1].month + ' ' + this.graphData[1].year;
+      }
+      if (this.graphData[0]) {
+        this.month2 = this.graphData[0].month + ' ' + this.graphData[0].year;
+      }
+
+      // OS          
+      if (this.graphData[1]) {
+        this.os1 = Number(this.graphData[1].balance).toFixed(0);
+      }
+      if (this.graphData[0]) {
+        this.os2 = Number(this.graphData[0].balance).toFixed(0);
+      }
+
+      // Purchase          
+      if (this.graphData[1]) {
+        this.purchase1 = Number(this.graphData[1].purchase).toFixed(0);
+      }
+      if (this.graphData[0]) {
+        this.purchase2 = Number(this.graphData[0].purchase).toFixed(0);
+      }
+
+      // Payment          
+      if (this.graphData[1]) {
+        this.payment1 = Number(this.graphData[1].payment).toFixed(0);
+      }
+      if (this.graphData[0]) {
+        this.payment2 = Number(this.graphData[0].payment).toFixed(0);
+      }
+
+      this.months = [this.month1, this.month2];
+      this.os = [this.os1, this.os2];
+      this.purchase = [this.purchase1, this.purchase2];
+      this.payment = [this.payment1, this.payment2];
+    } else if (this.stats.length == 1) {
+      //Months
+      if (this.graphData[0]) {
+        this.month1 = this.graphData[0].month;
+      }
+
+      // OS          
+      if (this.graphData[0]) {
+        this.os1 = Number(this.graphData[0].balance).toFixed(0);
+      }
+
+      // Purchase          
+      if (this.graphData[0]) {
+        this.purchase1 = Number(this.graphData[0].purchase).toFixed(0);
+      }
+
+      // Payment          
+      if (this.graphData[0]) {
+        this.payment1 = Number(this.graphData[0].payment).toFixed(0);
+      }
+
+      this.months = [this.month1];
+      this.os = [this.os1];
+      this.purchase = [this.purchase1];
+      this.payment = [this.payment1];
+    } else {
+      this.months = [];
+      this.os = [];
+      this.purchase = [];
+      this.payment = [];
+    }
+
+    this.chartOptions = getChartOptions(350, this.months, this.os, this.purchase, this.payment);
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+    }, 5000);
+    this.cd.detectChanges();
+
+  }
 
   getGraphDataByDealerId(fuelDealerId: any) {
     this.spinner.show()
     let data = {
       fuelDealerId: fuelDealerId
     }
-    this.post.getLastSixMonthsCrPOST(data)
+    this.post.getDealerDashboardCrDataPOST(data)
       .subscribe(res => {
         if (res.status == 'OK') {
-          this.graphData = res.data.reverse()
+          this.graphData = this.stats.reverse()
           localStorage.setItem('graphData', JSON.stringify(this.graphData));
-          if (res.data.length > 5) {
+          if (this.stats.length > 5) {
             //Months
             if (this.graphData[5]) {
               this.month1 = this.graphData[5].month + ' ' + this.graphData[5].year;
@@ -159,7 +518,7 @@ export class ChartsWidget1Component implements OnInit {
             this.purchase = [this.purchase1, this.purchase2, this.purchase3, this.purchase4, this.purchase5, this.purchase6];
             this.payment = [this.payment1, this.payment2, this.payment3, this.payment4, this.payment5, this.payment6];
 
-          } else if (res.data.length == 5) {
+          } else if (this.stats.length == 5) {
             //Months
             if (this.graphData[4]) {
               this.month1 = this.graphData[4].month + ' ' + this.graphData[4].year;
@@ -190,7 +549,7 @@ export class ChartsWidget1Component implements OnInit {
             if (this.graphData[1]) {
               this.os4 = Number(this.graphData[1].balance).toFixed(0);
             }
-            if (res.data[0]) {
+            if (this.stats[0]) {
               this.os5 = Number(this.graphData[0].balance).toFixed(0);
             }
 
@@ -232,7 +591,7 @@ export class ChartsWidget1Component implements OnInit {
             this.os = [this.os1, this.os2, this.os3, this.os4, this.os5];
             this.purchase = [this.purchase1, this.purchase2, this.purchase3, this.purchase4, this.purchase5];
             this.payment = [this.payment1, this.payment2, this.payment3, this.payment4, this.payment5];
-          } else if (res.data.length == 4) {
+          } else if (this.stats.length == 4) {
             //Months
             if (this.graphData[3]) {
               this.month1 = this.graphData[3].month + ' ' + this.graphData[3].year;
@@ -276,16 +635,16 @@ export class ChartsWidget1Component implements OnInit {
             }
 
             // Payment          
-            if (res.data[3]) {
-              this.payment1 = Number(res.data[3].payment).toFixed(0);
+            if (this.stats[3]) {
+              this.payment1 = Number(this.stats[3].payment).toFixed(0);
             }
-            if (res.data[2]) {
-              this.payment2 = Number(res.data[2].payment).toFixed(0);
+            if (this.stats[2]) {
+              this.payment2 = Number(this.stats[2].payment).toFixed(0);
             }
-            if (res.data[1]) {
-              this.payment3 = Number(res.data[1].payment).toFixed(0);
+            if (this.stats[1]) {
+              this.payment3 = Number(this.stats[1].payment).toFixed(0);
             }
-            if (res.data[0]) {
+            if (this.stats[0]) {
               this.payment4 = Number(this.graphData[0].payment).toFixed(0);
             }
 
@@ -293,7 +652,7 @@ export class ChartsWidget1Component implements OnInit {
             this.os = [this.os1, this.os2, this.os3, this.os4];
             this.purchase = [this.purchase1, this.purchase2, this.purchase3, this.purchase4];
             this.payment = [this.payment1, this.payment2, this.payment3, this.payment4];
-          } else if (res.data.length == 3) {
+          } else if (this.stats.length == 3) {
             //Months
             if (this.graphData[2]) {
               this.month1 = this.graphData[2].month + ' ' + this.graphData[2].year;
@@ -342,7 +701,7 @@ export class ChartsWidget1Component implements OnInit {
             this.os = [this.os1, this.os2, this.os3];
             this.purchase = [this.purchase1, this.purchase2, this.purchase3];
             this.payment = [this.payment1, this.payment2, this.payment3];
-          } else if (res.data.length == 2) {
+          } else if (this.stats.length == 2) {
             //Months
             if (this.graphData[1]) {
               this.month1 = this.graphData[1].month + ' ' + this.graphData[1].year;
@@ -379,7 +738,7 @@ export class ChartsWidget1Component implements OnInit {
             this.os = [this.os1, this.os2];
             this.purchase = [this.purchase1, this.purchase2];
             this.payment = [this.payment1, this.payment2];
-          } else if (res.data.length == 1) {
+          } else if (this.stats.length == 1) {
             //Months
             if (this.graphData[0]) {
               this.month1 = this.graphData[0].month;
@@ -431,12 +790,12 @@ export class ChartsWidget1Component implements OnInit {
     let data = {
       fuelDealerId: fuelDealerId
     }
-    this.post.getLastSixMonthsCrPOST(data)
+    this.post.getDealerDashboardCrDataPOST(data)
       .subscribe(res => {
         if (res.status == 'OK') {
-          this.graphData = res.data.reverse()
+          this.graphData = this.stats.reverse()
           localStorage.setItem('graphData', JSON.stringify(this.graphData));
-          if (res.data.length > 5) {
+          if (this.stats.length > 5) {
             //Months
             if (this.graphData[5]) {
               this.month1 = this.graphData[5].month + ' ' + this.graphData[5].year;
@@ -522,7 +881,7 @@ export class ChartsWidget1Component implements OnInit {
             this.purchase = [this.purchase1, this.purchase2, this.purchase3, this.purchase4, this.purchase5, this.purchase6];
             this.payment = [this.payment1, this.payment2, this.payment3, this.payment4, this.payment5, this.payment6];
 
-          } else if (res.data.length == 5) {
+          } else if (this.stats.length == 5) {
             //Months
             if (this.graphData[4]) {
               this.month1 = this.graphData[4].month + ' ' + this.graphData[4].year;
@@ -553,7 +912,7 @@ export class ChartsWidget1Component implements OnInit {
             if (this.graphData[1]) {
               this.os4 = Number(this.graphData[1].balance).toFixed(0);
             }
-            if (res.data[0]) {
+            if (this.stats[0]) {
               this.os5 = Number(this.graphData[0].balance).toFixed(0);
             }
 
@@ -595,7 +954,7 @@ export class ChartsWidget1Component implements OnInit {
             this.os = [this.os1, this.os2, this.os3, this.os4, this.os5];
             this.purchase = [this.purchase1, this.purchase2, this.purchase3, this.purchase4, this.purchase5];
             this.payment = [this.payment1, this.payment2, this.payment3, this.payment4, this.payment5];
-          } else if (res.data.length == 4) {
+          } else if (this.stats.length == 4) {
             //Months
             if (this.graphData[3]) {
               this.month1 = this.graphData[3].month + ' ' + this.graphData[3].year;
@@ -639,16 +998,16 @@ export class ChartsWidget1Component implements OnInit {
             }
 
             // Payment          
-            if (res.data[3]) {
-              this.payment1 = Number(res.data[3].payment).toFixed(0);
+            if (this.stats[3]) {
+              this.payment1 = Number(this.stats[3].payment).toFixed(0);
             }
-            if (res.data[2]) {
-              this.payment2 = Number(res.data[2].payment).toFixed(0);
+            if (this.stats[2]) {
+              this.payment2 = Number(this.stats[2].payment).toFixed(0);
             }
-            if (res.data[1]) {
-              this.payment3 = Number(res.data[1].payment).toFixed(0);
+            if (this.stats[1]) {
+              this.payment3 = Number(this.stats[1].payment).toFixed(0);
             }
-            if (res.data[0]) {
+            if (this.stats[0]) {
               this.payment4 = Number(this.graphData[0].payment).toFixed(0);
             }
 
@@ -656,7 +1015,7 @@ export class ChartsWidget1Component implements OnInit {
             this.os = [this.os1, this.os2, this.os3, this.os4];
             this.purchase = [this.purchase1, this.purchase2, this.purchase3, this.purchase4];
             this.payment = [this.payment1, this.payment2, this.payment3, this.payment4];
-          } else if (res.data.length == 3) {
+          } else if (this.stats.length == 3) {
             //Months
             if (this.graphData[2]) {
               this.month1 = this.graphData[2].month + ' ' + this.graphData[2].year;
@@ -705,7 +1064,7 @@ export class ChartsWidget1Component implements OnInit {
             this.os = [this.os1, this.os2, this.os3];
             this.purchase = [this.purchase1, this.purchase2, this.purchase3];
             this.payment = [this.payment1, this.payment2, this.payment3];
-          } else if (res.data.length == 2) {
+          } else if (this.stats.length == 2) {
             //Months
             if (this.graphData[1]) {
               this.month1 = this.graphData[1].month + ' ' + this.graphData[1].year;
@@ -742,7 +1101,7 @@ export class ChartsWidget1Component implements OnInit {
             this.os = [this.os1, this.os2];
             this.purchase = [this.purchase1, this.purchase2];
             this.payment = [this.payment1, this.payment2];
-          } else if (res.data.length == 1) {
+          } else if (this.stats.length == 1) {
             //Months
             if (this.graphData[0]) {
               this.month1 = this.graphData[0].month;
@@ -839,10 +1198,10 @@ function getChartOptions(height: number, months: string[] = [], os: any[] = [], 
     //     //   formatter: (val: number) => val.toFixed(0)
     //     // }
     //   }
-      
+
     // ],
 
-    
+
     yaxis: {
       title: {
         text: '₹'

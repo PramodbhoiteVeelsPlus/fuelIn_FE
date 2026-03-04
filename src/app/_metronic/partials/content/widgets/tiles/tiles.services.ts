@@ -82,6 +82,7 @@ export class TilesService {
     private getDigitalTotalByShiftTimeURL = this.baseURL + 'shiftBook/getDigitalTotalByShiftTime';
     private getStaffDetailsByVEELSURL = this.baseURL + 'groupAccess/getStaffDetailsByVEELS'; 
     private getVeelsIdURL = this.baseURL + 'groupAccess/getVeelsId'; 
+    private getOILCOMPANYDataInFuelExpenseForDashboardURL = this.baseURL + 'dealerDashboard/getOILCOMPANYDataInFuelExpenseForDashboard'; 
 
 
 
@@ -704,7 +705,15 @@ export class TilesService {
     }
 
 
-
+    // getOILCOMPANYDataInFuelExpenseForDashboardURL
+    getOILCOMPANYDataInFuelExpenseForDashboardPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getOILCOMPANYDataInFuelExpenseForDashboardURL, body, {
+            headers: headers
+        })
+    }
 
 
 

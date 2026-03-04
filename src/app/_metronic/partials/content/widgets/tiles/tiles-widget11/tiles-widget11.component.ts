@@ -146,9 +146,9 @@ export class TilesWidget11Component implements OnInit {
       startDate: this.openingDate,
       endDate: this.closingDate,
     }
-    this.post.getOILCOMPANYDataInFuelExpensePOST(data)
+    this.post.getOILCOMPANYDataInFuelExpenseForDashboardPOST(data)
       .subscribe(res => {
-        if (res.data.length) {
+        if (res.data3.length) {
           this.totalOilCOPurchase = res.data3[0].totalAmount
           this.getOilCoAcBalance1(this.fuelDealerId);
           setTimeout(() => {

@@ -77,6 +77,7 @@ export class ChartsService {
   private getLubricantsURL = this.baseURL + 'lubricants/getLubricants';
   private getGSTDataURL = this.baseURL + 'activityCount/getGSTData';
   private getStaffIdByPersonIdURL = this.baseURL + 'fuelExpense/getStaffIdByPersonId'; 
+  private getDealerDashboardCrDataURL = this.baseURL + 'crCustomers/getDealerDashboardCrData'; 
 
 
 
@@ -472,6 +473,15 @@ export class ChartsService {
     }
 
   
+    // getDealerDashboardCrDataURL
+    getDealerDashboardCrDataPOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getDealerDashboardCrDataURL, body, {
+            headers: headers
+        })
+    }
 
 
 
