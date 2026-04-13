@@ -158,32 +158,36 @@ export class AdvanceTablesWidget13Component {
   search() {
     let term = this.searchTerm;
     if (this.searchTerm) {
-      this.customerDetailData = this.customerDetail.filter(function (res:any) {
+      this.customerDetailData = this.customerDetail.filter(function (res: any) {
         return res.hostPhone.indexOf(term) >= 0;
       });
     } else {
       this.showCustomer()
     }
   }
-  
+
   pageChangeEvent(event: number) {
     this.p = event;
     this.showCustomer();
   }
 
   showCustomer() {
+    this.customerDetailData = [];
+    this.customerDetail = [];
+
     this.post.getCorporateDetailsForFastagLQPost()
       .subscribe(res => {
         if (res) {
           this.customerData = res;
-        
-        this.customerData.data.map(
-          (detail:any) => {
-            this.customerDetailData.push(detail)
-            this.customerDetail.push(detail)            
-          })
+
+          this.customerData.data.map(
+            (detail: any) => {
+              this.customerDetailData.push(detail)
+              this.customerDetail.push(detail)
+            })
           this.cd.detectChanges();
-      }}
+        }
+      }
       );
   }
 
