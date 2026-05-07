@@ -503,12 +503,13 @@ export class MixedWidget4Component {
             if (this.addPaymentForm.value.accountDetailsId) {
               if (Number(this.addPaymentForm.value.paymentAmount) > 0) {
                 if (this.addPaymentForm.value.paymentDate) {
-                  if (Number(this.netOutstanding) >= 0) {
-                    if ((Number(this.netOutstanding)) < (Number(this.addPaymentForm.value.paymentAmount))) {
+                  if (Number(this.calOutstanding) >= 0) {
+                    if ((Number(this.calOutstanding)) < (Number(this.addPaymentForm.value.paymentAmount))) {
                       this.paidAvg = 101
                     }
                     else {
-                      this.paidAvg = Math.round((Number(this.addPaymentForm.value.paymentAmount) * 100) / this.netOutstanding)
+                      this.paidAvg = Math.round((Number(this.addPaymentForm.value.paymentAmount) * 100) / this.calOutstanding)
+                      // console.log("score", this.paidAvg,this.addPaymentForm.value.paymentAmount, this.netOutstanding)
                     }
                   }
                   else {
@@ -690,14 +691,14 @@ export class MixedWidget4Component {
                   if (this.addPaymentForm.value.paymentDate) {
 
 
-                    if (Number(this.netOutstanding) >= 0) {
+                    if (Number(this.calOutstanding) >= 0) {
 
-                      if ((Number(this.netOutstanding)) < (Number(this.addPaymentForm.value.paymentAmount))) {
+                      if ((Number(this.calOutstanding)) < (Number(this.addPaymentForm.value.paymentAmount))) {
                         this.paidAvg = 101
 
                       }
                       else {
-                        this.paidAvg = Math.round((Number(this.addPaymentForm.value.paymentAmount) * 100) / this.netOutstanding)
+                        this.paidAvg = Math.round((Number(this.addPaymentForm.value.paymentAmount) * 100) / this.calOutstanding)
                       }
 
                     }
