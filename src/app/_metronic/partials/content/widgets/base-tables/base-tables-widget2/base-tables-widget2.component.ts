@@ -86,7 +86,7 @@ export class BaseTablesWidget2Component implements OnInit {
     endDate: new FormControl(''),
     selectCorporateName: new FormControl(''),
   });
-  
+
   editPaymentForm = new FormGroup({
     editpaymentMethod: new FormControl('', Validators.required),
     editpaymentTransactionNo: new FormControl('', Validators.required),
@@ -137,17 +137,17 @@ export class BaseTablesWidget2Component implements OnInit {
     private route: ActivatedRoute,
     private post1: WidgetService,
     private router: Router) {
-      const currentDate = new Date();
-      const month = moment(new Date()).format("MM");
-      const year = moment(new Date()).subtract(1, 'year').format("YYYY");
-      const lastYear = moment(new Date()).subtract(2, 'year').format("YYYY");
-      if(Number(month) > 3){
-        config.minDate = { year: Number(year), month: 4, day: 1 };
-        config.maxDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
-      } else {
-        config.minDate = { year: Number(lastYear), month: 4, day: 1 };
-        config.maxDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
-      }
+    const currentDate = new Date();
+    const month = moment(new Date()).format("MM");
+    const year = moment(new Date()).subtract(1, 'year').format("YYYY");
+    const lastYear = moment(new Date()).subtract(2, 'year').format("YYYY");
+    if (Number(month) > 3) {
+      config.minDate = { year: Number(year), month: 4, day: 1 };
+      config.maxDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
+    } else {
+      config.minDate = { year: Number(lastYear), month: 4, day: 1 };
+      config.maxDate = { year: currentDate.getFullYear(), month: currentDate.getMonth() + 1, day: currentDate.getDate() };
+    }
   }
 
   ngOnInit(): void {
@@ -176,7 +176,7 @@ export class BaseTablesWidget2Component implements OnInit {
     } else {
       this.getCRPayment1(this.dealerCorporateId);
     }
-    if(element.accessGroupId == '14'){
+    if (element.accessGroupId == '14') {
       var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
       this.customerId = managerData.customerId;
       this.searchDealerBycustomerId(this.customerId)
@@ -236,8 +236,32 @@ export class BaseTablesWidget2Component implements OnInit {
             .subscribe(res => {
               if (res.status == "OK") {
                 if (res.data.length) {
-                  this.crPaymentDetails = res.data;
-                  this.crPaymentDetailsData = res.data;
+                  // this.crPaymentDetails = res.data;
+                  // this.crPaymentDetailsData = res.data;
+                  this.crPaymentDetails = res.data.map((dataJSON: any) => {
+
+                    if (dataJSON.lastCRDate) {
+
+                      const g1 = new Date(moment(new Date()).format('YYYY-MM-DD'));
+                      const g2 = new Date(dataJSON.lastCRDate);
+
+                      const oneDay = 24 * 60 * 60 * 1000;
+
+                      const diffDays = Math.round(
+                        Math.abs((g1.getTime() - g2.getTime()) / oneDay)
+                      );
+
+                      dataJSON.pendingDays = diffDays;
+
+                    } else {
+
+                      dataJSON.pendingDays = 0;
+
+                    }
+
+                    return dataJSON;
+                  });
+                  this.crPaymentDetailsData = this.crPaymentDetails;
                   this.showHeading = true;
                   this.spinner.hide()
                   this.cd.detectChanges();
@@ -266,8 +290,32 @@ export class BaseTablesWidget2Component implements OnInit {
             .subscribe(res => {
               if (res.status == "OK") {
                 if (res.data.length) {
-                  this.crPaymentDetails = res.data;
-                  this.crPaymentDetailsData = res.data;
+                  // this.crPaymentDetails = res.data;
+                  // this.crPaymentDetailsData = res.data;
+                  this.crPaymentDetails = res.data.map((dataJSON: any) => {
+
+                    if (dataJSON.lastCRDate) {
+
+                      const g1 = new Date(moment(new Date()).format('YYYY-MM-DD'));
+                      const g2 = new Date(dataJSON.lastCRDate);
+
+                      const oneDay = 24 * 60 * 60 * 1000;
+
+                      const diffDays = Math.round(
+                        Math.abs((g1.getTime() - g2.getTime()) / oneDay)
+                      );
+
+                      dataJSON.pendingDays = diffDays;
+
+                    } else {
+
+                      dataJSON.pendingDays = 0;
+
+                    }
+
+                    return dataJSON;
+                  });
+                  this.crPaymentDetailsData = this.crPaymentDetails;
                   this.showHeading = true;
                   this.spinner.hide()
                   this.cd.detectChanges();
@@ -300,8 +348,32 @@ export class BaseTablesWidget2Component implements OnInit {
             .subscribe(res => {
               if (res.status == "OK") {
                 if (res.data.length) {
-                  this.crPaymentDetails = res.data;
-                  this.crPaymentDetailsData = res.data;
+                  // this.crPaymentDetails = res.data;
+                  // this.crPaymentDetailsData = res.data;
+                  this.crPaymentDetails = res.data.map((dataJSON: any) => {
+
+                    if (dataJSON.lastCRDate) {
+
+                      const g1 = new Date(moment(new Date()).format('YYYY-MM-DD'));
+                      const g2 = new Date(dataJSON.lastCRDate);
+
+                      const oneDay = 24 * 60 * 60 * 1000;
+
+                      const diffDays = Math.round(
+                        Math.abs((g1.getTime() - g2.getTime()) / oneDay)
+                      );
+
+                      dataJSON.pendingDays = diffDays;
+
+                    } else {
+
+                      dataJSON.pendingDays = 0;
+
+                    }
+
+                    return dataJSON;
+                  });
+                  this.crPaymentDetailsData = this.crPaymentDetails;
                   this.showHeading = true;
                   this.spinner.hide()
                   this.cd.detectChanges();
@@ -340,8 +412,31 @@ export class BaseTablesWidget2Component implements OnInit {
             .subscribe(res => {
               if (res.status == "OK") {
                 if (res.data.length) {
-                  this.crPaymentDetails = res.data;
-                  this.crPaymentDetailsData = res.data;
+                  // this.crPaymentDetails = res.data;
+                  this.crPaymentDetails = res.data.map((dataJSON: any) => {
+
+                    if (dataJSON.lastCRDate) {
+
+                      const g1 = new Date(moment(new Date()).format('YYYY-MM-DD'));
+                      const g2 = new Date(dataJSON.lastCRDate);
+
+                      const oneDay = 24 * 60 * 60 * 1000;
+
+                      const diffDays = Math.round(
+                        Math.abs((g1.getTime() - g2.getTime()) / oneDay)
+                      );
+
+                      dataJSON.pendingDays = diffDays;
+
+                    } else {
+
+                      dataJSON.pendingDays = 0;
+
+                    }
+
+                    return dataJSON;
+                  });
+                  this.crPaymentDetailsData = this.crPaymentDetails;
                   this.showHeading = true;
                   this.spinner.hide()
                   this.cd.detectChanges();
@@ -370,8 +465,32 @@ export class BaseTablesWidget2Component implements OnInit {
             .subscribe(res => {
               if (res.status == "OK") {
                 if (res.data.length) {
-                  this.crPaymentDetails = res.data;
-                  this.crPaymentDetailsData = res.data;
+                  // this.crPaymentDetails = res.data;
+                  // this.crPaymentDetailsData = res.data;
+                  this.crPaymentDetails = res.data.map((dataJSON: any) => {
+
+                    if (dataJSON.lastCRDate) {
+
+                      const g1 = new Date(moment(new Date()).format('YYYY-MM-DD'));
+                      const g2 = new Date(dataJSON.lastCRDate);
+
+                      const oneDay = 24 * 60 * 60 * 1000;
+
+                      const diffDays = Math.round(
+                        Math.abs((g1.getTime() - g2.getTime()) / oneDay)
+                      );
+
+                      dataJSON.pendingDays = diffDays;
+
+                    } else {
+
+                      dataJSON.pendingDays = 0;
+
+                    }
+
+                    return dataJSON;
+                  });
+                  this.crPaymentDetailsData = this.crPaymentDetails;
                   this.showHeading = true;
                   this.cd.detectChanges();
                   this.spinner.hide()
@@ -401,9 +520,33 @@ export class BaseTablesWidget2Component implements OnInit {
           .subscribe(res => {
             if (res.status == "OK") {
               if (res.data.length) {
-                this.crPaymentDetails = res.data;
-                this.crPaymentDetailsData = res.data;
+                // this.crPaymentDetails = res.data;
+                // this.crPaymentDetailsData = res.data;
                 // this.crPaymentDetails1 = res.data1;
+                this.crPaymentDetails = res.data.map((dataJSON: any) => {
+
+                  if (dataJSON.lastCRDate) {
+
+                    const g1 = new Date(moment(new Date()).format('YYYY-MM-DD'));
+                    const g2 = new Date(dataJSON.lastCRDate);
+
+                    const oneDay = 24 * 60 * 60 * 1000;
+
+                    const diffDays = Math.round(
+                      Math.abs((g1.getTime() - g2.getTime()) / oneDay)
+                    );
+
+                    dataJSON.pendingDays = diffDays;
+
+                  } else {
+
+                    dataJSON.pendingDays = 0;
+
+                  }
+
+                  return dataJSON;
+                });
+                this.crPaymentDetailsData = this.crPaymentDetails;
                 this.showHeading = true;
                 localStorage.setItem('crPaymentDetails', JSON.stringify(this.crPaymentDetails));
                 this.cd.detectChanges();
@@ -426,9 +569,33 @@ export class BaseTablesWidget2Component implements OnInit {
           .subscribe(res => {
             if (res.status == "OK") {
               if (res.data.length) {
-                this.crPaymentDetails = res.data;
-                this.crPaymentDetailsData = res.data;
+                // this.crPaymentDetails = res.data;
+                // this.crPaymentDetailsData = res.data;
                 // this.crPaymentDetails1 = res.data1;
+                this.crPaymentDetails = res.data.map((dataJSON: any) => {
+
+                  if (dataJSON.lastCRDate) {
+
+                    const g1 = new Date(moment(new Date()).format('YYYY-MM-DD'));
+                    const g2 = new Date(dataJSON.lastCRDate);
+
+                    const oneDay = 24 * 60 * 60 * 1000;
+
+                    const diffDays = Math.round(
+                      Math.abs((g1.getTime() - g2.getTime()) / oneDay)
+                    );
+
+                    dataJSON.pendingDays = diffDays;
+
+                  } else {
+
+                    dataJSON.pendingDays = 0;
+
+                  }
+
+                  return dataJSON;
+                });
+                this.crPaymentDetailsData = this.crPaymentDetails;
                 localStorage.setItem('crPaymentDetails', JSON.stringify(this.crPaymentDetails));
                 this.showHeading = true;
                 this.cd.detectChanges();
@@ -464,8 +631,32 @@ export class BaseTablesWidget2Component implements OnInit {
             .subscribe(res => {
               if (res.status == "OK") {
                 if (res.data.length) {
-                  this.crPaymentDetails = res.data;
-                  this.crPaymentDetailsData = res.data;
+                  // this.crPaymentDetails = res.data;
+                  // this.crPaymentDetailsData = res.data;  
+                  this.crPaymentDetails = res.data.map((dataJSON: any) => {
+
+                    if (dataJSON.lastCRDate) {
+
+                      const g1 = new Date(moment(new Date()).format('YYYY-MM-DD'));
+                      const g2 = new Date(dataJSON.lastCRDate);
+
+                      const oneDay = 24 * 60 * 60 * 1000;
+
+                      const diffDays = Math.round(
+                        Math.abs((g1.getTime() - g2.getTime()) / oneDay)
+                      );
+
+                      dataJSON.pendingDays = diffDays;
+
+                    } else {
+
+                      dataJSON.pendingDays = 0;
+
+                    }
+
+                    return dataJSON;
+                  });
+                  this.crPaymentDetailsData = this.crPaymentDetails;
                   this.showHeading = true;
                   this.cd.detectChanges();
                   this.spinner.hide()
@@ -493,8 +684,32 @@ export class BaseTablesWidget2Component implements OnInit {
             .subscribe(res => {
               if (res.status == "OK") {
                 if (res.data.length) {
-                  this.crPaymentDetails = res.data;
-                  this.crPaymentDetailsData = res.data;
+                  // this.crPaymentDetails = res.data;
+                  // this.crPaymentDetailsData = res.data;
+                  this.crPaymentDetails = res.data.map((dataJSON: any) => {
+
+                    if (dataJSON.lastCRDate) {
+
+                      const g1 = new Date(moment(new Date()).format('YYYY-MM-DD'));
+                      const g2 = new Date(dataJSON.lastCRDate);
+
+                      const oneDay = 24 * 60 * 60 * 1000;
+
+                      const diffDays = Math.round(
+                        Math.abs((g1.getTime() - g2.getTime()) / oneDay)
+                      );
+
+                      dataJSON.pendingDays = diffDays;
+
+                    } else {
+
+                      dataJSON.pendingDays = 0;
+
+                    }
+
+                    return dataJSON;
+                  });
+                  this.crPaymentDetailsData = this.crPaymentDetails;
                   this.showHeading = true;
                   this.cd.detectChanges();
                   this.spinner.hide()
@@ -523,9 +738,33 @@ export class BaseTablesWidget2Component implements OnInit {
           .subscribe(res => {
             if (res.status == "OK") {
               if (res.data.length) {
-                this.crPaymentDetails = res.data;
-                this.crPaymentDetailsData = res.data;
+                // this.crPaymentDetails = res.data;
+                // this.crPaymentDetailsData = res.data;
                 // this.crPaymentDetails1 = res.data1;
+                this.crPaymentDetails = res.data.map((dataJSON: any) => {
+
+                  if (dataJSON.lastCRDate) {
+
+                    const g1 = new Date(moment(new Date()).format('YYYY-MM-DD'));
+                    const g2 = new Date(dataJSON.lastCRDate);
+
+                    const oneDay = 24 * 60 * 60 * 1000;
+
+                    const diffDays = Math.round(
+                      Math.abs((g1.getTime() - g2.getTime()) / oneDay)
+                    );
+
+                    dataJSON.pendingDays = diffDays;
+
+                  } else {
+
+                    dataJSON.pendingDays = 0;
+
+                  }
+
+                  return dataJSON;
+                });
+                this.crPaymentDetailsData = this.crPaymentDetails;
                 this.showHeading = true;
                 localStorage.setItem('crPaymentDetails', JSON.stringify(this.crPaymentDetails));
                 this.cd.detectChanges();
@@ -547,9 +786,33 @@ export class BaseTablesWidget2Component implements OnInit {
           .subscribe(res => {
             if (res.status == "OK") {
               if (res.data.length) {
-                this.crPaymentDetails = res.data;
-                this.crPaymentDetailsData = res.data;
+                // this.crPaymentDetails = res.data;
+                // this.crPaymentDetailsData = res.data;
                 // this.crPaymentDetails1 = res.data1;
+                this.crPaymentDetails = res.data.map((dataJSON: any) => {
+
+                  if (dataJSON.lastCRDate) {
+
+                    const g1 = new Date(moment(new Date()).format('YYYY-MM-DD'));
+                    const g2 = new Date(dataJSON.lastCRDate);
+
+                    const oneDay = 24 * 60 * 60 * 1000;
+
+                    const diffDays = Math.round(
+                      Math.abs((g1.getTime() - g2.getTime()) / oneDay)
+                    );
+
+                    dataJSON.pendingDays = diffDays;
+
+                  } else {
+
+                    dataJSON.pendingDays = 0;
+
+                  }
+
+                  return dataJSON;
+                });
+                this.crPaymentDetailsData = this.crPaymentDetails;
                 this.showHeading = true;
                 this.cd.detectChanges();
                 this.spinner.hide()
@@ -865,26 +1128,26 @@ export class BaseTablesWidget2Component implements OnInit {
     this.post.updateAmountStatusByTranslogIdPOST(data)
       .subscribe(res => { })
   }
-  
-  searchDealerBycustomerId(customerId: any) {    
+
+  searchDealerBycustomerId(customerId: any) {
     this.spinner.show()
     let data = {
       customerId: customerId,
     };
     this.post1.getCustomerByCustomerIdPOST(data)
       .subscribe(res => {
-        if (res.data.length) {         
+        if (res.data.length) {
           this.headerName1 = res.data[0].companyName;
           this.headerName2 = res.data[0].address1 + ', ' + res.data[0].address2 + ', ' + res.data[0].city;
-          this.headerName3 = res.data[0].state + '-' + res.data[0].pin + '  ' + "GST: " + res.data[0].GSTNumber;   
+          this.headerName3 = res.data[0].state + '-' + res.data[0].pin + '  ' + "GST: " + res.data[0].GSTNumber;
           this.spinner.hide();
-          this.cd.detectChanges()      
-          
+          this.cd.detectChanges()
+
         } else {
           this.spinner.hide();
           this.cd.detectChanges();
         }
       });
-}
+  }
 
 }

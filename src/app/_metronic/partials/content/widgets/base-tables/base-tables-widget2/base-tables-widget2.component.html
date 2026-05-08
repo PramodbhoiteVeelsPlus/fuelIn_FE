@@ -136,7 +136,7 @@
             <span *ngIf="data.pendingDays != 'undefined'">
               {{data.pendingDays}}
             </span>
-            <span *ngIf="data.pendingDays == 'undefined'">
+            <span *ngIf="data.pendingDays == 'undefined' || data.pendingDays == 'null'">
               -
             </span>
           </td>
