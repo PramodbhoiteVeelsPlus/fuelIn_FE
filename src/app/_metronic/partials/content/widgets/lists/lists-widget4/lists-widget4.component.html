@@ -315,7 +315,10 @@
                   </div>
 
                   <div class="row" style="font-size: 12px;">
-                    <div class="col-md-9" style="text-align: left;">
+                    <div *ngIf="fuelDealerId == '356'" class="col-md-9" style="text-align: left;">
+                      Bill No :- {{FuelVeelsId}}/{{getFinancialYear(cashBillDate)}}/{{cashBillSystemNumber}} <span *ngIf="cashBillNumber"> / {{cashBillNumber}}</span>
+                    </div>
+                    <div *ngIf="fuelDealerId != '356'" class="col-md-9" style="text-align: left;">
                       Bill No :- VEELS{{cashBillSystemNumber}} <span *ngIf="cashBillNumber"> / {{cashBillNumber}}</span>
                     </div>
                     <div class="col-md-3" style="text-align: right;">

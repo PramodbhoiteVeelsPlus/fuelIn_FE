@@ -128,6 +128,8 @@ export class ChartsWidget14Component implements OnInit {
   rowNumber: any;
   show: boolean = false;
   headerName2: any
+  FuelVeelsId: any;
+  billNumber: string;
 
   constructor(
     private post: ChartsService,
@@ -151,6 +153,7 @@ export class ChartsWidget14Component implements OnInit {
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.accessGroup = element.accessGroupId;
+    this.FuelVeelsId = dealerData.FuelVeelsId;
     // this.managerVPPersonId = element.veelsPlusId
     // this.managerPersonId = element.personId
     this.managerName = element.firstName + ' ' + element.lastName
@@ -311,9 +314,16 @@ export class ChartsWidget14Component implements OnInit {
           }else{
             this.status = 'ISSUED'
           }
+
+          if(this.fuelDealerId == '356'){
+            this.billNumber = this.FuelVeelsId + '/' + this.getFinancialYear(this.lubeCashBillList[key].cashBillDate) + '/' + this.lubeCashBillList[key].cashBillSystemNumber+ '  ' +this.lubeCashBillList[key].cashBillNumber
+          } else {
+            this.billNumber = 'VEELS'+this.lubeCashBillList[key].cashBillSystemNumber+ '  ' +this.lubeCashBillList[key].cashBillNumber
+          }
+
           var temp = [
             moment(this.lubeCashBillList[key].cashBillDate).format("DD-MM-YYYY"),
-            'VEELS'+this.lubeCashBillList[key].cashBillSystemNumber+' '+this.lubeCashBillList[key].cashBillNumber,
+            this.billNumber,
             this.lubeCashBillList[key].cashBillCustName,
             this.lubeCashBillList[key].cashBillCustMobile,
             this.lubeCashBillList[key].cashBillVehicleNumber,
@@ -389,9 +399,14 @@ export class ChartsWidget14Component implements OnInit {
             this.taxAmount = Number(res.cashBillGSTAmt) 
           }
     
+          if(this.fuelDealerId == '356'){
+            this.billNumber = this.FuelVeelsId+ '/'  + this.getFinancialYear(res.cashBillDate) + '/' + res.cashBillSystemNumber+ '  ' +res.cashBillNumber
+          } else {
+            this.billNumber = 'VEELS'+res.cashBillSystemNumber+ '  ' +res.cashBillNumber
+          }
           let json = {
             Date: moment(res.cashBillDate).format("DD-MM-YYYY"),
-            BillNumber: 'VEELS'+res.cashBillSystemNumber+ '  ' +res.cashBillNumber,
+            BillNumber: this.billNumber,
             CustomerName: res.cashBillCustName, 
             CustomerMobile: res.cashBillCustMobile,
             Vehicle: res.cashBillVehicleNumber,  
@@ -537,4 +552,23 @@ goToLubeBillStatement(cashBillId: any){
   this.post1.setRoutingWithType1("lubeBill",cashBillId)
   this.router.navigate(['/credit/cashBillInvoice']);
   }
+
+  getFinancialYear(date: any): string {
+
+  const billDate = new Date(date);
+
+  let startYear;
+  let endYear;
+
+  // April = financial year start
+  if (billDate.getMonth() >= 3) {
+    startYear = billDate.getFullYear() % 100;
+    endYear = (billDate.getFullYear() + 1) % 100;
+  } else {
+    startYear = (billDate.getFullYear() - 1) % 100;
+    endYear = billDate.getFullYear() % 100;
+  }
+
+  return `${startYear}-${endYear}`;
+}
 }

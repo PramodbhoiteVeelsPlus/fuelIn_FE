@@ -132,6 +132,7 @@ export class ListsWidget4Component {
   fuelcreditTaxDetailsAdd: any;
   totalAmountExclude: number;
   bankAccList: any = [];
+  FuelVeelsId: any;
 
   constructor(
     private post: ListWidgetService,
@@ -157,6 +158,7 @@ export class ListsWidget4Component {
     var managerData = JSON.parse(localStorage.getItem('managerData') || '{}');
     this.accessGroup = element.accessGroupId;
     this.brandName = dealerData.brandName;
+    this.FuelVeelsId = dealerData.FuelVeelsId
     // this.getLubeTaxDetailsByDealerIdPost()
     this.routeView = this.post.type1;
     this.cashBillId = this.post.cashBillId;
@@ -291,4 +293,24 @@ export class ListsWidget4Component {
             }
           }) 
       }
+
+      
+  getFinancialYear(date: any): string {
+
+  const billDate = new Date(date);
+
+  let startYear;
+  let endYear;
+
+  // April = financial year start
+  if (billDate.getMonth() >= 3) {
+    startYear = billDate.getFullYear() % 100;
+    endYear = (billDate.getFullYear() + 1) % 100;
+  } else {
+    startYear = (billDate.getFullYear() - 1) % 100;
+    endYear = billDate.getFullYear() % 100;
+  }
+
+  return `${startYear}-${endYear}`;
+}
 }

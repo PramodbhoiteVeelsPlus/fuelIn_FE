@@ -107,6 +107,7 @@ export class ChartsWidget13Component implements OnInit {
   GSTNumber: string;
   fuelCashBillDetails: any = [];
   headerName2: any
+  FuelVeelsId: any;
 
   constructor(
     private post: ChartsService,
@@ -130,6 +131,7 @@ export class ChartsWidget13Component implements OnInit {
     this.dealerCorporateId = JSON.parse(localStorage.getItem('dealerCorporateId') || '{}');
     var dealerData = JSON.parse(localStorage.getItem('dealerData') || '{}');
     this.accessGroup = element.accessGroupId;
+    this.FuelVeelsId = dealerData.FuelVeelsId
     // this.managerVPPersonId = element.veelsPlusId
     // this.managerPersonId = element.personId
     this.managerName = element.firstName + ' ' + element.lastName

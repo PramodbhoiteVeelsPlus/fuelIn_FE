@@ -70,7 +70,16 @@
 
       <tr>
         <td style="text-align: left;"> {{data.cashBillDate | date:"d MMM, yyyy"}} </td>
-        <td style="text-align: left;">
+        <!-- <td style="text-align: left;">
+          <span *ngIf="data.cashBillNumber">
+            VEELS{{data.cashBillSystemNumber}} / {{data.cashBillNumber}}
+          </span>
+          <span *ngIf="!data.cashBillNumber">
+            VEELS{{data.cashBillSystemNumber}}
+          </span>
+
+        </td> -->
+        <td *ngIf="this.fuelDealerId != '356'" style="text-align: center;">
           <span *ngIf="data.cashBillNumber">
             VEELS{{data.cashBillSystemNumber}} / {{data.cashBillNumber}}
           </span>
@@ -79,6 +88,16 @@
           </span>
 
         </td>
+        <td *ngIf="this.fuelDealerId == '356'" style="text-align: center;">
+          <span *ngIf="data.cashBillNumber">
+            {{FuelVeelsId}}/26-27/{{data.cashBillSystemNumber}} / {{data.cashBillNumber}}
+          </span>
+          <span *ngIf="!data.cashBillNumber">
+            {{FuelVeelsId}}/26-27/{{data.cashBillSystemNumber}}
+          </span>
+
+        </td>
+        
         <td style="text-align: left;"> {{data.cashBillCustName}} <br>
           {{data.cashBillCustMobile}} </td>
         <td style="text-align: left;"> {{data.cashBillVehicleNumber}} </td>
