@@ -10,6 +10,7 @@ import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable'
 import { PumpTablesService } from '../pump-tables.services';
 import { Adv_TablesService } from '../../advance-tables/adv_tables.services';
+import * as XLSX from 'xlsx';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<any> {
@@ -99,6 +100,7 @@ export class PumpTablesWidget2Component implements OnInit {
   rowNumber: any;
   show: boolean = false;
   searchData: any;
+  stockPurchaseDetails: any = [];
 
   constructor(
     private modalService: NgbModal,
@@ -232,8 +234,13 @@ export class PumpTablesWidget2Component implements OnInit {
           if (res.status == "OK") {
             this.lubePurchaseDetails = res.data;
             this.lubePurchaseDetailsData = res.data;
+            this.getStockDetails()
+            this.cd.detectChanges()
             this.spinner.hide();
           } else {
+            this.lubePurchaseDetails = [];
+            this.lubePurchaseDetailsData = [];
+            this.cd.detectChanges()
             this.spinner.hide();
           }
         })
@@ -387,5 +394,66 @@ export class PumpTablesWidget2Component implements OnInit {
     }
   }
 
+  
+  getStockDetails() {
+    if (this.filterForm.value.startDate && this.filterForm.value.endDate) {
+      this.spinner.show();
+      let data = {
+        fuelDealerId: this.fuelDealerId,
+        startDate: moment(this.filterForm.value.startDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+        endDate: moment(this.filterForm.value.endDate, ["DD-MM-YYYY"]).format("YYYY-MM-DD"),
+      }
+      this.post.getLubricantStockPurchasePOST(data)
+        .subscribe(res => {
+          if (res.status == "OK") {
+            this.stockPurchaseDetails = res.data;
+            this.cd.detectChanges()
+            this.spinner.hide();
+          } else {
+            this.stockPurchaseDetails = [];
+            this.cd.detectChanges()
+            this.spinner.hide();
+          }
+        })
+    } else {
+      alert("Please Select Date..!")
+    }
+  }
+  
+  exportToPDFStock() {
+    
+    var doc = new jsPDF('l', 'pt');
+  
+    doc.setFontSize(20);  
+    doc.text("Stock Details ",350, 35 );  
+    doc.setFontSize(10);
+  
+     autoTable(doc, {
+      html: '#excel-table', 
+      startY: 70,  
+
+      theme: 'grid',
+      didDrawCell: (data) => { },
+  });
+    doc.save("StockDetails.pdf");
+  }
+
+  
+/*name of the excel-file which will be downloaded. */ 
+fileName = 'StockDetails.xlsx'; 
+
+  excelDownloadStock() : void 
+    {
+       /* table id is passed over here */   
+       let element = document.getElementById('excel-table'); 
+       const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+  
+       /* generate workbook and add the worksheet */
+       const wb: XLSX.WorkBook = XLSX.utils.book_new();
+       XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+  
+       /* save to file */
+       XLSX.writeFile(wb, this.fileName);
+  }
 }
 

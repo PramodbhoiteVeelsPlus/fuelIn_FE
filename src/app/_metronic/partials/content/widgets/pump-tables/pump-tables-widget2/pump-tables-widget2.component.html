@@ -41,6 +41,45 @@
             </div>
           </div>
           <br><br>
+          
+          <div *ngIf="stockPurchaseDetails.length" class="row">
+            <div class="col-md-3" style="text-align: right;"><b>Stock Details</b></div>
+            <div class="col-md-6">
+              <div class="table-responsive mb-0">
+                <table id= "excel-table" class="table table-centered table-nowrap">
+                  <thead class="table-light">
+                    <tr>
+                      <th style="text-align: left;"><b>Product</b></th>
+                      <th style="text-align: left;"><b>Stock(Quantity In Pieces)</b></th>
+                      <th style="text-align: left;"><b>Sales(Quantity In Pieces)</b></th>
+                      <th style="text-align: left;"><b>Available Stock(Quantity In Pieces)</b></th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let data of stockPurchaseDetails; let i = index">
+                    <tr>
+                      <td style="text-align: left;"> {{data.lubricantStockLubricantName}} </td>
+                      <td style="text-align: left;"> {{data.lubricantStockQuantityInPieces | number: '1.2-2'}} </td>
+                      <td style="text-align: left;"> {{data.quantityInPieces | number: '1.2-2'}} </td>
+                      <td style="text-align: left;"> {{data.availableQuantityInPieces | number: '1.2-2'}} </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+              <!-- <div class="col-md-2"></div> -->
+              <div class="col-md-1">
+                <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF" placement="bottom"
+                  (click)="exportToPDFStock()"><i class="fas fa-file-pdf" style="font-size: 30px;"></i></span> <br>
+              </div>
+              <div class="col-md-1">
+                <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download CSV" placement="bottom"
+                  (click)="excelDownloadStock()"><i class="fas fa-file-csv" style="font-size: 30px;"></i></span> <br>
+              </div>
+          </div>
+          <br><br>
+
           <form [formGroup]="filterForm">
             <div class="mb-3 row">
               <label for="example-text-input" class="col-auto col-form-label"><b>Date Range</b></label>
@@ -115,7 +154,14 @@
                   <td style="text-align: left;"> {{data.lubricantStockLubricantName}} </td>
                   <td style="text-align: left;"> {{data.lubricantStockQuantity}} </td>
                   <td style="text-align: left;"> {{data.lubricantStockQuantityInPieces}} </td>
-                  <td style="text-align: left;"> {{data.lubricantStockTaxableAmt | number:'1.2-2'}} </td>
+                  <td style="text-align: left;"> 
+                    <span *ngIf="data.lubricantStockTaxableAmt != 'undefined'">
+                    {{data.lubricantStockTaxableAmt | number:'1.2-2'}}
+                    </span> 
+                    <span *ngIf="data.lubricantStockTaxableAmt == 'undefined'">
+                    0
+                    </span> 
+                  </td>
                   <td style="text-align: left;"> {{data.lubricantStockTaxInPercentage | number:'1.2-2'}} </td>
                   <td style="text-align: left;"> {{data.lubricantStockTotalAmt | number:'1.2-2'}} </td>
                   <td style="text-align: left;cursor: pointer;">
