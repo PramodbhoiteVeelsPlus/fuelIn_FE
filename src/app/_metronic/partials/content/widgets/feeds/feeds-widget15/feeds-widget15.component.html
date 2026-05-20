@@ -1,0 +1,113 @@
+<br>
+<form [formGroup]="filterForm">
+  <div class="mb-3 row">
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="col-md-3">
+    <label for="example-text-input" class="col-auto col-form-label"><b>Khata</b></label>
+    </div>
+    
+    
+    <div class="col-md-3">
+    <label for="example-text-input" class="col-auto col-form-label"><b>Product</b></label>
+    </div>
+
+    
+    <div class="col-md-3">
+    <label for="example-text-input" class="col-auto col-form-label"><b>Date Range</b></label>
+    </div>
+</div>
+<div class="mb-3 row">
+  &nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="col-md-3">
+      <input class="form-control" type="text" list="allCorporateList" placeholder="All Khata"
+        formControlName="customerNameDAY" (change)="getDetailsByCustomerMapName($event)">
+      <datalist id="allCorporateList">
+        <option *ngFor="let data of allCorporateList" [value]="data.companyName">
+      </datalist>
+    </div>
+
+    <div class="col-md-2">
+      <select class="form-control" formControlName="productNameDAY" (change)="getPrice($event)" required>
+        <option value="">Select Product </option>
+        <option *ngFor="let data of productsData" [value]="data.fuelProductsId">
+          {{data.productName}}
+        <option *ngFor="let data of products" [value]="data.fuelProductsId">
+          {{data.productName}}
+        </option>
+      </select>
+    </div>
+
+    <div class="col-md-2">
+      <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;" name="startDate"
+        ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker #startDate="ngbDatepicker"
+        formControlName="startDate">
+    </div>
+    <div class="col-md-2">
+      <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;" name="endDate"
+        ngbTooltip="End Date" (click)="endDate.toggle()" ngbDatepicker #endDate="ngbDatepicker"
+        formControlName="endDate">
+    </div>
+
+    <div class="col-md-1">
+      <button type="button" class="btn btn-md btn-primary" (click)="getCustDayWiseQty()">
+        View
+      </button>
+    </div>
+    
+
+    <div class="col-md-1">
+      <button type="button" class="btn btn-md btn-secondary" (click)="clear()">
+        Cancel
+      </button>
+    </div>
+    </div>
+
+
+    <div class="md-3 row">
+    <div class="col-md-9"></div>
+    <div class="col-md-1">
+      <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF" placement="bottom"
+        (click)="exportToPDF()"><i class="fas fa-file-pdf" style="font-size: 30px;"></i></span>
+    </div>
+
+    <div class="col-md-1">
+            <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download Excel" placement="bottom" 
+            (click)="exportexcel()"><i class="fas fa-file-csv" style="font-size: 30px;"></i></span>
+        </div> 
+  </div>
+
+</form>
+
+<div class="card-body table-responsive">
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <table id="excel-table" class="table table-hover b">
+        <thead class="table-light">
+          <tr>
+            <th><b> Khata Name </b></th>
+            <th><b> Product </b></th>
+            <th><b> Quantity </b></th>
+            <th><b> Sales Amount </b></th>
+          </tr>
+        </thead>
+        <tbody
+          *ngFor="let data of dayWiseQtyData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+          <tr>
+            <td> {{ data.companyName}} </td>
+            <td> {{ data.productName}} </td>
+            <td> {{ data.totalQuantity | number:'1.2-2'}} </td>
+            <td> {{ data.totalPurchase | number:'1.2-2'}} </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <!-- begin::Pagination -->
+    <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+      style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+    </pagination-controls>
+    <!-- end::Pagination -->
+  </div>
+</div>
