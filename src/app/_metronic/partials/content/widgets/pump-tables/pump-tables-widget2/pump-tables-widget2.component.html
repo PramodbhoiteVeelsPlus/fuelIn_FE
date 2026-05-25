@@ -43,14 +43,16 @@
           <br><br>
           
           <div *ngIf="stockPurchaseDetails.length" class="row">
-            <div class="col-md-3" style="text-align: right;"><b>Stock Details</b></div>
+            <div class="col-md-1" style="text-align: right;"><b>Stock Details</b></div>
             <div class="col-md-6">
-              <div class="table-responsive mb-0">
+              <div class="mb-0">
                 <table id= "excel-table" class="table table-centered table-nowrap">
                   <thead class="table-light">
                     <tr>
                       <th style="text-align: left;"><b>Product</b></th>
-                      <th style="text-align: left;"><b>Stock(Quantity In Pieces)</b></th>
+                      <th style="text-align: left;"><b>Prev Stock(Quantity In Pieces)</b></th>
+                      <th style="text-align: left;"><b>Stock in Date Range(Quantity In Pieces)</b></th>
+                      <th style="text-align: left;"><b>Total Stock(Quantity In Pieces)</b></th>
                       <th style="text-align: left;"><b>Sales(Quantity In Pieces)</b></th>
                       <th style="text-align: left;"><b>Available Stock(Quantity In Pieces)</b></th>
                     </tr>
@@ -58,9 +60,11 @@
                   <tbody *ngFor="let data of stockPurchaseDetails; let i = index">
                     <tr>
                       <td style="text-align: left;"> {{data.lubricantStockLubricantName}} </td>
-                      <td style="text-align: left;"> {{data.lubricantStockQuantityInPieces | number: '1.2-2'}} </td>
-                      <td style="text-align: left;"> {{data.quantityInPieces | number: '1.2-2'}} </td>
-                      <td style="text-align: left;"> {{data.availableQuantityInPieces | number: '1.2-2'}} </td>
+                      <td style="text-align: left;"> {{data.openingStockPieces | number: '1.2-2'}} </td>
+                      <td style="text-align: left;"> {{data.stockQtyPieces | number: '1.2-2'}} </td>
+                      <td style="text-align: left;"> {{ data.openingStockPieces + data.stockQtyPieces | number: '1.2-2'}} </td>
+                      <td style="text-align: left;"> {{data.totalSalesPieces | number: '1.2-2'}} </td>
+                      <td style="text-align: left;"> {{data.availableStockPieces | number: '1.2-2'}} </td>
                     </tr>
 
                   </tbody>
@@ -68,7 +72,8 @@
               </div>
             </div>
             
-              <!-- <div class="col-md-2"></div> -->
+              <div class="col-md-2"></div>
+              &nbsp;
               <div class="col-md-1">
                 <span style="font-size: 35px;cursor: pointer;" ngbTooltip="Download PDF" placement="bottom"
                   (click)="exportToPDFStock()"><i class="fas fa-file-pdf" style="font-size: 30px;"></i></span> <br>
