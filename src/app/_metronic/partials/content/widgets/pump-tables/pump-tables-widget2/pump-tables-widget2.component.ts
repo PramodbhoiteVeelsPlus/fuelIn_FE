@@ -213,7 +213,7 @@ export class PumpTablesWidget2Component implements OnInit {
           dataJson.lubricantStockQuantityInPieces = 0;
           dataJson.lubricantStockQuantity = Number(res1.lubricantStockQuantity) - Number(res2.cashBillQuantity);
           dataJson.lubricantStockQuantityInPieces = (Number(res1.lubricantStockQuantity) - Number(res2.cashBillQuantity)) / (Number(res1.lubricantStockQuantity) / Number(res1.lubricantStockQuantityInPieces));
-          console.log("412", dataJson.lubricantStockQuantityInPieces, res1.lubricantStockQuantity, res2.cashBillQuantity, res1.lubricantStockQuantity,res1.lubricantStockQuantityInPieces)
+         
         }
       })
       this.lubeStockDetails.push(dataJson);
