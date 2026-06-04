@@ -207,6 +207,8 @@ import { TransTablesWidget11Component } from './trans-tables/trans-tables-widget
 import { TransTablesWidget12Component } from './trans-tables/trans-tables-widget12/trans-tables-widget12.component';
 import { TilesWidget15Component } from './tiles/tiles-widget15/tiles-widget15.component';
 import { FeedsWidget15Component } from './feeds/feeds-widget15/feeds-widget15.component';
+import { MixedWidget16Component } from './mixed/mixed-widget16/mixed-widget16.component';
+import { MixedWidget17Component } from './mixed/mixed-widget17/mixed-widget17.component';
 
 // import { routes } from 'src/app/app-routing.module';
 @NgModule({
@@ -406,7 +408,9 @@ import { FeedsWidget15Component } from './feeds/feeds-widget15/feeds-widget15.co
     TransTablesWidget11Component,
     TransTablesWidget12Component,
     TilesWidget15Component,
-    FeedsWidget15Component
+    FeedsWidget15Component,
+    MixedWidget16Component,
+    MixedWidget17Component
   ],
   imports: [
     ReactiveFormsModule,
@@ -623,7 +627,9 @@ import { FeedsWidget15Component } from './feeds/feeds-widget15/feeds-widget15.co
     TransTablesWidget11Component,
     TransTablesWidget12Component,
     TilesWidget15Component,
-    FeedsWidget15Component
+    FeedsWidget15Component,
+    MixedWidget16Component,
+    MixedWidget17Component
   ],
   providers: [NgbActiveModal, ExcelService],
 })

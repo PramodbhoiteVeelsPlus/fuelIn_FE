@@ -1,0 +1,276 @@
+<style>
+  .switch {
+    display: inline-block;
+    height: 34px;
+    position: relative;
+    width: 60px;
+  }
+
+  .switch input {
+    display: none;
+  }
+
+  .slider {
+    background-color: #ccc;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+  }
+
+  .slider:before {
+    background-color: #fff;
+    bottom: 4px;
+    content: "";
+    height: 26px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 26px;
+  }
+
+  input:checked+.slider {
+    background-color: #66bb6a;
+  }
+
+  input:checked+.slider:before {
+    transform: translateX(26px);
+  }
+
+  .slider.round {
+    border-radius: 34px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  .btn-outline-success {
+    border: 1px solid #28a745 !important;
+    color: #28a745 !important;
+    background-color: transparent !important;
+  }
+</style>
+
+
+<div class="card-body d-flex flex-column pb-10 pb-lg-15">
+  <div class="flex-grow-1">
+    <form [formGroup]="searchDiscountForm">
+
+      <div class="row">
+        <div class="col-md-3">
+          <label for="example-text-input" class="col-auto col-form-label"><b>Customer Select </b></label>
+        </div>
+        <div class="col-md-3">
+          <label for="example-text-input" class="col-auto col-form-label"><b>Date Range </b></label>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-3">
+          <label for="example-text-input" class="col-auto col-form-label"><b>Year </b></label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-3">
+          <input class="form-control" type="text" list="allCorporateList" placeholder="Select Customer"
+            formControlName="customerName" (change)="getDetailsByCustomerName($event)">
+          <datalist id="allCorporateList">
+            <option *ngFor="let data of allCorporateList" [value]="data.companyName">
+          </datalist>
+        </div>
+
+        <!-- <label for="example-text-input" class="col-auto col-form-label">Date Range </label> -->
+        <div class="col-md-2">
+          <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+            name="startDate" ngbTooltip="Start Date" (click)="startDate.toggle()" ngbDatepicker
+            #startDate="ngbDatepicker" formControlName="startDate">
+        </div>
+        <div class="col-md-2">
+          <input class="form-control" placeholder="DD-MM-YYYY" readonly style="background-color: #ffffff;"
+            name="endDate" ngbTooltip="End Date" (click)="endDate.toggle()" ngbDatepicker #endDate="ngbDatepicker"
+            formControlName="endDate">
+        </div>
+
+        <div class="col-md-2">
+          <select class="form-control" formControlName="year" required placeholder="Select Year">
+            <option *ngFor="let fy of financialYears" [value]="fy.value">
+              {{ fy.label }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-lg-1">
+          <button type="button" class="btn btn-primary w-md ms-1" name="button" (click)="getCrStatement()">
+            Submit
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <br>
+  <div *ngIf="statementData.length" class="table-responsive mb-0">
+    <table class="table table-centered table-nowrap table-bordered" style="border: 1px solid black;">
+      <thead class="">
+        <tr>
+          <th style="text-align: left;"><b>Opening Outstanding</b></th>
+          <th style="text-align: left;"><b>Total Purchase</b></th>
+          <th style="text-align: left;"><b>Total Payment</b></th>
+          <th style="text-align: left;"><b>Net Outstanding</b></th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let data of statementData">
+        <tr>
+          <td style="text-align: left;">
+            <span *ngIf="data.openningOS < 0">
+              <b>
+                <li class="fas fa-rupee-sign"></li> {{data.openningOS * (-1) | number:'1.2-2'}} /- CR
+              </b>
+            </span>
+            <span *ngIf="data.openningOS >= 0">
+              <b>
+                <li class="fas fa-rupee-sign"></li> {{data.openningOS | number:'1.2-2'}}
+                /-
+              </b>
+            </span>
+          </td>
+
+          <td style="text-align: left;"><b>
+              <li class="fas fa-rupee-sign"></li> {{data.totalPurchaseAmt | number:'1.2-2'}}
+            </b> </td>
+
+          <td style="text-align: left;"> <b>
+              <li class="fas fa-rupee-sign"></li> {{data.totalPaymentAmt| number:'1.2-2' }}
+            </b></td>
+
+          <td style="text-align: left;">
+            <span *ngIf="data.netOS < 0">
+              <b>
+                <li class="fas fa-rupee-sign"></li> {{data.netOS *(-1) |
+                number:'1.2-2'}}
+                /- CR
+              </b>
+            </span>
+            <span *ngIf="data.netOS >= 0">
+              <b>
+                <li class="fas fa-rupee-sign"></li> {{data.netOS | number:'1.2-2'}}
+                /-
+              </b>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <br>
+  <form [formGroup]="addForm">
+    <div class="row">
+      <div class="col-md-3">
+        <label><b>Add Manual Statement Number</b></label>
+        <input type="text" class="form-control" [(ngModel)]="manualSno" [ngModelOptions]="{standalone: true}"
+          placeholder="Enter Manual Statement Number" />
+      </div>
+      <div class="col-md-3">
+        <label><b>Add HSN Code</b></label>
+        <input type="text" class="form-control" [(ngModel)]="hsnCode" [ngModelOptions]="{standalone: true}"
+          placeholder="Enter HSN Code" />
+      </div>
+      <div class="col-md-3">
+        <label><b>Add Due Date</b></label>
+        <input class="form-control" placeholder="DD-MM-YYYY" style="background-color: #ffffff;" name="dueDate"
+          ngbTooltip="Due Date" (click)="dueDate.toggle()" ngbDatepicker #dueDate="ngbDatepicker"
+          formControlName="dueDate">
+      </div>
+    </div>
+  </form>
+  <br>
+
+  <div class="row">
+    <div class="col-md-5">
+      <button class="btn btn-outline-success my-2 my-sm-0 btn-sm" (click)="statementCreate1()">
+        Create Statement
+      </button>
+    </div>
+  </div><br>
+
+  <div class="table-responsive mb-0" *ngIf="isTable">
+    <table class="table table-centered table-nowrap">
+      <thead class="table-light">
+        <tr>
+          <th style="text-align: left;"><b>Sr.No</b>
+          <th style="text-align: left;"><b>Date</b>
+          <th style="text-align: left;"><b>Bill / ref number</b>
+          <th style="text-align: left;"><b>Vehicle no / other details</b></th>
+          <th style="text-align: left;"><b>Credit Amount</b>
+        </tr>
+      </thead>
+      <tbody
+        *ngFor="let data of statementPurData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let i = index">
+        <tr>
+          <td style="text-align: left;"> {{i+1}} </td>
+          <td style="text-align: left;">
+            <span *ngIf="data.estimatedRefuelDate == '2022-01-01' ">
+              1 Jan, 2022
+            </span>
+            <span *ngIf="data.estimatedRefuelDate != '2022-01-01' ">
+              {{data.estimatedRefuelDate | date:"d MMM, yyyy"}}
+            </span>
+          </td>
+          <td>
+            {{data.manualCrNumber}}
+          </td>
+          <td style="text-align: left;">
+            <!-- <span *ngIf="data.purpose == 'CREDIT'">
+              <span *ngIf="data.vehicleNumber == 'undefined'">
+              </span>
+              <span *ngIf="data.vehicleNumber != 'undefined'">
+                {{data.vehicleNumber}}
+              </span>
+            </span>
+            <span *ngIf="data.purpose == 'LUBE'">
+              <span *ngIf="data.vehicleNumber == 'undefined'">
+                {{data.lubeName}}
+              </span>
+              <span *ngIf="data.vehicleNumber != 'undefined'">
+                {{data.vehicleNumber}} {{data.lubeName}}
+              </span>
+            </span>
+            <span *ngIf="data.purpose == 'AdvAmt'">
+              {{data.advName}} {{data.advMobile}}
+            </span> -->
+
+
+            <div [ngSwitch]="data.purpose">
+              <div *ngSwitchCase="'CREDIT'">
+                <div [ngSwitch]="data.vehicleNumber">
+                  <div *ngSwitchCase="'undefined'"></div>
+                  <div *ngSwitchDefault>{{ data.vehicleNumber }}</div>
+                </div>
+              </div>
+              <div *ngSwitchCase="'LUBE'">
+                <div [ngSwitch]="data.vehicleNumber">
+                  <div *ngSwitchCase="'undefined'"> {{data.lubeName}}</div>
+                  <div *ngSwitchDefault>{{ data.vehicleNumber }} {{data.lubeName}}</div>
+                </div>
+              </div>
+              <div *ngSwitchCase="'AdvAmt'">
+                {{data.advName}} {{data.advMobile}}
+              </div>
+            </div>
+
+          </td>
+          <td style="text-align: left;"> {{data.creditAmount | number:'1.2-2'}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- begin::Pagination -->
+    <pagination-controls (pageChange)="pageChangeEvent($event)" previousLabel="" nextLabel=""
+      style="text-align: end; font-size: x-large; font-family: 'Font Awesome 6 Free'; font-style: oblique;">
+    </pagination-controls>
+    <!-- end::Pagination -->
+
+  </div>
+
+</div>

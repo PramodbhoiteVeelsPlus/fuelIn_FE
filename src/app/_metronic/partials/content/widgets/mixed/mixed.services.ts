@@ -22,6 +22,7 @@ export class MixedService {
     array2: any = [];
     lubeTax1: any;
     oldInvoice5: any;
+    year: any;
 
     constructor(private http: HttpClient,
         private router: Router
@@ -73,7 +74,8 @@ export class MixedService {
     private addManagerMobileToDOCURL = this.baseURL + 'fuelCreditInvoice/addManagerMobileToDOC';
     private updateCustManualNumberStatusURL = this.baseURL + 'fuelDealerCustMap/updateCustManualNumberStatus';
     private updateAutoManualNumberStatusURL = this.baseURL + 'fuelDealerCustMap/updateAutoManualNumberStatus';
-  private calOutstandingAmountforAllURL = this.baseURL + 'fuelCreditInvoice/calOutstandingAmountforAll';
+    private calOutstandingAmountforAllURL = this.baseURL + 'fuelCreditInvoice/calOutstandingAmountforAll';
+    private getCrStatementYearWiseURL = this.baseURL + 'crCustomers/getCrStatementYearwise';
 
 
     setHeader() {
@@ -232,6 +234,17 @@ export class MixedService {
         })
     }
 
+
+    // getCrStatementYearWiseURL
+    getCrStatementYearWisePOST(body: Object): Observable<any> {
+        this.setHeader();
+        let headers = new HttpHeaders();
+        headers = headers.set('authenticationToken', this.token);
+        return this.http.post(this.getCrStatementYearWiseURL, body, {
+            headers: headers
+        })
+    }
+
     // getCorporateInfoByfuelDealerCustomerMapIdURL
     getCorporateInfoByfuelDealerCustomerMapIdPOST(body: Object): Observable<any> {
         this.setHeader();
@@ -379,6 +392,14 @@ export class MixedService {
 
     lrOldInvoice3(oldInvoice3: any) {
         this.oldInvoice3 = oldInvoice3
+    }
+
+    lrForInvoiceYear(customerMapID: any, startDate: any, endDate: any, routeVar: any, year: any) {
+        this.routerVar = routeVar
+        this.custMappingID = customerMapID;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.year = year;
     }
 
     lrForVehicleInvoice(array: any, array1: any, array2: any, vehicleNumber: any, startDate: string, endDate: string, selectCorporateMapIdVehicle: any) {

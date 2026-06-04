@@ -26,6 +26,8 @@ import { FuelCreditInvoiceManualComponent } from './fuel-credit-invoice-manual/f
 import { AddLubeTaxGstSaleComponent } from './add-lube-tax-gst-sale/add-lube-tax-gst-sale.component';
 import { CashBillInvoiceComponent } from './cash-bill-invoice/cash-bill-invoice.component';
 import { ListBankComponent } from './list-bank/list-bank.component';
+import { FuelCreditInvoiceDocYearComponent } from './fuel-credit-invoice-doc-year/fuel-credit-invoice-doc-year.component';
+
 
 @NgModule({
   declarations: [
@@ -48,7 +50,8 @@ import { ListBankComponent } from './list-bank/list-bank.component';
     FuelCreditInvoiceManualComponent,
     AddLubeTaxGstSaleComponent,
     CashBillInvoiceComponent,
-    ListBankComponent
+    ListBankComponent,
+    FuelCreditInvoiceDocYearComponent
   ],
   imports: [
     CommonModule,
@@ -136,6 +139,10 @@ import { ListBankComponent } from './list-bank/list-bank.component';
       {
         path: 'listBank/:id',
         component: ListBankComponent,
+      },
+      {
+        path: 'FuelCreditInvoiceDocYear/:id',
+        component: FuelCreditInvoiceDocYearComponent,
       },
     ]),
     WidgetsModule,

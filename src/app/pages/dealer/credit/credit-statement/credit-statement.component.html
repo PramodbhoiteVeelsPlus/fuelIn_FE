@@ -38,6 +38,14 @@
           <app-mixed-widget13 class="card card-xxl-stretch mb-5 mb-xl-8"></app-mixed-widget13>
         </ng-template>
       </li>
+      <li [ngbNavItem]="5">
+        <a ngbNavLink>
+          <span class="d-none d-sm-block" style="font-size: 15px;">YEAR </span>
+        </a>
+        <ng-template ngbNavContent>
+          <app-mixed-widget16 class="card card-xxl-stretch mb-5 mb-xl-8"></app-mixed-widget16>
+        </ng-template>
+      </li>
     </ul>
     <div [ngbNavOutlet]="crStatement"></div>
   </div>
