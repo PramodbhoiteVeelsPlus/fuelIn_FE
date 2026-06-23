@@ -1,4 +1,4 @@
-import { Component, Injectable } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbDateAdapter, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../../services/auth.service';
@@ -55,8 +55,8 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent {
-
+export class HomeComponent implements OnInit {
+  email: any;
   sendMessageForm = new FormGroup({
     personName: new FormControl('', Validators.required),
     personEmail: new FormControl('', [Validators.email, Validators.required]),
@@ -73,6 +73,9 @@ export class HomeComponent {
     this.loadScript('../../assets/vendor/php-email-form/validate.js');
     this.loadScript('../../assets/vendor/swiper/swiper-bundle.min.js');
     this.loadScript('../../assets/js/main.js');
+  }
+  ngOnInit(): void {
+    this.email = "hello@veels.plus";
   }
 
   public loadScript(url: string) {
@@ -122,8 +125,8 @@ export class HomeComponent {
 
   }
 
-  
+
   clearSendMessageForm() {
     this.sendMessageForm.reset();
-}
+  }
 }

@@ -10,7 +10,7 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { AuthComponent } from './auth.component';
 import { TranslationModule } from '../i18n/translation.module';
 import { CustloginComponent } from './components/custlogin/custlogin.component';
-import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
@@ -28,6 +28,7 @@ import { HomeComponent } from './components/home/home.component';
     TranslationModule,
     AuthRoutingModule,
     FormsModule,
+    NgbTooltipModule,
     ReactiveFormsModule,
     HttpClientModule,NgbPaginationModule,
   ],
